@@ -514,8 +514,8 @@
       "counterHit": false,
       "cancelable": false,
       "forwardForce": 0.95,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 17,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15,
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
@@ -598,10 +598,10 @@
       "counterHit": false,
       "cancelable": false,
       "forwardForce": 1.2,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 20,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 6,
       "juggleRepeatPenaltyFrames": 9,
       "description": "Slow mid pole wheel with a wide blue arc and committed recovery."
@@ -692,8 +692,8 @@
       "whiffRecoveryFrames": 8,
       "range": 1.66,
       "forwardForce": 0.95,
-      "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 23,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 21,
       "label": "Low Sweep Kick",
       "hitLevel": "low",
       "tracking": "weakLeft",
@@ -715,8 +715,8 @@
       "whiffRecoveryFrames": 10,
       "range": 1.78,
       "forwardForce": 1.2,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 13,
       "label": "Heavy Pole Wheel",
       "hitLevel": "mid",
       "tracking": "weakRight",
@@ -792,8 +792,8 @@
       "hitLevel": "mid",
       "knockdown": true,
       "cancelable": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 7,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 9,
       "comboRepeatPenaltyFrames": 6,
       "juggleRepeatPenaltyFrames": 10
     },
@@ -809,8 +809,8 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "forwardForce": 1.97,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 32,
       "label": "Rising Pole Wheel",
       "hitLevel": "mid",
       "cancelable": false,
@@ -1000,14 +1000,14 @@
       "range": 8.5,
       "forwardForce": 3.12,
       "forwardForceStartFrame": 46,
-      "forwardForceEndFrame": 53,
+      "forwardForceEndFrame": 51,
       "label": "Kamehameha",
       "hitLevel": "special",
       "knockdown": false,
-      "onComboHitFrames": 34,
-      "onJuggleHitFrames": 38,
+      "onComboHitFrames": 32,
+      "onJuggleHitFrames": 24,
       "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 10,
+      "juggleRepeatPenaltyFrames": 14,
       "description": "Charge a blue-white Kamehameha between both palms, then release a launching full-screen beam.",
       "pushback": 0.82,
       "blockPushback": 0.68,
@@ -1688,8 +1688,8 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 20,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 16,
       "label": "Quick Pole Check",
       "hitLevel": "high",
       "cancelable": false,
@@ -1733,8 +1733,8 @@
       "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 7,
       "forwardForce": 1.69,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 17,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 18,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
       "label": "Low Forward Vault",
@@ -1757,8 +1757,8 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 20,
       "forwardForce": 2.17,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 20,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 16,
       "label": "Quick Pole Check",
       "hitLevel": "high",
       "cancelable": false,
@@ -1778,8 +1778,8 @@
       "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 30,
       "forwardForce": 2.27,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 17,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 25,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
       "label": "Low Pole Vault",
@@ -1847,8 +1847,8 @@
       "onCounterHitFrames": 24,
       "whiffRecoveryFrames": 30,
       "forwardForce": 2.12,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 25,
       "label": "Sidestep Pole Wheel",
       "hitLevel": "mid",
       "cancelable": false,
@@ -3727,5 +3727,366 @@
         "maxDamageScale": 1.55
       }
     ]
-  }
+  },
+  "beginnerComboRoutes": [
+    {
+      "id": "goku:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Quick Pole Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Quick Pole Check",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Power Pole Ender",
+          "windowBefore": 15,
+          "windowAfter": 19,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "goku:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Pole Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Power Pole Guard Break",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Power Pole Ender",
+          "windowBefore": 13,
+          "windowAfter": 17,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 32,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "goku:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Sweep Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Sweep Kick",
+          "windowBefore": 3,
+          "windowAfter": 7,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Power Pole Ender",
+          "windowBefore": 9,
+          "windowAfter": 13,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 32,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "goku:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Heavy Pole Wheel",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Pole Wheel",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Power Pole Ender",
+          "windowBefore": 8,
+          "windowAfter": 12,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 32,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "goku:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Quick Pole Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Pole Check",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Power Pole Ender",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 32,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "goku:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Heavy Pole Wheel",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Pole Check",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Power Pole Ender",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 32,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "goku:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Low Pole Knockdown",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Sweep Kick",
+          "windowBefore": 10,
+          "windowAfter": 14,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Power Pole Ender",
+          "windowBefore": 9,
+          "windowAfter": 13,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 32,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "goku:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Sweep Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Quick Pole Check",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Power Pole Ender",
+          "windowBefore": 14,
+          "windowAfter": 18,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 32,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

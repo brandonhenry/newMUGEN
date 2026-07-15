@@ -3326,5 +3326,368 @@
         "mirrorWithFacing": true
       }
     ]
-  }
+  },
+  "beginnerComboRoutes": [
+    {
+      "id": "nami-perfect-clima-tact:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Clima Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Ducking Clima Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Perfect Cyclone Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Staff Swipe",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Perfect Staff Swipe",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Perfect Cyclone Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Mirage Feint",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Gust Sweep",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Perfect Cyclone Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Blue Tempo Staff Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Weather Staff Kick",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Perfect Cyclone Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Clima Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Staff Swipe",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Perfect Cyclone Burst",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Blue Tempo Staff Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Staff Swipe",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Perfect Cyclone Burst",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Low Gust Knockdown",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Mirage Feint",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Perfect Cyclone Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Cyclone Tempo Crush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Clima Rush Jab",
+          "windowBefore": 12,
+          "windowAfter": 16,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Perfect Cyclone Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

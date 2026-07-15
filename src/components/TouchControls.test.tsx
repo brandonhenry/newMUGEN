@@ -112,12 +112,29 @@ describe('TouchControls', () => {
     expect(onAction.mock.calls.filter((call) => call[1] === 'special' && call[2] === false)).toHaveLength(1);
   });
 
-  it('renders colored numeric attacks and routes the pause control through the action callback', () => {
+  it('keeps two attack pointers active for Beginner Special chords', () => {
+    const onAction = vi.fn();
+    render(<TouchControls onAction={onAction} forceVisible controlScheme="beginner" />);
+    const cluster = screen.getByLabelText('Attack controls');
+    mockBounds(cluster, 0, 0, 180, 120);
+
+    fireEvent.pointerDown(cluster, { pointerId: 11, pointerType: 'touch', clientX: 90, clientY: 90, button: 0 });
+    fireEvent.pointerDown(cluster, { pointerId: 12, pointerType: 'touch', clientX: 90, clientY: 30, button: 0 });
+    expect(onAction.mock.calls).toContainEqual([1, 'special', true]);
+    expect(onAction.mock.calls).toContainEqual([1, 'jab', true]);
+
+    fireEvent.pointerUp(cluster, { pointerId: 12, pointerType: 'touch', clientX: 90, clientY: 30, button: 0 });
+    expect(onAction.mock.calls).toContainEqual([1, 'jab', false]);
+    expect(onAction.mock.calls.filter((call) => call[1] === 'special' && call[2] === false)).toHaveLength(0);
+  });
+
+  it('renders Beginner attack labels and routes the pause control through the action callback', () => {
     const onAction = vi.fn();
     render(<TouchControls onAction={onAction} forceVisible controlScheme="beginner" />);
 
-    expect(screen.getByTestId('touch-jab').textContent).toBe('1');
-    expect(screen.getByTestId('touch-jab').getAttribute('aria-label')).toBe('1');
+    expect(screen.getByTestId('touch-jab').textContent).toBe('L');
+    expect(screen.getByTestId('touch-jab').getAttribute('aria-label')).toBe('Light');
+    expect(screen.getByTestId('touch-special').textContent).toBe('S');
     expect(screen.getByTestId('touch-heavy').classList.contains('touch-number-2')).toBe(true);
 
     const pause = screen.getByTestId('touch-pause');

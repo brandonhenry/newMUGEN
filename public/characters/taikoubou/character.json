@@ -412,7 +412,7 @@
       "cancelable": false,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 23,
+      "forwardForceEndFrame": 22,
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
@@ -586,7 +586,7 @@
       "range": 1.44,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 23,
+      "forwardForceEndFrame": 22,
       "label": "Quick Dashinben Check",
       "hitLevel": "high",
       "tracking": "medium",
@@ -1535,8 +1535,8 @@
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.61,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 28,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31,
       "label": "Forward Staff Strike",
       "hitLevel": "mid",
       "tracking": "medium",
@@ -1558,7 +1558,7 @@
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.2,
       "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 28,
+      "forwardForceEndFrame": 22,
       "label": "Ducking Staff Check",
       "hitLevel": "high",
       "tracking": "medium",
@@ -1580,7 +1580,7 @@
       "whiffRecoveryFrames": 20,
       "forwardForce": 2.06,
       "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 28,
+      "forwardForceEndFrame": 22,
       "label": "Paopei Quick Check",
       "hitLevel": "high",
       "tracking": "medium",
@@ -3081,5 +3081,368 @@
     "getupRollUp": {}
   },
   "projectiles": [],
-  "moveProjectiles": {}
+  "moveProjectiles": {},
+  "beginnerComboRoutes": [
+    {
+      "id": "taikoubou:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Paopei Quick Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Ducking Staff Check",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Paopei Burst",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Staff Strike",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Dashinben Body Strike",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Paopei Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Paopei Feint",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Dashinben Sweep",
+          "windowBefore": 3,
+          "windowAfter": 7,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Paopei Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Spirit Beast Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Spirit Beast Rush",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Paopei Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Paopei Quick Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Staff Strike",
+          "windowBefore": 16,
+          "windowAfter": 23,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Paopei Burst",
+          "windowBefore": 8,
+          "windowAfter": 12,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Spirit Beast Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Staff Strike",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Paopei Burst",
+          "windowBefore": 8,
+          "windowAfter": 12,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Low Dashinben Knockdown",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Paopei Feint",
+          "windowBefore": 10,
+          "windowAfter": 14,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Paopei Burst",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Paopei Power Crush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Paopei Quick Check",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Paopei Burst",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

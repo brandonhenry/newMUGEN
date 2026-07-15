@@ -300,7 +300,14 @@
           0.5,
           0.6936
         ]
-      }
+      },
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 12
     },
     {
       "id": "kick",
@@ -332,7 +339,14 @@
           0.42,
           0.7096
         ]
-      }
+      },
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 9
     },
     {
       "id": "heavy",
@@ -364,7 +378,14 @@
           0.5,
           0.7
         ]
-      }
+      },
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 11
     },
     {
       "id": "special",
@@ -396,7 +417,14 @@
           0.5,
           0.7176
         ]
-      }
+      },
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21
     }
   ],
   "hurtboxes": [
@@ -437,7 +465,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "label": "Hivolt Left Check",
-      "hitLevel": "high"
+      "hitLevel": "high",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 11
     },
     "jabright": {
       "startupFrames": 11,
@@ -450,7 +485,14 @@
       "whiffRecoveryFrames": 5,
       "range": 1.5,
       "label": "Hivolt Right Check",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 10
     },
     "kickleft": {
       "startupFrames": 14,
@@ -463,7 +505,14 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Hivolt Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 9
     },
     "kickright": {
       "startupFrames": 15,
@@ -476,7 +525,14 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Hivolt Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 0.83,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 20
     },
     "cmd:f+1": {
       "startupFrames": 14,
@@ -490,7 +546,13 @@
       "range": 1.72,
       "forwardForce": 0.6,
       "label": "Hivolt Rush",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 19
     },
     "cmd:d/f+2": {
       "startupFrames": 16,
@@ -500,14 +562,21 @@
       "onBlockFrames": -13,
       "onHitFrames": 25,
       "onCounterHitFrames": 31,
-      "whiffRecoveryFrames": 12,
+      "whiffRecoveryFrames": 32,
       "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Hivolt Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 18,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13,
+      "forwardForce": 2.65,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 16
     },
     "cmd:qcf+4": {
       "startupFrames": 19,
@@ -517,11 +586,18 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 35,
       "range": 2.05,
       "label": "Hivolt Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10,
+      "forwardForce": 3.27,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 25
     },
     "cmd:WS+4": {
       "startupFrames": 13,
@@ -534,7 +610,14 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "label": "Hivolt Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 21,
+      "onJuggleHitFrames": 16,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 1.22,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 18
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -547,7 +630,14 @@
       "whiffRecoveryFrames": 5,
       "range": 1.34,
       "label": "Hivolt Crouch Jab",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5,
+      "forwardForce": 1.8,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 14
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -557,11 +647,18 @@
       "onBlockFrames": -13,
       "onHitFrames": 24,
       "onCounterHitFrames": 30,
-      "whiffRecoveryFrames": 12,
+      "whiffRecoveryFrames": 32,
       "range": 1.48,
       "launchHeight": 2,
       "label": "Hivolt Crouch Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 2.56,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -571,10 +668,17 @@
       "onBlockFrames": -8,
       "onHitFrames": 10,
       "onCounterHitFrames": 16,
-      "whiffRecoveryFrames": 9,
+      "whiffRecoveryFrames": 29,
       "range": 1.72,
       "label": "Hivolt Twin Assault",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 2.35,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -584,11 +688,18 @@
       "onBlockFrames": -14,
       "onHitFrames": 24,
       "onCounterHitFrames": 31,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 32,
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "Hivolt Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13,
+      "forwardForce": 2.22,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 11
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -601,7 +712,14 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "Hivolt Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 1.83,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -615,7 +733,14 @@
       "range": 1.74,
       "label": "Hivolt Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10,
+      "forwardForce": 1.49,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 25
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -625,11 +750,18 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 35,
       "range": 1.9,
       "label": "Hivolt Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 11,
+      "forwardForce": 2.69,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 28
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -639,13 +771,20 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 39,
       "range": 2.1,
       "kiCost": 35,
       "label": "Hivolt Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 3.79,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "neutral:jab-jab": {
       "label": "Hivolt Second Beat"

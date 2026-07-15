@@ -520,8 +520,8 @@
       "counterHit": false,
       "cancelable": false,
       "forwardForce": 0.5,
-      "forwardForceStartFrame": 4,
-      "forwardForceEndFrame": 9,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16,
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
@@ -694,12 +694,16 @@
       "whiffRecoveryFrames": 5,
       "range": 1.48,
       "forwardForce": 0.5,
-      "forwardForceStartFrame": 4,
-      "forwardForceEndFrame": 9,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16,
       "label": "Quick Hokuto Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
       "startupFrames": 14,
@@ -718,7 +722,11 @@
       "label": "Hokuto Body Palm",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
       "startupFrames": 28,
@@ -737,7 +745,11 @@
       "label": "Low Sweep Kick",
       "hitLevel": "low",
       "tracking": "weakLeft",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickright": {
       "startupFrames": 15,
@@ -756,7 +768,11 @@
       "label": "Heavy Roundhouse",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:f+1": {
       "startupFrames": 15,
@@ -775,7 +791,11 @@
       "label": "Hokuto Hundred Rush",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d/f+2": {
       "startupFrames": 16,
@@ -798,7 +818,11 @@
       "label": "Diagonal Point Launcher",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:qcf+4": {
       "startupFrames": 19,
@@ -812,7 +836,7 @@
       "whiffRecoveryFrames": 43,
       "range": 2.05,
       "forwardForce": 3.43,
-      "forwardForceStartFrame": 19,
+      "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 24,
       "moveJumpForce": 9.2,
       "moveJumpGravity": 24,
@@ -822,7 +846,11 @@
       "knockdown": true,
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 22,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 16
     },
     "cmd:WS+4": {
       "startupFrames": 15,
@@ -844,7 +872,11 @@
       "hitLevel": "mid",
       "tracking": "weakRight",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:FC+1": {
       "startupFrames": 14,
@@ -863,7 +895,11 @@
       "label": "Crouching Crescent Palm",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:FC+2": {
       "startupFrames": 16,
@@ -883,7 +919,11 @@
       "label": "Crouch Point Launcher",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:1+2": {
       "startupFrames": 15,
@@ -902,7 +942,11 @@
       "label": "Hokuto Arc Smash",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:1+3": {
       "startupFrames": 17,
@@ -922,7 +966,11 @@
       "label": "Pressure-Point Launcher",
       "hitLevel": "mid",
       "tracking": "weakLeft",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:2+3": {
       "startupFrames": 30,
@@ -941,7 +989,11 @@
       "label": "Low Shifting Kick",
       "hitLevel": "low",
       "tracking": "weakLeft",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:2+4": {
       "startupFrames": 30,
@@ -961,7 +1013,11 @@
       "hitLevel": "low",
       "tracking": "weakRight",
       "knockdown": true,
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:3+4": {
       "startupFrames": 25,
@@ -984,7 +1040,11 @@
       "tracking": "homing",
       "knockdown": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "cmd:O+2": {
       "startupFrames": 21,
@@ -1003,7 +1063,11 @@
       "label": "Hokuto Aura Drive",
       "hitLevel": "special",
       "tracking": "medium",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "neutral:jab-jab": {
       "startupFrames": 15,
@@ -1017,9 +1081,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Second Beat"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Second Beat",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 15,
@@ -1033,9 +1101,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Body Blow"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Body Blow",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 15,
@@ -1049,9 +1121,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Low Changeup"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Low Changeup",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-special": {
       "startupFrames": 15,
@@ -1065,9 +1141,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Pressure Feint"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Pressure Feint",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy": {
       "startupFrames": 15,
@@ -1081,9 +1161,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Drive"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Drive",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 15,
@@ -1097,9 +1181,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Barrage"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Barrage",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 15,
@@ -1113,9 +1201,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Finisher"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Finisher",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick": {
       "startupFrames": 18,
@@ -1129,9 +1221,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 16,
-      "label": "Kenshiro Step Kick"
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 33,
+      "label": "Kenshiro Step Kick",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 15,
@@ -1145,9 +1241,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Palm String"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Palm String",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick-special": {
       "startupFrames": 15,
@@ -1161,9 +1261,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Rising Chain"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Rising Chain",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-special": {
       "startupFrames": 15,
@@ -1177,9 +1281,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Special Setup"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Special Setup",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 15,
@@ -1193,9 +1301,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Break Art"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Break Art",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab": {
       "startupFrames": 15,
@@ -1209,9 +1321,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Check Hook"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Check Hook",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 15,
@@ -1225,9 +1341,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Heavy Break"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Heavy Break",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 15,
@@ -1241,9 +1361,13 @@
       "whiffRecoveryFrames": 25,
       "range": 1.55,
       "forwardForce": 2.51,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Charged Follow"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Charged Follow",
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-kick": {
       "startupFrames": 18,
@@ -1257,9 +1381,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 16,
-      "label": "Kenshiro Drop Kick"
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 33,
+      "label": "Kenshiro Drop Kick",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 15,
@@ -1273,9 +1401,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Arc Finisher"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Arc Finisher",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-special": {
       "startupFrames": 15,
@@ -1289,9 +1421,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Focus Stance"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Focus Stance",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 15,
@@ -1305,9 +1441,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Mode Shift"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Mode Shift",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-jab": {
       "startupFrames": 15,
@@ -1321,9 +1461,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Heel Feint"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Heel Feint",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-jab-special": {
       "startupFrames": 15,
@@ -1337,9 +1481,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Summon Strike"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Summon Strike",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-heavy": {
       "startupFrames": 15,
@@ -1353,9 +1501,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Guard Snare"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Guard Snare",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 15,
@@ -1369,9 +1521,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Armor Break"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Armor Break",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-special": {
       "startupFrames": 15,
@@ -1385,9 +1541,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Power Setup"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Power Setup",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 15,
@@ -1401,9 +1561,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Switch Strike"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Switch Strike",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-jab": {
       "startupFrames": 15,
@@ -1417,9 +1581,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Spark Jab"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Spark Jab",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 15,
@@ -1433,9 +1601,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Binding Blow"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Binding Blow",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-heavy": {
       "startupFrames": 15,
@@ -1449,9 +1621,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
-      "label": "Kenshiro Heavy Draw"
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 28,
+      "label": "Kenshiro Heavy Draw",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-kick": {
       "startupFrames": 18,
@@ -1465,9 +1641,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 16,
-      "label": "Kenshiro Kick Ender"
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 33,
+      "label": "Kenshiro Kick Ender",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:1+4": {
       "startupFrames": 24,
@@ -1489,7 +1669,11 @@
       "tracking": "weakRight",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 26,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13
     },
     "cmd:f+2": {
       "startupFrames": 14,
@@ -1507,7 +1691,11 @@
       "label": "Forward Body Palm",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:f+3": {
       "startupFrames": 20,
@@ -1525,7 +1713,11 @@
       "label": "Advancing Low Kick",
       "hitLevel": "low",
       "tracking": "weakLeft",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:d+1": {
       "startupFrames": 11,
@@ -1543,7 +1735,11 @@
       "label": "Ducking Hokuto Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d+3": {
       "startupFrames": 19,
@@ -1556,12 +1752,16 @@
       "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 29,
       "forwardForce": 2.2,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 11,
+      "forwardForceStartFrame": 28,
+      "forwardForceEndFrame": 34,
       "label": "Low Pressure Kick",
       "hitLevel": "low",
       "tracking": "weakLeft",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:d/f+3": {
       "startupFrames": 20,
@@ -1579,7 +1779,11 @@
       "label": "Diagonal Low Kick",
       "hitLevel": "low",
       "tracking": "weakLeft",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:qcf+1": {
       "startupFrames": 9,
@@ -1592,12 +1796,16 @@
       "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 22,
       "forwardForce": 2.17,
-      "forwardForceStartFrame": 4,
-      "forwardForceEndFrame": 11,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10,
       "label": "Hokuto Rush Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:qcf+3": {
       "startupFrames": 20,
@@ -1615,7 +1823,11 @@
       "label": "Hokuto Low Rush",
       "hitLevel": "low",
       "tracking": "weakLeft",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:WS+2": {
       "startupFrames": 13,
@@ -1633,7 +1845,11 @@
       "label": "While-Rising Body Palm",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:SS+3": {
       "startupFrames": 20,
@@ -1651,7 +1867,11 @@
       "label": "Sidestep Low Sweep",
       "hitLevel": "low",
       "tracking": "weakLeft",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:SS+4": {
       "startupFrames": 25,
@@ -1672,7 +1892,11 @@
       "hitLevel": "mid",
       "tracking": "weakRight",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:O+1": {
       "startupFrames": 27,
@@ -1690,7 +1914,11 @@
       "label": "Overdrive Hokuto Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:O+4": {
       "startupFrames": 30,
@@ -1712,7 +1940,11 @@
       "tracking": "weakRight",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 20,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13
     }
   },
   "effects": [],
@@ -4138,5 +4370,370 @@
     ]
   },
   "projectiles": [],
-  "moveProjectiles": {}
+  "moveProjectiles": {},
+  "beginnerComboRoutes": [
+    {
+      "id": "kenshiro:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Hokuto Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Ducking Hokuto Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Low Knockdown Rush",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "kenshiro:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Hokuto Arc Smash",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Body Palm",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Low Knockdown Rush",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kenshiro:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Hokuto Low Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "d/f+3",
+          "animationKey": "cmd:d/f+3",
+          "label": "Diagonal Low Kick",
+          "windowBefore": 13,
+          "windowAfter": 17,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Low Knockdown Rush",
+          "windowBefore": 3,
+          "windowAfter": 7,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kenshiro:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Roundhouse",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Low Knockdown Rush",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Low Knockdown Rush",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kenshiro:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Hokuto Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Hokuto Arc Smash",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Low Knockdown Rush",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kenshiro:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Hokuto Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Hokuto Arc Smash",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Low Knockdown Rush",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kenshiro:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Low Knockdown Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Hokuto Low Rush",
+          "windowBefore": 9,
+          "windowAfter": 13,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Low Knockdown Rush",
+          "windowBefore": 3,
+          "windowAfter": 7,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kenshiro:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Hokuto Low Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Hokuto Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Low Knockdown Rush",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

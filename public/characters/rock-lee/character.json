@@ -297,10 +297,10 @@
       "onBlockFrames": -1,
       "onHitFrames": 9,
       "onCounterHitFrames": 13,
-      "onComboHitFrames": 7,
-      "onJuggleHitFrames": 11,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 7,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 7,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "pushback": 0.93,
@@ -320,7 +320,10 @@
         ]
       },
       "id": "jab",
-      "input": "jab"
+      "input": "jab",
+      "forwardForce": 0.35,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 11
     },
     {
       "label": "Leaf Gale",
@@ -334,8 +337,8 @@
       "onBlockFrames": -12,
       "onHitFrames": 7,
       "onCounterHitFrames": 12,
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 9,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
       "comboRepeatPenaltyFrames": 5,
       "juggleRepeatPenaltyFrames": 8,
       "whiffRecoveryFrames": 7,
@@ -358,7 +361,10 @@
       },
       "endsInCrouch": true,
       "id": "kick",
-      "input": "kick"
+      "input": "kick",
+      "forwardForce": 0.9,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 34
     },
     {
       "label": "Dynamic Entry",
@@ -372,10 +378,10 @@
       "onBlockFrames": -5,
       "onHitFrames": 12,
       "onCounterHitFrames": 17,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 14,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 7,
       "whiffRecoveryFrames": 6,
       "range": 1.58,
       "pushback": 0.96,
@@ -395,8 +401,8 @@
         ]
       },
       "forwardForce": 0.9,
-      "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 15,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31,
       "id": "heavy",
       "input": "heavy"
     },
@@ -412,8 +418,8 @@
       "onBlockFrames": -8,
       "onHitFrames": 14,
       "onCounterHitFrames": 20,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 16,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
       "juggleRepeatPenaltyFrames": 8,
       "whiffRecoveryFrames": 8,
@@ -435,8 +441,8 @@
         ]
       },
       "forwardForce": 1.15,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 20,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 23,
       "id": "special",
       "input": "special"
     }
@@ -485,7 +491,14 @@
       "description": "Fast high jab for checking movement and starting pressure.",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.35,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 11
     },
     "jabright": {
       "startupFrames": 13,
@@ -504,7 +517,14 @@
       "description": "Compact mid punch that links after Lee's quickest checks.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.9,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "kickleft": {
       "startupFrames": 19,
@@ -524,7 +544,14 @@
       "hitLevel": "low",
       "tracking": "medium",
       "knockdown": false,
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 0.9,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 34
     },
     "kickright": {
       "startupFrames": 19,
@@ -532,21 +559,25 @@
       "recoveryFrames": 25,
       "damage": 12,
       "blockDamage": 1,
-      "onBlockFrames": -8,
+      "onBlockFrames": -10,
       "onHitFrames": 14,
       "onCounterHitFrames": 20,
-      "whiffRecoveryFrames": 8,
+      "whiffRecoveryFrames": 10,
       "range": 1.78,
       "forwardForce": 1.15,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 20,
-      "pushback": 0.98,
-      "blockPushback": 0.45,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 23,
+      "pushback": 1,
+      "blockPushback": 0.48,
       "label": "Leaf Whirlwind",
       "description": "Forward-spinning mid kick with enough hit advantage to continue pressure.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": true,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 11
     },
     "cmd:f+1": {
       "startupFrames": 13,
@@ -568,7 +599,11 @@
       "description": "Leaping forward strike that reaches farther than Lee's standing checks.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:f+3": {
       "startupFrames": 21,
@@ -583,8 +618,8 @@
       "whiffRecoveryFrames": 8,
       "range": 1.76,
       "forwardForce": 1.25,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 18,
+      "forwardForceStartFrame": 27,
+      "forwardForceEndFrame": 44,
       "pushback": 0.98,
       "blockPushback": 0.45,
       "label": "Youthful Counter Kick",
@@ -592,7 +627,11 @@
       "hitLevel": "mid",
       "tracking": "medium",
       "knockdown": false,
-      "counterHit": true
+      "counterHit": true,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:d+3": {
       "startupFrames": 18,
@@ -612,7 +651,14 @@
       "hitLevel": "low",
       "tracking": "medium",
       "knockdown": false,
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 1.25,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 33
     },
     "cmd:d/f+2": {
       "startupFrames": 17,
@@ -626,8 +672,8 @@
       "whiffRecoveryFrames": 10,
       "range": 1.66,
       "forwardForce": 0.85,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 17,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 45,
       "pushback": 0.97,
       "blockPushback": 0.44,
       "launchHeight": 2.15,
@@ -638,7 +684,11 @@
       "description": "Unsafe rising mid that launches for Lee's aerial lotus routes.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 25,
+      "onJuggleHitFrames": 23,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13
     },
     "cmd:d/f+3": {
       "startupFrames": 24,
@@ -652,8 +702,8 @@
       "whiffRecoveryFrames": 9,
       "range": 1.72,
       "forwardForce": 0.95,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 22,
+      "forwardForceStartFrame": 28,
+      "forwardForceEndFrame": 45,
       "pushback": 0.97,
       "blockPushback": 0.44,
       "label": "Leaf Hurricane Low",
@@ -661,7 +711,11 @@
       "hitLevel": "low",
       "tracking": "medium",
       "knockdown": true,
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:qcf+3": {
       "startupFrames": 18,
@@ -675,8 +729,8 @@
       "whiffRecoveryFrames": 9,
       "range": 1.86,
       "forwardForce": 1.3,
-      "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 24,
+      "forwardForceStartFrame": 25,
+      "forwardForceEndFrame": 30,
       "pushback": 0.99,
       "blockPushback": 0.45,
       "launchHeight": 1.35,
@@ -687,7 +741,11 @@
       "description": "Rising spin kick that lifts grounded hits into Lee's juggle plan.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 16,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13
     },
     "cmd:qcf+4": {
       "startupFrames": 24,
@@ -701,8 +759,8 @@
       "whiffRecoveryFrames": 12,
       "range": 2.02,
       "forwardForce": 1.85,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 31,
+      "forwardForceStartFrame": 56,
+      "forwardForceEndFrame": 62,
       "moveJumpForce": 8.6,
       "moveJumpGravity": 23,
       "pushback": 1.01,
@@ -713,7 +771,11 @@
       "tracking": "medium",
       "knockdown": true,
       "tornado": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 24,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 16
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -736,7 +798,14 @@
       "description": "While-standing mid kick that lifts opponents after crouch pressure.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 16,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 1.15,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 22
     },
     "cmd:FC+1": {
       "startupFrames": 13,
@@ -755,7 +824,14 @@
       "description": "Quick crouching body shot for interrupting after Leaf Gale.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5,
+      "forwardForce": 0.89,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 16
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -778,7 +854,14 @@
       "description": "Crouch-starting launcher that rewards a hard read from full crouch.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 24,
+      "onJuggleHitFrames": 22,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 0.9,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 45
     },
     "cmd:1+2": {
       "startupFrames": 20,
@@ -792,15 +875,19 @@
       "whiffRecoveryFrames": 8,
       "range": 1.78,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 22,
+      "forwardForceStartFrame": 26,
+      "forwardForceEndFrame": 51,
       "pushback": 0.98,
       "blockPushback": 0.45,
       "label": "Strong Fist Barrage",
       "description": "Two-hand taijutsu rush that keeps Lee close for route extensions.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:1+3": {
       "startupFrames": 19,
@@ -811,7 +898,7 @@
       "onBlockFrames": -15,
       "onHitFrames": 29,
       "onCounterHitFrames": 36,
-      "whiffRecoveryFrames": 11,
+      "whiffRecoveryFrames": 37,
       "range": 1.72,
       "moveJumpForce": 8.4,
       "moveJumpGravity": 22,
@@ -826,7 +913,14 @@
       "hitLevel": "mid",
       "tracking": "medium",
       "knockdown": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 22,
+      "onJuggleHitFrames": 17,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 16,
+      "forwardForce": 2.03,
+      "forwardForceStartFrame": 27,
+      "forwardForceEndFrame": 44
     },
     "cmd:2+3": {
       "startupFrames": 17,
@@ -848,7 +942,14 @@
       "tracking": "medium",
       "knockdown": false,
       "endsInCrouch": true,
-      "counterHit": true
+      "counterHit": true,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 1.32,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 31
     },
     "cmd:2+4": {
       "startupFrames": 24,
@@ -868,7 +969,14 @@
       "hitLevel": "low",
       "tracking": "medium",
       "knockdown": true,
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10,
+      "forwardForce": 1.15,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 27
     },
     "cmd:3+4": {
       "startupFrames": 24,
@@ -882,8 +990,8 @@
       "whiffRecoveryFrames": 12,
       "range": 1.96,
       "forwardForce": 1.7,
-      "forwardForceStartFrame": 13,
-      "forwardForceEndFrame": 32,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 30,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 23,
       "pushback": 1,
@@ -894,7 +1002,11 @@
       "tracking": "medium",
       "knockdown": true,
       "tornado": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 23,
+      "comboRepeatPenaltyFrames": 10,
+      "juggleRepeatPenaltyFrames": 17
     },
     "cmd:SS+3": {
       "startupFrames": 21,
@@ -914,7 +1026,14 @@
       "description": "Sidestep kick that catches linear retaliation and keeps Lee mobile.",
       "hitLevel": "mid",
       "tracking": "strong",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 1.59,
+      "forwardForceStartFrame": 27,
+      "forwardForceEndFrame": 44
     },
     "cmd:O+1": {
       "startupFrames": 30,
@@ -943,7 +1062,11 @@
       "knockdown": false,
       "throwCapture": true,
       "jumpBeforeMove": true,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:O+2": {
       "startupFrames": 30,
@@ -954,11 +1077,11 @@
       "onBlockFrames": -17,
       "onHitFrames": 25,
       "onCounterHitFrames": 36,
-      "whiffRecoveryFrames": 18,
+      "whiffRecoveryFrames": 44,
       "range": 2.08,
       "forwardForce": 2.1,
-      "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 38,
+      "forwardForceStartFrame": 38,
+      "forwardForceEndFrame": 76,
       "moveJumpForce": 9.2,
       "moveJumpGravity": 24,
       "pushback": 1.02,
@@ -971,7 +1094,11 @@
       "knockdown": true,
       "tornado": true,
       "jumpBeforeMove": true,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 19,
+      "comboRepeatPenaltyFrames": 11,
+      "juggleRepeatPenaltyFrames": 18
     },
     "neutral:jab-jab": {
       "startupFrames": 14,
@@ -3657,5 +3784,327 @@
   },
   "animationScales": {},
   "projectiles": [],
-  "moveProjectiles": {}
+  "moveProjectiles": {},
+  "beginnerComboRoutes": [
+    {
+      "id": "rock-lee:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "animationKey": "jableft",
+          "label": "Leaf Intercept Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "animationKey": "jableft",
+          "label": "Leaf Intercept Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Leaf Whirlwind",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Strong Fist Body Blow",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Strong Fist Body Blow",
+          "windowBefore": 15,
+          "windowAfter": 19,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Leaf Whirlwind",
+          "windowBefore": 9,
+          "windowAfter": 13,
+          "expect": "knockdown",
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Leaf Gale",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Leaf Rising Wind",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "launch"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Leaf Whirlwind",
+          "windowBefore": 13,
+          "windowAfter": 17,
+          "expect": "knockdown",
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Leaf Whirlwind",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Leaf Whirlwind",
+          "windowBefore": 8,
+          "windowAfter": 12,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Leaf Whirlwind",
+          "windowBefore": 8,
+          "windowAfter": 12,
+          "expect": "knockdown",
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "animationKey": "jableft",
+          "label": "Leaf Intercept Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Strong Fist Body Blow",
+          "windowBefore": 12,
+          "windowAfter": 16,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Leaf Whirlwind",
+          "windowBefore": 9,
+          "windowAfter": 13,
+          "expect": "knockdown",
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "jab",
+          "animationKey": "jableft",
+          "label": "Leaf Intercept Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Strong Fist Body Blow",
+          "windowBefore": 12,
+          "windowAfter": 16,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Leaf Whirlwind",
+          "windowBefore": 9,
+          "windowAfter": 13,
+          "expect": "knockdown",
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Strong Fist Body Blow",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Leaf Gale",
+          "windowBefore": 9,
+          "windowAfter": 13,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Leaf Whirlwind",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "knockdown",
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Leaf Gale",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "animationKey": "jableft",
+          "label": "Leaf Intercept Jab",
+          "windowBefore": 15,
+          "windowAfter": 19,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Leaf Whirlwind",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "knockdown",
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

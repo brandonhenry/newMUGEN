@@ -519,8 +519,8 @@
       "counterHit": false,
       "cancelable": false,
       "forwardForce": 0.85,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 8,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 31,
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
@@ -615,7 +615,11 @@
       "description": "Fast high spear jab with a tiny active window for checking close pressure.",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
       "startupFrames": 13,
@@ -626,16 +630,20 @@
       "onBlockFrames": -1,
       "onHitFrames": 12,
       "onCounterHitFrames": 16,
-      "whiffRecoveryFrames": 7,
+      "whiffRecoveryFrames": 22,
       "range": 1.6,
       "forwardForce": 2.85,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 8,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 31,
       "label": "Sunlight Body Thrust",
       "description": "Quick mid spear thrust with a short active window and steady recovery.",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
       "startupFrames": 30,
@@ -655,7 +663,11 @@
       "description": "Fast low spear sweep with long active coverage along the ground.",
       "hitLevel": "low",
       "tracking": "medium",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickright": {
       "startupFrames": 15,
@@ -675,7 +687,11 @@
       "description": "Fast mid kick-and-spear arc with a long active window for close scrambles.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:f+1": {
       "startupFrames": 15,
@@ -695,7 +711,11 @@
       "description": "Fast mid advancing flurry with long active spear coverage.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d/f+2": {
       "startupFrames": 18,
@@ -719,7 +739,11 @@
       "description": "Slow mid launcher with a small active pop-up and heavy recovery.",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:qcf+4": {
       "startupFrames": 23,
@@ -739,7 +763,11 @@
       "description": "Fast mid knockdown burst with long active pressure and quick recovery.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "cmd:WS+4": {
       "startupFrames": 15,
@@ -758,7 +786,11 @@
       "label": "Sunlight Rising Sweep",
       "description": "Fast mid rising sweep with long active spear coverage out of crouch.",
       "hitLevel": "mid",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 21,
+      "onJuggleHitFrames": 16,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:FC+1": {
       "startupFrames": 15,
@@ -778,7 +810,11 @@
       "description": "Fast mid crouch attack with long active spear coverage and quick recovery.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:FC+2": {
       "startupFrames": 18,
@@ -799,7 +835,11 @@
       "description": "Steady mid launcher with a short active pop-up after a crouched start.",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:1+2": {
       "startupFrames": 19,
@@ -823,7 +863,11 @@
       "tracking": "weakRight",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 25,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:1+3": {
       "startupFrames": 17,
@@ -843,7 +887,11 @@
       "label": "Cross Spear Launcher",
       "description": "Slow mid launcher that drives Sunlight Heart forward with a long active lift.",
       "hitLevel": "mid",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:2+3": {
       "startupFrames": 17,
@@ -862,7 +910,11 @@
       "label": "Alchemy Low Feint",
       "description": "Fast low feint with long active time from a crouched alchemy-tinted slash.",
       "hitLevel": "low",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 16,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:2+4": {
       "startupFrames": 30,
@@ -882,7 +934,11 @@
       "description": "Quick low knockdown sweep that slides through with extended active frames.",
       "hitLevel": "low",
       "tracking": "medium",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -902,7 +958,11 @@
       "description": "Fast mid knockdown drive with very long active pressure from the spear rush.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "cmd:O+2": {
       "startupFrames": 30,
@@ -922,7 +982,11 @@
       "description": "Fast special knockdown rush with long active red-aura spear pressure.",
       "hitLevel": "special",
       "tracking": "weakRight",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "neutral:jab-jab": {
       "startupFrames": 18,
@@ -938,7 +1002,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Second Beat"
+      "label": "Kazuki Muto Second Beat",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 18,
@@ -954,7 +1022,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Body Blow"
+      "label": "Kazuki Muto Body Blow",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 18,
@@ -970,7 +1042,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Low Changeup"
+      "label": "Kazuki Muto Low Changeup",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-special": {
       "startupFrames": 18,
@@ -986,7 +1062,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Pressure Feint"
+      "label": "Kazuki Muto Pressure Feint",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy": {
       "startupFrames": 18,
@@ -1002,7 +1082,11 @@
       "forwardForce": 2.13,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Drive"
+      "label": "Kazuki Muto Drive",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 18,
@@ -1018,7 +1102,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Barrage"
+      "label": "Kazuki Muto Barrage",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 18,
@@ -1034,7 +1122,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Finisher"
+      "label": "Kazuki Muto Finisher",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick": {
       "startupFrames": 18,
@@ -1050,7 +1142,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Step Kick"
+      "label": "Kazuki Muto Step Kick",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 18,
@@ -1066,7 +1162,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Palm String"
+      "label": "Kazuki Muto Palm String",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick-special": {
       "startupFrames": 18,
@@ -1082,7 +1182,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Rising Chain"
+      "label": "Kazuki Muto Rising Chain",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-special": {
       "startupFrames": 18,
@@ -1098,7 +1202,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Special Setup"
+      "label": "Kazuki Muto Special Setup",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 18,
@@ -1114,7 +1222,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Break Art"
+      "label": "Kazuki Muto Break Art",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab": {
       "startupFrames": 18,
@@ -1130,7 +1242,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Check Hook"
+      "label": "Kazuki Muto Check Hook",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 18,
@@ -1146,7 +1262,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Heavy Break"
+      "label": "Kazuki Muto Heavy Break",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 18,
@@ -1162,7 +1282,11 @@
       "forwardForce": 3.05,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Charged Follow"
+      "label": "Kazuki Muto Charged Follow",
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-kick": {
       "startupFrames": 18,
@@ -1178,7 +1302,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Drop Kick"
+      "label": "Kazuki Muto Drop Kick",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 18,
@@ -1194,7 +1322,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Arc Finisher"
+      "label": "Kazuki Muto Arc Finisher",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-special": {
       "startupFrames": 18,
@@ -1210,7 +1342,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Focus Stance"
+      "label": "Kazuki Muto Focus Stance",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 18,
@@ -1226,7 +1362,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Mode Shift"
+      "label": "Kazuki Muto Mode Shift",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-jab": {
       "startupFrames": 18,
@@ -1242,7 +1382,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Heel Feint"
+      "label": "Kazuki Muto Heel Feint",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-jab-special": {
       "startupFrames": 18,
@@ -1258,7 +1402,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Summon Strike"
+      "label": "Kazuki Muto Summon Strike",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-heavy": {
       "startupFrames": 18,
@@ -1274,7 +1422,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Guard Snare"
+      "label": "Kazuki Muto Guard Snare",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 18,
@@ -1290,7 +1442,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Armor Break"
+      "label": "Kazuki Muto Armor Break",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-special": {
       "startupFrames": 18,
@@ -1306,7 +1462,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Power Setup"
+      "label": "Kazuki Muto Power Setup",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 18,
@@ -1322,7 +1482,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Switch Strike"
+      "label": "Kazuki Muto Switch Strike",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-jab": {
       "startupFrames": 18,
@@ -1338,7 +1502,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Spark Jab"
+      "label": "Kazuki Muto Spark Jab",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 18,
@@ -1354,7 +1522,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Binding Blow"
+      "label": "Kazuki Muto Binding Blow",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-heavy": {
       "startupFrames": 18,
@@ -1370,7 +1542,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Heavy Draw"
+      "label": "Kazuki Muto Heavy Draw",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-kick": {
       "startupFrames": 18,
@@ -1386,7 +1562,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 29,
-      "label": "Kazuki Muto Kick Ender"
+      "label": "Kazuki Muto Kick Ender",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:1+4": {
       "startupFrames": 14,
@@ -1404,7 +1584,11 @@
       "label": "Grounded Lance Cut",
       "description": "Steady mid lance cut with a brief active window and grounded recovery.",
       "hitLevel": "mid",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:f+2": {
       "startupFrames": 15,
@@ -1423,7 +1607,11 @@
       "description": "Steady mid forward cut with moderate active time and quick recovery.",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:d+1": {
       "startupFrames": 9,
@@ -1436,13 +1624,17 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.85,
-      "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 19,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 15,
       "label": "Crouch Step Jab",
       "description": "Quick high jab with a short active window from a compact crouch-step poke.",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:qcf+1": {
       "startupFrames": 9,
@@ -1450,18 +1642,25 @@
       "recoveryFrames": 13,
       "damage": 8,
       "blockDamage": 1,
-      "onBlockFrames": 1,
+      "onBlockFrames": -10,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 22,
       "forwardForce": 2.71,
-      "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 19,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 15,
       "label": "Sunlight Rush Jab",
       "description": "Quick high rush jab with a short active window for fast approach checks.",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "knockdown": true,
+      "pushback": 1,
+      "blockPushback": 0.48,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:WS+2": {
       "startupFrames": 13,
@@ -1474,13 +1673,17 @@
       "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 7,
       "forwardForce": 1.7,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 8,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23,
       "label": "While-Rising Spear Cut",
       "description": "Steady mid while-rising cut with moderate active time and quick recovery.",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:O+1": {
       "startupFrames": 23,
@@ -1499,7 +1702,11 @@
       "description": "Quick high overdrive jab with a short active window and fast reset.",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7
     }
   },
   "effects": [],
@@ -3338,5 +3545,370 @@
     }
   },
   "projectiles": [],
-  "moveProjectiles": {}
+  "moveProjectiles": {},
+  "beginnerComboRoutes": [
+    {
+      "id": "kazuki-muto:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Crouch Step Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Sunlight Step Flurry",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Sunlight Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "kazuki-muto:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Spear Cut",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Sunlight Body Thrust",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Sunlight Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kazuki-muto:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Crouch Step Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Spear Cut",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Sunlight Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kazuki-muto:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Crouch Step Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Spear Cut",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Sunlight Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kazuki-muto:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Crouch Step Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Spear Cut",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Sunlight Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kazuki-muto:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Crouch Step Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Spear Cut",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Sunlight Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kazuki-muto:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Spear Cut",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Crouch Step Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Sunlight Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kazuki-muto:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Crouch Step Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Sunlight Step Flurry",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Sunlight Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

@@ -554,10 +554,10 @@
       "counterHit": false,
       "cancelable": false,
       "forwardForce": 0.83,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 12,
+      "forwardForceStartFrame": 42,
+      "forwardForceEndFrame": 48,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
       "juggleRepeatPenaltyFrames": 8
     }
@@ -669,8 +669,8 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "forwardForce": 0.83,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 24,
+      "forwardForceStartFrame": 26,
+      "forwardForceEndFrame": 29,
       "label": "Monkey D. Luffy (2nd Gear) Right Kick",
       "hitLevel": "mid",
       "onComboHitFrames": 12,
@@ -1568,8 +1568,8 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.22,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 17,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 14,
       "label": "Ducking Jet Pistol",
       "hitLevel": "high",
       "tracking": "medium",
@@ -1590,8 +1590,8 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 19,
       "forwardForce": 2.08,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 17,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 14,
       "label": "Jet Rush Pistol",
       "hitLevel": "high",
       "tracking": "medium",
@@ -2970,5 +2970,369 @@
     ]
   },
   "projectiles": [],
-  "moveProjectiles": {}
+  "moveProjectiles": {},
+  "beginnerComboRoutes": [
+    {
+      "id": "monkey-d-luffy-2nd-gear:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Jet Rush Pistol",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Ducking Jet Pistol",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Jet Giant Rifle",
+          "windowBefore": 9,
+          "windowAfter": 13,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Jet Gatling",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Jet Punch",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Jet Giant Rifle",
+          "windowBefore": 11,
+          "windowAfter": 15,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Jet Feint",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Jet Stamp",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Jet Giant Rifle",
+          "windowBefore": 4,
+          "windowAfter": 8,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Monkey D. Luffy (2nd Gear) Right Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Jet Giant Rifle",
+          "windowBefore": 4,
+          "windowAfter": 8,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Jet Giant Rifle",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Jet Rush Pistol",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Jet Gatling",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Jet Giant Rifle",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Jet Rush Pistol",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Jet Gatling",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Jet Giant Rifle",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Low Balloon Drive",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Jet Feint",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Jet Giant Rifle",
+          "windowBefore": 11,
+          "windowAfter": 15,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "monkey-d-luffy-2nd-gear:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Jet Giant Rifle",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Jet Rush Pistol",
+          "windowBefore": 14,
+          "windowAfter": 18,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Jet Giant Rifle",
+          "windowBefore": 8,
+          "windowAfter": 12,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

@@ -456,10 +456,10 @@
       "onBlockFrames": -1,
       "onHitFrames": 9,
       "onCounterHitFrames": 13,
-      "onComboHitFrames": 7,
-      "onJuggleHitFrames": 12,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 7,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 7,
       "whiffRecoveryFrames": 4,
       "range": 1.4,
       "pushback": 0.92,
@@ -479,7 +479,10 @@
         ]
       },
       "id": "jab",
-      "input": "jab"
+      "input": "jab",
+      "forwardForce": 0.35,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 11
     },
     {
       "label": "Skate Park Low",
@@ -493,8 +496,8 @@
       "onBlockFrames": -13,
       "onHitFrames": 7,
       "onCounterHitFrames": 12,
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 10,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
       "comboRepeatPenaltyFrames": 5,
       "juggleRepeatPenaltyFrames": 8,
       "whiffRecoveryFrames": 7,
@@ -517,7 +520,10 @@
       },
       "endsInCrouch": true,
       "id": "kick",
-      "input": "kick"
+      "input": "kick",
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18
     },
     {
       "label": "Dragon Claw Check",
@@ -531,10 +537,10 @@
       "onBlockFrames": -4,
       "onHitFrames": 12,
       "onCounterHitFrames": 17,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 15,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 7,
       "whiffRecoveryFrames": 5,
       "range": 1.55,
       "pushback": 0.94,
@@ -554,7 +560,10 @@
         ]
       },
       "id": "heavy",
-      "input": "heavy"
+      "input": "heavy",
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 20
     },
     {
       "label": "Dragon Tail Spark",
@@ -569,8 +578,8 @@
       "onHitFrames": 15,
       "onCounterHitFrames": 22,
       "onComboHitFrames": 13,
-      "onJuggleHitFrames": 18,
-      "comboRepeatPenaltyFrames": 5,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 6,
       "juggleRepeatPenaltyFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.82,
@@ -591,8 +600,8 @@
         ]
       },
       "forwardForce": 1.05,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 20,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21,
       "id": "special",
       "input": "special"
     }
@@ -641,7 +650,14 @@
       "description": "Fast human-form jab for checking movement and starting pressure.",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.35,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 11
     },
     "jabright": {
       "startupFrames": 14,
@@ -660,7 +676,14 @@
       "description": "Quick red-aura mid swipe that keeps Jake close enough to keep talking with his fists.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 20
     },
     "kickleft": {
       "startupFrames": 19,
@@ -680,7 +703,14 @@
       "hitLevel": "low",
       "tracking": "medium",
       "knockdown": false,
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18
     },
     "kickright": {
       "startupFrames": 23,
@@ -694,15 +724,19 @@
       "whiffRecoveryFrames": 8,
       "range": 1.78,
       "forwardForce": 1,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 20,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21,
       "pushback": 0.97,
       "blockPushback": 0.45,
       "label": "Dragon Tail Spark",
       "description": "Forward red-aura swing with enough advantage to keep pressure honest.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:f+1": {
       "startupFrames": 13,
@@ -716,15 +750,19 @@
       "whiffRecoveryFrames": 7,
       "range": 1.78,
       "forwardForce": 1.28,
-      "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 17,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 20,
       "pushback": 0.97,
       "blockPushback": 0.45,
       "label": "Claw Dash",
       "description": "Forward-moving claw strike that reaches farther than Jake's standing checks.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:f+3": {
       "startupFrames": 18,
@@ -738,15 +776,19 @@
       "whiffRecoveryFrames": 9,
       "range": 1.96,
       "forwardForce": 1.65,
-      "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 24,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 20,
       "pushback": 0.99,
       "blockPushback": 0.46,
       "label": "Skateboard Shoulder",
       "description": "Committed skateboard approach that catches backdash attempts but is punishable on block.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:d+3": {
       "startupFrames": 16,
@@ -766,7 +808,14 @@
       "hitLevel": "low",
       "tracking": "medium",
       "knockdown": false,
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     "cmd:d/f+2": {
       "startupFrames": 18,
@@ -780,8 +829,8 @@
       "whiffRecoveryFrames": 10,
       "range": 1.66,
       "forwardForce": 0.85,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 17,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 24,
       "pushback": 0.95,
       "blockPushback": 0.44,
       "launchHeight": 2.15,
@@ -792,7 +841,11 @@
       "description": "Unsafe rising claw that starts Jake's juggle routes.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 25,
+      "onJuggleHitFrames": 23,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13
     },
     "cmd:d/f+3": {
       "startupFrames": 19,
@@ -803,7 +856,7 @@
       "onBlockFrames": -9,
       "onHitFrames": 17,
       "onCounterHitFrames": 24,
-      "whiffRecoveryFrames": 9,
+      "whiffRecoveryFrames": 34,
       "range": 1.76,
       "moveJumpForce": 8,
       "moveJumpGravity": 22,
@@ -818,7 +871,14 @@
       "hitLevel": "mid",
       "tracking": "medium",
       "knockdown": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 2.15,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "cmd:qcf+3": {
       "startupFrames": 15,
@@ -832,15 +892,19 @@
       "whiffRecoveryFrames": 9,
       "range": 1.96,
       "forwardForce": 1.5,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 24,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 7,
       "pushback": 0.99,
       "blockPushback": 0.46,
       "label": "Dragon Rush",
       "description": "Red-aura rush that carries forward and catches retreat.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -866,7 +930,11 @@
       "tracking": "medium",
       "knockdown": true,
       "tornado": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 25,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 16
     },
     "cmd:WS+4": {
       "startupFrames": 15,
@@ -889,7 +957,14 @@
       "description": "While-standing kick that lifts after crouch pressure.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 16,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 1.05,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 16
     },
     "cmd:FC+1": {
       "startupFrames": 13,
@@ -909,7 +984,14 @@
       "hitLevel": "mid",
       "tracking": "medium",
       "knockdown": false,
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5,
+      "forwardForce": 0.89,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 16
     },
     "cmd:FC+2": {
       "startupFrames": 18,
@@ -932,7 +1014,14 @@
       "description": "Crouch-starting launcher that rewards a hard read from full crouch.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 23,
+      "onJuggleHitFrames": 21,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 1.9,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 29
     },
     "cmd:1+2": {
       "startupFrames": 19,
@@ -946,8 +1035,8 @@
       "whiffRecoveryFrames": 8,
       "range": 1.84,
       "forwardForce": 1.25,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 22,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 8,
       "pushback": 0.98,
       "blockPushback": 0.45,
       "launchHeight": 2.2,
@@ -958,7 +1047,11 @@
       "description": "Red-aura barrage that keeps Jake close for route extensions.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13
     },
     "cmd:1+3": {
       "startupFrames": 30,
@@ -969,7 +1062,7 @@
       "onBlockFrames": -15,
       "onHitFrames": 29,
       "onCounterHitFrames": 36,
-      "whiffRecoveryFrames": 11,
+      "whiffRecoveryFrames": 45,
       "range": 1.9,
       "pushback": 0.99,
       "blockPushback": 0.45,
@@ -984,7 +1077,14 @@
       "tracking": "medium",
       "knockdown": false,
       "tornado": true,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 21,
+      "comboRepeatPenaltyFrames": 11,
+      "juggleRepeatPenaltyFrames": 18,
+      "forwardForce": 2.53,
+      "forwardForceStartFrame": 45,
+      "forwardForceEndFrame": 53
     },
     "cmd:2+3": {
       "startupFrames": 19,
@@ -1010,7 +1110,14 @@
       "tracking": "medium",
       "knockdown": false,
       "endsInCrouch": true,
-      "counterHit": true
+      "counterHit": true,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 1.56,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 17
     },
     "cmd:2+4": {
       "startupFrames": 30,
@@ -1024,8 +1131,8 @@
       "whiffRecoveryFrames": 10,
       "range": 1.82,
       "forwardForce": 1.25,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 25,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 9,
       "pushback": 0.97,
       "blockPushback": 0.45,
       "label": "Skateboard Knockdown",
@@ -1033,7 +1140,11 @@
       "hitLevel": "low",
       "tracking": "medium",
       "knockdown": true,
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "cmd:3+4": {
       "startupFrames": 24,
@@ -1054,7 +1165,14 @@
       "hitLevel": "mid",
       "tracking": "strong",
       "knockdown": true,
-      "tornado": true
+      "tornado": true,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 24,
+      "comboRepeatPenaltyFrames": 10,
+      "juggleRepeatPenaltyFrames": 17,
+      "forwardForce": 1.05,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "cmd:SS+3": {
       "startupFrames": 18,
@@ -1074,7 +1192,14 @@
       "description": "Sidestep skateboard slash that catches linear retaliation and keeps Jake mobile.",
       "hitLevel": "mid",
       "tracking": "strong",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 1.65,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 20
     },
     "cmd:O+1": {
       "startupFrames": 29,
@@ -1100,7 +1225,11 @@
       "hitLevel": "special",
       "tracking": "medium",
       "knockdown": true,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 11
     },
     "cmd:O+2": {
       "startupFrames": 21,
@@ -1114,8 +1243,8 @@
       "whiffRecoveryFrames": 18,
       "range": 2.18,
       "forwardForce": 1.55,
-      "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 38,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 32,
       "pushback": 1.03,
       "blockPushback": 0.47,
       "kiCost": 50,
@@ -1125,7 +1254,11 @@
       "tracking": "medium",
       "knockdown": true,
       "tornado": true,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 25,
+      "comboRepeatPenaltyFrames": 11,
+      "juggleRepeatPenaltyFrames": 18
     },
     "neutral:jab-jab": {
       "startupFrames": 14,
@@ -1350,7 +1483,11 @@
       "description": "Short reverse claw check using the unused human strike sequence.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:WR+1": {
       "startupFrames": 14,
@@ -1372,7 +1509,11 @@
       "description": "Running skateboard rush that carries Jake forward into a claw strike.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:b,b+3": {
       "startupFrames": 18,
@@ -1392,7 +1533,14 @@
       "description": "Skateboard slash sequence that gives Jake a mobile retreating strike.",
       "hitLevel": "mid",
       "tracking": "strong",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 1.31,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 20
     },
     "cmd:O+3": {
       "startupFrames": 29,
@@ -1406,8 +1554,8 @@
       "whiffRecoveryFrames": 13,
       "range": 1.82,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 31,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 30,
       "pushback": 0.97,
       "blockPushback": 0.45,
       "kiCost": 35,
@@ -1418,7 +1566,11 @@
       "hitLevel": "special",
       "tracking": "medium",
       "knockdown": true,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 11
     },
     "cmd:qcb+4": {
       "startupFrames": 23,
@@ -1432,8 +1584,8 @@
       "whiffRecoveryFrames": 11,
       "range": 2.08,
       "forwardForce": 1.85,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 31,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 22,
       "moveJumpForce": 8.6,
       "moveJumpGravity": 23,
       "pushback": 1.01,
@@ -1444,7 +1596,11 @@
       "tracking": "medium",
       "knockdown": true,
       "tornado": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 24,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 16
     },
     "cmd:O+4": {
       "startupFrames": 30,
@@ -1458,8 +1614,8 @@
       "whiffRecoveryFrames": 18,
       "range": 2.18,
       "forwardForce": 1.55,
-      "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 38,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 27,
       "pushback": 1.03,
       "blockPushback": 0.47,
       "kiCost": 45,
@@ -1469,7 +1625,11 @@
       "tracking": "medium",
       "knockdown": true,
       "tornado": true,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 23,
+      "comboRepeatPenaltyFrames": 11,
+      "juggleRepeatPenaltyFrames": 18
     }
   },
   "effects": [],
@@ -5699,5 +5859,365 @@
         "clash": true
       }
     ]
-  }
+  },
+  "beginnerComboRoutes": [
+    {
+      "id": "jake-long:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Claw Dash",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "animationKey": "jableft",
+          "label": "American Dragon Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Skateboard Knockdown",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "jake-long:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Dragon Claw Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Claw Flare Barrage",
+          "windowBefore": 8,
+          "windowAfter": 12,
+          "expect": "launch"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Skateboard Knockdown",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "1+3",
+          "kiAnimationKey": "cmd:1+3",
+          "kiCost": 20,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "jake-long:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Dragon Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Skate Park Low",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Skateboard Knockdown",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "1+3",
+          "kiAnimationKey": "cmd:1+3",
+          "kiCost": 20,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "jake-long:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Dragon Tail Spark",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Dragon Tail Spark",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Skateboard Knockdown",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "1+3",
+          "kiAnimationKey": "cmd:1+3",
+          "kiCost": 20,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "jake-long:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Claw Dash",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Dragon Claw Check",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Skateboard Knockdown",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "1+3",
+          "kiAnimationKey": "cmd:1+3",
+          "kiCost": 20,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "jake-long:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Dragon Tail Spark",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Dragon Claw Check",
+          "windowBefore": 14,
+          "windowAfter": 18,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Skateboard Knockdown",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "1+3",
+          "kiAnimationKey": "cmd:1+3",
+          "kiCost": 20,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "jake-long:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Skateboard Knockdown",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Dragon Rush",
+          "windowBefore": 14,
+          "windowAfter": 18,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Skateboard Knockdown",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "knockdown",
+          "kiCommand": "1+3",
+          "kiAnimationKey": "cmd:1+3",
+          "kiCost": 20,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "jake-long:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Dragon Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Claw Dash",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Skateboard Knockdown",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "1+3",
+          "kiAnimationKey": "cmd:1+3",
+          "kiCost": 20,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

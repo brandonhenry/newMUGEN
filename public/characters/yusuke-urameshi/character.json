@@ -692,11 +692,11 @@
       "onBlockFrames": -7,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
-      "whiffRecoveryFrames": 33,
+      "whiffRecoveryFrames": 37,
       "range": 1.68,
       "forwardForce": 2.1,
-      "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 22,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 37,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
@@ -705,8 +705,8 @@
       "hitLevel": "mid",
       "tracking": "medium",
       "cancelable": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 12,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 6,
       "juggleRepeatPenaltyFrames": 12
     },
@@ -3126,5 +3126,368 @@
     "stageIntro": [
       "/characters/yusuke-urameshi/sounds/voices/win-01.wav"
     ]
-  }
+  },
+  "beginnerComboRoutes": [
+    {
+      "id": "yusuke-urameshi:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Street Rush Punch",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "animationKey": "jableft",
+          "label": "Quick Spirit Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Spirit Wave Crush",
+          "windowBefore": 4,
+          "windowAfter": 8,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Spirit Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Spirit Detective Body Blow",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Spirit Wave Crush",
+          "windowBefore": 3,
+          "windowAfter": 7,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Spirit Feint",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "1+2+3",
+          "animationKey": "cmd:1+2+3",
+          "label": "Low Spirit Sweep",
+          "windowBefore": 12,
+          "windowAfter": 16,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Spirit Wave Crush",
+          "windowBefore": 11,
+          "windowAfter": 15,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Street Arc Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Street Kick",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Spirit Wave Crush",
+          "windowBefore": 3,
+          "windowAfter": 7,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Street Rush Punch",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Spirit Check",
+          "windowBefore": 16,
+          "windowAfter": 23,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Spirit Wave Crush",
+          "windowBefore": 10,
+          "windowAfter": 14,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Street Arc Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Spirit Check",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Spirit Wave Crush",
+          "windowBefore": 10,
+          "windowAfter": 14,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Spirit Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Spirit Feint",
+          "windowBefore": 7,
+          "windowAfter": 11,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Spirit Wave Crush",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Spirit Wave Crush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Street Rush Punch",
+          "windowBefore": 15,
+          "windowAfter": 19,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Spirit Wave Crush",
+          "windowBefore": 7,
+          "windowAfter": 11,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

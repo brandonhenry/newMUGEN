@@ -323,7 +323,14 @@
           0.6936
         ]
       },
-      "description": "Fast high jab that checks close pressure with a short, compact strike."
+      "description": "Fast high jab that checks close pressure with a short, compact strike.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 9
     },
     {
       "id": "kick",
@@ -357,7 +364,14 @@
         ]
       },
       "endsInCrouch": true,
-      "description": "Steady low sweep that slips under highs but stays punishable on block."
+      "description": "Steady low sweep that slips under highs but stays punishable on block.",
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 20
     },
     {
       "id": "heavy",
@@ -390,7 +404,14 @@
           0.7
         ]
       },
-      "description": "Quick mid palm thrust with a faint psychic flare for steady close-range control."
+      "description": "Quick mid palm thrust with a faint psychic flare for steady close-range control.",
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 13
     },
     {
       "id": "special",
@@ -423,7 +444,14 @@
           0.7176
         ]
       },
-      "description": "Committed mid kick with a wide arc that keeps Chiaotzu close for extensions."
+      "description": "Committed mid kick with a wide arc that keeps Chiaotzu close for extensions.",
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     }
   ],
   "hurtboxes": [
@@ -469,7 +497,14 @@
       "label": "Crane Jab",
       "description": "Fast high jab that checks close pressure with a short, compact strike.",
       "hitLevel": "high",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 9
     },
     "jabright": {
       "startupFrames": 14,
@@ -487,7 +522,14 @@
       "label": "Psychic Palm",
       "description": "Quick mid palm thrust with a faint psychic flare for steady close-range control.",
       "hitLevel": "mid",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 13
     },
     "kickleft": {
       "startupFrames": 19,
@@ -506,7 +548,14 @@
       "description": "Steady low sweep that slips under highs but stays punishable on block.",
       "hitLevel": "low",
       "tracking": "medium",
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 20
     },
     "kickright": {
       "startupFrames": 22,
@@ -520,14 +569,18 @@
       "whiffRecoveryFrames": 10,
       "range": 1.74,
       "forwardForce": 0.72,
-      "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 17,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23,
       "pushback": 0.94,
       "blockPushback": 0.44,
       "label": "Telekinetic Roundhouse",
       "description": "Committed mid kick with a wide arc that keeps Chiaotzu close for extensions.",
       "hitLevel": "mid",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:f+1": {
       "startupFrames": 14,
@@ -542,15 +595,19 @@
       "whiffRecoveryFrames": 10,
       "range": 1.76,
       "forwardForce": 1.05,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 17,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12,
       "pushback": 0.94,
       "blockPushback": 0.44,
       "label": "White Sash Rush",
       "description": "Advancing mid shoulder rush that rewards timing wins with extra counter-hit stun.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "counterHit": true
+      "counterHit": true,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:d/f+2": {
       "startupFrames": 17,
@@ -572,7 +629,14 @@
       "label": "Psychic Lift",
       "description": "Unsafe mid launcher that pops the opponent upward with a telekinetic palm lift.",
       "hitLevel": "mid",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 25,
+      "onJuggleHitFrames": 22,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 1.95,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     "cmd:qcf+4": {
       "startupFrames": 20,
@@ -583,7 +647,7 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 30,
-      "whiffRecoveryFrames": 16,
+      "whiffRecoveryFrames": 33,
       "range": 3.2,
       "pushback": 0.94,
       "blockPushback": 0.44,
@@ -592,7 +656,14 @@
       "description": "Ki-cost yellow Dodon Ray shot that reaches far but leaves Chiaotzu punishable if read.",
       "hitLevel": "special",
       "tracking": "none",
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 3.17,
+      "forwardForceStartFrame": 39,
+      "forwardForceEndFrame": 51
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -603,7 +674,7 @@
       "onBlockFrames": -10,
       "onHitFrames": 23,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 9,
+      "whiffRecoveryFrames": 34,
       "range": 1.64,
       "pushback": 0.94,
       "blockPushback": 0.44,
@@ -614,7 +685,14 @@
       "label": "Rising Crane Kick",
       "description": "While-standing mid kick that lifts lightly out of crouch pressure.",
       "hitLevel": "mid",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 18,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 2.2,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 20
     },
     "cmd:FC+1": {
       "startupFrames": 13,
@@ -633,7 +711,14 @@
       "description": "Quick crouching mid palm that interrupts pressure without giving big reward.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5,
+      "forwardForce": 1.64,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 11
     },
     "cmd:FC+2": {
       "startupFrames": 16,
@@ -644,7 +729,7 @@
       "onBlockFrames": -15,
       "onHitFrames": 27,
       "onCounterHitFrames": 34,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 33,
       "range": 1.58,
       "pushback": 0.94,
       "blockPushback": 0.44,
@@ -656,7 +741,14 @@
       "description": "Full-crouch psychic pop-up that starts juggles but is launch-punishable on block.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "onComboHitFrames": 24,
+      "onJuggleHitFrames": 21,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 2.01,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17
     },
     "cmd:1+2": {
       "startupFrames": 22,
@@ -676,7 +768,14 @@
       "description": "Steady mid psychic bind that wins timing wars but stays minus on guard.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "counterHit": true
+      "counterHit": true,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 1.44,
+      "forwardForceStartFrame": 32,
+      "forwardForceEndFrame": 39
     },
     "cmd:1+3": {
       "startupFrames": 17,
@@ -690,8 +789,8 @@
       "whiffRecoveryFrames": 14,
       "range": 1.72,
       "forwardForce": 0.8,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 18,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 26,
       "pushback": 0.94,
       "blockPushback": 0.44,
       "launchHeight": 2.15,
@@ -701,7 +800,11 @@
       "label": "Psychic Launch Rush",
       "description": "Forward-moving mid launcher that cashes out a hard read with real block risk.",
       "hitLevel": "mid",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 26,
+      "onJuggleHitFrames": 24,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13
     },
     "cmd:2+3": {
       "startupFrames": 30,
@@ -720,7 +823,14 @@
       "description": "Low feint that ducks under highs and leaves Chiaotzu close but punishable.",
       "hitLevel": "low",
       "tracking": "medium",
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 1.49,
+      "forwardForceStartFrame": 26,
+      "forwardForceEndFrame": 31
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -740,7 +850,14 @@
       "hitLevel": "low",
       "tracking": "strong",
       "knockdown": true,
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10,
+      "forwardForce": 1.74,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 26
     },
     "cmd:3+4": {
       "startupFrames": 19,
@@ -751,7 +868,7 @@
       "onBlockFrames": -13,
       "onHitFrames": 19,
       "onCounterHitFrames": 27,
-      "whiffRecoveryFrames": 14,
+      "whiffRecoveryFrames": 38,
       "range": 1.82,
       "pushback": 0.94,
       "blockPushback": 0.44,
@@ -760,7 +877,14 @@
       "hitLevel": "mid",
       "tracking": "strong",
       "knockdown": true,
-      "tornado": true
+      "tornado": true,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 23,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 16,
+      "forwardForce": 3.43,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21
     },
     "cmd:O+2": {
       "startupFrames": 30,
@@ -771,7 +895,7 @@
       "onBlockFrames": -15,
       "onHitFrames": 25,
       "onCounterHitFrames": 36,
-      "whiffRecoveryFrames": 18,
+      "whiffRecoveryFrames": 46,
       "range": 2.05,
       "pushback": 0.94,
       "blockPushback": 0.44,
@@ -781,7 +905,14 @@
       "hitLevel": "special",
       "tracking": "medium",
       "knockdown": true,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 11,
+      "forwardForce": 2.96,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 28
     },
     "neutral:jab-jab": {
       "startupFrames": 14,
@@ -792,7 +923,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Crane Jab Second Beat",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 14,
@@ -803,7 +941,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Crane Palm Link",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 14,
@@ -814,7 +959,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Crane Low Changeup",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:jab-jab-special": {
       "startupFrames": 14,
@@ -825,7 +977,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Crane Roundhouse Ender",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:jab-heavy": {
       "startupFrames": 14,
@@ -836,7 +995,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Psychic Palm Check",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 14,
@@ -847,7 +1013,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Palm to Sweep",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 14,
@@ -858,7 +1031,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Palm Roundhouse Route",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:jab-kick": {
       "startupFrames": 14,
@@ -869,7 +1049,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Jab Low Feint",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 14,
@@ -880,7 +1067,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Low to Psychic Palm",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:jab-kick-special": {
       "startupFrames": 14,
@@ -891,7 +1085,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Low Roundhouse Route",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:jab-special": {
       "startupFrames": 14,
@@ -902,7 +1103,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Jab Roundhouse Setup",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 14,
@@ -913,7 +1121,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Roundhouse Palm Reset",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:heavy-jab": {
       "startupFrames": 14,
@@ -924,7 +1139,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Palm Jab Reset",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 14,
@@ -935,7 +1157,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Psychic Palm Loop",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 14,
@@ -946,7 +1175,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Palm Roundhouse Ender",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:heavy-kick": {
       "startupFrames": 14,
@@ -957,7 +1193,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Palm Low Changeup",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 14,
@@ -968,7 +1211,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Palm Sweep Ender",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:heavy-special": {
       "startupFrames": 14,
@@ -979,7 +1229,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Psychic Roundhouse",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 14,
@@ -990,7 +1247,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Roundhouse Low Reset",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:kick-jab": {
       "startupFrames": 14,
@@ -1001,7 +1265,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Low Jab Reset",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:kick-jab-special": {
       "startupFrames": 14,
@@ -1012,7 +1283,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Low Roundhouse Link",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:kick-heavy": {
       "startupFrames": 14,
@@ -1023,7 +1301,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Low Palm Link",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 14,
@@ -1034,7 +1319,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Low Palm Ender",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:kick-special": {
       "startupFrames": 14,
@@ -1045,7 +1337,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Low Roundhouse Ender",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 14,
@@ -1056,7 +1355,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Low Roundhouse Palm",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:special-jab": {
       "startupFrames": 14,
@@ -1067,7 +1373,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Roundhouse Jab Reset",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 14,
@@ -1078,7 +1391,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Roundhouse Palm Route",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:special-heavy": {
       "startupFrames": 14,
@@ -1089,7 +1409,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Roundhouse Psychic Palm",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "neutral:special-kick": {
       "startupFrames": 14,
@@ -1100,7 +1427,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "label": "Roundhouse Low Reset",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     }
   },
   "effects": [],
@@ -2911,5 +3245,367 @@
         "flipY": false
       }
     }
-  }
+  },
+  "beginnerComboRoutes": [
+    {
+      "id": "chiaotzu:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "animationKey": "jableft",
+          "label": "Crane Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "animationKey": "jableft",
+          "label": "Crane Jab",
+          "windowBefore": 14,
+          "windowAfter": 18,
+          "movementBefore": "dashForward",
+          "movementMinFrames": 1,
+          "movementMaxFrames": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Sweeping Crane Kick",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "chiaotzu:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Telekinesis Hold",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Psychic Palm",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Sweeping Crane Kick",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "qcf+4",
+          "kiAnimationKey": "cmd:qcf+4",
+          "kiCost": 22,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "chiaotzu:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Crane Low Feint",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Crane Sweep",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Sweeping Crane Kick",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "qcf+4",
+          "kiAnimationKey": "cmd:qcf+4",
+          "kiCost": 22,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "chiaotzu:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Telekinetic Roundhouse",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Telekinetic Roundhouse",
+          "windowBefore": 3,
+          "windowAfter": 7,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Sweeping Crane Kick",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "qcf+4",
+          "kiAnimationKey": "cmd:qcf+4",
+          "kiCost": 22,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "chiaotzu:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "animationKey": "jableft",
+          "label": "Crane Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Telekinesis Hold",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Sweeping Crane Kick",
+          "windowBefore": 7,
+          "windowAfter": 11,
+          "expect": "knockdown",
+          "kiCommand": "qcf+4",
+          "kiAnimationKey": "cmd:qcf+4",
+          "kiCost": 22,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "chiaotzu:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Telekinetic Roundhouse",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Telekinesis Hold",
+          "windowBefore": 3,
+          "windowAfter": 7,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Sweeping Crane Kick",
+          "windowBefore": 7,
+          "windowAfter": 11,
+          "expect": "knockdown",
+          "kiCommand": "qcf+4",
+          "kiAnimationKey": "cmd:qcf+4",
+          "kiCost": 22,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "chiaotzu:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Sweeping Crane Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Crane Low Feint",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Sweeping Crane Kick",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "qcf+4",
+          "kiAnimationKey": "cmd:qcf+4",
+          "kiCost": 22,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "chiaotzu:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Crane Low Feint",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "animationKey": "jableft",
+          "label": "Crane Jab",
+          "windowBefore": 15,
+          "windowAfter": 19,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Sweeping Crane Kick",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "qcf+4",
+          "kiAnimationKey": "cmd:qcf+4",
+          "kiCost": 22,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

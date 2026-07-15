@@ -314,7 +314,14 @@
           0.5,
           0.6936
         ]
-      }
+      },
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     },
     {
       "id": "kick",
@@ -346,7 +353,14 @@
           0.42,
           0.7096
         ]
-      }
+      },
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 32,
+      "forwardForceEndFrame": 40
     },
     {
       "id": "heavy",
@@ -378,7 +392,14 @@
           0.5,
           0.7
         ]
-      }
+      },
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.77,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 13
     },
     {
       "id": "special",
@@ -410,7 +431,14 @@
           0.5,
           0.7176
         ]
-      }
+      },
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     }
   ],
   "hurtboxes": [
@@ -451,7 +479,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "label": "Cure Black Left Check",
-      "hitLevel": "high"
+      "hitLevel": "high",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     },
     "jabright": {
       "startupFrames": 14,
@@ -464,7 +499,14 @@
       "whiffRecoveryFrames": 5,
       "range": 1.5,
       "label": "Cure Black Right Check",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.77,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 13
     },
     "kickleft": {
       "startupFrames": 18,
@@ -477,7 +519,14 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Cure Black Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 32,
+      "forwardForceEndFrame": 40
     },
     "kickright": {
       "startupFrames": 13,
@@ -490,7 +539,14 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Cure Black Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "cmd:f+1": {
       "startupFrames": 14,
@@ -504,7 +560,13 @@
       "range": 1.72,
       "forwardForce": 0.6,
       "label": "Cure Black Rush",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 34
     },
     "cmd:d/f+2": {
       "startupFrames": 18,
@@ -521,7 +583,14 @@
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Cure Black Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 21,
+      "onJuggleHitFrames": 19,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13,
+      "forwardForce": 1.84,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18
     },
     "cmd:qcf+4": {
       "startupFrames": 20,
@@ -531,11 +600,18 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 36,
       "range": 2.05,
       "label": "Cure Black Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10,
+      "forwardForce": 3.41,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 38
     },
     "cmd:WS+4": {
       "startupFrames": 14,
@@ -545,10 +621,17 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
-      "whiffRecoveryFrames": 8,
+      "whiffRecoveryFrames": 22,
       "range": 1.62,
       "label": "Cure Black Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 2.09,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 11
     },
     "cmd:FC+1": {
       "startupFrames": 13,
@@ -561,7 +644,14 @@
       "whiffRecoveryFrames": 5,
       "range": 1.34,
       "label": "Cure Black Crouch Jab",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5,
+      "forwardForce": 1.25,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -575,7 +665,14 @@
       "range": 1.48,
       "launchHeight": 2,
       "label": "Cure Black Crouch Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 22,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 1.55,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 17
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -588,7 +685,14 @@
       "whiffRecoveryFrames": 9,
       "range": 1.72,
       "label": "Cure Black Twin Assault",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 1.34,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 17
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -598,11 +702,18 @@
       "onBlockFrames": -14,
       "onHitFrames": 24,
       "onCounterHitFrames": 31,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 32,
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "Cure Black Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13,
+      "forwardForce": 2.09,
+      "forwardForceStartFrame": 38,
+      "forwardForceEndFrame": 47
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -615,7 +726,14 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "Cure Black Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 35,
+      "forwardForceEndFrame": 43
     },
     "cmd:2+4": {
       "startupFrames": 22,
@@ -625,11 +743,18 @@
       "onBlockFrames": -16,
       "onHitFrames": 8,
       "onCounterHitFrames": 14,
-      "whiffRecoveryFrames": 12,
+      "whiffRecoveryFrames": 32,
       "range": 1.74,
       "label": "Cure Black Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10,
+      "forwardForce": 2.52,
+      "forwardForceStartFrame": 25,
+      "forwardForceEndFrame": 37
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -639,11 +764,18 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 37,
       "range": 1.9,
       "label": "Cure Black Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 11,
+      "forwardForce": 3.72,
+      "forwardForceStartFrame": 27,
+      "forwardForceEndFrame": 40
     },
     "cmd:O+2": {
       "startupFrames": 20,
@@ -653,13 +785,20 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 34,
       "range": 2.1,
       "kiCost": 35,
       "label": "Cure Black Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 2.68,
+      "forwardForceStartFrame": 26,
+      "forwardForceEndFrame": 38
     },
     "neutral:jab-jab": {
       "label": "Cure Black Second Beat",
@@ -847,7 +986,13 @@
       "range": 1.72,
       "forwardForce": 0.45,
       "label": "Cure Black Backfist Rush",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 19
     },
     "cmd:f,f+1": {
       "startupFrames": 18,
@@ -861,7 +1006,13 @@
       "range": 1.72,
       "forwardForce": 0.7,
       "label": "Cure Black Running Chain",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 22
     },
     "cmd:qcb+4": {
       "startupFrames": 23,
@@ -871,11 +1022,18 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 35,
       "range": 2,
       "label": "Cure Black Crescent Spin",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10,
+      "forwardForce": 3.1,
+      "forwardForceStartFrame": 27,
+      "forwardForceEndFrame": 40
     },
     "cmd:WR+3": {
       "startupFrames": 15,
@@ -889,7 +1047,13 @@
       "range": 1.9,
       "forwardForce": 0.75,
       "label": "Cure Black Running Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForceStartFrame": 32,
+      "forwardForceEndFrame": 39
     },
     "cmd:b,b+3": {
       "startupFrames": 22,
@@ -903,7 +1067,14 @@
       "range": 1.9,
       "label": "Cure Black Retreating Sweep",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10,
+      "forwardForce": 1.87,
+      "forwardForceStartFrame": 43,
+      "forwardForceEndFrame": 53
     },
     "cmd:O+3": {
       "startupFrames": 22,
@@ -913,13 +1084,20 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 35,
       "range": 2.1,
       "kiCost": 30,
       "label": "Cure Black Ki Flurry",
       "hitLevel": "mid",
       "knockdown": true,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 11,
+      "forwardForce": 3.01,
+      "forwardForceStartFrame": 43,
+      "forwardForceEndFrame": 53
     },
     "cmd:dp+4": {
       "startupFrames": 18,
@@ -929,14 +1107,21 @@
       "onBlockFrames": -13,
       "onHitFrames": 25,
       "onCounterHitFrames": 31,
-      "whiffRecoveryFrames": 12,
+      "whiffRecoveryFrames": 33,
       "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Cure Black Rising Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 17,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13,
+      "forwardForce": 3.16,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 34
     },
     "cmd:qcf+3": {
       "startupFrames": 15,
@@ -950,7 +1135,13 @@
       "range": 1.95,
       "forwardForce": 0.8,
       "label": "Cure Black Forward Blitz",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForceStartFrame": 32,
+      "forwardForceEndFrame": 39
     },
     "cmd:O+4": {
       "startupFrames": 22,
@@ -960,13 +1151,20 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 36,
       "range": 2.15,
       "kiCost": 35,
       "label": "Cure Black Finishing Rush",
       "hitLevel": "mid",
       "knockdown": true,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 11,
+      "forwardForce": 3.72,
+      "forwardForceStartFrame": 27,
+      "forwardForceEndFrame": 39
     }
   },
   "effects": [],
@@ -3575,5 +3773,361 @@
   },
   "animationScales": {},
   "projectiles": [],
-  "moveProjectiles": {}
+  "moveProjectiles": {},
+  "beginnerComboRoutes": [
+    {
+      "id": "cure-black:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Cure Black Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "animationKey": "jableft",
+          "label": "Cure Black Left Check",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Cure Black Burst",
+          "windowBefore": 4,
+          "windowAfter": 8,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "cure-black:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Cure Black Right Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "d/f+2",
+          "animationKey": "cmd:d/f+2",
+          "label": "Cure Black Launcher",
+          "windowBefore": 4,
+          "windowAfter": 8,
+          "expect": "launch"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Cure Black Burst",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "cure-black:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Cure Black Left Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Cure Black Left Kick",
+          "windowBefore": 4,
+          "windowAfter": 8,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Cure Black Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "cure-black:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Cure Black Right Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Cure Black Burst",
+          "windowBefore": 4,
+          "windowAfter": 8,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Cure Black Burst",
+          "windowBefore": 10,
+          "windowAfter": 14,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "cure-black:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Cure Black Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Cure Black Right Check",
+          "windowBefore": 13,
+          "windowAfter": 17,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Cure Black Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "cure-black:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Cure Black Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Cure Black Right Check",
+          "windowBefore": 13,
+          "windowAfter": 17,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Cure Black Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "cure-black:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Cure Black Right Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Cure Black Left Kick",
+          "windowBefore": 4,
+          "windowAfter": 8,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Cure Black Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "cure-black:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Cure Black Left Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Cure Black Rush",
+          "windowBefore": 8,
+          "windowAfter": 12,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Cure Black Burst",
+          "windowBefore": 7,
+          "windowAfter": 11,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

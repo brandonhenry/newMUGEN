@@ -77,6 +77,7 @@ export function TouchControls({
   onAction,
   onUse,
   forceVisible = false,
+  controlScheme = 'beginner',
   showPause = true
 }: TouchControlsProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -237,7 +238,9 @@ export function TouchControls({
       >
         {attackCells.map((action) => {
           const number = attackNumbers[action];
-          const label = action === 'jump' ? 'Jump' : action === 'charge' ? 'Charge Ki' : number ?? action;
+          const beginnerLabel = action === 'jab' ? 'Light' : action === 'heavy' ? 'Medium' : action === 'kick' ? 'Heavy' : action === 'special' ? 'Special' : null;
+          const label = action === 'jump' ? 'Jump' : action === 'charge' ? 'Charge Ki' : controlScheme === 'beginner' ? beginnerLabel ?? action : number ?? action;
+          const face = controlScheme === 'beginner' && beginnerLabel ? beginnerLabel.slice(0, 1).toUpperCase() : number;
           return (
             <button
               key={action}
@@ -247,7 +250,7 @@ export function TouchControls({
               data-testid={`touch-${action}`}
               {...keyboardHandlers(action)}
             >
-              {number ?? (action === 'jump' ? 'JUMP' : 'KI')}
+              {face ?? (action === 'jump' ? 'JUMP' : 'KI')}
             </button>
           );
         })}

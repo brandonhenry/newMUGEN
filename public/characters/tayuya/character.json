@@ -302,7 +302,14 @@
           0.5,
           0.6936
         ]
-      }
+      },
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 16
     },
     {
       "id": "kick",
@@ -334,7 +341,14 @@
           0.42,
           0.7096
         ]
-      }
+      },
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     {
       "id": "heavy",
@@ -366,7 +380,14 @@
           0.5,
           0.7
         ]
-      }
+      },
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 26,
+      "forwardForceEndFrame": 30
     },
     {
       "id": "special",
@@ -398,7 +419,14 @@
           0.5,
           0.7176
         ]
-      }
+      },
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.1,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 19
     }
   ],
   "hurtboxes": [
@@ -439,7 +467,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "label": "Tayuya Left Check",
-      "hitLevel": "high"
+      "hitLevel": "high",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 16
     },
     "jabright": {
       "startupFrames": 14,
@@ -452,7 +487,14 @@
       "whiffRecoveryFrames": 5,
       "range": 1.5,
       "label": "Tayuya Right Check",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 26,
+      "forwardForceEndFrame": 30
     },
     "kickleft": {
       "startupFrames": 18,
@@ -465,7 +507,14 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Tayuya Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "kickright": {
       "startupFrames": 14,
@@ -478,7 +527,14 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Tayuya Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.1,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 19
     },
     "cmd:f+1": {
       "startupFrames": 14,
@@ -492,7 +548,13 @@
       "range": 1.72,
       "forwardForce": 0.6,
       "label": "Tayuya Rush",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 13
     },
     "cmd:d/f+2": {
       "startupFrames": 17,
@@ -502,14 +564,21 @@
       "onBlockFrames": -13,
       "onHitFrames": 25,
       "onCounterHitFrames": 31,
-      "whiffRecoveryFrames": 12,
+      "whiffRecoveryFrames": 34,
       "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Tayuya Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 18,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13,
+      "forwardForce": 2.65,
+      "forwardForceStartFrame": 34,
+      "forwardForceEndFrame": 40
     },
     "cmd:qcf+4": {
       "startupFrames": 27,
@@ -519,11 +588,18 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 43,
       "range": 2.05,
       "label": "Tayuya Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10,
+      "forwardForce": 3.75,
+      "forwardForceStartFrame": 43,
+      "forwardForceEndFrame": 50
     },
     "cmd:WS+4": {
       "startupFrames": 15,
@@ -536,7 +612,14 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "label": "Tayuya Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 1.98,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 29
     },
     "cmd:FC+1": {
       "startupFrames": 14,
@@ -549,7 +632,14 @@
       "whiffRecoveryFrames": 5,
       "range": 1.34,
       "label": "Tayuya Crouch Jab",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5,
+      "forwardForce": 1.61,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 24
     },
     "cmd:FC+2": {
       "startupFrames": 15,
@@ -559,11 +649,18 @@
       "onBlockFrames": -13,
       "onHitFrames": 24,
       "onCounterHitFrames": 30,
-      "whiffRecoveryFrames": 12,
+      "whiffRecoveryFrames": 29,
       "range": 1.48,
       "launchHeight": 2,
       "label": "Tayuya Crouch Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 2.56,
+      "forwardForceStartFrame": 28,
+      "forwardForceEndFrame": 33
     },
     "cmd:1+2": {
       "startupFrames": 22,
@@ -573,10 +670,17 @@
       "onBlockFrames": -8,
       "onHitFrames": 10,
       "onCounterHitFrames": 16,
-      "whiffRecoveryFrames": 9,
+      "whiffRecoveryFrames": 34,
       "range": 1.72,
       "label": "Tayuya Twin Assault",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 2.35,
+      "forwardForceStartFrame": 40,
+      "forwardForceEndFrame": 47
     },
     "cmd:1+3": {
       "startupFrames": 15,
@@ -590,7 +694,14 @@
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "Tayuya Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13,
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "cmd:2+3": {
       "startupFrames": 16,
@@ -603,7 +714,14 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "Tayuya Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 14
     },
     "cmd:2+4": {
       "startupFrames": 22,
@@ -617,7 +735,14 @@
       "range": 1.74,
       "label": "Tayuya Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10,
+      "forwardForce": 1.76,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "cmd:3+4": {
       "startupFrames": 18,
@@ -627,11 +752,18 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 32,
       "range": 1.9,
       "label": "Tayuya Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 11,
+      "forwardForce": 2.96,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 26
     },
     "cmd:O+2": {
       "startupFrames": 18,
@@ -641,13 +773,20 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 34,
       "range": 2.1,
       "kiCost": 35,
       "label": "Tayuya Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 3.79,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 39
     },
     "neutral:jab-jab": {
       "startupFrames": 14,
@@ -2436,5 +2575,339 @@
   },
   "animationScales": {},
   "projectiles": [],
-  "moveProjectiles": {}
+  "moveProjectiles": {},
+  "beginnerComboRoutes": [
+    {
+      "id": "tayuya:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Tayuya Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "animationKey": "jableft",
+          "label": "Tayuya Left Check",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Tayuya Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "tayuya:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Tayuya Right Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Tayuya Right Check",
+          "windowBefore": 8,
+          "windowAfter": 12,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Tayuya Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "tayuya:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Tayuya Left Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Tayuya Left Kick",
+          "windowBefore": 4,
+          "windowAfter": 8,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Tayuya Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "tayuya:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Tayuya Right Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Tayuya Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Tayuya Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "tayuya:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Tayuya Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Tayuya Right Check",
+          "windowBefore": 13,
+          "windowAfter": 17,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Tayuya Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "tayuya:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Tayuya Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Tayuya Right Check",
+          "windowBefore": 13,
+          "windowAfter": 17,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Tayuya Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "tayuya:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Tayuya Right Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Tayuya Left Kick",
+          "windowBefore": 4,
+          "windowAfter": 8,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Tayuya Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "tayuya:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Tayuya Left Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Tayuya Rush",
+          "windowBefore": 8,
+          "windowAfter": 12,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Tayuya Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

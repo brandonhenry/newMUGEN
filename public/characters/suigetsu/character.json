@@ -291,7 +291,14 @@
           0.5,
           0.6936
         ]
-      }
+      },
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     {
       "id": "kick",
@@ -323,7 +330,14 @@
           0.42,
           0.7096
         ]
-      }
+      },
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 0.68,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 27
     },
     {
       "id": "heavy",
@@ -355,7 +369,14 @@
           0.5,
           0.7
         ]
-      }
+      },
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     {
       "id": "special",
@@ -387,7 +408,14 @@
           0.5,
           0.7176
         ]
-      }
+      },
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 28,
+      "forwardForceEndFrame": 41
     }
   ],
   "hurtboxes": [
@@ -428,7 +456,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "label": "Suigetsu Left Check",
-      "hitLevel": "high"
+      "hitLevel": "high",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 12
     },
     "jabright": {
       "startupFrames": 13,
@@ -441,7 +476,14 @@
       "whiffRecoveryFrames": 5,
       "range": 1.5,
       "label": "Suigetsu Right Check",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 15
     },
     "kickleft": {
       "startupFrames": 14,
@@ -454,7 +496,14 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Suigetsu Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 0.68,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 27
     },
     "kickright": {
       "startupFrames": 17,
@@ -467,7 +516,14 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Suigetsu Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 28,
+      "forwardForceEndFrame": 41
     },
     "cmd:f+1": {
       "startupFrames": 17,
@@ -481,7 +537,13 @@
       "range": 1.72,
       "forwardForce": 0.6,
       "label": "Suigetsu Rush",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 20
     },
     "cmd:d/f+2": {
       "startupFrames": 18,
@@ -498,7 +560,14 @@
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Suigetsu Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 21,
+      "onJuggleHitFrames": 19,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13,
+      "forwardForce": 1.76,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 22
     },
     "cmd:qcf+4": {
       "startupFrames": 19,
@@ -508,11 +577,18 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 37,
       "range": 2.05,
       "label": "Suigetsu Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10,
+      "forwardForce": 4,
+      "forwardForceStartFrame": 34,
+      "forwardForceEndFrame": 50
     },
     "cmd:WS+4": {
       "startupFrames": 13,
@@ -525,7 +601,14 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "label": "Suigetsu Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 1.95,
+      "forwardForceStartFrame": 26,
+      "forwardForceEndFrame": 38
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -538,7 +621,14 @@
       "whiffRecoveryFrames": 5,
       "range": 1.34,
       "label": "Suigetsu Crouch Jab",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5,
+      "forwardForce": 1.96,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 14
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -552,7 +642,14 @@
       "range": 1.48,
       "launchHeight": 2,
       "label": "Suigetsu Crouch Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 22,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 1.67,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -565,7 +662,14 @@
       "whiffRecoveryFrames": 9,
       "range": 1.72,
       "label": "Suigetsu Twin Assault",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -579,7 +683,14 @@
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "Suigetsu Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 21,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13,
+      "forwardForce": 1.49,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 35
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -592,7 +703,14 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "Suigetsu Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 1.1,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -602,11 +720,18 @@
       "onBlockFrames": -16,
       "onHitFrames": 8,
       "onCounterHitFrames": 14,
-      "whiffRecoveryFrames": 12,
+      "whiffRecoveryFrames": 31,
       "range": 1.74,
       "label": "Suigetsu Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10,
+      "forwardForce": 2.22,
+      "forwardForceStartFrame": 32,
+      "forwardForceEndFrame": 48
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -616,11 +741,18 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 37,
       "range": 1.9,
       "label": "Suigetsu Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 11,
+      "forwardForce": 3.42,
+      "forwardForceStartFrame": 36,
+      "forwardForceEndFrame": 54
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -630,13 +762,20 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 38,
       "range": 2.1,
       "kiCost": 35,
       "label": "Suigetsu Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 2.9,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 28
     },
     "neutral:jab-jab": {
       "label": "Suigetsu Second Beat"

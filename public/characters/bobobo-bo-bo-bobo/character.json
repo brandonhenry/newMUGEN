@@ -462,8 +462,8 @@
       "counterHit": false,
       "cancelable": false,
       "forwardForce": 0.5,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 16,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 13,
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
@@ -504,8 +504,8 @@
       "counterHit": false,
       "cancelable": false,
       "forwardForce": 0.95,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 20,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 23,
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
@@ -636,12 +636,16 @@
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "forwardForce": 0.5,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 16,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 13,
       "label": "Quick Nose-Hair Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
       "startupFrames": 14,
@@ -658,7 +662,11 @@
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 20,
       "label": "Hajike Head Rush",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
       "startupFrames": 22,
@@ -672,12 +680,16 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "forwardForce": 0.95,
-      "forwardForceStartFrame": 20,
-      "forwardForceEndFrame": 28,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 32,
       "label": "Low Plank Bonk",
       "hitLevel": "low",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickright": {
       "startupFrames": 14,
@@ -694,7 +706,11 @@
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 15,
       "label": "Nose-Hair Sweep Rush",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:f+1": {
       "startupFrames": 15,
@@ -712,7 +728,11 @@
       "forwardForceEndFrame": 27,
       "label": "Forward Nose-Hair Wheel",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d/f+2": {
       "startupFrames": 19,
@@ -726,14 +746,18 @@
       "whiffRecoveryFrames": 12,
       "range": 1.68,
       "forwardForce": 1.48,
-      "forwardForceStartFrame": 33,
-      "forwardForceEndFrame": 35,
+      "forwardForceStartFrame": 44,
+      "forwardForceEndFrame": 46,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Forward Hajike Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:qcf+4": {
       "startupFrames": 30,
@@ -754,7 +778,11 @@
       "label": "Bo-bobo World Burst",
       "hitLevel": "mid",
       "knockdown": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "cmd:WS+4": {
       "startupFrames": 15,
@@ -771,7 +799,11 @@
       "forwardForceStartFrame": 3,
       "forwardForceEndFrame": 5,
       "label": "Motorcycle Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 21,
+      "onJuggleHitFrames": 16,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:FC+1": {
       "startupFrames": 14,
@@ -790,7 +822,11 @@
       "label": "Crouch Nose-Hair Wheel",
       "hitLevel": "mid",
       "endsInCrouch": true,
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -808,7 +844,11 @@
       "forwardForceEndFrame": 26,
       "launchHeight": 2.1,
       "label": "Crouch Hajike Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:1+2": {
       "startupFrames": 14,
@@ -828,7 +868,11 @@
       "moveJumpGravity": 24,
       "label": "Twin Hajike Dive",
       "hitLevel": "mid",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:1+3": {
       "startupFrames": 17,
@@ -847,7 +891,11 @@
       "launchHeight": 2.1,
       "label": "Plank Pop Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:2+3": {
       "startupFrames": 16,
@@ -865,7 +913,11 @@
       "forwardForceEndFrame": 20,
       "label": "Low Plank Fakeout",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:2+4": {
       "startupFrames": 30,
@@ -879,11 +931,15 @@
       "whiffRecoveryFrames": 12,
       "range": 1.74,
       "forwardForce": 1.62,
-      "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21,
+      "forwardForceStartFrame": 52,
+      "forwardForceEndFrame": 55,
       "label": "Flying Nose-Hair Trip",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:3+4": {
       "startupFrames": 20,
@@ -901,7 +957,11 @@
       "forwardForceEndFrame": 30,
       "label": "Hajike Power Bonk",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "cmd:O+2": {
       "startupFrames": 30,
@@ -920,7 +980,11 @@
       "label": "Hajike Sun Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "neutral:jab-jab": {
       "startupFrames": 15,
@@ -934,9 +998,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Second Beat"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Second Beat",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 15,
@@ -950,9 +1018,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Body Blow"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Body Blow",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 15,
@@ -966,9 +1038,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Low Changeup"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Low Changeup",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-special": {
       "startupFrames": 15,
@@ -982,9 +1058,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Pressure Feint"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Pressure Feint",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy": {
       "startupFrames": 15,
@@ -998,9 +1078,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.63,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Drive"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Drive",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 15,
@@ -1014,9 +1098,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Barrage"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Barrage",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 15,
@@ -1030,9 +1118,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Finisher"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Finisher",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick": {
       "startupFrames": 18,
@@ -1046,9 +1138,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 33,
-      "label": "Bobobo-bo Bo-bobo Step Kick"
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 26,
+      "label": "Bobobo-bo Bo-bobo Step Kick",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 15,
@@ -1062,9 +1158,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Palm String"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Palm String",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick-special": {
       "startupFrames": 15,
@@ -1078,9 +1178,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Rising Chain"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Rising Chain",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-special": {
       "startupFrames": 15,
@@ -1094,9 +1198,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Special Setup"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Special Setup",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 15,
@@ -1110,9 +1218,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Break Art"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Break Art",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab": {
       "startupFrames": 15,
@@ -1126,9 +1238,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Check Hook"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Check Hook",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 15,
@@ -1142,9 +1258,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Heavy Break"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Heavy Break",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 15,
@@ -1158,9 +1278,13 @@
       "whiffRecoveryFrames": 25,
       "range": 1.55,
       "forwardForce": 2.55,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Charged Follow"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Charged Follow",
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-kick": {
       "startupFrames": 18,
@@ -1174,9 +1298,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 33,
-      "label": "Bobobo-bo Bo-bobo Drop Kick"
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 26,
+      "label": "Bobobo-bo Bo-bobo Drop Kick",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 15,
@@ -1190,9 +1318,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Arc Finisher"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Arc Finisher",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-special": {
       "startupFrames": 15,
@@ -1206,9 +1338,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Focus Stance"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Focus Stance",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 15,
@@ -1222,9 +1358,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Mode Shift"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Mode Shift",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-jab": {
       "startupFrames": 15,
@@ -1238,9 +1378,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Heel Feint"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Heel Feint",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-jab-special": {
       "startupFrames": 15,
@@ -1254,9 +1398,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Summon Strike"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Summon Strike",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-heavy": {
       "startupFrames": 15,
@@ -1270,9 +1418,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Guard Snare"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Guard Snare",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 15,
@@ -1286,9 +1438,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Armor Break"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Armor Break",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-special": {
       "startupFrames": 15,
@@ -1302,9 +1458,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Power Setup"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Power Setup",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 15,
@@ -1318,9 +1478,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Switch Strike"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Switch Strike",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-jab": {
       "startupFrames": 15,
@@ -1334,9 +1498,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Spark Jab"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Spark Jab",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 15,
@@ -1350,9 +1518,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Binding Blow"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Binding Blow",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-heavy": {
       "startupFrames": 15,
@@ -1366,9 +1538,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 28,
-      "label": "Bobobo-bo Bo-bobo Heavy Draw"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Bobobo-bo Bo-bobo Heavy Draw",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-kick": {
       "startupFrames": 18,
@@ -1382,9 +1558,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 33,
-      "label": "Bobobo-bo Bo-bobo Kick Ender"
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 26,
+      "label": "Bobobo-bo Bo-bobo Kick Ender",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:f+3": {
       "startupFrames": 17,
@@ -1397,11 +1577,15 @@
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.66,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 20,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 18,
       "label": "Forward Plank Low",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:d+1": {
       "startupFrames": 9,
@@ -1418,7 +1602,11 @@
       "forwardForceEndFrame": 20,
       "label": "Low-Step Nose Jab",
       "hitLevel": "high",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d+3": {
       "startupFrames": 19,
@@ -1431,11 +1619,15 @@
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.38,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 20,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
       "label": "Down Plank Trip",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:d/f+3": {
       "startupFrames": 20,
@@ -1448,11 +1640,15 @@
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.66,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 20,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17,
       "label": "Diagonal Plank Low",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:qcf+1": {
       "startupFrames": 10,
@@ -1465,11 +1661,15 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 20,
       "forwardForce": 2.21,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 20,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 10,
       "label": "Hajike Dash Jab",
       "hitLevel": "high",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:qcf+3": {
       "startupFrames": 16,
@@ -1486,7 +1686,11 @@
       "forwardForceEndFrame": 20,
       "label": "Hajike Plank Low",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:SS+3": {
       "startupFrames": 30,
@@ -1499,11 +1703,15 @@
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 7,
       "forwardForce": 1.72,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 20,
+      "forwardForceStartFrame": 49,
+      "forwardForceEndFrame": 55,
       "label": "Sidestep Plank Low",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:O+1": {
       "startupFrames": 20,
@@ -1521,7 +1729,11 @@
       "label": "Charged Nose Jab",
       "hitLevel": "high",
       "cancelable": false,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7
     }
   },
   "effects": [],
@@ -4315,5 +4527,367 @@
     }
   },
   "projectiles": [],
-  "moveProjectiles": {}
+  "moveProjectiles": {},
+  "beginnerComboRoutes": [
+    {
+      "id": "bobobo-bo-bo-bobo:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Hajike Dash Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Low-Step Nose Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Hajike Power Bonk",
+          "windowBefore": 13,
+          "windowAfter": 17,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "bobobo-bo-bo-bobo:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Hajike Head Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "d/f+2",
+          "animationKey": "cmd:d/f+2",
+          "label": "Forward Hajike Launcher",
+          "windowBefore": 10,
+          "windowAfter": 14,
+          "expect": "launch"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Hajike Power Bonk",
+          "windowBefore": 9,
+          "windowAfter": 13,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "bobobo-bo-bo-bobo:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Hajike Plank Low",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "d/f+3",
+          "animationKey": "cmd:d/f+3",
+          "label": "Diagonal Plank Low",
+          "windowBefore": 15,
+          "windowAfter": 19,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Hajike Power Bonk",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "bobobo-bo-bo-bobo:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Nose-Hair Sweep Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Hajike Power Bonk",
+          "windowBefore": 8,
+          "windowAfter": 12,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Hajike Power Bonk",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "bobobo-bo-bo-bobo:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Hajike Dash Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Hajike Head Rush",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Hajike Power Bonk",
+          "windowBefore": 9,
+          "windowAfter": 13,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "bobobo-bo-bo-bobo:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Hajike Dash Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Hajike Head Rush",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Hajike Power Bonk",
+          "windowBefore": 9,
+          "windowAfter": 13,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "bobobo-bo-bo-bobo:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Flying Nose-Hair Trip",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Hajike Plank Low",
+          "windowBefore": 16,
+          "windowAfter": 23,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Hajike Power Bonk",
+          "windowBefore": 15,
+          "windowAfter": 19,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "bobobo-bo-bo-bobo:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Hajike Power Bonk",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Hajike Dash Jab",
+          "windowBefore": 15,
+          "windowAfter": 19,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Hajike Power Bonk",
+          "windowBefore": 12,
+          "windowAfter": 16,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

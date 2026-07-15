@@ -544,8 +544,8 @@
       "counterHit": false,
       "cancelable": false,
       "forwardForce": 0.95,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 11,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 12,
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
@@ -628,10 +628,10 @@
       "counterHit": false,
       "cancelable": false,
       "forwardForce": 1.2,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 17,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 11,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 23,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 6,
       "juggleRepeatPenaltyFrames": 8,
       "description": "Slow mid kick with a long active swing and measured recovery."
@@ -720,8 +720,8 @@
       "whiffRecoveryFrames": 8,
       "range": 1.66,
       "forwardForce": 0.95,
-      "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 15,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 17,
       "label": "Low Table Kick",
       "hitLevel": "low",
       "tracking": "weakLeft",
@@ -737,22 +737,24 @@
       "recoveryFrames": 17,
       "damage": 9,
       "blockDamage": 1,
-      "onBlockFrames": -2,
+      "onBlockFrames": -10,
       "onHitFrames": 10,
       "onCounterHitFrames": 14,
-      "whiffRecoveryFrames": 9,
+      "whiffRecoveryFrames": 10,
       "range": 1.71,
       "forwardForce": 1.2,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 11,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15,
       "label": "Heavy Chef Kick",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "knockdown": true,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 10,
+      "pushback": 1,
+      "blockPushback": 0.48
     },
     "cmd:f+1": {
       "startupFrames": 15,
@@ -811,11 +813,11 @@
       "onBlockFrames": -11,
       "onHitFrames": 17,
       "onCounterHitFrames": 24,
-      "whiffRecoveryFrames": 37,
+      "whiffRecoveryFrames": 39,
       "range": 2.05,
       "forwardForce": 3.2,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 17,
+      "forwardForceStartFrame": 44,
+      "forwardForceEndFrame": 50,
       "moveJumpForce": 9,
       "moveJumpGravity": 24,
       "label": "Diable Jambe Knockdown",
@@ -841,8 +843,8 @@
       "whiffRecoveryFrames": 26,
       "range": 1.62,
       "forwardForce": 2.07,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 11,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 27,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
       "label": "Rising Aerial Kick",
@@ -962,8 +964,8 @@
       "whiffRecoveryFrames": 41,
       "range": 1.58,
       "forwardForce": 2.27,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 11,
+      "forwardForceStartFrame": 25,
+      "forwardForceEndFrame": 28,
       "label": "Low Table Tornado",
       "hitLevel": "low",
       "tracking": "weakLeft",
@@ -1646,8 +1648,8 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 28,
       "forwardForce": 2.08,
-      "forwardForceStartFrame": 23,
-      "forwardForceEndFrame": 28,
+      "forwardForceStartFrame": 36,
+      "forwardForceEndFrame": 39,
       "moveJumpForce": 8.6,
       "moveJumpGravity": 26,
       "label": "Aerial Heel Drop",
@@ -1672,8 +1674,8 @@
       "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 30,
       "forwardForce": 2.38,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 11,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15,
       "label": "Advancing Low Sweep",
       "hitLevel": "low",
       "tracking": "weakLeft",
@@ -1692,18 +1694,18 @@
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
-      "whiffRecoveryFrames": 29,
+      "whiffRecoveryFrames": 40,
       "forwardForce": 2.1,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 11,
+      "forwardForceStartFrame": 28,
+      "forwardForceEndFrame": 34,
       "label": "Ducking Low Sweep",
       "hitLevel": "low",
       "tracking": "weakLeft",
       "cancelable": false,
       "damage": 12,
       "blockDamage": 1,
-      "onComboHitFrames": 18,
-      "onJuggleHitFrames": 12,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 3,
       "juggleRepeatPenaltyFrames": 6
     },
@@ -1716,8 +1718,8 @@
       "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 30,
       "forwardForce": 2.38,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 11,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 23,
       "label": "Diagonal Low Sweep",
       "hitLevel": "low",
       "tracking": "weakLeft",
@@ -1738,8 +1740,8 @@
       "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 31,
       "forwardForce": 2.96,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 11,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 13,
       "label": "Black Leg Low Sweep",
       "hitLevel": "low",
       "tracking": "weakLeft",
@@ -1758,18 +1760,18 @@
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
-      "whiffRecoveryFrames": 30,
+      "whiffRecoveryFrames": 41,
       "forwardForce": 2.44,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 11,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 19,
       "label": "Sidestep Low Sweep",
       "hitLevel": "low",
       "tracking": "weakLeft",
       "cancelable": false,
       "damage": 12,
       "blockDamage": 1,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 12,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 3,
       "juggleRepeatPenaltyFrames": 6
     },
@@ -1782,8 +1784,8 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 28,
       "forwardForce": 2.22,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 11,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 25,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
       "label": "Sidestep Aerial Kick",
@@ -4123,5 +4125,357 @@
     ]
   },
   "projectiles": [],
-  "moveProjectiles": {}
+  "moveProjectiles": {},
+  "beginnerComboRoutes": [
+    {
+      "id": "sanji-vinsmoke:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Black Leg Rushdown",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "animationKey": "jableft",
+          "label": "Collier Spin Kick",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Chef Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Black Leg Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "d/f+2",
+          "animationKey": "cmd:d/f+2",
+          "label": "Diagonal Concasse Launcher",
+          "windowBefore": 10,
+          "windowAfter": 14,
+          "expect": "launch"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Chef Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Black Leg Low Sweep",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "d/f+3",
+          "animationKey": "cmd:d/f+3",
+          "label": "Diagonal Low Sweep",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Chef Kick",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Chef Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Black Leg Low Sweep",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Chef Kick",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Black Leg Rushdown",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Black Leg Rush",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Chef Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Black Leg Rushdown",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Black Leg Rush",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Chef Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Black Leg Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Black Leg Low Sweep",
+          "windowBefore": 10,
+          "windowAfter": 14,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Chef Kick",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Black Leg Low Sweep",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Black Leg Rushdown",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Chef Kick",
+          "windowBefore": 16,
+          "windowAfter": 23,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

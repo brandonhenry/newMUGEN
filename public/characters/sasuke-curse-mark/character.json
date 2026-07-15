@@ -400,7 +400,14 @@
           0.5,
           0.6936
         ]
-      }
+      },
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     },
     {
       "id": "kick",
@@ -432,7 +439,14 @@
           0.42,
           0.7096
         ]
-      }
+      },
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 13
     },
     {
       "id": "heavy",
@@ -464,7 +478,14 @@
           0.5,
           0.7
         ]
-      }
+      },
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     {
       "id": "special",
@@ -496,7 +517,14 @@
           0.5,
           0.7176
         ]
-      }
+      },
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 11
     }
   ],
   "hurtboxes": [
@@ -537,7 +565,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "label": "Sasuke Curse Mark Left Check",
-      "hitLevel": "high"
+      "hitLevel": "high",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     },
     "jabright": {
       "startupFrames": 13,
@@ -550,7 +585,14 @@
       "whiffRecoveryFrames": 5,
       "range": 1.5,
       "label": "Sasuke Curse Mark Right Check",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "kickleft": {
       "startupFrames": 19,
@@ -563,7 +605,14 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Sasuke Curse Mark Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 13
     },
     "kickright": {
       "startupFrames": 17,
@@ -580,7 +629,14 @@
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
       "label": "Sasuke Curse Mark Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 14,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "cmd:f+1": {
       "startupFrames": 25,
@@ -594,7 +650,13 @@
       "range": 1.72,
       "forwardForce": 0.6,
       "label": "Sasuke Curse Mark Rush",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForceStartFrame": 52,
+      "forwardForceEndFrame": 64
     },
     "cmd:d/f+2": {
       "startupFrames": 18,
@@ -604,14 +666,21 @@
       "onBlockFrames": -13,
       "onHitFrames": 25,
       "onCounterHitFrames": 31,
-      "whiffRecoveryFrames": 12,
+      "whiffRecoveryFrames": 35,
       "range": 1.68,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Sasuke Curse Mark Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 18,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13,
+      "forwardForce": 2.65,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 22
     },
     "cmd:qcf+4": {
       "startupFrames": 28,
@@ -621,11 +690,18 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 43,
       "range": 2.05,
       "label": "Fire Style: Fireball Jutsu",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10,
+      "forwardForce": 2.76,
+      "forwardForceStartFrame": 57,
+      "forwardForceEndFrame": 61
     },
     "cmd:WS+4": {
       "startupFrames": 14,
@@ -635,10 +711,17 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
-      "whiffRecoveryFrames": 8,
+      "whiffRecoveryFrames": 23,
       "range": 1.62,
       "label": "Sasuke Curse Mark Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 2.06,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 25
     },
     "cmd:FC+1": {
       "startupFrames": 14,
@@ -651,7 +734,14 @@
       "whiffRecoveryFrames": 5,
       "range": 1.34,
       "label": "Sasuke Curse Mark Crouch Jab",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5,
+      "forwardForce": 1.74,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 17
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -665,7 +755,14 @@
       "range": 1.48,
       "launchHeight": 2,
       "label": "Sasuke Curse Mark Crouch Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 21,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 1.9,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 14
     },
     "cmd:1+2": {
       "startupFrames": 22,
@@ -675,10 +772,17 @@
       "onBlockFrames": -8,
       "onHitFrames": 10,
       "onCounterHitFrames": 16,
-      "whiffRecoveryFrames": 9,
+      "whiffRecoveryFrames": 35,
       "range": 1.72,
       "label": "Sasuke Curse Mark Twin Assault",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 2.35,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 20
     },
     "cmd:1+3": {
       "startupFrames": 19,
@@ -692,7 +796,14 @@
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "Sasuke Curse Mark Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13,
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10
     },
     "cmd:2+3": {
       "startupFrames": 21,
@@ -705,7 +816,14 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "Sasuke Curse Mark Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 1.42,
+      "forwardForceStartFrame": 36,
+      "forwardForceEndFrame": 47
     },
     "cmd:2+4": {
       "startupFrames": 25,
@@ -719,7 +837,14 @@
       "range": 1.74,
       "label": "Sasuke Curse Mark Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10,
+      "forwardForce": 1.49,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 30
     },
     "cmd:3+4": {
       "startupFrames": 21,
@@ -729,11 +854,18 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 36,
       "range": 1.9,
       "label": "Sasuke Curse Mark Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 11,
+      "forwardForce": 3.09,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 22
     },
     "cmd:O+2": {
       "startupFrames": 23,
@@ -743,13 +875,20 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 39,
       "range": 2.1,
       "kiCost": 35,
       "label": "Sasuke Curse Mark Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 3.61,
+      "forwardForceStartFrame": 49,
+      "forwardForceEndFrame": 53
     },
     "neutral:jab-jab": {
       "startupFrames": 14,
@@ -3239,6 +3378,7 @@
       {
         "id": "cmd-qcf-4-fireball-jutsu",
         "projectileId": "fireball-jutsu",
+        "delivery": "replaceMoveHit",
         "label": "Fire Style: Fireball Jutsu",
         "spawnFrame": 28,
         "spawnOffset": [
@@ -3279,5 +3419,368 @@
         "kiBurst": true
       }
     ]
-  }
+  },
+  "beginnerComboRoutes": [
+    {
+      "id": "sasuke-curse-mark:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Sasuke Curse Mark Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "animationKey": "jableft",
+          "label": "Sasuke Curse Mark Left Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Sasuke Curse Mark Power Crush",
+          "windowBefore": 3,
+          "windowAfter": 7,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Sasuke Curse Mark Twin Assault",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Sasuke Curse Mark Right Check",
+          "windowBefore": 14,
+          "windowAfter": 18,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Sasuke Curse Mark Power Crush",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Sasuke Curse Mark Low Feint",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Sasuke Curse Mark Left Kick",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Sasuke Curse Mark Power Crush",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Sasuke Curse Mark Twin Assault",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Sasuke Curse Mark Low Feint",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Sasuke Curse Mark Power Crush",
+          "windowBefore": 3,
+          "windowAfter": 7,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Sasuke Curse Mark Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Sasuke Curse Mark Twin Assault",
+          "windowBefore": 3,
+          "windowAfter": 7,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Sasuke Curse Mark Power Crush",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Sasuke Curse Mark Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Sasuke Curse Mark Twin Assault",
+          "windowBefore": 3,
+          "windowAfter": 7,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Sasuke Curse Mark Power Crush",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Sasuke Curse Mark Twin Assault",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Sasuke Curse Mark Low Feint",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Sasuke Curse Mark Power Crush",
+          "windowBefore": 3,
+          "windowAfter": 7,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Sasuke Curse Mark Low Feint",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Sasuke Curse Mark Rush",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Sasuke Curse Mark Power Crush",
+          "windowBefore": 4,
+          "windowAfter": 8,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

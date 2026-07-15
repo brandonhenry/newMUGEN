@@ -689,7 +689,11 @@
       "label": "Quick Toyako Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
       "startupFrames": 15,
@@ -708,7 +712,11 @@
       "label": "Toyako Backhand",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
       "startupFrames": 16,
@@ -727,7 +735,11 @@
       "label": "Low Lazy Kick",
       "hitLevel": "low",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickright": {
       "startupFrames": 14,
@@ -744,7 +756,11 @@
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 20,
       "label": "Heavy Toyako Thrust",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:f+1": {
       "startupFrames": 18,
@@ -762,7 +778,11 @@
       "forwardForceEndFrame": 21,
       "label": "Toyako Body Poke",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d/f+2": {
       "startupFrames": 19,
@@ -784,7 +804,11 @@
       "juggleGravityScale": 0.54,
       "label": "Forward Toyako Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:qcf+4": {
       "startupFrames": 28,
@@ -802,7 +826,11 @@
       "forwardForceEndFrame": 23,
       "label": "Shiroyasha Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "cmd:WS+4": {
       "startupFrames": 15,
@@ -819,7 +847,11 @@
       "forwardForceStartFrame": 36,
       "forwardForceEndFrame": 39,
       "label": "Rising Toyako Rush",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 21,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:FC+1": {
       "startupFrames": 15,
@@ -837,7 +869,11 @@
       "forwardForceEndFrame": 5,
       "label": "Crouch Toyako Drive",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:FC+2": {
       "startupFrames": 19,
@@ -856,7 +892,11 @@
       "launchHeight": 2,
       "label": "Crouch Toyako Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:1+2": {
       "startupFrames": 19,
@@ -878,7 +918,11 @@
       "hitLevel": "mid",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 23,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:1+3": {
       "startupFrames": 17,
@@ -900,7 +944,11 @@
       "label": "Toyako Rising Cut",
       "hitLevel": "mid",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:2+3": {
       "startupFrames": 17,
@@ -918,7 +966,11 @@
       "forwardForceEndFrame": 28,
       "label": "Low Wooden Sweep",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:2+4": {
       "startupFrames": 30,
@@ -936,7 +988,11 @@
       "forwardForceEndFrame": 23,
       "label": "Low Toyako Slide",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:3+4": {
       "startupFrames": 25,
@@ -954,7 +1010,11 @@
       "forwardForceEndFrame": 31,
       "label": "Toyako Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "cmd:O+2": {
       "startupFrames": 30,
@@ -972,7 +1032,11 @@
       "forwardForceEndFrame": 30,
       "label": "Shiroyasha Rush",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "neutral:jab-jab": {
       "startupFrames": 18,
@@ -988,7 +1052,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Second Beat"
+      "label": "Gintoki Sakata Second Beat",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 18,
@@ -1004,7 +1072,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Body Blow"
+      "label": "Gintoki Sakata Body Blow",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 18,
@@ -1020,7 +1092,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Low Changeup"
+      "label": "Gintoki Sakata Low Changeup",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-special": {
       "startupFrames": 18,
@@ -1036,7 +1112,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Pressure Feint"
+      "label": "Gintoki Sakata Pressure Feint",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy": {
       "startupFrames": 18,
@@ -1052,7 +1132,11 @@
       "forwardForce": 2.13,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Drive"
+      "label": "Gintoki Sakata Drive",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 18,
@@ -1068,7 +1152,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Barrage"
+      "label": "Gintoki Sakata Barrage",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 18,
@@ -1084,7 +1172,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Finisher"
+      "label": "Gintoki Sakata Finisher",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick": {
       "startupFrames": 18,
@@ -1100,7 +1192,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Step Kick"
+      "label": "Gintoki Sakata Step Kick",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 18,
@@ -1116,7 +1212,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Palm String"
+      "label": "Gintoki Sakata Palm String",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick-special": {
       "startupFrames": 18,
@@ -1132,7 +1232,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Rising Chain"
+      "label": "Gintoki Sakata Rising Chain",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-special": {
       "startupFrames": 18,
@@ -1148,7 +1252,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Special Setup"
+      "label": "Gintoki Sakata Special Setup",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 18,
@@ -1164,7 +1272,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Break Art"
+      "label": "Gintoki Sakata Break Art",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab": {
       "startupFrames": 18,
@@ -1180,7 +1292,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Check Hook"
+      "label": "Gintoki Sakata Check Hook",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 18,
@@ -1196,7 +1312,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Heavy Break"
+      "label": "Gintoki Sakata Heavy Break",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 18,
@@ -1212,7 +1332,11 @@
       "forwardForce": 3.05,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Charged Follow"
+      "label": "Gintoki Sakata Charged Follow",
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-kick": {
       "startupFrames": 18,
@@ -1228,7 +1352,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Drop Kick"
+      "label": "Gintoki Sakata Drop Kick",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 18,
@@ -1244,7 +1372,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Arc Finisher"
+      "label": "Gintoki Sakata Arc Finisher",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-special": {
       "startupFrames": 18,
@@ -1260,7 +1392,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Focus Stance"
+      "label": "Gintoki Sakata Focus Stance",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 18,
@@ -1276,7 +1412,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Mode Shift"
+      "label": "Gintoki Sakata Mode Shift",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-jab": {
       "startupFrames": 18,
@@ -1292,7 +1432,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Heel Feint"
+      "label": "Gintoki Sakata Heel Feint",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-jab-special": {
       "startupFrames": 18,
@@ -1308,7 +1452,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Summon Strike"
+      "label": "Gintoki Sakata Summon Strike",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-heavy": {
       "startupFrames": 18,
@@ -1324,7 +1472,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Guard Snare"
+      "label": "Gintoki Sakata Guard Snare",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 18,
@@ -1340,7 +1492,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Armor Break"
+      "label": "Gintoki Sakata Armor Break",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-special": {
       "startupFrames": 18,
@@ -1356,7 +1512,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Power Setup"
+      "label": "Gintoki Sakata Power Setup",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 18,
@@ -1372,7 +1532,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Switch Strike"
+      "label": "Gintoki Sakata Switch Strike",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-jab": {
       "startupFrames": 18,
@@ -1388,7 +1552,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Spark Jab"
+      "label": "Gintoki Sakata Spark Jab",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 18,
@@ -1404,7 +1572,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Binding Blow"
+      "label": "Gintoki Sakata Binding Blow",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-heavy": {
       "startupFrames": 18,
@@ -1420,7 +1592,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Heavy Draw"
+      "label": "Gintoki Sakata Heavy Draw",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-kick": {
       "startupFrames": 18,
@@ -1436,7 +1612,11 @@
       "forwardForce": 1.85,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 16,
-      "label": "Gintoki Sakata Kick Ender"
+      "label": "Gintoki Sakata Kick Ender",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:f+2": {
       "startupFrames": 15,
@@ -1449,11 +1629,15 @@
       "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 25,
       "forwardForce": 2.21,
-      "forwardForceStartFrame": 4,
-      "forwardForceEndFrame": 7,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 10,
       "label": "Forward Toyako Cut",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:f+3": {
       "startupFrames": 19,
@@ -1466,11 +1650,15 @@
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.84,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 13,
       "label": "Forward Low Kick",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d+1": {
       "startupFrames": 12,
@@ -1483,11 +1671,15 @@
       "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.85,
-      "forwardForceStartFrame": 4,
-      "forwardForceEndFrame": 11,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 26,
       "label": "Quick Toyako Check",
       "hitLevel": "high",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d+3": {
       "startupFrames": 30,
@@ -1500,11 +1692,15 @@
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.56,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
+      "forwardForceStartFrame": 35,
+      "forwardForceEndFrame": 52,
       "label": "Low Lazy Kick",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d/f+3": {
       "startupFrames": 21,
@@ -1517,11 +1713,15 @@
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.84,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 26,
       "label": "Low Forward Kick",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:qcf+1": {
       "startupFrames": 11,
@@ -1538,7 +1738,11 @@
       "forwardForceEndFrame": 11,
       "label": "Toyako Quick Check",
       "hitLevel": "high",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:qcf+3": {
       "startupFrames": 18,
@@ -1555,7 +1759,11 @@
       "forwardForceEndFrame": 28,
       "label": "Low Sugar Kick",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:WS+2": {
       "startupFrames": 15,
@@ -1572,7 +1780,11 @@
       "forwardForceEndFrame": 7,
       "label": "While Rising Toyako",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:SS+3": {
       "startupFrames": 17,
@@ -1589,7 +1801,11 @@
       "forwardForceEndFrame": 28,
       "label": "Sidestep Low Kick",
       "hitLevel": "low",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:O+1": {
       "startupFrames": 27,
@@ -1606,7 +1822,11 @@
       "forwardForceEndFrame": 25,
       "label": "Quick Toyako Check",
       "hitLevel": "high",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:1+4": {
       "startupFrames": 14,
@@ -1619,7 +1839,11 @@
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 26,
       "label": "Toyako Step Thrust",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 21,
+      "onJuggleHitFrames": 16,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     }
   },
   "effects": [],
@@ -4116,5 +4340,369 @@
     ]
   },
   "projectiles": [],
-  "moveProjectiles": {}
+  "moveProjectiles": {},
+  "beginnerComboRoutes": [
+    {
+      "id": "gintoki-sakata:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Toyako Quick Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Quick Toyako Check",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Shiroyasha Burst",
+          "windowBefore": 3,
+          "windowAfter": 7,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "gintoki-sakata:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Toyako Cut",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Toyako Backhand",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Shiroyasha Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "gintoki-sakata:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Low Sugar Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "d/f+3",
+          "animationKey": "cmd:d/f+3",
+          "label": "Low Forward Kick",
+          "windowBefore": 13,
+          "windowAfter": 17,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Shiroyasha Burst",
+          "windowBefore": 7,
+          "windowAfter": 11,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "gintoki-sakata:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Toyako Step Thrust",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Toyako Thrust",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Shiroyasha Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "gintoki-sakata:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Toyako Quick Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Toyako Cut",
+          "windowBefore": 15,
+          "windowAfter": 19,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Shiroyasha Burst",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "gintoki-sakata:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Toyako Step Thrust",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Toyako Cut",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Shiroyasha Burst",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "gintoki-sakata:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Low Toyako Slide",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Low Sugar Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Shiroyasha Burst",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "gintoki-sakata:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Toyako Power Crush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Toyako Quick Check",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Shiroyasha Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

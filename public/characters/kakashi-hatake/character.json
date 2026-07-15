@@ -759,8 +759,8 @@
       "whiffRecoveryFrames": 34,
       "range": 1.68,
       "forwardForce": 2.59,
-      "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 22,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 17,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
@@ -1604,10 +1604,10 @@
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
-      "whiffRecoveryFrames": 22,
+      "whiffRecoveryFrames": 23,
       "forwardForce": 2.2,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 16,
+      "forwardForceStartFrame": 31,
+      "forwardForceEndFrame": 36,
       "label": "Forward Kunai Cut",
       "hitLevel": "mid",
       "cancelable": false,
@@ -1625,17 +1625,17 @@
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
-      "whiffRecoveryFrames": 27,
+      "whiffRecoveryFrames": 41,
       "forwardForce": 2.33,
-      "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 23,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 20,
       "label": "Forward Low Kick",
       "hitLevel": "low",
       "cancelable": false,
       "damage": 10,
       "blockDamage": 1,
-      "onComboHitFrames": 19,
-      "onJuggleHitFrames": 14,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 13,
       "comboRepeatPenaltyFrames": 3,
       "juggleRepeatPenaltyFrames": 6
     },
@@ -1648,8 +1648,8 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.39,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 16,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 13,
       "label": "Quick Kunai Check",
       "hitLevel": "high",
       "cancelable": false,
@@ -1711,8 +1711,8 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 21,
       "forwardForce": 2.25,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 16,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 13,
       "label": "Quick Kunai Check",
       "hitLevel": "high",
       "cancelable": false,
@@ -1730,10 +1730,10 @@
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
-      "whiffRecoveryFrames": 28,
+      "whiffRecoveryFrames": 30,
       "forwardForce": 2.91,
-      "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 23,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 26,
       "label": "Low Shinobi Kick",
       "hitLevel": "low",
       "cancelable": false,
@@ -1753,8 +1753,8 @@
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 23,
       "forwardForce": 2.26,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 16,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 19,
       "label": "While Rising Kunai",
       "hitLevel": "mid",
       "cancelable": false,
@@ -3413,5 +3413,370 @@
     ]
   },
   "projectiles": [],
-  "moveProjectiles": {}
+  "moveProjectiles": {},
+  "beginnerComboRoutes": [
+    {
+      "id": "kakashi-hatake:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Quick Kunai Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Quick Kunai Check",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Raikiri Burst",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "kakashi-hatake:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Kunai Cut",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Kunai Guard Break",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Raikiri Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kakashi-hatake:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Low Shinobi Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "d/f+3",
+          "animationKey": "cmd:d/f+3",
+          "label": "Forward Low Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Raikiri Burst",
+          "windowBefore": 7,
+          "windowAfter": 11,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kakashi-hatake:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Chakra Arc Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Chakra Arc Kick",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Raikiri Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kakashi-hatake:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Quick Kunai Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Kunai Cut",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Raikiri Burst",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kakashi-hatake:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Chakra Arc Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Kunai Cut",
+          "windowBefore": 12,
+          "windowAfter": 16,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Raikiri Burst",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kakashi-hatake:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Low Kunai Trip",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Low Shinobi Kick",
+          "windowBefore": 9,
+          "windowAfter": 13,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Raikiri Burst",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kakashi-hatake:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Shinobi Power Crush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Quick Kunai Check",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Raikiri Burst",
+          "windowBefore": 4,
+          "windowAfter": 8,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

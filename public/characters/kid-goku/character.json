@@ -482,10 +482,10 @@
       "onBlockFrames": -1,
       "onHitFrames": 9,
       "onCounterHitFrames": 13,
-      "onComboHitFrames": 7,
-      "onJuggleHitFrames": 11,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 7,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 7,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "pushback": 0.92,
@@ -505,7 +505,10 @@
         ]
       },
       "id": "jab",
-      "input": "jab"
+      "input": "jab",
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 7
     },
     {
       "label": "Low Tail Trip",
@@ -519,8 +522,8 @@
       "onBlockFrames": -12,
       "onHitFrames": 7,
       "onCounterHitFrames": 12,
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 9,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
       "comboRepeatPenaltyFrames": 5,
       "juggleRepeatPenaltyFrames": 8,
       "whiffRecoveryFrames": 7,
@@ -543,7 +546,10 @@
       },
       "endsInCrouch": true,
       "id": "kick",
-      "input": "kick"
+      "input": "kick",
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     {
       "label": "Power Pole Poke",
@@ -557,10 +563,10 @@
       "onBlockFrames": -5,
       "onHitFrames": 12,
       "onCounterHitFrames": 17,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 14,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 7,
       "whiffRecoveryFrames": 6,
       "range": 1.72,
       "pushback": 0.96,
@@ -580,7 +586,10 @@
         ]
       },
       "id": "heavy",
-      "input": "heavy"
+      "input": "heavy",
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 16
     },
     {
       "label": "Power Pole Sweep",
@@ -595,8 +604,8 @@
       "onHitFrames": 15,
       "onCounterHitFrames": 22,
       "onComboHitFrames": 13,
-      "onJuggleHitFrames": 17,
-      "comboRepeatPenaltyFrames": 5,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 6,
       "juggleRepeatPenaltyFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.86,
@@ -617,8 +626,8 @@
         ]
       },
       "forwardForce": 1.05,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 20,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 21,
       "id": "special",
       "input": "special"
     }
@@ -667,7 +676,14 @@
       "description": "Fast high jab with short reach that checks close pressure.",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 7
     },
     "jabright": {
       "startupFrames": 15,
@@ -686,7 +702,14 @@
       "description": "Quick mid punch that keeps Kid Goku close enough to continue strings.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 16
     },
     "kickleft": {
       "startupFrames": 18,
@@ -706,7 +729,14 @@
       "hitLevel": "low",
       "tracking": "medium",
       "knockdown": false,
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "kickright": {
       "startupFrames": 14,
@@ -725,7 +755,14 @@
       "description": "Steady mid staff poke with enough reach to punish small whiffs.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.05,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 13
     },
     "cmd:f+1": {
       "startupFrames": 14,
@@ -739,15 +776,19 @@
       "whiffRecoveryFrames": 7,
       "range": 1.78,
       "forwardForce": 1.25,
-      "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 17,
+      "forwardForceStartFrame": 31,
+      "forwardForceEndFrame": 36,
       "pushback": 0.97,
       "blockPushback": 0.45,
       "label": "Turtle Dash Punch",
       "description": "Forward-moving mid punch that carries Kid Goku into pressure.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:f+3": {
       "startupFrames": 14,
@@ -762,8 +803,8 @@
       "whiffRecoveryFrames": 8,
       "range": 1.92,
       "forwardForce": 1.35,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 18,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 9,
       "pushback": 0.99,
       "blockPushback": 0.46,
       "label": "Running Power Pole",
@@ -771,7 +812,11 @@
       "hitLevel": "mid",
       "tracking": "medium",
       "knockdown": false,
-      "counterHit": true
+      "counterHit": true,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:d+3": {
       "startupFrames": 19,
@@ -791,7 +836,14 @@
       "hitLevel": "low",
       "tracking": "medium",
       "knockdown": false,
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 1.13,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 25
     },
     "cmd:d/f+2": {
       "startupFrames": 18,
@@ -805,8 +857,8 @@
       "whiffRecoveryFrames": 10,
       "range": 1.66,
       "forwardForce": 0.85,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 17,
+      "forwardForceStartFrame": 25,
+      "forwardForceEndFrame": 30,
       "pushback": 0.96,
       "blockPushback": 0.44,
       "launchHeight": 2.15,
@@ -817,7 +869,11 @@
       "description": "Unsafe rising pop-up that starts Kid Goku's juggle routes.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 25,
+      "onJuggleHitFrames": 23,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13
     },
     "cmd:d/f+3": {
       "startupFrames": 19,
@@ -828,7 +884,7 @@
       "onBlockFrames": -9,
       "onHitFrames": 17,
       "onCounterHitFrames": 24,
-      "whiffRecoveryFrames": 9,
+      "whiffRecoveryFrames": 37,
       "range": 1.78,
       "moveJumpForce": 7.8,
       "moveJumpGravity": 22,
@@ -843,7 +899,14 @@
       "hitLevel": "mid",
       "tracking": "medium",
       "knockdown": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 2.11,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 43
     },
     "cmd:qcf+3": {
       "startupFrames": 14,
@@ -857,15 +920,19 @@
       "whiffRecoveryFrames": 9,
       "range": 1.95,
       "forwardForce": 1.55,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 24,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 25,
       "pushback": 0.99,
       "blockPushback": 0.46,
       "label": "Power Pole Rush",
       "description": "Long-reaching staff rush that carries forward and catches retreat.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:qcf+4": {
       "startupFrames": 14,
@@ -879,15 +946,19 @@
       "whiffRecoveryFrames": 9,
       "range": 1.95,
       "forwardForce": 1.55,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 24,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 11,
       "pushback": 0.99,
       "blockPushback": 0.46,
       "label": "Power Pole Rush",
       "description": "Long-reaching staff rush that carries forward and catches retreat.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:WS+4": {
       "startupFrames": 16,
@@ -910,7 +981,14 @@
       "description": "While-standing mid kick that lifts opponents after crouch pressure.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 16,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 1.05,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 17
     },
     "cmd:FC+1": {
       "startupFrames": 13,
@@ -930,7 +1008,14 @@
       "hitLevel": "mid",
       "tracking": "medium",
       "knockdown": false,
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5,
+      "forwardForce": 1.65,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 20
     },
     "cmd:FC+2": {
       "startupFrames": 18,
@@ -954,7 +1039,14 @@
       "hitLevel": "mid",
       "tracking": "medium",
       "knockdown": false,
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "onComboHitFrames": 23,
+      "onJuggleHitFrames": 21,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 1.75,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18
     },
     "cmd:1+2": {
       "startupFrames": 22,
@@ -968,8 +1060,8 @@
       "whiffRecoveryFrames": 8,
       "range": 1.92,
       "forwardForce": 1.25,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 22,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 23,
       "pushback": 0.99,
       "blockPushback": 0.46,
       "label": "Power Pole Barrage",
@@ -977,7 +1069,11 @@
       "hitLevel": "throw",
       "tracking": "medium",
       "knockdown": false,
-      "throwCapture": true
+      "throwCapture": true,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:1+3": {
       "startupFrames": 17,
@@ -988,7 +1084,7 @@
       "onBlockFrames": -15,
       "onHitFrames": 29,
       "onCounterHitFrames": 36,
-      "whiffRecoveryFrames": 11,
+      "whiffRecoveryFrames": 30,
       "range": 1.72,
       "pushback": 0.96,
       "blockPushback": 0.44,
@@ -1001,7 +1097,14 @@
       "hitLevel": "mid",
       "tracking": "medium",
       "knockdown": false,
-      "tornado": true
+      "tornado": true,
+      "onComboHitFrames": 22,
+      "onJuggleHitFrames": 27,
+      "comboRepeatPenaltyFrames": 10,
+      "juggleRepeatPenaltyFrames": 18,
+      "forwardForce": 2.1,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 43
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -1023,7 +1126,14 @@
       "tracking": "medium",
       "knockdown": false,
       "endsInCrouch": true,
-      "counterHit": true
+      "counterHit": true,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 0.97,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 21
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -1043,7 +1153,14 @@
       "hitLevel": "low",
       "tracking": "medium",
       "knockdown": true,
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10,
+      "forwardForce": 1.05,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 20
     },
     "cmd:3+4": {
       "startupFrames": 25,
@@ -1066,7 +1183,14 @@
       "knockdown": true,
       "tornado": false,
       "endsInCrouch": false,
-      "jumpBeforeMove": false
+      "jumpBeforeMove": false,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10,
+      "forwardForce": 1.05,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 26
     },
     "cmd:SS+3": {
       "startupFrames": 18,
@@ -1086,7 +1210,14 @@
       "description": "Sidestep staff swing that covers lateral movement and keeps him mobile.",
       "hitLevel": "mid",
       "tracking": "strong",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29
     },
     "cmd:O+1": {
       "startupFrames": 27,
@@ -1100,8 +1231,8 @@
       "whiffRecoveryFrames": 12,
       "range": 1.8,
       "forwardForce": 1.3,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 30,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 23,
       "pushback": 0.97,
       "blockPushback": 0.45,
       "kiCost": 30,
@@ -1112,7 +1243,11 @@
       "hitLevel": "special",
       "tracking": "medium",
       "knockdown": true,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 11
     },
     "cmd:O+2": {
       "startupFrames": 25,
@@ -1126,8 +1261,8 @@
       "whiffRecoveryFrames": 18,
       "range": 2.08,
       "forwardForce": 1.9,
-      "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 36,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 26,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
       "pushback": 1.01,
@@ -1140,7 +1275,11 @@
       "knockdown": true,
       "tornado": true,
       "jumpBeforeMove": true,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 22,
+      "comboRepeatPenaltyFrames": 11,
+      "juggleRepeatPenaltyFrames": 18
     },
     "neutral:jab-jab": {
       "startupFrames": 14,
@@ -1357,15 +1496,19 @@
       "whiffRecoveryFrames": 7,
       "range": 1.78,
       "forwardForce": 1.25,
-      "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 17,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 34,
       "pushback": 0.97,
       "blockPushback": 0.45,
       "label": "Reverse Power Pole Check",
       "description": "Back-step staff check using the unused reverse pole swing sequence.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:WR+3": {
       "startupFrames": 29,
@@ -1376,7 +1519,7 @@
       "onBlockFrames": -16,
       "onHitFrames": 13,
       "onCounterHitFrames": 19,
-      "whiffRecoveryFrames": 10,
+      "whiffRecoveryFrames": 41,
       "range": 1.78,
       "pushback": 0.97,
       "blockPushback": 0.45,
@@ -1385,7 +1528,14 @@
       "hitLevel": "low",
       "tracking": "medium",
       "knockdown": true,
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10,
+      "forwardForce": 2.47,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 37
     },
     "cmd:f,f+1": {
       "startupFrames": 14,
@@ -1399,15 +1549,19 @@
       "whiffRecoveryFrames": 7,
       "range": 1.78,
       "forwardForce": 1.25,
-      "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 17,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 18,
       "pushback": 0.97,
       "blockPushback": 0.45,
       "label": "Dash Staff Rush",
       "description": "Forward dash staff rush built from the unused running attack frames.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:dp+3": {
       "startupFrames": 18,
@@ -1418,7 +1572,7 @@
       "onBlockFrames": -9,
       "onHitFrames": 17,
       "onCounterHitFrames": 24,
-      "whiffRecoveryFrames": 8,
+      "whiffRecoveryFrames": 34,
       "range": 1.7,
       "pushback": 0.96,
       "blockPushback": 0.44,
@@ -1430,7 +1584,14 @@
       "description": "Rising kick route using the unused upward attack sequence.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 2.19,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 12
     },
     "cmd:qcb+1": {
       "startupFrames": 14,
@@ -1444,15 +1605,19 @@
       "whiffRecoveryFrames": 9,
       "range": 1.95,
       "forwardForce": 1.55,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 24,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 9,
       "pushback": 0.99,
       "blockPushback": 0.46,
       "label": "Retreating Power Pole Rush",
       "description": "Long staff sequence that gives Kid Goku another committed pole-rush route.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:WR+4": {
       "startupFrames": 20,
@@ -1466,15 +1631,19 @@
       "whiffRecoveryFrames": 9,
       "range": 1.95,
       "forwardForce": 1.55,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 24,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 19,
       "pushback": 0.99,
       "blockPushback": 0.46,
       "label": "Running Power Pole Vault",
       "description": "Running pole-vault staff special using the unused final pole sequence.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:1+4": {
       "startupFrames": 18,
@@ -1494,7 +1663,14 @@
       "description": "Chorded staff swing using the existing side staff animation.",
       "hitLevel": "mid",
       "tracking": "strong",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 1.05,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 29
     },
     "cmd:1+2+3": {
       "startupFrames": 24,
@@ -1505,7 +1681,7 @@
       "onBlockFrames": -12,
       "onHitFrames": 20,
       "onCounterHitFrames": 29,
-      "whiffRecoveryFrames": 11,
+      "whiffRecoveryFrames": 40,
       "range": 1.9,
       "homingSpeed": 9,
       "pushback": 0.99,
@@ -1517,7 +1693,14 @@
       "knockdown": false,
       "tornado": true,
       "endsInCrouch": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 27,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13,
+      "forwardForce": 2.14,
+      "forwardForceStartFrame": 25,
+      "forwardForceEndFrame": 37
     }
   },
   "effects": [],
@@ -5210,5 +5393,347 @@
         "flipY": false
       }
     }
-  }
+  },
+  "beginnerComboRoutes": [
+    {
+      "id": "kid-goku:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcb+1",
+          "animationKey": "cmd:qcb+1",
+          "label": "Retreating Power Pole Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "b+1",
+          "animationKey": "cmd:b+1",
+          "label": "Reverse Power Pole Check",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Sliding Monkey Trip",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Turtle School Body Blow",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "d/f+2",
+          "animationKey": "cmd:d/f+2",
+          "label": "Rising Tail Pop",
+          "windowBefore": 9,
+          "windowAfter": 13,
+          "expect": "launch"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Sliding Monkey Trip",
+          "windowBefore": 14,
+          "windowAfter": 18,
+          "expect": "knockdown",
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Power Pole Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "f+3",
+          "animationKey": "cmd:f+3",
+          "label": "Running Power Pole",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Sliding Monkey Trip",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "knockdown",
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Power Pole Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Cross Staff Swing",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Sliding Monkey Trip",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "knockdown",
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcb+1",
+          "animationKey": "cmd:qcb+1",
+          "label": "Retreating Power Pole Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Turtle School Body Blow",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Sliding Monkey Trip",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Cross Staff Swing",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Turtle School Body Blow",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Sliding Monkey Trip",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Sliding Monkey Trip",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Power Pole Rush",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Sliding Monkey Trip",
+          "windowBefore": 9,
+          "windowAfter": 13,
+          "expect": "knockdown",
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Tail Cyclone",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcb+1",
+          "animationKey": "cmd:qcb+1",
+          "label": "Retreating Power Pole Rush",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Sliding Monkey Trip",
+          "windowBefore": 9,
+          "windowAfter": 13,
+          "expect": "knockdown",
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

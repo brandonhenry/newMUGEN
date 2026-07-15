@@ -4,7 +4,7 @@ import { keybindableButtonComboIds } from './buttonCombos';
 import { emptyInputFrame } from '../types';
 
 const SETTINGS_STORAGE_KEY = 'kore.gameSettings';
-const settingsVersion = 16;
+const settingsVersion = 17;
 const legacySmallDefaultCursorId = 'Basic/Default/pointer_a.png';
 const actions = Object.keys(emptyInputFrame()) as ActionName[];
 
@@ -78,7 +78,7 @@ export const defaultGameSettings: GameSettings = {
     maxHealth: 200,
     trainingInfiniteHealth: true,
     inputAssist: true,
-    controlScheme: 'kore'
+    controlScheme: 'beginner'
   },
   training: {
     frameAdvantageNumbers: true,
@@ -181,7 +181,7 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
       maxHealth: sanitizeMaxHealth(game.maxHealth, defaults.game.maxHealth),
       trainingInfiniteHealth: booleanOr(game.trainingInfiniteHealth, defaults.game.trainingInfiniteHealth),
       inputAssist: booleanOr(game.inputAssist, defaults.game.inputAssist),
-      controlScheme: game.controlScheme === 'beginner' ? 'beginner' : defaults.game.controlScheme
+      controlScheme: game.controlScheme === 'kore' ? 'kore' : defaults.game.controlScheme
     },
     training: {
       frameAdvantageNumbers: booleanOr(training.frameAdvantageNumbers, defaults.training.frameAdvantageNumbers),
@@ -312,12 +312,11 @@ function migrateStoredSettings(settings: unknown, version: number) {
     : cursorMigratedDisplay;
   const migrated = {
     ...settings,
-    game: game.maxHealth === 100
-      ? {
-          ...game,
-          maxHealth: defaultGameSettings.game.maxHealth
-        }
-      : game,
+    game: {
+      ...game,
+      ...(game.maxHealth === 100 ? { maxHealth: defaultGameSettings.game.maxHealth } : {}),
+      ...(version < 17 ? { controlScheme: 'beginner' } : {})
+    },
     display: version < 13
       ? {
           ...impactMigratedDisplay,

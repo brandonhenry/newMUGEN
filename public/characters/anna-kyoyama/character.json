@@ -362,8 +362,8 @@
       "counterHit": false,
       "cancelable": false,
       "forwardForce": 0.35,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 14,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 11,
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
@@ -404,8 +404,8 @@
       "counterHit": false,
       "cancelable": false,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
+      "forwardForceStartFrame": 27,
+      "forwardForceEndFrame": 31,
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
@@ -537,10 +537,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "forwardForce": 0.35,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 14,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 11,
       "label": "Quick Itako Jab",
-      "hitLevel": "high"
+      "hitLevel": "high",
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
       "startupFrames": 13,
@@ -559,7 +563,11 @@
       "label": "Rosary Arc",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
       "startupFrames": 21,
@@ -573,10 +581,14 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
+      "forwardForceStartFrame": 27,
+      "forwardForceEndFrame": 31,
       "label": "Low Sandal Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickright": {
       "startupFrames": 17,
@@ -597,7 +609,11 @@
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
       "label": "Rising Bead Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 13
     },
     "cmd:f+1": {
       "startupFrames": 14,
@@ -611,11 +627,15 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "forwardForceStartFrame": 32,
-      "forwardForceEndFrame": 35,
+      "forwardForceStartFrame": 31,
+      "forwardForceEndFrame": 36,
       "label": "Forward Bead Rush",
       "hitLevel": "throw",
-      "throwCapture": true
+      "throwCapture": true,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d/f+2": {
       "startupFrames": 15,
@@ -629,15 +649,19 @@
       "whiffRecoveryFrames": 34,
       "range": 1.68,
       "forwardForce": 2.65,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 20,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Forward Rosary Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:qcf+4": {
       "startupFrames": 30,
@@ -656,7 +680,11 @@
       "launchHeight": 2.1,
       "label": "Oni Hand Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 16
     },
     "cmd:WS+4": {
       "startupFrames": 15,
@@ -675,7 +703,11 @@
       "launchHeight": 2.1,
       "label": "Rising Spirit Kick",
       "hitLevel": "mid",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:FC+1": {
       "startupFrames": 13,
@@ -693,7 +725,11 @@
       "forwardForceEndFrame": 15,
       "label": "Crouching Bead Tap",
       "hitLevel": "mid",
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:FC+2": {
       "startupFrames": 15,
@@ -712,7 +748,11 @@
       "launchHeight": 2.1,
       "label": "Crouch Spirit Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:1+2": {
       "startupFrames": 22,
@@ -730,7 +770,11 @@
       "forwardForceEndFrame": 23,
       "label": "Rosary Frame Strike",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:1+3": {
       "startupFrames": 19,
@@ -749,7 +793,11 @@
       "launchHeight": 2.1,
       "label": "Itako Flip Launcher",
       "hitLevel": "mid",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:2+3": {
       "startupFrames": 24,
@@ -766,7 +814,11 @@
       "forwardForceStartFrame": 33,
       "forwardForceEndFrame": 43,
       "label": "Low Spirit Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:2+4": {
       "startupFrames": 16,
@@ -785,7 +837,11 @@
       "launchHeight": 2.1,
       "label": "Bead Snare Sweep",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 16
     },
     "cmd:3+4": {
       "startupFrames": 18,
@@ -804,7 +860,11 @@
       "launchHeight": 2.1,
       "label": "Rosary Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 16
     },
     "cmd:O+2": {
       "startupFrames": 30,
@@ -818,12 +878,16 @@
       "whiffRecoveryFrames": 47,
       "range": 2.1,
       "forwardForce": 3.79,
-      "forwardForceStartFrame": 44,
-      "forwardForceEndFrame": 48,
+      "forwardForceStartFrame": 56,
+      "forwardForceEndFrame": 62,
       "label": "Itako Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "neutral:jab-jab": {
       "startupFrames": 15,
@@ -837,9 +901,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Second Beat"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Second Beat",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 15,
@@ -853,9 +921,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Body Blow"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Body Blow",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 15,
@@ -869,9 +941,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Low Changeup"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Low Changeup",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-special": {
       "startupFrames": 15,
@@ -885,9 +961,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Pressure Feint"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Pressure Feint",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy": {
       "startupFrames": 15,
@@ -901,9 +981,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.83,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Drive"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Drive",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 15,
@@ -917,9 +1001,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Barrage"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Barrage",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 15,
@@ -933,9 +1021,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Finisher"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Finisher",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick": {
       "startupFrames": 18,
@@ -949,9 +1041,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 20,
-      "forwardForceEndFrame": 25,
-      "label": "Anna Kyoyama Step Kick"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Anna Kyoyama Step Kick",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 15,
@@ -965,9 +1061,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Palm String"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Palm String",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick-special": {
       "startupFrames": 15,
@@ -981,9 +1081,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Rising Chain"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Rising Chain",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-special": {
       "startupFrames": 15,
@@ -997,9 +1101,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Special Setup"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Special Setup",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 15,
@@ -1013,9 +1121,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Break Art"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Break Art",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab": {
       "startupFrames": 15,
@@ -1029,9 +1141,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Check Hook"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Check Hook",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 15,
@@ -1045,9 +1161,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Heavy Break"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Heavy Break",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 15,
@@ -1061,9 +1181,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.75,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Charged Follow"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Charged Follow",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-kick": {
       "startupFrames": 18,
@@ -1077,9 +1201,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 20,
-      "forwardForceEndFrame": 25,
-      "label": "Anna Kyoyama Drop Kick"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Anna Kyoyama Drop Kick",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 15,
@@ -1093,9 +1221,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Arc Finisher"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Arc Finisher",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-special": {
       "startupFrames": 15,
@@ -1109,9 +1241,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Focus Stance"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Focus Stance",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 15,
@@ -1125,9 +1261,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Mode Shift"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Mode Shift",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-jab": {
       "startupFrames": 15,
@@ -1141,9 +1281,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Heel Feint"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Heel Feint",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-jab-special": {
       "startupFrames": 15,
@@ -1157,9 +1301,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Summon Strike"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Summon Strike",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-heavy": {
       "startupFrames": 15,
@@ -1173,9 +1321,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Guard Snare"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Guard Snare",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 15,
@@ -1189,9 +1341,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Armor Break"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Armor Break",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-special": {
       "startupFrames": 15,
@@ -1205,9 +1361,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Power Setup"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Power Setup",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 15,
@@ -1221,9 +1381,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Switch Strike"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Switch Strike",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-jab": {
       "startupFrames": 15,
@@ -1237,9 +1401,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Spark Jab"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Spark Jab",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 15,
@@ -1253,9 +1421,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Binding Blow"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Binding Blow",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-heavy": {
       "startupFrames": 15,
@@ -1269,9 +1441,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
-      "label": "Anna Kyoyama Heavy Draw"
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 18,
+      "label": "Anna Kyoyama Heavy Draw",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-kick": {
       "startupFrames": 18,
@@ -1285,9 +1461,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 20,
-      "forwardForceEndFrame": 25,
-      "label": "Anna Kyoyama Kick Ender"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Anna Kyoyama Kick Ender",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:f+2": {
       "startupFrames": 15,
@@ -1298,13 +1478,17 @@
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
-      "whiffRecoveryFrames": 24,
+      "whiffRecoveryFrames": 25,
       "forwardForce": 2.26,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 15,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 12,
       "label": "Forward Rosary Arc",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:WS+2": {
       "startupFrames": 13,
@@ -1317,11 +1501,15 @@
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 24,
       "forwardForce": 2.32,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 15,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 20,
       "label": "While-Rising Rosary",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     }
   },
   "effects": [],
@@ -3021,5 +3209,365 @@
     ]
   },
   "projectiles": [],
-  "moveProjectiles": {}
+  "moveProjectiles": {},
+  "beginnerComboRoutes": [
+    {
+      "id": "anna-kyoyama:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "animationKey": "jableft",
+          "label": "Quick Itako Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "animationKey": "jableft",
+          "label": "Quick Itako Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Oni Hand Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Rosary Frame Strike",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Rosary Arc",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Oni Hand Burst",
+          "windowBefore": 4,
+          "windowAfter": 8,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Spirit Feint",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Sandal Kick",
+          "windowBefore": 10,
+          "windowAfter": 14,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Oni Hand Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Rosary Frame Strike",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Rosary Arc",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Oni Hand Burst",
+          "windowBefore": 4,
+          "windowAfter": 8,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "animationKey": "jableft",
+          "label": "Quick Itako Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Rosary Frame Strike",
+          "windowBefore": 7,
+          "windowAfter": 11,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Oni Hand Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "jab",
+          "animationKey": "jableft",
+          "label": "Quick Itako Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Rosary Frame Strike",
+          "windowBefore": 7,
+          "windowAfter": 11,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Oni Hand Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Rosary Frame Strike",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Spirit Feint",
+          "windowBefore": 8,
+          "windowAfter": 12,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Oni Hand Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Spirit Feint",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "animationKey": "jableft",
+          "label": "Quick Itako Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Oni Hand Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

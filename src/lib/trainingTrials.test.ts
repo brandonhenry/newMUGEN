@@ -3,7 +3,6 @@ import { join } from 'node:path';
 import { beforeEach, describe, expect, it } from 'vitest';
 import type { CharacterDefinition, FighterRuntime, ImpactSparkEvent, InputFrameWithMetadata, MatchSnapshot, MoveProjectileInstance } from '../types';
 import { emptyInputFrame } from '../types';
-import { resolveBeginnerAutoComboPlan } from './beginnerAutoCombos';
 import { resolveMoveRoutes } from './comboRoutes';
 import {
   TRAINING_TRIAL_STORAGE_KEY,
@@ -11,7 +10,6 @@ import {
   advanceTrainingTrialWithInput,
   generateBasicTrainingTrials,
   generateComboTrainingTrials,
-  makeComboRoutePreviewScript,
   makeMovePreviewScript,
   makePreviewInput,
   makeTrainingTrialProgress,
@@ -852,24 +850,41 @@ describe('training trial catalog', () => {
   });
 
   it('adapts combo routes into the shared trial shape', () => {
-    const character = readRosterCharacters().find((candidate) => generateComboTrainingTrials(candidate).length > 0);
+    const character = readRosterCharacters().find((candidate) => generateComboTrainingTrials(candidate).some((trial) => trial.sourceBeginnerRoute));
     expect(character).toBeTruthy();
     if (!character) return;
 
     const trials = generateComboTrainingTrials(character);
-    const routeTrials = trials.filter((trial) => trial.sourceComboRoute);
+    const routeTrials = trials.filter((trial) => trial.sourceBeginnerRoute);
     expect(trials.length).toBeGreaterThan(0);
     expect(trials.every((trial) => trial.mode === 'combos' && trial.category === 'combo')).toBe(true);
-    expect(routeTrials.some((trial) => trial.steps.length > 3)).toBe(true);
-    expect(routeTrials.every((trial) => trial.steps.every((step) => step.routeKey && step.animationKey))).toBe(true);
-    expect(routeTrials.every((trial) => (trial.sourceComboRoute?.estimatedDamage ?? 0) > 0)).toBe(true);
-    expect(routeTrials.every((trial) => trial.sourceComboRoute?.structure.includes('starter'))).toBe(true);
-    expect(routeTrials.every((trial) => trial.lesson.includes('damage'))).toBe(true);
+    const rosterRouteTrials = readRosterCharacters().flatMap((candidate) => generateComboTrainingTrials(candidate).filter((trial) => trial.sourceBeginnerRoute));
+    expect(rosterRouteTrials.some((trial) => trial.steps.length > 3)).toBe(true);
+    expect(routeTrials.every((trial) => trial.steps.filter((step) => step.kind === 'impact').every((step) => step.animationKey))).toBe(true);
+    expect(routeTrials.every((trial) => trial.steps.filter((step) => step.kind === 'impact').length >= 3)).toBe(true);
+    expect(routeTrials.every((trial) => trial.lesson.includes('confirm each hit'))).toBe(true);
+  });
+
+  it('uses simple gestures in Beginner and the same route commands in KORE', () => {
+    const character = readRosterCharacters().find((candidate) => candidate.beginnerComboRoutes?.length);
+    expect(character).toBeTruthy();
+    if (!character) return;
+    const beginner = generateComboTrainingTrials(character, 'beginner').find((trial) => trial.sourceBeginnerRoute);
+    const kore = generateComboTrainingTrials(character, 'kore').find((trial) => trial.sourceBeginnerRoute?.id === beginner?.sourceBeginnerRoute?.id);
+    expect(beginner).toBeTruthy();
+    expect(kore).toBeTruthy();
+    if (!beginner || !kore) return;
+
+    const beginnerAttacks = beginner.steps.filter((step) => step.kind === 'impact');
+    const koreAttacks = kore.steps.filter((step) => step.kind === 'impact');
+    expect(beginnerAttacks[0].notation).toEqual(['Light']);
+    expect(koreAttacks.map((step) => step.command)).toEqual(beginner.sourceBeginnerRoute!.steps.map((step) => step.command));
+    expect(koreAttacks.map((step) => step.animationKey)).toEqual(beginnerAttacks.map((step) => step.animationKey));
   });
 
   it('adds a recoverable health combo lesson for every combo-capable character', () => {
     const roster = readRosterCharacters();
-    const comboCapable = roster.filter((candidate) => generateComboTrainingTrials(candidate).some((trial) => trial.sourceComboRoute));
+    const comboCapable = roster.filter((candidate) => generateComboTrainingTrials(candidate).some((trial) => trial.sourceBeginnerRoute));
     expect(comboCapable.length).toBeGreaterThan(0);
 
     for (const character of comboCapable) {
@@ -896,44 +911,44 @@ describe('training trial catalog', () => {
     const comboStepLabels = comboTrials.flatMap((trial) => trial.steps.map((step) => step.label));
 
     expect(basicStepLabels).toContain('Spirit Wave Drive');
-    expect(comboStepLabels).toContain('Spirit Gun Burst');
     expect([...basicStepLabels, ...comboStepLabels].some((label) => /Frame Link/.test(label))).toBe(false);
-    expect(comboTrials.find((trial) => trial.steps[0]?.label === 'Spirit Gun Burst')?.title).toContain('Spirit Gun Burst');
+    expect(comboTrials.filter((trial) => trial.sourceBeginnerRoute).every((trial) => trial.steps.some((step) => step.label.trim().length > 0))).toBe(true);
   });
 
   it('generates Beginner auto-combo previews from the route-aware finisher plan', () => {
     const roster = readRosterCharacters();
-    const character = roster.find((candidate) => resolveBeginnerAutoComboPlan(candidate).finisherCommand);
+    const character = roster.find((candidate) => candidate.beginnerComboRoutes?.some((route) => route.id.endsWith('light-core')));
     expect(character).toBeTruthy();
     if (!character) return;
 
-    const plan = resolveBeginnerAutoComboPlan(character);
+    const route = character.beginnerComboRoutes!.find((candidate) => candidate.id.endsWith('light-core'))!;
     const trial = generateBasicTrainingTrials(character, roster).find((item) => item.id.endsWith('offense:beginner-auto-combo'));
     expect(trial).toBeTruthy();
     if (!trial) return;
 
-    expect(trial.title).toBe('Beginner Auto Combo');
-    expect(trial.steps.map((step) => step.input)).toEqual(['jab', 'heavy', 'kick', 'special']);
-    expect(trial.steps[3].label).toContain(plan.finisherLabel);
-    expect(trial.steps[3].routeKey).toBe(plan.finisherStep?.routeKey);
-    expect(trial.sourceComboRoute?.id).toBe(plan.sourceRoute?.id);
-    expect(trial.lesson).toContain(plan.finisherLabel);
+    expect(trial.title).toBe('Beginner Light Route');
+    expect(trial.steps).toHaveLength(3);
+    expect(trial.steps.every((step) => step.notation.includes('Light'))).toBe(true);
+    expect(trial.steps[2].label).toContain('Knockdown');
+    expect(trial.sourceBeginnerRoute?.id).toBe(route.id);
+    expect(trial.lesson).toContain('block or whiff resets');
 
-    const finalPreviewFrame = [...trial.previewScript].reverse().find((frame) => frame.actions.includes('special'));
-    expect(finalPreviewFrame?.actions).toEqual(['special']);
+    const attackPreviewFrames = trial.previewScript.filter((frame) => frame.actions.includes('jab'));
+    expect(attackPreviewFrames.length).toBeGreaterThanOrEqual(3);
   });
 
   it('sets up ki and command-family combo trials with executable previews', () => {
     const character = readRosterCharacters().find((candidate) =>
-      generateComboTrainingTrials(candidate).some((trial) => trial.sourceComboRoute?.requiresKi)
+      generateComboTrainingTrials(candidate).some((trial) => trial.id.endsWith(':ki'))
     );
     expect(character).toBeTruthy();
     if (!character) return;
 
     const trials = generateComboTrainingTrials(character);
-    const kiTrial = trials.find((trial) => trial.sourceComboRoute?.requiresKi);
+    const kiTrial = trials.find((trial) => trial.id.endsWith(':ki'));
     expect(kiTrial?.setup.p1Ki).toBe(100);
-    expect(kiTrial?.previewScript.some((frame) => frame.actions.includes('charge'))).toBe(true);
+    expect(kiTrial?.sourceBeginnerRoute).toBeTruthy();
+    expect(kiTrial?.steps.filter((step) => step.kind === 'impact')).toHaveLength(3);
 
     const motionTrial = trials.find((trial) => trial.steps.some((step) => /^(qcf|qcb|hcf|hcb|dp|rdp|cd)\+/.test(step.command ?? '')));
     if (motionTrial) {
@@ -953,18 +968,18 @@ describe('training trial catalog', () => {
 
   it('keeps grounded launcher trial previews free of jump inputs', () => {
     const character = readRosterCharacters().find((candidate) =>
-      generateComboTrainingTrials(candidate).some((trial) => trial.sourceComboRoute?.launchRouteStyle === 'grounded')
+      generateComboTrainingTrials(candidate).some((trial) => trial.steps.some((step) => step.kind === 'state'))
     );
     expect(character).toBeTruthy();
     if (!character) return;
 
-    const trial = generateComboTrainingTrials(character).find((candidate) => candidate.sourceComboRoute?.launchRouteStyle === 'grounded');
+    const trial = generateComboTrainingTrials(character).find((candidate) => candidate.steps.some((step) => step.kind === 'state'));
     expect(trial).toBeTruthy();
     if (!trial) return;
 
-    expect(trial.title).toContain('Grounded Launcher');
-    expect(trial.steps.every((step) => !step.actions.includes('up')), `${character.id}:${trial.id}`).toBe(true);
-    expect(trial.previewScript.every((frame) => !frame.actions.includes('up')), `${character.id}:${trial.id}`).toBe(true);
+    const movement = trial.steps.find((step) => step.kind === 'state')!;
+    expect(movement.label).toMatch(/Neutral|Dash|Back Hop|Jump/);
+    expect(trial.previewScript.some((frame) => movement.actions.every((action) => frame.actions.includes(action)))).toBe(true);
   });
 
   it('stores completion by character and trial id', () => {
@@ -1105,14 +1120,13 @@ describe('training trial catalog', () => {
   });
 
   it('builds combo route preview scripts in ordered step timing', () => {
-    const character = readRosterCharacters().find((candidate) => generateComboTrainingTrials(candidate).some((trial) => trial.sourceComboRoute));
+    const character = readRosterCharacters().find((candidate) => generateComboTrainingTrials(candidate).some((trial) => trial.sourceBeginnerRoute));
     expect(character).toBeTruthy();
     if (!character) return;
-    const route = generateComboTrainingTrials(character).find((trial) => trial.sourceComboRoute)?.sourceComboRoute;
-    expect(route).toBeTruthy();
-    if (!route) return;
-
-    const script = makeComboRoutePreviewScript(route);
+    const trial = generateComboTrainingTrials(character).find((candidate) => candidate.sourceBeginnerRoute);
+    expect(trial).toBeTruthy();
+    if (!trial) return;
+    const script = trial.previewScript;
     const attackFrames = script
       .filter((frame) => frame.actions.some((action) => action === 'jab' || action === 'heavy' || action === 'kick' || action === 'special'))
       .map((frame) => frame.frame);

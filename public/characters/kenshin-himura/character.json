@@ -504,8 +504,8 @@
       "counterHit": false,
       "cancelable": false,
       "forwardForce": 0.5,
-      "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 16,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 11,
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
@@ -678,12 +678,16 @@
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "forwardForce": 0.5,
-      "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 16,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 11,
       "label": "Quick Sakabato Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
       "startupFrames": 13,
@@ -702,7 +706,11 @@
       "label": "Sakabato Body Cut",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
       "startupFrames": 30,
@@ -720,7 +728,11 @@
       "forwardForceEndFrame": 20,
       "label": "Low Sakabato Sweep",
       "hitLevel": "low",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickright": {
       "startupFrames": 15,
@@ -738,7 +750,11 @@
       "forwardForceEndFrame": 39,
       "label": "Hiten Step Cut",
       "hitLevel": "mid",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:f+1": {
       "startupFrames": 15,
@@ -757,7 +773,11 @@
       "label": "Hiten Step Rush",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d/f+2": {
       "startupFrames": 19,
@@ -768,11 +788,11 @@
       "onBlockFrames": -7,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
-      "whiffRecoveryFrames": 33,
+      "whiffRecoveryFrames": 37,
       "range": 1.68,
       "forwardForce": 2.16,
-      "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 20,
+      "forwardForceStartFrame": 29,
+      "forwardForceEndFrame": 35,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
@@ -780,7 +800,11 @@
       "label": "Diagonal Draw Launcher",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:qcf+4": {
       "startupFrames": 30,
@@ -799,7 +823,11 @@
       "label": "Hiten Burst Ender",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "cmd:WS+4": {
       "startupFrames": 15,
@@ -817,7 +845,11 @@
       "forwardForceEndFrame": 11,
       "label": "Rising Hiten Sweep",
       "hitLevel": "mid",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 21,
+      "onJuggleHitFrames": 16,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:FC+1": {
       "startupFrames": 14,
@@ -836,7 +868,11 @@
       "label": "Full-Crouch Draw Cut",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:FC+2": {
       "startupFrames": 18,
@@ -847,16 +883,20 @@
       "onBlockFrames": -7,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
-      "whiffRecoveryFrames": 33,
+      "whiffRecoveryFrames": 36,
       "range": 1.48,
       "forwardForce": 2.07,
-      "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 20,
+      "forwardForceStartFrame": 47,
+      "forwardForceEndFrame": 52,
       "launchHeight": 2,
       "label": "Crouching Pop-Up",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:1+2": {
       "startupFrames": 15,
@@ -870,12 +910,16 @@
       "whiffRecoveryFrames": 6,
       "range": 1.72,
       "forwardForce": 1.86,
-      "forwardForceStartFrame": 4,
-      "forwardForceEndFrame": 7,
+      "forwardForceStartFrame": 37,
+      "forwardForceEndFrame": 39,
       "label": "Hiten Cross Cut",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:1+3": {
       "startupFrames": 19,
@@ -889,12 +933,16 @@
       "whiffRecoveryFrames": 13,
       "range": 1.65,
       "forwardForce": 1.86,
-      "forwardForceStartFrame": 31,
-      "forwardForceEndFrame": 41,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 14,
       "launchHeight": 2.2,
       "label": "Sakabato Pop-Up",
       "hitLevel": "mid",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:2+3": {
       "startupFrames": 30,
@@ -908,14 +956,18 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "forwardForce": 1.47,
-      "forwardForceStartFrame": 65,
-      "forwardForceEndFrame": 70,
+      "forwardForceStartFrame": 47,
+      "forwardForceEndFrame": 51,
       "moveJumpForce": 8.6,
       "moveJumpGravity": 26,
       "label": "Low Batto Feint",
       "hitLevel": "low",
       "tracking": "medium",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:2+4": {
       "startupFrames": 29,
@@ -934,7 +986,11 @@
       "label": "Low Driving Slash",
       "hitLevel": "low",
       "tracking": "medium",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:3+4": {
       "startupFrames": 24,
@@ -956,7 +1012,11 @@
       "knockdown": true,
       "tornado": true,
       "endsInCrouch": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 18,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 16
     },
     "cmd:O+2": {
       "startupFrames": 30,
@@ -975,7 +1035,11 @@
       "label": "Hiten Aura Drive",
       "hitLevel": "special",
       "tracking": "medium",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "neutral:jab-jab": {
       "startupFrames": 15,
@@ -989,9 +1053,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Second Beat"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Second Beat",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 15,
@@ -1005,9 +1073,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Body Blow"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Body Blow",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 15,
@@ -1021,9 +1093,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Low Changeup"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Low Changeup",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-special": {
       "startupFrames": 15,
@@ -1037,9 +1113,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Pressure Feint"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Pressure Feint",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy": {
       "startupFrames": 15,
@@ -1053,9 +1133,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.87,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Drive"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Drive",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 15,
@@ -1069,9 +1153,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Barrage"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Barrage",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 15,
@@ -1085,9 +1173,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Finisher"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Finisher",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick": {
       "startupFrames": 18,
@@ -1101,9 +1193,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 23,
-      "forwardForceEndFrame": 33,
-      "label": "Kenshin Himura Step Kick"
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22,
+      "label": "Kenshin Himura Step Kick",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 15,
@@ -1117,9 +1213,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Palm String"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Palm String",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick-special": {
       "startupFrames": 15,
@@ -1133,9 +1233,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Rising Chain"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Rising Chain",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-special": {
       "startupFrames": 15,
@@ -1149,9 +1253,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Special Setup"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Special Setup",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 15,
@@ -1165,9 +1273,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Break Art"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Break Art",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab": {
       "startupFrames": 15,
@@ -1181,9 +1293,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Check Hook"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Check Hook",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 15,
@@ -1197,9 +1313,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Heavy Break"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Heavy Break",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 15,
@@ -1213,9 +1333,13 @@
       "whiffRecoveryFrames": 26,
       "range": 1.55,
       "forwardForce": 2.79,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Charged Follow"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Charged Follow",
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-kick": {
       "startupFrames": 18,
@@ -1229,9 +1353,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 23,
-      "forwardForceEndFrame": 33,
-      "label": "Kenshin Himura Drop Kick"
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22,
+      "label": "Kenshin Himura Drop Kick",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 15,
@@ -1245,9 +1373,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Arc Finisher"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Arc Finisher",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-special": {
       "startupFrames": 15,
@@ -1261,9 +1393,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Focus Stance"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Focus Stance",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 15,
@@ -1277,9 +1413,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Mode Shift"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Mode Shift",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-jab": {
       "startupFrames": 15,
@@ -1293,9 +1433,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Heel Feint"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Heel Feint",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-jab-special": {
       "startupFrames": 15,
@@ -1309,9 +1453,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Summon Strike"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Summon Strike",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-heavy": {
       "startupFrames": 15,
@@ -1325,9 +1473,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Guard Snare"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Guard Snare",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 15,
@@ -1341,9 +1493,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Armor Break"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Armor Break",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-special": {
       "startupFrames": 15,
@@ -1357,9 +1513,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Power Setup"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Power Setup",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 15,
@@ -1373,9 +1533,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Switch Strike"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Switch Strike",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-jab": {
       "startupFrames": 15,
@@ -1389,9 +1553,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Spark Jab"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Spark Jab",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 15,
@@ -1405,9 +1573,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Binding Blow"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Binding Blow",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-heavy": {
       "startupFrames": 15,
@@ -1421,9 +1593,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28,
-      "label": "Kenshin Himura Heavy Draw"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
+      "label": "Kenshin Himura Heavy Draw",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-kick": {
       "startupFrames": 18,
@@ -1437,9 +1613,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 23,
-      "forwardForceEndFrame": 33,
-      "label": "Kenshin Himura Kick Ender"
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22,
+      "label": "Kenshin Himura Kick Ender",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:1+4": {
       "startupFrames": 14,
@@ -1456,7 +1636,11 @@
       "forwardForceEndFrame": 18,
       "label": "Heavy Step Cut",
       "hitLevel": "mid",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:1+2+3": {
       "startupFrames": 19,
@@ -1473,7 +1657,11 @@
       "forwardForceEndFrame": 25,
       "label": "Low Iai Sweep",
       "hitLevel": "low",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:f+2": {
       "startupFrames": 15,
@@ -1486,12 +1674,16 @@
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.77,
-      "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 15,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21,
       "label": "Forward Draw Cut",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d+1": {
       "startupFrames": 10,
@@ -1504,12 +1696,16 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.59,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 20,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 18,
       "label": "Ducking Sakabato Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:qcf+1": {
       "startupFrames": 10,
@@ -1522,12 +1718,16 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 21,
       "forwardForce": 2.45,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 20,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 22,
       "label": "Batto Rush Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:WS+2": {
       "startupFrames": 15,
@@ -1540,12 +1740,16 @@
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 7,
       "forwardForce": 1.83,
-      "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 15,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 27,
       "label": "While-Rising Draw Cut",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:O+1": {
       "startupFrames": 20,
@@ -1563,7 +1767,11 @@
       "label": "Overdrive Sakabato Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7
     }
   },
   "effects": [],
@@ -4170,5 +4378,369 @@
     ]
   },
   "projectiles": [],
-  "moveProjectiles": {}
+  "moveProjectiles": {},
+  "beginnerComboRoutes": [
+    {
+      "id": "kenshin-himura:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Batto Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Ducking Sakabato Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Hiten Burst Ender",
+          "windowBefore": 3,
+          "windowAfter": 7,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "kenshin-himura:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Hiten Cross Cut",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Draw Cut",
+          "windowBefore": 15,
+          "windowAfter": 19,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Hiten Burst Ender",
+          "windowBefore": 4,
+          "windowAfter": 8,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kenshin-himura:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "1+2+3",
+          "animationKey": "cmd:1+2+3",
+          "label": "Low Iai Sweep",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Sakabato Sweep",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Hiten Burst Ender",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kenshin-himura:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Heavy Step Cut",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Hiten Step Cut",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Hiten Burst Ender",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kenshin-himura:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Batto Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Hiten Cross Cut",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Hiten Burst Ender",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kenshin-himura:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Heavy Step Cut",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Hiten Cross Cut",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Hiten Burst Ender",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kenshin-himura:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Low Driving Slash",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "1+2+3",
+          "animationKey": "cmd:1+2+3",
+          "label": "Low Iai Sweep",
+          "windowBefore": 10,
+          "windowAfter": 14,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Hiten Burst Ender",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kenshin-himura:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "kick",
+          "command": "1+2+3",
+          "animationKey": "cmd:1+2+3",
+          "label": "Low Iai Sweep",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Batto Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Hiten Burst Ender",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

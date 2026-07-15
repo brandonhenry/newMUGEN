@@ -640,10 +640,10 @@
       "recoveryFrames": 20,
       "damage": 9,
       "blockDamage": 1,
-      "onBlockFrames": -2,
+      "onBlockFrames": -10,
       "onHitFrames": 10,
       "onCounterHitFrames": 14,
-      "whiffRecoveryFrames": 9,
+      "whiffRecoveryFrames": 10,
       "range": 1.76,
       "forwardForce": 1.2,
       "forwardForceStartFrame": 10,
@@ -651,11 +651,13 @@
       "label": "Heavy Namekian Kick",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "knockdown": true,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 10,
+      "pushback": 1,
+      "blockPushback": 0.48
     },
     "cmd:f+1": {
       "startupFrames": 15,
@@ -839,8 +841,8 @@
       "whiffRecoveryFrames": 13,
       "range": 8.5,
       "forwardForce": 1.31,
-      "forwardForceStartFrame": 47,
-      "forwardForceEndFrame": 52,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29,
       "launchHeight": 2.15,
       "kiCost": 35,
       "healAmount": 8,
@@ -849,10 +851,10 @@
       "tracking": "none",
       "usesKi": true,
       "healsHp": true,
-      "onComboHitFrames": 34,
-      "onJuggleHitFrames": 38,
+      "onComboHitFrames": 33,
+      "onJuggleHitFrames": 24,
       "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 10,
+      "juggleRepeatPenaltyFrames": 15,
       "description": "Charge piercing Namekian energy at the fingers, then release a narrow launching spiral beam.",
       "pushback": 0.82,
       "blockPushback": 0.68,
@@ -1596,8 +1598,8 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.7,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 17,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 14,
       "label": "Ducking Namekian Jab",
       "hitLevel": "high",
       "tracking": "medium",
@@ -1618,8 +1620,8 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 20,
       "forwardForce": 2.56,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 17,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 14,
       "label": "Demon Jab Swipe",
       "hitLevel": "high",
       "tracking": "medium",
@@ -3471,5 +3473,357 @@
     "stageIntro": [
       "/characters/piccolo/sounds/voices/win-01.wav"
     ]
-  }
+  },
+  "beginnerComboRoutes": [
+    {
+      "id": "piccolo:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Demon Jab Swipe",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Ducking Namekian Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Namekian Kick",
+          "windowBefore": 16,
+          "windowAfter": 23,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "piccolo:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Namekian Twin Assault",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Stretch Arm Body Blow",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Namekian Kick",
+          "windowBefore": 15,
+          "windowAfter": 19,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "piccolo:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Namekian Sweep",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Namekian Sweep",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Namekian Kick",
+          "windowBefore": 14,
+          "windowAfter": 18,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "piccolo:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Namekian Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Demon Jab Swipe",
+          "windowBefore": 15,
+          "windowAfter": 19,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Namekian Kick",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "piccolo:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Demon Jab Swipe",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Namekian Twin Assault",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Namekian Kick",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "piccolo:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Demon Jab Swipe",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Namekian Twin Assault",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Namekian Kick",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "piccolo:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Namekian Twin Assault",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Namekian Sweep",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Namekian Kick",
+          "windowBefore": 14,
+          "windowAfter": 18,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "piccolo:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Namekian Sweep",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Demon Jab Swipe",
+          "windowBefore": 16,
+          "windowAfter": 23,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Namekian Kick",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

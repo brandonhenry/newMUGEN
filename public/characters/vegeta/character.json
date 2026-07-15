@@ -674,10 +674,10 @@
       "recoveryFrames": 18,
       "damage": 9,
       "blockDamage": 1,
-      "onBlockFrames": -2,
+      "onBlockFrames": -10,
       "onHitFrames": 10,
       "onCounterHitFrames": 14,
-      "whiffRecoveryFrames": 9,
+      "whiffRecoveryFrames": 10,
       "range": 1.71,
       "forwardForce": 1.2,
       "forwardForceStartFrame": 12,
@@ -685,11 +685,13 @@
       "label": "Heavy Saiyan Kick",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "knockdown": true,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 10,
+      "pushback": 1,
+      "blockPushback": 0.48
     },
     "cmd:f+1": {
       "startupFrames": 13,
@@ -986,16 +988,16 @@
       "whiffRecoveryFrames": 45,
       "range": 8.5,
       "forwardForce": 2.68,
-      "forwardForceStartFrame": 61,
-      "forwardForceEndFrame": 68,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 21,
       "label": "Galick Gun",
       "hitLevel": "special",
       "tracking": "none",
       "knockdown": false,
-      "onComboHitFrames": 34,
-      "onJuggleHitFrames": 38,
+      "onComboHitFrames": 33,
+      "onJuggleHitFrames": 24,
       "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 10,
+      "juggleRepeatPenaltyFrames": 14,
       "description": "Charge purple Saiyan energy at the palm, then release a launching full-screen Galick Gun.",
       "pushback": 0.82,
       "blockPushback": 0.68,
@@ -1682,8 +1684,8 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.32,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 13,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10,
       "label": "Ducking Saiyan Jab",
       "hitLevel": "high",
       "tracking": "medium",
@@ -1754,8 +1756,8 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 20,
       "forwardForce": 2.18,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 13,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10,
       "label": "Saiyan Quick Jab",
       "hitLevel": "high",
       "tracking": "medium",
@@ -1823,8 +1825,8 @@
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 7,
       "forwardForce": 1.72,
-      "forwardForceStartFrame": 20,
-      "forwardForceEndFrame": 28,
+      "forwardForceStartFrame": 25,
+      "forwardForceEndFrame": 49,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
       "label": "Sidestep Low Hop Kick",
@@ -3310,5 +3312,358 @@
         "maxDamageScale": 1.55
       }
     ]
-  }
+  },
+  "beginnerComboRoutes": [
+    {
+      "id": "vegeta:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Saiyan Quick Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Ducking Saiyan Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Saiyan Kick",
+          "windowBefore": 16,
+          "windowAfter": 23,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "vegeta:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Saiyan Twin Strike",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Saiyan Body Blow",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Saiyan Kick",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 34,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "vegeta:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Saiyan Sweep",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Saiyan Sweep",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Saiyan Kick",
+          "windowBefore": 13,
+          "windowAfter": 17,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 34,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "vegeta:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Saiyan Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Saiyan Twin Strike",
+          "windowBefore": 10,
+          "windowAfter": 14,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Saiyan Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 34,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "vegeta:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Saiyan Quick Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Saiyan Twin Strike",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Saiyan Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 34,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "vegeta:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Saiyan Quick Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Saiyan Twin Strike",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Saiyan Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 34,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "vegeta:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Saiyan Twin Strike",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Saiyan Sweep",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Saiyan Kick",
+          "windowBefore": 13,
+          "windowAfter": 17,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 34,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "vegeta:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Saiyan Sweep",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Saiyan Quick Jab",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Saiyan Kick",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 34,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

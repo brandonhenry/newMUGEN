@@ -1,11 +1,9 @@
-import type { ActionName, CharacterDefinition, FighterRuntime, ImpactSparkEvent, InputFrame, InputFrameWithMetadata, MatchSnapshot, MoveInput, MoveProjectileInstance } from '../types';
+import type { ActionName, BeginnerComboRoute, CharacterDefinition, ControlScheme, FighterRuntime, ImpactSparkEvent, InputFrame, InputFrameWithMetadata, MatchSnapshot, MoveInput, MoveProjectileInstance } from '../types';
 import { emptyInputFrame } from '../types';
-import { BEGINNER_AUTO_COMBO_INPUTS, resolveBeginnerAutoComboPlan } from './beginnerAutoCombos';
+import { beginnerGestureActions, beginnerGestureNotation, resolveBeginnerAutoComboPlan } from './beginnerAutoCombos';
 import { commandRouteFamily, commandToActions as commandRouteToActions } from './commandRoutes';
 import {
-  comboTrialCategoryLabels,
   comboTrialStepMatchesImpact,
-  generateComboTrials,
   resolveMoveRoutes,
   type ComboTrialStep,
   type GeneratedComboRoute
@@ -96,6 +94,7 @@ export type TrainingTrialDefinition = {
   successText: string;
   previewScript: TrainingPreviewFrame[];
   sourceComboRoute?: GeneratedComboRoute;
+  sourceBeginnerRoute?: BeginnerComboRoute;
 };
 
 export type TrainingTrialProgress = {
@@ -116,7 +115,7 @@ export type TrainingTrialNextResolution = {
   allComplete: boolean;
 };
 
-export const TRAINING_TRIAL_CATALOG_VERSION = 1;
+export const TRAINING_TRIAL_CATALOG_VERSION = 2;
 export const TRAINING_TRIAL_STORAGE_KEY = `kore.trainingTrials.v${TRAINING_TRIAL_CATALOG_VERSION}`;
 
 const actionToNotation: Partial<Record<ActionName, string>> = {
@@ -178,10 +177,10 @@ const categoryLabels: Record<TrainingTrialCategory, string> = {
 export const trainingTrialCategoryLabels = categoryLabels;
 export const trainingTrialModes: TrainingTrialMode[] = ['free', 'basics', 'combos'];
 
-export function generateTrainingTrials(character: CharacterDefinition, roster: CharacterDefinition[] = []): TrainingTrialDefinition[] {
+export function generateTrainingTrials(character: CharacterDefinition, roster: CharacterDefinition[] = [], controlScheme: ControlScheme = 'beginner'): TrainingTrialDefinition[] {
   return [
     ...generateBasicTrainingTrials(character, roster),
-    ...generateComboTrainingTrials(character)
+    ...generateComboTrainingTrials(character, controlScheme)
   ];
 }
 
@@ -466,49 +465,71 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
   return dedupeTrials(trials);
 }
 
-export function generateComboTrainingTrials(character: CharacterDefinition): TrainingTrialDefinition[] {
+export function generateComboTrainingTrials(character: CharacterDefinition, controlScheme: ControlScheme = 'beginner'): TrainingTrialDefinition[] {
   const systemTrial = makeRecoverableHealthTrial(character);
-  const routeTrials: TrainingTrialDefinition[] = generateComboTrials(character).map((route) => {
-    const routeIntent = comboRouteIntent(route);
-    const routeStepActions = route.steps.map(stepToActions);
-    const steps = route.steps.map((step, index): TrainingTrialStep => ({
-      id: `${route.id}:step:${index}`,
-      notation: normalizeTrainingNotation(step.notation, routeStepActions[index] ?? []),
-      label: step.label,
-      routeKey: step.routeKey,
-      animationKey: step.animationKey,
-      input: step.input,
-      command: step.command,
-      actions: routeStepActions[index] ?? stepToActions(step),
-      kind: 'impact',
-      targetFrame: index === 0 ? 18 : 14,
-      windowBefore: 6,
-      windowAfter: 8,
-      expectImpact: step.expect,
-      counterHit: step.counterHit,
-      reason: step.reason
-    }));
+  const catalog = character.beginnerComboRoutes ?? [];
+  const routeVariants = catalog.flatMap((route) => {
+    const resourceSensitive = route.family === 'core' && !route.id.endsWith('light-core');
+    return resourceSensitive ? [{ route, ki: 0, suffix: 'no-ki' }, { route, ki: 100, suffix: 'ki' }] : [{ route, ki: route.steps.some((step) => step.kiCommand || step.poweredKiFallback) ? 100 : 0, suffix: 'route' }];
+  });
+  const routeTrials: TrainingTrialDefinition[] = routeVariants.map(({ route, ki, suffix }): TrainingTrialDefinition => {
+    const steps: TrainingTrialStep[] = [];
+    route.steps.forEach((step, index) => {
+      if (step.movementBefore) {
+        const movementActions: ActionName[] = step.movementBefore === 'neutral' ? [] : [step.movementBefore];
+        steps.push({
+          id: `${route.id}:movement:${index}`,
+          notation: [step.movementBefore === 'neutral' ? 'Neutral' : actionToNotation[step.movementBefore] ?? step.movementBefore],
+          label: step.movementBefore === 'neutral' ? 'Return To Neutral' : step.movementBefore === 'dashForward' ? 'Dash Forward' : step.movementBefore === 'dashBack' ? 'Back Hop' : 'Jump',
+          actions: movementActions,
+          kind: 'state',
+          targetFrame: step.movementMinFrames ?? 1,
+          windowBefore: 0,
+          windowAfter: Math.max(4, (step.movementMaxFrames ?? 20) - (step.movementMinFrames ?? 1)),
+          requireState: step.movementBefore === 'neutral' ? 'idle' : step.movementBefore === 'jump' || step.movementBefore === 'dashBack' ? 'jump' : 'walk',
+          reason: 'Perform the route movement before the next attack.'
+        });
+      }
+      const useKi = ki > 0 && Boolean(step.kiCommand || step.poweredKiFallback);
+      const command = useKi && step.kiCommand ? step.kiCommand : step.command;
+      const actions = controlScheme === 'beginner'
+        ? beginnerGestureActions(step.gesture)
+        : commandRouteToActions(command, useKi && step.kiCommand ? commandInputFromNotation(command) ?? step.input : step.input);
+      const notation = controlScheme === 'beginner'
+        ? beginnerGestureNotation(step.gesture)
+        : normalizeTrainingNotation(command ? command.split('+') : [inputToButton[step.input]], actions);
+      steps.push({
+        id: `${route.id}:step:${index}`,
+        notation,
+        label: useKi ? `Ki ${step.label}` : step.label,
+        animationKey: useKi && step.kiAnimationKey ? step.kiAnimationKey : step.animationKey,
+        input: useKi && step.kiCommand ? commandInputFromNotation(step.kiCommand) ?? step.input : step.input,
+        command,
+        actions,
+        kind: 'impact',
+        targetFrame: index === 0 ? 18 : Math.max(8, step.windowBefore),
+        windowBefore: step.windowBefore,
+        windowAfter: step.windowAfter,
+        expectImpact: step.expect === 'launch' ? { launched: true } : step.expect === 'juggle' ? { juggled: true } : undefined,
+        expectImpactKinds: ['hit', 'counterHit', 'punish', 'whiffPunish'],
+        reason: step.expect === 'knockdown' ? 'Confirm the route finisher and knock the dummy down.' : 'Confirm this hit inside its authored link window.'
+      });
+    });
     return {
-      id: `combo:${route.id}`,
-      title: route.title,
+      id: `combo:${route.id}:${suffix}`,
+      title: `${route.title}${suffix === 'no-ki' ? ' (No Ki)' : suffix === 'ki' ? ' (Ki)' : ''}`,
       characterId: character.id,
       category: 'combo',
       mode: 'combos',
-      difficulty: route.level,
+      difficulty: route.family === 'core' ? 1 : 2,
       stageId: 'the-chamber',
-      setup: {
-        stageId: 'the-chamber',
-        dummyScript: route.steps[0]?.counterHit ? 'counterHit' : 'idle',
-        p1Position: { x: -0.45, z: 0 },
-        p2Position: { x: 0.45, z: 0 },
-        p1Ki: route.requiresKi ? 100 : undefined
-      },
+      setup: { stageId: 'the-chamber', dummyScript: 'idle', p1Position: { x: -0.45, z: 0 }, p2Position: { x: 0.45, z: 0 }, p1Ki: ki },
       steps,
-      lesson: `${comboTrialCategoryLabels[route.category]}: ${routeIntent}. ${route.reason}`,
-      zoroLine: comboRouteZoroLine(route),
-      successText: 'Route complete.',
+      lesson: `${controlScheme === 'beginner' ? 'Use simple attacks' : 'Use the mapped KORE commands'} and confirm each hit. Blocks and whiffs reset the route; movement steps are manual.`,
+      zoroLine: 'Confirm the cut. Then take the next step.',
+      successText: 'Beginner route complete.',
       previewScript: makePreviewScript(steps),
-      sourceComboRoute: route
+      sourceBeginnerRoute: route
     };
   });
   return systemTrial ? [systemTrial, ...routeTrials] : routeTrials;
@@ -558,27 +579,6 @@ function makeRecoverableHealthTrial(character: CharacterDefinition): TrainingTri
     successText: 'Recoverable health lesson complete.',
     previewScript: makePreviewScript(steps)
   };
-}
-
-function comboRouteIntent(route: GeneratedComboRoute) {
-  if (route.tier === 'marathon') return `Marathon ${route.structure.join(' / ')} route for about ${route.estimatedDamage} damage`;
-  if (route.launchRouteStyle === 'grounded') return `Grounded launcher route for about ${route.estimatedDamage} damage`;
-  if (route.launchRouteStyle === 'airChase') return `Air chase launcher route for about ${route.estimatedDamage} damage`;
-  if (route.launchRouteStyle === 'hybrid') return `Hybrid launcher route for about ${route.estimatedDamage} damage`;
-  if (route.structure.includes('tornado')) return `Tornado extender route for about ${route.estimatedDamage} damage`;
-  if (route.structure.includes('counterHit')) return `Counter-hit link route for about ${route.estimatedDamage} damage`;
-  if (route.structure.includes('crouch')) return `Crouch or while-standing branch for about ${route.estimatedDamage} damage`;
-  if (route.structure.includes('ki')) return `Ki route for about ${route.estimatedDamage} damage`;
-  return `${route.rewardClass} route for about ${route.estimatedDamage} damage`;
-}
-
-function comboRouteZoroLine(route: GeneratedComboRoute) {
-  if (route.tier === 'marathon') return 'Long route. Stay clean, keep the order.';
-  if (route.category === 'launcher') return 'Launch first. Keep the air route clean.';
-  if (route.category === 'counterHit') return 'Make them swing, then cut through it.';
-  if (route.structure.includes('tornado')) return 'Extend once the juggle is real.';
-  if (route.structure.includes('ki')) return 'Spend power only after the opening.';
-  return 'One clean input after another.';
 }
 
 export function makeTrainingTrialProgress(trial: TrainingTrialDefinition | null, preview = false, attempts = 0): TrainingTrialProgress | null {
@@ -1525,46 +1525,42 @@ function makeBasicButtonSteps(character: CharacterDefinition): Array<{
     }));
 }
 
-function makeBeginnerAutoComboTrial(character: CharacterDefinition, dummy: CharacterDefinition | undefined) {
-  const plan = resolveBeginnerAutoComboPlan(character);
-  if (!BEGINNER_AUTO_COMBO_INPUTS.every((input) => character.moves.some((move) => move.input === input && !move.command))) return null;
-
-  const routeIntent = plan.sourceRoute ? comboRouteIntent(plan.sourceRoute) : undefined;
-  const steps: MixedTrialStepInput[] = BEGINNER_AUTO_COMBO_INPUTS.map((input, index) => {
-    const isFinisher = index === BEGINNER_AUTO_COMBO_INPUTS.length - 1;
-    const finisherStep = isFinisher ? plan.finisherStep : undefined;
-    return {
-      id: isFinisher ? 'finisher' : input,
-      routeKey: finisherStep?.routeKey,
-      animationKey: finisherStep?.animationKey,
-      notation: [inputToButton[input]],
-      label: isFinisher ? `${inputToButton[input]} Special: ${plan.finisherLabel}` : `${inputToButton[input]} Button`,
-      input,
-      actions: [inputToAction[input]],
-      kind: 'state',
-      requireState: 'attack',
-      reason: isFinisher
-        ? routeIntent
-          ? `Beginner 4 selects ${plan.finisherLabel}: ${routeIntent}.`
-          : `Beginner 4 finishes with ${plan.finisherLabel}.`
-        : `Press ${inputToButton[input]} as the Beginner auto combo advances.`
-    };
-  });
-
-  return makeMixedTrial(
-    character,
-    dummy,
-    'offense',
-    'offense:beginner-auto-combo',
-    'Beginner Auto Combo',
+function makeBeginnerAutoComboTrial(character: CharacterDefinition, dummy: CharacterDefinition | undefined): TrainingTrialDefinition | null {
+  const route = resolveBeginnerAutoComboPlan(character, { family: 'light' }).sourceRoute;
+  if (!route) return null;
+  const setup = makeSetup(dummy, 'idle');
+  const steps: TrainingTrialStep[] = route.steps.map((step, index) => ({
+    id: `beginner-core:${index}`,
+    animationKey: step.animationKey,
+    notation: beginnerGestureNotation(step.gesture),
+    label: index === route.steps.length - 1 ? `${step.label} Knockdown` : step.label,
+    input: step.input,
+    command: step.command,
+    actions: beginnerGestureActions(step.gesture),
+    kind: 'impact',
+    targetFrame: index === 0 ? 18 : Math.max(8, step.windowBefore),
+    windowBefore: step.windowBefore,
+    windowAfter: step.windowAfter,
+    expectImpactKinds: ['hit', 'counterHit', 'punish', 'whiffPunish'],
+    reason: index === route.steps.length - 1 ? 'Confirm the third Light for a guaranteed knockdown.' : 'Only a confirmed hit advances the Beginner route.'
+  }));
+  return {
+    id: `basic:${character.id}:offense:beginner-auto-combo`,
+    title: 'Beginner Light Route',
+    characterId: character.id,
+    category: 'offense',
+    mode: 'basics',
+    difficulty: 1,
+    stageId: setup.stageId,
+    dummyCharacterId: dummy?.id,
+    setup,
     steps,
-    routeIntent
-      ? `Beginner controls keep the input simple while still using ${plan.finisherLabel}: ${routeIntent}.`
-      : `Beginner controls keep the input simple: press 4 through the chain and finish with ${plan.finisherLabel}.`,
-    'Simple inputs. Real finish.',
-    'Beginner auto combo complete.',
-    { sourceComboRoute: plan.sourceRoute }
-  );
+    lesson: 'Press Light three times and confirm each hit. A block or whiff resets the route; the third confirmed hit knocks down.',
+    zoroLine: 'Simple inputs. Real finish.',
+    successText: 'Beginner Light route complete.',
+    previewScript: makePreviewScript(steps),
+    sourceBeginnerRoute: route
+  };
 }
 
 function routeToTrialStep(

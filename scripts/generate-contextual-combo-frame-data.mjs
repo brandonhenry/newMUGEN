@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const timingKeys = ['startupFrames', 'activeFrames', 'recoveryFrames'];
-const retunedKeys = ['damage', 'blockDamage', 'onComboHitFrames', 'onJuggleHitFrames', 'comboRepeatPenaltyFrames', 'juggleRepeatPenaltyFrames'];
+const retunedKeys = ['onComboHitFrames', 'onJuggleHitFrames', 'comboRepeatPenaltyFrames', 'juggleRepeatPenaltyFrames'];
 const baseKeys = new Set(['jableft', 'jabright', 'kickleft', 'kickright']);
 const buttonToInput = { 1: 'jab', 2: 'heavy', 3: 'kick', 4: 'special' };
 
@@ -123,51 +123,12 @@ function commandAdvantageFields(move) {
   };
 }
 
-function damageBudgetFields(move) {
-  if ((move.damage ?? 0) <= 0) return {};
-  const command = resolvedCommandForMove(move);
-  const advanced = isAdvancedCommand(command);
-  const currentDamage = Math.max(1, Math.round(move.damage ?? 1));
-  const isKi = Boolean(move.usesKi || move.kiBurst || (command && /^O\+/.test(command)));
-  const isLauncher = Boolean(move.launchHeight);
-  const isTornado = Boolean(move.tornado);
-  const isLow = move.hitLevel === 'low';
-  let target = currentDamage;
-
-  if (!advanced) {
-    if (move.input === 'jab') target = clamp(currentDamage, 5, 8);
-    else if (move.input === 'heavy') target = clamp(currentDamage, 7, 11);
-    else if (move.input === 'kick') target = clamp(currentDamage, 7, 12);
-    else target = clamp(currentDamage, 9, 14);
-  } else if (isKi) {
-    target = clamp(currentDamage, 16, 22);
-  } else if (isLauncher) {
-    target = clamp(currentDamage, 12, 16);
-  } else if (isTornado) {
-    target = clamp(currentDamage, 10, 16);
-  } else if (isLow) {
-    target = clamp(currentDamage, 8, 12);
-  } else if (move.knockdown) {
-    target = clamp(currentDamage, 10, 17);
-  } else {
-    target = clamp(currentDamage, 8, 16);
-  }
-
-  const blockDamage = Math.max(0, Math.min(Math.round(move.blockDamage ?? 0), Math.floor(target * 0.25)));
-  return {
-    damage: target,
-    blockDamage
-  };
-}
-
 function contextualFields(move) {
-  const tunedMove = { ...move, ...damageBudgetFields(move) };
   return {
-    ...damageBudgetFields(move),
-    onComboHitFrames: defaultOnComboHitFrames(tunedMove),
-    onJuggleHitFrames: defaultOnJuggleHitFrames(tunedMove),
-    comboRepeatPenaltyFrames: defaultComboRepeatPenaltyFrames(tunedMove),
-    juggleRepeatPenaltyFrames: defaultJuggleRepeatPenaltyFrames(tunedMove)
+    onComboHitFrames: defaultOnComboHitFrames(move),
+    onJuggleHitFrames: defaultOnJuggleHitFrames(move),
+    comboRepeatPenaltyFrames: defaultComboRepeatPenaltyFrames(move),
+    juggleRepeatPenaltyFrames: defaultJuggleRepeatPenaltyFrames(move)
   };
 }
 

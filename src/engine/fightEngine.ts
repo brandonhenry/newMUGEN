@@ -23,7 +23,13 @@ import type {
 } from '../types';
 import { ROUNDS_TO_WIN, emptyInputFrame } from '../types';
 import { getCharacterCombatScale, getCharacterGlobalScale } from '../lib/characterScale';
-import { BEGINNER_AUTO_COMBO_INPUTS, resolveBeginnerAutoComboPlan } from '../lib/beginnerAutoCombos';
+import {
+  BEGINNER_AUTO_COMBO_KI_COST,
+  BEGINNER_SPECIAL_CHORD_GRACE_FRAMES,
+  beginnerMovementSatisfied,
+  resolveBeginnerGesture,
+  resolveBeginnerRouteStep
+} from '../lib/beginnerAutoCombos';
 import { scaledComboDamage } from '../lib/comboDamage';
 import { contextualComboFrameData, contextualHitAdvantage } from '../lib/comboFrameMath';
 import {
@@ -211,7 +217,7 @@ export function createMatch(
   const maxHealth = normalizeMaxHealth(options.maxHealth);
   const aiSeed = normalizeAiSeed(options.aiSeed);
   const roster = normalizeTransformRoster(options.roster, p1, p2);
-  const controlScheme = options.controlScheme === 'beginner' ? 'beginner' : 'kore';
+  const controlScheme = options.controlScheme === 'kore' ? 'kore' : 'beginner';
   const match: MatchSnapshot = {
     fighters: [createFighter(1, p1, -START_DISTANCE / 2, maxHealth), createFighter(2, p2, START_DISTANCE / 2, maxHealth)],
     roster,
@@ -440,6 +446,12 @@ function releaseTimeStopActivator(fighter: FighterRuntime) {
   fighter.comboTimer = 0;
   fighter.comboStep = 0;
   fighter.comboSequence = [];
+  fighter.beginnerGestureSequence = [];
+  fighter.beginnerActiveRouteId = null;
+  fighter.beginnerPendingRouteStep = -1;
+  fighter.beginnerPendingSpecialIntent = null;
+  fighter.beginnerSpecialGraceFrames = 0;
+  fighter.horizontalKnockback = null;
   fighter.comboIdentitySequence = [];
   fighter.comboFamilySequence = [];
   fighter.comboVisualFamilySequence = [];
@@ -768,6 +780,12 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     comboHits: 0,
     comboContactHits: 0,
     comboDamage: 0,
+    beginnerGestureSequence: [],
+    beginnerActiveRouteId: null,
+    beginnerPendingRouteStep: -1,
+    beginnerPendingSpecialIntent: null,
+    beginnerSpecialGraceFrames: 0,
+    horizontalKnockback: null,
     bufferedMoveInput: null,
     bufferedMoveFrames: 0,
     bufferedMoveIntent: null,
@@ -933,6 +951,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   };
   const jumpPressed = input.jump && !fighter.jumpInputHeld;
   const frameDelta = secondsToFrames(dt);
+  applyHorizontalKnockback(fighter, frameDelta);
   fighter.jumpInputHeld = input.jump;
   fighter.blockFlash = 0;
   fighter.hitFlash = 0;
@@ -951,6 +970,9 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     fighter.comboHits = 0;
     fighter.comboContactHits = 0;
     fighter.comboDamage = 0;
+    fighter.beginnerGestureSequence = [];
+    fighter.beginnerActiveRouteId = null;
+    fighter.beginnerPendingRouteStep = -1;
     fighter.aiActiveComboRouteId = null;
   }
   fighter.aiJuggleLockoutFrames = Math.max(0, fighter.aiJuggleLockoutFrames - frameDelta);
@@ -990,9 +1012,10 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   }
 
   const rawFreshMoveIntent = transformDestination ? null : getFreshMoveIntent(fighter, input);
-  const freshMoveIntent = rawFreshMoveIntent ? resolveControlSchemeMoveIntent(match, fighter, opponent, rawFreshMoveIntent) : null;
+  const graceResolvedMoveIntent = resolveBeginnerSpecialChordGrace(match, fighter, opponent, rawFreshMoveIntent, frameDelta);
+  const freshMoveIntent = graceResolvedMoveIntent ? resolveControlSchemeMoveIntent(match, fighter, opponent, graceResolvedMoveIntent) : null;
   const freshMoveInput = freshMoveIntent?.moveInput ?? null;
-  if (freshMoveIntent && canBufferFreshMoveInput(fighter)) bufferMoveIntent(fighter, freshMoveIntent);
+  if (freshMoveIntent && canBufferFreshMoveInput(fighter, freshMoveIntent)) bufferMoveIntent(fighter, freshMoveIntent);
 
   if (
     fighter.state === 'chargeKi' &&
@@ -1148,7 +1171,11 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   }
   if (input.down) fighter.forcedCrouchFrames = 0;
 
-  const moveIntent = fighter.bufferedMoveIntent ?? freshMoveIntent;
+  const bufferedIntent = fighter.bufferedMoveIntent?.beginnerAwaitingHitConfirm
+    ? resolveControlSchemeMoveIntent(match, fighter, opponent, { ...fighter.bufferedMoveIntent, beginnerAwaitingHitConfirm: false })
+    : fighter.bufferedMoveIntent;
+  if (fighter.bufferedMoveIntent?.beginnerAwaitingHitConfirm && !bufferedIntent) clearBufferedMoveInput(fighter);
+  const moveIntent = bufferedIntent ?? freshMoveIntent;
   if (moveIntent) {
     const moveInput = moveIntent.moveInput;
     const moveInputSnapshot = moveIntent.inputSnapshot;
@@ -1595,7 +1622,7 @@ function previewResolvedMove(
   const sequence = [moveInput];
   const command = intent?.beginnerForcedCommand ? makeCommandCandidate(intent.beginnerForcedCommand) : findConfiguredCommand(fighter, opponent, input, moveInput);
   const move = buildComboMove(fighter.character, baseMove, moveInput, route, 1, sequence, command);
-  return scaleBeginnerMoveDamage(input.charge ? buildKiBurstMove(move, getMoveKiCost(move)) : move, intent?.beginnerDamageScale);
+  return scaleBeginnerMoveDamage(input.charge || intent?.beginnerUseKiBurst ? buildKiBurstMove(move, intent?.beginnerUseKiBurst ? BEGINNER_AUTO_COMBO_KI_COST : getMoveKiCost(move)) : move, intent?.beginnerDamageScale);
 }
 
 function beginLotusFinisherCinematic(match: MatchSnapshot, attacker: FighterRuntime, defender: FighterRuntime, move: MoveDefinition) {
@@ -1685,16 +1712,24 @@ function clearThrowRuntime(fighter: FighterRuntime) {
 }
 
 function bufferMoveIntent(fighter: FighterRuntime, intent: NonNullable<FighterRuntime['bufferedMoveIntent']>) {
+  const bufferFrames = Math.max(1, Math.min(ATTACK_BUFFER_FRAMES, Math.round(intent.beginnerWindowBefore ?? ATTACK_BUFFER_FRAMES)));
   fighter.bufferedMoveIntent = {
     moveInput: intent.moveInput,
     inputSnapshot: cloneInputFrame(intent.inputSnapshot),
-    framesRemaining: ATTACK_BUFFER_FRAMES,
+    framesRemaining: bufferFrames,
     sequence: intent.sequence,
     beginnerDamageScale: intent.beginnerDamageScale,
-    beginnerForcedCommand: intent.beginnerForcedCommand
+    beginnerForcedCommand: intent.beginnerForcedCommand,
+    beginnerUseKiBurst: intent.beginnerUseKiBurst,
+    beginnerRouteId: intent.beginnerRouteId,
+    beginnerRouteStep: intent.beginnerRouteStep,
+    beginnerGesture: intent.beginnerGesture,
+    beginnerWindowBefore: intent.beginnerWindowBefore,
+    beginnerWindowAfter: intent.beginnerWindowAfter,
+    beginnerAwaitingHitConfirm: intent.beginnerAwaitingHitConfirm
   };
   fighter.bufferedMoveInput = intent.moveInput;
-  fighter.bufferedMoveFrames = ATTACK_BUFFER_FRAMES;
+  fighter.bufferedMoveFrames = bufferFrames;
 }
 
 function tickBufferedMoveIntent(fighter: FighterRuntime, frameDelta: number) {
@@ -1715,11 +1750,11 @@ function clearBufferedMoveInput(fighter: FighterRuntime) {
   fighter.bufferedMoveIntent = null;
 }
 
-function canBufferFreshMoveInput(fighter: FighterRuntime) {
+function canBufferFreshMoveInput(fighter: FighterRuntime, intent?: FighterRuntime['bufferedMoveIntent']) {
   // Recovery is a committed state: non-cancelable follow-ups must be pressed
   // after the current attack has fully completed. Authored hit-cancels still
   // use the fresh intent directly in the attack branch below.
-  if (fighter.state === 'attack') return false;
+  if (fighter.state === 'attack') return Boolean(intent?.beginnerAwaitingHitConfirm);
   if (fighter.state === 'juggle' || fighter.state === 'knockdown' || fighter.state === 'transform' || fighter.state === 'throwHold' || fighter.state === 'throwHeld') return false;
   if (fighter.state === 'chargeKi' && (fighter.chargePhase === 'startup' || fighter.chargePhase === 'recovery')) return false;
   return true;
@@ -1832,6 +1867,11 @@ function completeTransform(fighter: FighterRuntime, target: CharacterDefinition,
   fighter.comboTimer = 0;
   fighter.comboStep = 0;
   fighter.comboSequence = [];
+  fighter.beginnerGestureSequence = [];
+  fighter.beginnerActiveRouteId = null;
+  fighter.beginnerPendingRouteStep = -1;
+  fighter.beginnerPendingSpecialIntent = null;
+  fighter.beginnerSpecialGraceFrames = 0;
   fighter.comboIdentitySequence = [];
   fighter.comboFamilySequence = [];
   fighter.comboVisualFamilySequence = [];
@@ -2226,36 +2266,115 @@ function resolveControlSchemeMoveIntent(
   intent: FighterRuntime['bufferedMoveIntent']
 ): FighterRuntime['bufferedMoveIntent'] {
   if (!intent || match.controlScheme !== 'beginner') return intent;
-  if (hasExplicitFullDamageKoreCommand(fighter, opponent, intent.inputSnapshot, intent.moveInput)) return intent;
-  if (intent.moveInput !== 'special') {
-    return { ...intent, beginnerDamageScale: BEGINNER_DAMAGE_SCALE };
+  if (!isBeginnerSpecialChordIntent(intent.inputSnapshot) && hasExplicitFullDamageKoreCommand(fighter, opponent, intent.inputSnapshot, intent.moveInput)) return intent;
+  // Preview/test fighters and legacy custom manifests without a checked-in route
+  // catalog keep their authored controls. Every roster fighter receives routes at
+  // build time, so this does not weaken Beginner routing for playable characters.
+  if (!fighter.character.beginnerComboRoutes?.length) return intent;
+  if (fighter.beginnerGestureSequence.length > fighter.comboHits) {
+    if (fighter.state === 'attack' && fighter.beginnerActiveRouteId) {
+      return {
+        ...intent,
+        beginnerDamageScale: BEGINNER_DAMAGE_SCALE,
+        beginnerAwaitingHitConfirm: true
+      };
+    }
+    resetBeginnerRoute(fighter);
+    return null;
   }
-
-  const autoStep = getBeginnerAutoComboStep(fighter);
-  const moveInput = BEGINNER_AUTO_COMBO_INPUTS[Math.min(autoStep, BEGINNER_AUTO_COMBO_INPUTS.length - 1)] ?? 'special';
-  const beginnerForcedCommand = moveInput === 'special'
-    ? selectBeginnerAutoComboFinisher(fighter)
-    : undefined;
+  const confirmedGestures = fighter.beginnerGestureSequence.slice(0, fighter.comboHits);
+  const gesture = resolveBeginnerGesture(intent.inputSnapshot, intent.moveInput);
+  let resolution = resolveBeginnerRouteStep(
+    fighter.character,
+    confirmedGestures,
+    gesture,
+    fighter.ki,
+    fighter.beginnerActiveRouteId
+  );
+  if (!resolution && confirmedGestures.length > 0) {
+    resetBeginnerRoute(fighter);
+    resolution = resolveBeginnerRouteStep(fighter.character, [], gesture, fighter.ki);
+  }
+  if (!resolution) return { ...intent, beginnerDamageScale: BEGINNER_DAMAGE_SCALE };
+  if (!beginnerMovementSatisfied(resolution.step.movementBefore, fighter, intent.inputSnapshot)) {
+    return null;
+  }
+  const moveInput = resolution.moveInput;
+  const beginnerForcedCommand = resolution.forcedCommand;
   const inputSnapshot = cloneInputFrame(intent.inputSnapshot);
   for (const action of moveInputs) inputSnapshot[action] = action === moveInput;
-  if (beginnerForcedCommand?.startsWith('O+')) inputSnapshot.charge = false;
+  inputSnapshot.charge = false;
 
   return {
     ...intent,
     moveInput,
     inputSnapshot,
     beginnerDamageScale: BEGINNER_DAMAGE_SCALE,
-    beginnerForcedCommand
+    beginnerForcedCommand,
+    beginnerUseKiBurst: resolution.usePoweredKi,
+    beginnerRouteId: resolution.route.id,
+    beginnerRouteStep: resolution.stepIndex,
+    beginnerGesture: resolution.gesture,
+    beginnerWindowBefore: resolution.step.windowBefore,
+    beginnerWindowAfter: resolution.step.windowAfter
   };
 }
 
-function getBeginnerAutoComboStep(fighter: FighterRuntime) {
-  if (fighter.state === 'attack' || fighter.comboTimer > 0) return Math.min(3, Math.max(0, fighter.comboStep));
-  return 0;
+function resolveBeginnerSpecialChordGrace(
+  match: MatchSnapshot,
+  fighter: FighterRuntime,
+  opponent: FighterRuntime,
+  intent: FighterRuntime['bufferedMoveIntent'],
+  frameDelta: number
+): FighterRuntime['bufferedMoveIntent'] {
+  if (match.controlScheme !== 'beginner' || !fighter.character.beginnerComboRoutes?.length) return intent;
+
+  const pending = fighter.beginnerPendingSpecialIntent;
+  if (pending && intent && intent.moveInput !== 'special') {
+    const chordIntent = {
+      ...intent,
+      inputSnapshot: cloneInputFrame(intent.inputSnapshot)
+    };
+    chordIntent.inputSnapshot.special = true;
+    fighter.beginnerPendingSpecialIntent = null;
+    fighter.beginnerSpecialGraceFrames = 0;
+    return chordIntent;
+  }
+
+  if (intent && !isBeginnerSpecialChordIntent(intent.inputSnapshot) && hasExplicitFullDamageKoreCommand(fighter, opponent, intent.inputSnapshot, intent.moveInput)) return intent;
+
+  if (intent?.moveInput === 'special') {
+    const hasChordAttack = intent.inputSnapshot.jab || intent.inputSnapshot.heavy || intent.inputSnapshot.kick;
+    if (hasChordAttack) {
+      const chordMoveInput: MoveInput = intent.inputSnapshot.jab ? 'jab' : intent.inputSnapshot.heavy ? 'heavy' : 'kick';
+      return { ...intent, moveInput: chordMoveInput };
+    }
+    fighter.beginnerPendingSpecialIntent = {
+      ...intent,
+      inputSnapshot: cloneInputFrame(intent.inputSnapshot)
+    };
+    fighter.beginnerSpecialGraceFrames = BEGINNER_SPECIAL_CHORD_GRACE_FRAMES;
+    return null;
+  }
+
+  if (!pending) return intent;
+  fighter.beginnerSpecialGraceFrames = Math.max(0, fighter.beginnerSpecialGraceFrames - frameDelta);
+  if (fighter.beginnerSpecialGraceFrames > 0) return intent;
+  fighter.beginnerPendingSpecialIntent = null;
+  return pending;
 }
 
-function selectBeginnerAutoComboFinisher(fighter: FighterRuntime): string | undefined {
-  return resolveBeginnerAutoComboPlan(fighter.character, { ki: fighter.ki }).finisherCommand;
+function isBeginnerSpecialChordIntent(input: InputFrame) {
+  return input.special && (input.jab || input.heavy || input.kick);
+}
+
+function resetBeginnerRoute(fighter: FighterRuntime) {
+  fighter.beginnerGestureSequence = [];
+  fighter.beginnerActiveRouteId = null;
+  fighter.beginnerPendingRouteStep = -1;
+  fighter.beginnerPendingSpecialIntent = null;
+  fighter.beginnerSpecialGraceFrames = 0;
+  if (fighter.bufferedMoveIntent?.beginnerAwaitingHitConfirm) clearBufferedMoveInput(fighter);
 }
 
 function hasExplicitFullDamageKoreCommand(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame, moveInput: MoveInput) {
@@ -2408,8 +2527,8 @@ function startComboAttack(
     if (fighter.bufferedMoveInput === moveInput) clearBufferedMoveInput(fighter);
     return false;
   }
-  const chargedIntent = input.charge;
-  const kiCost = getMoveKiCost(move);
+  const chargedIntent = input.charge || Boolean(intent?.beginnerUseKiBurst);
+  const kiCost = intent?.beginnerUseKiBurst ? BEGINNER_AUTO_COMBO_KI_COST : getMoveKiCost(move);
   const commandConsumesKi = Boolean(command?.notation.startsWith('O+'));
   const spendsKi = chargedIntent || moveUsesKi(move) || commandConsumesKi;
   if (spendsKi && fighter.ki < kiCost) {
@@ -2453,6 +2572,11 @@ function startComboAttack(
   fighter.comboIdentitySequence = continuing ? [...fighter.comboIdentitySequence, identity].slice(-COMBO_SEQUENCE_MEMORY) : [identity];
   fighter.comboFamilySequence = continuing ? [...fighter.comboFamilySequence, family].slice(-COMBO_SEQUENCE_MEMORY) : [family];
   fighter.comboVisualFamilySequence = continuing ? [...fighter.comboVisualFamilySequence, visualFamily].slice(-COMBO_SEQUENCE_MEMORY) : [visualFamily];
+  if (intent?.beginnerGesture && intent.beginnerRouteId) {
+    fighter.beginnerGestureSequence = [...fighter.beginnerGestureSequence.slice(0, fighter.comboHits), intent.beginnerGesture];
+    fighter.beginnerActiveRouteId = intent.beginnerRouteId;
+    fighter.beginnerPendingRouteStep = intent.beginnerRouteStep ?? fighter.beginnerGestureSequence.length - 1;
+  }
   if (!continuing) {
     fighter.comboUsedKeys = [];
     fighter.aiJuggleLockoutFrames = 0;
@@ -2786,8 +2910,7 @@ function applyJuggleLoopBreakerHit(
   enterKnockdown(defender, Math.max(KNOCKDOWN_MIN_FRAMES + GETUP_FRAMES, breakerMove.onHitFrames + KNOCKDOWN_MIN_FRAMES));
   const pushX = distance > 0 ? dx / distance : attacker.facing;
   const pushZ = distance > 0 ? dz / distance : 0;
-  defender.position.x += pushX * Math.max(0.2, breakerMove.pushback) * 0.22;
-  defender.position.z += pushZ * Math.max(0.2, breakerMove.pushback) * 0.22;
+  queueHorizontalKnockback(defender, pushX * Math.max(0.2, breakerMove.pushback) * 0.22, pushZ * Math.max(0.2, breakerMove.pushback) * 0.22, 10);
   applyVisualHitstop(attacker, defender, breakerMove, 'hit');
   if (defender.hp <= 0) beginRoundFinisher(match, attacker, defender, impactId, position);
 }
@@ -2833,8 +2956,7 @@ function applyShadowCloneJuggleLoopBreakerHit(
   enterKnockdown(defender, Math.max(KNOCKDOWN_MIN_FRAMES + GETUP_FRAMES, breakerMove.onHitFrames + KNOCKDOWN_MIN_FRAMES));
   const pushX = distance > 0 ? dx / distance : cloneFighter.facing;
   const pushZ = distance > 0 ? dz / distance : 0;
-  defender.position.x += pushX * Math.max(0.2, breakerMove.pushback) * 0.16;
-  defender.position.z += pushZ * Math.max(0.2, breakerMove.pushback) * 0.16;
+  queueHorizontalKnockback(defender, pushX * Math.max(0.2, breakerMove.pushback) * 0.16, pushZ * Math.max(0.2, breakerMove.pushback) * 0.16, 10);
   applyShadowCloneVisualHitstop(attacker, defender, breakerMove, 'hit');
   scheduleShadowCloneVanish(attacker);
   if (defender.hp <= 0) beginRoundFinisher(match, attacker, defender, impactId, position);
@@ -4037,6 +4159,7 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
   const attackerRemaining = Math.max(1, projectile.lifetimeFrames - projectile.ageFrames);
   if (blocked) {
     attacker.hitConfirmed = false;
+    resetBeginnerRoute(attacker);
     if (!moveUsesKi(move)) {
       attacker.ki = clamp(attacker.ki + KI_BLOCK_GAIN + Math.max(0, move.blockDamage), 0, KI_MAX);
       syncDisplayedKiIfNotCharging(attacker);
@@ -4051,8 +4174,7 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
     defender.stunTimer = framesToSeconds(defender.blockstunFramesRemaining);
     defender.state = defender.state === 'crouchBlock' ? 'crouchBlock' : 'block';
     defender.tornadoReactionFrames = 0;
-    defender.position.x += pushX * move.blockPushback * 0.14;
-    defender.position.z += pushZ * move.blockPushback * 0.14;
+    queueHorizontalKnockback(defender, pushX * move.blockPushback * 0.14, pushZ * move.blockPushback * 0.14, 5);
     applyVisualHitstop(attacker, defender, move, 'block');
     if (defender.hp <= 0) beginRoundFinisher(match, attacker, defender, impactId, position);
     return;
@@ -4131,8 +4253,12 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
   const hitPushback = wasJuggled
     ? getProgressiveJugglePushback(move, nextJuggleHitCount, tornadoExtendsJuggle)
     : clamp(Math.max(move.pushback, PROJECTILE_MIN_HIT_PUSHBACK), 0, PROJECTILE_MAX_HIT_PUSHBACK) * 0.28;
-  defender.position.x += pushX * hitPushback;
-  defender.position.z += pushZ * hitPushback;
+  queueHorizontalKnockback(
+    defender,
+    pushX * hitPushback,
+    pushZ * hitPushback,
+    move.knockdown || move.kiBurst ? 10 : wasJuggled || wasAirborne ? 8 : 6
+  );
   applyVisualHitstop(attacker, defender, move, counterHit ? 'counterHit' : whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : 'hit');
   if (defender.hp <= 0) beginRoundFinisher(match, attacker, defender, impactId, position);
 }
@@ -4438,6 +4564,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
 
   if (blocked) {
     attacker.hitConfirmed = false;
+    resetBeginnerRoute(attacker);
     if (!moveUsesKi(move)) {
       attacker.ki = clamp(attacker.ki + KI_BLOCK_GAIN + Math.max(0, move.blockDamage), 0, KI_MAX);
       syncDisplayedKiIfNotCharging(attacker);
@@ -4463,8 +4590,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     defender.juggleTornadoCount = 0;
     defender.juggleGravityScale = JUGGLE_GRAVITY_SCALE;
     defender.tornadoReactionFrames = 0;
-    defender.position.x += pushX * move.blockPushback * 0.14;
-    defender.position.z += pushZ * move.blockPushback * 0.14;
+    queueHorizontalKnockback(defender, pushX * move.blockPushback * 0.14, pushZ * move.blockPushback * 0.14, 5);
     applyVisualHitstop(attacker, defender, move, 'block');
     if (defender.hp <= 0) beginRoundFinisher(match, attacker, defender, impactId, collision.position);
     return;
@@ -4579,8 +4705,12 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   const hitPushback = wasJuggled
     ? getProgressiveJugglePushback(move, nextJuggleHitCount, tornadoExtendsJuggle)
     : move.pushback * 0.28;
-  defender.position.x += pushX * hitPushback;
-  defender.position.z += pushZ * hitPushback;
+  queueHorizontalKnockback(
+    defender,
+    pushX * hitPushback,
+    pushZ * hitPushback,
+    forceKnockdown || move.kiBurst ? 10 : wasJuggled || wasAirborne ? 8 : 6
+  );
   applyVisualHitstop(attacker, defender, move, counterHit ? 'counterHit' : whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : 'hit');
   if (defender.hp <= 0) beginRoundFinisher(match, attacker, defender, impactId, collision.position);
 }
@@ -4657,8 +4787,7 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
     defender.stunTimer = framesToSeconds(defender.blockstunFramesRemaining);
     defender.state = defender.state === 'crouchBlock' ? 'crouchBlock' : 'block';
     defender.forcedCrouchFrames = 0;
-    defender.position.x += pushX * weakMove.blockPushback * 0.12;
-    defender.position.z += pushZ * weakMove.blockPushback * 0.12;
+    queueHorizontalKnockback(defender, pushX * weakMove.blockPushback * 0.12, pushZ * weakMove.blockPushback * 0.12, 5);
     applyShadowCloneVisualHitstop(attacker, defender, weakMove, 'block');
     return;
   }
@@ -4712,8 +4841,7 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
   const clonePushback = wasJuggled
     ? getProgressiveJugglePushback(weakMove, defender.juggleHitCount, false)
     : weakMove.pushback * 0.18;
-  defender.position.x += pushX * clonePushback;
-  defender.position.z += pushZ * clonePushback;
+  queueHorizontalKnockback(defender, pushX * clonePushback, pushZ * clonePushback, sourceMove.kiBurst || sourceMove.knockdown ? 10 : wasJuggled ? 8 : 6);
   applyShadowCloneVisualHitstop(attacker, defender, weakMove, 'hit');
   if (defender.hp <= 0) beginRoundFinisher(match, attacker, defender, impactId, collision.position);
 }
@@ -5114,6 +5242,7 @@ function applyWhiffRecoveryIfNeeded(match: MatchSnapshot, fighter: FighterRuntim
   const extraFrames = getWhiffRecoveryFrames(move);
   fighter.actionFramesRemaining += extraFrames;
   fighter.whiffRecoveryApplied = true;
+  resetBeginnerRoute(fighter);
   if (isTrainingInfiniteHealthMode(match)) {
     const activeFrame = Math.max(move.startupFrames, move.startupFrames + move.activeFrames - 1);
     const attackBox = getActiveAttackAabbs(fighter, move, true, activeFrame)[0];
@@ -6239,6 +6368,40 @@ function moveAlongOpponentAxis(fighter: FighterRuntime, opponent: FighterRuntime
   const distance = Math.hypot(dx, dz) || 1;
   fighter.position.x += (dx / distance) * amount;
   fighter.position.z += (dz / distance) * amount;
+}
+
+function queueHorizontalKnockback(fighter: FighterRuntime, x: number, z: number, durationFrames: number) {
+  const current = fighter.horizontalKnockback;
+  let remainingX = 0;
+  let remainingZ = 0;
+  if (current) {
+    const progress = easeOutCubic(clamp(current.elapsedFrames / Math.max(1, current.durationFrames), 0, 1));
+    remainingX = current.x * (1 - progress);
+    remainingZ = current.z * (1 - progress);
+  }
+  fighter.horizontalKnockback = {
+    x: remainingX + x,
+    z: remainingZ + z,
+    elapsedFrames: 0,
+    durationFrames: Math.max(1, Math.round(durationFrames))
+  };
+}
+
+function applyHorizontalKnockback(fighter: FighterRuntime, frameDelta: number) {
+  const knockback = fighter.horizontalKnockback;
+  if (!knockback || frameDelta <= 0) return;
+  const duration = Math.max(1, knockback.durationFrames);
+  const previous = easeOutCubic(clamp(knockback.elapsedFrames / duration, 0, 1));
+  knockback.elapsedFrames = Math.min(duration, knockback.elapsedFrames + frameDelta);
+  const next = easeOutCubic(clamp(knockback.elapsedFrames / duration, 0, 1));
+  const delta = Math.max(0, next - previous);
+  fighter.position.x += knockback.x * delta;
+  fighter.position.z += knockback.z * delta;
+  if (knockback.elapsedFrames >= duration) fighter.horizontalKnockback = null;
+}
+
+function easeOutCubic(value: number) {
+  return 1 - Math.pow(1 - clamp(value, 0, 1), 3);
 }
 
 function applyAttackForwardForce(fighter: FighterRuntime, opponent: FighterRuntime, previousMoveFrame: number, currentMoveFrame: number) {
@@ -8248,6 +8411,14 @@ export function cloneMatchSnapshot(match: MatchSnapshot): MatchSnapshot {
       comboFamilySequence: [...fighter.comboFamilySequence],
       comboVisualFamilySequence: [...fighter.comboVisualFamilySequence],
       comboUsedKeys: [...fighter.comboUsedKeys],
+      beginnerGestureSequence: [...fighter.beginnerGestureSequence],
+      beginnerPendingSpecialIntent: fighter.beginnerPendingSpecialIntent
+        ? {
+            ...fighter.beginnerPendingSpecialIntent,
+            inputSnapshot: cloneInputFrame(fighter.beginnerPendingSpecialIntent.inputSnapshot)
+          }
+        : null,
+      horizontalKnockback: fighter.horizontalKnockback ? { ...fighter.horizontalKnockback } : null,
       aiRecentComboKeys: [...fighter.aiRecentComboKeys],
       aiRecentComboFamilies: [...fighter.aiRecentComboFamilies],
       aiRecentComboVisualFamilies: [...fighter.aiRecentComboVisualFamilies],

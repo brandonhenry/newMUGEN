@@ -591,7 +591,11 @@
       "label": "Quick Principal Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
       "startupFrames": 13,
@@ -610,7 +614,11 @@
       "label": "Principal Body Blow",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
       "startupFrames": 30,
@@ -627,7 +635,11 @@
       "forwardForceStartFrame": 28,
       "forwardForceEndFrame": 34,
       "label": "Low Otokojuku Roll",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickright": {
       "startupFrames": 19,
@@ -644,7 +656,11 @@
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 24,
       "label": "Heihachi Edajima Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:f+1": {
       "startupFrames": 15,
@@ -662,7 +678,11 @@
       "forwardForceEndFrame": 11,
       "label": "Principal Roll Rush",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d/f+2": {
       "startupFrames": 16,
@@ -684,7 +704,11 @@
       "juggleGravityScale": 0.54,
       "label": "Forward Edajima Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:qcf+4": {
       "startupFrames": 30,
@@ -702,7 +726,11 @@
       "forwardForceEndFrame": 76,
       "label": "Otokojuku Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "cmd:WS+4": {
       "startupFrames": 15,
@@ -719,7 +747,11 @@
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 7,
       "label": "Rising Otokojuku Roll",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 21,
+      "onJuggleHitFrames": 16,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:FC+1": {
       "startupFrames": 14,
@@ -737,7 +769,11 @@
       "forwardForceEndFrame": 33,
       "label": "Crouch Principal Hook",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:FC+2": {
       "startupFrames": 16,
@@ -756,7 +792,11 @@
       "launchHeight": 2,
       "label": "Crouch Edajima Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:1+2": {
       "startupFrames": 14,
@@ -774,7 +814,11 @@
       "forwardForceEndFrame": 13,
       "label": "Otokojuku Guard Break",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:1+3": {
       "startupFrames": 16,
@@ -792,7 +836,11 @@
       "forwardForceEndFrame": 41,
       "launchHeight": 2.2,
       "label": "Edajima Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:2+3": {
       "startupFrames": 23,
@@ -809,7 +857,11 @@
       "forwardForceStartFrame": 26,
       "forwardForceEndFrame": 38,
       "label": "Low Discipline Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:2+4": {
       "startupFrames": 28,
@@ -827,7 +879,11 @@
       "forwardForceEndFrame": 47,
       "label": "Low Principal Drive",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:3+4": {
       "startupFrames": 21,
@@ -849,7 +905,11 @@
       "hitLevel": "mid",
       "knockdown": true,
       "tornado": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 19,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 16
     },
     "cmd:O+2": {
       "startupFrames": 18,
@@ -867,7 +927,11 @@
       "forwardForceEndFrame": 46,
       "label": "Edajima Aura Drive",
       "hitLevel": "special",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "neutral:jab-jab": {
       "startupFrames": 15,
@@ -883,7 +947,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Second Beat"
+      "label": "Heihachi Edajima Second Beat",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 15,
@@ -899,7 +967,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Body Blow"
+      "label": "Heihachi Edajima Body Blow",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 15,
@@ -915,7 +987,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Low Changeup"
+      "label": "Heihachi Edajima Low Changeup",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-special": {
       "startupFrames": 15,
@@ -931,7 +1007,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Pressure Feint"
+      "label": "Heihachi Edajima Pressure Feint",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy": {
       "startupFrames": 15,
@@ -947,7 +1027,11 @@
       "forwardForce": 2.08,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Drive"
+      "label": "Heihachi Edajima Drive",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 15,
@@ -963,7 +1047,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Barrage"
+      "label": "Heihachi Edajima Barrage",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 15,
@@ -979,7 +1067,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Finisher"
+      "label": "Heihachi Edajima Finisher",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick": {
       "startupFrames": 18,
@@ -995,7 +1087,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 33,
-      "label": "Heihachi Edajima Step Kick"
+      "label": "Heihachi Edajima Step Kick",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 15,
@@ -1011,7 +1107,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Palm String"
+      "label": "Heihachi Edajima Palm String",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick-special": {
       "startupFrames": 15,
@@ -1027,7 +1127,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Rising Chain"
+      "label": "Heihachi Edajima Rising Chain",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-special": {
       "startupFrames": 15,
@@ -1043,7 +1147,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Special Setup"
+      "label": "Heihachi Edajima Special Setup",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 15,
@@ -1059,7 +1167,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Break Art"
+      "label": "Heihachi Edajima Break Art",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab": {
       "startupFrames": 15,
@@ -1075,7 +1187,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Check Hook"
+      "label": "Heihachi Edajima Check Hook",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 15,
@@ -1091,7 +1207,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Heavy Break"
+      "label": "Heihachi Edajima Heavy Break",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 15,
@@ -1107,7 +1227,11 @@
       "forwardForce": 3,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Charged Follow"
+      "label": "Heihachi Edajima Charged Follow",
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-kick": {
       "startupFrames": 18,
@@ -1123,7 +1247,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 33,
-      "label": "Heihachi Edajima Drop Kick"
+      "label": "Heihachi Edajima Drop Kick",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 15,
@@ -1139,7 +1267,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Arc Finisher"
+      "label": "Heihachi Edajima Arc Finisher",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-special": {
       "startupFrames": 15,
@@ -1155,7 +1287,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Focus Stance"
+      "label": "Heihachi Edajima Focus Stance",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 15,
@@ -1171,7 +1307,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Mode Shift"
+      "label": "Heihachi Edajima Mode Shift",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-jab": {
       "startupFrames": 15,
@@ -1187,7 +1327,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Heel Feint"
+      "label": "Heihachi Edajima Heel Feint",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-jab-special": {
       "startupFrames": 15,
@@ -1203,7 +1347,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Summon Strike"
+      "label": "Heihachi Edajima Summon Strike",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-heavy": {
       "startupFrames": 15,
@@ -1219,7 +1367,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Guard Snare"
+      "label": "Heihachi Edajima Guard Snare",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 15,
@@ -1235,7 +1387,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Armor Break"
+      "label": "Heihachi Edajima Armor Break",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-special": {
       "startupFrames": 15,
@@ -1251,7 +1407,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Power Setup"
+      "label": "Heihachi Edajima Power Setup",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 15,
@@ -1267,7 +1427,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Switch Strike"
+      "label": "Heihachi Edajima Switch Strike",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-jab": {
       "startupFrames": 15,
@@ -1283,7 +1447,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Spark Jab"
+      "label": "Heihachi Edajima Spark Jab",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 15,
@@ -1299,7 +1467,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Binding Blow"
+      "label": "Heihachi Edajima Binding Blow",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-heavy": {
       "startupFrames": 15,
@@ -1315,7 +1487,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 28,
-      "label": "Heihachi Edajima Heavy Draw"
+      "label": "Heihachi Edajima Heavy Draw",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-kick": {
       "startupFrames": 18,
@@ -1331,7 +1507,11 @@
       "forwardForce": 1.8,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 33,
-      "label": "Heihachi Edajima Kick Ender"
+      "label": "Heihachi Edajima Kick Ender",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:f+2": {
       "startupFrames": 13,
@@ -1348,7 +1528,11 @@
       "forwardForceEndFrame": 23,
       "label": "Forward Principal Punch",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d+1": {
       "startupFrames": 10,
@@ -1361,11 +1545,15 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.8,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 20,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 26,
       "label": "Quick Principal Check",
       "hitLevel": "high",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:qcf+1": {
       "startupFrames": 9,
@@ -1378,11 +1566,15 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 21,
       "forwardForce": 2.66,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 20,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 16,
       "label": "Quick Principal Check",
       "hitLevel": "high",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:WS+2": {
       "startupFrames": 15,
@@ -1395,11 +1587,15 @@
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 7,
       "forwardForce": 1.51,
-      "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 23,
+      "forwardForceStartFrame": 32,
+      "forwardForceEndFrame": 33,
       "label": "While Rising Punch",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:O+1": {
       "startupFrames": 20,
@@ -1416,7 +1612,11 @@
       "forwardForceEndFrame": 38,
       "label": "Quick Principal Check",
       "hitLevel": "high",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:1+4": {
       "startupFrames": 15,
@@ -1429,7 +1629,11 @@
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 27,
       "label": "Long Principal Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 21,
+      "onJuggleHitFrames": 16,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     }
   },
   "effects": [],
@@ -3079,5 +3283,370 @@
     }
   },
   "projectiles": [],
-  "moveProjectiles": {}
+  "moveProjectiles": {},
+  "beginnerComboRoutes": [
+    {
+      "id": "heihachi-edajima:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Quick Principal Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Quick Principal Check",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Otokojuku Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "heihachi-edajima:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Otokojuku Guard Break",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Principal Punch",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Otokojuku Burst",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "heihachi-edajima:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Discipline Feint",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Otokojuku Roll",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Otokojuku Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "heihachi-edajima:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Long Principal Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Long Principal Kick",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Otokojuku Burst",
+          "windowBefore": 7,
+          "windowAfter": 11,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "heihachi-edajima:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Quick Principal Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Otokojuku Guard Break",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Otokojuku Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "heihachi-edajima:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Long Principal Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Otokojuku Guard Break",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Otokojuku Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "heihachi-edajima:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Low Principal Drive",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Discipline Feint",
+          "windowBefore": 7,
+          "windowAfter": 11,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Otokojuku Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "heihachi-edajima:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Discipline Feint",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Quick Principal Check",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Otokojuku Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

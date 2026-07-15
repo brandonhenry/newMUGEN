@@ -360,8 +360,8 @@
       "counterHit": false,
       "cancelable": false,
       "forwardForce": 0.85,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 19,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 20,
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
@@ -431,8 +431,8 @@
       "whiffRecoveryFrames": 5,
       "range": 1.53,
       "forwardForce": 0.85,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 19,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 20,
       "label": "Fusion Body Check",
       "hitLevel": "mid",
       "tracking": "medium",
@@ -454,8 +454,8 @@
       "whiffRecoveryFrames": 6,
       "range": 1.72,
       "forwardForce": 0.6,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 24,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16,
       "label": "Fusion Body Poke",
       "hitLevel": "mid",
       "cancelable": false,
@@ -476,7 +476,7 @@
       "whiffRecoveryFrames": 34,
       "range": 1.68,
       "forwardForce": 2.47,
-      "forwardForceStartFrame": 18,
+      "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 26,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
@@ -1222,10 +1222,10 @@
       "startupFrames": 14,
       "activeFrames": 2,
       "recoveryFrames": 17,
-      "onBlockFrames": -5,
+      "onBlockFrames": -10,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
-      "whiffRecoveryFrames": 21,
+      "whiffRecoveryFrames": 23,
       "forwardForce": 2.08,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 19,
@@ -1234,10 +1234,13 @@
       "cancelable": false,
       "damage": 8,
       "blockDamage": 1,
-      "onComboHitFrames": 18,
-      "onJuggleHitFrames": 14,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "knockdown": true,
+      "pushback": 1,
+      "blockPushback": 0.48
     },
     "cmd:d+1": {
       "startupFrames": 9,
@@ -1269,8 +1272,8 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 9,
       "forwardForce": 1.41,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 12,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10,
       "label": "Instant Fusion Check",
       "hitLevel": "high",
       "cancelable": false,
@@ -1288,10 +1291,10 @@
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
-      "whiffRecoveryFrames": 21,
+      "whiffRecoveryFrames": 25,
       "forwardForce": 2.14,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 19,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 12,
       "label": "While Rising Fusion",
       "hitLevel": "mid",
       "cancelable": false,
@@ -2229,5 +2232,367 @@
     ]
   },
   "projectiles": [],
-  "moveProjectiles": {}
+  "moveProjectiles": {},
+  "beginnerComboRoutes": [
+    {
+      "id": "gotenks:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Instant Fusion Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Fusion Body Poke",
+          "windowBefore": 16,
+          "windowAfter": 23,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Fusion Check",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "gotenks:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Fusion Body Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "d/f+2",
+          "animationKey": "cmd:d/f+2",
+          "label": "Forward Fusion Launcher",
+          "windowBefore": 11,
+          "windowAfter": 15,
+          "expect": "launch"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Fusion Check",
+          "windowBefore": 14,
+          "windowAfter": 18,
+          "expect": "knockdown",
+          "kiCommand": "O+1",
+          "kiAnimationKey": "cmd:O+1",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "gotenks:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Instant Fusion Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Fusion Body Poke",
+          "windowBefore": 16,
+          "windowAfter": 23,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Fusion Check",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "knockdown",
+          "kiCommand": "O+1",
+          "kiAnimationKey": "cmd:O+1",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "gotenks:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Instant Fusion Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Fusion Body Poke",
+          "windowBefore": 16,
+          "windowAfter": 23,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Fusion Check",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "knockdown",
+          "kiCommand": "O+1",
+          "kiAnimationKey": "cmd:O+1",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "gotenks:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Instant Fusion Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Fusion Body Check",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Fusion Check",
+          "windowBefore": 14,
+          "windowAfter": 18,
+          "expect": "knockdown",
+          "kiCommand": "O+1",
+          "kiAnimationKey": "cmd:O+1",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "gotenks:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Instant Fusion Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Fusion Body Check",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Fusion Check",
+          "windowBefore": 14,
+          "windowAfter": 18,
+          "expect": "knockdown",
+          "kiCommand": "O+1",
+          "kiAnimationKey": "cmd:O+1",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "gotenks:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Fusion Body Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Instant Fusion Check",
+          "windowBefore": 16,
+          "windowAfter": 23,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Fusion Check",
+          "windowBefore": 16,
+          "windowAfter": 23,
+          "expect": "knockdown",
+          "kiCommand": "O+1",
+          "kiAnimationKey": "cmd:O+1",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "gotenks:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Instant Fusion Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Fusion Body Poke",
+          "windowBefore": 16,
+          "windowAfter": 23,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Fusion Check",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "knockdown",
+          "kiCommand": "O+1",
+          "kiAnimationKey": "cmd:O+1",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

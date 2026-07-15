@@ -815,8 +815,8 @@
       "counterHit": false,
       "cancelable": false,
       "forwardForce": 0.92,
-      "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 20,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 14,
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 13,
       "comboRepeatPenaltyFrames": 5,
@@ -932,8 +932,8 @@
       "whiffRecoveryFrames": 8,
       "range": 1.65,
       "forwardForce": 0.92,
-      "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 20,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 14,
       "label": "Heavy Coat Kick",
       "hitLevel": "mid",
       "tracking": "medium",
@@ -1003,14 +1003,14 @@
       "whiffRecoveryFrames": 36,
       "range": 2.05,
       "forwardForce": 2.44,
-      "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 29,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 26,
       "label": "Star Knockdown Ender",
       "hitLevel": "mid",
       "knockdown": true,
       "cancelable": false,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 10,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 9,
       "comboRepeatPenaltyFrames": 6,
       "juggleRepeatPenaltyFrames": 10
     },
@@ -1048,8 +1048,8 @@
       "whiffRecoveryFrames": 7,
       "range": 1.34,
       "forwardForce": 0.89,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 15,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 27,
       "label": "Crouch Star Flicker",
       "hitLevel": "mid",
       "cancelable": false,
@@ -1160,14 +1160,14 @@
       "whiffRecoveryFrames": 6,
       "range": 1.74,
       "forwardForce": 1.58,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 32,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 37,
       "label": "Low Knockdown Kick",
       "hitLevel": "low",
       "knockdown": true,
       "cancelable": false,
-      "onComboHitFrames": 20,
-      "onJuggleHitFrames": 11,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
       "juggleRepeatPenaltyFrames": 9
     },
@@ -1183,14 +1183,14 @@
       "whiffRecoveryFrames": 6,
       "range": 1.9,
       "forwardForce": 1.58,
-      "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 29,
+      "forwardForceStartFrame": 51,
+      "forwardForceEndFrame": 58,
       "label": "Star Knockdown Kick",
       "hitLevel": "mid",
       "knockdown": true,
       "cancelable": false,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 11,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 6,
       "juggleRepeatPenaltyFrames": 10
     },
@@ -1992,17 +1992,17 @@
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
-      "whiffRecoveryFrames": 28,
+      "whiffRecoveryFrames": 40,
       "forwardForce": 2.14,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 25,
+      "forwardForceStartFrame": 38,
+      "forwardForceEndFrame": 43,
       "label": "Sidestep Low Sweep",
       "hitLevel": "low",
       "cancelable": false,
       "damage": 11,
       "blockDamage": 1,
-      "onComboHitFrames": 19,
-      "onJuggleHitFrames": 14,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 13,
       "comboRepeatPenaltyFrames": 3,
       "juggleRepeatPenaltyFrames": 6
     },
@@ -2083,9 +2083,24 @@
         }
       ],
       "hitbox": {
-        "offset": [0, 1, 0],
-        "size": [0.1, 0.1, 0.1]
-      }
+        "offset": [
+          0,
+          1,
+          0
+        ],
+        "size": [
+          0.1,
+          0.1,
+          0.1
+        ]
+      },
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 37,
+      "forwardForceEndFrame": 55
     },
     "cmd:O+4": {
       "startupFrames": 20,
@@ -2094,17 +2109,17 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
-      "whiffRecoveryFrames": 29,
+      "whiffRecoveryFrames": 31,
       "forwardForce": 2.04,
-      "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 30,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
       "label": "Heavy Coat Kick",
       "hitLevel": "mid",
       "cancelable": false,
       "damage": 16,
       "blockDamage": 1,
-      "onComboHitFrames": 19,
-      "onJuggleHitFrames": 14,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 13,
       "comboRepeatPenaltyFrames": 4,
       "juggleRepeatPenaltyFrames": 7
     }
@@ -3737,5 +3752,370 @@
     ]
   },
   "projectiles": [],
-  "moveProjectiles": {}
+  "moveProjectiles": {},
+  "beginnerComboRoutes": [
+    {
+      "id": "jotaro-kujo:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Instant Ora Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Jotaro Body Poke",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Star Knockdown Ender",
+          "windowBefore": 11,
+          "windowAfter": 15,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "jotaro-kujo:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Ora Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Ora Guard Break",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Star Knockdown Ender",
+          "windowBefore": 10,
+          "windowAfter": 14,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "jotaro-kujo:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Low Ora Sweep",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "d/f+3",
+          "animationKey": "cmd:d/f+3",
+          "label": "Forward Low Sweep",
+          "windowBefore": 15,
+          "windowAfter": 19,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Star Knockdown Ender",
+          "windowBefore": 14,
+          "windowAfter": 18,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "jotaro-kujo:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Heavy Coat Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Coat Kick",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Star Knockdown Ender",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "jotaro-kujo:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Instant Ora Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Ora Check",
+          "windowBefore": 16,
+          "windowAfter": 23,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Star Knockdown Ender",
+          "windowBefore": 14,
+          "windowAfter": 18,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "jotaro-kujo:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Heavy Coat Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Ora Check",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Star Knockdown Ender",
+          "windowBefore": 14,
+          "windowAfter": 18,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "jotaro-kujo:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Low Knockdown Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Low Ora Sweep",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Star Knockdown Ender",
+          "windowBefore": 13,
+          "windowAfter": 17,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "jotaro-kujo:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Star Knockdown Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Instant Ora Check",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Star Knockdown Ender",
+          "windowBefore": 12,
+          "windowAfter": 16,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

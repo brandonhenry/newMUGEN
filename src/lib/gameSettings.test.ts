@@ -83,6 +83,17 @@ describe('game settings', () => {
     expect(settings.display.reducedMotion).toBe(true);
   });
 
+  it('migrates every version-16 control choice to Beginner exactly once', () => {
+    const migratedKore = sanitizeGameSettings({ version: 16, settings: { game: { controlScheme: 'kore' } } });
+    const migratedBeginner = sanitizeGameSettings({ version: 16, settings: { game: { controlScheme: 'beginner' } } });
+    const currentKore = sanitizeGameSettings({ version: 17, settings: { game: { controlScheme: 'kore' } } });
+
+    expect(defaultGameSettings.game.controlScheme).toBe('beginner');
+    expect(migratedKore.game.controlScheme).toBe('beginner');
+    expect(migratedBeginner.game.controlScheme).toBe('beginner');
+    expect(currentKore.game.controlScheme).toBe('kore');
+  });
+
   it('forces the voxel impact default once for old saves and preserves later user choices', () => {
     const migrated = sanitizeGameSettings({
       version: 9,

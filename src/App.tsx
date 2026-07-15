@@ -8233,7 +8233,11 @@ function buildStarterGuideSections(settings: GameSettings, inputPromptMode: Inpu
     eyebrow: 'Round flow',
     body: 'Fights reward spacing, blocking, movement, and reading the opponent before committing to big attacks.',
     points: [
-      'Light, heavy, kick, and special attacks chain into character-specific routes.',
+      'Beginner uses Light, Medium, Heavy, and Special. Three confirmed presses create character-specific knockdown routes.',
+      'Hold or tap Special with Light, Medium, or Heavy to open more routes. The chord has a short input grace window.',
+      'Medium, Heavy, Special, and chord routes spend Ki on their designated finisher when enough Ki is available; otherwise they use a safe non-Ki finish.',
+      'Only confirmed hits advance a route. Blocks, whiffs, interruptions, and movement mistakes reset it.',
+      'Dash, back-hop, jump, and neutral steps shown in Combo Trials are manual and must be timed inside the route window.',
       'Block to survive pressure, then punish unsafe moves when they recover.',
       'Charge ki for stronger options and special routes.',
       'Launchers, tornado extenders, wall pressure, and counter hits create bigger damage.'
@@ -24070,7 +24074,7 @@ function FightScreen({
   const [activeMoveListTab, setActiveMoveListTab] = useState<MoveListTab>('raw');
   const [trainingMode, setTrainingMode] = useState<TrainingTrialMode>(initialTrainingMode);
   const basicTrainingTrials = useMemo(() => generateBasicTrainingTrials(p1, roster), [p1, roster]);
-  const comboTrainingTrials = useMemo(() => generateComboTrainingTrials(p1), [p1]);
+  const comboTrainingTrials = useMemo(() => generateComboTrainingTrials(p1, settings.game.controlScheme), [p1, settings.game.controlScheme]);
   const activeTrainingTrials = trainingMode === 'basics' ? basicTrainingTrials : trainingMode === 'combos' ? comboTrainingTrials : [];
   const [activeTrainingTrialId, setActiveTrainingTrialId] = useState<string | null>(() => activeTrainingTrials[0]?.id ?? null);
   const activeTrainingTrial = useMemo(

@@ -432,8 +432,8 @@
       "counterHit": false,
       "cancelable": false,
       "forwardForce": 0.5,
-      "forwardForceStartFrame": 4,
-      "forwardForceEndFrame": 15,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 13,
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
@@ -516,8 +516,8 @@
       "counterHit": false,
       "cancelable": false,
       "forwardForce": 0.85,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 15,
+      "forwardForceStartFrame": 26,
+      "forwardForceEndFrame": 29,
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
@@ -559,9 +559,9 @@
       "cancelable": false,
       "forwardForce": 0.83,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 12,
+      "forwardForceEndFrame": 20,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
       "juggleRepeatPenaltyFrames": 8
     }
@@ -605,12 +605,16 @@
       "whiffRecoveryFrames": 4,
       "range": 1.45,
       "forwardForce": 0.5,
-      "forwardForceStartFrame": 4,
-      "forwardForceEndFrame": 15,
+      "forwardForceStartFrame": 5,
+      "forwardForceEndFrame": 13,
       "label": "Quick Doctor Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
       "startupFrames": 15,
@@ -624,10 +628,14 @@
       "whiffRecoveryFrames": 5,
       "range": 1.5,
       "forwardForce": 0.85,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 15,
+      "forwardForceStartFrame": 26,
+      "forwardForceEndFrame": 29,
       "label": "Robot Arm Smash",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
       "startupFrames": 30,
@@ -644,7 +652,11 @@
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 13,
       "label": "Caramel Man Sweep",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickright": {
       "startupFrames": 24,
@@ -658,10 +670,14 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "forwardForce": 0.83,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 24,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 20,
       "label": "Dr. Mashirito Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:f+1": {
       "startupFrames": 15,
@@ -679,7 +695,11 @@
       "forwardForceEndFrame": 15,
       "label": "Forward Robot Ram",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d/f+2": {
       "startupFrames": 15,
@@ -693,15 +713,19 @@
       "whiffRecoveryFrames": 38,
       "range": 1.68,
       "forwardForce": 2.65,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 21,
+      "forwardForceStartFrame": 26,
+      "forwardForceEndFrame": 39,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Diagonal Robot Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:qcf+4": {
       "startupFrames": 30,
@@ -719,7 +743,11 @@
       "forwardForceEndFrame": 30,
       "label": "Caramel Man Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "cmd:WS+4": {
       "startupFrames": 15,
@@ -736,7 +764,11 @@
       "forwardForceStartFrame": 4,
       "forwardForceEndFrame": 11,
       "label": "Rising Caramel Swing",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 21,
+      "onJuggleHitFrames": 16,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:FC+1": {
       "startupFrames": 14,
@@ -755,7 +787,11 @@
       "label": "Crouch Robot Swipe",
       "hitLevel": "mid",
       "endsInCrouch": true,
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:FC+2": {
       "startupFrames": 19,
@@ -774,7 +810,11 @@
       "launchHeight": 2.1,
       "label": "Crouch Robot Launcher",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:1+2": {
       "startupFrames": 15,
@@ -792,7 +832,11 @@
       "forwardForceEndFrame": 11,
       "label": "Caramel Man Charge",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:1+3": {
       "startupFrames": 16,
@@ -806,11 +850,15 @@
       "whiffRecoveryFrames": 13,
       "range": 1.65,
       "forwardForce": 1.36,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 21,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 26,
       "launchHeight": 2.1,
       "label": "Robot Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:2+3": {
       "startupFrames": 30,
@@ -827,7 +875,11 @@
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 13,
       "label": "Low Lab Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:2+4": {
       "startupFrames": 29,
@@ -845,7 +897,11 @@
       "forwardForceEndFrame": 29,
       "label": "Robot Driving Sweep",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:3+4": {
       "startupFrames": 24,
@@ -863,7 +919,11 @@
       "forwardForceEndFrame": 27,
       "label": "Bolt Scatter Smash",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "cmd:O+2": {
       "startupFrames": 30,
@@ -882,7 +942,11 @@
       "label": "Caramel Man Cannon",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "neutral:jab-jab": {
       "startupFrames": 15,
@@ -896,9 +960,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Second Beat"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Second Beat",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 15,
@@ -912,9 +980,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Body Blow"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Body Blow",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 15,
@@ -928,9 +1000,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Low Changeup"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Low Changeup",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-special": {
       "startupFrames": 15,
@@ -944,9 +1020,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Pressure Feint"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Pressure Feint",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy": {
       "startupFrames": 15,
@@ -960,9 +1040,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.42,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Drive"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Drive",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 15,
@@ -976,9 +1060,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Barrage"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Barrage",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 15,
@@ -992,9 +1080,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Finisher"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Finisher",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick": {
       "startupFrames": 18,
@@ -1008,9 +1100,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 29,
-      "label": "Dr. Mashirito Step Kick"
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 26,
+      "label": "Dr. Mashirito Step Kick",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 15,
@@ -1024,9 +1120,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Palm String"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Palm String",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick-special": {
       "startupFrames": 15,
@@ -1040,9 +1140,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Rising Chain"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Rising Chain",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-special": {
       "startupFrames": 15,
@@ -1056,9 +1160,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Special Setup"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Special Setup",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 15,
@@ -1072,9 +1180,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Break Art"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Break Art",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab": {
       "startupFrames": 15,
@@ -1088,9 +1200,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Check Hook"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Check Hook",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 15,
@@ -1104,9 +1220,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Heavy Break"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Heavy Break",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 15,
@@ -1120,9 +1240,13 @@
       "whiffRecoveryFrames": 25,
       "range": 1.55,
       "forwardForce": 2.34,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Charged Follow"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Charged Follow",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-kick": {
       "startupFrames": 18,
@@ -1136,9 +1260,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 29,
-      "label": "Dr. Mashirito Drop Kick"
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 26,
+      "label": "Dr. Mashirito Drop Kick",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 15,
@@ -1152,9 +1280,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Arc Finisher"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Arc Finisher",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-special": {
       "startupFrames": 15,
@@ -1168,9 +1300,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Focus Stance"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Focus Stance",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 15,
@@ -1184,9 +1320,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Mode Shift"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Mode Shift",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-jab": {
       "startupFrames": 15,
@@ -1200,9 +1340,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Heel Feint"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Heel Feint",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-jab-special": {
       "startupFrames": 15,
@@ -1216,9 +1360,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Summon Strike"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Summon Strike",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-heavy": {
       "startupFrames": 15,
@@ -1232,9 +1380,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Guard Snare"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Guard Snare",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 15,
@@ -1248,9 +1400,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Armor Break"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Armor Break",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-special": {
       "startupFrames": 15,
@@ -1264,9 +1420,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Power Setup"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Power Setup",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 15,
@@ -1280,9 +1440,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Switch Strike"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Switch Strike",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-jab": {
       "startupFrames": 15,
@@ -1296,9 +1460,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Spark Jab"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Spark Jab",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 15,
@@ -1312,9 +1480,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Binding Blow"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Binding Blow",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-heavy": {
       "startupFrames": 15,
@@ -1328,9 +1500,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 25,
-      "label": "Dr. Mashirito Heavy Draw"
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 22,
+      "label": "Dr. Mashirito Heavy Draw",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-kick": {
       "startupFrames": 18,
@@ -1344,9 +1520,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 29,
-      "label": "Dr. Mashirito Kick Ender"
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 26,
+      "label": "Dr. Mashirito Kick Ender",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:f+2": {
       "startupFrames": 15,
@@ -1359,11 +1539,15 @@
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 26,
       "forwardForce": 2.26,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 15,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 11,
       "label": "Forward Robot Arm",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d+1": {
       "startupFrames": 9,
@@ -1376,11 +1560,15 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.14,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 19,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 15,
       "label": "Low-Step Doctor Jab",
       "hitLevel": "high",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:qcf+1": {
       "startupFrames": 9,
@@ -1397,7 +1585,11 @@
       "forwardForceEndFrame": 19,
       "label": "Lab Dash Jab",
       "hitLevel": "high",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:WS+2": {
       "startupFrames": 14,
@@ -1410,11 +1602,15 @@
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 26,
       "forwardForce": 2.32,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 15,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 11,
       "label": "While-Rising Robot Arm",
       "hitLevel": "mid",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:O+1": {
       "startupFrames": 23,
@@ -1432,7 +1628,11 @@
       "label": "Charged Doctor Jab",
       "hitLevel": "high",
       "cancelable": false,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7
     }
   },
   "effects": [],
@@ -4066,5 +4266,369 @@
     "stageIntro": [
       "/characters/dr-mashirito/sounds/voices/win-01.ogg"
     ]
-  }
+  },
+  "beginnerComboRoutes": [
+    {
+      "id": "dr-mashirito:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Lab Dash Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Low-Step Doctor Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Caramel Man Burst",
+          "windowBefore": 3,
+          "windowAfter": 7,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "dr-mashirito:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Caramel Man Charge",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Robot Arm",
+          "windowBefore": 15,
+          "windowAfter": 19,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Caramel Man Burst",
+          "windowBefore": 4,
+          "windowAfter": 8,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "dr-mashirito:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Lab Feint",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Caramel Man Sweep",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Caramel Man Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "dr-mashirito:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Dr. Mashirito Right Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Caramel Man Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Caramel Man Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "dr-mashirito:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Lab Dash Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Caramel Man Charge",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Caramel Man Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "dr-mashirito:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Lab Dash Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Caramel Man Charge",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Caramel Man Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "dr-mashirito:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Robot Driving Sweep",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Lab Feint",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Caramel Man Burst",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "dr-mashirito:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Bolt Scatter Smash",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Lab Dash Jab",
+          "windowBefore": 15,
+          "windowAfter": 19,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Caramel Man Burst",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

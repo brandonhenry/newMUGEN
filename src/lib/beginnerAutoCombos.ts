@@ -1,156 +1,153 @@
-import type { CharacterDefinition, MoveInput } from '../types';
-import { generateCharacterComboRoutes, type ComboTrialStep, type GeneratedComboRoute } from './comboRoutes';
+import type {
+  BeginnerComboGesture,
+  BeginnerComboMovement,
+  BeginnerComboRoute,
+  BeginnerComboRouteStep,
+  CharacterDefinition,
+  InputFrame,
+  MoveInput
+} from '../types';
 
-export const BEGINNER_AUTO_COMBO_INPUTS: MoveInput[] = ['jab', 'heavy', 'kick', 'special'];
+export const BEGINNER_AUTO_COMBO_INPUTS: MoveInput[] = ['jab', 'jab', 'jab'];
 export const BEGINNER_AUTO_COMBO_KI_COST = 35;
+export const BEGINNER_SPECIAL_CHORD_GRACE_FRAMES = 6;
 
 export type BeginnerAutoComboPlan = {
   inputs: MoveInput[];
   finisherCommand?: string;
   finisherLabel: string;
-  finisherStep?: ComboTrialStep;
-  sourceRoute?: GeneratedComboRoute;
+  finisherStep?: BeginnerComboRouteStep;
+  sourceRoute?: BeginnerComboRoute;
   estimatedDamage?: number;
   usesKi: boolean;
 };
 
-type BeginnerAutoComboCandidate = {
-  route: GeneratedComboRoute;
-  step: ComboTrialStep;
+export type BeginnerRouteResolution = {
+  gesture: BeginnerComboGesture;
+  route: BeginnerComboRoute;
+  step: BeginnerComboRouteStep;
   stepIndex: number;
-  score: number;
-  genericLabel: boolean;
+  moveInput: MoveInput;
+  forcedCommand?: string;
+  usePoweredKi: boolean;
 };
+
+const moveInputGesture: Record<MoveInput, BeginnerComboGesture> = {
+  jab: 'light',
+  heavy: 'medium',
+  kick: 'heavy',
+  special: 'special'
+};
+
+const gestureNotation: Record<BeginnerComboGesture, string[]> = {
+  light: ['Light'],
+  medium: ['Medium'],
+  heavy: ['Heavy'],
+  special: ['Special'],
+  'special+light': ['Special+Light'],
+  'special+medium': ['Special+Medium'],
+  'special+heavy': ['Special+Heavy']
+};
+
+export function resolveBeginnerGesture(input: InputFrame, moveInput: MoveInput): BeginnerComboGesture {
+  if (input.special && moveInput !== 'special') {
+    if (moveInput === 'jab') return 'special+light';
+    if (moveInput === 'heavy') return 'special+medium';
+    if (moveInput === 'kick') return 'special+heavy';
+  }
+  return moveInputGesture[moveInput];
+}
+
+export function beginnerGestureNotation(gesture: BeginnerComboGesture) {
+  return gestureNotation[gesture];
+}
+
+export function beginnerGestureActions(gesture: BeginnerComboGesture): MoveInput[] {
+  if (gesture === 'special+light') return ['special', 'jab'];
+  if (gesture === 'special+medium') return ['special', 'heavy'];
+  if (gesture === 'special+heavy') return ['special', 'kick'];
+  if (gesture === 'light') return ['jab'];
+  if (gesture === 'medium') return ['heavy'];
+  if (gesture === 'heavy') return ['kick'];
+  return ['special'];
+}
+
+export function resolveBeginnerRouteStep(
+  character: CharacterDefinition,
+  confirmedGestures: BeginnerComboGesture[],
+  gesture: BeginnerComboGesture,
+  availableKi: number,
+  preferredRouteId?: string | null
+): BeginnerRouteResolution | null {
+  const prefix = [...confirmedGestures, gesture];
+  const routes = character.beginnerComboRoutes ?? [];
+  const candidates = routes.filter((route) => prefix.every((item, index) => route.gestures[index] === item));
+  const route = candidates.find((candidate) => candidate.id === preferredRouteId) ?? candidates[0];
+  if (!route) return null;
+  const stepIndex = prefix.length - 1;
+  const step = route.steps[stepIndex];
+  if (!step) return null;
+  const authoredKiCost = Math.max(0, Math.round(step.kiCost ?? BEGINNER_AUTO_COMBO_KI_COST));
+  const canUseAuthoredKi = Boolean(step.kiCommand) && availableKi >= authoredKiCost;
+  const canUsePoweredKi = !canUseAuthoredKi && Boolean(step.poweredKiFallback) && availableKi >= BEGINNER_AUTO_COMBO_KI_COST;
+  return {
+    gesture,
+    route,
+    step,
+    stepIndex,
+    moveInput: canUseAuthoredKi && step.kiCommand ? commandMoveInput(step.kiCommand) : step.input,
+    forcedCommand: canUseAuthoredKi ? step.kiCommand : step.command,
+    usePoweredKi: canUsePoweredKi
+  };
+}
+
+export function beginnerMovementSatisfied(
+  movement: BeginnerComboMovement | undefined,
+  state: { dashForwardFrames: number; backHopFrames: number; state: string; position: { y: number }; velocityY: number },
+  input: InputFrame
+) {
+  if (!movement) return true;
+  if (movement === 'dashForward') return input.dashForward || state.dashForwardFrames > 0;
+  if (movement === 'dashBack') return input.dashBack || state.backHopFrames > 0;
+  if (movement === 'jump') return input.jump || state.state === 'jump' || state.position.y > 0 || state.velocityY !== 0;
+  return !input.left && !input.right && !input.up && !input.down &&
+    !input.dashForward && !input.dashBack && !input.jump;
+}
 
 export function resolveBeginnerAutoComboPlan(
   character: CharacterDefinition,
-  options: { ki?: number } = {}
+  options: { ki?: number; family?: 'light' | 'medium' | 'heavy' | 'special' } = {}
 ): BeginnerAutoComboPlan {
+  const family = options.family ?? 'light';
+  const route = (character.beginnerComboRoutes ?? []).find((candidate) => candidate.id.endsWith(`${family}-core`));
+  const finisher = route?.steps[route.steps.length - 1];
   const availableKi = options.ki ?? 0;
-  const candidates = generateCharacterComboRoutes(character)
-    .flatMap((route) => route.steps.map((step, stepIndex) => ({ route, step, stepIndex })))
-    .filter(({ route, step, stepIndex }) => beginnerFinisherCandidateFits(character, route, step, stepIndex, availableKi))
-    .map(({ route, step, stepIndex }) => {
-      const genericLabel = isGenericBeginnerFinisherLabel(step.label, step.command);
-      return {
-        route,
-        step,
-        stepIndex,
-        genericLabel,
-        score: scoreBeginnerFinisherCandidate(route, step, stepIndex, genericLabel, availableKi)
-      };
-    })
-    .filter((candidate) => candidate.score > 0)
-    .sort(compareBeginnerFinisherCandidates);
-
-  const finisher = candidates[0];
-  if (!finisher) {
-    return {
-      inputs: BEGINNER_AUTO_COMBO_INPUTS,
-      finisherLabel: baseSpecialLabel(character),
-      usesKi: false
-    };
-  }
-
+  const usesKi = family !== 'light' && Boolean(finisher) && availableKi >= Math.max(0, finisher?.kiCost ?? BEGINNER_AUTO_COMBO_KI_COST);
   return {
-    inputs: BEGINNER_AUTO_COMBO_INPUTS,
-    finisherCommand: finisher.step.command,
-    finisherLabel: finisher.step.label,
-    finisherStep: finisher.step,
-    sourceRoute: finisher.route,
-    estimatedDamage: finisher.route.estimatedDamage,
-    usesKi: Boolean(finisher.step.command?.startsWith('O+'))
+    inputs: route?.steps.map((step) => step.input) ?? BEGINNER_AUTO_COMBO_INPUTS,
+    finisherCommand: usesKi ? finisher?.kiCommand ?? finisher?.command : finisher?.command,
+    finisherLabel: finisher?.label ?? baseSpecialLabel(character),
+    finisherStep: finisher,
+    sourceRoute: route,
+    estimatedDamage: undefined,
+    usesKi
   };
 }
 
 export function hasNamedBeginnerAutoComboFinisher(character: CharacterDefinition, options: { ki?: number } = {}) {
-  const availableKi = options.ki ?? 0;
-  return generateCharacterComboRoutes(character).some((route) =>
-    route.steps.some((step, stepIndex) =>
-      beginnerFinisherCandidateFits(character, route, step, stepIndex, availableKi) &&
-      !isGenericBeginnerFinisherLabel(step.label, step.command)
-    )
-  );
+  const plan = resolveBeginnerAutoComboPlan(character, options);
+  return Boolean(plan.finisherStep && !/frame link/i.test(plan.finisherLabel));
 }
 
-function beginnerFinisherCandidateFits(
-  character: CharacterDefinition,
-  route: GeneratedComboRoute,
-  step: ComboTrialStep,
-  stepIndex: number,
-  availableKi: number
-) {
-  if (!step.command || step.input !== 'special') return false;
-  if ((character.animationFrames?.[`cmd:${step.command}`]?.length ?? 0) <= 0) return false;
-  if (route.tier === 'long' || route.tier === 'marathon') return false;
-  if (route.category === 'counterHit' || route.structure.includes('counterHit') || step.counterHit) return false;
-  if (route.launchRouteStyle === 'airChase') return false;
-  if (step.expect?.juggled || step.expect?.tornado) return false;
-  if (step.command.startsWith('O+')) return availableKi >= BEGINNER_AUTO_COMBO_KI_COST;
-  if (route.estimatedDamage > 86) return false;
-  if (route.category === 'tornado' && route.estimatedDamage > 42) return false;
-  if (route.rewardClass === 'tornado' && route.estimatedDamage > 44) return false;
-  if (stepIndex > 0 && !route.structure.includes('ender')) return false;
-  return true;
-}
-
-function scoreBeginnerFinisherCandidate(
-  route: GeneratedComboRoute,
-  step: ComboTrialStep,
-  stepIndex: number,
-  genericLabel: boolean,
-  availableKi: number
-) {
-  const usesKi = Boolean(step.command?.startsWith('O+'));
-  const idealDamage = usesKi ? 42 : 30;
-  let score = 34;
-
-  score -= Math.abs(route.estimatedDamage - idealDamage) * 0.6;
-  if (!usesKi && route.estimatedDamage > 42) score -= (route.estimatedDamage - 42) * 0.45;
-  if (usesKi && route.estimatedDamage > 62) score -= (route.estimatedDamage - 62) * 1.15;
-
-  if (route.tier === 'short') score += 9;
-  if (route.tier === 'medium') score += 2;
-
-  if (route.category === 'basic') score += 4;
-  if (route.category === 'advanced') score += 3;
-  if (route.category === 'crouch') score += 1;
-  if (route.category === 'launcher') score -= 2;
-  if (route.category === 'tornado') score -= 5;
-
-  if (route.rewardClass === 'poke') score += 1;
-  if (route.rewardClass === 'string') score += 4;
-  if (route.rewardClass === 'launcher') score -= 3;
-  if (route.rewardClass === 'tornado') score -= 5;
-
-  if (route.structure.includes('ender')) score += 8;
-  if (route.structure.includes('launcher')) score -= 2;
-  if (route.structure.includes('tornado')) score -= 4;
-  if (usesKi) score += availableKi >= BEGINNER_AUTO_COMBO_KI_COST ? 3 : -40;
-  if (stepIndex === route.steps.length - 1) score += 5;
-  if (step.command?.startsWith('qcf+') || step.command?.startsWith('qcb+')) score += 2;
-  if (step.command?.includes('+') && !step.command.startsWith('O+')) score += 1;
-  if (genericLabel) score -= 80;
-
-  return score;
-}
-
-function compareBeginnerFinisherCandidates(a: BeginnerAutoComboCandidate, b: BeginnerAutoComboCandidate) {
-  return b.score - a.score ||
-    Number(a.genericLabel) - Number(b.genericLabel) ||
-    a.route.level - b.route.level ||
-    a.route.estimatedDamage - b.route.estimatedDamage ||
-    a.step.label.localeCompare(b.step.label);
-}
-
-function isGenericBeginnerFinisherLabel(label: string, command?: string) {
-  const normalized = label.trim().toLowerCase();
-  return /frame link/i.test(label) ||
-    (command !== undefined && normalized === command.toLowerCase()) ||
-    normalized === 'right kick' ||
-    normalized.endsWith(' right kick');
+function commandMoveInput(command: string): MoveInput {
+  const buttons = [...command.matchAll(/[1-4]/g)];
+  const button = buttons[buttons.length - 1]?.[0] ?? '1';
+  if (button === '2') return 'heavy';
+  if (button === '3') return 'kick';
+  if (button === '4') return 'special';
+  return 'jab';
 }
 
 function baseSpecialLabel(character: CharacterDefinition) {
-  return character.moves.find((move) => move.input === 'special' && !move.command)?.label ?? '4 Special';
+  return character.moves.find((move) => move.input === 'special' && !move.command)?.label ?? 'Special';
 }

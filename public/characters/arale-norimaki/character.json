@@ -414,8 +414,8 @@
       "counterHit": false,
       "cancelable": false,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 27,
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
@@ -593,8 +593,8 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 27,
       "label": "Low Robot Slide",
       "hitLevel": "low",
       "onComboHitFrames": 13,
@@ -636,13 +636,13 @@
       "whiffRecoveryFrames": 6,
       "range": 1.72,
       "forwardForce": 0.6,
-      "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 29,
+      "forwardForceStartFrame": 40,
+      "forwardForceEndFrame": 47,
       "label": "Forward Robot Poke",
       "hitLevel": "mid",
       "cancelable": false,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 14,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 13,
       "comboRepeatPenaltyFrames": 3,
       "juggleRepeatPenaltyFrames": 5
     },
@@ -684,12 +684,12 @@
       "whiffRecoveryFrames": 47,
       "range": 2.05,
       "forwardForce": 3.53,
-      "forwardForceStartFrame": 61,
-      "forwardForceEndFrame": 68,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 43,
       "label": "Penguin Village Burst",
       "hitLevel": "mid",
       "knockdown": true,
-      "onComboHitFrames": 5,
+      "onComboHitFrames": 9,
       "onJuggleHitFrames": 4,
       "comboRepeatPenaltyFrames": 6,
       "juggleRepeatPenaltyFrames": 10
@@ -706,8 +706,8 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "forwardForce": 1.22,
-      "forwardForceStartFrame": 32,
-      "forwardForceEndFrame": 35,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 26,
       "label": "Rising Robot Tumble",
       "hitLevel": "mid",
       "jumpBeforeMove": true,
@@ -771,7 +771,7 @@
       "onBlockFrames": -11,
       "onHitFrames": 11,
       "onCounterHitFrames": 16,
-      "whiffRecoveryFrames": 6,
+      "whiffRecoveryFrames": 10,
       "range": 1.72,
       "forwardForce": 1.77,
       "forwardForceStartFrame": 12,
@@ -779,10 +779,13 @@
       "label": "Penguin Village Link",
       "hitLevel": "mid",
       "cancelable": false,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 9,
+      "knockdown": true,
+      "pushback": 1,
+      "blockPushback": 0.48
     },
     "cmd:2+3": {
       "startupFrames": 20,
@@ -1461,8 +1464,8 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 6,
       "forwardForce": 0.89,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 17,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 18,
       "label": "Low-Step Ncha Jab",
       "hitLevel": "high",
       "cancelable": false,
@@ -1482,8 +1485,8 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 9,
       "forwardForce": 1.75,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 17,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 14,
       "label": "Ncha Dash Jab",
       "hitLevel": "high",
       "cancelable": false,
@@ -1503,8 +1506,8 @@
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 7,
       "forwardForce": 1.63,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 19,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 11,
       "label": "While-Rising Hook",
       "hitLevel": "mid",
       "cancelable": false,
@@ -2872,5 +2875,369 @@
         "maxDamageScale": 1
       }
     ]
-  }
+  },
+  "beginnerComboRoutes": [
+    {
+      "id": "arale-norimaki:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Ncha Dash Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Low-Step Ncha Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Penguin Village Link",
+          "windowBefore": 16,
+          "windowAfter": 23,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Robot Hook",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Windup Robot Hook",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Penguin Village Link",
+          "windowBefore": 14,
+          "windowAfter": 18,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Gadget Feint",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Robot Slide",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Penguin Village Link",
+          "windowBefore": 15,
+          "windowAfter": 19,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Ncha Dash Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Robot Hook",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Penguin Village Link",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Ncha Dash Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Robot Hook",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Penguin Village Link",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Ncha Dash Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Robot Hook",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Penguin Village Link",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Robot Hook",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Gadget Feint",
+          "windowBefore": 15,
+          "windowAfter": 19,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Penguin Village Link",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Gadget Feint",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Ncha Dash Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Penguin Village Link",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

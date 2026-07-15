@@ -55,6 +55,7 @@ function makeBeginnerSchemeCharacter(options: { includeFinisherCommands?: boolea
       ...(includeFinisherCommands
         ? {
             'cmd:qcf+4': ['/test-qcf4.png'],
+            'cmd:1+4': ['/test-14.png'],
             'cmd:1+2': ['/test-12.png'],
             'cmd:2+3': ['/test-23.png'],
             'cmd:O+4': ['/test-o4.png']
@@ -67,19 +68,51 @@ function makeBeginnerSchemeCharacter(options: { includeFinisherCommands?: boolea
           })
     },
     moveOverrides: {
-      jableft: { damage: 10, blockDamage: 5 },
+      jableft: { damage: 10, blockDamage: 5, startupFrames: 6, activeFrames: 3, recoveryFrames: 8 },
       jabright: { damage: 20, blockDamage: 5 },
       kickleft: { damage: 30, blockDamage: 5 },
       kickright: { damage: 40, blockDamage: 5 },
       ...(includeFinisherCommands
         ? {
-            'cmd:qcf+4': { damage: 18, blockDamage: 5, label: 'Test qcf+4' },
+            'cmd:qcf+4': { damage: 18, blockDamage: 5, label: 'Test qcf+4', knockdown: true },
+            'cmd:1+4': { damage: 16, blockDamage: 4, label: 'Test 1+4' },
             'cmd:1+2': { damage: 19, blockDamage: 5, label: 'Test 1+2' },
             'cmd:2+3': { damage: 20, blockDamage: 5, label: 'Test 2+3' },
             'cmd:O+4': { damage: 24, blockDamage: 5, label: 'Test O+4', usesKi: true, kiCost: 35 }
           }
         : {})
-    }
+    },
+    beginnerComboRoutes: [
+      {
+        id: 'test:beginner:light-core', title: 'Light Knockdown', family: 'core', gestures: ['light', 'light', 'light'],
+        steps: [
+          { gesture: 'light', input: 'jab', animationKey: 'jableft', label: 'Test Light', windowBefore: 16, windowAfter: 16, expect: 'hit' },
+          { gesture: 'light', input: 'heavy', animationKey: 'jabright', label: 'Test Medium', windowBefore: 16, windowAfter: 16, expect: 'hit' },
+          { gesture: 'light', input: includeFinisherCommands ? 'special' : 'special', ...(includeFinisherCommands ? { command: 'qcf+4' } : {}), animationKey: includeFinisherCommands ? 'cmd:qcf+4' : 'kickright', label: includeFinisherCommands ? 'Test qcf+4' : 'Test Special', windowBefore: 16, windowAfter: 16, expect: 'knockdown' }
+        ]
+      },
+      ...(['medium', 'heavy', 'special'] as const).map((gesture) => ({
+        id: `test:beginner:${gesture}-core`, title: `${gesture} core`, family: 'core' as const, gestures: [gesture, gesture, gesture],
+        steps: [0, 1, 2].map((index) => ({
+          gesture,
+          input: gesture === 'medium' ? 'heavy' as const : gesture === 'heavy' ? 'kick' as const : 'special' as const,
+          animationKey: gesture === 'medium' ? 'jabright' : gesture === 'heavy' ? 'kickleft' : 'kickright',
+          label: `Test ${gesture}`,
+          windowBefore: 16,
+          windowAfter: 16,
+          expect: index === 2 ? 'knockdown' as const : 'hit' as const,
+          ...(index === 2 && gesture !== 'special' ? { poweredKiFallback: true } : {})
+        }))
+      })),
+      {
+        id: 'test:beginner:special-light-route', title: 'Special Light', family: 'mixed', gestures: ['special+light', 'medium', 'heavy'],
+        steps: [
+          { gesture: 'special+light', input: 'jab', command: '1+4', animationKey: 'cmd:1+4', label: 'Chord Light', windowBefore: 16, windowAfter: 16, expect: 'hit' },
+          { gesture: 'medium', input: 'heavy', animationKey: 'jabright', label: 'Test Medium', windowBefore: 16, windowAfter: 16, expect: 'hit' },
+          { gesture: 'heavy', input: 'special', command: 'qcf+4', animationKey: 'cmd:qcf+4', label: 'Test qcf+4', windowBefore: 16, windowAfter: 16, expect: 'knockdown' }
+        ]
+      }
+    ]
   };
 }
 
@@ -221,8 +254,8 @@ function readyForBeginnerAutoComboLink(match: MatchSnapshot) {
   match.fighters[0].actionTimer = 0;
   match.fighters[0].hitConfirmed = true;
   match.fighters[0].comboTimer = 0.5;
-  match.fighters[0].comboHits = 1;
-  match.fighters[0].previousAttackInputs.special = false;
+  match.fighters[0].comboHits = match.fighters[0].beginnerGestureSequence.length;
+  match.fighters[0].previousAttackInputs = { jab: false, kick: false, heavy: false, special: false };
   match.fighters[1].stunFramesRemaining = 30;
   match.fighters[1].stunTimer = 0.5;
 }
@@ -1110,7 +1143,7 @@ describe('character manifests', () => {
 
   it('keeps KORE move damage unchanged', () => {
     const character = makeBeginnerSchemeCharacter();
-    let match = createMatch(character, starterCharacters[1], stages[0], 'local2p');
+    let match = createMatch(character, starterCharacters[1], stages[0], 'local2p', 3, { controlScheme: 'kore' });
 
     match = stepMatch(match, makeInput('special'), emptyInputFrame(), 1 / 60);
 
@@ -1152,61 +1185,105 @@ describe('character manifests', () => {
     const character = makeBeginnerSchemeCharacter();
     let match = createMatch(character, starterCharacters[1], stages[0], 'local2p', 3, { controlScheme: 'beginner' });
 
-    match = stepMatch(match, makeInput('special'), emptyInputFrame(), 1 / 60);
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].currentMove?.input).toBe('jab');
     expect(match.fighters[0].currentMove?.damage).toBe(6);
 
     readyForBeginnerAutoComboLink(match);
-    match = stepMatch(match, makeInput('special'), emptyInputFrame(), 1 / 60);
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].currentMove?.input).toBe('heavy');
     expect(match.fighters[0].currentMove?.damage).toBe(12);
 
     readyForBeginnerAutoComboLink(match);
-    match = stepMatch(match, makeInput('special'), emptyInputFrame(), 1 / 60);
-    expect(match.fighters[0].currentMove?.input).toBe('kick');
-    expect(match.fighters[0].currentMove?.damage).toBe(18);
-
-    readyForBeginnerAutoComboLink(match);
-    match = stepMatch(match, makeInput('special'), emptyInputFrame(), 1 / 60);
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].currentMove?.input).toBe('special');
     expect(match.fighters[0].currentMove?.command).toBe('qcf+4');
     expect(match.fighters[0].currentMove?.damage).toBe(11);
   });
 
-  it('uses a route-aware character finisher for Beginner auto-combo step four', () => {
-    const character: CharacterDefinition = {
-      ...makeBeginnerSchemeCharacter(),
-      id: 'beginner-route-aware-finisher-test',
-      animationFrames: {
-        ...(makeBeginnerSchemeCharacter().animationFrames ?? {}),
-        'cmd:1+4': ['/test-14.png']
-      },
-      moveOverrides: {
-        ...(makeBeginnerSchemeCharacter().moveOverrides ?? {}),
-        'cmd:qcf+4': { damage: 18, blockDamage: 5, label: 'qcf+4 Frame Link' },
-        'cmd:1+4': { damage: 18, blockDamage: 5, label: 'Character-Specific Ender' }
-      }
-    };
+  it('uses a six-frame grace window for Special chords', () => {
+    const character = makeBeginnerSchemeCharacter();
     let match = createMatch(character, starterCharacters[1], stages[0], 'local2p', 3, { controlScheme: 'beginner' });
 
-    for (let step = 0; step < 4; step += 1) {
-      if (step > 0) readyForBeginnerAutoComboLink(match);
-      match = stepMatch(match, makeInput('special'), emptyInputFrame(), 1 / 60);
-    }
+    match = stepMatch(match, makeInput('special'), emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].currentMove).toBeNull();
+    expect(match.fighters[0].beginnerSpecialGraceFrames).toBe(6);
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
 
-    expect(match.fighters[0].currentMove?.input).toBe('special');
+    expect(match.fighters[0].currentMove?.input).toBe('jab');
     expect(match.fighters[0].currentMove?.command).toBe('1+4');
-    expect(match.fighters[0].currentMove?.label).toBe('Character-Specific Ender');
-    expect(match.fighters[0].currentMove?.damage).toBe(11);
+    expect(match.fighters[0].beginnerSpecialGraceFrames).toBe(0);
+  });
+
+  it('executes dedicated Special chords immediately and releases standalone Special after grace', () => {
+    const character = makeBeginnerSchemeCharacter();
+    let chord = createMatch(character, starterCharacters[1], stages[0], 'local2p', 3, { controlScheme: 'beginner' });
+    chord = stepMatch(chord, makeInput('special', 'jab'), emptyInputFrame(), 1 / 60);
+    expect(chord.fighters[0].currentMove?.command).toBe('1+4');
+    expect(chord.fighters[0].beginnerSpecialGraceFrames).toBe(0);
+
+    let standalone = createMatch(character, starterCharacters[1], stages[0], 'local2p', 3, { controlScheme: 'beginner' });
+    standalone = stepMatch(standalone, makeInput('special'), emptyInputFrame(), 1 / 60);
+    standalone = stepFrames(standalone, 5);
+    expect(standalone.fighters[0].currentMove).toBeNull();
+    standalone = stepMatch(standalone, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(standalone.fighters[0].currentMove?.input).toBe('special');
+    expect(standalone.fighters[0].beginnerGestureSequence).toEqual(['special']);
+  });
+
+  it('spends exactly 35 Ki on a powered core finisher and keeps the zero-Ki fallback input', () => {
+    const character = makeBeginnerSchemeCharacter();
+    const run = (ki: number) => {
+      let match = createMatch(character, starterCharacters[1], stages[0], 'local2p', 3, { controlScheme: 'beginner' });
+      match.fighters[0].ki = ki;
+      for (let step = 0; step < 3; step += 1) {
+        if (step > 0) readyForBeginnerAutoComboLink(match);
+        match = stepMatch(match, makeInput('heavy'), emptyInputFrame(), 1 / 60);
+      }
+      return match;
+    };
+
+    const insufficient = run(34);
+    const affordable = run(35);
+    expect(insufficient.fighters[0].ki).toBe(34);
+    expect(insufficient.fighters[0].currentMove?.kiBurst).not.toBe(true);
+    expect(affordable.fighters[0].ki).toBe(0);
+    expect(affordable.fighters[0].currentMove?.kiBurst).toBe(true);
+  });
+
+  it('holds an early follow-up until impact confirmation and deletes it after a whiff', () => {
+    const character = makeBeginnerSchemeCharacter();
+    const run = (distance: number) => {
+      let match = createMatch(character, starterCharacters[1], stages[0], 'local2p', 3, { controlScheme: 'beginner' });
+      match.fighters[0].position.x = -distance / 2;
+      match.fighters[1].position.x = distance / 2;
+      match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+      const startup = match.fighters[0].currentMove?.startupFrames ?? 9;
+      match = stepFrames(match, Math.max(1, startup - 2));
+      expect(match.fighters[0].comboHits).toBe(0);
+      expect(match.fighters[0].beginnerGestureSequence).toEqual(['light']);
+      match.fighters[0].previousAttackInputs.jab = false;
+      match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+      expect(match.fighters[0].bufferedMoveIntent?.beginnerAwaitingHitConfirm).toBe(true);
+      return stepFrames(match, 24);
+    };
+
+    const confirmed = run(0.8);
+    expect(confirmed.fighters[0].beginnerGestureSequence).toEqual(['light', 'light']);
+    expect(confirmed.fighters[0].currentMove?.input).toBe('heavy');
+
+    const whiffed = run(8);
+    expect(whiffed.fighters[0].beginnerGestureSequence).toEqual([]);
+    expect(whiffed.fighters[0].bufferedMoveIntent).toBeNull();
   });
 
   it('falls Beginner auto-combo finishers back to base special when preferred commands are missing', () => {
     const character = makeBeginnerSchemeCharacter({ includeFinisherCommands: false });
     let match = createMatch(character, starterCharacters[1], stages[0], 'local2p', 3, { controlScheme: 'beginner' });
 
-    for (let step = 0; step < 4; step += 1) {
+    for (let step = 0; step < 3; step += 1) {
       if (step > 0) readyForBeginnerAutoComboLink(match);
-      match = stepMatch(match, makeInput('special'), emptyInputFrame(), 1 / 60);
+      match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
     }
 
     expect(match.fighters[0].currentMove?.input).toBe('special');
@@ -1372,7 +1449,7 @@ describe('character manifests', () => {
     });
 
     expect(settings.game.roundTimer).toBe(75);
-    expect(settings.game.controlScheme).toBe('kore');
+    expect(settings.game.controlScheme).toBe('beginner');
     expect(settings.controls.keyboard[0].jab).toEqual(['KeyP']);
     expect(settings.controls.keyboard[0].up).toEqual(defaultGameSettings.controls.keyboard[0].up);
     expect(settings.controls.keyboard[0].jump).toEqual(defaultGameSettings.controls.keyboard[0].jump);
@@ -1425,8 +1502,8 @@ describe('character manifests', () => {
 
   it('sanitizes control scheme settings', () => {
     expect(sanitizeGameSettings({ game: { controlScheme: 'beginner' } }).game.controlScheme).toBe('beginner');
-    expect(sanitizeGameSettings({ game: { controlScheme: 'expert' } }).game.controlScheme).toBe('kore');
-    expect(cloneSettings(defaultGameSettings).game.controlScheme).toBe('kore');
+    expect(sanitizeGameSettings({ game: { controlScheme: 'expert' } }).game.controlScheme).toBe('beginner');
+    expect(cloneSettings(defaultGameSettings).game.controlScheme).toBe('beginner');
   });
 
   it('keeps infinite round timer settings as a real option', () => {
@@ -2574,9 +2651,9 @@ describe('fight engine', () => {
     expect(match.timer).toBe(45);
   });
 
-  it('uses KORE controls by default and Beginner controls when requested', () => {
-    const kore = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
-    const beginner = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p', 3, { controlScheme: 'beginner' });
+  it('uses Beginner controls by default and KORE controls when requested', () => {
+    const beginner = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    const kore = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p', 3, { controlScheme: 'kore' });
 
     expect(kore.controlScheme).toBe('kore');
     expect(beginner.controlScheme).toBe('beginner');
@@ -7115,7 +7192,48 @@ describe('fight engine', () => {
 
     expect(match.fighters[1].juggleHitCount).toBe(4);
     expect(match.fighters[1].juggleGravityScale).toBeGreaterThan(0.52);
+    expect(match.fighters[1].horizontalKnockback?.durationFrames).toBe(8);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     expect(match.fighters[1].position.x).toBeGreaterThan(startX);
+  });
+
+  it('applies grounded knockback as a six-frame cubic ease-out while preserving total distance', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p', 3, { controlScheme: 'kore' });
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.7;
+    match.fighters[1].position.x = 0.7;
+    match.fighters[0].state = 'attack';
+    match.fighters[0].currentMove = {
+      ...starterCharacters[0].moves[0],
+      startupFrames: 0,
+      activeFrames: 3,
+      recoveryFrames: 12,
+      pushback: 1.1,
+      range: 2.5,
+      hitbox: { offset: [0, 1, 0.7], size: [1, 1.2, 1.5] }
+    };
+    match.fighters[0].actionFramesRemaining = 15;
+    match.fighters[0].actionTimer = 15 / 60;
+    const startX = match.fighters[1].position.x;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    const queued = match.fighters[1].horizontalKnockback;
+    expect(queued?.durationFrames).toBe(6);
+    expect(match.fighters[1].position.x).toBe(startX);
+    const deltas: number[] = [];
+    let previousX = startX;
+    for (let frame = 0; frame < 6; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      deltas.push(match.fighters[1].position.x - previousX);
+      previousX = match.fighters[1].position.x;
+    }
+
+    expect(deltas[0]).toBeGreaterThan(deltas[1]);
+    expect(deltas[1]).toBeGreaterThan(deltas[2]);
+    expect(deltas.every((delta) => delta > 0)).toBe(true);
+    expect(match.fighters[1].position.x - startX).toBeCloseTo(queued!.x, 5);
+    expect(match.fighters[1].horizontalKnockback).toBeNull();
   });
 
   it('keeps a charged shadow clone offset when Naruto attacks directly from ki charge', () => {
@@ -9266,10 +9384,15 @@ describe('fight engine', () => {
       match.fighters[0].actionTimer = 12 / 60;
       const startX = match.fighters[1].position.x;
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
-      const pushback = match.fighters[1].position.x - startX;
       const appliedHitCount = match.fighters[1].juggleHitCount;
       let airborneFrames = 0;
       let risingFrames = 0;
+      for (let frame = 0; frame < 8 && match.fighters[1].position.y > 0; frame += 1) {
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+        airborneFrames += 1;
+        if (match.fighters[1].velocityY > 0) risingFrames += 1;
+      }
+      const pushback = match.fighters[1].position.x - startX;
       while (airborneFrames < 90 && match.fighters[1].position.y > 0) {
         match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
         airborneFrames += 1;
@@ -10183,7 +10306,7 @@ describe('fight engine', () => {
     expect(hydrated.roundTime).toBe(0);
   });
 
-  it('round-trips control scheme in compact snapshots and defaults legacy snapshots to KORE', () => {
+  it('round-trips control scheme in compact snapshots and defaults legacy snapshots to Beginner', () => {
     const host = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'online', 3, { controlScheme: 'beginner' });
     const guestBase = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'online', 3);
     const snapshot = compactMatchSnapshot(host, 14);
@@ -10192,6 +10315,6 @@ describe('fight engine', () => {
 
     expect(snapshot.controlScheme).toBe('beginner');
     expect(hydrated.controlScheme).toBe('beginner');
-    expect(legacyHydrated.controlScheme).toBe('kore');
+    expect(legacyHydrated.controlScheme).toBe('beginner');
   });
 });

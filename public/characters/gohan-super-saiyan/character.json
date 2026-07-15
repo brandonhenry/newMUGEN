@@ -541,8 +541,8 @@
       "usesKi": true,
       "kiBurst": true,
       "forwardForce": 0.89,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 18,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39,
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
@@ -658,14 +658,14 @@
       "whiffRecoveryFrames": 7,
       "range": 8.5,
       "forwardForce": 0.89,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 11,
+      "forwardForceStartFrame": 30,
+      "forwardForceEndFrame": 39,
       "label": "Kamehameha",
       "hitLevel": "special",
       "usesKi": true,
       "kiBurst": true,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 8,
       "comboRepeatPenaltyFrames": 5,
       "juggleRepeatPenaltyFrames": 7
     },
@@ -890,15 +890,15 @@
       "whiffRecoveryFrames": 12,
       "range": 8.2,
       "forwardForce": 1.55,
-      "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 14,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 29,
       "label": "Masenko",
       "hitLevel": "special",
       "knockdown": true,
       "usesKi": true,
       "kiBurst": true,
-      "onComboHitFrames": 19,
-      "onJuggleHitFrames": 10,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 9,
       "comboRepeatPenaltyFrames": 5,
       "juggleRepeatPenaltyFrames": 9
     },
@@ -1556,8 +1556,8 @@
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 35,
       "forwardForce": 2.01,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 29,
+      "forwardForceStartFrame": 33,
+      "forwardForceEndFrame": 43,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
       "label": "Forward Low Burst",
@@ -1566,8 +1566,8 @@
       "jumpBeforeMove": true,
       "damage": 10,
       "blockDamage": 1,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 13,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 14,
       "comboRepeatPenaltyFrames": 3,
       "juggleRepeatPenaltyFrames": 6
     },
@@ -1580,8 +1580,8 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 6,
       "forwardForce": 0.74,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 17,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 14,
       "label": "Quick Aura Check",
       "hitLevel": "high",
       "cancelable": false,
@@ -1635,8 +1635,8 @@
       "jumpBeforeMove": true,
       "damage": 10,
       "blockDamage": 1,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 13,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 15,
       "comboRepeatPenaltyFrames": 3,
       "juggleRepeatPenaltyFrames": 6
     },
@@ -1644,22 +1644,25 @@
       "startupFrames": 9,
       "activeFrames": 1,
       "recoveryFrames": 12,
-      "onBlockFrames": 1,
+      "onBlockFrames": -10,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
-      "whiffRecoveryFrames": 9,
+      "whiffRecoveryFrames": 10,
       "forwardForce": 1.6,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 17,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 14,
       "label": "Quick Saiyan Check",
       "hitLevel": "high",
       "cancelable": false,
       "damage": 8,
       "blockDamage": 1,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 14,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "knockdown": true,
+      "pushback": 1,
+      "blockPushback": 0.48
     },
     "cmd:qcf+3": {
       "startupFrames": 23,
@@ -3205,5 +3208,367 @@
         "maxDamageScale": 1
       }
     ]
-  }
+  },
+  "beginnerComboRoutes": [
+    {
+      "id": "gohan-super-saiyan:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Quick Aura Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Saiyan Body Poke",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Quick Saiyan Check",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Saiyan Guard Break",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Aura Hook",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Quick Saiyan Check",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "knockdown",
+          "kiCommand": "3+4",
+          "kiAnimationKey": "cmd:3+4",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Sliding Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Sliding Kick",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Quick Saiyan Check",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "knockdown",
+          "kiCommand": "3+4",
+          "kiAnimationKey": "cmd:3+4",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Saiyan Guard Break",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Aura Hook",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Quick Saiyan Check",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "knockdown",
+          "kiCommand": "3+4",
+          "kiAnimationKey": "cmd:3+4",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Quick Aura Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Saiyan Guard Break",
+          "windowBefore": 16,
+          "windowAfter": 23,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Quick Saiyan Check",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "knockdown",
+          "kiCommand": "3+4",
+          "kiAnimationKey": "cmd:3+4",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Quick Aura Check",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Saiyan Guard Break",
+          "windowBefore": 16,
+          "windowAfter": 23,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Quick Saiyan Check",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "knockdown",
+          "kiCommand": "3+4",
+          "kiAnimationKey": "cmd:3+4",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Saiyan Guard Break",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Sliding Kick",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Quick Saiyan Check",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "knockdown",
+          "kiCommand": "3+4",
+          "kiAnimationKey": "cmd:3+4",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Sliding Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Quick Aura Check",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Quick Saiyan Check",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "knockdown",
+          "kiCommand": "3+4",
+          "kiAnimationKey": "cmd:3+4",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

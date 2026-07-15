@@ -468,6 +468,45 @@ export type AttackCompanionDefinition = {
   verticalOffset?: number;
 };
 
+export type BeginnerComboGesture =
+  | 'light'
+  | 'medium'
+  | 'heavy'
+  | 'special'
+  | 'special+light'
+  | 'special+medium'
+  | 'special+heavy';
+
+export type BeginnerComboMovement = 'dashForward' | 'dashBack' | 'jump' | 'neutral';
+
+export type BeginnerComboRouteStep = {
+  routeKey?: string;
+  gesture: BeginnerComboGesture;
+  input: MoveInput;
+  command?: string;
+  animationKey: string;
+  label: string;
+  windowBefore: number;
+  windowAfter: number;
+  movementBefore?: BeginnerComboMovement;
+  movementMinFrames?: number;
+  movementMaxFrames?: number;
+  expect?: 'hit' | 'launch' | 'juggle' | 'knockdown';
+  kiCommand?: string;
+  kiAnimationKey?: string;
+  kiCost?: number;
+  poweredKiFallback?: boolean;
+};
+
+export type BeginnerComboRoute = {
+  id: string;
+  title: string;
+  family: 'core' | 'mixed';
+  gestures: BeginnerComboGesture[];
+  steps: BeginnerComboRouteStep[];
+  tier?: 'short' | 'medium' | 'long' | 'marathon';
+};
+
 export type CharacterDefinition = {
   id: string;
   displayName: string;
@@ -507,6 +546,7 @@ export type CharacterDefinition = {
   animations: Record<string, string>;
   moves: MoveDefinition[];
   moveOverrides?: Record<string, MoveOverride>;
+  beginnerComboRoutes?: BeginnerComboRoute[];
   getupFrameOverrides?: GetupFrameOverrides;
   effects?: CharacterEffectDefinition[];
   moveEffects?: Record<string, MoveEffectInstance[]>;
@@ -1145,6 +1185,13 @@ export type BufferedMoveIntent = {
   sequence: number;
   beginnerDamageScale?: number;
   beginnerForcedCommand?: string;
+  beginnerUseKiBurst?: boolean;
+  beginnerRouteId?: string;
+  beginnerRouteStep?: number;
+  beginnerGesture?: BeginnerComboGesture;
+  beginnerWindowBefore?: number;
+  beginnerWindowAfter?: number;
+  beginnerAwaitingHitConfirm?: boolean;
 };
 
 export type MatchMode = 'ai' | 'cpuArcade' | 'versusCpu' | 'local2p' | 'cpu' | 'training' | 'trainingOnline' | 'online' | 'ranked' | 'private' | 'custom' | 'tournamentLocal' | 'tournamentOnline' | 'tournamentInfinite';
@@ -1386,6 +1433,17 @@ export type FighterRuntime = {
   comboHits: number;
   comboContactHits: number;
   comboDamage: number;
+  beginnerGestureSequence: BeginnerComboGesture[];
+  beginnerActiveRouteId: string | null;
+  beginnerPendingRouteStep: number;
+  beginnerPendingSpecialIntent: BufferedMoveIntent | null;
+  beginnerSpecialGraceFrames: number;
+  horizontalKnockback: {
+    x: number;
+    z: number;
+    elapsedFrames: number;
+    durationFrames: number;
+  } | null;
   bufferedMoveInput: MoveInput | null;
   bufferedMoveFrames: number;
   bufferedMoveIntent: BufferedMoveIntent | null;

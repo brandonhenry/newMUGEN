@@ -438,8 +438,8 @@
       "counterHit": false,
       "cancelable": false,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15,
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
@@ -520,10 +520,10 @@
       "counterHit": false,
       "cancelable": false,
       "forwardForce": 0.83,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 12,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 26,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
       "juggleRepeatPenaltyFrames": 8
     }
@@ -611,8 +611,8 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "forwardForce": 0.55,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15,
       "label": "Monkey D. Luffy Left Kick",
       "hitLevel": "low",
       "onComboHitFrames": 13,
@@ -632,8 +632,8 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "forwardForce": 0.83,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 24,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16,
       "label": "Monkey D. Luffy Right Kick",
       "hitLevel": "mid",
       "onComboHitFrames": 12,
@@ -701,13 +701,13 @@
       "whiffRecoveryFrames": 37,
       "range": 2.05,
       "forwardForce": 3.27,
-      "forwardForceStartFrame": 20,
-      "forwardForceEndFrame": 28,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 46,
       "label": "Monkey D. Luffy Burst",
       "hitLevel": "mid",
       "knockdown": true,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 8,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 9,
       "comboRepeatPenaltyFrames": 6,
       "juggleRepeatPenaltyFrames": 10
     },
@@ -1526,8 +1526,8 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.85,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 11,
       "label": "Ducking Gum-Gum Pistol",
       "hitLevel": "high",
       "tracking": "medium",
@@ -1548,8 +1548,8 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 22,
       "forwardForce": 2.71,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 14,
+      "forwardForceStartFrame": 4,
+      "forwardForceEndFrame": 11,
       "label": "Gum-Gum Rush Pistol",
       "hitLevel": "high",
       "tracking": "medium",
@@ -2782,5 +2782,368 @@
     ]
   },
   "projectiles": [],
-  "moveProjectiles": {}
+  "moveProjectiles": {},
+  "beginnerComboRoutes": [
+    {
+      "id": "monkey-d-luffy:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Gum-Gum Rush Pistol",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Ducking Gum-Gum Pistol",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Monkey D. Luffy Burst",
+          "windowBefore": 14,
+          "windowAfter": 18,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "monkey-d-luffy:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Gum-Gum Gatling",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Monkey D. Luffy Right Check",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Monkey D. Luffy Burst",
+          "windowBefore": 11,
+          "windowAfter": 15,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "monkey-d-luffy:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Gum-Gum Feint",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Monkey D. Luffy Left Kick",
+          "windowBefore": 13,
+          "windowAfter": 17,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Monkey D. Luffy Burst",
+          "windowBefore": 11,
+          "windowAfter": 15,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "monkey-d-luffy:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Monkey D. Luffy Right Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Gum-Gum Balloon Tornado",
+          "windowBefore": 7,
+          "windowAfter": 11,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Monkey D. Luffy Burst",
+          "windowBefore": 15,
+          "windowAfter": 19,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "monkey-d-luffy:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Gum-Gum Rush Pistol",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Gum-Gum Gatling",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Monkey D. Luffy Burst",
+          "windowBefore": 12,
+          "windowAfter": 16,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "monkey-d-luffy:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Gum-Gum Balloon Tornado",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Gum-Gum Gatling",
+          "windowBefore": 16,
+          "windowAfter": 23,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Monkey D. Luffy Burst",
+          "windowBefore": 12,
+          "windowAfter": 16,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "monkey-d-luffy:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Gum-Gum Red Drive",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Gum-Gum Feint",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Monkey D. Luffy Burst",
+          "windowBefore": 13,
+          "windowAfter": 17,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "monkey-d-luffy:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Gum-Gum Giant Rifle",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Gum-Gum Rush Pistol",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Monkey D. Luffy Burst",
+          "windowBefore": 13,
+          "windowAfter": 17,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

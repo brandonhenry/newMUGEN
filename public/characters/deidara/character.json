@@ -269,7 +269,14 @@
           0.5,
           0.6936
         ]
-      }
+      },
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.35,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 13
     },
     {
       "id": "kick",
@@ -301,7 +308,14 @@
           0.42,
           0.7096
         ]
-      }
+      },
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 24
     },
     {
       "id": "heavy",
@@ -333,7 +347,14 @@
           0.5,
           0.7
         ]
-      }
+      },
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     {
       "id": "special",
@@ -365,7 +386,14 @@
           0.5,
           0.7176
         ]
-      }
+      },
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 13
     }
   ],
   "hurtboxes": [
@@ -406,7 +434,14 @@
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "label": "Deidara Left Check",
-      "hitLevel": "high"
+      "hitLevel": "high",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.35,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 12
     },
     "jabright": {
       "startupFrames": 12,
@@ -419,7 +454,14 @@
       "whiffRecoveryFrames": 5,
       "range": 1.5,
       "label": "Deidara Right Check",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22
     },
     "kickleft": {
       "startupFrames": 14,
@@ -432,7 +474,14 @@
       "whiffRecoveryFrames": 7,
       "range": 1.62,
       "label": "Deidara Left Kick",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 24
     },
     "kickright": {
       "startupFrames": 17,
@@ -445,7 +494,14 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Deidara Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 13
     },
     "cmd:f+1": {
       "startupFrames": 18,
@@ -459,7 +515,13 @@
       "range": 1.72,
       "forwardForce": 0.6,
       "label": "Deidara Rush",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23
     },
     "cmd:d/f+2": {
       "startupFrames": 16,
@@ -476,7 +538,14 @@
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Deidara Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 21,
+      "onJuggleHitFrames": 19,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13,
+      "forwardForce": 1.76,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 32
     },
     "cmd:qcf+4": {
       "startupFrames": 19,
@@ -486,11 +555,18 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 37,
       "range": 2.05,
       "label": "Deidara Burst",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10,
+      "forwardForce": 3.95,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 16
     },
     "cmd:WS+4": {
       "startupFrames": 14,
@@ -503,7 +579,14 @@
       "whiffRecoveryFrames": 8,
       "range": 1.62,
       "label": "Deidara Rising Strike",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 1.9,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 12
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -516,7 +599,14 @@
       "whiffRecoveryFrames": 5,
       "range": 1.34,
       "label": "Deidara Crouch Jab",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5,
+      "forwardForce": 0.89,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 15
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -530,7 +620,14 @@
       "range": 1.48,
       "launchHeight": 2,
       "label": "Deidara Crouch Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 22,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 1.67,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 33
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -543,7 +640,14 @@
       "whiffRecoveryFrames": 9,
       "range": 1.72,
       "label": "Deidara Twin Assault",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7,
+      "forwardForce": 1.46,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 33
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -553,11 +657,18 @@
       "onBlockFrames": -14,
       "onHitFrames": 24,
       "onCounterHitFrames": 31,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 32,
       "range": 1.65,
       "launchHeight": 2.2,
       "label": "Deidara Cross Launcher",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13,
+      "forwardForce": 2.08,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -570,7 +681,14 @@
       "whiffRecoveryFrames": 8,
       "range": 1.58,
       "label": "Deidara Low Feint",
-      "hitLevel": "low"
+      "hitLevel": "low",
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
+      "forwardForce": 1.69,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 28
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -580,11 +698,18 @@
       "onBlockFrames": -16,
       "onHitFrames": 8,
       "onCounterHitFrames": 14,
-      "whiffRecoveryFrames": 12,
+      "whiffRecoveryFrames": 31,
       "range": 1.74,
       "label": "Deidara Driving Kick",
       "hitLevel": "low",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10,
+      "forwardForce": 2.17,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -594,11 +719,18 @@
       "onBlockFrames": -10,
       "onHitFrames": 18,
       "onCounterHitFrames": 26,
-      "whiffRecoveryFrames": 13,
+      "whiffRecoveryFrames": 37,
       "range": 1.9,
       "label": "Deidara Power Crush",
       "hitLevel": "mid",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 11,
+      "forwardForce": 3.37,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 17
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -608,13 +740,20 @@
       "onBlockFrames": -12,
       "onHitFrames": 22,
       "onCounterHitFrames": 32,
-      "whiffRecoveryFrames": 15,
+      "whiffRecoveryFrames": 38,
       "range": 2.1,
       "kiCost": 35,
       "label": "Deidara Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 12,
+      "forwardForce": 2.9,
+      "forwardForceStartFrame": 29,
+      "forwardForceEndFrame": 43
     },
     "neutral:jab-jab": {
       "label": "Deidara Second Beat"
@@ -715,6 +854,34 @@
   },
   "animationFrameScales": {
     "idle": {
+      "0": {
+        "width": 1.53,
+        "height": 1.53,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "1": {
+        "width": 1.53,
+        "height": 1.53,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "2": {
+        "width": 1.53,
+        "height": 1.53,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "3": {
+        "width": 1.53,
+        "height": 1.53,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
       "5": {
         "width": 1,
         "height": 1,
@@ -762,75 +929,9 @@
         "flipX": false,
         "flipY": false,
         "voxelScaleX": 1.00018
-      },
-      "0": {
-        "width": 1.53,
-        "height": 1.53,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
-      },
-      "1": {
-        "width": 1.53,
-        "height": 1.53,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
-      },
-      "2": {
-        "width": 1.53,
-        "height": 1.53,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
-      },
-      "3": {
-        "width": 1.53,
-        "height": 1.53,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
       }
     },
     "walkForward": {
-      "16": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.00002
-      },
-      "17": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
-      },
-      "18": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.05593
-      },
-      "19": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.00002
-      },
-      "20": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
-      },
       "4": {
         "width": 1.53,
         "height": 1.53,
@@ -858,9 +959,7 @@
         "offsetX": 0,
         "flipX": false,
         "flipY": false
-      }
-    },
-    "walkBack": {
+      },
       "16": {
         "width": 1,
         "height": 1,
@@ -898,7 +997,9 @@
         "offsetX": 0,
         "flipX": false,
         "flipY": false
-      },
+      }
+    },
+    "walkBack": {
       "8": {
         "width": 1.24,
         "height": 1.33,
@@ -930,6 +1031,44 @@
       "12": {
         "width": 1.16,
         "height": 1.2,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "16": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScaleX": 1.00002
+      },
+      "17": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "18": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScaleX": 1.05593
+      },
+      "19": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScaleX": 1.00002
+      },
+      "20": {
+        "width": 1,
+        "height": 1,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -1119,14 +1258,6 @@
       }
     },
     "block": {
-      "91": {
-        "width": 1,
-        "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.25971
-      },
       "39": {
         "width": 1.61,
         "height": 1.27,
@@ -1154,6 +1285,14 @@
         "offsetX": 0,
         "flipX": false,
         "flipY": false
+      },
+      "91": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScaleX": 1.25971
       }
     },
     "chargeKi": {

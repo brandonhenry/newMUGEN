@@ -1,6 +1,6 @@
 import { emptyInputFrame, type ActionName, type CharacterDefinition, type ControlScheme, type FighterRuntime, type InputFrame, type MatchSnapshot, type MoveDefinition, type MoveInput } from '../../types';
 
-export const ONLINE_PROTOCOL_VERSION = 22;
+export const ONLINE_PROTOCOL_VERSION = 23;
 
 export const inputActions: ActionName[] = [
   'up',
@@ -80,6 +80,12 @@ export type CompactFighterSnapshot = {
   comboHits: number;
   comboContactHits?: number;
   comboDamage: number;
+  beginnerGestureSequence?: FighterRuntime['beginnerGestureSequence'];
+  beginnerActiveRouteId?: string | null;
+  beginnerPendingRouteStep?: number;
+  beginnerPendingSpecialIntent?: FighterRuntime['beginnerPendingSpecialIntent'];
+  beginnerSpecialGraceFrames?: number;
+  horizontalKnockback?: FighterRuntime['horizontalKnockback'];
   wasCrouching: boolean;
   roundsWon: number;
   stunTimer: number;
@@ -229,7 +235,7 @@ export function hydrateMatchSnapshot(base: MatchSnapshot, snapshot: CompactMatch
     roundsToWin: snapshot.roundsToWin ?? base.roundsToWin,
     maxHealth: snapshot.maxHealth ?? base.maxHealth,
     trainingInfiniteHealth: snapshot.trainingInfiniteHealth,
-    controlScheme: snapshot.controlScheme === 'beginner' ? 'beginner' : 'kore',
+    controlScheme: snapshot.controlScheme === 'kore' ? 'kore' : 'beginner',
     introEnabled: snapshot.introEnabled,
     timer: snapshot.timer,
     round: snapshot.round,
@@ -334,6 +340,17 @@ function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
     comboHits: fighter.comboHits,
     comboContactHits: fighter.comboContactHits,
     comboDamage: fighter.comboDamage,
+    beginnerGestureSequence: [...fighter.beginnerGestureSequence],
+    beginnerActiveRouteId: fighter.beginnerActiveRouteId,
+    beginnerPendingRouteStep: fighter.beginnerPendingRouteStep,
+    beginnerPendingSpecialIntent: fighter.beginnerPendingSpecialIntent
+      ? {
+          ...fighter.beginnerPendingSpecialIntent,
+          inputSnapshot: { ...fighter.beginnerPendingSpecialIntent.inputSnapshot }
+        }
+      : null,
+    beginnerSpecialGraceFrames: fighter.beginnerSpecialGraceFrames,
+    horizontalKnockback: fighter.horizontalKnockback ? { ...fighter.horizontalKnockback } : null,
     wasCrouching: fighter.wasCrouching,
     roundsWon: fighter.roundsWon,
     stunTimer: fighter.stunTimer,
@@ -436,6 +453,17 @@ function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot, 
     comboHits: snapshot.comboHits,
     comboContactHits: snapshot.comboContactHits ?? snapshot.comboHits,
     comboDamage: snapshot.comboDamage,
+    beginnerGestureSequence: [...(snapshot.beginnerGestureSequence ?? base.beginnerGestureSequence)],
+    beginnerActiveRouteId: snapshot.beginnerActiveRouteId ?? null,
+    beginnerPendingRouteStep: snapshot.beginnerPendingRouteStep ?? -1,
+    beginnerPendingSpecialIntent: snapshot.beginnerPendingSpecialIntent
+      ? {
+          ...snapshot.beginnerPendingSpecialIntent,
+          inputSnapshot: { ...snapshot.beginnerPendingSpecialIntent.inputSnapshot }
+        }
+      : null,
+    beginnerSpecialGraceFrames: snapshot.beginnerSpecialGraceFrames ?? 0,
+    horizontalKnockback: snapshot.horizontalKnockback ? { ...snapshot.horizontalKnockback } : null,
     wasCrouching: snapshot.wasCrouching,
     roundsWon: snapshot.roundsWon,
     stunTimer: snapshot.stunTimer,

@@ -455,8 +455,8 @@
       "counterHit": false,
       "cancelable": false,
       "forwardForce": 0.5,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 21,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 14,
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
@@ -540,7 +540,7 @@
       "cancelable": false,
       "forwardForce": 0.85,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 19,
+      "forwardForceEndFrame": 26,
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
@@ -629,11 +629,15 @@
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "forwardForce": 0.5,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 21,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 14,
       "label": "Quick Fusion Jab",
       "hitLevel": "high",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
       "startupFrames": 14,
@@ -648,11 +652,15 @@
       "range": 1.53,
       "forwardForce": 0.85,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 19,
+      "forwardForceEndFrame": 26,
       "label": "Fusion Body Blow",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
       "startupFrames": 29,
@@ -671,7 +679,11 @@
       "label": "Low Fusion Sweep",
       "hitLevel": "low",
       "tracking": "weakLeft",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickright": {
       "startupFrames": 15,
@@ -679,7 +691,7 @@
       "recoveryFrames": 20,
       "damage": 9,
       "blockDamage": 1,
-      "onBlockFrames": -2,
+      "onBlockFrames": -10,
       "onHitFrames": 10,
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 10,
@@ -690,7 +702,13 @@
       "label": "Heavy Fusion Kick",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "knockdown": false
+      "knockdown": true,
+      "pushback": 1,
+      "blockPushback": 0.48,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 10
     },
     "cmd:f+1": {
       "startupFrames": 15,
@@ -708,7 +726,11 @@
       "forwardForceEndFrame": 29,
       "label": "Fusion Rushdown",
       "hitLevel": "mid",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d/f+2": {
       "startupFrames": 16,
@@ -731,7 +753,11 @@
       "label": "Diagonal Fusion Launcher",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:qcf+4": {
       "startupFrames": 23,
@@ -755,7 +781,11 @@
       "knockdown": true,
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 21,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 16
     },
     "cmd:WS+4": {
       "startupFrames": 23,
@@ -778,7 +808,11 @@
       "tracking": "weakRight",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 26,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:FC+1": {
       "startupFrames": 15,
@@ -796,7 +830,11 @@
       "forwardForceEndFrame": 35,
       "label": "Crouch Fusion Flurry",
       "hitLevel": "mid",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:FC+2": {
       "startupFrames": 18,
@@ -816,7 +854,11 @@
       "label": "Crouch Spirit Launcher",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:1+2": {
       "startupFrames": 20,
@@ -835,7 +877,11 @@
       "label": "Fusion Cross Strike",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -855,7 +901,11 @@
       "label": "Rising Fusion Launcher",
       "hitLevel": "mid",
       "tracking": "weakLeft",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:2+3": {
       "startupFrames": 25,
@@ -874,7 +924,11 @@
       "label": "Low Fusion Feint",
       "hitLevel": "low",
       "tracking": "weakLeft",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:2+4": {
       "startupFrames": 18,
@@ -898,7 +952,11 @@
       "knockdown": true,
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 20,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 16
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -922,7 +980,11 @@
       "knockdown": true,
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 8,
+      "onJuggleHitFrames": 19,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 16
     },
     "cmd:O+2": {
       "startupFrames": 25,
@@ -936,8 +998,8 @@
       "whiffRecoveryFrames": 46,
       "range": 8.5,
       "forwardForce": 3.12,
-      "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 22,
+      "forwardForceStartFrame": 45,
+      "forwardForceEndFrame": 53,
       "pushback": 0.82,
       "blockPushback": 0.68,
       "launchHeight": 2.05,
@@ -951,7 +1013,11 @@
       "tracking": "none",
       "knockdown": false,
       "holdable": true,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 30,
+      "onJuggleHitFrames": 24,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 14
     },
     "neutral:jab-jab": {
       "startupFrames": 15,
@@ -965,9 +1031,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Second Beat"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Second Beat",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 15,
@@ -981,9 +1051,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Body Blow"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Body Blow",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 15,
@@ -997,9 +1071,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Low Changeup"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Low Changeup",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-special": {
       "startupFrames": 15,
@@ -1013,9 +1091,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Pressure Feint"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Pressure Feint",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy": {
       "startupFrames": 15,
@@ -1029,9 +1111,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.01,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Drive"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Drive",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 15,
@@ -1045,9 +1131,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Barrage"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Barrage",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 15,
@@ -1061,9 +1151,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Finisher"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Finisher",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick": {
       "startupFrames": 18,
@@ -1077,9 +1171,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 32,
-      "forwardForceEndFrame": 35,
-      "label": "Vegito Step Kick"
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 29,
+      "label": "Vegito Step Kick",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 15,
@@ -1093,9 +1191,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Palm String"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Palm String",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick-special": {
       "startupFrames": 15,
@@ -1109,9 +1211,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Rising Chain"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Rising Chain",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-special": {
       "startupFrames": 15,
@@ -1125,9 +1231,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Special Setup"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Special Setup",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 15,
@@ -1141,9 +1251,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Break Art"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Break Art",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab": {
       "startupFrames": 15,
@@ -1157,9 +1271,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Check Hook"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Check Hook",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 15,
@@ -1173,9 +1291,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Heavy Break"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Heavy Break",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 15,
@@ -1189,9 +1311,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 1.93,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Charged Follow"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Charged Follow",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-kick": {
       "startupFrames": 18,
@@ -1205,9 +1331,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 32,
-      "forwardForceEndFrame": 35,
-      "label": "Vegito Drop Kick"
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 29,
+      "label": "Vegito Drop Kick",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 15,
@@ -1221,9 +1351,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Arc Finisher"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Arc Finisher",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-special": {
       "startupFrames": 15,
@@ -1237,9 +1371,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Focus Stance"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Focus Stance",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 15,
@@ -1253,9 +1391,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Mode Shift"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Mode Shift",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-jab": {
       "startupFrames": 15,
@@ -1269,9 +1411,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Heel Feint"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Heel Feint",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-jab-special": {
       "startupFrames": 15,
@@ -1285,9 +1431,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Summon Strike"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Summon Strike",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-heavy": {
       "startupFrames": 15,
@@ -1301,9 +1451,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Guard Snare"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Guard Snare",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 15,
@@ -1317,9 +1471,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Armor Break"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Armor Break",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-special": {
       "startupFrames": 15,
@@ -1333,9 +1491,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Power Setup"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Power Setup",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 15,
@@ -1349,9 +1511,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Switch Strike"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Switch Strike",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-jab": {
       "startupFrames": 15,
@@ -1365,9 +1531,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Spark Jab"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Spark Jab",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 15,
@@ -1381,9 +1551,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Binding Blow"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Binding Blow",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-heavy": {
       "startupFrames": 15,
@@ -1397,9 +1571,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 30,
-      "label": "Vegito Heavy Draw"
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 25,
+      "label": "Vegito Heavy Draw",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-kick": {
       "startupFrames": 18,
@@ -1413,9 +1591,13 @@
       "whiffRecoveryFrames": 4,
       "range": 1.55,
       "forwardForce": 0.73,
-      "forwardForceStartFrame": 32,
-      "forwardForceEndFrame": 35,
-      "label": "Vegito Kick Ender"
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 29,
+      "label": "Vegito Kick Ender",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:1+4": {
       "startupFrames": 23,
@@ -1437,7 +1619,11 @@
       "tracking": "weakRight",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 26,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13
     },
     "cmd:f+2": {
       "startupFrames": 14,
@@ -1455,7 +1641,11 @@
       "label": "Forward Fusion Strike",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:f+3": {
       "startupFrames": 19,
@@ -1468,7 +1658,7 @@
       "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 7,
       "forwardForce": 1.68,
-      "forwardForceStartFrame": 38,
+      "forwardForceStartFrame": 35,
       "forwardForceEndFrame": 42,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
@@ -1476,7 +1666,11 @@
       "hitLevel": "low",
       "tracking": "weakLeft",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:d+3": {
       "startupFrames": 16,
@@ -1489,15 +1683,19 @@
       "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 7,
       "forwardForce": 1.4,
-      "forwardForceStartFrame": 38,
-      "forwardForceEndFrame": 42,
+      "forwardForceStartFrame": 36,
+      "forwardForceEndFrame": 36,
       "moveJumpForce": 8.4,
       "moveJumpGravity": 26,
       "label": "Ducking Low Hop Kick",
       "hitLevel": "low",
       "tracking": "weakLeft",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:d/f+3": {
       "startupFrames": 19,
@@ -1510,15 +1708,19 @@
       "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 7,
       "forwardForce": 1.68,
-      "forwardForceStartFrame": 38,
-      "forwardForceEndFrame": 42,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 20,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
       "label": "Diagonal Low Hop Kick",
       "hitLevel": "low",
       "tracking": "weakLeft",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:qcf+3": {
       "startupFrames": 21,
@@ -1539,7 +1741,11 @@
       "hitLevel": "low",
       "tracking": "weakLeft",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:WS+2": {
       "startupFrames": 14,
@@ -1557,7 +1763,11 @@
       "label": "Rising Fusion Strike",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:SS+3": {
       "startupFrames": 16,
@@ -1570,15 +1780,19 @@
       "onCounterHitFrames": 20,
       "whiffRecoveryFrames": 8,
       "forwardForce": 1.74,
-      "forwardForceStartFrame": 38,
-      "forwardForceEndFrame": 42,
+      "forwardForceStartFrame": 36,
+      "forwardForceEndFrame": 36,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
       "label": "Sidestep Low Hop Kick",
       "hitLevel": "low",
       "tracking": "weakLeft",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:SS+4": {
       "startupFrames": 23,
@@ -1600,7 +1814,11 @@
       "tracking": "weakRight",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 26,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13
     },
     "cmd:O+4": {
       "startupFrames": 28,
@@ -1622,7 +1840,11 @@
       "tracking": "weakRight",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 21,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13
     }
   },
   "effects": [],
@@ -3917,5 +4139,360 @@
         "kiBurst": true
       }
     ]
-  }
+  },
+  "beginnerComboRoutes": [
+    {
+      "id": "vegito:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Fusion Rushdown",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "animationKey": "jableft",
+          "label": "Quick Fusion Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Fusion Kick",
+          "windowBefore": 14,
+          "windowAfter": 18,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "vegito:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Fusion Cross Strike",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Fusion Strike",
+          "windowBefore": 16,
+          "windowAfter": 23,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Fusion Kick",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 38,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "vegito:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Fusion Feint",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Fusion Sweep",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Fusion Kick",
+          "windowBefore": 11,
+          "windowAfter": 15,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 38,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "vegito:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Fusion Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Fusion Cross Strike",
+          "windowBefore": 4,
+          "windowAfter": 8,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Fusion Kick",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 38,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "vegito:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Fusion Rushdown",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Fusion Cross Strike",
+          "windowBefore": 10,
+          "windowAfter": 14,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Fusion Kick",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 38,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "vegito:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Fusion Rushdown",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Fusion Cross Strike",
+          "windowBefore": 10,
+          "windowAfter": 14,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Fusion Kick",
+          "windowBefore": 16,
+          "windowAfter": 22,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 38,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "vegito:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Fusion Cross Strike",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Fusion Feint",
+          "windowBefore": 8,
+          "windowAfter": 12,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Fusion Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 38,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "vegito:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "kick",
+          "command": "2+3",
+          "animationKey": "cmd:2+3",
+          "label": "Low Fusion Feint",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Fusion Rushdown",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Heavy Fusion Kick",
+          "windowBefore": 15,
+          "windowAfter": 19,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 38,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

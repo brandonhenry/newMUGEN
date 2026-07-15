@@ -509,8 +509,8 @@
       "counterHit": false,
       "cancelable": false,
       "forwardForce": 0.85,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 19,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 31,
       "onComboHitFrames": 15,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
@@ -604,7 +604,11 @@
       "label": "Quick Muscle Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
       "startupFrames": 13,
@@ -618,12 +622,16 @@
       "whiffRecoveryFrames": 5,
       "range": 1.53,
       "forwardForce": 0.85,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 19,
+      "forwardForceStartFrame": 21,
+      "forwardForceEndFrame": 31,
       "label": "Muscle Body Punch",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false
+      "knockdown": false,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
       "startupFrames": 25,
@@ -641,7 +649,11 @@
       "forwardForceEndFrame": 38,
       "label": "Low Leg Sweep",
       "hitLevel": "low",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickright": {
       "startupFrames": 13,
@@ -659,7 +671,11 @@
       "forwardForceEndFrame": 31,
       "label": "Quick Knee Check",
       "hitLevel": "mid",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:f+1": {
       "startupFrames": 15,
@@ -678,7 +694,11 @@
       "label": "Muscle Step Rush",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d/f+2": {
       "startupFrames": 16,
@@ -692,8 +712,8 @@
       "whiffRecoveryFrames": 10,
       "range": 1.68,
       "forwardForce": 1.77,
-      "forwardForceStartFrame": 18,
-      "forwardForceEndFrame": 26,
+      "forwardForceStartFrame": 27,
+      "forwardForceEndFrame": 44,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
@@ -701,7 +721,11 @@
       "label": "Diagonal Body Launcher",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:qcf+4": {
       "startupFrames": 28,
@@ -720,7 +744,11 @@
       "label": "Kinniku Burst Lariat",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "cmd:WS+4": {
       "startupFrames": 14,
@@ -738,7 +766,11 @@
       "forwardForceEndFrame": 25,
       "label": "Rising Body Splash",
       "hitLevel": "mid",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 21,
+      "onJuggleHitFrames": 16,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:FC+1": {
       "startupFrames": 14,
@@ -757,7 +789,11 @@
       "label": "Crouching Lariat",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:FC+2": {
       "startupFrames": 16,
@@ -777,7 +813,11 @@
       "label": "Crouch Body Launcher",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 6,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:1+2": {
       "startupFrames": 15,
@@ -796,7 +836,11 @@
       "label": "Rolling Muscle Press",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -818,7 +862,11 @@
       "label": "Kinniku Lift-Off",
       "hitLevel": "mid",
       "tracking": "medium",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:2+3": {
       "startupFrames": 16,
@@ -844,7 +892,11 @@
       "hitLevel": "low",
       "tracking": "medium",
       "endsInCrouch": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:2+4": {
       "startupFrames": 24,
@@ -871,7 +923,11 @@
       "tracking": "medium",
       "knockdown": false,
       "tornado": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 10,
+      "juggleRepeatPenaltyFrames": 18
     },
     "cmd:3+4": {
       "startupFrames": 24,
@@ -894,7 +950,11 @@
       "tracking": "medium",
       "knockdown": true,
       "tornado": true,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 17,
+      "comboRepeatPenaltyFrames": 9,
+      "juggleRepeatPenaltyFrames": 16
     },
     "cmd:O+2": {
       "startupFrames": 30,
@@ -913,7 +973,11 @@
       "label": "Muscle Spark Drive",
       "hitLevel": "special",
       "tracking": "medium",
-      "knockdown": true
+      "knockdown": true,
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "neutral:jab-jab": {
       "startupFrames": 18,
@@ -929,7 +993,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Second Beat"
+      "label": "Kinnikuman Second Beat",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 18,
@@ -945,7 +1013,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Body Blow"
+      "label": "Kinnikuman Body Blow",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 18,
@@ -961,7 +1033,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Low Changeup"
+      "label": "Kinnikuman Low Changeup",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-special": {
       "startupFrames": 18,
@@ -977,7 +1053,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Pressure Feint"
+      "label": "Kinnikuman Pressure Feint",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy": {
       "startupFrames": 18,
@@ -993,7 +1073,11 @@
       "forwardForce": 1.31,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Drive"
+      "label": "Kinnikuman Drive",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 18,
@@ -1009,7 +1093,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Barrage"
+      "label": "Kinnikuman Barrage",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 18,
@@ -1025,7 +1113,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Finisher"
+      "label": "Kinnikuman Finisher",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick": {
       "startupFrames": 18,
@@ -1041,7 +1133,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Step Kick"
+      "label": "Kinnikuman Step Kick",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 18,
@@ -1057,7 +1153,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Palm String"
+      "label": "Kinnikuman Palm String",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick-special": {
       "startupFrames": 18,
@@ -1073,7 +1173,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Rising Chain"
+      "label": "Kinnikuman Rising Chain",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-special": {
       "startupFrames": 18,
@@ -1089,7 +1193,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Special Setup"
+      "label": "Kinnikuman Special Setup",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 18,
@@ -1105,7 +1213,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Break Art"
+      "label": "Kinnikuman Break Art",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab": {
       "startupFrames": 18,
@@ -1121,7 +1233,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Check Hook"
+      "label": "Kinnikuman Check Hook",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 18,
@@ -1137,7 +1253,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Heavy Break"
+      "label": "Kinnikuman Heavy Break",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 18,
@@ -1153,7 +1273,11 @@
       "forwardForce": 2.23,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Charged Follow"
+      "label": "Kinnikuman Charged Follow",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-kick": {
       "startupFrames": 18,
@@ -1169,7 +1293,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Drop Kick"
+      "label": "Kinnikuman Drop Kick",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 18,
@@ -1185,7 +1313,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Arc Finisher"
+      "label": "Kinnikuman Arc Finisher",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-special": {
       "startupFrames": 18,
@@ -1201,7 +1333,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Focus Stance"
+      "label": "Kinnikuman Focus Stance",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 18,
@@ -1217,7 +1353,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Mode Shift"
+      "label": "Kinnikuman Mode Shift",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-jab": {
       "startupFrames": 18,
@@ -1233,7 +1373,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Heel Feint"
+      "label": "Kinnikuman Heel Feint",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-jab-special": {
       "startupFrames": 18,
@@ -1249,7 +1393,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Summon Strike"
+      "label": "Kinnikuman Summon Strike",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-heavy": {
       "startupFrames": 18,
@@ -1265,7 +1413,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Guard Snare"
+      "label": "Kinnikuman Guard Snare",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 18,
@@ -1281,7 +1433,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Armor Break"
+      "label": "Kinnikuman Armor Break",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-special": {
       "startupFrames": 18,
@@ -1297,7 +1453,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Power Setup"
+      "label": "Kinnikuman Power Setup",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 18,
@@ -1313,7 +1473,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Switch Strike"
+      "label": "Kinnikuman Switch Strike",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-jab": {
       "startupFrames": 18,
@@ -1329,7 +1493,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Spark Jab"
+      "label": "Kinnikuman Spark Jab",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 18,
@@ -1345,7 +1513,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Binding Blow"
+      "label": "Kinnikuman Binding Blow",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-heavy": {
       "startupFrames": 18,
@@ -1361,7 +1533,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Heavy Draw"
+      "label": "Kinnikuman Heavy Draw",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-kick": {
       "startupFrames": 18,
@@ -1377,7 +1553,11 @@
       "forwardForce": 1.03,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 26,
-      "label": "Kinnikuman Kick Ender"
+      "label": "Kinnikuman Kick Ender",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:1+4": {
       "startupFrames": 14,
@@ -1394,7 +1574,11 @@
       "forwardForceEndFrame": 19,
       "label": "Muscle Step Kick",
       "hitLevel": "mid",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 21,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:f+2": {
       "startupFrames": 14,
@@ -1412,7 +1596,11 @@
       "label": "Forward Body Punch",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d+1": {
       "startupFrames": 9,
@@ -1425,12 +1613,16 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 6,
       "forwardForce": 1.03,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 16,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 13,
       "label": "Ducking Muscle Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:qcf+1": {
       "startupFrames": 9,
@@ -1443,12 +1635,16 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 9,
       "forwardForce": 1.89,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 16,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 13,
       "label": "Muscle Rush Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:WS+2": {
       "startupFrames": 14,
@@ -1461,12 +1657,16 @@
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 7,
       "forwardForce": 1.44,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 19,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 16,
       "label": "While-Rising Body Punch",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:O+1": {
       "startupFrames": 21,
@@ -1484,7 +1684,11 @@
       "label": "Overdrive Muscle Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7
     }
   },
   "effects": [],
@@ -3225,5 +3429,366 @@
     }
   },
   "projectiles": [],
-  "moveProjectiles": {}
+  "moveProjectiles": {},
+  "beginnerComboRoutes": [
+    {
+      "id": "kinnikuman:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Muscle Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "d+1",
+          "animationKey": "cmd:d+1",
+          "label": "Ducking Muscle Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Kinniku Burst Lariat",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "kinnikuman:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Rolling Muscle Press",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Body Punch",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Kinniku Burst Lariat",
+          "windowBefore": 7,
+          "windowAfter": 11,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kinnikuman:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Leg Sweep",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Leg Sweep",
+          "windowBefore": 4,
+          "windowAfter": 8,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Kinniku Burst Lariat",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kinnikuman:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Muscle Step Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Quick Knee Check",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Kinniku Burst Lariat",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kinnikuman:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Muscle Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Rolling Muscle Press",
+          "windowBefore": 16,
+          "windowAfter": 21,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Kinniku Burst Lariat",
+          "windowBefore": 3,
+          "windowAfter": 7,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kinnikuman:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Muscle Step Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Rolling Muscle Press",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Kinniku Burst Lariat",
+          "windowBefore": 3,
+          "windowAfter": 7,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kinnikuman:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "heavy",
+          "command": "1+2",
+          "animationKey": "cmd:1+2",
+          "label": "Rolling Muscle Press",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Leg Sweep",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Kinniku Burst Lariat",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kinnikuman:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "kick",
+          "animationKey": "kickleft",
+          "label": "Low Leg Sweep",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Muscle Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "qcf+4",
+          "animationKey": "cmd:qcf+4",
+          "label": "Kinniku Burst Lariat",
+          "windowBefore": 4,
+          "windowAfter": 8,
+          "expect": "knockdown",
+          "kiCommand": "O+2",
+          "kiAnimationKey": "cmd:O+2",
+          "kiCost": 35,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

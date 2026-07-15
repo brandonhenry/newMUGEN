@@ -71,8 +71,8 @@
       "counterHit": false,
       "cancelable": false,
       "forwardForce": 0.5,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 9,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10,
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
@@ -683,7 +683,11 @@
       "label": "Forward Clone Strike",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d/f+2": {
       "startupFrames": 16,
@@ -706,7 +710,11 @@
       "hitLevel": "mid",
       "tracking": "weakLeft",
       "knockdown": false,
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:qcf+4": {
       "startupFrames": 17,
@@ -727,7 +735,11 @@
       "tracking": "strong",
       "knockdown": false,
       "tornado": true,
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 27,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13
     },
     "cmd:WS+4": {
       "startupFrames": 13,
@@ -750,7 +762,11 @@
       "tracking": "strong",
       "knockdown": false,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 21,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:3+4": {
       "startupFrames": 29,
@@ -786,7 +802,11 @@
           "pan": 0,
           "retrigger": false
         }
-      ]
+      ],
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 9
     },
     "neutral:jab-jab": {
       "startupFrames": 14,
@@ -859,7 +879,11 @@
       "hitLevel": "mid",
       "tracking": "strong",
       "knockdown": true,
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 9
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 14,
@@ -995,7 +1019,11 @@
       "forwardForceEndFrame": 23,
       "label": "Low Uzumaki Kick",
       "hitLevel": "low",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 16,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:d+1": {
       "startupFrames": 16,
@@ -1014,7 +1042,11 @@
       "hitLevel": "low",
       "tracking": "medium",
       "endsInCrouch": true,
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:1+2": {
       "startupFrames": 16,
@@ -1036,7 +1068,11 @@
       "label": "Rasengan Pop-Up",
       "hitLevel": "high",
       "tracking": "weakLeft",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:2+3": {
       "startupFrames": 19,
@@ -1055,7 +1091,11 @@
       "hitLevel": "low",
       "tracking": "medium",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "jableft": {
       "startupFrames": 9,
@@ -1067,11 +1107,15 @@
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
       "forwardForce": 0.5,
-      "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 9,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10,
       "label": "Shadow Clone Jab",
       "hitLevel": "high",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
       "startupFrames": 10,
@@ -1087,7 +1131,11 @@
       "forwardForceEndFrame": 16,
       "label": "Uzumaki Barrage Kick",
       "hitLevel": "high",
-      "tracking": "medium"
+      "tracking": "medium",
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
       "startupFrames": 10,
@@ -1103,7 +1151,11 @@
       "forwardForceEndFrame": 16,
       "label": "Quick Rasengan Palm",
       "hitLevel": "high",
-      "tracking": "weakLeft"
+      "tracking": "weakLeft",
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickright": {
       "startupFrames": 13,
@@ -1119,7 +1171,11 @@
       "forwardForceEndFrame": 23,
       "label": "Rasenshuriken Arc",
       "hitLevel": "mid",
-      "tracking": "strong"
+      "tracking": "strong",
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:O+2": {
       "startupFrames": 23,
@@ -1149,7 +1205,11 @@
           "pan": 0,
           "retrigger": false
         }
-      ]
+      ],
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "cmd:1+3": {
       "startupFrames": 16,
@@ -1171,7 +1231,11 @@
       "label": "Clone Upper Barrage",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:FC+1": {
       "startupFrames": 14,
@@ -1189,7 +1253,11 @@
       "label": "Crouching Clone Combo",
       "hitLevel": "mid",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:FC+2": {
       "startupFrames": 15,
@@ -1211,7 +1279,11 @@
       "label": "Crouch Rasengan Pop-Up",
       "hitLevel": "high",
       "tracking": "weakLeft",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:FC+4": {
       "startupFrames": 18,
@@ -1222,14 +1294,18 @@
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
-      "whiffRecoveryFrames": 24,
+      "whiffRecoveryFrames": 26,
       "forwardForce": 3,
-      "forwardForceStartFrame": 18,
-      "forwardForceEndFrame": 36,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 31,
       "label": "Low Rasenshuriken Feint",
       "hitLevel": "low",
       "tracking": "homing",
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:FC+3": {
       "startupFrames": 16,
@@ -1247,7 +1323,11 @@
       "label": "Full-Crouch Low Kick",
       "hitLevel": "low",
       "tracking": "homing",
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:WR+4": {
       "startupFrames": 15,
@@ -1268,7 +1348,11 @@
       "juggleGravityScale": 0.52,
       "label": "Running Rasenshuriken Launcher",
       "hitLevel": "mid",
-      "tracking": "strong"
+      "tracking": "strong",
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:2+4": {
       "startupFrames": 13,
@@ -1286,7 +1370,11 @@
       "label": "Rasenshuriken Step",
       "hitLevel": "mid",
       "tracking": "strong",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:f+2": {
       "startupFrames": 10,
@@ -1304,7 +1392,11 @@
       "label": "Forward Rasengan Palm",
       "hitLevel": "high",
       "tracking": "weakLeft",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:f+3": {
       "startupFrames": 12,
@@ -1317,12 +1409,16 @@
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 25,
       "forwardForce": 2.28,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 16,
+      "forwardForceStartFrame": 27,
+      "forwardForceEndFrame": 28,
       "label": "Advancing Barrage Kick",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:d+3": {
       "startupFrames": 12,
@@ -1335,12 +1431,16 @@
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 24,
       "forwardForce": 2,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 16,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 18,
       "label": "Ducking Barrage Kick",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:d/f+3": {
       "startupFrames": 10,
@@ -1358,7 +1458,11 @@
       "label": "Diagonal Barrage Kick",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:qcf+1": {
       "startupFrames": 9,
@@ -1371,12 +1475,16 @@
       "onCounterHitFrames": 18,
       "whiffRecoveryFrames": 9,
       "forwardForce": 1.91,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 11,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 18,
       "label": "Shadow Clone Rush Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:qcf+3": {
       "startupFrames": 12,
@@ -1389,12 +1497,16 @@
       "onCounterHitFrames": 21,
       "whiffRecoveryFrames": 26,
       "forwardForce": 2.86,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 16,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 26,
       "label": "Uzumaki Rush Kick",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 13,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:WS+2": {
       "startupFrames": 10,
@@ -1412,7 +1524,11 @@
       "label": "While-Rising Rasengan",
       "hitLevel": "high",
       "tracking": "weakLeft",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:SS+3": {
       "startupFrames": 10,
@@ -1430,7 +1546,11 @@
       "label": "Sidestep Barrage Kick",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:SS+4": {
       "startupFrames": 14,
@@ -1443,12 +1563,16 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 29,
       "forwardForce": 2.46,
-      "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 23,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 28,
       "label": "Sidestep Rasenshuriken",
       "hitLevel": "mid",
       "tracking": "strong",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:O+1": {
       "startupFrames": 21,
@@ -1466,7 +1590,11 @@
       "label": "Overdrive Clone Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:O+4": {
       "startupFrames": 20,
@@ -1485,7 +1613,11 @@
       "hitLevel": "mid",
       "tracking": "strong",
       "tornado": true,
-      "cancelable": false
+      "cancelable": false,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 24,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 13
     },
     "cmd:FC+3+4": {
       "startupFrames": 14,
@@ -1498,7 +1630,11 @@
       "forwardForceEndFrame": 10,
       "label": "Crouch Rasenshuriken",
       "hitLevel": "mid",
-      "tracking": "strong"
+      "tracking": "strong",
+      "onComboHitFrames": 21,
+      "onJuggleHitFrames": 16,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:O+3": {
       "startupFrames": 30,
@@ -1512,8 +1648,8 @@
       "whiffRecoveryFrames": 44,
       "range": 3.15,
       "forwardForce": 1.55,
-      "forwardForceStartFrame": 18,
-      "forwardForceEndFrame": 45,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 23,
       "pushback": 1.15,
       "blockPushback": 0.9,
       "launchHeight": 1.25,
@@ -1527,7 +1663,11 @@
       "tracking": "medium",
       "knockdown": true,
       "cancelable": false,
-      "usesKi": true
+      "usesKi": true,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 10,
+      "juggleRepeatPenaltyFrames": 17
     }
   },
   "spriteFrameEdits": {
@@ -12894,5 +13034,372 @@
       "/characters/kiro/sounds/voices/S2.wav"
     ]
   },
-  "projectiles": []
+  "projectiles": [],
+  "beginnerComboRoutes": [
+    {
+      "id": "kiro:beginner:light-core",
+      "title": "Light Knockdown",
+      "family": "core",
+      "gestures": [
+        "light",
+        "light",
+        "light"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Shadow Clone Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "f+1",
+          "animationKey": "cmd:f+1",
+          "label": "Forward Clone Strike",
+          "windowBefore": 12,
+          "windowAfter": 16,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Homing Low Sweep",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown"
+        }
+      ]
+    },
+    {
+      "id": "kiro:beginner:medium-core",
+      "title": "Medium Ki Finish",
+      "family": "core",
+      "gestures": [
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "steps": [
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Rasengan Palm",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "animationKey": "jabright",
+          "label": "Quick Rasengan Palm",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Homing Low Sweep",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+3",
+          "kiAnimationKey": "cmd:O+3",
+          "kiCost": 32,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kiro:beginner:heavy-core",
+      "title": "Heavy Ki Finish",
+      "family": "core",
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Uzumaki Rush Kick",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "d/f+3",
+          "animationKey": "cmd:d/f+3",
+          "label": "Diagonal Barrage Kick",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Homing Low Sweep",
+          "windowBefore": 5,
+          "windowAfter": 9,
+          "expect": "knockdown",
+          "kiCommand": "O+3",
+          "kiAnimationKey": "cmd:O+3",
+          "kiCost": 32,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kiro:beginner:special-core",
+      "title": "Special Ki Finish",
+      "family": "core",
+      "gestures": [
+        "special",
+        "special",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Rasenshuriken Step",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "animationKey": "kickright",
+          "label": "Rasenshuriken Arc",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Homing Low Sweep",
+          "windowBefore": 3,
+          "windowAfter": 6,
+          "expect": "knockdown",
+          "kiCommand": "O+3",
+          "kiAnimationKey": "cmd:O+3",
+          "kiCost": 32,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kiro:beginner:light-medium-heavy",
+      "title": "Rising Power Route",
+      "family": "mixed",
+      "gestures": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Shadow Clone Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Rasengan Palm",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Homing Low Sweep",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "knockdown",
+          "kiCommand": "O+3",
+          "kiAnimationKey": "cmd:O+3",
+          "kiCost": 32,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kiro:beginner:special-light-route",
+      "title": "Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "special+light",
+        "medium",
+        "heavy"
+      ],
+      "steps": [
+        {
+          "gesture": "special+light",
+          "input": "special",
+          "command": "1+4",
+          "animationKey": "cmd:1+4",
+          "label": "Rasenshuriken Smash",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "medium",
+          "input": "heavy",
+          "command": "f+2",
+          "animationKey": "cmd:f+2",
+          "label": "Forward Rasengan Palm",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Homing Low Sweep",
+          "windowBefore": 6,
+          "windowAfter": 10,
+          "expect": "knockdown",
+          "kiCommand": "O+3",
+          "kiAnimationKey": "cmd:O+3",
+          "kiCost": 32,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kiro:beginner:special-medium-route",
+      "title": "Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+medium",
+          "input": "special",
+          "command": "2+4",
+          "animationKey": "cmd:2+4",
+          "label": "Rasenshuriken Step",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "heavy",
+          "input": "kick",
+          "command": "qcf+3",
+          "animationKey": "cmd:qcf+3",
+          "label": "Uzumaki Rush Kick",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Homing Low Sweep",
+          "windowBefore": 4,
+          "windowAfter": 8,
+          "expect": "knockdown",
+          "kiCommand": "O+3",
+          "kiAnimationKey": "cmd:O+3",
+          "kiCost": 32,
+          "poweredKiFallback": true
+        }
+      ]
+    },
+    {
+      "id": "kiro:beginner:special-heavy-route",
+      "title": "Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "steps": [
+        {
+          "gesture": "special+heavy",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Homing Low Sweep",
+          "windowBefore": 16,
+          "windowAfter": 20,
+          "expect": "hit"
+        },
+        {
+          "gesture": "light",
+          "input": "jab",
+          "command": "qcf+1",
+          "animationKey": "cmd:qcf+1",
+          "label": "Shadow Clone Rush Jab",
+          "windowBefore": 16,
+          "windowAfter": 24,
+          "movementBefore": "dashForward",
+          "movementMinFrames": 1,
+          "movementMaxFrames": 24,
+          "expect": "hit"
+        },
+        {
+          "gesture": "special",
+          "input": "special",
+          "command": "3+4",
+          "animationKey": "cmd:3+4",
+          "label": "Homing Low Sweep",
+          "windowBefore": 3,
+          "windowAfter": 7,
+          "expect": "knockdown",
+          "kiCommand": "O+3",
+          "kiAnimationKey": "cmd:O+3",
+          "kiCost": 32,
+          "poweredKiFallback": true
+        }
+      ]
+    }
+  ]
 }

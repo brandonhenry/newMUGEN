@@ -110,8 +110,8 @@ describe('online Netlify function handlers', () => {
     const { handler: rankedProfile } = await import('../netlify/functions/online-ranked-profile.mjs');
     const { handler: rankedSubmit } = await import('../netlify/functions/online-ranked-submit.mjs');
 
-    const p1Profile = await post(rankedProfile, { profile: { playerId: 'player-one', displayName: 'Kiro' } });
-    const p2Profile = await post(rankedProfile, { profile: { playerId: 'player-two', displayName: 'Riven' } });
+    const p1Profile = await post(rankedProfile, { profile: { playerId: 'player-one', displayName: 'Kiro' }, characterId: 'kiro' });
+    const p2Profile = await post(rankedProfile, { profile: { playerId: 'player-two', displayName: 'Riven' }, characterId: 'riven' });
     expect(p1Profile).toMatchObject({ playerId: 'player-one', displayName: 'KIRO', kp: 1200 });
     expect(p2Profile).toMatchObject({ playerId: 'player-two', displayName: 'RIVEN', kp: 1200 });
 
@@ -128,7 +128,7 @@ describe('online Netlify function handlers', () => {
 
     const store = stores.get('kore-online-ranked');
     expect(await store?.get('profiles/bot-ranked')).toBeNull();
-    expect(await store?.get('profiles/player-one')).toBeTruthy();
+    expect(await store?.get('profiles/player-one/kiro')).toBeTruthy();
   });
 });
 

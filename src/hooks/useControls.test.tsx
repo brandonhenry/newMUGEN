@@ -69,7 +69,7 @@ describe('useControls', () => {
     setGamepadButton(activePad, 0, true);
 
     const [p1Input] = controlsApi!.readInputsForStep();
-    const match = stepMatch(createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p'), p1Input, emptyInputFrame(), 1 / 60);
+    const match = stepMatch(createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p', 3, { controlScheme: 'kore' }), p1Input, emptyInputFrame(), 1 / 60);
 
     expect(match.controlScheme).toBe('kore');
     expect(match.fighters[0].currentMove?.input).toBe('jab');
@@ -96,7 +96,7 @@ describe('useControls', () => {
     );
 
     expect(match.controlScheme).toBe('beginner');
-    expect(match.fighters[0].currentMove?.input).toBe('jab');
+    expect(match.fighters[0].currentMove?.input).toBe('special');
   });
 
   it('does not synthesize forward dash while holding controller back', () => {
