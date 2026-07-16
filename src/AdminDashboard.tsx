@@ -38,6 +38,27 @@ type TournamentReviewRow = {
   entryB?: { id: string; displayName: string } | null;
 };
 
+type OfficialTournamentAdmin = {
+  id: string;
+  name: string;
+  status: string;
+  startsAt?: number;
+  registrationOpensAt?: number;
+  checkInOpensAt?: number;
+  prizeFundingConfirmedAt?: number;
+  legalApprovedAt?: number;
+  emailDeliveryConfirmedAt?: number;
+  entries: Array<{
+    id: string;
+    displayName: string;
+    seed: number;
+    registrationState?: string;
+    waitlistPosition?: number;
+    checkedInAt?: number;
+    joinedAt: number;
+  }>;
+};
+
 const adminQueryLabels: Record<AdminQueryName, string> = {
   summary: 'Summary',
   trends: 'Growth',
@@ -100,6 +121,12 @@ function formatDuration(seconds: number) {
   if (!Number.isFinite(seconds) || seconds <= 0) return '0s';
   if (seconds < 60) return `${formatNumber(seconds)}s`;
   return `${formatNumber(seconds / 60)}m`;
+}
+
+function toDateTimeLocal(timestamp: number) {
+  const date = new Date(timestamp);
+  const local = new Date(timestamp - date.getTimezoneOffset() * 60_000);
+  return local.toISOString().slice(0, 16);
 }
 
 function getColumnLabel(column: unknown) {
@@ -189,6 +216,13 @@ export function AdminDashboard() {
   const [snapshotHistory, setSnapshotHistory] = useState<AdminSnapshot[]>(() => readSnapshotHistory());
   const [tournamentReviews, setTournamentReviews] = useState<TournamentReviewRow[]>([]);
   const [tournamentReviewsLoading, setTournamentReviewsLoading] = useState(false);
+  const [officialTournament, setOfficialTournament] = useState<OfficialTournamentAdmin | null>(null);
+  const [officialAdminToken, setOfficialAdminToken] = useState(() => typeof window === 'undefined' ? '' : window.sessionStorage.getItem('kore:official-admin-token') ?? '');
+  const [officialEventName, setOfficialEventName] = useState('');
+  const [officialStartAt, setOfficialStartAt] = useState('');
+  const [officialRegistrationAt, setOfficialRegistrationAt] = useState('');
+  const [officialSeedOrder, setOfficialSeedOrder] = useState('');
+  const [officialLoading, setOfficialLoading] = useState(false);
 
   const readReady = hasAnyConfiguredEndpoint(config);
   const ratios = useMemo(() => data ? summarizeDashboardRatios(data) : null, [data]);
@@ -236,7 +270,7 @@ export function AdminDashboard() {
     setTournamentReviewsLoading(true);
     setStatus({ kind: 'idle', message: 'Refreshing tournament reviews...' });
     try {
-      const response = await fetch('/.netlify/functions/tournament-admin-reviews');
+      const response = await fetch('/.netlify/functions/tournament-admin-reviews', { headers: officialAdminToken ? { authorization: `Bearer ${officialAdminToken}` } : undefined });
       const payload = await response.json().catch(() => null) as { reviews?: TournamentReviewRow[]; message?: string } | null;
       if (!response.ok) throw new Error(payload?.message || `Tournament reviews failed (${response.status})`);
       setTournamentReviews(Array.isArray(payload?.reviews) ? payload.reviews : []);
@@ -246,7 +280,7 @@ export function AdminDashboard() {
     } finally {
       setTournamentReviewsLoading(false);
     }
-  }, []);
+  }, [officialAdminToken]);
 
   const resolveTournamentReview = useCallback(async (review: TournamentReviewRow, winnerEntryId: string) => {
     setTournamentReviewsLoading(true);
@@ -254,7 +288,7 @@ export function AdminDashboard() {
     try {
       const response = await fetch('/.netlify/functions/tournament-admin-resolve-match', {
         method: 'POST',
-        headers: { 'content-type': 'application/json' },
+        headers: { 'content-type': 'application/json', ...(officialAdminToken ? { authorization: `Bearer ${officialAdminToken}` } : {}) },
         body: JSON.stringify({
           tournamentId: review.tournamentId,
           matchId: review.matchId,
@@ -272,7 +306,35 @@ export function AdminDashboard() {
     } finally {
       setTournamentReviewsLoading(false);
     }
-  }, []);
+  }, [officialAdminToken]);
+
+  const runOfficialAdminAction = useCallback(async (action?: string, extra: Record<string, unknown> = {}) => {
+    setOfficialLoading(true);
+    setStatus({ kind: 'idle', message: action ? `Running official event action: ${action}…` : 'Loading official event…' });
+    try {
+      if (officialAdminToken) window.sessionStorage.setItem('kore:official-admin-token', officialAdminToken);
+      const response = await fetch('/.netlify/functions/tournament-admin-official', {
+        method: action ? 'POST' : 'GET',
+        headers: {
+          'content-type': 'application/json',
+          ...(officialAdminToken ? { authorization: `Bearer ${officialAdminToken}` } : {})
+        },
+        ...(action ? { body: JSON.stringify({ action, ...(action === 'create' ? {} : { id: officialTournament?.id }), ...extra }) } : {})
+      });
+      const payload = await response.json().catch(() => null) as { tournament?: OfficialTournamentAdmin; message?: string } | null;
+      if (!response.ok || !payload?.tournament) throw new Error(payload?.message || `Official event request failed (${response.status})`);
+      setOfficialTournament(payload.tournament);
+      setOfficialEventName(payload.tournament.name || '');
+      setOfficialStartAt(payload.tournament.startsAt ? toDateTimeLocal(payload.tournament.startsAt) : '');
+      setOfficialRegistrationAt(payload.tournament.registrationOpensAt ? toDateTimeLocal(payload.tournament.registrationOpensAt) : '');
+      setOfficialSeedOrder(payload.tournament.entries.filter((entry) => entry.registrationState === 'confirmed').sort((a, b) => a.seed - b.seed).map((entry) => entry.id).join('\n'));
+      setStatus({ kind: 'success', message: action ? `Official event ${action} completed.` : 'Official event loaded.' });
+    } catch (error) {
+      setStatus({ kind: 'error', message: error instanceof Error ? error.message : 'Official event request failed.' });
+    } finally {
+      setOfficialLoading(false);
+    }
+  }, [officialAdminToken, officialTournament?.id]);
 
   const refresh = useCallback(async (singleQuery?: AdminQueryName) => {
     if (!hasAnyConfiguredEndpoint(config)) {
@@ -387,6 +449,69 @@ export function AdminDashboard() {
       </section>
 
       <p className={`admin-status ${status.kind}`}>{status.message}</p>
+
+      <section className="admin-endpoint-setup official-admin-panel" aria-label="Official tournament controls">
+        <div className="admin-section-heading">
+          <div>
+            <h2>K.O.R.E. Official Event</h2>
+            <span>{officialTournament ? `${officialTournament.status} · ${officialTournament.entries.length} registrations` : 'Load the reusable official event series'}</span>
+          </div>
+          <button className="secondary-button" onClick={() => void runOfficialAdminAction()} disabled={officialLoading}>
+            <RotateCcw size={18} /> {officialLoading ? 'Working' : 'Load Event'}
+          </button>
+        </div>
+        <div className="admin-config">
+          <label>
+            <span>Admin token</span>
+            <input type="password" value={officialAdminToken} onChange={(event) => setOfficialAdminToken(event.target.value)} placeholder="TOURNAMENT_ADMIN_TOKEN" autoComplete="off" />
+          </label>
+          <label>
+            <span>Event name</span>
+            <input value={officialEventName} onChange={(event) => setOfficialEventName(event.target.value)} placeholder="K.O.R.E. Official Tournament" />
+          </label>
+          <label>
+            <span>New start time</span>
+            <input type="datetime-local" value={officialStartAt} onChange={(event) => setOfficialStartAt(event.target.value)} />
+          </label>
+          <label>
+            <span>Registration opens</span>
+            <input type="datetime-local" value={officialRegistrationAt} onChange={(event) => setOfficialRegistrationAt(event.target.value)} />
+          </label>
+          <div className="admin-config-actions">
+            <button className="secondary-button" disabled={!officialEventName || !officialStartAt || officialLoading} onClick={() => void runOfficialAdminAction('create', { name: officialEventName, startsAt: new Date(officialStartAt).getTime(), registrationOpensAt: officialRegistrationAt ? new Date(officialRegistrationAt).getTime() : undefined })}>Create Next Event</button>
+            <button className="secondary-button" disabled={!officialTournament || officialLoading} onClick={() => void runOfficialAdminAction('update', { name: officialEventName })}>Update Event Name</button>
+            <button className="secondary-button" disabled={!officialTournament || !officialStartAt || officialLoading} onClick={() => void runOfficialAdminAction('reschedule', { startsAt: new Date(officialStartAt).getTime(), registrationOpensAt: officialRegistrationAt ? new Date(officialRegistrationAt).getTime() : undefined })}>Reschedule</button>
+            <button className="secondary-button" disabled={!officialTournament || officialLoading} onClick={() => void runOfficialAdminAction('confirmFunding')}>Confirm $100 Funded</button>
+            <button className="secondary-button" disabled={!officialTournament || officialLoading} onClick={() => void runOfficialAdminAction('confirmLegal')}>Confirm Rules Approved</button>
+            <button className="secondary-button" disabled={!officialTournament || officialLoading} onClick={() => void runOfficialAdminAction('confirmEmail')}>Confirm Email Delivery</button>
+            <button className="secondary-button" disabled={!officialTournament || officialLoading} onClick={() => void runOfficialAdminAction('publish')}>Publish</button>
+            <button className="secondary-button" disabled={!officialTournament || officialLoading} onClick={() => void runOfficialAdminAction('postpone')}>Postpone</button>
+            <button className="primary-button" disabled={!officialTournament || officialLoading} onClick={() => void runOfficialAdminAction('start')}>Start at 32</button>
+          </div>
+        </div>
+        {officialTournament && (
+          <>
+            <label className="official-admin-seeds">
+              <span>Seed order (one entry id per line)</span>
+              <textarea value={officialSeedOrder} onChange={(event) => setOfficialSeedOrder(event.target.value)} rows={7} />
+              <button className="secondary-button" disabled={officialLoading} onClick={() => void runOfficialAdminAction('seed', { entryIds: officialSeedOrder.split(/\s+/).filter(Boolean) })}>Save Seeding</button>
+            </label>
+            <div className="admin-table-wrap">
+              <table className="admin-table">
+                <thead><tr><th>Seed</th><th>Player</th><th>Registration</th><th>Check-in</th></tr></thead>
+                <tbody>{[...officialTournament.entries].sort((a, b) => a.joinedAt - b.joinedAt).map((entry) => (
+                  <tr key={entry.id}>
+                    <td>{entry.seed || '—'}</td>
+                    <td>{entry.displayName}</td>
+                    <td>{entry.registrationState}{entry.waitlistPosition ? ` #${entry.waitlistPosition}` : ''}</td>
+                    <td>{entry.checkedInAt ? new Date(entry.checkedInAt).toLocaleTimeString() : 'Not checked in'}</td>
+                  </tr>
+                ))}</tbody>
+              </table>
+            </div>
+          </>
+        )}
+      </section>
 
       <section className="admin-endpoint-setup" aria-label="Tournament reviews">
         <div className="admin-section-heading">

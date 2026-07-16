@@ -24,7 +24,7 @@ export async function saveTournamentEmailSubscription(store, request, now = Date
   const email = cleanEmail(request.email);
   const tournamentId = cleanId(request.tournamentId);
   const entryId = cleanId(request.entryId);
-  const kind = request.kind === 'paidOnline' ? 'paidOnline' : 'freeOnline';
+  const kind = request.kind === 'officialOnline' ? 'officialOnline' : request.kind === 'paidOnline' ? 'paidOnline' : 'freeOnline';
   if (!playerId || !displayName || !email || !tournamentId || !entryId) {
     throw Object.assign(new Error('Invalid tournament reminder email'), { statusCode: 400, code: 'invalid_email_subscription' });
   }
@@ -169,7 +169,7 @@ function confirmationHtml(displayName) {
 }
 
 function readyHtml(displayName, bracket) {
-  const label = bracket.kind === 'paidOnline' ? 'Prizepool tournament' : 'Online tournament';
+  const label = bracket.kind === 'officialOnline' ? 'K.O.R.E. official tournament' : bracket.kind === 'paidOnline' ? 'Prizepool tournament' : 'Online tournament';
   return `<div style="font-family:Inter,Arial,sans-serif;line-height:1.5;color:#101114"><h1>Your KORE tournament is ready</h1><p>${escapeHtml(displayName)}, your ${escapeHtml(label)} bracket is live.</p><p>Open KORE on the same device you used to enter, then head to Tournament to play your match. If you use a different device, you may not be able to enter your assigned room.</p></div>`;
 }
 

@@ -12,6 +12,11 @@ import {
   PAID_LIGHTNING_TOURNAMENT_ID,
   resolvePaidTournamentReview
 } from './_paid-tournament-store.mjs';
+import {
+  getOfficialTournamentStore,
+  isOfficialTournamentId,
+  resolveOfficialMatchAdmin
+} from './_official-tournament-store.mjs';
 
 export async function handler(event) {
   if (event.httpMethod !== 'POST') return json(405, { error: 'method_not_allowed' });
@@ -25,6 +30,9 @@ export async function handler(event) {
     const reason = cleanAdminString(body.reason || 'manual_review');
     if (!tournamentId || !matchId || !winnerEntryId) return json(400, { error: 'missing_fields' });
     const now = Date.now();
+    if (isOfficialTournamentId(tournamentId)) {
+      return json(200, await resolveOfficialMatchAdmin(getOfficialTournamentStore(event), tournamentId, matchId, winnerEntryId, now));
+    }
     if (tournamentId === PAID_LIGHTNING_TOURNAMENT_ID || tournamentId.startsWith(`${PAID_LIGHTNING_TOURNAMENT_ID}-`)) {
       return json(200, await resolvePaidTournamentReview(getPaidTournamentStores(event), tournamentId, matchId, winnerEntryId, resolver, reason, now));
     }

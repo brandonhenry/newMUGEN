@@ -16,6 +16,11 @@ import {
   PAID_LIGHTNING_TOURNAMENT_ID,
   reportPaidTournamentWinner
 } from './_paid-tournament-store.mjs';
+import {
+  getOfficialTournamentStore,
+  isOfficialTournamentId,
+  reportOfficialGame
+} from './_official-tournament-store.mjs';
 
 export async function handler(event) {
   if (event.httpMethod !== 'POST') return json(405, { error: 'method_not_allowed' });
@@ -26,6 +31,17 @@ export async function handler(event) {
     const reporterPlayerId = cleanId(body.reporterPlayerId);
     const winnerEntryId = cleanId(body.winnerEntryId);
     if (!tournamentId || !matchId || !reporterPlayerId || !winnerEntryId) return json(400, { error: 'missing_fields' });
+    if (isOfficialTournamentId(tournamentId)) {
+      return json(200, await reportOfficialGame(getOfficialTournamentStore(event), {
+        tournamentId,
+        matchId,
+        reporterPlayerId,
+        winnerEntryId,
+        posthogDeviceId: body.posthogDeviceId,
+        roomId: body.roomId,
+        gameNumber: body.gameNumber
+      }, Date.now()));
+    }
     if (tournamentId === PAID_LIGHTNING_TOURNAMENT_ID || tournamentId.startsWith(`${PAID_LIGHTNING_TOURNAMENT_ID}-`)) {
       return json(200, await reportPaidTournamentWinner(getPaidTournamentStores(event), matchId, reporterPlayerId, winnerEntryId, body.posthogDeviceId, body.roomId, Date.now()));
     }

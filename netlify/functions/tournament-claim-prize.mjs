@@ -4,11 +4,20 @@ import {
   getPaidTournamentStores,
   json
 } from './_paid-tournament-store.mjs';
+import {
+  claimOfficialPrize,
+  getOfficialTournamentStore,
+  isOfficialTournamentId
+} from './_official-tournament-store.mjs';
 
 export async function handler(event) {
   if (event.httpMethod !== 'POST') return json(405, { error: 'method_not_allowed' });
   try {
     const body = JSON.parse(event.body || '{}');
+    if (isOfficialTournamentId(body.tournamentId)) {
+      const result = await claimOfficialPrize(getOfficialTournamentStore(event), body, Date.now());
+      return json(200, { bracket: result.bracket, entry: result.entry, payout: result.payout });
+    }
     const result = await claimPaidPrize(getPaidTournamentStores(event), {
       tournamentId: body.tournamentId,
       playerId: body.playerId,

@@ -15,17 +15,43 @@ import {
   enterPaidTournament,
   getPaidTournamentStores
 } from './_paid-tournament-store.mjs';
-import { getTournamentEmailStore, notifyTournamentReady } from './_tournament-email.mjs';
+import { getTournamentEmailStore, notifyTournamentReady, saveTournamentEmailSubscription } from './_tournament-email.mjs';
+import {
+  enterOfficialTournament,
+  getOfficialTournamentStore,
+  isOfficialTournamentId
+} from './_official-tournament-store.mjs';
 
 export async function handler(event) {
   if (event.httpMethod !== 'POST') return json(405, { error: 'method_not_allowed' });
   try {
     const body = JSON.parse(event.body || '{}');
-    const kind = body.kind === 'paidOnline' ? 'paidOnline' : body.kind === 'freeOnline' ? 'freeOnline' : '';
+    const kind = body.kind === 'officialOnline' ? 'officialOnline' : body.kind === 'paidOnline' ? 'paidOnline' : body.kind === 'freeOnline' ? 'freeOnline' : '';
     const playerId = cleanId(body.playerId);
     const characterId = cleanId(body.characterId);
     const displayName = cleanName(body.displayName);
     if (!kind || !playerId || !characterId) return json(400, { error: 'missing_fields' });
+
+    if (kind === 'officialOnline' || isOfficialTournamentId(body.tournamentId)) {
+      const result = await enterOfficialTournament(getOfficialTournamentStore(event), {
+        playerId,
+        displayName,
+        characterId,
+        email: body.email,
+        posthogDeviceId: body.posthogDeviceId,
+        eligibilityAccepted: body.eligibilityAccepted,
+        rulesAccepted: body.rulesAccepted
+      }, Date.now());
+      if (!result.reused) await saveTournamentEmailSubscription(getTournamentEmailStore(event), {
+        playerId,
+        displayName,
+        email: body.email,
+        tournamentId: result.bracket.id,
+        entryId: result.entry.id,
+        kind: 'officialOnline'
+      }, Date.now()).catch((error) => console.warn('Official tournament confirmation email failed', error));
+      return json(200, result);
+    }
 
     if (kind === 'paidOnline' || body.tournamentId === PAID_LIGHTNING_TOURNAMENT_ID) {
       const result = await enterPaidTournament(getPaidTournamentStores(event), { playerId, displayName, characterId, posthogDeviceId: body.posthogDeviceId }, Date.now());

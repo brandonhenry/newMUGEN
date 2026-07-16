@@ -6,10 +6,12 @@ import type {
   TournamentBracket,
   TournamentClaimPrizeRequest,
   TournamentClaimPrizeResult,
+  TournamentCheckInRequest,
   TournamentEntry,
   TournamentPaidRecoveryConfirmRequest,
   TournamentPaidRecoveryRequest,
   TournamentPaidRecoveryRequestResult,
+  TournamentGameLockInRequest,
   TournamentRoomJoinRequest,
   TournamentRoomStatusRequest,
   TournamentReportRequest,
@@ -70,6 +72,20 @@ export async function subscribeTournamentEmail(request: TournamentEmailSubscribe
   });
 }
 
+export async function checkInTournament(request: TournamentCheckInRequest): Promise<TournamentStatusResult> {
+  return postJson<TournamentStatusResult>('/.netlify/functions/tournament-check-in', request).catch((error) => {
+    if (isLocalFallbackAllowed()) return localOfficialCheckIn(request);
+    throw error;
+  });
+}
+
+export async function lockInTournamentGameFighter(request: TournamentGameLockInRequest): Promise<TournamentStatusResult> {
+  return postJson<TournamentStatusResult>('/.netlify/functions/tournament-game-lock-in', request).catch((error) => {
+    if (isLocalFallbackAllowed()) return localOfficialLockFighter(request);
+    throw error;
+  });
+}
+
 export async function requestPaidTournamentRecovery(request: TournamentPaidRecoveryRequest): Promise<TournamentPaidRecoveryRequestResult> {
   return postJson<TournamentPaidRecoveryRequestResult>('/.netlify/functions/tournament-paid-recovery-request', request);
 }
@@ -123,7 +139,7 @@ function isLocalFallbackAllowed() {
 }
 
 function localPublicTournament(slug: string): TournamentPublicView {
-  const bracket = readLocalTournament();
+  const bracket = slug === 'kore-open-beta-cup-1' ? readLocalOfficialTournament() : readLocalTournament();
   if (slug !== bracket.id && slug !== bracket.slug) throw new Error('Tournament not found');
   return {
     id: bracket.id,
@@ -144,6 +160,7 @@ function localPublicTournament(slug: string): TournamentPublicView {
 
 function localTournamentList() {
   const bracket = readLocalTournament();
+  const official = readLocalOfficialTournament();
   return {
     tournaments: [
       {
@@ -163,6 +180,28 @@ function localTournamentList() {
         liveTournamentCount: bracket.status === 'open' ? 0 : 1,
         formingTournamentCount: bracket.status === 'open' ? 1 : 0,
         startsLabel: 'Starts when full'
+      },
+      {
+        id: official.id,
+        kind: 'officialOnline' as const,
+        status: official.status,
+        entryFeeUsd: 0,
+        entryFeeLabel: 'Free',
+        prizeLabel: '$60 / $25 / $15 Lightning',
+        entries: official.entries.filter((entry) => entry.registrationState === 'confirmed').length,
+        confirmedEntries: official.entries.filter((entry) => entry.registrationState === 'confirmed').length,
+        entriesNeeded: Math.max(0, 32 - official.entries.filter((entry) => entry.registrationState === 'confirmed').length),
+        checkedInEntries: official.entries.filter((entry) => entry.checkedInAt).length,
+        waitlistEntries: official.entries.filter((entry) => entry.registrationState === 'waitlisted').length,
+        minEntries: 32,
+        capacity: 32,
+        paidEnabled: false,
+        registrationOpensAt: official.registrationOpensAt,
+        checkInOpensAt: official.checkInOpensAt,
+        checkInClosesAt: official.checkInClosesAt,
+        startsAt: official.startsAt,
+        rulesVersion: official.rulesVersion,
+        startsLabel: localOfficialStartsLabel(official)
       },
       {
         id: 'paid-lightning-beta',
@@ -192,6 +231,7 @@ const LOCAL_TOURNAMENT_KEY = 'kore.tournament.localOnline';
 
 function localEnterTournament(request: TournamentEnterRequest): TournamentEnterResult {
   if (request.kind === 'paidOnline') throw new Error('Paid Lightning tournaments are not enabled yet.');
+  if (request.kind === 'officialOnline') return localEnterOfficialTournament(request);
   const bracket = readLocalTournament();
   const existing = bracket.entries.find((entry) => entry.playerId === request.playerId);
   if (existing) return { bracket, entry: existing };
@@ -216,6 +256,11 @@ function localEnterTournament(request: TournamentEnterRequest): TournamentEnterR
 }
 
 function localTournamentStatus(tournamentId: string, playerId?: string): TournamentStatusResult {
+  if (tournamentId === 'kore-open-beta-cup-1') {
+    const bracket = readLocalOfficialTournament();
+    const entry = bracket.entries.find((candidate) => candidate.playerId === playerId || candidate.id === playerId);
+    return { bracket, entry, registrationOpensAt: bracket.registrationOpensAt, checkInOpensAt: bracket.checkInOpensAt, checkInClosesAt: bracket.checkInClosesAt, startsAt: bracket.startsAt, statusText: entry?.registrationState === 'waitlisted' ? `Waitlist position ${entry.waitlistPosition ?? 1}` : entry ? 'Registered for K.O.R.E. Open Beta Cup #1' : localOfficialStartsLabel(bracket) };
+  }
   const bracket = readLocalTournament();
   if (tournamentId !== bracket.id) throw new Error('Tournament not found');
   const entry = bracket.entries.find((candidate) => candidate.playerId === playerId || candidate.id === playerId);
@@ -269,4 +314,107 @@ function readLocalTournament(): TournamentBracket {
 
 function writeLocalTournament(bracket: TournamentBracket) {
   window.localStorage.setItem(LOCAL_TOURNAMENT_KEY, JSON.stringify(bracket));
+}
+
+const LOCAL_OFFICIAL_TOURNAMENT_KEY = 'kore.tournament.localOfficial.v1';
+
+function readLocalOfficialTournament(): TournamentBracket {
+  try {
+    const parsed = JSON.parse(window.localStorage.getItem(LOCAL_OFFICIAL_TOURNAMENT_KEY) ?? 'null') as TournamentBracket | null;
+    if (parsed?.id === 'kore-open-beta-cup-1') return parsed;
+  } catch {
+    // no-op
+  }
+  const now = Date.now();
+  const registrationOpensAt = Date.parse('2026-07-20T05:00:00.000Z');
+  const checkInOpensAt = Date.parse('2026-08-01T23:30:00.000Z');
+  const startsAt = Date.parse('2026-08-02T00:00:00.000Z');
+  return {
+    id: 'kore-open-beta-cup-1',
+    slug: 'kore-open-beta-cup-1',
+    name: 'K.O.R.E. Open Beta Cup #1',
+    kind: 'officialOnline',
+    status: now < registrationOpensAt ? 'announced' : now < checkInOpensAt ? 'registrationOpen' : now < startsAt ? 'checkIn' : 'postponed',
+    entries: [],
+    matches: [],
+    currentRound: 0,
+    capacity: 32,
+    minEntries: 32,
+    paidEnabled: false,
+    registrationOpensAt,
+    checkInOpensAt,
+    checkInClosesAt: startsAt,
+    startsAt,
+    timezone: 'America/Chicago',
+    rulesVersion: '2026-07-16',
+    prizesUsd: { 1: 60, 2: 25, 3: 15 },
+    format: { elimination: 'double', gamesToWin: 2, finalsGamesToWin: 3, roundsToWin: 3, roundTimerSeconds: 60, fighterSelection: 'freeHiddenLock', grandFinalReset: true, noShowMinutes: 10 },
+    createdAt: now,
+    updatedAt: now,
+    reward: { kind: 'lightningPrize', label: '$60 / $25 / $15 Lightning prizes', state: 'locked' }
+  };
+}
+
+function localEnterOfficialTournament(request: TournamentEnterRequest): TournamentEnterResult {
+  const bracket = readLocalOfficialTournament();
+  if (Date.now() < Number(bracket.registrationOpensAt)) throw new Error('Registration opens July 20, 2026');
+  if (!request.posthogDeviceId || !request.email || !request.eligibilityAccepted || !request.rulesAccepted) throw new Error('Profile, email, Global 18+ eligibility, and rules acceptance are required');
+  const existing = bracket.entries.find((entry) => entry.playerId === request.playerId);
+  if (existing) return { bracket, entry: existing };
+  const confirmed = bracket.entries.filter((entry) => entry.registrationState === 'confirmed').length;
+  const waitlisted = bracket.entries.filter((entry) => entry.registrationState === 'waitlisted').length;
+  const entry: TournamentEntry = {
+    id: `official-${request.playerId}-${Date.now()}`,
+    playerId: request.playerId,
+    registeredDeviceId: request.posthogDeviceId,
+    displayName: request.displayName.toUpperCase().slice(0, 12) || 'PLAYER',
+    email: request.email,
+    characterId: request.characterId,
+    seed: confirmed < 32 ? confirmed + 1 : 0,
+    registrationState: confirmed < 32 ? 'confirmed' : 'waitlisted',
+    waitlistPosition: confirmed < 32 ? undefined : waitlisted + 1,
+    eligibilityAcceptedAt: Date.now(),
+    rulesAcceptedAt: Date.now(),
+    rulesVersion: '2026-07-16',
+    paymentState: 'notRequired',
+    joinedAt: Date.now()
+  };
+  const next = { ...bracket, entries: [...bracket.entries, entry], updatedAt: Date.now() };
+  window.localStorage.setItem(LOCAL_OFFICIAL_TOURNAMENT_KEY, JSON.stringify(next));
+  return { bracket: next, entry };
+}
+
+function localOfficialStartsLabel(bracket: TournamentBracket) {
+  const now = Date.now();
+  if (now < Number(bracket.registrationOpensAt)) {
+    const days = Math.ceil((Number(bracket.registrationOpensAt) - now) / 86_400_000);
+    return `Registration opens in ${days} day${days === 1 ? '' : 's'}`;
+  }
+  if (now < Number(bracket.checkInOpensAt)) return 'Registration open';
+  if (now < Number(bracket.checkInClosesAt)) return 'Check-in open';
+  return 'Postponed — new date coming';
+}
+
+function localOfficialCheckIn(request: TournamentCheckInRequest): TournamentStatusResult {
+  const bracket = readLocalOfficialTournament();
+  if (bracket.status !== 'checkIn') throw new Error('Check-in is not open');
+  const entry = bracket.entries.find((candidate) => candidate.playerId === request.playerId);
+  if (!entry || entry.registeredDeviceId !== request.posthogDeviceId) throw new Error('Official tournament entry unavailable');
+  const checkedInAt = Date.now();
+  const entries = bracket.entries.map((candidate) => candidate.id === entry.id ? { ...candidate, checkedInAt } : candidate);
+  const next = { ...bracket, entries, updatedAt: checkedInAt };
+  window.localStorage.setItem(LOCAL_OFFICIAL_TOURNAMENT_KEY, JSON.stringify(next));
+  return { bracket: next, entry: { ...entry, checkedInAt }, statusText: 'Checked in for K.O.R.E. Open Beta Cup #1' };
+}
+
+function localOfficialLockFighter(request: TournamentGameLockInRequest): TournamentStatusResult {
+  const bracket = readLocalOfficialTournament();
+  const entry = bracket.entries.find((candidate) => candidate.playerId === request.playerId);
+  const assignedMatch = bracket.matches.find((match) => match.id === request.matchId);
+  if (!entry || !assignedMatch) throw new Error('Official tournament set unavailable');
+  const fighterLocks = { ...(assignedMatch.fighterLocks || {}), [entry.id]: request.characterId };
+  const matches = bracket.matches.map((match) => match.id === assignedMatch.id ? { ...match, fighterLocks } : match);
+  const next = { ...bracket, matches, updatedAt: Date.now() };
+  window.localStorage.setItem(LOCAL_OFFICIAL_TOURNAMENT_KEY, JSON.stringify(next));
+  return { bracket: next, entry, assignedMatch: { ...assignedMatch, fighterLocks }, statusText: 'Fighter locked' };
 }

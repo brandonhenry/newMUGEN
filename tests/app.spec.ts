@@ -68,9 +68,9 @@ async function startFromSplash(page: Page, options: { dismissStarterGuide?: bool
   await expectMainMenu(page);
 }
 
-async function selectTournamentMode(page: Page, label: 'Free' | 'Custom' | 'Online' | 'Prizepool' | 'Infinite') {
+async function selectTournamentMode(page: Page, label: 'Free' | 'Custom' | 'Online' | 'K.O.R.E.' | 'Prizepool' | 'Infinite') {
   const currentMode = page.locator('.mode-carousel-current strong');
-  for (let index = 0; index < 5; index += 1) {
+  for (let index = 0; index < 6; index += 1) {
     if ((await currentMode.textContent())?.trim() === label) return;
     await page.getByRole('button', { name: 'Next tournament mode' }).click();
   }
@@ -1566,6 +1566,38 @@ test('opens tournament mode above characters and shows paid beta disabled', asyn
   await expect(page.getByText('Paid beta unavailable')).toBeVisible();
 });
 
+test('shows the announced K.O.R.E. official cup, guaranteed prizes, rules, and registration countdown', async ({ page }) => {
+  const now = Date.now();
+  const registrationOpensAt = now + 4 * 86_400_000;
+  const startsAt = now + 16 * 86_400_000;
+  await page.route('**/.netlify/functions/tournament-list', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ tournaments: [{
+        id: 'kore-open-beta-cup-1', kind: 'officialOnline', status: 'announced', entryFeeUsd: 0, entryFeeLabel: 'Free',
+        prizeLabel: '$60 / $25 / $15 Lightning', entries: 0, confirmedEntries: 0, entriesNeeded: 32, minEntries: 32, capacity: 32,
+        paidEnabled: false, registrationOpensAt, checkInOpensAt: startsAt - 30 * 60_000, checkInClosesAt: startsAt, startsAt,
+        rulesVersion: '2026-07-16', startsLabel: 'Registration opens in 4 days'
+      }] })
+    });
+  });
+
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Tournament' }).click();
+  await selectTournamentMode(page, 'K.O.R.E.');
+
+  await expect(page.getByRole('heading', { name: 'K.O.R.E. Open Beta Cup #1' })).toBeVisible();
+  await expect(page.getByText('Registration opens in 4 days').first()).toBeVisible();
+  await expect(page.getByText('$60').first()).toBeVisible();
+  await expect(page.getByText('$25').first()).toBeVisible();
+  await expect(page.getByText('$15').first()).toBeVisible();
+  await expect(page.getByText('$100 guaranteed • Free entry • Double elimination')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Registration Soon' })).toBeDisabled();
+  await page.getByText('Rules & eligibility').click();
+  await expect(page.getByText(/Exactly 32 checked-in players are required/)).toBeVisible();
+});
+
 test('tournament select keeps the page locked while roster content scrolls internally', async ({ page }) => {
   const viewports = [
     { name: 'short desktop', width: 1100, height: 560 },
@@ -1582,7 +1614,6 @@ test('tournament select keeps the page locked while roster content scrolls inter
       await selectTournamentMode(page, 'Online');
 
       await expect(page.locator('.tournament-select-screen')).toBeVisible();
-      await expect(page.getByLabel('Player name')).toBeVisible();
       await expect(page.getByRole('button', { name: 'Enter Online' })).toBeVisible();
       await expectDocumentLocked(page);
 

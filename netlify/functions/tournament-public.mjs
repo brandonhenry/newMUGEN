@@ -1,12 +1,23 @@
 import { cleanId, errorJson, getTournamentStore, json, readTournament } from './_tournament-store.mjs';
 import { getPaidTournamentStores, readPaidTournament } from './_paid-tournament-store.mjs';
 import { deriveTournamentSlug, sanitizePublicTournament } from './_tournament-public.mjs';
+import {
+  getOfficialTournamentStore,
+  isOfficialTournamentId,
+  officialPublicView,
+  readOfficialTournament
+} from './_official-tournament-store.mjs';
 
 export async function handler(event) {
   if (event.httpMethod !== 'GET') return json(405, { error: 'method_not_allowed' });
   try {
     const slug = cleanId(event.queryStringParameters?.slug);
     if (!slug) return json(400, { error: 'missing_tournament_slug' });
+    if (isOfficialTournamentId(slug)) {
+      const official = await readOfficialTournament(getOfficialTournamentStore(event), slug);
+      if (!official) return json(404, { error: 'tournament_not_found' });
+      return json(200, { tournament: officialPublicView(official) });
+    }
     const freeStore = getTournamentStore(event);
     const paidStores = getPaidTournamentStores(event);
     const bracket = await findTournament(freeStore, paidStores, slug);

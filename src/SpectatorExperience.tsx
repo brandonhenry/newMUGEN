@@ -169,11 +169,11 @@ export function SpectatorExperience({ route }: { route: SpectatorRoute }) {
         <a className={`primary-button spectator-action-link ${liveMatches.length ? '' : 'is-disabled'}`} href={`${tournamentUrl(tournament)}/watch`} aria-disabled={!liveMatches.length}><Radio size={18} /> Watch Tournament</a>
       </div>
       <section className="public-bracket" aria-label="Tournament bracket">
-        {[...new Set(tournament.matches.map((match) => match.round))].sort((a, b) => b - a).map((round) => (
-          <div className="public-bracket-round" key={round}>
-            <h2>{roundLabel(round, tournament.matches)}</h2>
+        {publicBracketGroups(tournament).map((group) => (
+          <div className="public-bracket-round" key={group.key}>
+            <h2>{group.label}</h2>
             <div className="public-match-grid">
-              {tournament.matches.filter((match) => match.round === round).map((match) => (
+              {group.matches.map((match) => (
                 <PublicMatchCard key={match.id} tournament={tournament} match={match} stream={streamByMatch.get(match.id)} />
               ))}
             </div>
@@ -184,6 +184,22 @@ export function SpectatorExperience({ route }: { route: SpectatorRoute }) {
   );
 }
 
+function publicBracketGroups(tournament: TournamentPublicView) {
+  if (tournament.kind === 'officialOnline') {
+    const sideLabels: Record<string, string> = { winners: 'Winners Bracket', losers: 'Losers Bracket', grandFinal: 'Grand Final', grandFinalReset: 'Grand Final Reset' };
+    return ['winners', 'losers', 'grandFinal', 'grandFinalReset'].flatMap((side) => {
+      const sideMatches = tournament.matches.filter((match) => match.bracketSide === side && (side !== 'grandFinalReset' || match.resetRequired));
+      const rounds = [...new Set(sideMatches.map((match) => match.bracketRound ?? match.round))].sort((a, b) => a - b);
+      return rounds.map((round) => ({
+        key: `${side}-${round}`,
+        label: side === 'grandFinal' || side === 'grandFinalReset' ? sideLabels[side] : `${sideLabels[side]} · Round ${round}`,
+        matches: sideMatches.filter((match) => (match.bracketRound ?? match.round) === round)
+      }));
+    });
+  }
+  return [...new Set(tournament.matches.map((match) => match.round))].sort((a, b) => b - a).map((round) => ({ key: String(round), label: roundLabel(round, tournament.matches), matches: tournament.matches.filter((match) => match.round === round) }));
+}
+
 function PublicMatchCard({ tournament, match, stream }: { tournament: TournamentPublicView; match: PublicTournamentMatch; stream?: SpectatorStreamSummary }) {
   const live = match.status === 'ready' && stream?.state === 'live';
   return (
@@ -191,6 +207,7 @@ function PublicMatchCard({ tournament, match, stream }: { tournament: Tournament
       <div className="public-match-state">{live ? <><i /> LIVE · {stream.viewerCount.toLocaleString()} WATCHING</> : match.status === 'completed' ? 'FINAL' : match.status === 'forfeit' || match.roomStatus === 'forfeit' ? 'FORFEIT' : match.status === 'ready' ? 'WAITING FOR BROADCAST' : 'WAITING TO START'}</div>
       <PublicEntrant entry={findEntry(tournament, match.entryAId)} winner={match.winnerEntryId === match.entryAId} />
       <PublicEntrant entry={findEntry(tournament, match.entryBId)} winner={match.winnerEntryId === match.entryBId} />
+      {match.targetWins && <small className="public-set-score">{match.setScore?.[match.entryAId ?? ''] ?? 0}–{match.setScore?.[match.entryBId ?? ''] ?? 0} · First to {match.targetWins}</small>}
       {live && <a className="primary-button public-watch-button" href={`${tournamentUrl(tournament)}/matches/${encodeURIComponent(match.id)}`}><Eye size={18} /> Watch Game</a>}
     </article>
   );

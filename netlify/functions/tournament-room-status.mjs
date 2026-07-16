@@ -11,6 +11,11 @@ import {
   getPaidTournamentStores,
   PAID_LIGHTNING_TOURNAMENT_ID
 } from './_paid-tournament-store.mjs';
+import {
+  getOfficialTournamentStatus,
+  getOfficialTournamentStore,
+  isOfficialTournamentId
+} from './_official-tournament-store.mjs';
 
 export async function handler(event) {
   if (event.httpMethod !== 'GET') return json(405, { error: 'method_not_allowed' });
@@ -23,6 +28,9 @@ export async function handler(event) {
       playerId: params.playerId,
       posthogDeviceId: params.posthogDeviceId
     };
+    if (isOfficialTournamentId(tournamentId)) {
+      return json(200, await getOfficialTournamentStatus(getOfficialTournamentStore(event), tournamentId, request.playerId, request.posthogDeviceId, Date.now()));
+    }
     if (tournamentId === PAID_LIGHTNING_TOURNAMENT_ID || tournamentId === LEGACY_PAID_LIGHTNING_TOURNAMENT_ID || tournamentId.startsWith(`${PAID_LIGHTNING_TOURNAMENT_ID}-`)) {
       return json(200, await getPaidTournamentRoomStatus(getPaidTournamentStores(event), request, Date.now()));
     }

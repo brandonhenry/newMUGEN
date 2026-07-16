@@ -1,6 +1,6 @@
 import type { RankedKrScores } from '../online/ranked';
 
-export type TournamentKind = 'freeLocal' | 'freeOnline' | 'paidOnline';
+export type TournamentKind = 'freeLocal' | 'freeOnline' | 'paidOnline' | 'officialOnline';
 
 export type TournamentStatus =
   | 'open'
@@ -8,7 +8,23 @@ export type TournamentStatus =
   | 'bracketGenerated'
   | 'roundActive'
   | 'completed'
-  | 'cancelled';
+  | 'cancelled'
+  | 'draft'
+  | 'announced'
+  | 'registrationOpen'
+  | 'checkIn'
+  | 'postponed';
+
+export type OfficialRegistrationState = 'confirmed' | 'waitlisted' | 'missedCheckIn' | 'active';
+
+export type OfficialTournamentGame = {
+  number: number;
+  winnerEntryId: string;
+  characterAId?: string;
+  characterBId?: string;
+  stageId?: string;
+  completedAt: number;
+};
 
 export type TournamentPaymentState =
   | 'notRequired'
@@ -50,6 +66,13 @@ export type TournamentEntry = {
   payoutAmountSats?: number;
   payoutInvoice?: string;
   payoutId?: string;
+  email?: string;
+  registrationState?: OfficialRegistrationState;
+  waitlistPosition?: number;
+  checkedInAt?: number;
+  eligibilityAcceptedAt?: number;
+  rulesAcceptedAt?: number;
+  rulesVersion?: string;
   joinedAt: number;
 };
 
@@ -73,6 +96,16 @@ export type TournamentMatch = {
   reportState?: 'none' | 'single' | 'agreed' | 'conflict' | 'forfeit';
   resultReports?: Record<string, string>;
   reportedAt?: number;
+  bracketSide?: 'winners' | 'losers' | 'grandFinal' | 'grandFinalReset';
+  bracketRound?: number;
+  targetWins?: number;
+  setScore?: Record<string, number>;
+  games?: OfficialTournamentGame[];
+  fighterLocks?: Record<string, string>;
+  pendingGameReports?: Record<string, string>;
+  gameNumber?: number;
+  arrivalDeadlineAt?: number;
+  resetRequired?: boolean;
 };
 
 export type TournamentMatchRoom = {
@@ -90,10 +123,18 @@ export type TournamentMatchRoom = {
   spectatorRelayUrl?: string;
   spectatorPublishToken?: string;
   spectatorRole?: 'primary' | 'standby';
+  arrivalDeadlineAt?: number;
+  fighterLocked?: boolean;
+  fightersRevealed?: boolean;
+  fighterLocks?: Record<string, string | undefined>;
+  gameNumber?: number;
+  setScore?: Record<string, number>;
+  targetWins?: number;
+  stageId?: string;
 };
 
 export type TournamentReward = {
-  kind: 'localTrophy' | 'profilePoints' | 'lightningPending';
+  kind: 'localTrophy' | 'profilePoints' | 'lightningPending' | 'lightningPrize';
   label: string;
   state: 'locked' | 'earned' | 'pending' | 'blocked';
 };
@@ -113,13 +154,37 @@ export type TournamentBracket = {
   createdAt: number;
   updatedAt: number;
   reward?: TournamentReward;
+  published?: boolean;
+  registrationOpensAt?: number;
+  checkInOpensAt?: number;
+  checkInClosesAt?: number;
+  startsAt?: number;
+  timezone?: string;
+  rulesVersion?: string;
+  format?: {
+    elimination: 'double';
+    gamesToWin: number;
+    finalsGamesToWin: number;
+    roundsToWin: number;
+    roundTimerSeconds: number;
+    fighterSelection: 'freeHiddenLock';
+    grandFinalReset: boolean;
+    noShowMinutes: number;
+  };
+  prizesUsd?: Record<number, number>;
+  prizeFundingConfirmedAt?: number;
+  legalApprovedAt?: number;
+  emailDeliveryConfirmedAt?: number;
+  placements?: Record<number, string>;
+  postponedAt?: number;
+  postponementReason?: string;
 };
 
 export type PublicTournamentEntry = Pick<TournamentEntry, 'id' | 'displayName' | 'characterId' | 'seed' | 'isCpu' | 'isBot'>;
 
 export type PublicTournamentMatch = Pick<
   TournamentMatch,
-  'id' | 'round' | 'index' | 'entryAId' | 'entryBId' | 'winnerEntryId' | 'status' | 'stageId' | 'roomStatus' | 'reportedAt'
+  'id' | 'round' | 'index' | 'entryAId' | 'entryBId' | 'winnerEntryId' | 'status' | 'stageId' | 'roomStatus' | 'reportedAt' | 'bracketSide' | 'bracketRound' | 'targetWins' | 'setScore' | 'games' | 'resetRequired'
 >;
 
 export type TournamentPublicView = {
@@ -159,6 +224,13 @@ export type TournamentSummary = {
   estimatedStartLabel?: string;
   startsWhenFullLabel?: string;
   startsLabel: string;
+  checkedInEntries?: number;
+  waitlistEntries?: number;
+  registrationOpensAt?: number;
+  checkInOpensAt?: number;
+  checkInClosesAt?: number;
+  startsAt?: number;
+  rulesVersion?: string;
 };
 
 export type TournamentPaymentSummary = {
@@ -183,6 +255,9 @@ export type TournamentEnterRequest = {
   kp?: number;
   kr?: Partial<RankedKrScores>;
   availableCharacterIds?: string[];
+  email?: string;
+  eligibilityAccepted?: boolean;
+  rulesAccepted?: boolean;
 };
 
 export type TournamentEnterResult = {
@@ -209,6 +284,11 @@ export type TournamentStatusResult = {
   resumeNotice?: 'forfeit_win' | 'admin_review' | 'connection_retry' | 'late_payment_review';
   pendingResult?: { matchId: string; winnerEntryId: string; roomId?: string };
   statusText: string;
+  checkedInEntries?: number;
+  registrationOpensAt?: number;
+  checkInOpensAt?: number;
+  checkInClosesAt?: number;
+  startsAt?: number;
 };
 
 export type TournamentReportRequest = {
@@ -218,6 +298,18 @@ export type TournamentReportRequest = {
   posthogDeviceId?: string;
   roomId?: string;
   winnerEntryId: string;
+  gameNumber?: number;
+};
+
+export type TournamentCheckInRequest = {
+  tournamentId: string;
+  playerId: string;
+  posthogDeviceId: string;
+};
+
+export type TournamentGameLockInRequest = TournamentCheckInRequest & {
+  matchId: string;
+  characterId: string;
 };
 
 export type TournamentClaimPrizeRequest = {

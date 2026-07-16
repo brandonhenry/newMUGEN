@@ -66,6 +66,7 @@ export type AnalyticsEventName =
   | 'tournament_mode_selected'
   | 'tournament_entry_started'
   | 'tournament_entry_succeeded'
+  | 'tournament_check_in_completed'
   | 'tournament_entry_failed'
   | 'tournament_payment_opened'
   | 'tournament_lobby_refreshed'

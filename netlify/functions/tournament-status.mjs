@@ -18,6 +18,12 @@ import {
   getPaidTournamentStores,
   PAID_LIGHTNING_TOURNAMENT_ID
 } from './_paid-tournament-store.mjs';
+import {
+  getOfficialTournamentStatus,
+  getOfficialTournamentStore,
+  isOfficialTournamentId
+} from './_official-tournament-store.mjs';
+import { getTournamentEmailStore, notifyTournamentReady } from './_tournament-email.mjs';
 
 export async function handler(event) {
   if (event.httpMethod !== 'GET') return json(405, { error: 'method_not_allowed' });
@@ -26,6 +32,11 @@ export async function handler(event) {
     const tournamentId = cleanId(params.tournamentId);
     const playerId = cleanId(params.playerId);
     if (!tournamentId) return json(400, { error: 'missing_tournament_id' });
+    if (isOfficialTournamentId(tournamentId)) {
+      const status = await getOfficialTournamentStatus(getOfficialTournamentStore(event), tournamentId, playerId, params.posthogDeviceId, Date.now());
+      if (status.bracket.status === 'roundActive') await notifyTournamentReady(getTournamentEmailStore(event), status.bracket, Date.now()).catch((error) => console.warn('Official tournament ready email failed', error));
+      return json(200, status);
+    }
     if (tournamentId === PAID_LIGHTNING_TOURNAMENT_ID || tournamentId.startsWith(`${PAID_LIGHTNING_TOURNAMENT_ID}-`)) {
       return json(200, await getPaidTournamentStatus(getPaidTournamentStores(event), playerId, params.posthogDeviceId));
     }

@@ -235,6 +235,7 @@ import {
 } from './lib/voxelBodyNormalization';
 import {
   advanceTournamentBracket,
+  checkInTournament,
   claimTournamentPrize,
   confirmPaidTournamentRecovery,
   createCustomLocalTournamentBracket,
@@ -251,6 +252,7 @@ import {
   getTournamentEntry,
   getTournamentOpponentEntry,
   joinTournamentMatchRoom,
+  lockInTournamentGameFighter,
   reportTournamentMatch,
   requestPaidTournamentRecovery,
   simulateCpuTournamentMatches,
@@ -352,6 +354,7 @@ type TournamentAdvancementState = {
   nextAction: TournamentAdvancementNextAction;
 };
 const PAID_LIGHTNING_TOURNAMENT_ID = 'paid-lightning-beta';
+const OFFICIAL_TOURNAMENT_ID = 'kore-open-beta-cup-1';
 type E2EFightPosition = { x?: number; y?: number; z?: number };
 type E2EOnlineDiagnostics = {
   mode: MatchMode;
@@ -479,11 +482,13 @@ function onlineMatchGateMode(match: MatchSnapshot): OnlineAssetGate['mode'] {
 }
 
 type RandomCharacterSlots = Record<1 | 2, boolean>;
-type TournamentSelectMode = 'free' | 'custom' | 'online' | 'paid' | 'infinite';
+type TournamentSelectMode = 'free' | 'custom' | 'online' | 'official' | 'paid' | 'infinite';
 type LocalTournamentStartConfig = {
   p1CharacterId: string;
   p2CharacterId?: string;
   playerCount: 1 | 2;
+  officialEligibilityAccepted?: boolean;
+  officialRulesAccepted?: boolean;
 };
 type CharacterMetadataPatch = Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'hasTransform' | 'transformCharacterId' | 'faceCardPath' | 'stats'>>;
 type ArcadeMiniGameLaunch = {
@@ -1141,7 +1146,7 @@ function requiresOnlineProfileForMode(mode: MatchMode) {
 }
 
 function requiresOnlineProfileForTournamentMode(mode: TournamentSelectMode) {
-  return mode === 'online' || mode === 'paid';
+  return mode === 'online' || mode === 'official' || mode === 'paid';
 }
 
 function buildAnimationSlots(): AnimationSlot[] {
@@ -3669,13 +3674,20 @@ export default function App() {
     };
   }, [onlineProfile, screen]);
 
-  const enterOnlineTournament = useCallback(async (characterId: string, tournamentMode: Extract<TournamentSelectMode, 'online' | 'paid'>, confirmedProfile?: OnlinePlayerProfile) => {
+  const enterOnlineTournament = useCallback(async (
+    characterId: string,
+    tournamentMode: Extract<TournamentSelectMode, 'online' | 'official' | 'paid'>,
+    confirmedProfile?: OnlinePlayerProfile,
+    officialAcceptance?: { eligibilityAccepted: boolean; rulesAccepted: boolean }
+  ) => {
     const profile = confirmedProfile ?? onlineProfile;
     if (!profile) throw new Error('Player name required');
     const paid = tournamentMode === 'paid';
-    const posthogDeviceId = paid ? getPostHogDeviceId() : undefined;
-    if (paid && !posthogDeviceId) throw new Error('Device id unavailable. Reload and try again.');
-    setTournamentStatusText(paid ? 'Checking tournament entry' : 'Entering free online tournament');
+    const official = tournamentMode === 'official';
+    const posthogDeviceId = paid || official ? getPostHogDeviceId() : undefined;
+    if ((paid || official) && !posthogDeviceId) throw new Error('Device id unavailable. Reload and try again.');
+    if (official && !sanitizeEmail(profile.email)) throw new Error('Add an email to your K.O.R.E. profile before registering.');
+    setTournamentStatusText(paid ? 'Checking tournament entry' : official ? 'Registering for K.O.R.E. Open Beta Cup #1' : 'Entering free online tournament');
     if (paid && posthogDeviceId) {
       const existingStatus = await fetchTournamentStatus(PAID_LIGHTNING_TOURNAMENT_ID, profile.playerId, posthogDeviceId).catch(() => null);
       if (existingStatus?.entry) {
@@ -3697,8 +3709,8 @@ export default function App() {
       }
       setTournamentStatusText('Creating Cash App checkout');
     }
-    let savedFreeTournamentId = !paid ? readSavedFreeOnlineTournamentId(profile.playerId) : '';
-    if (!paid && savedFreeTournamentId) {
+    let savedFreeTournamentId = !paid && !official ? readSavedFreeOnlineTournamentId(profile.playerId) : '';
+    if (!paid && !official && savedFreeTournamentId) {
       const existingStatus = await fetchTournamentStatus(savedFreeTournamentId, profile.playerId).catch(() => null);
       if (existingStatus?.entry && existingStatus.bracket.kind === 'freeOnline') {
         writeSavedFreeOnlineTournamentId(profile.playerId, existingStatus.bracket.id);
@@ -3723,12 +3735,15 @@ export default function App() {
       savedFreeTournamentId = '';
     }
     const result = await enterTournament({
-      tournamentId: savedFreeTournamentId || undefined,
-      kind: paid ? 'paidOnline' : 'freeOnline',
+      tournamentId: official ? OFFICIAL_TOURNAMENT_ID : savedFreeTournamentId || undefined,
+      kind: paid ? 'paidOnline' : official ? 'officialOnline' : 'freeOnline',
       playerId: profile.playerId,
       posthogDeviceId,
       displayName: profile.displayName,
       characterId,
+      email: official ? sanitizeEmail(profile.email) : undefined,
+      eligibilityAccepted: official ? officialAcceptance?.eligibilityAccepted : undefined,
+      rulesAccepted: official ? officialAcceptance?.rulesAccepted : undefined,
       kp: rankedProfile?.kp,
       kr: rankedProfile?.kr,
       availableCharacterIds: roster
@@ -3757,14 +3772,22 @@ export default function App() {
       entriesNeeded: Math.max(0, result.bracket.minEntries - confirmedTournamentEntryCount(result.bracket)),
       estimatedStartLabel: getEstimatedTournamentStartLabel(result.bracket),
       startsWhenFullLabel: `Tournament starts once ${result.bracket.minEntries} entries enter`,
-      statusText: paid && payment
+      registrationOpensAt: result.bracket.registrationOpensAt,
+      checkInOpensAt: result.bracket.checkInOpensAt,
+      checkInClosesAt: result.bracket.checkInClosesAt,
+      startsAt: result.bracket.startsAt,
+      statusText: official
+        ? result.entry.registrationState === 'waitlisted'
+          ? `Waitlist position ${result.entry.waitlistPosition ?? 1}`
+          : 'Registered for K.O.R.E. Open Beta Cup #1'
+        : paid && payment
         ? getTournamentPaymentStatusText(payment.state, result.bracket.minEntries)
         : result.bracket.status === 'open'
           ? `${confirmedTournamentEntryCount(result.bracket)} / ${result.bracket.minEntries} entered`
           : 'Tournament ready'
     };
     setP1Id(characterId);
-    if (!paid) writeSavedFreeOnlineTournamentId(profile.playerId, status.bracket.id);
+    if (!paid && !official) writeSavedFreeOnlineTournamentId(profile.playerId, status.bracket.id);
     setOnlineTournamentStatus(status);
     setE2eSimulateOnlineTournament(false);
     setLocalTournamentBracket(null);
@@ -3778,7 +3801,7 @@ export default function App() {
       character_id: characterId,
       payment_state: result.entry.paymentState
     });
-    maybePromptForTournamentEmail(profile, status, paid ? 'paid_tournament_entry' : 'free_tournament_entry');
+    if (!official) maybePromptForTournamentEmail(profile, status, paid ? 'paid_tournament_entry' : 'free_tournament_entry');
   }, [captureAppAnalytics, effectiveUnlockedCharacterIds, maybePromptForTournamentEmail, onlineProfile, rankedProfile?.kp, rankedProfile?.kr, roster]);
 
   const claimPaidTournamentPrize = useCallback(async (bolt11: string) => {
@@ -3786,7 +3809,7 @@ export default function App() {
     const profile = onlineProfile;
     if (!current || !profile) throw new Error('Tournament entry unavailable');
     const posthogDeviceId = getPostHogDeviceId() || (import.meta.env.DEV && e2eSimulateOnlineTournament ? 'e2e-device' : '');
-    if (current.bracket.kind === 'paidOnline' && !posthogDeviceId) throw new Error('Device id unavailable. Reload and try again.');
+    if ((current.bracket.kind === 'paidOnline' || current.bracket.kind === 'officialOnline') && !posthogDeviceId) throw new Error('Device id unavailable. Reload and try again.');
     setTournamentStatusText('Submitting prize invoice');
     const result = await claimTournamentPrize({
       tournamentId: current.bracket.id,
@@ -3815,17 +3838,42 @@ export default function App() {
     return 'Prize sent';
   }, [captureAppAnalytics, capturePositiveMilestone, e2eSimulateOnlineTournament, onlineProfile, onlineTournamentStatus]);
 
+  const checkInOfficialTournamentEntry = useCallback(async () => {
+    const current = onlineTournamentStatus;
+    const profile = onlineProfile;
+    const posthogDeviceId = getPostHogDeviceId();
+    if (!current || current.bracket.kind !== 'officialOnline' || !profile || !posthogDeviceId) throw new Error('Official tournament entry unavailable');
+    const status = await checkInTournament({ tournamentId: current.bracket.id, playerId: profile.playerId, posthogDeviceId });
+    setOnlineTournamentStatus(status);
+    setTournamentStatusText(tournamentStatusDisplayText(status));
+    captureAppAnalytics('tournament_check_in_completed', { tournament_id: current.bracket.id, registration_state: status.entry?.registrationState });
+    return status.statusText;
+  }, [captureAppAnalytics, onlineProfile, onlineTournamentStatus]);
+
+  const lockOfficialTournamentFighter = useCallback(async (characterId: string) => {
+    const current = onlineTournamentStatus;
+    const profile = onlineProfile;
+    const posthogDeviceId = getPostHogDeviceId();
+    const matchId = current?.assignedMatch?.id;
+    if (!current || current.bracket.kind !== 'officialOnline' || !profile || !posthogDeviceId || !matchId) throw new Error('Official tournament set unavailable');
+    const status = await lockInTournamentGameFighter({ tournamentId: current.bracket.id, matchId, playerId: profile.playerId, posthogDeviceId, characterId });
+    setOnlineTournamentStatus(status);
+    setP1Id(characterId);
+    setTournamentStatusText(status.matchRoom?.fightersRevealed ? 'Both fighters locked. Match ready.' : 'Fighter locked. Waiting for opponent.');
+    return status;
+  }, [onlineProfile, onlineTournamentStatus]);
+
   const requestPaidTournamentEntryRecovery = useCallback(async () => {
     const profile = onlineProfile;
     const email = sanitizeEmail(profile?.email);
     if (!profile || !email) throw new Error('Save a reminder email before recovering a paid entry.');
     const result = await requestPaidTournamentRecovery({
-      tournamentId: onlineTournamentStatus?.bracket.id ?? PAID_LIGHTNING_TOURNAMENT_ID,
+      tournamentId: onlineTournamentStatus?.bracket.id ?? (selectedTournamentMode === 'official' ? OFFICIAL_TOURNAMENT_ID : PAID_LIGHTNING_TOURNAMENT_ID),
       playerId: profile.playerId,
       email
     });
     return result.emailSent ? `Recovery code sent to ${result.email}` : `Recovery code saved for ${result.email}`;
-  }, [e2eSimulateOnlineTournament, onlineProfile, onlineTournamentStatus?.bracket.id]);
+  }, [e2eSimulateOnlineTournament, onlineProfile, onlineTournamentStatus?.bracket.id, selectedTournamentMode]);
 
   const confirmPaidTournamentEntryRecovery = useCallback(async (code: string) => {
     const profile = onlineProfile;
@@ -3833,7 +3881,7 @@ export default function App() {
     const posthogDeviceId = getPostHogDeviceId() || (import.meta.env.DEV && e2eSimulateOnlineTournament ? 'e2e-device' : '');
     if (!posthogDeviceId) throw new Error('Device id unavailable. Reload and try again.');
     const status = await confirmPaidTournamentRecovery({
-      tournamentId: onlineTournamentStatus?.bracket.id ?? PAID_LIGHTNING_TOURNAMENT_ID,
+      tournamentId: onlineTournamentStatus?.bracket.id ?? (selectedTournamentMode === 'official' ? OFFICIAL_TOURNAMENT_ID : PAID_LIGHTNING_TOURNAMENT_ID),
       playerId: profile.playerId,
       code,
       posthogDeviceId
@@ -3841,13 +3889,13 @@ export default function App() {
     setOnlineTournamentStatus(status);
     setTournamentStatusText(tournamentStatusDisplayText(status, 'Paid tournament recovered'));
     return 'Paid tournament recovered';
-  }, [onlineProfile, onlineTournamentStatus?.bracket.id]);
+  }, [onlineProfile, onlineTournamentStatus?.bracket.id, selectedTournamentMode]);
 
   const refreshOnlineTournament = useCallback(async () => {
     const current = onlineTournamentStatus;
     const profile = onlineProfile;
     if (!current || !profile) return;
-    const posthogDeviceId = current.bracket.kind === 'paidOnline' ? getPostHogDeviceId() : undefined;
+    const posthogDeviceId = current.bracket.kind === 'paidOnline' || current.bracket.kind === 'officialOnline' ? getPostHogDeviceId() : undefined;
     const status = await fetchTournamentStatus(current.bracket.id, profile.playerId, posthogDeviceId);
     setOnlineTournamentStatus(status);
     setActiveTournamentMatchId(status.assignedMatch?.id ?? '');
@@ -3914,6 +3962,31 @@ export default function App() {
     };
   }, [onlineProfile, onlineTournamentStatus]);
 
+  useEffect(() => {
+    const current = onlineTournamentStatus;
+    const profile = onlineProfile;
+    if (screen !== 'tournamentLobby' || current?.bracket.kind !== 'officialOnline' || !profile) return undefined;
+    let cancelled = false;
+    const poll = async () => {
+      const posthogDeviceId = getPostHogDeviceId();
+      if (!posthogDeviceId) return;
+      try {
+        const status = await fetchTournamentStatus(current.bracket.id, profile.playerId, posthogDeviceId);
+        if (cancelled) return;
+        setOnlineTournamentStatus(status);
+        setActiveTournamentMatchId(status.assignedMatch?.id ?? '');
+        setTournamentStatusText(tournamentStatusDisplayText(status));
+      } catch (error) {
+        if (!cancelled) console.warn('Failed to poll official tournament', error);
+      }
+    };
+    const interval = window.setInterval(() => void poll(), 3000);
+    return () => {
+      cancelled = true;
+      window.clearInterval(interval);
+    };
+  }, [onlineProfile, onlineTournamentStatus?.bracket.id, onlineTournamentStatus?.bracket.kind, screen]);
+
   const startOnlineTournamentMatch = useCallback(() => {
     const status = onlineTournamentStatus;
     const profile = onlineProfile;
@@ -3922,9 +3995,15 @@ export default function App() {
     if (!status || !profile || !match || !entry) return;
     const opponent = getTournamentOpponentEntry(status.bracket, match, entry.id);
     if (!opponent) return;
-    const opponentCharacter = roster.find((character) => character.id === opponent.characterId) ?? roster[0];
-    const fightStage = match.stageId ? playableStageRoster.find((item) => item.id === match.stageId) ?? resolveRandomStageSelection() : resolveRandomStageSelection();
-    if (!opponentCharacter || !fightStage) return;
+    const officialLocks = status.bracket.kind === 'officialOnline' && status.matchRoom?.fightersRevealed ? status.matchRoom.fighterLocks : undefined;
+    const localCharacterId = officialLocks?.[entry.id] ?? entry.characterId;
+    const opponentCharacterId = officialLocks?.[opponent.id] ?? opponent.characterId;
+    const localCharacter = roster.find((character) => character.id === localCharacterId) ?? roster[0];
+    const opponentCharacter = roster.find((character) => character.id === opponentCharacterId) ?? roster[0];
+    const officialStageId = status.matchRoom?.stageId;
+    const fightStage = (officialStageId || match.stageId) ? playableStageRoster.find((item) => item.id === (officialStageId || match.stageId)) ?? resolveRandomStageSelection() : resolveRandomStageSelection();
+    if (!localCharacter || !opponentCharacter || !fightStage) return;
+    setP1Id(localCharacter.id);
     setP2Id(opponentCharacter.id);
     setStageId(fightStage.id);
     setLocalTournamentCpuSlots([]);
@@ -5673,7 +5752,11 @@ export default function App() {
                 return;
               }
               const startOnlineTournamentEntry = (profile?: OnlinePlayerProfile) => {
-                void enterOnlineTournament(characterId, tournamentMode === 'paid' ? 'paid' : 'online', profile).catch((error) => {
+                const onlineMode = tournamentMode === 'paid' ? 'paid' : tournamentMode === 'official' ? 'official' : 'online';
+                void enterOnlineTournament(characterId, onlineMode, profile, tournamentMode === 'official' ? {
+                  eligibilityAccepted: Boolean(startConfig.officialEligibilityAccepted),
+                  rulesAccepted: Boolean(startConfig.officialRulesAccepted)
+                } : undefined).catch((error) => {
                   console.error('Failed to enter tournament', error);
                   captureAppAnalytics('tournament_entry_failed', {
                     tournament_mode: tournamentMode,
@@ -5730,6 +5813,8 @@ export default function App() {
               startOnlineTournamentMatch();
             }}
             onClaimPrize={(bolt11) => claimPaidTournamentPrize(bolt11)}
+            onCheckIn={checkInOfficialTournamentEntry}
+            onLockFighter={lockOfficialTournamentFighter}
             onRequestPaidRecovery={requestPaidTournamentEntryRecovery}
             onConfirmPaidRecovery={confirmPaidTournamentEntryRecovery}
           />
@@ -10502,6 +10587,9 @@ function TournamentSelect({
   const [selectTarget, setSelectTarget] = useState<1 | 2>(1);
   const [summaries, setSummaries] = useState<TournamentSummary[]>([]);
   const [summaryStatus, setSummaryStatus] = useState<'loading' | 'ready' | 'error'>('loading');
+  const [officialEligibilityAccepted, setOfficialEligibilityAccepted] = useState(false);
+  const [officialRulesAccepted, setOfficialRulesAccepted] = useState(false);
+  const [clockNow, setClockNow] = useState(() => Date.now());
   const pageGamepadStateRef = useRef({ previous: false, next: false });
   const modeGamepadStateRef = useRef({ previous: false, next: false });
   const p1Character = roster.find((character) => character.id === p1Id) ?? roster[0];
@@ -10517,6 +10605,7 @@ function TournamentSelect({
     visibleRosterPage * CHARACTER_SELECT_PAGE_SIZE + CHARACTER_SELECT_PAGE_SIZE
   );
   const freeOnlineSummary = summaries.find((summary) => summary.kind === 'freeOnline');
+  const officialSummary = summaries.find((summary) => summary.kind === 'officialOnline');
   const paidSummary = summaries.find((summary) => summary.kind === 'paidOnline');
   const paidEnabled = isPaidTournamentUiEnabled(paidSummary);
   const hasKnownPaidEntry = Boolean(knownPaidTournamentStatus?.entry);
@@ -10534,6 +10623,10 @@ function TournamentSelect({
   const paidActivityLabel = paidEnabled
     ? formatTournamentActivityLabel(paidSummary, paidSummary?.prizeLabel ?? '$15 / $10 / $5 Lightning', { showForming: false })
     : paidSummary?.prizeLabel ?? '$15 / $10 / $5 Lightning';
+  const officialRegistrationOpen = Boolean(officialSummary && ['registrationOpen', 'checkIn', 'postponed'].includes(officialSummary.status));
+  const officialCountdown = officialSummary?.registrationOpensAt
+    ? formatTournamentCountdown(officialSummary.registrationOpensAt, clockNow, 'Registration opens')
+    : 'Registration opens July 20';
   const canStart = Boolean(
     customTournamentMode
       ? roster.filter((character) => isCharacterSelectable(character, unlockedCharacterIds)).length >= 2
@@ -10541,8 +10634,8 @@ function TournamentSelect({
     isCharacterUnlocked(p1Character, unlockedCharacterIds) &&
     (tournamentMode !== 'free' || localPlayerCount === 1 || (p2Character && isCharacterUnlocked(p2Character, unlockedCharacterIds)))
   );
-  const nextLabel = tournamentMode === 'free' ? 'Start Free' : tournamentMode === 'custom' ? 'Start Custom' : tournamentMode === 'paid' ? hasKnownPaidEntry ? 'View Tournament' : 'Enter Tournament' : tournamentMode === 'infinite' ? 'Watch Infinite' : 'Enter Online';
-  const nextDisabled = !canStart || (tournamentMode === 'paid' && !paidEnabled) || (tournamentMode === 'infinite' && !isDevHost);
+  const nextLabel = tournamentMode === 'free' ? 'Start Free' : tournamentMode === 'custom' ? 'Start Custom' : tournamentMode === 'official' ? officialRegistrationOpen ? 'Register' : 'Registration Soon' : tournamentMode === 'paid' ? hasKnownPaidEntry ? 'View Tournament' : 'Enter Tournament' : tournamentMode === 'infinite' ? 'Watch Infinite' : 'Enter Online';
+  const nextDisabled = !canStart || (tournamentMode === 'official' && (!officialRegistrationOpen || !officialEligibilityAccepted || !officialRulesAccepted)) || (tournamentMode === 'paid' && !paidEnabled) || (tournamentMode === 'infinite' && !isDevHost);
   const selectedModeSummary = tournamentMode === 'free'
     ? {
         label: 'Free local tournament',
@@ -10561,6 +10654,12 @@ function TournamentSelect({
             description: freeOnlineEntryLabel,
             stats: freeOnlineActivityLabel
           }
+        : tournamentMode === 'official'
+          ? {
+              label: 'K.O.R.E. official tournament',
+              description: officialRegistrationOpen ? `${officialSummary?.entries ?? 0} / 32 registered${officialSummary?.waitlistEntries ? ` • ${officialSummary.waitlistEntries} waitlisted` : ''}` : officialCountdown,
+              stats: '$100 guaranteed • Free entry • Double elimination'
+            }
         : tournamentMode === 'paid'
           ? {
               label: 'Prizepool tournament',
@@ -10596,6 +10695,12 @@ function TournamentSelect({
     };
   }, [onAnalytics]);
 
+  useEffect(() => {
+    if (tournamentMode !== 'official') return undefined;
+    const interval = window.setInterval(() => setClockNow(Date.now()), 1000);
+    return () => window.clearInterval(interval);
+  }, [tournamentMode]);
+
   const assignCharacter = (id: string) => {
     const character = roster.find((item) => item.id === id);
     if (!character || !isCharacterSelectable(character, unlockedCharacterIds)) return;
@@ -10617,7 +10722,7 @@ function TournamentSelect({
   };
 
   const cycleTournamentMode = useCallback((direction: -1 | 1) => {
-    const modes: TournamentSelectMode[] = ['free', 'custom', 'online', 'paid', ...(isDevHost ? ['infinite' as const] : [])];
+    const modes: TournamentSelectMode[] = ['free', 'custom', 'online', 'official', 'paid', ...(isDevHost ? ['infinite' as const] : [])];
     const nextMode = cycleModeValue(modes, tournamentMode, direction);
     if (nextMode === tournamentMode) return;
     setTournamentMode(nextMode);
@@ -10747,6 +10852,17 @@ function TournamentSelect({
 
           {summaryStatus === 'error' && <div className="tournament-status-strip">Online tournament list unavailable</div>}
 
+          {tournamentMode === 'official' && (
+            <OfficialTournamentRegistrationPanel
+              summary={officialSummary}
+              now={clockNow}
+              eligibilityAccepted={officialEligibilityAccepted}
+              rulesAccepted={officialRulesAccepted}
+              onEligibilityChange={setOfficialEligibilityAccepted}
+              onRulesChange={setOfficialRulesAccepted}
+            />
+          )}
+
           {tournamentMode === 'free' && (
             <>
               <div className="versus-target-tabs" aria-label="Local tournament players">
@@ -10853,7 +10969,9 @@ function TournamentSelect({
           onNext={() => onStart({
             p1CharacterId: p1Character.id,
             p2CharacterId: tournamentMode === 'free' && localPlayerCount === 2 ? p2Character?.id : undefined,
-            playerCount: tournamentMode === 'free' ? localPlayerCount : 1
+            playerCount: tournamentMode === 'free' ? localPlayerCount : 1,
+            officialEligibilityAccepted,
+            officialRulesAccepted
           }, tournamentMode)}
           nextLabel={nextLabel}
           nextDisabled={nextDisabled}
@@ -10876,7 +10994,7 @@ function TournamentSelect({
         <section className="versus-hero versus-hero-right tournament-preview-hero" aria-label="Tournament preview">
           <span className="versus-player-kicker">Bracket</span>
           <TournamentPreviewBracket />
-          <span className="versus-hero-name">{tournamentMode === 'free' ? 'FREE' : tournamentMode === 'custom' ? 'CUSTOM' : tournamentMode === 'paid' ? 'PAID' : tournamentMode === 'infinite' ? 'INFINITE' : 'ONLINE'}</span>
+          <span className="versus-hero-name">{tournamentMode === 'free' ? 'FREE' : tournamentMode === 'custom' ? 'CUSTOM' : tournamentMode === 'official' ? 'K.O.R.E.' : tournamentMode === 'paid' ? 'PAID' : tournamentMode === 'infinite' ? 'INFINITE' : 'ONLINE'}</span>
         </section>
       )}
       <div className="versus-floor-glow" aria-hidden="true" />
@@ -10897,6 +11015,7 @@ function TournamentModeCarousel({
     { mode: 'free', label: 'Free', icon: <Trophy size={18} /> },
     { mode: 'custom', label: 'Custom', icon: <Users size={18} /> },
     { mode: 'online', label: 'Online', icon: <Wifi size={18} /> },
+    { mode: 'official', label: 'K.O.R.E.', icon: <Award size={18} /> },
     { mode: 'paid', label: 'Prizepool', icon: <Trophy size={18} /> },
     ...(isDevHost ? [{ mode: 'infinite' as const, label: 'Infinite', icon: <Swords size={18} /> }] : [])
   ];
@@ -10942,6 +11061,94 @@ function TournamentModeCarousel({
   );
 }
 
+function OfficialTournamentRegistrationPanel({
+  summary,
+  now,
+  eligibilityAccepted,
+  rulesAccepted,
+  onEligibilityChange,
+  onRulesChange
+}: {
+  summary?: TournamentSummary;
+  now: number;
+  eligibilityAccepted: boolean;
+  rulesAccepted: boolean;
+  onEligibilityChange: (accepted: boolean) => void;
+  onRulesChange: (accepted: boolean) => void;
+}) {
+  const registrationLabel = summary?.registrationOpensAt
+    ? formatTournamentLocalDate(summary.registrationOpensAt)
+    : 'July 20, 2026';
+  const eventLabel = summary?.startsAt ? formatTournamentLocalDate(summary.startsAt) : 'August 1, 2026 at 7:00 PM CT';
+  const countdown = summary?.registrationOpensAt ? formatTournamentCountdown(summary.registrationOpensAt, now, 'Registration opens') : 'Registration opens in 4 days';
+
+  return (
+    <section className="official-registration-card" aria-label="K.O.R.E. official tournament registration">
+      <div className="official-registration-hero">
+        <span>Official Tournament</span>
+        <h3>K.O.R.E. Open Beta Cup #1</h3>
+        <strong className="official-countdown">{summary?.status === 'announced' ? countdown : summary?.startsLabel ?? countdown}</strong>
+        <p>Registration: {registrationLabel} · Tournament: {eventLabel}</p>
+      </div>
+      <div className="official-prize-grid" aria-label="Guaranteed prize pool">
+        <div><span>1st</span><strong>$60</strong></div>
+        <div><span>2nd</span><strong>$25</strong></div>
+        <div><span>3rd</span><strong>$15</strong></div>
+        <div><span>Field</span><strong>{summary?.entries ?? 0}/32</strong></div>
+      </div>
+      <OfficialTournamentRules compact />
+      <div className="official-registration-consent">
+        <label>
+          <input type="checkbox" checked={eligibilityAccepted} onChange={(event) => onEligibilityChange(event.target.checked)} />
+          <span>I confirm I am 18 or older and may legally enter where I live.</span>
+        </label>
+        <label>
+          <input type="checkbox" checked={rulesAccepted} onChange={(event) => onRulesChange(event.target.checked)} />
+          <span>I accept the K.O.R.E. official tournament rules.</span>
+        </label>
+      </div>
+    </section>
+  );
+}
+
+function OfficialTournamentRules({ compact = false }: { compact?: boolean }) {
+  return (
+    <details className={`official-rules ${compact ? 'is-compact' : ''}`}>
+      <summary><BookOpen size={18} /> Rules & eligibility</summary>
+      <div>
+        <p>Free entry. Global entrants must be 18 or older and participate only where permitted.</p>
+        <ul>
+          <li>Exactly 32 checked-in players are required. Check-in runs for 30 minutes before the scheduled start; otherwise the event is postponed.</li>
+          <li>Double elimination. Sets are best-of-3 full fights; Winners Final, Losers Final, and Grand Final are best-of-5, including a bracket reset when required.</li>
+          <li>Each fight is first to 3 rounds with a 60-second timer. Both players may privately select any unlocked fighter before every game.</li>
+          <li>Stages are selected server-side from the official competitive pool. One present player receives a forfeit after the 10-minute match check-in window.</li>
+          <li>Collusion, automation, exploits, harassment, false reports, or account sharing can cause disqualification. Disconnects and conflicting reports pause the set for review.</li>
+          <li>Prizes are $60, $25, and $15 paid by Bitcoin Lightning. Winners provide an invoice and are responsible for applicable taxes.</li>
+        </ul>
+        <small>Rules version 2026-07-16 · Privacy and disputes: hello@playkore.com</small>
+      </div>
+    </details>
+  );
+}
+
+function formatTournamentLocalDate(timestamp: number) {
+  return new Intl.DateTimeFormat(undefined, {
+    dateStyle: 'medium',
+    timeStyle: 'short'
+  }).format(timestamp);
+}
+
+function formatTournamentCountdown(timestamp: number, now: number, prefix: string) {
+  const remaining = Math.max(0, timestamp - now);
+  if (remaining <= 0) return `${prefix} now`;
+  const days = Math.ceil(remaining / 86_400_000);
+  if (days >= 1) return `${prefix} in ${days} day${days === 1 ? '' : 's'}`;
+  const hours = Math.ceil(remaining / 3_600_000);
+  if (hours >= 1) return `${prefix} in ${hours} hour${hours === 1 ? '' : 's'}`;
+  const minutes = Math.max(1, Math.ceil(remaining / 60_000));
+  return `${prefix} in ${minutes} minute${minutes === 1 ? '' : 's'}`;
+}
+
 function TournamentLobbyScreen({
   localBracket,
   onlineStatus,
@@ -10953,6 +11160,8 @@ function TournamentLobbyScreen({
   onRefresh,
   onStartOnlineMatch,
   onClaimPrize,
+  onCheckIn,
+  onLockFighter,
   onRequestPaidRecovery,
   onConfirmPaidRecovery
 }: {
@@ -10966,34 +11175,41 @@ function TournamentLobbyScreen({
   onRefresh: () => void;
   onStartOnlineMatch: () => void;
   onClaimPrize: (bolt11: string) => Promise<string>;
+  onCheckIn: () => Promise<string>;
+  onLockFighter: (characterId: string) => Promise<TournamentStatusResult>;
   onRequestPaidRecovery: () => Promise<string>;
   onConfirmPaidRecovery: (code: string) => Promise<string>;
 }) {
   const bracket = onlineStatus?.bracket ?? localBracket;
   const assignedMatch = onlineStatus?.assignedMatch;
   const payment = onlineStatus?.payment;
-  const title = bracket?.id.startsWith('infinite-') ? 'Infinite Tournament' : bracket?.kind === 'paidOnline' ? 'Cash App Tournament' : bracket?.kind === 'freeOnline' ? 'Online Tournament' : 'Free Tournament';
+  const title = bracket?.id.startsWith('infinite-') ? 'Infinite Tournament' : bracket?.kind === 'officialOnline' ? bracket.name ?? 'K.O.R.E. Official Tournament' : bracket?.kind === 'paidOnline' ? 'Cash App Tournament' : bracket?.kind === 'freeOnline' ? 'Online Tournament' : 'Free Tournament';
   const finalRound = getTournamentTotalRounds(bracket);
   const confirmedEntries = confirmedTournamentEntryCount(bracket);
   const winner = bracket?.matches.find((match) => match.round === finalRound && match.winnerEntryId)?.winnerEntryId;
   const winnerEntry = getTournamentEntry(bracket ?? null, winner);
   const assignedRoomBlocked = assignedMatch?.roomStatus === 'review' || assignedMatch?.roomStatus === 'forfeit' || onlineStatus?.matchRoom?.status === 'review' || onlineStatus?.matchRoom?.status === 'forfeit';
-  const canStartOnlineMatch = Boolean(assignedMatch && onlineStatus?.entry && !assignedRoomBlocked);
+  const officialFightersReady = bracket?.kind !== 'officialOnline' || Boolean(onlineStatus?.matchRoom?.fightersRevealed);
+  const canStartOnlineMatch = Boolean(assignedMatch && onlineStatus?.entry && !assignedRoomBlocked && officialFightersReady);
   const paymentConfirmed = payment?.state === 'paid' || payment?.state === 'entryLocked' || onlineStatus?.entry?.paymentState === 'paid' || onlineStatus?.entry?.paymentState === 'entryLocked';
   const lightningUrl = payment?.lightningUrl ?? onlineStatus?.entry?.lightningUrl;
   const paymentRequest = payment?.paymentRequest ?? onlineStatus?.entry?.paymentRequest;
   const amountSats = payment?.amountSats ?? onlineStatus?.entry?.amountSats;
   const paymentProcessing = payment?.state === 'invoiceProcessing' || onlineStatus?.entry?.paymentState === 'invoiceProcessing';
   const prizeEntry = onlineStatus?.entry;
-  const canClaimPrize = bracket?.kind === 'paidOnline' && bracket.status === 'completed' && prizeEntry?.payoutState === 'rewardPending' && Boolean(prizeEntry.payoutAmountSats);
+  const canClaimPrize = (bracket?.kind === 'paidOnline' || bracket?.kind === 'officialOnline') && bracket.status === 'completed' && prizeEntry?.payoutState === 'rewardPending' && Boolean(prizeEntry.payoutAmountSats || prizeEntry.payoutAmountUsd);
   const estimatedStartLabel = onlineStatus?.estimatedStartLabel ?? getEstimatedTournamentStartLabel(bracket);
   const startsWhenFullLabel = onlineStatus?.startsWhenFullLabel ?? (bracket ? `Tournament starts once ${bracket.minEntries} entries enter` : 'Tournament starts once enough players enter');
   const matchRoom = onlineStatus?.matchRoom;
   const entryCharacter = tournamentEntryCharacter(roster, onlineStatus?.entry);
   const canRecoverPaidEntry = !onlineStatus && /device mismatch|same device|different device/i.test(statusText) && Boolean(sanitizeEmail(onlineProfile?.email));
+  const recoveringOfficialEntry = statusText.toLowerCase().includes('official') || statusText.toLowerCase().includes('entry is registered') || statusText.toLowerCase().includes('different device');
   const checkoutKey = payment?.checkingId ?? onlineStatus?.entry?.checkingId ?? '';
   const isPrizepoolReview = onlineStatus?.resumeNotice === 'admin_review' || bracket?.kind === 'paidOnline' && (assignedMatch?.roomStatus === 'review' || onlineStatus?.matchRoom?.status === 'review');
   const [cashAppCheckoutDismissed, setCashAppCheckoutDismissed] = useState(false);
+  const [officialFighterId, setOfficialFighterId] = useState(() => onlineStatus?.entry?.characterId ?? roster[0]?.id ?? '');
+  const [officialActionStatus, setOfficialActionStatus] = useState('');
+  const officialCheckInOpen = bracket?.kind === 'officialOnline' && bracket.status === 'checkIn' && !onlineStatus?.entry?.checkedInAt;
 
   useEffect(() => {
     setCashAppCheckoutDismissed(false);
@@ -11029,9 +11245,24 @@ function TournamentLobbyScreen({
             <div className="tournament-lobby-summary">
               <TournamentStat label="Status" value={bracket.status} />
               <TournamentStat label="Players" value={`${confirmedEntries}/${bracket.capacity}`} />
-              <TournamentStat label="Estimated start" value={estimatedStartLabel} />
+              <TournamentStat label={bracket.kind === 'officialOnline' ? 'Local start' : 'Estimated start'} value={bracket.kind === 'officialOnline' && bracket.startsAt ? formatTournamentLocalDate(bracket.startsAt) : estimatedStartLabel} />
               <TournamentStat label="Reward" value={bracket.reward?.label ?? 'Profile trophy'} />
             </div>
+            {bracket.kind === 'officialOnline' && (
+              <section className="official-lobby-panel">
+                <div>
+                  <span>Official event</span>
+                  <strong>{onlineStatus?.entry?.registrationState === 'waitlisted' ? `Waitlist #${onlineStatus.entry.waitlistPosition ?? 1}` : onlineStatus?.entry?.checkedInAt ? 'Checked in' : 'Registration confirmed'}</strong>
+                  <small>{bracket.checkInOpensAt ? `Check-in opens ${formatTournamentLocalDate(bracket.checkInOpensAt)}` : 'Check-in opens 30 minutes before start'}</small>
+                </div>
+                <div className="official-prize-grid" aria-label="Official tournament prizes">
+                  <div><span>1st</span><strong>$60</strong></div>
+                  <div><span>2nd</span><strong>$25</strong></div>
+                  <div><span>3rd</span><strong>$15</strong></div>
+                </div>
+                <OfficialTournamentRules />
+              </section>
+            )}
             {showCashAppCheckout && (
               <CashAppCheckoutPopup
                 amountSats={amountSats}
@@ -11059,6 +11290,32 @@ function TournamentLobbyScreen({
                 Already entered as {onlineStatus.entry.displayName} with {entryCharacter?.displayName ?? onlineStatus.entry.characterId}. Entry details are locked for this bracket.
               </div>
             )}
+            {officialCheckInOpen && (
+              <div className="tournament-payment-strip official-check-in-strip">
+                <div><strong>Check-in is open</strong><small>All 32 players must check in before the bracket can start.</small></div>
+                <button className="primary-button" type="button" onClick={() => {
+                  setOfficialActionStatus('Checking in…');
+                  void onCheckIn().then(setOfficialActionStatus).catch((error) => setOfficialActionStatus(error instanceof Error ? error.message : 'Check-in failed'));
+                }}><CheckCircle2 size={18} /> Check In</button>
+              </div>
+            )}
+            {bracket.kind === 'officialOnline' && assignedMatch && onlineStatus?.entry && (
+              <section className="official-fighter-lock" aria-label="Official tournament fighter lock-in">
+                <div>
+                  <span>Game {(assignedMatch.games?.length ?? 0) + 1} · First to {assignedMatch.targetWins ?? 2}</span>
+                  <strong>{onlineStatus.matchRoom?.fightersRevealed ? 'Both fighters locked' : onlineStatus.matchRoom?.fighterLocked ? 'Waiting for opponent' : 'Choose your fighter'}</strong>
+                  <small>Set score {assignedMatch.setScore?.[onlineStatus.entry.id] ?? 0}–{assignedMatch.setScore?.[assignedMatch.entryAId === onlineStatus.entry.id ? assignedMatch.entryBId ?? '' : assignedMatch.entryAId ?? ''] ?? 0}</small>
+                </div>
+                <select value={officialFighterId} disabled={Boolean(onlineStatus.matchRoom?.fighterLocked)} onChange={(event) => setOfficialFighterId(event.target.value)} aria-label="Official tournament fighter">
+                  {roster.filter((character) => isCharacterPlayable(character)).map((character) => <option key={character.id} value={character.id}>{character.displayName}</option>)}
+                </select>
+                <button className="primary-button" type="button" disabled={!officialFighterId || Boolean(onlineStatus.matchRoom?.fighterLocked)} onClick={() => {
+                  setOfficialActionStatus('Locking fighter…');
+                  void onLockFighter(officialFighterId).then((status) => setOfficialActionStatus(status.matchRoom?.fightersRevealed ? 'Both fighters locked' : 'Fighter locked; waiting for opponent')).catch((error) => setOfficialActionStatus(error instanceof Error ? error.message : 'Fighter lock failed'));
+                }}><Swords size={18} /> Lock Fighter</button>
+              </section>
+            )}
+            {officialActionStatus && <div className="tournament-status-strip">{officialActionStatus}</div>}
             {matchRoom && (
               <div className="tournament-status-strip">
                 {matchRoom.status === 'forfeit'
@@ -11083,6 +11340,7 @@ function TournamentLobbyScreen({
             {canClaimPrize && (
               <TournamentPrizeClaim
                 amountSats={prizeEntry?.payoutAmountSats ?? 0}
+                amountUsd={prizeEntry?.payoutAmountUsd}
                 onClaimPrize={onClaimPrize}
               />
             )}
@@ -11093,6 +11351,7 @@ function TournamentLobbyScreen({
             {canRecoverPaidEntry && (
               <PaidTournamentRecoveryPanel
                 email={sanitizeEmail(onlineProfile?.email)}
+                official={recoveringOfficialEntry}
                 onRequestRecovery={onRequestPaidRecovery}
                 onConfirmRecovery={onConfirmPaidRecovery}
               />
@@ -11135,7 +11394,7 @@ function TournamentLobbyScreen({
         {onlineStatus && (
           <button className="primary-button" type="button" onClick={onStartOnlineMatch} disabled={!canStartOnlineMatch}>
             <Swords size={18} />
-            {bracket?.kind === 'paidOnline' ? 'Join Match Room' : 'Start Match'}
+            {bracket?.kind === 'paidOnline' || bracket?.kind === 'officialOnline' ? 'Join Match Room' : 'Start Match'}
           </button>
         )}
         <button className="secondary-button" type="button" onClick={onMenu}>
@@ -11149,9 +11408,11 @@ function TournamentLobbyScreen({
 
 function TournamentPrizeClaim({
   amountSats,
+  amountUsd,
   onClaimPrize
 }: {
   amountSats: number;
+  amountUsd?: number;
   onClaimPrize: (bolt11: string) => Promise<string>;
 }) {
   const [bolt11, setBolt11] = useState('');
@@ -11175,14 +11436,14 @@ function TournamentPrizeClaim({
     >
       <div>
         <span>Prize ready</span>
-        <strong>{amountSats.toLocaleString()} sats</strong>
+        <strong>{amountUsd ? `$${amountUsd}` : `${amountSats.toLocaleString()} sats`}</strong>
       </div>
       <label>
         <span>Lightning invoice</span>
         <input
           value={bolt11}
           onChange={(event) => setBolt11(event.target.value)}
-          placeholder={`Invoice for ${amountSats} sats`}
+          placeholder={amountUsd ? `Lightning invoice for $${amountUsd}` : `Invoice for ${amountSats} sats`}
           spellCheck={false}
         />
       </label>
@@ -11197,10 +11458,12 @@ function TournamentPrizeClaim({
 
 function PaidTournamentRecoveryPanel({
   email,
+  official = false,
   onRequestRecovery,
   onConfirmRecovery
 }: {
   email: string;
+  official?: boolean;
   onRequestRecovery: () => Promise<string>;
   onConfirmRecovery: (code: string) => Promise<string>;
 }) {
@@ -11225,7 +11488,7 @@ function PaidTournamentRecoveryPanel({
       }}
     >
       <div>
-        <span>Paid Entry Recovery</span>
+        <span>{official ? 'Official Entry Recovery' : 'Paid Entry Recovery'}</span>
         <strong>Same-device issue</strong>
       </div>
       <p>Send a one-time code to {email} to bind this paid entry to your current device.</p>
@@ -11286,8 +11549,8 @@ function TournamentBracketIntroScreen({
   const match = bracket?.matches.find((candidate) => candidate.id === matchId);
   const entry = localEntryId ? getTournamentEntry(bracket, localEntryId) : getTournamentEntry(bracket, match?.entryAId);
   const opponent = localEntryId ? getTournamentOpponentEntry(bracket, match, localEntryId) : getTournamentEntry(bracket, match?.entryBId);
-  const entryCharacter = tournamentEntryCharacter(roster, entry);
-  const opponentCharacter = tournamentEntryCharacter(roster, opponent);
+  const entryCharacter = roster.find((character) => character.id === match?.fighterLocks?.[entry?.id ?? '']) ?? tournamentEntryCharacter(roster, entry);
+  const opponentCharacter = roster.find((character) => character.id === match?.fighterLocks?.[opponent?.id ?? '']) ?? tournamentEntryCharacter(roster, opponent);
   const advance = useCallback(() => {
     if (advancedRef.current) return;
     advancedRef.current = true;
@@ -11439,6 +11702,9 @@ function TournamentBracketBoard({
   compact?: boolean;
   advancingWinnerEntryId?: string;
 }) {
+  if (bracket.kind === 'officialOnline') {
+    return <OfficialDoubleEliminationBoard bracket={bracket} roster={roster} focusMatchId={focusMatchId} compact={compact} />;
+  }
   const totalRounds = getTournamentTotalRounds(bracket);
   const rounds = bracket.matches.length
     ? [...new Set(bracket.matches.map((match) => match.round))].sort((a, b) => a - b)
@@ -11483,6 +11749,54 @@ function TournamentBracketBoard({
   );
 }
 
+function OfficialDoubleEliminationBoard({
+  bracket,
+  roster,
+  focusMatchId,
+  compact
+}: {
+  bracket: TournamentBracket;
+  roster: CharacterDefinition[];
+  focusMatchId?: string;
+  compact?: boolean;
+}) {
+  const sections: Array<{ side: NonNullable<TournamentMatch['bracketSide']>; label: string }> = [
+    { side: 'winners', label: 'Winners Bracket' },
+    { side: 'losers', label: 'Losers Bracket' },
+    { side: 'grandFinal', label: 'Grand Final' },
+    { side: 'grandFinalReset', label: 'Grand Final Reset' }
+  ];
+  const champion = getTournamentEntry(bracket, bracket.placements?.[1]);
+  return (
+    <div className={`official-bracket-board ${compact ? 'is-compact' : ''}`}>
+      <header>
+        <div><span>Double Elimination</span><strong>{champion ? `${champion.displayName} wins` : 'K.O.R.E. Official Bracket'}</strong></div>
+        <small>BO3 sets · Finals BO5 · Grand Final reset enabled</small>
+      </header>
+      {sections.map(({ side, label }) => {
+        const sideMatches = bracket.matches.filter((match) => match.bracketSide === side && (side !== 'grandFinalReset' || match.resetRequired));
+        if (sideMatches.length === 0) return null;
+        const rounds = [...new Set(sideMatches.map((match) => match.bracketRound ?? match.round))].sort((a, b) => a - b);
+        return (
+          <section key={side} className={`official-bracket-section is-${side}`}>
+            <h3>{label}</h3>
+            <div className="official-bracket-rounds">
+              {rounds.map((round) => (
+                <div key={round} className="official-bracket-round">
+                  <strong>{side.includes('Final') ? label : `Round ${round}`}</strong>
+                  <div>{sideMatches.filter((match) => (match.bracketRound ?? match.round) === round).map((match) => (
+                    <TournamentMatchCard key={match.id} bracket={bracket} match={match} roster={roster} focused={match.id === focusMatchId} />
+                  ))}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+        );
+      })}
+    </div>
+  );
+}
+
 function TournamentMatchCard({
   bracket,
   match,
@@ -11515,7 +11829,7 @@ function TournamentMatchCard({
         loser={complete && Boolean(entryB) && match.winnerEntryId !== entryB?.id}
         advancing={advancingWinnerEntryId === entryB?.id}
       />
-      <small>{match.status === 'ready' ? 'Ready' : match.status === 'completed' ? 'Complete' : 'Pending'}</small>
+      <small>{match.targetWins ? `${match.setScore?.[entryA?.id ?? ''] ?? 0}–${match.setScore?.[entryB?.id ?? ''] ?? 0} · First to ${match.targetWins}` : match.status === 'ready' ? 'Ready' : match.status === 'completed' ? 'Complete' : 'Pending'}</small>
     </article>
   );
 }
@@ -25144,6 +25458,10 @@ function FightScreen({
     const hostEntry = getTournamentEntry(status.bracket, hostEntryId);
     const guestEntry = getTournamentEntry(status.bracket, guestEntryId);
     if (!hostEntry || !guestEntry) return null;
+    const officialFighterLocks = status.bracket.kind === 'officialOnline' && room.fightersRevealed ? room.fighterLocks : undefined;
+    const hostCharacterId = officialFighterLocks?.[hostEntryId] ?? hostEntry.characterId;
+    const guestCharacterId = officialFighterLocks?.[guestEntryId] ?? guestEntry.characterId;
+    if (!hostCharacterId || !guestCharacterId || (status.bracket.kind === 'officialOnline' && !room.fightersRevealed)) return null;
     const hostPeerId = room.hostPeerId ?? (room.localRole === 'host' ? peerId : '');
     const guestPeerId = room.guestPeerId ?? (room.localRole === 'guest' ? peerId : undefined);
     if (!hostPeerId) return null;
@@ -25154,9 +25472,9 @@ function FightScreen({
       ownerToken: room.roomId,
       hostPeerId,
       guestPeerId,
-      hostCharacterId: hostEntry.characterId,
-      guestCharacterId: guestEntry.characterId,
-      stageId: match.stageId ?? stage.id,
+      hostCharacterId,
+      guestCharacterId,
+      stageId: room.stageId ?? match.stageId ?? stage.id,
       queue: 'casual',
       opponentKind: 'human'
     };
@@ -26319,15 +26637,15 @@ function FightScreen({
         }
 
         if (mode === 'tournamentOnline' && onlineTournamentStatus?.assignedMatch && onlineTournamentStatus.entry) {
-          const paidTournamentRoom = onlineTournamentStatus.bracket.kind === 'paidOnline';
-          if (paidTournamentRoom && !posthogDeviceId) throw new Error('Tournament device id unavailable');
+          const deviceBoundTournamentRoom = onlineTournamentStatus.bracket.kind === 'paidOnline' || onlineTournamentStatus.bracket.kind === 'officialOnline';
+          if (deviceBoundTournamentRoom && !posthogDeviceId) throw new Error('Tournament device id unavailable');
           let tournamentRoomReadySince = 0;
           const joinOrPollTournamentRoom = async (join: boolean) => {
             const request = {
               tournamentId: onlineTournamentStatus.bracket.id,
               matchId: onlineTournamentStatus.assignedMatch?.id ?? '',
               playerId: onlineTournamentStatus.entry?.playerId ?? onlineProfile?.playerId ?? '',
-              posthogDeviceId: paidTournamentRoom ? posthogDeviceId : undefined
+              posthogDeviceId: deviceBoundTournamentRoom ? posthogDeviceId : undefined
             };
             const status = join
               ? await joinTournamentMatchRoom({ ...request, peerId: session.peerId })
@@ -27118,9 +27436,10 @@ function FightScreen({
       tournamentId: onlineTournamentStatus.bracket.id,
       matchId: tournamentMatch.id,
       reporterPlayerId: onlineProfile.playerId,
-      posthogDeviceId: onlineTournamentStatus.bracket.kind === 'paidOnline' ? posthogDeviceId : undefined,
+      posthogDeviceId: onlineTournamentStatus.bracket.kind === 'paidOnline' || onlineTournamentStatus.bracket.kind === 'officialOnline' ? posthogDeviceId : undefined,
       roomId: onlineTournamentStatus.matchRoom?.roomId ?? tournamentMatch.roomId,
-      winnerEntryId
+      winnerEntryId,
+      gameNumber: onlineTournamentStatus.bracket.kind === 'officialOnline' ? (tournamentMatch.games?.length ?? 0) + 1 : undefined
     });
   }, [match.phase, match.winnerSlot, mode, onlineProfile, onlineTournamentStatus, posthogDeviceId]);
 
