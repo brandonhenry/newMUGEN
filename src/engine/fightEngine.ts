@@ -3941,10 +3941,15 @@ function createProjectileRuntime(
   const definition = attacker.character.projectiles?.find((candidate) => candidate.id === instance.projectileId);
   const kind = instance.kind ?? definition?.kind ?? 'projectile';
   const targetMode = instance.targetMode ?? 'forward';
-  const spawnX = targetMode === 'targetLocation' ? targetPosition.x : attackerPosition.x + facing * instance.spawnOffset[2] * scale.width;
-  const spawnY = (targetMode === 'targetLocation' ? targetPosition.y : attackerPosition.y) + instance.spawnOffset[1] * scale.height + PROJECTILE_SPAWN_VERTICAL_ALIGNMENT_OFFSET;
-  const spawnZ = (targetMode === 'targetLocation' ? targetPosition.z : attackerPosition.z) + instance.spawnOffset[0] * scale.width + PROJECTILE_SPAWN_FRONT_DEPTH_OFFSET;
   const currentForward = unitFromTo({ x: attackerPosition.x, z: attackerPosition.z }, { x: opponent.position.x, z: opponent.position.z }, facing);
+  const spawnYaw = Math.atan2(currentForward.x, currentForward.z);
+  const spawnOffset = localCombatOffsetToWorld(spawnYaw, {
+    forward: instance.spawnOffset[2] * scale.width,
+    lateral: (instance.spawnOffset[0] * scale.width) + PROJECTILE_SPAWN_FRONT_DEPTH_OFFSET
+  });
+  const spawnX = targetMode === 'targetLocation' ? targetPosition.x : attackerPosition.x + spawnOffset.x;
+  const spawnY = (targetMode === 'targetLocation' ? targetPosition.y : attackerPosition.y) + instance.spawnOffset[1] * scale.height + PROJECTILE_SPAWN_VERTICAL_ALIGNMENT_OFFSET;
+  const spawnZ = targetMode === 'targetLocation' ? targetPosition.z : attackerPosition.z + spawnOffset.z;
   const forward = instance.homingMode === 'limited'
     ? attacker.projectileAimDirection ?? currentForward
     : currentForward;
@@ -5535,85 +5540,122 @@ function getProjectileCollision(projectile: ProjectileRuntime, defender: Fighter
 }
 
 function projectileHitboxToWorldAabb(projectile: ProjectileRuntime): Aabb {
-  const facing = projectile.facing || 1;
   const hitbox = projectile.hitbox;
-  return makeAabb(
-    projectile.position.x + facing * hitbox.offset[2],
-    projectile.position.y + hitbox.offset[1],
-    projectile.position.z + hitbox.offset[0],
-    hitbox.size[2] + UNIVERSAL_HITBOX_FORWARD_PADDING,
-    hitbox.size[1] + UNIVERSAL_HITBOX_VERTICAL_PADDING,
-    hitbox.size[0] + UNIVERSAL_HITBOX_LATERAL_PADDING
+  const yaw = getProjectileCombatYaw(projectile);
+  const current = makeYawOrientedAabb(
+    projectile.position,
+    yaw,
+    hitbox.offset,
+    [
+      hitbox.size[0] + UNIVERSAL_HITBOX_LATERAL_PADDING,
+      hitbox.size[1] + UNIVERSAL_HITBOX_VERTICAL_PADDING,
+      hitbox.size[2] + UNIVERSAL_HITBOX_FORWARD_PADDING
+    ]
   );
+  const previous = makeYawOrientedAabb(
+    projectile.previousPosition,
+    yaw,
+    hitbox.offset,
+    [
+      hitbox.size[0] + UNIVERSAL_HITBOX_LATERAL_PADDING,
+      hitbox.size[1] + UNIVERSAL_HITBOX_VERTICAL_PADDING,
+      hitbox.size[2] + UNIVERSAL_HITBOX_FORWARD_PADDING
+    ]
+  );
+  return unionAabbs(current, previous);
 }
 
 function effectHitboxToWorldAabb(attacker: FighterRuntime, transform: { position: [number, number, number]; scale: [number, number, number] }, anchor: string, hitbox?: BoxSpec) {
   const [baseX, baseY, baseZ] = resolveEffectWorldPosition(attacker, transform, anchor);
   const globalScale = getCharacterCombatScale(attacker.character);
   if (hitbox) {
-    const facing = attacker.facing || 1;
-    return makeAabb(
-      baseX + hitbox.offset[2] * globalScale.width * facing,
-      baseY + hitbox.offset[1] * globalScale.height,
-      baseZ + hitbox.offset[0] * globalScale.width,
-      hitbox.size[2] * globalScale.width + UNIVERSAL_HITBOX_FORWARD_PADDING,
-      hitbox.size[1] * globalScale.height + UNIVERSAL_HITBOX_VERTICAL_PADDING,
-      hitbox.size[0] * globalScale.width + UNIVERSAL_HITBOX_LATERAL_PADDING
+    return makeYawOrientedAabb(
+      { x: baseX, y: baseY, z: baseZ },
+      getFighterCombatYaw(attacker),
+      [
+        hitbox.offset[0] * globalScale.width,
+        hitbox.offset[1] * globalScale.height,
+        hitbox.offset[2] * globalScale.width
+      ],
+      [
+        hitbox.size[0] * globalScale.width + UNIVERSAL_HITBOX_LATERAL_PADDING,
+        hitbox.size[1] * globalScale.height + UNIVERSAL_HITBOX_VERTICAL_PADDING,
+        hitbox.size[2] * globalScale.width + UNIVERSAL_HITBOX_FORWARD_PADDING
+      ]
     );
   }
-  const sizeX = Math.max(0.38, Math.abs(transform.scale[0]) * 0.62 * globalScale.width) + UNIVERSAL_HITBOX_FORWARD_PADDING;
+  const sizeForward = Math.max(0.38, Math.abs(transform.scale[0]) * 0.62 * globalScale.width) + UNIVERSAL_HITBOX_FORWARD_PADDING;
   const sizeY = Math.max(0.38, Math.abs(transform.scale[1]) * 0.62 * globalScale.height) + UNIVERSAL_HITBOX_VERTICAL_PADDING;
-  const sizeZ = Math.max(0.36, Math.abs(transform.scale[2]) * 0.62 * globalScale.width) + UNIVERSAL_HITBOX_LATERAL_PADDING;
-  return makeAabb(baseX, baseY, baseZ, sizeX, sizeY, sizeZ);
+  const sizeLateral = Math.max(0.36, Math.abs(transform.scale[2]) * 0.62 * globalScale.width) + UNIVERSAL_HITBOX_LATERAL_PADDING;
+  return makeYawOrientedAabb(
+    { x: baseX, y: baseY, z: baseZ },
+    getFighterCombatYaw(attacker),
+    [0, 0, 0],
+    [sizeLateral, sizeY, sizeForward]
+  );
 }
 
 function resolveEffectWorldPosition(fighter: FighterRuntime, transform: { position: [number, number, number] }, anchor: string): [number, number, number] {
-  const facing = fighter.facing || 1;
   const fighterPosition = getFighterCombatPosition(fighter);
   const globalScale = getCharacterCombatScale(fighter.character);
   const anchorOffsets: Record<string, [number, number, number]> = {
     root: [0, 0, 0],
     body: [0, 1.05, 0],
     head: [0, 1.75, 0],
-    hands: [0.52 * facing, 1.18, 0],
-    feet: [0.18 * facing, 0.28, 0],
-    hitbox: [0.78 * facing, 1.08, 0],
+    hands: [0.52, 1.18, 0],
+    feet: [0.18, 0.28, 0],
+    hitbox: [0.78, 1.08, 0],
     world: [0, 0, 0]
   };
   const offset = anchorOffsets[anchor] ?? anchorOffsets.body;
   if (anchor === 'world') return [...transform.position] as [number, number, number];
-  const mirroredX = transform.position[0] * globalScale.width * (facing === -1 ? -1 : 1);
+  const worldOffset = localCombatOffsetToWorld(getFighterCombatYaw(fighter), {
+    forward: (offset[0] + transform.position[0]) * globalScale.width,
+    lateral: (offset[2] + transform.position[2]) * globalScale.width
+  });
   return [
-    fighterPosition.x + offset[0] * globalScale.width + mirroredX,
+    fighterPosition.x + worldOffset.x,
     fighterPosition.y + offset[1] * globalScale.height + transform.position[1] * globalScale.height,
-    fighterPosition.z + offset[2] * globalScale.width + transform.position[2] * globalScale.width
+    fighterPosition.z + worldOffset.z
   ];
 }
 
 function moveHitboxToWorldAabb(attacker: FighterRuntime, hitbox: BoxSpec): Aabb {
-  const facing = attacker.facing || 1;
   const attackerPosition = getFighterCombatPosition(attacker);
   const globalScale = getCharacterCombatScale(attacker.character);
-  const centerX = attackerPosition.x + facing * hitbox.offset[2] * globalScale.width;
-  const centerY = attackerPosition.y + hitbox.offset[1] * globalScale.height;
-  const centerZ = attackerPosition.z + hitbox.offset[0] * globalScale.width;
-  return makeAabb(
-    centerX,
-    centerY,
-    centerZ,
-    hitbox.size[2] * globalScale.width + UNIVERSAL_HITBOX_FORWARD_PADDING,
-    hitbox.size[1] * globalScale.height + UNIVERSAL_HITBOX_VERTICAL_PADDING,
-    hitbox.size[0] * globalScale.width + UNIVERSAL_HITBOX_LATERAL_PADDING
+  return makeYawOrientedAabb(
+    attackerPosition,
+    getFighterCombatYaw(attacker),
+    [
+      hitbox.offset[0] * globalScale.width,
+      hitbox.offset[1] * globalScale.height,
+      hitbox.offset[2] * globalScale.width
+    ],
+    [
+      hitbox.size[0] * globalScale.width + UNIVERSAL_HITBOX_LATERAL_PADDING,
+      hitbox.size[1] * globalScale.height + UNIVERSAL_HITBOX_VERTICAL_PADDING,
+      hitbox.size[2] * globalScale.width + UNIVERSAL_HITBOX_FORWARD_PADDING
+    ]
   );
 }
 
 function hurtboxToWorldAabb(defender: FighterRuntime, hurtbox: BoxSpec): Aabb {
   const defenderPosition = getFighterCombatPosition(defender);
   const globalScale = getCharacterCombatScale(defender.character);
-  const centerX = defenderPosition.x + hurtbox.offset[2] * globalScale.width * (defender.facing || 1);
-  const centerY = defenderPosition.y + hurtbox.offset[1] * globalScale.height;
-  const centerZ = defenderPosition.z + hurtbox.offset[0] * globalScale.width;
-  return makeAabb(centerX, centerY, centerZ, hurtbox.size[2] * globalScale.width, hurtbox.size[1] * globalScale.height, hurtbox.size[0] * globalScale.width);
+  const worldOffset = localCombatOffsetToWorld(getFighterCombatYaw(defender), {
+    forward: hurtbox.offset[2] * globalScale.width,
+    lateral: hurtbox.offset[0] * globalScale.width
+  });
+  // Hurtboxes remain axis-aligned so rotating a tall, narrow body does not
+  // inflate its corners and erase intentional sidestep gaps.
+  return makeAabb(
+    defenderPosition.x + worldOffset.x,
+    defenderPosition.y + hurtbox.offset[1] * globalScale.height,
+    defenderPosition.z + worldOffset.z,
+    hurtbox.size[2] * globalScale.width,
+    hurtbox.size[1] * globalScale.height,
+    hurtbox.size[0] * globalScale.width
+  );
 }
 
 function getFighterCombatPosition(fighter: FighterRuntime) {
@@ -5742,6 +5784,60 @@ function makeAabb(centerX: number, centerY: number, centerZ: number, sizeX: numb
     maxY: centerY + sizeY / 2,
     minZ: centerZ - sizeZ / 2,
     maxZ: centerZ + sizeZ / 2
+  };
+}
+
+function getFighterCombatYaw(fighter: FighterRuntime) {
+  return Number.isFinite(fighter.facingYaw)
+    ? fighter.facingYaw
+    : (fighter.facing || 1) * Math.PI / 2;
+}
+
+function getProjectileCombatYaw(projectile: ProjectileRuntime) {
+  const horizontalSpeed = Math.hypot(projectile.velocity.x, projectile.velocity.z);
+  return horizontalSpeed > 0.001
+    ? Math.atan2(projectile.velocity.x, projectile.velocity.z)
+    : (projectile.facing || 1) * Math.PI / 2;
+}
+
+function localCombatOffsetToWorld(yaw: number, offset: { forward: number; lateral: number }) {
+  return {
+    x: Math.sin(yaw) * offset.forward - Math.cos(yaw) * offset.lateral,
+    z: Math.cos(yaw) * offset.forward + Math.sin(yaw) * offset.lateral
+  };
+}
+
+function makeYawOrientedAabb(
+  origin: { x: number; y: number; z: number },
+  yaw: number,
+  offset: Vec3Tuple,
+  size: Vec3Tuple
+): Aabb {
+  const worldOffset = localCombatOffsetToWorld(yaw, { forward: offset[2], lateral: offset[0] });
+  const forwardX = Math.abs(Math.sin(yaw));
+  const forwardZ = Math.abs(Math.cos(yaw));
+  const lateralX = Math.abs(Math.cos(yaw));
+  const lateralZ = Math.abs(Math.sin(yaw));
+  const sizeX = forwardX * size[2] + lateralX * size[0];
+  const sizeZ = forwardZ * size[2] + lateralZ * size[0];
+  return makeAabb(
+    origin.x + worldOffset.x,
+    origin.y + offset[1],
+    origin.z + worldOffset.z,
+    sizeX,
+    size[1],
+    sizeZ
+  );
+}
+
+function unionAabbs(a: Aabb, b: Aabb): Aabb {
+  return {
+    minX: Math.min(a.minX, b.minX),
+    maxX: Math.max(a.maxX, b.maxX),
+    minY: Math.min(a.minY, b.minY),
+    maxY: Math.max(a.maxY, b.maxY),
+    minZ: Math.min(a.minZ, b.minZ),
+    maxZ: Math.max(a.maxZ, b.maxZ)
   };
 }
 
@@ -6196,7 +6292,12 @@ function resolveFighterFacing(stage: StageDefinition, fighter: FighterRuntime, o
   if (!isRecoverySideLocked(fighter)) {
     fighter.facing = getOpponentSideSign(fighter, opponent, stage);
   }
-  fighter.facingYaw = getFacingYawTowardOpponent(fighter, opponent);
+  // A grounded strike is aimed when it starts. Keeping that aim stable lets a
+  // real sidestep evade it; homing attacks are the explicit exception. Without
+  // this guard, rotating the collision volume below would make every move home.
+  if (fighter.state !== 'attack' || fighter.currentMove?.tracking === 'homing') {
+    fighter.facingYaw = getFacingYawTowardOpponent(fighter, opponent);
+  }
 }
 
 function updateControlSideSigns(match: MatchSnapshot) {

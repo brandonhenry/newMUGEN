@@ -3943,24 +3943,26 @@ function ProceduralEffectVisual({
 }
 
 function resolveEffectWorldPosition(fighter: FighterRuntime, transform: EffectTransform, anchor: string): [number, number, number] {
-  const facing = fighter.facing;
   const offsetX = getFighterRenderOffsetX(fighter, activeMoveProgress(fighter), 0);
   const anchorOffsets: Record<string, [number, number, number]> = {
     root: [0, 0, 0],
     body: [0, 1.05, 0],
     head: [0, 1.75, 0],
-    hands: [0.52 * facing, 1.18, 0],
-    feet: [0.18 * facing, 0.28, 0],
-    hitbox: [0.78 * facing, 1.08, 0],
+    hands: [0.52, 1.18, 0],
+    feet: [0.18, 0.28, 0],
+    hitbox: [0.78, 1.08, 0],
     world: [0, 0, 0]
   };
   const offset = anchorOffsets[anchor] ?? anchorOffsets.body;
   if (anchor === 'world') return [...transform.position] as [number, number, number];
-  const mirroredX = transform.position[0] * (facing === -1 ? -1 : 1);
+  const forward = offset[0] + transform.position[0];
+  const lateral = offset[2] + transform.position[2];
+  const worldX = Math.sin(fighter.facingYaw) * forward - Math.cos(fighter.facingYaw) * lateral;
+  const worldZ = Math.cos(fighter.facingYaw) * forward + Math.sin(fighter.facingYaw) * lateral;
   return [
-    fighter.position.x + offsetX + offset[0] + mirroredX,
+    fighter.position.x + offsetX + worldX,
     fighter.position.y + offset[1] + transform.position[1],
-    fighter.position.z + offset[2] + transform.position[2]
+    fighter.position.z + worldZ
   ];
 }
 

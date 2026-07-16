@@ -2742,6 +2742,7 @@ describe('fight engine', () => {
 
     expect(attackFrames).toBeGreaterThan(80);
     expect(movingFrames).toBeGreaterThan(20);
+    expect(match.fighters.some((fighter) => fighter.hp < fighter.maxHp)).toBe(true);
   });
 
   it('recovers a stuck actionable CPU by clearing stale AI route state and moving back into range', () => {
@@ -5364,6 +5365,28 @@ describe('fight engine', () => {
       attack.jab = false;
     }
 
+    expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health - starterCharacters[0].moves[0].damage);
+  });
+
+  it('projects melee hitboxes along the fighter yaw during diagonal engagements', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.3;
+    match.fighters[0].position.z = -0.55;
+    match.fighters[1].position.x = 0.3;
+    match.fighters[1].position.z = 0.55;
+
+    // Let both fighters acquire the diagonal facing before committing the hit.
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    const attack = emptyInputFrame();
+    attack.jab = true;
+    for (let i = 0; i < 12; i += 1) {
+      match = stepMatch(match, attack, emptyInputFrame(), 1 / 60);
+      attack.jab = false;
+    }
+
+    expect(match.fighters[0].hitConnected).toBe(true);
     expect(match.fighters[1].hp).toBe(starterCharacters[1].stats.health - starterCharacters[0].moves[0].damage);
   });
 
@@ -8566,6 +8589,26 @@ describe('fight engine', () => {
     expect(match.projectiles[0].position.y).toBeLessThan(fallingY);
   });
 
+  it('sweeps fast projectile hitboxes between simulation positions', () => {
+    const shooter = makeProjectileCharacter('projectile-sweep-test', {}, {
+      homingMode: 'none',
+      speed: 30,
+      forwardVelocity: 30,
+      hitbox: { offset: [0, 0, 0], size: [0.3, 0.42, 0.3] }
+    });
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(shooter, defender, stages[0], 'local2p');
+    match.fighters[0].position.x = -1.3;
+    match.fighters[1].position.x = 1.3;
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    match = stepFrames(match, 2);
+    expect(match.projectiles).toHaveLength(1);
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 6 / 60);
+
+    expect(match.fighters[1].hp).toBeLessThan(defender.stats.health);
+  });
+
   it('keeps holdable attacks active until the button is released', () => {
     const shooter = makeProjectileCharacter('holdable-projectile-test', {
       holdable: true,
@@ -9168,6 +9211,8 @@ describe('fight engine', () => {
     match = stepFrames(match, 2);
     expect(match.projectiles).toHaveLength(1);
     match.fighters[1].position.z = 0;
+    match.projectiles[0].position = { x: 0.1, y: 0.84, z: 0 };
+    match.projectiles[0].previousPosition = { ...match.projectiles[0].position };
 
     const antiProjectileMove = normalizeMove({
       ...defender.moves[0],
@@ -9181,6 +9226,7 @@ describe('fight engine', () => {
     });
     match.fighters[1].state = 'attack';
     match.fighters[1].currentMove = antiProjectileMove;
+    match.fighters[1].facingYaw = -Math.PI / 2;
     match.fighters[1].moveFrame = 1;
     match.fighters[1].actionFramesRemaining = 20;
     match.fighters[1].actionTimer = 20 / 60;
