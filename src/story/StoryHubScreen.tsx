@@ -8,7 +8,7 @@ import type { OnlinePlayerProfile } from '../lib/online/leaderboard';
 import { addFriendEntry, isFriend, readMatchHistory } from '../lib/socialHistory';
 import type { InputFrame } from '../types';
 import { STORY_ADVENTURE_ASSET_PATHS, STORY_ENEMY_SPRITE_PATHS, storyWorldAssetPath } from './adventureAssets';
-import { adventureAttackHits, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureEnemyStats, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, shouldRespawnAdventureEnemy, stepAdventureProjectile, type AdventureDamageFeedback } from './adventureCombat';
+import { STORY_ATTACK_VISUAL_SYNC_DELAY_MS, adventureAttackHits, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureAttackFrameHitbox, getAdventureEnemyStats, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, shouldRespawnAdventureEnemy, stepAdventureProjectile, type AdventureDamageFeedback } from './adventureCombat';
 import { STORY_ADVENTURE_STAT_CAP, STORY_ADVENTURE_STAT_KEYS, allocateAdventureStat, awardAdventureExperience, canRespecAdventureStats, experienceToNextLevel, getAdventureDerivedStats, readAdventureProgress, respecAdventureStats, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_REGION_LABELS, STORY_WORLDS, isStoryAdventureRegionId, isStoryAdventureWorldId, isStoryWorldId } from './adventureWorlds';
 import { STORY_GROUNDED_ACTOR_CENTER_Y, storyAvatarGroundingOffsetForWorld } from './actorGrounding';
@@ -17,7 +17,7 @@ import { KORE_CENTRAL_HUB } from './hubData';
 import { storyPlatformSurfacePlacement } from './platformGrounding';
 import { getStorySpriteAnimationDurationMs } from './streetAvatarCatalog';
 import { StoryAvatarRig, type StoryAvatarPose } from './StoryAvatarRig';
-import type { HubDestination, StoryEnemySpawnDefinition, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StoryWorldBackdropLayerDefinition, StoryWorldId, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
+import type { HubDestination, StoryAvatarSet, StoryEnemySpawnDefinition, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StoryWorldBackdropLayerDefinition, StoryWorldId, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
 
 type StoryHubInput = Pick<InputFrame, 'left' | 'right' | 'down' | 'up' | 'jump' | 'confirm' | 'jab' | 'kick' | 'heavy' | 'special' | 'block' | 'back' | 'pause'>;
 type SetVirtualAction = (player: 1 | 2, action: keyof InputFrame, pressed: boolean) => void;
@@ -72,7 +72,7 @@ function isHubDestination(value: string): value is HubDestination {
   return Object.prototype.hasOwnProperty.call(DESTINATION_STOREFRONTS, value);
 }
 
-type StoryAdventureAttackEvent = { id: number; x: number; y: number; facing: -1 | 1; damage: number; critical: boolean };
+type StoryAdventureAttackEvent = { id: number; x: number; y: number; facing: -1 | 1; damage: number; critical: boolean; avatarSet: StoryAvatarSet; startedAt: number; activeUntil: number };
 type StoryPlayerImpactEvent = { id: number; sourceX: number; knockback: number; respawn?: [number, number] };
 
 function configurePixelTexture(texture: THREE.Texture, repeatX = 1, repeatY = 1) {
@@ -608,6 +608,7 @@ function AdventureEnemy({ spawn, level, playerPosition, attackEvent, reducedMoti
   const staggerUntil = useRef(0);
   const lastAttackAt = useRef(0);
   const damageSequence = useRef(0);
+  const lastRegisteredAttackId = useRef(0);
   const damageTimers = useRef<number[]>([]);
   const [damagePops, setDamagePops] = useState<AdventureDamagePop[]>([]);
   const [visual, setVisual] = useState({ health: stats.maxHealth, alive: true, critical: false, facing: -1 as -1 | 1 });
@@ -624,46 +625,56 @@ function AdventureEnemy({ spawn, level, playerPosition, attackEvent, reducedMoti
 
   useEffect(() => () => damageTimers.current.forEach((timer) => window.clearTimeout(timer)), []);
 
-  useEffect(() => {
-    if (!attackEvent || !alive.current) return;
-    for (const projectile of projectiles.current) {
-      if (projectile.active && adventureAttackHits({ playerX: attackEvent.x, playerY: attackEvent.y, facing: attackEvent.facing, enemyX: projectile.x, enemyY: projectile.y })) projectile.active = false;
-    }
-    if (!adventureAttackHits({ playerX: attackEvent.x, playerY: attackEvent.y, facing: attackEvent.facing, enemyX: x.current, enemyY: y.current })) return;
-    health.current = Math.max(0, health.current - attackEvent.damage);
+  const registerAttackHit = useCallback((currentAttack: StoryAdventureAttackEvent) => {
+    if (!alive.current || lastRegisteredAttackId.current === currentAttack.id) return;
+    lastRegisteredAttackId.current = currentAttack.id;
+    health.current = Math.max(0, health.current - currentAttack.damage);
     const hitAt = performance.now();
     const finishing = health.current <= 0;
     const popId = ++damageSequence.current;
-    const feedback = createAdventureDamageFeedback({ damage: attackEvent.damage, critical: attackEvent.critical, finishing, sequence: popId, reducedMotion });
-    const reaction = createAdventureHitReaction(attackEvent.critical, reducedMotion);
+    const feedback = createAdventureDamageFeedback({ damage: currentAttack.damage, critical: currentAttack.critical, finishing, sequence: popId, reducedMotion });
+    const reaction = createAdventureHitReaction(currentAttack.critical, reducedMotion);
     setDamagePops((current) => [...current.slice(-3), { id: popId, ...feedback }]);
     const damageTimer = window.setTimeout(() => {
       setDamagePops((current) => current.filter((pop) => pop.id !== popId));
       damageTimers.current = damageTimers.current.filter((timer) => timer !== damageTimer);
     }, feedback.durationMs);
     damageTimers.current.push(damageTimer);
-    x.current += attackEvent.facing * 0.46;
+    x.current += currentAttack.facing * 0.46;
     flashUntil.current = hitAt + (reducedMotion ? 90 : 240);
     shakeStartedAt.current = hitAt;
     shakeUntil.current = hitAt + reaction.shakeDurationMs;
     shakeStrength.current = reaction.shakeStrength;
-    shakeDirection.current = attackEvent.facing;
+    shakeDirection.current = currentAttack.facing;
     staggerUntil.current = hitAt + reaction.staggerMs;
     defeatLingerMs.current = reaction.defeatLingerMs;
     if (health.current <= 0) {
       alive.current = false;
       defeatedAt.current = hitAt;
-      setVisual({ health: 0, alive: false, critical: attackEvent.critical, facing: facing.current });
+      setVisual({ health: 0, alive: false, critical: currentAttack.critical, facing: facing.current });
       onDefeated(stats.xp);
       return;
     }
-    setVisual({ health: health.current, alive: true, critical: attackEvent.critical, facing: facing.current });
-  }, [attackEvent, onDefeated, reducedMotion, stats.xp]);
+    setVisual({ health: health.current, alive: true, critical: currentAttack.critical, facing: facing.current });
+  }, [onDefeated, reducedMotion, stats.xp]);
 
   useFrame((state, frameDelta) => {
     const now = performance.now();
     const delta = Math.min(frameDelta, 1 / 30);
     if (!group.current) return;
+    if (attackEvent && now <= attackEvent.activeUntil) {
+      const attackBox = getAdventureAttackFrameHitbox(attackEvent.avatarSet, now - attackEvent.startedAt);
+      if (attackBox) {
+        const attackX = playerPosition.current.x;
+        const attackY = playerPosition.current.y;
+        for (const projectile of projectiles.current) {
+          if (projectile.active && adventureAttackHits({ playerX: attackX, playerY: attackY, facing: attackEvent.facing, enemyX: projectile.x, enemyY: projectile.y, targetKind: 'projectile', attackBox })) projectile.active = false;
+        }
+        if (lastRegisteredAttackId.current !== attackEvent.id && adventureAttackHits({ playerX: attackX, playerY: attackY, facing: attackEvent.facing, enemyX: x.current, enemyY: y.current, targetKind: spawn.archetype, attackBox })) {
+          registerAttackHit(attackEvent);
+        }
+      }
+    }
     if (damageLayer.current) damageLayer.current.position.set(x.current, y.current, 0.9);
     if (enemyBody.current) {
       if (!reducedMotion && now < shakeUntil.current) {
@@ -801,7 +812,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
   quickMatchAvailable: boolean;
   derivedStats: ReturnType<typeof getAdventureDerivedStats>;
   impactEvent: StoryPlayerImpactEvent | null;
-  onAttack: (x: number, y: number, facing: -1 | 1) => void;
+  onAttack: (x: number, y: number, facing: -1 | 1, durationSeconds: number) => void;
   onQuickMatch: () => void;
   onNearbyPortal: (portal: StoryPortalDefinition | null) => void;
   onActivatePortal: (portal: StoryPortalDefinition) => void;
@@ -883,7 +894,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
     if (pauseEdge) onPause();
     if (attackEdge && attackUntil.current <= now) {
       attackUntil.current = now + attackDurationSeconds;
-      onAttack(position.current.x, position.current.y, facing.current);
+      onAttack(position.current.x, position.current.y, facing.current, attackDurationSeconds);
     }
     const standingPlatform = groundedPlatform.current
       ? hub.platforms.find((platform) => platform.id === groundedPlatform.current)
@@ -1004,7 +1015,7 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
   progress: StoryAdventureProgressV1;
   attackEvent: StoryAdventureAttackEvent | null;
   impactEvent: StoryPlayerImpactEvent | null;
-  onAttack: (x: number, y: number, facing: -1 | 1) => void;
+  onAttack: (x: number, y: number, facing: -1 | 1, durationSeconds: number) => void;
   onPlayerDamage: (damage: number, sourceX: number) => void;
   onEnemyDefeated: (xp: number) => void;
   onSelectPlayer: (presence: StoryHubPresence) => void;
@@ -1249,11 +1260,12 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     playerHealthRef.current = maxHealth;
     setPlayerHealth(maxHealth);
   }, [activeWorldId, nearbyPortal?.kind, updateAdventureProgress]);
-  const handleAdventureAttack = useCallback((x: number, y: number, facing: -1 | 1) => {
+  const handleAdventureAttack = useCallback((x: number, y: number, facing: -1 | 1, durationSeconds: number) => {
     if (!isStoryAdventureRegionId(activeWorldId)) return;
     const resolved = resolveAdventurePlayerAttack(adventureProgressRef.current);
-    setAttackEvent({ id: ++attackSequenceRef.current, x, y, facing, ...resolved });
-  }, [activeWorldId]);
+    const startedAt = performance.now() + STORY_ATTACK_VISUAL_SYNC_DELAY_MS;
+    setAttackEvent({ id: ++attackSequenceRef.current, x, y, facing, avatarSet: profile.avatar.avatarSet, startedAt, activeUntil: startedAt + Math.max(100, durationSeconds * 1_000), ...resolved });
+  }, [activeWorldId, profile.avatar.avatarSet]);
   const handlePlayerDamage = useCallback((baseDamage: number, sourceX: number) => {
     if (!isStoryAdventureRegionId(activeWorldId) || performance.now() < playerInvulnerableUntilRef.current) return;
     playerInvulnerableUntilRef.current = performance.now() + 650;

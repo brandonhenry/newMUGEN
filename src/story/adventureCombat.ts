@@ -1,8 +1,13 @@
 import { getAdventureDerivedStats, sanitizeAdventureProgress, type StoryAdventureProgressV1 } from './adventureProgress';
-import type { StoryEnemyArchetype } from './types';
+import { STORY_AVATAR_GROUNDING_OFFSET_Y, STORY_AVATAR_MESH_CENTER_Y, storyAvatarPlaneHeight } from './actorGrounding';
+import { getStorySpriteAnimation, STORY_SPRITE_MANIFEST } from './streetAvatarCatalog';
+import type { StoryAvatarSet, StoryEnemyArchetype } from './types';
 
-export const STORY_ATTACK_REACH = 1.65;
-export const STORY_ATTACK_VERTICAL_REACH = 1.25;
+export const STORY_ATTACK_REACH = 2.45;
+export const STORY_ATTACK_REAR_OVERLAP = 0.45;
+export const STORY_ATTACK_BOTTOM_OFFSET = -0.45;
+export const STORY_ATTACK_TOP_OFFSET = 2.2;
+export const STORY_ATTACK_VISUAL_SYNC_DELAY_MS = 24;
 export const STORY_PLAYER_INVULNERABILITY_MS = 650;
 export const STORY_ENEMY_RESPAWN_MS = 10_000;
 export const STORY_DAMAGE_POP_MS = 760;
@@ -99,15 +104,90 @@ export function resolveAdventurePlayerDamage(baseDamage: number, progress: Story
   };
 }
 
+export type AdventureAttackTargetKind = StoryEnemyArchetype | 'projectile';
+
+export type AdventureAttackBox = {
+  forwardReach: number;
+  rearReach: number;
+  bottomOffset: number;
+  topOffset: number;
+};
+
+const STORY_ATTACK_ACTIVE_FRAMES: Record<StoryAvatarSet, readonly [first: number, last: number]> = {
+  'arena-rebel': [3, 6],
+  'circuit-mage': [1, 4],
+  'crimson-ranger': [3, 6],
+  'ember-scout': [3, 6],
+  'forest-warden': [3, 6],
+  'neon-courier': [3, 5],
+  'rose-blade': [3, 5],
+  'solar-brawler': [2, 5],
+  'solar-runner': [3, 4],
+  'street-medic': [2, 6],
+  'street-shadow': [5, 7],
+  'synth-drifter': [0, 5],
+  'tech-nomad': [0, 5],
+  'void-operative': [1, 5]
+};
+
+const ATTACK_TARGET_HALF_SIZE: Record<AdventureAttackTargetKind, { width: number; height: number }> = {
+  ground: { width: 0.85, height: 0.85 },
+  flying: { width: 0.78, height: 0.78 },
+  ranged: { width: 0.85, height: 0.85 },
+  projectile: { width: 0.2, height: 0.2 }
+};
+
+export function getAdventureAttackFrameHitbox(avatarSet: StoryAvatarSet, elapsedMs: number): AdventureAttackBox | null {
+  if (!Number.isFinite(elapsedMs) || elapsedMs < 0) return null;
+  const animation = getStorySpriteAnimation(avatarSet, 'attack');
+  let frameStartMs = 0;
+  let frameIndex = -1;
+  for (let index = 0; index < animation.frames.length; index += 1) {
+    const frameEndMs = frameStartMs + animation.frames[index].durationMs;
+    if (elapsedMs < frameEndMs) {
+      frameIndex = index;
+      break;
+    }
+    frameStartMs = frameEndMs;
+  }
+  const activeFrames = STORY_ATTACK_ACTIVE_FRAMES[avatarSet];
+  if (frameIndex < activeFrames[0] || frameIndex > activeFrames[1]) return null;
+  const frame = animation.frames[frameIndex];
+  const pixelsToWorld = storyAvatarPlaneHeight() / STORY_SPRITE_MANIFEST.frameSize.height;
+  const [left, top, right, bottom] = frame.contentBounds;
+  const planeTop = STORY_AVATAR_GROUNDING_OFFSET_Y + STORY_AVATAR_MESH_CENTER_Y + storyAvatarPlaneHeight() / 2;
+  return {
+    forwardReach: Math.max(0, (right - frame.bodyAnchorX) * pixelsToWorld),
+    rearReach: Math.max(0, (frame.bodyAnchorX - left) * pixelsToWorld),
+    bottomOffset: planeTop - bottom * pixelsToWorld,
+    topOffset: planeTop - top * pixelsToWorld
+  };
+}
+
 export function adventureAttackHits(input: {
   playerX: number;
   playerY: number;
   facing: -1 | 1;
   enemyX: number;
   enemyY: number;
+  targetKind?: AdventureAttackTargetKind;
+  attackBox?: AdventureAttackBox;
 }) {
+  const target = ATTACK_TARGET_HALF_SIZE[input.targetKind ?? 'ground'];
+  const attackBox = input.attackBox ?? {
+    forwardReach: STORY_ATTACK_REACH,
+    rearReach: STORY_ATTACK_REAR_OVERLAP,
+    bottomOffset: STORY_ATTACK_BOTTOM_OFFSET,
+    topOffset: STORY_ATTACK_TOP_OFFSET
+  };
   const horizontal = (input.enemyX - input.playerX) * input.facing;
-  return horizontal >= -0.2 && horizontal <= STORY_ATTACK_REACH && Math.abs(input.enemyY - input.playerY) <= STORY_ATTACK_VERTICAL_REACH;
+  const overlapsHorizontally = horizontal + target.width >= -attackBox.rearReach
+    && horizontal - target.width <= attackBox.forwardReach;
+  const attackBottom = input.playerY + attackBox.bottomOffset;
+  const attackTop = input.playerY + attackBox.topOffset;
+  const overlapsVertically = input.enemyY + target.height >= attackBottom
+    && input.enemyY - target.height <= attackTop;
+  return overlapsHorizontally && overlapsVertically;
 }
 
 export function canDamageAdventurePlayer(nowMs: number, invulnerableUntilMs: number) {

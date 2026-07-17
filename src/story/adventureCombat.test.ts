@@ -8,6 +8,7 @@ import {
   canDamageAdventurePlayer,
   createAdventureDamageFeedback,
   createAdventureHitReaction,
+  getAdventureAttackFrameHitbox,
   getAdventureEnemyStats,
   resolveAdventurePlayerAttack,
   resolveAdventurePlayerDamage,
@@ -35,6 +36,30 @@ describe('story adventure combat math', () => {
     expect(resolveAdventurePlayerDamage(20, guarded)).toMatchObject({ damage: 15, knockback: 0.575 });
     expect(canDamageAdventurePlayer(1_000, 999)).toBe(true);
     expect(canDamageAdventurePlayer(1_000, 1_001)).toBe(false);
+  });
+
+  it('registers visible attack-box overlap for every enemy archetype', () => {
+    expect(adventureAttackHits({ playerX: 0, playerY: 0.82, facing: 1, enemyX: 2.9, enemyY: 0.82, targetKind: 'ground' })).toBe(true);
+    expect(adventureAttackHits({ playerX: 0, playerY: 0.82, facing: 1, enemyX: 1.5, enemyY: 3.2, targetKind: 'flying' })).toBe(true);
+    expect(adventureAttackHits({ playerX: 0, playerY: 0.82, facing: -1, enemyX: -2.9, enemyY: 0.82, targetKind: 'ranged' })).toBe(true);
+  });
+
+  it('counts body overlap across the player without hitting distant or non-overlapping targets', () => {
+    expect(adventureAttackHits({ playerX: 0, playerY: 0.82, facing: 1, enemyX: -1.1, enemyY: 0.82, targetKind: 'ground' })).toBe(true);
+    expect(adventureAttackHits({ playerX: 0, playerY: 0.82, facing: 1, enemyX: -1.4, enemyY: 0.82, targetKind: 'ground' })).toBe(false);
+    expect(adventureAttackHits({ playerX: 0, playerY: 0.82, facing: 1, enemyX: 4, enemyY: 0.82, targetKind: 'ranged' })).toBe(false);
+    expect(adventureAttackHits({ playerX: 0, playerY: 0.82, facing: 1, enemyX: 1.5, enemyY: 4.2, targetKind: 'flying' })).toBe(false);
+  });
+
+  it('opens hit detection on authored contact frames and follows the visible frame reach', () => {
+    expect(getAdventureAttackFrameHitbox('arena-rebel', 245)).toBeNull();
+    const earlyContact = getAdventureAttackFrameHitbox('arena-rebel', 246);
+    const extendedContact = getAdventureAttackFrameHitbox('arena-rebel', 410);
+    expect(earlyContact).not.toBeNull();
+    expect(extendedContact).not.toBeNull();
+    expect(adventureAttackHits({ playerX: 0, playerY: 0.82, facing: 1, enemyX: 2.4, enemyY: 0.82, targetKind: 'ground', attackBox: earlyContact! })).toBe(false);
+    expect(adventureAttackHits({ playerX: 0, playerY: 0.82, facing: 1, enemyX: 2.4, enemyY: 0.82, targetKind: 'ground', attackBox: extendedContact! })).toBe(true);
+    expect(getAdventureAttackFrameHitbox('arena-rebel', 574)).toBeNull();
   });
 
   it('steps projectiles safely and waits for offscreen enemy respawns', () => {
