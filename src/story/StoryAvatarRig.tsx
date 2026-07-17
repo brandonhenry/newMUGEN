@@ -64,9 +64,9 @@ export function StoryAvatarRig({ avatar, pose = 'idle', facing = 1, reducedMotio
   });
 
   return <group scale={[facing, 1, 1]}>
-    <mesh position={[0, 0.63, 0.2]} renderOrder={20}>
+    <mesh position={[0, 0.63, 0.85]} renderOrder={20}>
       <planeGeometry args={[planeWidth, planeHeight]} />
-      <meshBasicMaterial ref={materialRef} map={textures[0]} transparent alphaTest={0.5} depthWrite={false} toneMapped={false} />
+      <meshBasicMaterial ref={materialRef} map={textures[0]} transparent alphaTest={0.5} depthTest={false} depthWrite={false} toneMapped={false} />
     </mesh>
   </group>;
 }
