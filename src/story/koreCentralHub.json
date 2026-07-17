@@ -15,7 +15,7 @@
     { "id": "online-gate", "label": "Online", "subtitle": "Enter the Online Exchange", "destination": "online", "position": [-21, 1.7], "size": [2.8, 3.4], "accent": "#7d91ff", "kind": "mode-door" },
     { "id": "characters-kiosk", "label": "Characters", "subtitle": "Browse the roster", "destination": "characters", "position": [-14.5, 1.4], "size": [2.6, 3], "accent": "#b883ff" },
     { "id": "avatar-studio", "label": "Avatar Studio", "subtitle": "Change your look", "destination": "avatarStudio", "position": [-8, 1.4], "size": [2.6, 3], "accent": "#ff77c8" },
-    { "id": "story-gate", "label": "Story Mode", "subtitle": "Gate sealed", "destination": "story", "position": [0, 1.8], "size": [4.2, 4], "accent": "#ffe071", "locked": true },
+    { "id": "story-gate", "label": "World Route", "subtitle": "Explore the adventure worlds", "destination": "story", "position": [0, 1.8], "size": [4.2, 4], "accent": "#ffe071" },
     { "id": "arcade-gate", "label": "Arcade", "subtitle": "Enter the Arcade World", "destination": "arcade", "position": [8, 1.7], "size": [2.6, 3.4], "accent": "#ff9d35", "kind": "mode-door" },
     { "id": "versus-gate", "label": "Versus", "subtitle": "Enter the Versus Hall", "destination": "versus", "position": [14, 1.7], "size": [2.6, 3.4], "accent": "#ff5d69", "kind": "mode-door" },
     { "id": "training-gate", "label": "Training", "subtitle": "Enter the Training Lab", "destination": "training", "position": [20, 1.7], "size": [2.6, 3.4], "accent": "#52e1a1", "kind": "mode-door" },

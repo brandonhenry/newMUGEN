@@ -15,6 +15,10 @@ export function getStorySpriteAnimation(setId: StoryAvatarSet, animationId: stri
     ?? set.animations.find((animation) => animation.id === 'idle')!;
 }
 
+export function getStorySpriteAnimationDurationMs(setId: StoryAvatarSet, animationId: string): number {
+  return getStorySpriteAnimation(setId, animationId).frames.reduce((total, frame) => total + frame.durationMs, 0);
+}
+
 export function validateStorySpriteManifest(value: unknown): string[] {
   const errors: string[] = [];
   if (!value || typeof value !== 'object') return ['manifest must be an object'];
@@ -22,10 +26,10 @@ export function validateStorySpriteManifest(value: unknown): string[] {
   if (manifest.version !== 2) errors.push('manifest version must be 2');
   if (manifest.avatarStyle !== 'kore-street-v1') errors.push('avatar style must be kore-street-v1');
   if (manifest.defaultSet !== 'street-shadow') errors.push('default set must be street-shadow');
-  if (manifest.frameCount !== 520) errors.push('the authored set union must contain 520 unique frames');
+  if (manifest.frameCount !== 519) errors.push('the authored set union must contain 519 unique frames');
   if (manifest.facing !== 'right') errors.push('canonical frames must face right');
-  if (manifest.frameSize?.width !== 224 || manifest.frameSize?.height !== 192 || manifest.frameSize?.baseline !== 182) {
-    errors.push('all frames must share the 224x192 canvas and baseline 182');
+  if (manifest.frameSize?.width !== 320 || manifest.frameSize?.height !== 192 || manifest.frameSize?.baseline !== 182) {
+    errors.push('all frames must share the 320x192 canvas and baseline 182');
   }
   const expectedSets = new Set<StoryAvatarSet>([
     'solar-runner', 'street-shadow', 'crimson-ranger', 'rose-blade',
@@ -50,8 +54,10 @@ export function validateStorySpriteManifest(value: unknown): string[] {
         uniquePaths.add(frame.path);
         if (!frame.path.startsWith(`/story/avatars/kore-street-v1/sets/${set.id}/frames/`)) errors.push(`${set.id}/${frame.id} has an invalid path`);
         if (frame.durationMs <= 0) errors.push(`${set.id}/${frame.id} has an invalid duration`);
+        if (!Number.isFinite(frame.bodyAnchorX) || frame.bodyAnchorX < 0 || frame.bodyAnchorX > 320) errors.push(`${set.id}/${frame.id} has an invalid body anchor`);
+        if (animation.id === 'attack' && frame.bodyAnchorX !== 160) errors.push(`${set.id}/${frame.id} must keep its attack body anchored at x=160`);
         const [left, top, right, bottom] = frame.contentBounds;
-        if (left < 0 || top < 0 || right > 224 || bottom > 192 || left >= right || top >= bottom) errors.push(`${set.id}/${frame.id} has invalid bounds`);
+        if (left < 0 || top < 0 || right > 320 || bottom > 192 || left >= right || top >= bottom) errors.push(`${set.id}/${frame.id} has invalid bounds`);
       }
     }
     for (const required of ['idle', 'walk', 'sprint', 'jump', 'attack']) {

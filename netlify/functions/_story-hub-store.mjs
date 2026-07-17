@@ -34,7 +34,11 @@ function numberInRange(value, min, max, fallback) {
 }
 
 const CHALLENGE_STATUSES = new Set(['pending', 'accepted', 'declined', 'revoked', 'expired']);
-const STORY_WORLD_IDS = new Set(['central', 'arcade', 'versus', 'online', 'training', 'tournament']);
+const STORY_WORLD_IDS = new Set([
+  'central', 'arcade', 'versus', 'online', 'training', 'tournament',
+  'world-route', 'greenhollow', 'thornwood', 'ironroot', 'bonevault',
+  'emberdeep', 'frostpeak', 'sunscar', 'skyglass'
+]);
 
 export function normalizeStoryHubChallenge(value, now = Date.now()) {
   if (!value || typeof value !== 'object') return null;
@@ -90,7 +94,7 @@ export function normalizeStoryHubPresence(value, now = Date.now()) {
     playerId: cleanHubId(value?.playerId, 96) || `story-${sessionId}`,
     displayName,
     avatar: cleanAvatar(value?.avatar, displayName),
-    x: numberInRange(value?.x, -30.5, 30.5, -4.5),
+    x: numberInRange(value?.x, -47.5, 47.5, -4.5),
     y: numberInRange(value?.y, 0.82, 12, 0.82),
     pose: value?.pose === 'walk' || value?.pose === 'sprint' || value?.pose === 'jump' || value?.pose === 'attack' ? value.pose : 'idle',
     facing: value?.facing === -1 ? -1 : 1,

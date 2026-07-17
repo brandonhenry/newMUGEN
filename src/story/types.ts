@@ -22,6 +22,7 @@ export type StorySpriteFrame = {
   path: string;
   durationMs: number;
   contentBounds: [number, number, number, number];
+  bodyAnchorX: number;
 };
 
 export type StorySpriteAnimation = {
@@ -115,7 +116,7 @@ export type StoryHubPlayerState = {
   y: number;
   pose: StoryHubAvatarPose;
   facing: -1 | 1;
-  worldId?: StoryModeWorldId;
+  worldId?: StoryWorldId;
 };
 
 export type StoryHubChallengeStatus = 'pending' | 'accepted' | 'declined' | 'revoked' | 'expired';
@@ -165,13 +166,75 @@ export type HubDestination =
   | 'exit';
 
 export type StoryModeWorldId = 'central' | 'arcade' | 'versus' | 'online' | 'training' | 'tournament';
-export type StoryPortalKind = 'storefront' | 'mode-door' | 'arcade-machine' | 'versus-machine' | 'terminal';
+export type StoryAdventureWorldId =
+  | 'world-route'
+  | 'greenhollow'
+  | 'thornwood'
+  | 'ironroot'
+  | 'bonevault'
+  | 'emberdeep'
+  | 'frostpeak'
+  | 'sunscar'
+  | 'skyglass';
+export type StoryWorldId = StoryModeWorldId | StoryAdventureWorldId;
+export type StoryPortalDestination = HubDestination | StoryAdventureWorldId;
+export type StoryPortalKind = 'storefront' | 'mode-door' | 'adventure-gate' | 'shrine' | 'arcade-machine' | 'versus-machine' | 'terminal';
+export type StoryWorldThemeId =
+  | 'city'
+  | 'route'
+  | 'village'
+  | 'forest'
+  | 'mine'
+  | 'crypt'
+  | 'underworld'
+  | 'snow'
+  | 'desert'
+  | 'ruins';
+export type StoryEnemyArchetype = 'ground' | 'flying' | 'ranged';
+export type StoryAdventureAssetId =
+  | 'dawn-tree'
+  | 'dawn-wall'
+  | 'dawn-ore'
+  | 'dawn-reptile'
+  | 'dawn-slime'
+  | 'dawn-undead'
+  | 'dawn-demon'
+  | 'dawn-elemental'
+  | 'crawler-buildings'
+  | 'crawler-dungeon'
+  | 'crawler-tree'
+  | 'pixel-terrain'
+  | 'pixel-trap';
+
+export type StoryAtlasFrame = {
+  asset: StoryAdventureAssetId;
+  frame: [number, number, number, number];
+  atlasSize: [number, number];
+};
+
+export type StoryWorldPropDefinition = StoryAtlasFrame & {
+  id: string;
+  position: [number, number, number];
+  size: [number, number];
+  mirrored?: boolean;
+  opacity?: number;
+};
+
+export type StoryEnemySpawnDefinition = {
+  id: string;
+  name: string;
+  archetype: StoryEnemyArchetype;
+  position: [number, number];
+  patrolRadius: number;
+  sprite: 'skeleton' | 'skeleton-mage' | 'orc' | 'orc-shaman' | 'slime' | 'demon' | 'elemental' | 'reptile';
+  accent: string;
+};
 
 export type StoryPortalDefinition = {
   id: string;
   label: string;
   subtitle: string;
-  destination: HubDestination;
+  destination: StoryPortalDestination;
   position: [number, number];
   size: [number, number];
   accent: string;
@@ -196,4 +259,9 @@ export type StoryHubDefinition = {
   bounds: { minX: number; maxX: number; floorY: number };
   platforms: StoryPlatformDefinition[];
   portals: StoryPortalDefinition[];
+  theme?: StoryWorldThemeId;
+  checkpoint?: [number, number];
+  props?: StoryWorldPropDefinition[];
+  enemySpawns?: StoryEnemySpawnDefinition[];
+  adventure?: boolean;
 };

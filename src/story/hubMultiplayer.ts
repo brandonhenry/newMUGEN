@@ -1,5 +1,6 @@
 import type { OnlinePlayerProfile } from '../lib/online/leaderboard';
 import { sanitizeStoryAvatar, sanitizeStoryName } from './avatarCatalog';
+import { isStoryWorldId, storyWorldBounds } from './adventureWorlds';
 import type {
   StoryHubConnectionStatus,
   StoryHubChallenge,
@@ -18,7 +19,6 @@ export const STORY_HUB_GUEST_IDENTITY_KEY = 'kore.story.hub.guest.v1';
 const HEARTBEAT_MS = 650;
 const LOCAL_PRESENCE_TTL_MS = 4_000;
 export const STORY_HUB_CHALLENGE_TIMEOUT_MS = 30_000;
-const STORY_WORLD_IDS = new Set(['central', 'arcade', 'versus', 'online', 'training', 'tournament']);
 
 type HubChannelMessage =
   | { type: 'presence'; presence: StoryHubPresence }
@@ -92,16 +92,18 @@ export function sanitizeStoryHubPresence(value: unknown, now = Date.now()): Stor
   if (!sessionId) return null;
   const pose = record.pose === 'walk' || record.pose === 'sprint' || record.pose === 'jump' || record.pose === 'attack' ? record.pose : 'idle';
   const challenge = sanitizeStoryHubChallenge(record.challenge, now);
+  const worldId = isStoryWorldId(record.worldId) ? record.worldId : 'central';
+  const bounds = storyWorldBounds(worldId);
   return {
     sessionId,
     playerId: cleanId(record.playerId) || `story-${sessionId}`,
     displayName: sanitizeStoryName(record.displayName) || 'PLAYER',
     avatar: sanitizeStoryAvatar(record.avatar, record.displayName),
-    x: Math.max(-30.5, Math.min(30.5, finiteNumber(record.x, -4.5))),
+    x: Math.max(bounds.minX + 0.5, Math.min(bounds.maxX - 0.5, finiteNumber(record.x, -4.5))),
     y: Math.max(0.82, Math.min(12, finiteNumber(record.y, 0.82))),
     pose,
     facing: record.facing === -1 ? -1 : 1,
-    worldId: STORY_WORLD_IDS.has(String(record.worldId)) ? record.worldId : 'central',
+    worldId,
     updatedAt: Math.max(0, Math.round(finiteNumber(record.updatedAt, now))),
     ...(challenge ? { challenge } : {})
   };

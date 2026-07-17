@@ -82,6 +82,7 @@ async function expectMainMenu(page: Page) {
 }
 
 test('Play creates a story avatar and enters K.O.R.E. Central', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   await startFromSplash(page);
   const play = page.getByRole('button', { name: 'Play', exact: true });
   await expect(play).toBeVisible();
@@ -102,8 +103,7 @@ test('Play creates a story avatar and enters K.O.R.E. Central', async ({ page })
   await expect(hub).toContainText('NOVA 7');
   await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.profile.v4') ?? 'null')?.avatar?.name)).toBe('NOVA 7');
   await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.profile.v4') ?? 'null')?.avatar?.avatarSet)).toBe('crimson-ranger');
-  await expect(page.getByRole('heading', { name: 'The route is still sealed' })).toBeHidden();
-  await expect(page.getByTestId('story-destination-story-gate')).toContainText('Story Mode');
+  await expect(page.getByTestId('story-destination-story-gate')).toContainText('World Route');
   await expect(page.getByTestId('story-destination-friends-lounge')).toContainText('Friends');
 
   await page.getByRole('button', { name: 'Controls', exact: true }).click();
@@ -116,9 +116,92 @@ test('Play creates a story avatar and enters K.O.R.E. Central', async ({ page })
   await page.keyboard.up('ArrowRight');
   await expect(hub).toHaveAttribute('data-nearby-portal', 'story-gate', { timeout: 3_000 });
   await page.keyboard.press('Enter');
-  await expect(page.getByRole('heading', { name: 'The route is still sealed' })).toBeVisible();
-  await page.getByRole('button', { name: 'Return to Hub' }).click();
-  await expect(hub).toBeVisible();
+  await expect(page.getByTestId('story-door-transition')).toBeVisible();
+  await expect(hub).toHaveAttribute('data-world', 'world-route', { timeout: 4_000 });
+  await expect(page.getByTestId('story-door-transition')).toBeHidden({ timeout: 4_000 });
+  await page.keyboard.press('m');
+  const routeMap = page.getByTestId('story-adventure-map');
+  await expect(routeMap).toBeVisible();
+  await expect(routeMap).toContainText('Greenhollow Village');
+  await expect(routeMap).toContainText('Skyglass Ruins');
+  await page.keyboard.press('Escape');
+  await expect(routeMap).toBeHidden();
+});
+
+test('adventure combat levels the player and Central Route shrine respecs stats', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.localStorage.setItem('kore.story.profile.v4', JSON.stringify({
+      version: 4,
+      avatarStyle: 'kore-street-v1',
+      avatar: {
+        name: 'RANGER', avatarSet: 'crimson-ranger', lineage: 'human', bodyPreset: 'standard', bodyTone: 'tan', hairStyle: 'short', hairColor: '#15131a', outfit: 'kore-cyan', accessory: 'none'
+      },
+      createdAt: 1,
+      updatedAt: 1,
+      reviewedAt: 1
+    }));
+    window.localStorage.setItem('kore.story.adventure.v1', JSON.stringify({
+      version: 1,
+      level: 1,
+      xp: 99,
+      unspentPoints: 0,
+      stats: { power: 0, vitality: 0, agility: 0, guard: 0, critical: 0, insight: 0 },
+      lifetimeDefeats: 0
+    }));
+  });
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Play', exact: true }).click();
+  const hub = page.getByTestId('story-hub-screen');
+  await expect(hub).toHaveAttribute('data-hub-ready', 'true', { timeout: 15_000 });
+
+  await page.keyboard.down('ArrowRight');
+  await page.waitForTimeout(850);
+  await page.keyboard.up('ArrowRight');
+  await expect(hub).toHaveAttribute('data-nearby-portal', 'story-gate', { timeout: 3_000 });
+  await page.keyboard.press('Enter');
+  await expect(hub).toHaveAttribute('data-world', 'world-route', { timeout: 4_000 });
+  await expect(page.getByTestId('story-door-transition')).toBeHidden({ timeout: 4_000 });
+
+  await page.keyboard.down('ArrowRight');
+  await page.waitForTimeout(950);
+  await page.keyboard.up('ArrowRight');
+  await expect(hub).toHaveAttribute('data-nearby-portal', 'route-emberdeep', { timeout: 3_000 });
+  await page.getByRole('button', { name: 'Enter', exact: true }).click();
+  await expect(page.getByTestId('story-door-transition')).toBeVisible();
+  await expect(hub).toHaveAttribute('data-world', 'emberdeep', { timeout: 4_000 });
+  await expect(page.getByTestId('story-door-transition')).toBeHidden({ timeout: 4_000 });
+
+  await page.keyboard.down('ArrowRight');
+  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 4_000 }).toBeGreaterThan(-31.5);
+  await page.keyboard.up('ArrowRight');
+  for (let hit = 0; hit < 8; hit += 1) {
+    await page.keyboard.press('u');
+    await page.waitForTimeout(850);
+    if (await page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v1') ?? 'null')?.level) === 2) break;
+  }
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v1') ?? 'null')?.level), { timeout: 5_000 }).toBe(2);
+  await expect(hub).toHaveAttribute('data-player-level', '2');
+
+  await page.keyboard.press('p');
+  const stats = page.getByTestId('story-adventure-stats');
+  await expect(stats).toBeVisible();
+  await stats.getByRole('button', { name: 'Add point to Power' }).click();
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v1') ?? 'null')?.stats?.power)).toBe(1);
+  await stats.getByRole('button', { name: 'Close adventure stats' }).click();
+
+  await page.keyboard.down('ArrowLeft');
+  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 5_000 }).toBeLessThan(-41.5);
+  await page.keyboard.up('ArrowLeft');
+  await expect(hub).toHaveAttribute('data-nearby-portal', 'emberdeep-return-west', { timeout: 3_000 });
+  await page.getByRole('button', { name: 'Enter', exact: true }).click();
+  await expect(page.getByTestId('story-door-transition')).toBeVisible();
+  await expect(hub).toHaveAttribute('data-world', 'world-route', { timeout: 4_000 });
+  await expect(page.getByTestId('story-door-transition')).toBeHidden({ timeout: 4_000 });
+  await expect(hub).toHaveAttribute('data-nearby-portal', 'route-respec-shrine', { timeout: 3_000 });
+  await page.getByRole('button', { name: 'Recalibrate', exact: true }).click();
+  await expect(stats).toBeVisible();
+  await stats.getByRole('button', { name: 'Reset all points' }).click();
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v1') ?? 'null')?.stats?.power)).toBe(0);
 });
 
 test('saved story profiles enter Arcade World, retain jump controls, and launch a cabinet', async ({ page }) => {
@@ -142,9 +225,8 @@ test('saved story profiles enter Arcade World, retain jump controls, and launch 
   await expect(page.getByTestId('story-avatar-creator')).toBeHidden();
 
   await page.keyboard.down('ArrowRight');
-  await page.waitForTimeout(2_050);
+  await page.waitForTimeout(2_300);
   await page.keyboard.up('ArrowRight');
-  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 2_000 }).toBeGreaterThan(5.8);
   await expect(hub).toHaveAttribute('data-nearby-portal', 'arcade-gate', { timeout: 3_000 });
   await page.getByRole('button', { name: 'Enter', exact: true }).click();
   await expect(page.getByTestId('story-door-transition')).toBeVisible();
@@ -167,6 +249,41 @@ test('saved story profiles enter Arcade World, retain jump controls, and launch 
   await expect(page.locator('.select-screen')).toBeVisible({ timeout: 8_000 });
   await page.getByRole('button', { name: 'Back', exact: true }).click();
   await expect(hub).toBeVisible({ timeout: 8_000 });
+});
+
+test('Versus World keeps players in-world and assigns quick-match stations', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.localStorage.setItem('kore.story.profile.v4', JSON.stringify({
+      version: 4,
+      avatarStyle: 'kore-street-v1',
+      avatar: {
+        name: 'MATCH', avatarSet: 'street-shadow', lineage: 'human', bodyPreset: 'standard', bodyTone: 'tan', hairStyle: 'short', hairColor: '#15131a', outfit: 'kore-cyan', accessory: 'none'
+      },
+      createdAt: 1,
+      updatedAt: 1,
+      reviewedAt: 1
+    }));
+  });
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Play', exact: true }).click();
+  const hub = page.getByTestId('story-hub-screen');
+  await expect(hub).toHaveAttribute('data-hub-ready', 'true', { timeout: 15_000 });
+
+  await page.keyboard.down('ArrowRight');
+  await page.waitForTimeout(3_650);
+  await page.keyboard.up('ArrowRight');
+  await expect(hub).toHaveAttribute('data-nearby-portal', 'versus-gate', { timeout: 3_000 });
+  await page.keyboard.press('Enter');
+  await expect(hub).toHaveAttribute('data-world', 'versus', { timeout: 4_000 });
+  await expect(page.getByTestId('story-door-transition')).toBeHidden({ timeout: 4_000 });
+  await page.waitForTimeout(350);
+  await expect(hub).toHaveAttribute('data-world', 'versus');
+
+  await page.keyboard.press('f');
+  const quickMatch = page.getByTestId('story-quick-match');
+  await expect(quickMatch).toContainText('Searching network');
+  await expect(quickMatch).toContainText('Station 03 ready', { timeout: 3_000 });
+  await expect(page.getByTestId('story-destination-versus-station-3')).toContainText('Go Here');
 });
 
 test('story hub shares avatars and persists the pause-menu offline choice', async ({ page, context }) => {

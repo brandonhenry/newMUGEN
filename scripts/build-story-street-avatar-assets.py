@@ -9,10 +9,12 @@ It never recolors, redraws, or procedurally modifies character artwork.
 
 from __future__ import annotations
 
+import gc
 import hashlib
 import json
 import shutil
 from collections import Counter, deque
+from io import BytesIO
 from pathlib import Path
 from typing import Any
 
@@ -21,7 +23,7 @@ from PIL import Image, ImageDraw
 
 ROOT = Path("public/story/avatars/kore-street-v1")
 RUNTIME_MANIFEST = Path("src/story/storyStreetAvatarManifest.json")
-FRAME_SIZE = (224, 192)
+FRAME_SIZE = (320, 192)
 BASELINE = 182
 
 SHEETS: dict[str, dict[str, Any]] = {
@@ -33,7 +35,9 @@ SHEETS: dict[str, dict[str, Any]] = {
             "walk": [(267,274,354,424),(465,272,551,424),(656,272,742,424),(848,273,935,424),(1040,274,1126,424),(1229,274,1316,424),(1421,274,1508,424),(1615,276,1701,424)],
             "sprint": [(281,511,368,655),(475,514,562,656),(669,515,756,656),(859,513,947,656),(1051,512,1138,656),(1243,513,1331,656),(1434,514,1522,656),(1627,513,1715,656)],
             "jump": [(278,730,365,868),(468,730,554,868),(670,717,758,866),(853,700,955,849),(1043,712,1136,855),(1244,717,1347,864),(1436,724,1536,868),(1625,730,1712,869)],
-            "attack": [(272,929,360,1080),(464,930,551,1080),(656,928,743,1080),(842,930,929,1080),(1040,933,1127,1080),(1230,934,1317,1080)],
+            # Frame five includes the detached authored slash trail between it
+            # and the recovery pose. Keep both components in one runtime frame.
+            "attack": [(272,929,360,1080),(464,930,551,1080),(656,928,743,1080),(842,930,929,1080),(1040,933,1211,1080),(1230,934,1317,1080)],
         },
     },
     "street-shadow": {
@@ -45,7 +49,9 @@ SHEETS: dict[str, dict[str, Any]] = {
             "walk": [(264,273,354,424),(457,272,545,424),(649,272,738,424),(841,274,930,424),(1033,272,1121,424),(1225,272,1313,424),(1416,273,1506,424)],
             "sprint": [(279,512,367,656),(472,512,560,656),(662,514,752,656),(849,514,943,656),(1048,512,1136,656),(1241,512,1329,656),(1431,513,1522,656),(1617,514,1711,656)],
             "jump": [(274,724,362,869),(476,707,564,859),(673,699,762,846),(867,699,956,841),(1059,702,1148,841),(1250,710,1337,847),(1446,714,1538,854),(1641,730,1730,868)],
-            "attack": [(257,928,346,1080),(455,928,543,1080),(652,928,740,1080),(847,928,935,1080),(1041,928,1130,1080),(1229,925,1325,1079),(1414,926,1502,1079),(1610,925,1699,1079)],
+            # The final two energy bursts are detached from their bodies in the
+            # source sheet. Their wider bounds retain those projectile pixels.
+            "attack": [(257,928,346,1080),(455,928,543,1080),(652,928,740,1080),(847,928,935,1080),(1041,928,1130,1080),(1229,925,1325,1079),(1414,926,1595,1079),(1610,925,1798,1079)],
         },
     },
     "crimson-ranger": {
@@ -125,7 +131,7 @@ SHEETS: dict[str, dict[str, Any]] = {
 TIMINGS = {"idle": 180, "walk": 92, "sprint": 72, "jump": 86, "attack": 82}
 
 
-def load_sources() -> dict[str, tuple[Image.Image, bytes, Path]]:
+def load_sources() -> dict[str, Path]:
     loaded = {}
     for set_id, definition in SHEETS.items():
         committed = ROOT / "sets" / set_id / "source.png"
@@ -133,12 +139,12 @@ def load_sources() -> dict[str, tuple[Image.Image, bytes, Path]]:
         source_path = next((path for path in candidates if path and path.exists()), None)
         if not source_path:
             raise FileNotFoundError(f"Missing source sheet for {set_id}")
-        data = source_path.read_bytes()
-        image = Image.open(source_path).convert("RGB").copy()
+        with Image.open(source_path) as image:
+            image_size = image.size
         expected_size = (1536, 1024) if definition.get("generated") else (1800, 1200)
-        if image.size != expected_size:
-            raise ValueError(f"Expected {expected_size[0]}x{expected_size[1]} {set_id} sheet, got {image.size}")
-        loaded[set_id] = (image, data, source_path)
+        if image_size != expected_size:
+            raise ValueError(f"Expected {expected_size[0]}x{expected_size[1]} {set_id} sheet, got {image_size}")
+        loaded[set_id] = source_path
     return loaded
 
 
@@ -222,6 +228,27 @@ def primary_alpha_component(mask: bytearray, width: int, height: int) -> bytearr
     for key in largest:
         primary[key] = 1
     return primary
+
+
+def attack_body_anchor_x(image: Image.Image) -> int:
+    """Locate the character independently from right-side attack effects.
+
+    The upper portion of the largest opaque component is dominated by the
+    chibi's head and hair. Anchoring that mass prevents detached or connected
+    projectiles from pushing the character backward as their reach grows.
+    """
+    width, height = image.size
+    primary = primary_alpha_component(alpha_mask(image), width, height)
+    points = [(key % width, key // width) for key, opaque in enumerate(primary) if opaque]
+    if not points:
+        return width // 2
+    top = min(y for _, y in points)
+    bottom = max(y for _, y in points) + 1
+    upper_limit = top + max(1, (bottom - top) * 55 // 100)
+    upper_x = sorted(x for x, y in points if y < upper_limit)
+    if not upper_x:
+        upper_x = sorted(x for x, _ in points)
+    return upper_x[len(upper_x) // 2]
 
 
 def inside_primary_span(mask: bytearray, width: int, height: int, x: int, y: int) -> bool:
@@ -461,6 +488,10 @@ def crop_opaque_region(image: Image.Image, bounds: tuple[int, int, int, int]) ->
     return region
 
 
+def opaque_pixel_count(image: Image.Image) -> int:
+    return sum(1 for alpha in image.getchannel("A").get_flattened_data() if alpha)
+
+
 def extract_generated_animations(source: Image.Image, set_id: str) -> dict[str, list[Image.Image]]:
     transparent = remove_generated_gray_matte(source)
     walk_y_start, walk_y_end = GENERATED_ROW_BANDS["walk"]
@@ -498,48 +529,67 @@ def extract_generated_animations(source: Image.Image, set_id: str) -> dict[str, 
             crop_opaque_region(transparent, (boundaries[index], y_start, boundaries[index + 1], y_end))
             for index in range(8)
         ]
+        if animation_id == "attack":
+            # A detached projectile can cross the inferred cell boundary after
+            # the final body pose. It is part of that pose, not a standalone
+            # frame. Detect a trailing effect-only cell and stitch the original
+            # source region back together before normalization.
+            body_counts = [opaque_pixel_count(crop) for crop in crops[:-1]]
+            typical_body_count = sorted(body_counts)[len(body_counts) // 2]
+            if opaque_pixel_count(crops[-1]) < typical_body_count * 0.4:
+                crops[-2] = crop_opaque_region(
+                    transparent,
+                    (boundaries[-3], y_start, boundaries[-1], y_end),
+                )
+                crops.pop()
         animations[animation_id] = crops
     return animations
 
 
-def checkerboard_contact_sheet(sets: list[tuple[str, str, list[tuple[str, Image.Image]]]], path: Path) -> None:
+def checkerboard_contact_sheet(sets: list[tuple[str, str, list[tuple[str, Path]]]], path: Path) -> None:
     columns = 8
-    cell_width = 240
+    cell_width = FRAME_SIZE[0] + 16
     cell_height = 221
-    frames = [(set_id, label, frame_id, frame) for set_id, label, set_frames in sets for frame_id, frame in set_frames]
+    frames = [(set_id, label, frame_id, frame_path) for set_id, label, set_frames in sets for frame_id, frame_path in set_frames]
     rows = (len(frames) + columns - 1) // columns
     sheet = Image.new("RGBA", (columns * cell_width, rows * cell_height), "#101722")
     draw = ImageDraw.Draw(sheet)
-    for index, (set_id, label, frame_id, frame) in enumerate(frames):
+    for index, (set_id, label, frame_id, frame_path) in enumerate(frames):
         cell_x = index % columns * cell_width
         cell_y = index // columns * cell_height
         for y in range(4, 196, 8):
-            for x in range(8, 232, 8):
+            for x in range(8, cell_width - 8, 8):
                 fill = "#3d4654" if ((x // 8) + (y // 8)) % 2 else "#252d39"
                 draw.rectangle((cell_x + x, cell_y + y, cell_x + x + 7, cell_y + y + 7), fill=fill)
-        sheet.alpha_composite(frame, (cell_x + 8, cell_y + 4))
+        with Image.open(frame_path) as frame:
+            sheet.alpha_composite(frame.convert("RGBA"), (cell_x + 8, cell_y + 4))
         draw.text((cell_x + 8, cell_y + 200), f"{label} · {frame_id}", fill="#edf3ff")
     sheet.save(path, optimize=True)
 
 
 def build() -> None:
     sources = load_sources()
-    if ROOT.exists():
-        shutil.rmtree(ROOT)
-    ROOT.mkdir(parents=True)
+    build_root = ROOT.with_name(f".{ROOT.name}-building")
+    if build_root.exists():
+        shutil.rmtree(build_root)
+    build_root.mkdir(parents=True)
     manifest_sets = []
     contact_sets = []
     total_unique_frames = 0
 
     for set_id, definition in SHEETS.items():
-        source, source_bytes, source_path = sources[set_id]
-        set_root = ROOT / "sets" / set_id
+        print(f"building {set_id}", flush=True)
+        source_path = sources[set_id]
+        source_bytes = source_path.read_bytes()
+        with Image.open(BytesIO(source_bytes)) as source_image:
+            source = source_image.convert("RGB").copy()
+        set_root = build_root / "sets" / set_id
         frames_root = set_root / "frames"
         frames_root.mkdir(parents=True)
         source.save(set_root / "source.png", optimize=True)
         background = source.getpixel((0, 0))
         animations = []
-        contact_frames: list[tuple[str, Image.Image]] = []
+        contact_frames: list[tuple[str, Path]] = []
         animation_paths: dict[str, list[dict[str, Any]]] = {}
 
         if definition.get("generated"):
@@ -591,18 +641,22 @@ def build() -> None:
                 if crop.width > FRAME_SIZE[0] or crop.height > FRAME_SIZE[1]:
                     raise ValueError(f"Frame {set_id}/{animation_id}/{index} is {crop.width}x{crop.height}, exceeding {FRAME_SIZE[0]}x{FRAME_SIZE[1]}")
                 frame = Image.new("RGBA", FRAME_SIZE)
-                x = (FRAME_SIZE[0] - crop.width) // 2
+                body_anchor_x = attack_body_anchor_x(crop) if animation_id == "attack" else crop.width // 2
+                x = FRAME_SIZE[0] // 2 - body_anchor_x if animation_id == "attack" else (FRAME_SIZE[0] - crop.width) // 2
                 y = BASELINE - crop.height
+                if x < 0 or x + crop.width > FRAME_SIZE[0]:
+                    raise ValueError(f"Frame {set_id}/{animation_id}/{index} clips horizontally at x={x} on the {FRAME_SIZE[0]}px canvas")
                 frame.alpha_composite(crop, (x, y))
                 frame_id = f"{animation_id}-{index:02d}"
                 frame_path = animation_root / f"{index:02d}.png"
                 frame.save(frame_path, optimize=True)
-                contact_frames.append((frame_id, frame))
+                contact_frames.append((frame_id, frame_path))
                 runtime_frames.append({
                     "id": frame_id,
                     "path": f"/story/avatars/kore-street-v1/sets/{set_id}/frames/{animation_id}/{index:02d}.png",
                     "durationMs": TIMINGS[animation_id],
                     "contentBounds": list(frame.getbbox() or (0, 0, 0, 0)),
+                    "bodyAnchorX": x + body_anchor_x,
                 })
             animation_paths[animation_id] = runtime_frames
             animations.append({"id": animation_id, "loop": animation_id not in {"jump", "attack"}, "frames": runtime_frames})
@@ -625,8 +679,10 @@ def build() -> None:
             "animations": animations,
         })
         contact_sets.append((set_id, definition["label"], contact_frames))
+        del source_crops, source, source_bytes, frame, crop, crops
+        gc.collect()
 
-    checkerboard_contact_sheet(contact_sets, ROOT / "contact-sheet.png")
+    checkerboard_contact_sheet(contact_sets, build_root / "contact-sheet.png")
     manifest = {
         "version": 2,
         "avatarStyle": "kore-street-v1",
@@ -637,15 +693,18 @@ def build() -> None:
         "sets": manifest_sets,
     }
     serialized = json.dumps(manifest, indent=2) + "\n"
-    (ROOT / "manifest.json").write_text(serialized)
+    (build_root / "manifest.json").write_text(serialized)
     RUNTIME_MANIFEST.write_text(serialized)
-    (ROOT / "SOURCE.md").write_text(
+    (build_root / "SOURCE.md").write_text(
         "# K.O.R.E. Street Avatar Sources\n\n"
         "Four animation sheets supplied by the project owner and ten original Image API-generated K.O.R.E. presets "
         "are imported without runtime recoloring or redraws. "
         "Frames use an exterior-only transparent matte, conservative source-silhouette restoration, "
-        "a shared 224×192 canvas, and baseline 182.\n"
+        "a shared 320×192 canvas with body-anchored attack effects, and baseline 182.\n"
     )
+    if ROOT.exists():
+        shutil.rmtree(ROOT)
+    build_root.rename(ROOT)
     print(f"built {len(manifest_sets)} avatar sets with {total_unique_frames} unique transparent frames")
 
 

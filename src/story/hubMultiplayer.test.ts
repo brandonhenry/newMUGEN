@@ -46,7 +46,7 @@ describe('story hub multiplayer', () => {
       sessionId: 'peerone',
       playerId: 'playerone',
       displayName: 'NOVA',
-      x: 30.5,
+      x: 19.5,
       y: 0.82,
       pose: 'attack',
       facing: -1,

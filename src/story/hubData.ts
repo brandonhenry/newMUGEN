@@ -5,7 +5,7 @@ const HUB_DESTINATIONS: readonly HubDestination[] = [
   'central', 'story', 'friends', 'online', 'arcade', 'versus', 'training', 'tournament', 'characters', 'avatarStudio', 'options', 'exit'
 ];
 
-const PORTAL_KINDS = ['storefront', 'mode-door', 'arcade-machine', 'versus-machine', 'terminal'] as const;
+const PORTAL_KINDS = ['storefront', 'mode-door', 'adventure-gate', 'shrine', 'arcade-machine', 'versus-machine', 'terminal'] as const;
 
 export const FALLBACK_STORY_HUB: StoryHubDefinition = {
   id: 'kore-central',

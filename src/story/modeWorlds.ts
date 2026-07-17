@@ -90,6 +90,6 @@ export const STORY_MODE_WORLDS: Record<StoryModeWorldId, StoryHubDefinition> = {
 
 export const MODE_WORLD_DESTINATIONS: readonly StoryModeWorldId[] = ['arcade', 'versus', 'online', 'training', 'tournament'];
 
-export function isStoryModeWorldId(value: HubDestination): value is StoryModeWorldId {
+export function isStoryModeWorldId(value: unknown): value is StoryModeWorldId {
   return value === 'central' || MODE_WORLD_DESTINATIONS.includes(value as StoryModeWorldId);
 }
