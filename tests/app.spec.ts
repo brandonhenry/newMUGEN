@@ -81,6 +81,205 @@ async function expectMainMenu(page: Page) {
   await expect(page.getByRole('button', { name: 'Arcade' })).toBeVisible({ timeout: 10000 });
 }
 
+test('Play creates a story avatar and enters K.O.R.E. Central', async ({ page }) => {
+  await startFromSplash(page);
+  const play = page.getByRole('button', { name: 'Play', exact: true });
+  await expect(play).toBeVisible();
+  await expect(play).toBeFocused();
+  await play.click();
+
+  const creator = page.getByTestId('story-avatar-creator');
+  await expect(creator).toBeVisible({ timeout: 10_000 });
+  await creator.getByLabel('Hub name').fill('Nova 7');
+  await creator.getByRole('button', { name: 'Next avatar' }).click();
+  await expect(creator).toContainText('Crimson Ranger');
+  await creator.getByRole('button', { name: 'Save & Enter Hub' }).click();
+
+  const hub = page.getByTestId('story-hub-screen');
+  await expect(hub).toBeVisible({ timeout: 15_000 });
+  await expect(hub).toHaveAttribute('data-hub-ready', 'true', { timeout: 15_000 });
+  await expect(hub).toContainText('K.O.R.E. Central');
+  await expect(hub).toContainText('NOVA 7');
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.profile.v4') ?? 'null')?.avatar?.name)).toBe('NOVA 7');
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.profile.v4') ?? 'null')?.avatar?.avatarSet)).toBe('crimson-ranger');
+  await expect(page.getByRole('heading', { name: 'The route is still sealed' })).toBeHidden();
+  await expect(page.getByTestId('story-destination-story-gate')).toContainText('Story Mode');
+  await expect(page.getByTestId('story-destination-friends-lounge')).toContainText('Friends');
+
+  await page.getByRole('button', { name: 'Controls', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'K.O.R.E. Controls' })).toBeVisible();
+  await expect(page.getByText('Left stick / D-pad', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Close controls' }).click();
+
+  await page.keyboard.down('ArrowRight');
+  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 4_000 }).toBeGreaterThan(-1.5);
+  await page.keyboard.up('ArrowRight');
+  await expect(hub).toHaveAttribute('data-nearby-portal', 'story-gate', { timeout: 3_000 });
+  await page.keyboard.press('Enter');
+  await expect(page.getByRole('heading', { name: 'The route is still sealed' })).toBeVisible();
+  await page.getByRole('button', { name: 'Return to Hub' }).click();
+  await expect(hub).toBeVisible();
+});
+
+test('saved story profiles skip creation and hub Arcade returns to the hub', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.localStorage.setItem('kore.story.profile.v4', JSON.stringify({
+      version: 4,
+      avatarStyle: 'kore-street-v1',
+      avatar: {
+        name: 'HUBBER', avatarSet: 'rose-blade', lineage: 'human', bodyPreset: 'standard', bodyTone: 'tan', hairStyle: 'short', hairColor: '#15131a', outfit: 'kore-cyan', accessory: 'none'
+      },
+      createdAt: 1,
+      updatedAt: 1,
+      reviewedAt: 1
+    }));
+  });
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Play', exact: true }).click();
+  const hub = page.getByTestId('story-hub-screen');
+  await expect(hub).toBeVisible({ timeout: 15_000 });
+  await expect(hub).toHaveAttribute('data-hub-ready', 'true', { timeout: 15_000 });
+  await expect(page.getByTestId('story-avatar-creator')).toBeHidden();
+
+  await page.keyboard.down('ArrowRight');
+  await page.waitForTimeout(2_050);
+  await page.keyboard.up('ArrowRight');
+  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 2_000 }).toBeGreaterThan(5.8);
+  await expect(hub).toHaveAttribute('data-nearby-portal', 'arcade-gate', { timeout: 3_000 });
+  await page.getByRole('button', { name: 'Enter', exact: true }).click();
+  await expect(page.locator('.select-screen')).toBeVisible({ timeout: 8_000 });
+  await page.getByRole('button', { name: 'Back', exact: true }).click();
+  await expect(hub).toBeVisible({ timeout: 8_000 });
+});
+
+test('story hub shares avatars and persists the pause-menu offline choice', async ({ page, context }) => {
+  await context.addInitScript(() => {
+    window.localStorage.setItem('kore.story.profile.v4', JSON.stringify({
+      version: 4,
+      avatarStyle: 'kore-street-v1',
+      avatar: {
+        name: 'ROOKIE', avatarSet: 'solar-runner', lineage: 'sylvan', bodyPreset: 'standard', bodyTone: 'tan', hairStyle: 'bob', hairColor: '#9f49c8', outfit: 'royal-circuit', accessory: 'glasses'
+      },
+      createdAt: 1,
+      updatedAt: 1,
+      reviewedAt: 1
+    }));
+  });
+
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Play', exact: true }).click();
+  const firstHub = page.getByTestId('story-hub-screen');
+  await expect(firstHub).toHaveAttribute('data-hub-ready', 'true', { timeout: 15_000 });
+  await expect(firstHub).toHaveAttribute('data-online', 'true');
+
+  const secondPage = await context.newPage();
+  await startFromSplash(secondPage);
+  await secondPage.getByRole('button', { name: 'Play', exact: true }).click();
+  const secondHub = secondPage.getByTestId('story-hub-screen');
+  await expect(secondHub).toHaveAttribute('data-hub-ready', 'true', { timeout: 15_000 });
+  await expect(firstHub).toHaveAttribute('data-player-count', '2', { timeout: 8_000 });
+  await expect(secondHub).toHaveAttribute('data-player-count', '2', { timeout: 8_000 });
+
+  await secondPage.keyboard.press('Escape');
+  await expect(secondPage.getByRole('heading', { name: 'Hub Paused' })).toBeVisible();
+  await secondPage.getByRole('button', { name: 'Resume' }).click();
+  await expect(secondPage.getByRole('heading', { name: 'Hub Paused' })).toBeHidden();
+  await secondPage.waitForTimeout(500);
+  await expect(secondPage.getByRole('heading', { name: 'Hub Paused' })).toBeHidden();
+
+  await secondPage.keyboard.press('Escape');
+  await expect(secondPage.getByRole('heading', { name: 'Hub Paused' })).toBeVisible();
+  await secondPage.getByRole('button', { name: 'Edit Avatar' }).click();
+  await expect(secondPage.getByTestId('story-avatar-creator')).toBeVisible();
+  await secondPage.getByRole('button', { name: 'Back' }).click();
+  await expect(secondHub).toBeVisible();
+
+  await secondPage.keyboard.press('Escape');
+  await expect(secondPage.getByRole('heading', { name: 'Hub Paused' })).toBeVisible();
+  const onlineSwitch = secondPage.getByRole('switch');
+  await expect(onlineSwitch).toHaveAttribute('aria-checked', 'true');
+  await onlineSwitch.click();
+  await expect(secondHub).toHaveAttribute('data-online', 'false');
+  await expect(firstHub).toHaveAttribute('data-player-count', '1', { timeout: 5_000 });
+  await expect.poll(() => secondPage.evaluate(() => window.localStorage.getItem('kore.story.hub.online.v1'))).toBe('offline');
+
+  await secondPage.reload();
+  await expect.poll(() => secondPage.evaluate(() => window.localStorage.getItem('kore.story.hub.online.v1'))).toBe('offline');
+  await secondPage.close();
+});
+
+test('story hub accepts controller and touch movement, run, attack, and pause', async ({ page }) => {
+  await installMockGamepad(page);
+  await page.setViewportSize({ width: 600, height: 800 });
+  await page.addInitScript(() => {
+    window.localStorage.setItem('kore.story.profile.v4', JSON.stringify({
+      version: 4,
+      avatarStyle: 'kore-street-v1',
+      avatar: {
+        name: 'INPUT', avatarSet: 'street-shadow', lineage: 'synth', bodyPreset: 'compact', bodyTone: 'light', hairStyle: 'locs', hairColor: '#4a2c22', outfit: 'forest-scout', accessory: 'scarf'
+      },
+      createdAt: 1,
+      updatedAt: 1,
+      reviewedAt: 1
+    }));
+  });
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Play', exact: true }).click();
+  const hub = page.getByTestId('story-hub-screen');
+  await expect(hub).toHaveAttribute('data-hub-ready', 'true', { timeout: 15_000 });
+
+  const beforeTouch = Number(await hub.getAttribute('data-player-x'));
+  const moveRight = page.getByRole('button', { name: 'Move right' });
+  await expect(moveRight).toBeVisible();
+  const moveRightBounds = await moveRight.boundingBox();
+  expect(moveRightBounds).not.toBeNull();
+  await page.mouse.move(moveRightBounds!.x + moveRightBounds!.width / 2, moveRightBounds!.y + moveRightBounds!.height / 2);
+  await page.mouse.down();
+  await page.waitForTimeout(350);
+  await page.mouse.up();
+  await expect.poll(async () => Number(await hub.getAttribute('data-player-x'))).toBeGreaterThan(beforeTouch + 0.8);
+
+  const runButton = page.getByRole('button', { name: 'Run', exact: true });
+  const attackButton = page.getByRole('button', { name: 'Attack', exact: true });
+  await expect(runButton).toBeVisible();
+  await expect(attackButton).toBeVisible();
+  await runButton.dispatchEvent('pointerdown', { pointerId: 31, pointerType: 'touch', isPrimary: true, bubbles: true });
+  await moveRight.dispatchEvent('pointerdown', { pointerId: 32, pointerType: 'touch', bubbles: true });
+  await expect(hub).toHaveAttribute('data-player-pose', 'sprint');
+  await moveRight.dispatchEvent('pointerup', { pointerId: 32, pointerType: 'touch', bubbles: true });
+  await runButton.dispatchEvent('pointerup', { pointerId: 31, pointerType: 'touch', isPrimary: true, bubbles: true });
+  await attackButton.dispatchEvent('pointerdown', { pointerId: 33, pointerType: 'touch', isPrimary: true, bubbles: true });
+  await attackButton.dispatchEvent('pointerup', { pointerId: 33, pointerType: 'touch', isPrimary: true, bubbles: true });
+  await expect(hub).toHaveAttribute('data-player-pose', 'attack');
+
+  const beforeController = Number(await hub.getAttribute('data-player-x'));
+  await page.evaluate(() => {
+    const testWindow = window as unknown as { __koreMockGamepadConnected?: boolean; __koreMockGamepadAxes?: [number, number] };
+    testWindow.__koreMockGamepadConnected = true;
+    testWindow.__koreMockGamepadAxes = [0.9, 0];
+  });
+  await page.waitForTimeout(450);
+  await page.evaluate(() => ((window as unknown as { __koreMockGamepadAxes?: [number, number] }).__koreMockGamepadAxes = [0, 0]));
+  await expect.poll(async () => Number(await hub.getAttribute('data-player-x'))).toBeGreaterThan(beforeController + 0.8);
+
+  await page.evaluate(() => {
+    const testWindow = window as unknown as { __koreMockGamepadButtons?: boolean[]; __koreMockGamepadAxes?: [number, number] };
+    testWindow.__koreMockGamepadButtons = Array.from({ length: 17 }, (_, index) => index === 4);
+    testWindow.__koreMockGamepadAxes = [0.9, 0];
+  });
+  await expect(hub).toHaveAttribute('data-player-pose', 'sprint');
+  await page.evaluate(() => {
+    const testWindow = window as unknown as { __koreMockGamepadButtons?: boolean[]; __koreMockGamepadAxes?: [number, number] };
+    testWindow.__koreMockGamepadButtons = [];
+    testWindow.__koreMockGamepadAxes = [0, 0];
+  });
+  await tapMockGamepadButton(page, 0);
+  await expect(hub).toHaveAttribute('data-player-pose', 'attack');
+
+  await tapMockGamepadButton(page, 9);
+  await expect(page.getByRole('heading', { name: 'Hub Paused' })).toBeVisible();
+});
+
 test('main-menu CPU attract renders mapped attack companions', async ({ page }) => {
   await page.addInitScript(() => {
     (window as typeof window & { __KORE_FORCE_MENU_ATTRACT_IDS__?: [string, string] }).__KORE_FORCE_MENU_ATTRACT_IDS__ = ['jotaro-kujo', 'dio'];

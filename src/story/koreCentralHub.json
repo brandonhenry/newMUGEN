@@ -1,0 +1,26 @@
+{
+  "id": "kore-central",
+  "name": "K.O.R.E. Central",
+  "subtitle": "Where every route begins",
+  "spawn": [-4.5, 0.9],
+  "bounds": { "minX": -31, "maxX": 31, "floorY": 0 },
+  "platforms": [
+    { "id": "ground", "position": [0, -0.5], "size": [66, 1] },
+    { "id": "central-overlook", "position": [0, 4.2], "size": [12, 0.45], "oneWay": true },
+    { "id": "social-overlook", "position": [-19, 4.2], "size": [8, 0.45], "oneWay": true },
+    { "id": "competition-overlook", "position": [19, 4.2], "size": [8, 0.45], "oneWay": true }
+  ],
+  "portals": [
+    { "id": "friends-lounge", "label": "Friends", "subtitle": "Meet your crew", "destination": "friends", "position": [-27, 1.5], "size": [2.8, 3.2], "accent": "#67d9ff" },
+    { "id": "online-gate", "label": "Online", "subtitle": "Find a challenger", "destination": "online", "position": [-21, 1.5], "size": [2.8, 3.2], "accent": "#7d91ff" },
+    { "id": "characters-kiosk", "label": "Characters", "subtitle": "Browse the roster", "destination": "characters", "position": [-14.5, 1.4], "size": [2.6, 3], "accent": "#b883ff" },
+    { "id": "avatar-studio", "label": "Avatar Studio", "subtitle": "Change your look", "destination": "avatarStudio", "position": [-8, 1.4], "size": [2.6, 3], "accent": "#ff77c8" },
+    { "id": "story-gate", "label": "Story Mode", "subtitle": "Gate sealed", "destination": "story", "position": [0, 1.8], "size": [4.2, 4], "accent": "#ffe071", "locked": true },
+    { "id": "arcade-gate", "label": "Arcade", "subtitle": "Start a solo run", "destination": "arcade", "position": [8, 1.4], "size": [2.6, 3], "accent": "#ff9d35" },
+    { "id": "versus-gate", "label": "Versus", "subtitle": "Local battle", "destination": "versus", "position": [14, 1.4], "size": [2.6, 3], "accent": "#ff5d69" },
+    { "id": "training-gate", "label": "Training", "subtitle": "Sharpen your skills", "destination": "training", "position": [20, 1.4], "size": [2.6, 3], "accent": "#52e1a1" },
+    { "id": "tournament-gate", "label": "Tournament", "subtitle": "Enter the bracket", "destination": "tournament", "position": [26, 1.5], "size": [2.8, 3.2], "accent": "#ffe071" },
+    { "id": "options-kiosk", "label": "Options", "subtitle": "Tune K.O.R.E.", "destination": "options", "position": [-4, 5.7], "size": [2.4, 2.6], "accent": "#a8b2c4" },
+    { "id": "exit-gate", "label": "Exit", "subtitle": "Return to menu", "destination": "exit", "position": [4, 5.7], "size": [2.4, 2.6], "accent": "#a8b2c4" }
+  ]
+}

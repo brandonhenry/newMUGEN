@@ -47,7 +47,7 @@ import {
   ZoomOut
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
-import { type CSSProperties, type Dispatch, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent, type ReactNode, type SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, type CSSProperties, type Dispatch, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent, type ReactNode, type SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AdminDashboard } from './AdminDashboard';
 import { CustomMatchSpectator, CustomRoomsExperience, type CustomMatchLaunch } from './CustomRoomsExperience';
 import { SpectatorExperience, parseSpectatorRoute, shareSpectatorLink } from './SpectatorExperience';
@@ -225,6 +225,8 @@ import {
   readLocalArcadeRunHighScore,
   submitArcadeRunScore
 } from './lib/arcadeRun';
+import { readStoryProfile, writeStoryProfile } from './story/profile';
+import { LEGACY_STORY_PROFILE_STORAGE_KEY, STORY_PROFILE_STORAGE_KEY, type HubDestination, type StoryProfileV4 } from './story/types';
 import {
   applyVoxelBodyScale,
   computeVoxelBodyNormalization,
@@ -282,7 +284,7 @@ const MOVEMENT_SMOKE_STYLE_OPTIONS: ReadonlyArray<{ value: MovementSmokeStyle; l
   { value: 'dust-ring', label: 'Dust Ring' }
 ];
 
-type Screen = 'boot' | 'title' | 'menu' | 'friends' | 'leaderboard' | 'matchHistory' | 'privateRooms' | 'customRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'tournamentAdvancement' | 'stage' | 'assetWarmup' | 'versus' | 'fight' | 'arcadeTransition' | 'miniGame' | 'miniGameResult' | 'arcadeGameOver' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
+type Screen = 'boot' | 'title' | 'menu' | 'avatarCreator' | 'storyHub' | 'friends' | 'leaderboard' | 'matchHistory' | 'privateRooms' | 'customRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'tournamentAdvancement' | 'stage' | 'assetWarmup' | 'versus' | 'fight' | 'arcadeTransition' | 'miniGame' | 'miniGameResult' | 'arcadeGameOver' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
 type E2EAuditScreen = Exclude<Screen, 'boot'>
   | 'selectOnline'
   | 'selectRanked'
@@ -315,6 +317,8 @@ type E2EAuditScreen = Exclude<Screen, 'boot'>
 
 function isFullBleedScreen(screen: Screen) {
   return (
+    screen === 'avatarCreator' ||
+    screen === 'storyHub' ||
     screen === 'assetWarmup' ||
     screen === 'versus' ||
     screen === 'arcadeTransition' ||
@@ -327,6 +331,9 @@ function isFullBleedScreen(screen: Screen) {
     screen === 'tournamentAdvancement'
   );
 }
+
+const StoryAvatarCreatorScreen = lazy(() => import('./story/StoryAvatarCreatorScreen'));
+const StoryHubScreen = lazy(() => import('./story/StoryHubScreen'));
 
 type FightPauseMenuView = 'menu' | 'movelist' | 'trainingTrials' | 'trainingSettings';
 type AnalyticsCapture = (name: AnalyticsEventName, properties?: AnalyticsProperties) => void;
@@ -578,6 +585,8 @@ const MEMORY_CARD_FORMAT = 'kore.memorycard';
 const MEMORY_CARD_VERSION = 1;
 const MEMORY_CARD_SAVE_KEYS = [
   { key: UNLOCKED_CHARACTERS_KEY, label: 'Unlocked fighters' },
+  { key: STORY_PROFILE_STORAGE_KEY, label: 'Story avatar' },
+  { key: LEGACY_STORY_PROFILE_STORAGE_KEY, label: 'Legacy story avatar' },
   { key: GAME_SETTINGS_STORAGE_KEY, label: 'Options settings' },
   { key: ONLINE_PROFILE_STORAGE_KEY, label: 'Online profile' },
   { key: LOCAL_LEADERBOARD_STORAGE_KEY, label: 'Local leaderboard' },
@@ -3154,6 +3163,8 @@ export default function App() {
   if (spectatorRoute) return <SpectatorExperience route={spectatorRoute} />;
 
   const [screen, setScreen] = useState<Screen>('boot');
+  const [navigationHome, setNavigationHome] = useState<'menu' | 'storyHub'>('menu');
+  const [avatarCreatorReturnScreen, setAvatarCreatorReturnScreen] = useState<'menu' | 'storyHub'>('menu');
   const [versusReturnScreen, setVersusReturnScreen] = useState<'stage' | 'privateRooms'>('stage');
   const [assetWarmupIntent, setAssetWarmupIntent] = useState<AssetWarmupIntent | null>(null);
   const [stageAssetRevision, setStageAssetRevision] = useState(0);
@@ -3191,6 +3202,7 @@ export default function App() {
   const [changeSideRequest, setChangeSideRequest] = useState<{ source: string } | null>(null);
   const [inputPromptMode, setInputPromptMode] = useState<InputPromptMode>('keyboardShortcut');
   const [onlineProfile, setOnlineProfile] = useState<OnlinePlayerProfile | null>(() => readOnlineProfile());
+  const [storyProfile, setStoryProfile] = useState<StoryProfileV4 | null>(() => readStoryProfile());
   const [friendPresence, setFriendPresence] = useState<Record<string, FriendPresence>>({});
   const [friendInbox, setFriendInbox] = useState<FriendInvite[]>([]);
   const [friendNotifications, setFriendNotifications] = useState<FriendNotification[]>([]);
@@ -3384,7 +3396,7 @@ export default function App() {
     openHistory();
   }, [captureAppAnalytics, onlineProfile, promptForUsername]);
 
-  const openFriendList = useCallback((source: string) => {
+  const openFriendList = useCallback((source: string, returnScreen: 'menu' | 'storyHub' = 'menu') => {
     const openFriends = () => {
       captureAppAnalytics('navigation_clicked', { source, destination: 'friends' });
       setScreen('friends');
@@ -3394,7 +3406,7 @@ export default function App() {
         source: 'friend_list',
         body: 'Choose your player name before opening the friend list.',
         onConfirm: openFriends,
-        onBack: () => setScreen('menu')
+        onBack: () => setScreen(returnScreen)
       });
       return;
     }
@@ -5097,6 +5109,7 @@ export default function App() {
     setSettings(readGameSettings());
     setUnlockedCharacterIds(readUnlockedCharacterIds());
     setOnlineProfile(readOnlineProfile());
+    setStoryProfile(readStoryProfile());
   }, []);
 
   useEffect(() => {
@@ -5465,6 +5478,104 @@ export default function App() {
 	    setActiveArcadeMiniGame(null);
 	    setArcadeTransition(null);
 	  }, []);
+	  const returnToNavigationHome = useCallback(() => {
+	    setScreen(navigationHome);
+	  }, [navigationHome]);
+	  const openStoryHubFromMenu = useCallback(() => {
+	    captureAppAnalytics('navigation_clicked', { source: 'main_menu', destination: 'story_hub' });
+	    setNavigationHome('storyHub');
+	    if (storyProfile?.reviewedAt) {
+	      setScreen('storyHub');
+	      return;
+	    }
+	    setAvatarCreatorReturnScreen('menu');
+	    setScreen('avatarCreator');
+	  }, [captureAppAnalytics, storyProfile]);
+	  const saveStoryAvatar = useCallback((avatar: StoryProfileV4['avatar']) => {
+	    const next = writeStoryProfile(avatar, storyProfile);
+	    setStoryProfile(next);
+	    setNavigationHome('storyHub');
+	    captureAppAnalytics('positive_milestone_reached', {
+	      milestone_type: storyProfile ? 'story_avatar_updated' : 'story_avatar_created',
+	      source: 'avatar_creator'
+	    });
+	    setScreen('storyHub');
+	  }, [captureAppAnalytics, storyProfile]);
+	  const launchStoryHubDestination = useCallback((destination: HubDestination) => {
+	    setNavigationHome('storyHub');
+	    captureAppAnalytics('navigation_clicked', { source: 'story_hub', destination });
+	    if (destination === 'friends') {
+	      setInputPromptMode('pointer');
+	      openFriendList('story_hub', 'storyHub');
+	      return;
+	    }
+	    if (destination === 'online') {
+	      resetRandomSelections();
+	      setMode('online');
+	      setPrivateRoomIntent(null);
+	      if (!onlineProfile) {
+	        promptForUsername({
+	          source: 'story_hub_online',
+	          body: 'Choose the name other players will see online.',
+	          onConfirm: () => setScreen('select'),
+	          onBack: () => {
+	            setMode('ai');
+	            setScreen('storyHub');
+	          }
+	        });
+	        return;
+	      }
+	      setScreen('select');
+	      return;
+	    }
+	    if (destination === 'arcade') {
+	      resetRandomSelections();
+	      resetArcadeRun();
+	      setMode('ai');
+	      setScreen('select');
+	      return;
+	    }
+	    if (destination === 'versus') {
+	      resetRandomSelections();
+	      setMode('local2p');
+	      setScreen('select');
+	      return;
+	    }
+	    if (destination === 'training') {
+	      resetRandomSelections();
+	      setMode('training');
+	      setSelectedTrainingMode('free');
+	      const trainingCharacters = resolveTrainingCharacters(roster, effectiveUnlockedCharacterIds, p1Id, p2Id, 'offlineTraining');
+	      if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
+	      if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
+	      setScreen('training');
+	      return;
+	    }
+	    if (destination === 'tournament') {
+	      resetRandomSelections();
+	      setMode('tournamentLocal');
+	      setSelectedTournamentMode('free');
+	      setScreen('tournament');
+	      return;
+	    }
+	    if (destination === 'characters') {
+	      setScreen('viewer');
+	      return;
+	    }
+	    if (destination === 'options') {
+	      setScreen('settings');
+	      return;
+	    }
+	    if (destination === 'avatarStudio') {
+	      setAvatarCreatorReturnScreen('storyHub');
+	      setScreen('avatarCreator');
+	      return;
+	    }
+	    if (destination === 'exit') {
+	      setNavigationHome('menu');
+	      setScreen('menu');
+	    }
+	  }, [captureAppAnalytics, effectiveUnlockedCharacterIds, onlineProfile, openFriendList, p1Id, p2Id, promptForUsername, resetArcadeRun, resetRandomSelections, roster]);
 	  const finishArcadeRun = useCallback((run: ArcadeRunState) => {
 	    const previousBest = readLocalArcadeRunHighScore(onlineProfile, p1Id);
 	    const best = Math.max(previousBest, run.score);
@@ -5616,6 +5727,43 @@ export default function App() {
       <StageAmbiencePlayer audio={settings.audio} stage={activeAmbienceStage} active={Boolean(activeAmbienceStage)} />
       <section className={`screen-panel ${fullBleedScreen ? 'is-full-bleed' : ''}`}>
         {screen === 'title' && <TitleScreen onStart={startFromTitle} cpuAutoAccept={cpuAutoAccept} />}
+        {screen === 'avatarCreator' && (
+          <Suspense fallback={<div className="story-loading-screen"><Swords size={34} /><strong>Opening Avatar Studio</strong></div>}>
+            <StoryAvatarCreatorScreen
+              profile={storyProfile}
+              preferredName={onlineProfile?.displayName}
+              reducedMotion={settings.display.reducedMotion}
+              onSave={saveStoryAvatar}
+              onBack={() => setScreen(avatarCreatorReturnScreen)}
+            />
+          </Suspense>
+        )}
+        {screen === 'storyHub' && storyProfile && (
+          <Suspense fallback={<div className="story-loading-screen"><Swords size={34} /><strong>Entering K.O.R.E. Central</strong></div>}>
+            <StoryHubScreen
+              profile={storyProfile}
+              onlineProfile={onlineProfile}
+              reducedMotion={settings.display.reducedMotion}
+              peekInputs={peekInputs}
+              setVirtualAction={setVirtualAction}
+              onDestination={launchStoryHubDestination}
+              onExit={() => {
+                setNavigationHome('menu');
+                setScreen('menu');
+              }}
+            />
+          </Suspense>
+        )}
+        {screen === 'storyHub' && !storyProfile && (
+          <div className="story-loading-screen">
+            <Swords size={34} />
+            <strong>Story profile needed</strong>
+            <button type="button" className="story-primary-button" onClick={() => {
+              setAvatarCreatorReturnScreen('menu');
+              setScreen('avatarCreator');
+            }}>Create Avatar</button>
+          </div>
+        )}
         {screen === 'menu' && (
           <MenuScreen
             roster={roster}
@@ -5630,7 +5778,9 @@ export default function App() {
             onAnalytics={captureAppAnalytics}
             onMenuSelect={playMenuSelectSound}
             onMenuHover={() => playMenuHoverSound(60)}
+            onPlay={openStoryHubFromMenu}
             onArcade={() => {
+              setNavigationHome('menu');
               captureAppAnalytics('game_start_clicked', { source: 'mode_select', selected_mode: 'ai' });
               resetRandomSelections();
               resetArcadeRun();
@@ -5638,12 +5788,14 @@ export default function App() {
               setScreen('select');
             }}
             onVersus={() => {
+              setNavigationHome('menu');
               captureAppAnalytics('game_start_clicked', { source: 'mode_select', selected_mode: 'local2p' });
               resetRandomSelections();
               setMode('local2p');
               setScreen('select');
             }}
             onTraining={() => {
+              setNavigationHome('menu');
               captureAppAnalytics('game_start_clicked', { source: 'mode_select', selected_mode: 'training' });
               resetRandomSelections();
               setMode('training');
@@ -5654,6 +5806,7 @@ export default function App() {
               setScreen('training');
             }}
             onTournament={() => {
+              setNavigationHome('menu');
               captureAppAnalytics('game_start_clicked', { source: 'mode_select', selected_mode: 'tournament' });
               resetRandomSelections();
               setMode('tournamentLocal');
@@ -5661,6 +5814,7 @@ export default function App() {
               setScreen('tournament');
             }}
             onOnline={() => {
+              setNavigationHome('menu');
               captureAppAnalytics('game_start_clicked', { source: 'mode_select', selected_mode: 'online' });
               resetRandomSelections();
               setMode('online');
@@ -5680,22 +5834,27 @@ export default function App() {
               setScreen('select');
             }}
             onSettings={() => {
+              setNavigationHome('menu');
               captureAppAnalytics('menu_item_selected', { item: 'settings' });
               setScreen('settings');
             }}
             onFriends={() => {
+              setNavigationHome('menu');
               setInputPromptMode('pointer');
-              openFriendList('menu_friend_chip');
+              openFriendList('menu_friend_chip', 'menu');
             }}
             onViewer={() => {
+              setNavigationHome('menu');
               captureAppAnalytics('menu_item_selected', { item: 'viewer' });
               setScreen('viewer');
             }}
             onStages={() => {
+              setNavigationHome('menu');
               captureAppAnalytics('menu_item_selected', { item: 'stage_editor' });
               setScreen('stageEditor');
             }}
             onExit={() => {
+              setNavigationHome('menu');
               captureAppAnalytics('menu_item_selected', { item: 'exit_to_title' });
               setScreen('title');
             }}
@@ -5711,7 +5870,7 @@ export default function App() {
             onInviteFriend={startFriendInvite}
             onJoinInvite={joinFriendInvite}
             onDeclineInvite={declineFriendInvite}
-            onBack={() => setScreen('menu')}
+            onBack={returnToNavigationHome}
             onAnalytics={captureAppAnalytics}
           />
         )}
@@ -5729,7 +5888,7 @@ export default function App() {
             setP2Id={setP2Id}
             setTournamentMode={setSelectedTournamentMode}
             setLocalPlayerCount={setSelectedLocalTournamentPlayerCount}
-            onBack={() => setScreen('menu')}
+            onBack={returnToNavigationHome}
             onStart={(startConfig, tournamentMode) => {
               const characterId = startConfig.p1CharacterId;
               captureAppAnalytics('game_start_clicked', { source: 'tournament_select', selected_mode: tournamentMode });
@@ -5798,7 +5957,7 @@ export default function App() {
             }}
             onMenu={() => {
               clearInfiniteTournamentRestart();
-              setScreen('menu');
+              returnToNavigationHome();
             }}
             onRefresh={() => void refreshOnlineTournament().catch((error) => {
               captureAppAnalytics('tournament_lobby_refreshed', { status: 'error' });
@@ -5957,7 +6116,7 @@ export default function App() {
             setP2Id={setP2Id}
             setTrainingMode={setSelectedTrainingMode}
             onMatchHistory={openMatchHistoryFromTraining}
-            onBack={() => setScreen('menu')}
+            onBack={returnToNavigationHome}
             onStart={() => {
               const startTraining = () => {
                 const fightStage = trainingChamberStage;
@@ -6037,7 +6196,7 @@ export default function App() {
               setScreen('leaderboard');
             }}
             onUiNavigate={playInnerMenuSelectSound}
-            onBack={() => setScreen('menu')}
+            onBack={returnToNavigationHome}
             onNext={() => {
               if (mode === 'custom') {
                 captureAppAnalytics('navigation_clicked', { destination: 'custom_rooms', source: 'create_custom_room_button' });
@@ -6083,7 +6242,7 @@ export default function App() {
                   onBack: () => {
                     setMode('ai');
                     setPrivateRoomIntent(null);
-                    setScreen('menu');
+                    returnToNavigationHome();
                   }
                 });
                 return;
@@ -6215,7 +6374,7 @@ export default function App() {
                 finishArcadeRun(arcadeRun);
                 setActiveArcadeMiniGame(null);
                 setLastMiniGameResult(null);
-                setScreen('menu');
+                returnToNavigationHome();
               }}
               onComplete={(result) => {
                 const resultWithAward = { ...result, arcadeScoreAward: result.score };
@@ -6251,7 +6410,7 @@ export default function App() {
                 finishArcadeRun(arcadeRun);
                 setActiveArcadeMiniGame(null);
                 setLastMiniGameResult(null);
-                setScreen('menu');
+                returnToNavigationHome();
               }}
               onComplete={(result) => {
                 const resultWithAward = { ...result, arcadeScoreAward: result.score };
@@ -6286,7 +6445,7 @@ export default function App() {
                 finishArcadeRun(arcadeRun);
                 setActiveArcadeMiniGame(null);
                 setLastMiniGameResult(null);
-                setScreen('menu');
+                returnToNavigationHome();
               }}
               onComplete={(result) => {
                 const resultWithAward = { ...result, arcadeScoreAward: result.score };
@@ -6351,7 +6510,7 @@ export default function App() {
             onGiveUp={() => {
               finishArcadeRun(arcadeRun);
               resetArcadeRun();
-              setScreen('menu');
+              returnToNavigationHome();
             }}
           />
         )}
@@ -6362,7 +6521,7 @@ export default function App() {
             p1={p1}
             p2={p2}
             onReload={reloadStages}
-            onBack={() => setScreen('menu')}
+            onBack={returnToNavigationHome}
             onAnalytics={captureAppAnalytics}
           />
         )}
@@ -6386,7 +6545,7 @@ export default function App() {
             onOptionsShortcut={playInnerMenuSelectSound}
             onOpenStarterGuide={() => openStarterGuide('options_about')}
             onMemoryCardLoaded={refreshMemoryCardState}
-            onBack={() => setScreen('menu')}
+            onBack={returnToNavigationHome}
             onAnalytics={captureAppAnalytics}
           />
         )}
@@ -6425,7 +6584,7 @@ export default function App() {
                 throw error;
               }
             }}
-            onBack={() => setScreen('menu')}
+            onBack={returnToNavigationHome}
             onAnalytics={captureAppAnalytics}
           />
         )}
@@ -6482,7 +6641,7 @@ export default function App() {
             }}
             arcadeRun={arcadeRun}
             onPausedChange={setFightPaused}
-            onMenu={() => setScreen(mode === 'custom' ? 'customRooms' : 'menu')}
+            onMenu={() => mode === 'custom' ? setScreen('customRooms') : returnToNavigationHome()}
             initialTrainingMode={selectedTrainingMode}
             initialPauseMenuView={selectedTrainingMode === 'basics' || selectedTrainingMode === 'combos' ? 'trainingTrials' : undefined}
             onCharacterSelect={() => setScreen(mode === 'custom' ? 'customRooms' : mode === 'training' || mode === 'trainingOnline' ? 'training' : 'select')}
@@ -6969,7 +7128,7 @@ function isMenuNavigationActive(screen: Screen) {
   if (screen === 'boot') return false;
   if (document.querySelector('.starter-guide-overlay')) return true;
   if (document.querySelector('.username-gate-overlay')) return false;
-  if (screen === 'title' || screen === 'versus' || screen === 'unlockReveal') return false;
+  if (screen === 'title' || screen === 'storyHub' || screen === 'versus' || screen === 'unlockReveal') return false;
   if (screen === 'fight') return Boolean(document.querySelector('.pause-overlay'));
   if (screen === 'miniGame') return Boolean(document.querySelector('.pause-overlay'));
   if (screen === 'stageEditor') return false;
@@ -7845,6 +8004,7 @@ function MenuScreen({
   onAnalytics,
   onMenuSelect,
   onMenuHover,
+  onPlay,
   onArcade,
   onVersus,
   onTraining,
@@ -7868,6 +8028,7 @@ function MenuScreen({
   onAnalytics: AnalyticsCapture;
   onMenuSelect: () => void;
   onMenuHover: () => void;
+  onPlay: () => void;
   onArcade: () => void;
   onVersus: () => void;
   onTraining: () => void;
@@ -7882,9 +8043,9 @@ function MenuScreen({
   const [attractIds] = useState(() => pickAttractCharacterIds(roster, unlockedCharacterIds));
   const p1 = roster.find((character) => character.id === attractIds[0]) ?? roster[0];
   const p2 = roster.find((character) => character.id === attractIds[1]) ?? roster.find((character) => character.id !== p1?.id) ?? roster[1] ?? roster[0];
-  const [activeMenuIndex, setActiveMenuIndex] = useState(1);
+  const [activeMenuIndex, setActiveMenuIndex] = useState(0);
   const [menuChromeHidden, setMenuChromeHidden] = useState(false);
-  const activeMenuIndexRef = useRef(1);
+  const activeMenuIndexRef = useRef(0);
   const menuChromeHiddenRef = useRef(false);
   const hiddenMenuGamepadPressedRef = useRef(false);
   const menuScreenRef = useRef<HTMLDivElement>(null);
@@ -8108,8 +8269,8 @@ function MenuScreen({
     };
   }, [clearMenuIdleTimer, menuChromeHidden, scheduleMenuScreensaver]);
 
-  const menuItems = [
-    { label: 'Story', action: undefined, disabled: true },
+  const menuItems: Array<{ label: string; action?: () => void; disabled?: boolean }> = [
+    { label: 'Play', action: onPlay },
     { label: 'Arcade', action: onArcade },
     { label: 'Versus', action: onVersus },
     { label: 'Training', action: onTraining },

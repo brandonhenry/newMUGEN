@@ -1,0 +1,6399 @@
+{
+  "version": 2,
+  "avatarStyle": "kore-street-v1",
+  "defaultSet": "street-shadow",
+  "frameSize": {
+    "width": 224,
+    "height": 192,
+    "baseline": 182
+  },
+  "facing": "right",
+  "frameCount": 520,
+  "sets": [
+    {
+      "id": "solar-runner",
+      "label": "Solar Runner",
+      "frameCount": 38,
+      "source": {
+        "kind": "user-supplied-reference-sheet",
+        "sha256": "e4de86eb5cbfe31e205ad9c3a1f431fd2df6fa31d2e0325627be2f42536e1fd6",
+        "originalFile": "codex-clipboard-aa54433e-69e8-40bb-a38e-59bd72e8dd3c.png"
+      },
+      "animations": [
+        {
+          "id": "idle",
+          "loop": true,
+          "frames": [
+            {
+              "id": "idle-00",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/idle/00.png",
+              "durationMs": 180,
+              "contentBounds": [
+                63,
+                39,
+                161,
+                182
+              ]
+            },
+            {
+              "id": "idle-01",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/idle/01.png",
+              "durationMs": 180,
+              "contentBounds": [
+                63,
+                39,
+                161,
+                182
+              ]
+            },
+            {
+              "id": "idle-02",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/idle/02.png",
+              "durationMs": 180,
+              "contentBounds": [
+                62,
+                39,
+                161,
+                182
+              ]
+            },
+            {
+              "id": "idle-03",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/idle/03.png",
+              "durationMs": 180,
+              "contentBounds": [
+                62,
+                38,
+                161,
+                182
+              ]
+            },
+            {
+              "id": "idle-04",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/idle/04.png",
+              "durationMs": 180,
+              "contentBounds": [
+                62,
+                35,
+                161,
+                182
+              ]
+            },
+            {
+              "id": "idle-05",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/idle/05.png",
+              "durationMs": 180,
+              "contentBounds": [
+                62,
+                35,
+                161,
+                182
+              ]
+            },
+            {
+              "id": "idle-06",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/idle/06.png",
+              "durationMs": 180,
+              "contentBounds": [
+                62,
+                37,
+                161,
+                182
+              ]
+            },
+            {
+              "id": "idle-07",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/idle/07.png",
+              "durationMs": 180,
+              "contentBounds": [
+                62,
+                39,
+                161,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "walk",
+          "loop": true,
+          "frames": [
+            {
+              "id": "walk-00",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/walk/00.png",
+              "durationMs": 92,
+              "contentBounds": [
+                69,
+                32,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "walk-01",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/walk/01.png",
+              "durationMs": 92,
+              "contentBounds": [
+                69,
+                30,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "walk-02",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/walk/02.png",
+              "durationMs": 92,
+              "contentBounds": [
+                69,
+                30,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "walk-03",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/walk/03.png",
+              "durationMs": 92,
+              "contentBounds": [
+                69,
+                32,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "walk-04",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/walk/04.png",
+              "durationMs": 92,
+              "contentBounds": [
+                69,
+                34,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "walk-05",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/walk/05.png",
+              "durationMs": 92,
+              "contentBounds": [
+                69,
+                32,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "walk-06",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/walk/06.png",
+              "durationMs": 92,
+              "contentBounds": [
+                69,
+                32,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "walk-07",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/walk/07.png",
+              "durationMs": 92,
+              "contentBounds": [
+                69,
+                34,
+                155,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sprint",
+          "loop": true,
+          "frames": [
+            {
+              "id": "sprint-00",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/sprint/00.png",
+              "durationMs": 72,
+              "contentBounds": [
+                69,
+                38,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "sprint-01",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/sprint/01.png",
+              "durationMs": 72,
+              "contentBounds": [
+                69,
+                40,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "sprint-02",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/sprint/02.png",
+              "durationMs": 72,
+              "contentBounds": [
+                69,
+                42,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "sprint-03",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/sprint/03.png",
+              "durationMs": 72,
+              "contentBounds": [
+                68,
+                40,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "sprint-04",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/sprint/04.png",
+              "durationMs": 72,
+              "contentBounds": [
+                68,
+                38,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "sprint-05",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/sprint/05.png",
+              "durationMs": 72,
+              "contentBounds": [
+                68,
+                40,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "sprint-06",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/sprint/06.png",
+              "durationMs": 72,
+              "contentBounds": [
+                68,
+                42,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "sprint-07",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/sprint/07.png",
+              "durationMs": 72,
+              "contentBounds": [
+                68,
+                40,
+                155,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jump",
+          "loop": false,
+          "frames": [
+            {
+              "id": "jump-00",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/jump/00.png",
+              "durationMs": 86,
+              "contentBounds": [
+                69,
+                44,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "jump-01",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/jump/01.png",
+              "durationMs": 86,
+              "contentBounds": [
+                69,
+                46,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "jump-02",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/jump/02.png",
+              "durationMs": 86,
+              "contentBounds": [
+                68,
+                34,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "jump-03",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/jump/03.png",
+              "durationMs": 86,
+              "contentBounds": [
+                61,
+                34,
+                163,
+                182
+              ]
+            },
+            {
+              "id": "jump-04",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/jump/04.png",
+              "durationMs": 86,
+              "contentBounds": [
+                66,
+                40,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "jump-05",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/jump/05.png",
+              "durationMs": 86,
+              "contentBounds": [
+                61,
+                36,
+                163,
+                182
+              ]
+            },
+            {
+              "id": "jump-06",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/jump/06.png",
+              "durationMs": 86,
+              "contentBounds": [
+                62,
+                40,
+                162,
+                182
+              ]
+            },
+            {
+              "id": "jump-07",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/jump/07.png",
+              "durationMs": 86,
+              "contentBounds": [
+                69,
+                44,
+                155,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "attack",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-00",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                69,
+                32,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "attack-01",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                69,
+                32,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "attack-02",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                69,
+                32,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "attack-03",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                69,
+                33,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "attack-04",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                69,
+                36,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "attack-05",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                69,
+                36,
+                155,
+                182
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "street-shadow",
+      "label": "Street Shadow",
+      "frameCount": 37,
+      "source": {
+        "kind": "user-supplied-reference-sheet",
+        "sha256": "1569987d900732e9a262021befa649d3f77a7b0f1ce4503d6f80f7cbb80a4a3c",
+        "originalFile": "codex-clipboard-aa6c97ef-31d3-4c9e-b9b4-bef823d8c365.png"
+      },
+      "animations": [
+        {
+          "id": "idle",
+          "loop": true,
+          "frames": [
+            {
+              "id": "idle-00",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/idle/00.png",
+              "durationMs": 180,
+              "contentBounds": [
+                65,
+                34,
+                159,
+                182
+              ]
+            },
+            {
+              "id": "idle-01",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/idle/01.png",
+              "durationMs": 180,
+              "contentBounds": [
+                65,
+                32,
+                159,
+                182
+              ]
+            },
+            {
+              "id": "idle-02",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/idle/02.png",
+              "durationMs": 180,
+              "contentBounds": [
+                65,
+                30,
+                159,
+                182
+              ]
+            },
+            {
+              "id": "idle-03",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/idle/03.png",
+              "durationMs": 180,
+              "contentBounds": [
+                65,
+                30,
+                159,
+                182
+              ]
+            },
+            {
+              "id": "idle-04",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/idle/04.png",
+              "durationMs": 180,
+              "contentBounds": [
+                65,
+                30,
+                159,
+                182
+              ]
+            },
+            {
+              "id": "idle-05",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/idle/05.png",
+              "durationMs": 180,
+              "contentBounds": [
+                65,
+                32,
+                159,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "walk",
+          "loop": true,
+          "frames": [
+            {
+              "id": "walk-00",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/walk/00.png",
+              "durationMs": 92,
+              "contentBounds": [
+                68,
+                32,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "walk-01",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/walk/01.png",
+              "durationMs": 92,
+              "contentBounds": [
+                68,
+                30,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "walk-02",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/walk/02.png",
+              "durationMs": 92,
+              "contentBounds": [
+                68,
+                30,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "walk-03",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/walk/03.png",
+              "durationMs": 92,
+              "contentBounds": [
+                68,
+                32,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "walk-04",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/walk/04.png",
+              "durationMs": 92,
+              "contentBounds": [
+                68,
+                30,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "walk-05",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/walk/05.png",
+              "durationMs": 92,
+              "contentBounds": [
+                68,
+                30,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "walk-06",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/walk/06.png",
+              "durationMs": 92,
+              "contentBounds": [
+                68,
+                32,
+                156,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sprint",
+          "loop": true,
+          "frames": [
+            {
+              "id": "sprint-00",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/sprint/00.png",
+              "durationMs": 72,
+              "contentBounds": [
+                68,
+                38,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "sprint-01",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/sprint/01.png",
+              "durationMs": 72,
+              "contentBounds": [
+                68,
+                38,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "sprint-02",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/sprint/02.png",
+              "durationMs": 72,
+              "contentBounds": [
+                67,
+                40,
+                157,
+                182
+              ]
+            },
+            {
+              "id": "sprint-03",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/sprint/03.png",
+              "durationMs": 72,
+              "contentBounds": [
+                65,
+                40,
+                159,
+                182
+              ]
+            },
+            {
+              "id": "sprint-04",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/sprint/04.png",
+              "durationMs": 72,
+              "contentBounds": [
+                68,
+                38,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "sprint-05",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/sprint/05.png",
+              "durationMs": 72,
+              "contentBounds": [
+                68,
+                38,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "sprint-06",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/sprint/06.png",
+              "durationMs": 72,
+              "contentBounds": [
+                67,
+                40,
+                157,
+                182
+              ]
+            },
+            {
+              "id": "sprint-07",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/sprint/07.png",
+              "durationMs": 72,
+              "contentBounds": [
+                65,
+                40,
+                159,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jump",
+          "loop": false,
+          "frames": [
+            {
+              "id": "jump-00",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/jump/00.png",
+              "durationMs": 86,
+              "contentBounds": [
+                68,
+                38,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "jump-01",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/jump/01.png",
+              "durationMs": 86,
+              "contentBounds": [
+                68,
+                32,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "jump-02",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/jump/02.png",
+              "durationMs": 86,
+              "contentBounds": [
+                68,
+                36,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "jump-03",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/jump/03.png",
+              "durationMs": 86,
+              "contentBounds": [
+                68,
+                40,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "jump-04",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/jump/04.png",
+              "durationMs": 86,
+              "contentBounds": [
+                68,
+                44,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "jump-05",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/jump/05.png",
+              "durationMs": 86,
+              "contentBounds": [
+                68,
+                46,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "jump-06",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/jump/06.png",
+              "durationMs": 86,
+              "contentBounds": [
+                67,
+                42,
+                157,
+                182
+              ]
+            },
+            {
+              "id": "jump-07",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/jump/07.png",
+              "durationMs": 86,
+              "contentBounds": [
+                68,
+                44,
+                156,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "attack",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-00",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                68,
+                30,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "attack-01",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                68,
+                30,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "attack-02",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                68,
+                30,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "attack-03",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                68,
+                30,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "attack-04",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                68,
+                30,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "attack-05",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                64,
+                30,
+                159,
+                182
+              ]
+            },
+            {
+              "id": "attack-06",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                68,
+                30,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "attack-07",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                68,
+                30,
+                156,
+                182
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "crimson-ranger",
+      "label": "Crimson Ranger",
+      "frameCount": 38,
+      "source": {
+        "kind": "user-supplied-reference-sheet",
+        "sha256": "3828b16ed8ddd4ebfd5dae73c25df39d6893cc8a0d04a94fd9595bcd7f89bc70",
+        "originalFile": "codex-clipboard-df0cbf64-5835-4d1f-82a7-247c91d23791.png"
+      },
+      "animations": [
+        {
+          "id": "idle",
+          "loop": true,
+          "frames": [
+            {
+              "id": "idle-00",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/idle/00.png",
+              "durationMs": 180,
+              "contentBounds": [
+                48,
+                36,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "idle-01",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/idle/01.png",
+              "durationMs": 180,
+              "contentBounds": [
+                48,
+                34,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "idle-02",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/idle/02.png",
+              "durationMs": 180,
+              "contentBounds": [
+                48,
+                34,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "idle-03",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/idle/03.png",
+              "durationMs": 180,
+              "contentBounds": [
+                48,
+                34,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "idle-04",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/idle/04.png",
+              "durationMs": 180,
+              "contentBounds": [
+                48,
+                34,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "idle-05",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/idle/05.png",
+              "durationMs": 180,
+              "contentBounds": [
+                48,
+                36,
+                176,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "walk",
+          "loop": true,
+          "frames": [
+            {
+              "id": "walk-00",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/walk/00.png",
+              "durationMs": 92,
+              "contentBounds": [
+                48,
+                36,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "walk-01",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/walk/01.png",
+              "durationMs": 92,
+              "contentBounds": [
+                48,
+                34,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "walk-02",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/walk/02.png",
+              "durationMs": 92,
+              "contentBounds": [
+                48,
+                32,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "walk-03",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/walk/03.png",
+              "durationMs": 92,
+              "contentBounds": [
+                48,
+                34,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "walk-04",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/walk/04.png",
+              "durationMs": 92,
+              "contentBounds": [
+                48,
+                36,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "walk-05",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/walk/05.png",
+              "durationMs": 92,
+              "contentBounds": [
+                47,
+                34,
+                177,
+                182
+              ]
+            },
+            {
+              "id": "walk-06",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/walk/06.png",
+              "durationMs": 92,
+              "contentBounds": [
+                48,
+                32,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "walk-07",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/walk/07.png",
+              "durationMs": 92,
+              "contentBounds": [
+                48,
+                34,
+                176,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sprint",
+          "loop": true,
+          "frames": [
+            {
+              "id": "sprint-00",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/sprint/00.png",
+              "durationMs": 72,
+              "contentBounds": [
+                48,
+                38,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "sprint-01",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/sprint/01.png",
+              "durationMs": 72,
+              "contentBounds": [
+                48,
+                40,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "sprint-02",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/sprint/02.png",
+              "durationMs": 72,
+              "contentBounds": [
+                48,
+                42,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "sprint-03",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/sprint/03.png",
+              "durationMs": 72,
+              "contentBounds": [
+                48,
+                40,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "sprint-04",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/sprint/04.png",
+              "durationMs": 72,
+              "contentBounds": [
+                48,
+                38,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "sprint-05",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/sprint/05.png",
+              "durationMs": 72,
+              "contentBounds": [
+                48,
+                40,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "sprint-06",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/sprint/06.png",
+              "durationMs": 72,
+              "contentBounds": [
+                48,
+                42,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "sprint-07",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/sprint/07.png",
+              "durationMs": 72,
+              "contentBounds": [
+                48,
+                40,
+                176,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jump",
+          "loop": false,
+          "frames": [
+            {
+              "id": "jump-00",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/jump/00.png",
+              "durationMs": 86,
+              "contentBounds": [
+                48,
+                42,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "jump-01",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/jump/01.png",
+              "durationMs": 86,
+              "contentBounds": [
+                48,
+                44,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "jump-02",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/jump/02.png",
+              "durationMs": 86,
+              "contentBounds": [
+                48,
+                36,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "jump-03",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/jump/03.png",
+              "durationMs": 86,
+              "contentBounds": [
+                48,
+                40,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "jump-04",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/jump/04.png",
+              "durationMs": 86,
+              "contentBounds": [
+                48,
+                46,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "jump-05",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/jump/05.png",
+              "durationMs": 86,
+              "contentBounds": [
+                48,
+                48,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "jump-06",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/jump/06.png",
+              "durationMs": 86,
+              "contentBounds": [
+                48,
+                38,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "jump-07",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/jump/07.png",
+              "durationMs": 86,
+              "contentBounds": [
+                48,
+                36,
+                176,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "attack",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-00",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                61,
+                40,
+                163,
+                182
+              ]
+            },
+            {
+              "id": "attack-01",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                61,
+                40,
+                163,
+                182
+              ]
+            },
+            {
+              "id": "attack-02",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                61,
+                40,
+                163,
+                182
+              ]
+            },
+            {
+              "id": "attack-03",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                43,
+                40,
+                181,
+                182
+              ]
+            },
+            {
+              "id": "attack-04",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                32,
+                40,
+                192,
+                182
+              ]
+            },
+            {
+              "id": "attack-05",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                37,
+                40,
+                187,
+                182
+              ]
+            },
+            {
+              "id": "attack-06",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                49,
+                40,
+                175,
+                182
+              ]
+            },
+            {
+              "id": "attack-07",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                57,
+                40,
+                167,
+                182
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rose-blade",
+      "label": "Rose Blade",
+      "frameCount": 27,
+      "source": {
+        "kind": "user-supplied-reference-sheet",
+        "sha256": "8e70171b2f96699076d5797f698900d97c9af012ac5f148d9aa059a5686a6eb4",
+        "originalFile": "codex-clipboard-81ce300d-ba20-4d59-a7b0-2eb565f8e2c4.png"
+      },
+      "animations": [
+        {
+          "id": "idle",
+          "loop": true,
+          "frames": [
+            {
+              "id": "idle-00",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/idle/00.png",
+              "durationMs": 180,
+              "contentBounds": [
+                41,
+                50,
+                183,
+                182
+              ]
+            },
+            {
+              "id": "idle-01",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/idle/01.png",
+              "durationMs": 180,
+              "contentBounds": [
+                41,
+                48,
+                183,
+                182
+              ]
+            },
+            {
+              "id": "idle-02",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/idle/02.png",
+              "durationMs": 180,
+              "contentBounds": [
+                41,
+                46,
+                183,
+                182
+              ]
+            },
+            {
+              "id": "idle-03",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/idle/03.png",
+              "durationMs": 180,
+              "contentBounds": [
+                41,
+                46,
+                183,
+                182
+              ]
+            },
+            {
+              "id": "idle-04",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/idle/04.png",
+              "durationMs": 180,
+              "contentBounds": [
+                41,
+                46,
+                183,
+                182
+              ]
+            },
+            {
+              "id": "idle-05",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/idle/05.png",
+              "durationMs": 180,
+              "contentBounds": [
+                41,
+                48,
+                183,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "walk",
+          "loop": true,
+          "frames": [
+            {
+              "id": "walk-00",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/walk/00.png",
+              "durationMs": 92,
+              "contentBounds": [
+                60,
+                44,
+                164,
+                182
+              ]
+            },
+            {
+              "id": "walk-01",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/walk/01.png",
+              "durationMs": 92,
+              "contentBounds": [
+                60,
+                42,
+                164,
+                182
+              ]
+            },
+            {
+              "id": "walk-02",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/walk/02.png",
+              "durationMs": 92,
+              "contentBounds": [
+                63,
+                44,
+                161,
+                182
+              ]
+            },
+            {
+              "id": "walk-03",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/walk/03.png",
+              "durationMs": 92,
+              "contentBounds": [
+                61,
+                46,
+                163,
+                182
+              ]
+            },
+            {
+              "id": "walk-04",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/walk/04.png",
+              "durationMs": 92,
+              "contentBounds": [
+                60,
+                44,
+                164,
+                182
+              ]
+            },
+            {
+              "id": "walk-05",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/walk/05.png",
+              "durationMs": 92,
+              "contentBounds": [
+                58,
+                42,
+                166,
+                182
+              ]
+            },
+            {
+              "id": "walk-06",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/walk/06.png",
+              "durationMs": 92,
+              "contentBounds": [
+                58,
+                44,
+                166,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sprint",
+          "loop": true,
+          "frames": [
+            {
+              "id": "sprint-00",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/sprint/00.png",
+              "durationMs": 72,
+              "contentBounds": [
+                66,
+                51,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "sprint-01",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/sprint/01.png",
+              "durationMs": 72,
+              "contentBounds": [
+                66,
+                54,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "sprint-02",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/sprint/02.png",
+              "durationMs": 72,
+              "contentBounds": [
+                66,
+                52,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "sprint-03",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/sprint/03.png",
+              "durationMs": 72,
+              "contentBounds": [
+                66,
+                50,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "sprint-04",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/sprint/04.png",
+              "durationMs": 72,
+              "contentBounds": [
+                66,
+                51,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "sprint-05",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/sprint/05.png",
+              "durationMs": 72,
+              "contentBounds": [
+                65,
+                50,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "sprint-06",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/sprint/06.png",
+              "durationMs": 72,
+              "contentBounds": [
+                66,
+                48,
+                158,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jump",
+          "loop": false,
+          "frames": [
+            {
+              "id": "jump-00",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/sprint/00.png",
+              "durationMs": 86,
+              "contentBounds": [
+                66,
+                51,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "jump-01",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/sprint/01.png",
+              "durationMs": 86,
+              "contentBounds": [
+                66,
+                54,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "jump-02",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/sprint/02.png",
+              "durationMs": 86,
+              "contentBounds": [
+                66,
+                52,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "jump-03",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/sprint/03.png",
+              "durationMs": 86,
+              "contentBounds": [
+                66,
+                50,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "jump-04",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/sprint/04.png",
+              "durationMs": 86,
+              "contentBounds": [
+                66,
+                51,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "jump-05",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/sprint/05.png",
+              "durationMs": 86,
+              "contentBounds": [
+                65,
+                50,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "jump-06",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/sprint/06.png",
+              "durationMs": 86,
+              "contentBounds": [
+                66,
+                48,
+                158,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "attack",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-00",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                48,
+                47,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "attack-01",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                50,
+                48,
+                174,
+                182
+              ]
+            },
+            {
+              "id": "attack-02",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                65,
+                48,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "attack-03",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                46,
+                48,
+                177,
+                182
+              ]
+            },
+            {
+              "id": "attack-04",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                47,
+                47,
+                177,
+                182
+              ]
+            },
+            {
+              "id": "attack-05",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                38,
+                48,
+                186,
+                182
+              ]
+            },
+            {
+              "id": "attack-06",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                50,
+                46,
+                174,
+                182
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "neon-courier",
+      "label": "Neon Courier",
+      "frameCount": 38,
+      "source": {
+        "kind": "openai-image-generation-reference-sheet",
+        "sha256": "c2c47f1f11a1f11f27e29579b292ce9f9fb398d5c212ecae5a2820a36b1a3bf6",
+        "originalFile": "neon-courier-imagegen-v1.png"
+      },
+      "animations": [
+        {
+          "id": "idle",
+          "loop": true,
+          "frames": [
+            {
+              "id": "idle-00",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/idle/00.png",
+              "durationMs": 180,
+              "contentBounds": [
+                79,
+                61,
+                145,
+                182
+              ]
+            },
+            {
+              "id": "idle-01",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/idle/01.png",
+              "durationMs": 180,
+              "contentBounds": [
+                79,
+                61,
+                145,
+                182
+              ]
+            },
+            {
+              "id": "idle-02",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/idle/02.png",
+              "durationMs": 180,
+              "contentBounds": [
+                79,
+                61,
+                145,
+                182
+              ]
+            },
+            {
+              "id": "idle-03",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/idle/03.png",
+              "durationMs": 180,
+              "contentBounds": [
+                79,
+                61,
+                144,
+                182
+              ]
+            },
+            {
+              "id": "idle-04",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/idle/04.png",
+              "durationMs": 180,
+              "contentBounds": [
+                79,
+                61,
+                144,
+                182
+              ]
+            },
+            {
+              "id": "idle-05",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/idle/05.png",
+              "durationMs": 180,
+              "contentBounds": [
+                79,
+                61,
+                144,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "walk",
+          "loop": true,
+          "frames": [
+            {
+              "id": "walk-00",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/walk/00.png",
+              "durationMs": 92,
+              "contentBounds": [
+                77,
+                62,
+                147,
+                182
+              ]
+            },
+            {
+              "id": "walk-01",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/walk/01.png",
+              "durationMs": 92,
+              "contentBounds": [
+                76,
+                63,
+                147,
+                182
+              ]
+            },
+            {
+              "id": "walk-02",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/walk/02.png",
+              "durationMs": 92,
+              "contentBounds": [
+                77,
+                63,
+                147,
+                182
+              ]
+            },
+            {
+              "id": "walk-03",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/walk/03.png",
+              "durationMs": 92,
+              "contentBounds": [
+                77,
+                65,
+                146,
+                182
+              ]
+            },
+            {
+              "id": "walk-04",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/walk/04.png",
+              "durationMs": 92,
+              "contentBounds": [
+                78,
+                64,
+                146,
+                182
+              ]
+            },
+            {
+              "id": "walk-05",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/walk/05.png",
+              "durationMs": 92,
+              "contentBounds": [
+                78,
+                65,
+                146,
+                182
+              ]
+            },
+            {
+              "id": "walk-06",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/walk/06.png",
+              "durationMs": 92,
+              "contentBounds": [
+                78,
+                66,
+                146,
+                182
+              ]
+            },
+            {
+              "id": "walk-07",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/walk/07.png",
+              "durationMs": 92,
+              "contentBounds": [
+                78,
+                68,
+                145,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sprint",
+          "loop": true,
+          "frames": [
+            {
+              "id": "sprint-00",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/sprint/00.png",
+              "durationMs": 72,
+              "contentBounds": [
+                74,
+                69,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "sprint-01",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/sprint/01.png",
+              "durationMs": 72,
+              "contentBounds": [
+                73,
+                72,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "sprint-02",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/sprint/02.png",
+              "durationMs": 72,
+              "contentBounds": [
+                74,
+                75,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "sprint-03",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/sprint/03.png",
+              "durationMs": 72,
+              "contentBounds": [
+                74,
+                73,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "sprint-04",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/sprint/04.png",
+              "durationMs": 72,
+              "contentBounds": [
+                72,
+                75,
+                151,
+                182
+              ]
+            },
+            {
+              "id": "sprint-05",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/sprint/05.png",
+              "durationMs": 72,
+              "contentBounds": [
+                73,
+                77,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "sprint-06",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/sprint/06.png",
+              "durationMs": 72,
+              "contentBounds": [
+                75,
+                77,
+                149,
+                182
+              ]
+            },
+            {
+              "id": "sprint-07",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/sprint/07.png",
+              "durationMs": 72,
+              "contentBounds": [
+                74,
+                77,
+                150,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jump",
+          "loop": false,
+          "frames": [
+            {
+              "id": "jump-00",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/jump/00.png",
+              "durationMs": 86,
+              "contentBounds": [
+                78,
+                63,
+                145,
+                182
+              ]
+            },
+            {
+              "id": "jump-01",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/jump/01.png",
+              "durationMs": 86,
+              "contentBounds": [
+                78,
+                76,
+                145,
+                182
+              ]
+            },
+            {
+              "id": "jump-02",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/jump/02.png",
+              "durationMs": 86,
+              "contentBounds": [
+                78,
+                71,
+                145,
+                182
+              ]
+            },
+            {
+              "id": "jump-03",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/jump/03.png",
+              "durationMs": 86,
+              "contentBounds": [
+                79,
+                70,
+                145,
+                182
+              ]
+            },
+            {
+              "id": "jump-04",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/jump/04.png",
+              "durationMs": 86,
+              "contentBounds": [
+                79,
+                80,
+                144,
+                182
+              ]
+            },
+            {
+              "id": "jump-05",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/jump/05.png",
+              "durationMs": 86,
+              "contentBounds": [
+                80,
+                76,
+                144,
+                182
+              ]
+            },
+            {
+              "id": "jump-06",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/jump/06.png",
+              "durationMs": 86,
+              "contentBounds": [
+                79,
+                80,
+                144,
+                182
+              ]
+            },
+            {
+              "id": "jump-07",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/jump/07.png",
+              "durationMs": 86,
+              "contentBounds": [
+                77,
+                85,
+                147,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "attack",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-00",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                70,
+                70,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "attack-01",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                74,
+                74,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "attack-02",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                74,
+                75,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "attack-03",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                70,
+                76,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "attack-04",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                67,
+                76,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "attack-05",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                64,
+                76,
+                160,
+                182
+              ]
+            },
+            {
+              "id": "attack-06",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                74,
+                74,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "attack-07",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                77,
+                74,
+                146,
+                182
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ember-scout",
+      "label": "Ember Scout",
+      "frameCount": 38,
+      "source": {
+        "kind": "openai-image-generation-reference-sheet",
+        "sha256": "87c73fe4149a2059145deb31f7884ed741610ff3a2a765e27329c7f8f3bd8dfd",
+        "originalFile": "ember-scout-imagegen-v1.png"
+      },
+      "animations": [
+        {
+          "id": "idle",
+          "loop": true,
+          "frames": [
+            {
+              "id": "idle-00",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/idle/00.png",
+              "durationMs": 180,
+              "contentBounds": [
+                65,
+                63,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "idle-01",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/idle/01.png",
+              "durationMs": 180,
+              "contentBounds": [
+                65,
+                63,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "idle-02",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/idle/02.png",
+              "durationMs": 180,
+              "contentBounds": [
+                65,
+                63,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "idle-03",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/idle/03.png",
+              "durationMs": 180,
+              "contentBounds": [
+                66,
+                63,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "idle-04",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/idle/04.png",
+              "durationMs": 180,
+              "contentBounds": [
+                66,
+                63,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "idle-05",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/idle/05.png",
+              "durationMs": 180,
+              "contentBounds": [
+                65,
+                63,
+                158,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "walk",
+          "loop": true,
+          "frames": [
+            {
+              "id": "walk-00",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/walk/00.png",
+              "durationMs": 92,
+              "contentBounds": [
+                66,
+                61,
+                157,
+                182
+              ]
+            },
+            {
+              "id": "walk-01",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/walk/01.png",
+              "durationMs": 92,
+              "contentBounds": [
+                67,
+                60,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "walk-02",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/walk/02.png",
+              "durationMs": 92,
+              "contentBounds": [
+                67,
+                61,
+                157,
+                182
+              ]
+            },
+            {
+              "id": "walk-03",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/walk/03.png",
+              "durationMs": 92,
+              "contentBounds": [
+                67,
+                61,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "walk-04",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/walk/04.png",
+              "durationMs": 92,
+              "contentBounds": [
+                68,
+                62,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "walk-05",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/walk/05.png",
+              "durationMs": 92,
+              "contentBounds": [
+                67,
+                61,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "walk-06",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/walk/06.png",
+              "durationMs": 92,
+              "contentBounds": [
+                67,
+                61,
+                157,
+                182
+              ]
+            },
+            {
+              "id": "walk-07",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/walk/07.png",
+              "durationMs": 92,
+              "contentBounds": [
+                67,
+                61,
+                156,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sprint",
+          "loop": true,
+          "frames": [
+            {
+              "id": "sprint-00",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/sprint/00.png",
+              "durationMs": 72,
+              "contentBounds": [
+                65,
+                64,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "sprint-01",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/sprint/01.png",
+              "durationMs": 72,
+              "contentBounds": [
+                66,
+                64,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "sprint-02",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/sprint/02.png",
+              "durationMs": 72,
+              "contentBounds": [
+                65,
+                62,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "sprint-03",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/sprint/03.png",
+              "durationMs": 72,
+              "contentBounds": [
+                66,
+                72,
+                157,
+                182
+              ]
+            },
+            {
+              "id": "sprint-04",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/sprint/04.png",
+              "durationMs": 72,
+              "contentBounds": [
+                66,
+                62,
+                157,
+                182
+              ]
+            },
+            {
+              "id": "sprint-05",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/sprint/05.png",
+              "durationMs": 72,
+              "contentBounds": [
+                66,
+                63,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "sprint-06",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/sprint/06.png",
+              "durationMs": 72,
+              "contentBounds": [
+                66,
+                66,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "sprint-07",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/sprint/07.png",
+              "durationMs": 72,
+              "contentBounds": [
+                66,
+                64,
+                157,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jump",
+          "loop": false,
+          "frames": [
+            {
+              "id": "jump-00",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/jump/00.png",
+              "durationMs": 86,
+              "contentBounds": [
+                68,
+                62,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "jump-01",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/jump/01.png",
+              "durationMs": 86,
+              "contentBounds": [
+                66,
+                63,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "jump-02",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/jump/02.png",
+              "durationMs": 86,
+              "contentBounds": [
+                67,
+                64,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "jump-03",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/jump/03.png",
+              "durationMs": 86,
+              "contentBounds": [
+                68,
+                72,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "jump-04",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/jump/04.png",
+              "durationMs": 86,
+              "contentBounds": [
+                68,
+                62,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "jump-05",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/jump/05.png",
+              "durationMs": 86,
+              "contentBounds": [
+                68,
+                61,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "jump-06",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/jump/06.png",
+              "durationMs": 86,
+              "contentBounds": [
+                67,
+                66,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "jump-07",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/jump/07.png",
+              "durationMs": 86,
+              "contentBounds": [
+                68,
+                65,
+                156,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "attack",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-00",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                58,
+                64,
+                166,
+                182
+              ]
+            },
+            {
+              "id": "attack-01",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                59,
+                65,
+                165,
+                182
+              ]
+            },
+            {
+              "id": "attack-02",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                59,
+                65,
+                164,
+                182
+              ]
+            },
+            {
+              "id": "attack-03",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                66,
+                65,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "attack-04",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                45,
+                64,
+                178,
+                182
+              ]
+            },
+            {
+              "id": "attack-05",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                41,
+                65,
+                182,
+                182
+              ]
+            },
+            {
+              "id": "attack-06",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                46,
+                66,
+                178,
+                182
+              ]
+            },
+            {
+              "id": "attack-07",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                67,
+                64,
+                157,
+                182
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "synth-drifter",
+      "label": "Synth Drifter",
+      "frameCount": 38,
+      "source": {
+        "kind": "openai-image-generation-reference-sheet",
+        "sha256": "f1fc9061dafd071e8a287fea1235b0928993c223380196671855aa5c47969daa",
+        "originalFile": "synth-drifter-imagegen-v1.png"
+      },
+      "animations": [
+        {
+          "id": "idle",
+          "loop": true,
+          "frames": [
+            {
+              "id": "idle-00",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/idle/00.png",
+              "durationMs": 180,
+              "contentBounds": [
+                71,
+                64,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "idle-01",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/idle/01.png",
+              "durationMs": 180,
+              "contentBounds": [
+                71,
+                64,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "idle-02",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/idle/02.png",
+              "durationMs": 180,
+              "contentBounds": [
+                70,
+                64,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "idle-03",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/idle/03.png",
+              "durationMs": 180,
+              "contentBounds": [
+                71,
+                64,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "idle-04",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/idle/04.png",
+              "durationMs": 180,
+              "contentBounds": [
+                70,
+                64,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "idle-05",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/idle/05.png",
+              "durationMs": 180,
+              "contentBounds": [
+                71,
+                64,
+                153,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "walk",
+          "loop": true,
+          "frames": [
+            {
+              "id": "walk-00",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/walk/00.png",
+              "durationMs": 92,
+              "contentBounds": [
+                74,
+                67,
+                149,
+                182
+              ]
+            },
+            {
+              "id": "walk-01",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/walk/01.png",
+              "durationMs": 92,
+              "contentBounds": [
+                74,
+                66,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "walk-02",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/walk/02.png",
+              "durationMs": 92,
+              "contentBounds": [
+                74,
+                66,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "walk-03",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/walk/03.png",
+              "durationMs": 92,
+              "contentBounds": [
+                74,
+                67,
+                149,
+                182
+              ]
+            },
+            {
+              "id": "walk-04",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/walk/04.png",
+              "durationMs": 92,
+              "contentBounds": [
+                74,
+                68,
+                149,
+                182
+              ]
+            },
+            {
+              "id": "walk-05",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/walk/05.png",
+              "durationMs": 92,
+              "contentBounds": [
+                74,
+                67,
+                149,
+                182
+              ]
+            },
+            {
+              "id": "walk-06",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/walk/06.png",
+              "durationMs": 92,
+              "contentBounds": [
+                74,
+                67,
+                149,
+                182
+              ]
+            },
+            {
+              "id": "walk-07",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/walk/07.png",
+              "durationMs": 92,
+              "contentBounds": [
+                74,
+                67,
+                150,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sprint",
+          "loop": true,
+          "frames": [
+            {
+              "id": "sprint-00",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/sprint/00.png",
+              "durationMs": 72,
+              "contentBounds": [
+                73,
+                71,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "sprint-01",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/sprint/01.png",
+              "durationMs": 72,
+              "contentBounds": [
+                73,
+                75,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "sprint-02",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/sprint/02.png",
+              "durationMs": 72,
+              "contentBounds": [
+                73,
+                73,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "sprint-03",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/sprint/03.png",
+              "durationMs": 72,
+              "contentBounds": [
+                70,
+                74,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "sprint-04",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/sprint/04.png",
+              "durationMs": 72,
+              "contentBounds": [
+                68,
+                75,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "sprint-05",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/sprint/05.png",
+              "durationMs": 72,
+              "contentBounds": [
+                72,
+                77,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "sprint-06",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/sprint/06.png",
+              "durationMs": 72,
+              "contentBounds": [
+                70,
+                77,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "sprint-07",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/sprint/07.png",
+              "durationMs": 72,
+              "contentBounds": [
+                69,
+                76,
+                155,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jump",
+          "loop": false,
+          "frames": [
+            {
+              "id": "jump-00",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/jump/00.png",
+              "durationMs": 86,
+              "contentBounds": [
+                75,
+                80,
+                148,
+                182
+              ]
+            },
+            {
+              "id": "jump-01",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/jump/01.png",
+              "durationMs": 86,
+              "contentBounds": [
+                74,
+                81,
+                149,
+                182
+              ]
+            },
+            {
+              "id": "jump-02",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/jump/02.png",
+              "durationMs": 86,
+              "contentBounds": [
+                74,
+                78,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "jump-03",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/jump/03.png",
+              "durationMs": 86,
+              "contentBounds": [
+                73,
+                78,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "jump-04",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/jump/04.png",
+              "durationMs": 86,
+              "contentBounds": [
+                73,
+                77,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "jump-05",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/jump/05.png",
+              "durationMs": 86,
+              "contentBounds": [
+                74,
+                79,
+                149,
+                182
+              ]
+            },
+            {
+              "id": "jump-06",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/jump/06.png",
+              "durationMs": 86,
+              "contentBounds": [
+                73,
+                76,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "jump-07",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/jump/07.png",
+              "durationMs": 86,
+              "contentBounds": [
+                74,
+                79,
+                150,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "attack",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-00",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                50,
+                70,
+                173,
+                182
+              ]
+            },
+            {
+              "id": "attack-01",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                36,
+                67,
+                188,
+                182
+              ]
+            },
+            {
+              "id": "attack-02",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                52,
+                60,
+                172,
+                182
+              ]
+            },
+            {
+              "id": "attack-03",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                38,
+                79,
+                185,
+                182
+              ]
+            },
+            {
+              "id": "attack-04",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                36,
+                76,
+                187,
+                182
+              ]
+            },
+            {
+              "id": "attack-05",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                57,
+                75,
+                166,
+                182
+              ]
+            },
+            {
+              "id": "attack-06",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                74,
+                73,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "attack-07",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                73,
+                73,
+                150,
+                182
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "forest-warden",
+      "label": "Forest Warden",
+      "frameCount": 38,
+      "source": {
+        "kind": "openai-image-generation-reference-sheet",
+        "sha256": "74b2e78cb8d057776619dd00d9c5257c128f3dbed955ec7461b68e1c7cfba096",
+        "originalFile": "forest-warden-imagegen-v1.png"
+      },
+      "animations": [
+        {
+          "id": "idle",
+          "loop": true,
+          "frames": [
+            {
+              "id": "idle-00",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/idle/00.png",
+              "durationMs": 180,
+              "contentBounds": [
+                67,
+                65,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "idle-01",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/idle/01.png",
+              "durationMs": 180,
+              "contentBounds": [
+                68,
+                65,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "idle-02",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/idle/02.png",
+              "durationMs": 180,
+              "contentBounds": [
+                68,
+                65,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "idle-03",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/idle/03.png",
+              "durationMs": 180,
+              "contentBounds": [
+                68,
+                65,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "idle-04",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/idle/04.png",
+              "durationMs": 180,
+              "contentBounds": [
+                67,
+                65,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "idle-05",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/idle/05.png",
+              "durationMs": 180,
+              "contentBounds": [
+                68,
+                65,
+                156,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "walk",
+          "loop": true,
+          "frames": [
+            {
+              "id": "walk-00",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/walk/00.png",
+              "durationMs": 92,
+              "contentBounds": [
+                71,
+                63,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "walk-01",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/walk/01.png",
+              "durationMs": 92,
+              "contentBounds": [
+                72,
+                63,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "walk-02",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/walk/02.png",
+              "durationMs": 92,
+              "contentBounds": [
+                72,
+                62,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "walk-03",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/walk/03.png",
+              "durationMs": 92,
+              "contentBounds": [
+                71,
+                63,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "walk-04",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/walk/04.png",
+              "durationMs": 92,
+              "contentBounds": [
+                70,
+                62,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "walk-05",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/walk/05.png",
+              "durationMs": 92,
+              "contentBounds": [
+                70,
+                61,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "walk-06",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/walk/06.png",
+              "durationMs": 92,
+              "contentBounds": [
+                71,
+                61,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "walk-07",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/walk/07.png",
+              "durationMs": 92,
+              "contentBounds": [
+                72,
+                63,
+                152,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sprint",
+          "loop": true,
+          "frames": [
+            {
+              "id": "sprint-00",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/sprint/00.png",
+              "durationMs": 72,
+              "contentBounds": [
+                69,
+                71,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "sprint-01",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/sprint/01.png",
+              "durationMs": 72,
+              "contentBounds": [
+                69,
+                68,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "sprint-02",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/sprint/02.png",
+              "durationMs": 72,
+              "contentBounds": [
+                66,
+                69,
+                157,
+                182
+              ]
+            },
+            {
+              "id": "sprint-03",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/sprint/03.png",
+              "durationMs": 72,
+              "contentBounds": [
+                69,
+                69,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "sprint-04",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/sprint/04.png",
+              "durationMs": 72,
+              "contentBounds": [
+                70,
+                69,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "sprint-05",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/sprint/05.png",
+              "durationMs": 72,
+              "contentBounds": [
+                72,
+                70,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "sprint-06",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/sprint/06.png",
+              "durationMs": 72,
+              "contentBounds": [
+                68,
+                69,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "sprint-07",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/sprint/07.png",
+              "durationMs": 72,
+              "contentBounds": [
+                72,
+                69,
+                152,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jump",
+          "loop": false,
+          "frames": [
+            {
+              "id": "jump-00",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/jump/00.png",
+              "durationMs": 86,
+              "contentBounds": [
+                71,
+                70,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "jump-01",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/jump/01.png",
+              "durationMs": 86,
+              "contentBounds": [
+                71,
+                70,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "jump-02",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/jump/02.png",
+              "durationMs": 86,
+              "contentBounds": [
+                72,
+                66,
+                151,
+                182
+              ]
+            },
+            {
+              "id": "jump-03",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/jump/03.png",
+              "durationMs": 86,
+              "contentBounds": [
+                72,
+                65,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "jump-04",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/jump/04.png",
+              "durationMs": 86,
+              "contentBounds": [
+                71,
+                66,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "jump-05",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/jump/05.png",
+              "durationMs": 86,
+              "contentBounds": [
+                71,
+                70,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "jump-06",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/jump/06.png",
+              "durationMs": 86,
+              "contentBounds": [
+                72,
+                72,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "jump-07",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/jump/07.png",
+              "durationMs": 86,
+              "contentBounds": [
+                71,
+                72,
+                152,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "attack",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-00",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                71,
+                69,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "attack-01",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                71,
+                69,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "attack-02",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                71,
+                69,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "attack-03",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                50,
+                69,
+                173,
+                182
+              ]
+            },
+            {
+              "id": "attack-04",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                44,
+                69,
+                180,
+                182
+              ]
+            },
+            {
+              "id": "attack-05",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                41,
+                69,
+                183,
+                182
+              ]
+            },
+            {
+              "id": "attack-06",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                56,
+                69,
+                168,
+                182
+              ]
+            },
+            {
+              "id": "attack-07",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                83,
+                106,
+                140,
+                182
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "solar-brawler",
+      "label": "Solar Brawler",
+      "frameCount": 38,
+      "source": {
+        "kind": "openai-image-generation-reference-sheet",
+        "sha256": "38b384cb59afef09e44bf8949eea3d34ab4cc15e8b80a5b54e63bf04a23974da",
+        "originalFile": "solar-brawler-imagegen-v1.png"
+      },
+      "animations": [
+        {
+          "id": "idle",
+          "loop": true,
+          "frames": [
+            {
+              "id": "idle-00",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/idle/00.png",
+              "durationMs": 180,
+              "contentBounds": [
+                73,
+                52,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "idle-01",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/idle/01.png",
+              "durationMs": 180,
+              "contentBounds": [
+                73,
+                54,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "idle-02",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/idle/02.png",
+              "durationMs": 180,
+              "contentBounds": [
+                73,
+                54,
+                151,
+                182
+              ]
+            },
+            {
+              "id": "idle-03",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/idle/03.png",
+              "durationMs": 180,
+              "contentBounds": [
+                73,
+                54,
+                151,
+                182
+              ]
+            },
+            {
+              "id": "idle-04",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/idle/04.png",
+              "durationMs": 180,
+              "contentBounds": [
+                73,
+                54,
+                151,
+                182
+              ]
+            },
+            {
+              "id": "idle-05",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/idle/05.png",
+              "durationMs": 180,
+              "contentBounds": [
+                73,
+                54,
+                151,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "walk",
+          "loop": true,
+          "frames": [
+            {
+              "id": "walk-00",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/walk/00.png",
+              "durationMs": 92,
+              "contentBounds": [
+                75,
+                62,
+                149,
+                182
+              ]
+            },
+            {
+              "id": "walk-01",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/walk/01.png",
+              "durationMs": 92,
+              "contentBounds": [
+                74,
+                63,
+                149,
+                182
+              ]
+            },
+            {
+              "id": "walk-02",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/walk/02.png",
+              "durationMs": 92,
+              "contentBounds": [
+                74,
+                63,
+                149,
+                182
+              ]
+            },
+            {
+              "id": "walk-03",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/walk/03.png",
+              "durationMs": 92,
+              "contentBounds": [
+                75,
+                61,
+                148,
+                182
+              ]
+            },
+            {
+              "id": "walk-04",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/walk/04.png",
+              "durationMs": 92,
+              "contentBounds": [
+                75,
+                61,
+                149,
+                182
+              ]
+            },
+            {
+              "id": "walk-05",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/walk/05.png",
+              "durationMs": 92,
+              "contentBounds": [
+                74,
+                62,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "walk-06",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/walk/06.png",
+              "durationMs": 92,
+              "contentBounds": [
+                75,
+                60,
+                149,
+                182
+              ]
+            },
+            {
+              "id": "walk-07",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/walk/07.png",
+              "durationMs": 92,
+              "contentBounds": [
+                75,
+                61,
+                149,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sprint",
+          "loop": true,
+          "frames": [
+            {
+              "id": "sprint-00",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/sprint/00.png",
+              "durationMs": 72,
+              "contentBounds": [
+                72,
+                69,
+                151,
+                182
+              ]
+            },
+            {
+              "id": "sprint-01",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/sprint/01.png",
+              "durationMs": 72,
+              "contentBounds": [
+                70,
+                70,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "sprint-02",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/sprint/02.png",
+              "durationMs": 72,
+              "contentBounds": [
+                72,
+                67,
+                151,
+                182
+              ]
+            },
+            {
+              "id": "sprint-03",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/sprint/03.png",
+              "durationMs": 72,
+              "contentBounds": [
+                73,
+                72,
+                151,
+                182
+              ]
+            },
+            {
+              "id": "sprint-04",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/sprint/04.png",
+              "durationMs": 72,
+              "contentBounds": [
+                71,
+                70,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "sprint-05",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/sprint/05.png",
+              "durationMs": 72,
+              "contentBounds": [
+                72,
+                70,
+                151,
+                182
+              ]
+            },
+            {
+              "id": "sprint-06",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/sprint/06.png",
+              "durationMs": 72,
+              "contentBounds": [
+                75,
+                67,
+                149,
+                182
+              ]
+            },
+            {
+              "id": "sprint-07",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/sprint/07.png",
+              "durationMs": 72,
+              "contentBounds": [
+                74,
+                68,
+                149,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jump",
+          "loop": false,
+          "frames": [
+            {
+              "id": "jump-00",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/jump/00.png",
+              "durationMs": 86,
+              "contentBounds": [
+                77,
+                69,
+                147,
+                182
+              ]
+            },
+            {
+              "id": "jump-01",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/jump/01.png",
+              "durationMs": 86,
+              "contentBounds": [
+                76,
+                68,
+                147,
+                182
+              ]
+            },
+            {
+              "id": "jump-02",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/jump/02.png",
+              "durationMs": 86,
+              "contentBounds": [
+                76,
+                73,
+                147,
+                182
+              ]
+            },
+            {
+              "id": "jump-03",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/jump/03.png",
+              "durationMs": 86,
+              "contentBounds": [
+                76,
+                72,
+                148,
+                182
+              ]
+            },
+            {
+              "id": "jump-04",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/jump/04.png",
+              "durationMs": 86,
+              "contentBounds": [
+                76,
+                78,
+                147,
+                182
+              ]
+            },
+            {
+              "id": "jump-05",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/jump/05.png",
+              "durationMs": 86,
+              "contentBounds": [
+                76,
+                72,
+                147,
+                182
+              ]
+            },
+            {
+              "id": "jump-06",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/jump/06.png",
+              "durationMs": 86,
+              "contentBounds": [
+                76,
+                70,
+                147,
+                182
+              ]
+            },
+            {
+              "id": "jump-07",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/jump/07.png",
+              "durationMs": 86,
+              "contentBounds": [
+                76,
+                78,
+                147,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "attack",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-00",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                71,
+                66,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "attack-01",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                73,
+                66,
+                151,
+                182
+              ]
+            },
+            {
+              "id": "attack-02",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                66,
+                68,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "attack-03",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                65,
+                74,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "attack-04",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                53,
+                71,
+                171,
+                182
+              ]
+            },
+            {
+              "id": "attack-05",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                45,
+                75,
+                178,
+                182
+              ]
+            },
+            {
+              "id": "attack-06",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                73,
+                72,
+                151,
+                182
+              ]
+            },
+            {
+              "id": "attack-07",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                73,
+                73,
+                150,
+                182
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "void-operative",
+      "label": "Void Operative",
+      "frameCount": 38,
+      "source": {
+        "kind": "openai-image-generation-reference-sheet",
+        "sha256": "1aa6cb8b3cfef9b7b097fe2cd0d0fc9aa1f367d32438d18cfc4109205d58d358",
+        "originalFile": "void-operative-imagegen-v1.png"
+      },
+      "animations": [
+        {
+          "id": "idle",
+          "loop": true,
+          "frames": [
+            {
+              "id": "idle-00",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/idle/00.png",
+              "durationMs": 180,
+              "contentBounds": [
+                68,
+                61,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "idle-01",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/idle/01.png",
+              "durationMs": 180,
+              "contentBounds": [
+                68,
+                61,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "idle-02",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/idle/02.png",
+              "durationMs": 180,
+              "contentBounds": [
+                69,
+                61,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "idle-03",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/idle/03.png",
+              "durationMs": 180,
+              "contentBounds": [
+                69,
+                61,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "idle-04",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/idle/04.png",
+              "durationMs": 180,
+              "contentBounds": [
+                68,
+                61,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "idle-05",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/idle/05.png",
+              "durationMs": 180,
+              "contentBounds": [
+                69,
+                60,
+                155,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "walk",
+          "loop": true,
+          "frames": [
+            {
+              "id": "walk-00",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/walk/00.png",
+              "durationMs": 92,
+              "contentBounds": [
+                71,
+                62,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "walk-01",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/walk/01.png",
+              "durationMs": 92,
+              "contentBounds": [
+                70,
+                62,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "walk-02",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/walk/02.png",
+              "durationMs": 92,
+              "contentBounds": [
+                71,
+                62,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "walk-03",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/walk/03.png",
+              "durationMs": 92,
+              "contentBounds": [
+                71,
+                62,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "walk-04",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/walk/04.png",
+              "durationMs": 92,
+              "contentBounds": [
+                70,
+                62,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "walk-05",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/walk/05.png",
+              "durationMs": 92,
+              "contentBounds": [
+                71,
+                61,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "walk-06",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/walk/06.png",
+              "durationMs": 92,
+              "contentBounds": [
+                70,
+                61,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "walk-07",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/walk/07.png",
+              "durationMs": 92,
+              "contentBounds": [
+                70,
+                62,
+                154,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sprint",
+          "loop": true,
+          "frames": [
+            {
+              "id": "sprint-00",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/sprint/00.png",
+              "durationMs": 72,
+              "contentBounds": [
+                69,
+                64,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "sprint-01",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/sprint/01.png",
+              "durationMs": 72,
+              "contentBounds": [
+                69,
+                64,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "sprint-02",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/sprint/02.png",
+              "durationMs": 72,
+              "contentBounds": [
+                69,
+                67,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "sprint-03",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/sprint/03.png",
+              "durationMs": 72,
+              "contentBounds": [
+                68,
+                68,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "sprint-04",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/sprint/04.png",
+              "durationMs": 72,
+              "contentBounds": [
+                68,
+                64,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "sprint-05",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/sprint/05.png",
+              "durationMs": 72,
+              "contentBounds": [
+                70,
+                64,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "sprint-06",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/sprint/06.png",
+              "durationMs": 72,
+              "contentBounds": [
+                69,
+                64,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "sprint-07",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/sprint/07.png",
+              "durationMs": 72,
+              "contentBounds": [
+                70,
+                65,
+                154,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jump",
+          "loop": false,
+          "frames": [
+            {
+              "id": "jump-00",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/jump/00.png",
+              "durationMs": 86,
+              "contentBounds": [
+                70,
+                60,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "jump-01",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/jump/01.png",
+              "durationMs": 86,
+              "contentBounds": [
+                70,
+                66,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "jump-02",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/jump/02.png",
+              "durationMs": 86,
+              "contentBounds": [
+                69,
+                65,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "jump-03",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/jump/03.png",
+              "durationMs": 86,
+              "contentBounds": [
+                70,
+                69,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "jump-04",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/jump/04.png",
+              "durationMs": 86,
+              "contentBounds": [
+                70,
+                60,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "jump-05",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/jump/05.png",
+              "durationMs": 86,
+              "contentBounds": [
+                70,
+                64,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "jump-06",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/jump/06.png",
+              "durationMs": 86,
+              "contentBounds": [
+                70,
+                63,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "jump-07",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/jump/07.png",
+              "durationMs": 86,
+              "contentBounds": [
+                70,
+                68,
+                154,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "attack",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-00",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                70,
+                65,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "attack-01",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                67,
+                66,
+                157,
+                182
+              ]
+            },
+            {
+              "id": "attack-02",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                40,
+                66,
+                184,
+                182
+              ]
+            },
+            {
+              "id": "attack-03",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                43,
+                66,
+                181,
+                182
+              ]
+            },
+            {
+              "id": "attack-04",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                48,
+                69,
+                175,
+                182
+              ]
+            },
+            {
+              "id": "attack-05",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                39,
+                68,
+                184,
+                182
+              ]
+            },
+            {
+              "id": "attack-06",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                54,
+                67,
+                170,
+                182
+              ]
+            },
+            {
+              "id": "attack-07",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                40,
+                67,
+                184,
+                182
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "circuit-mage",
+      "label": "Circuit Mage",
+      "frameCount": 38,
+      "source": {
+        "kind": "openai-image-generation-reference-sheet",
+        "sha256": "6db79cf14eefb14b6a381e08e4e28ed86039e2c423e12ea6210739f514ba2d68",
+        "originalFile": "circuit-mage-imagegen-v1.png"
+      },
+      "animations": [
+        {
+          "id": "idle",
+          "loop": true,
+          "frames": [
+            {
+              "id": "idle-00",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/idle/00.png",
+              "durationMs": 180,
+              "contentBounds": [
+                66,
+                47,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "idle-01",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/idle/01.png",
+              "durationMs": 180,
+              "contentBounds": [
+                65,
+                48,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "idle-02",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/idle/02.png",
+              "durationMs": 180,
+              "contentBounds": [
+                66,
+                48,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "idle-03",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/idle/03.png",
+              "durationMs": 180,
+              "contentBounds": [
+                66,
+                48,
+                157,
+                182
+              ]
+            },
+            {
+              "id": "idle-04",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/idle/04.png",
+              "durationMs": 180,
+              "contentBounds": [
+                66,
+                48,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "idle-05",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/idle/05.png",
+              "durationMs": 180,
+              "contentBounds": [
+                66,
+                48,
+                157,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "walk",
+          "loop": true,
+          "frames": [
+            {
+              "id": "walk-00",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/walk/00.png",
+              "durationMs": 92,
+              "contentBounds": [
+                71,
+                58,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "walk-01",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/walk/01.png",
+              "durationMs": 92,
+              "contentBounds": [
+                72,
+                59,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "walk-02",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/walk/02.png",
+              "durationMs": 92,
+              "contentBounds": [
+                73,
+                59,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "walk-03",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/walk/03.png",
+              "durationMs": 92,
+              "contentBounds": [
+                72,
+                59,
+                151,
+                182
+              ]
+            },
+            {
+              "id": "walk-04",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/walk/04.png",
+              "durationMs": 92,
+              "contentBounds": [
+                72,
+                59,
+                151,
+                182
+              ]
+            },
+            {
+              "id": "walk-05",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/walk/05.png",
+              "durationMs": 92,
+              "contentBounds": [
+                73,
+                58,
+                151,
+                182
+              ]
+            },
+            {
+              "id": "walk-06",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/walk/06.png",
+              "durationMs": 92,
+              "contentBounds": [
+                74,
+                59,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "walk-07",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/walk/07.png",
+              "durationMs": 92,
+              "contentBounds": [
+                72,
+                58,
+                151,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sprint",
+          "loop": true,
+          "frames": [
+            {
+              "id": "sprint-00",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/sprint/00.png",
+              "durationMs": 72,
+              "contentBounds": [
+                70,
+                66,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "sprint-01",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/sprint/01.png",
+              "durationMs": 72,
+              "contentBounds": [
+                69,
+                68,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "sprint-02",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/sprint/02.png",
+              "durationMs": 72,
+              "contentBounds": [
+                70,
+                66,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "sprint-03",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/sprint/03.png",
+              "durationMs": 72,
+              "contentBounds": [
+                70,
+                64,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "sprint-04",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/sprint/04.png",
+              "durationMs": 72,
+              "contentBounds": [
+                69,
+                64,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "sprint-05",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/sprint/05.png",
+              "durationMs": 72,
+              "contentBounds": [
+                70,
+                65,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "sprint-06",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/sprint/06.png",
+              "durationMs": 72,
+              "contentBounds": [
+                71,
+                64,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "sprint-07",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/sprint/07.png",
+              "durationMs": 72,
+              "contentBounds": [
+                70,
+                68,
+                154,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jump",
+          "loop": false,
+          "frames": [
+            {
+              "id": "jump-00",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/jump/00.png",
+              "durationMs": 86,
+              "contentBounds": [
+                73,
+                76,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "jump-01",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/jump/01.png",
+              "durationMs": 86,
+              "contentBounds": [
+                71,
+                67,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "jump-02",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/jump/02.png",
+              "durationMs": 86,
+              "contentBounds": [
+                73,
+                69,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "jump-03",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/jump/03.png",
+              "durationMs": 86,
+              "contentBounds": [
+                73,
+                65,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "jump-04",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/jump/04.png",
+              "durationMs": 86,
+              "contentBounds": [
+                73,
+                65,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "jump-05",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/jump/05.png",
+              "durationMs": 86,
+              "contentBounds": [
+                73,
+                66,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "jump-06",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/jump/06.png",
+              "durationMs": 86,
+              "contentBounds": [
+                73,
+                75,
+                150,
+                182
+              ]
+            },
+            {
+              "id": "jump-07",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/jump/07.png",
+              "durationMs": 86,
+              "contentBounds": [
+                73,
+                75,
+                151,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "attack",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-00",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                69,
+                58,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "attack-01",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                47,
+                59,
+                176,
+                182
+              ]
+            },
+            {
+              "id": "attack-02",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                43,
+                58,
+                181,
+                182
+              ]
+            },
+            {
+              "id": "attack-03",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                42,
+                59,
+                181,
+                182
+              ]
+            },
+            {
+              "id": "attack-04",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                32,
+                61,
+                191,
+                182
+              ]
+            },
+            {
+              "id": "attack-05",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                64,
+                60,
+                159,
+                182
+              ]
+            },
+            {
+              "id": "attack-06",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                32,
+                60,
+                191,
+                182
+              ]
+            },
+            {
+              "id": "attack-07",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                31,
+                58,
+                192,
+                182
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "street-medic",
+      "label": "Street Medic",
+      "frameCount": 38,
+      "source": {
+        "kind": "openai-image-generation-reference-sheet",
+        "sha256": "a459e3edbff928bc164577ed92187c180badc712cee42aa9067bb7789930e27a",
+        "originalFile": "street-medic-imagegen-v1.png"
+      },
+      "animations": [
+        {
+          "id": "idle",
+          "loop": true,
+          "frames": [
+            {
+              "id": "idle-00",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/idle/00.png",
+              "durationMs": 180,
+              "contentBounds": [
+                67,
+                70,
+                157,
+                182
+              ]
+            },
+            {
+              "id": "idle-01",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/idle/01.png",
+              "durationMs": 180,
+              "contentBounds": [
+                67,
+                70,
+                157,
+                182
+              ]
+            },
+            {
+              "id": "idle-02",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/idle/02.png",
+              "durationMs": 180,
+              "contentBounds": [
+                67,
+                69,
+                157,
+                182
+              ]
+            },
+            {
+              "id": "idle-03",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/idle/03.png",
+              "durationMs": 180,
+              "contentBounds": [
+                67,
+                69,
+                156,
+                182
+              ]
+            },
+            {
+              "id": "idle-04",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/idle/04.png",
+              "durationMs": 180,
+              "contentBounds": [
+                67,
+                69,
+                157,
+                182
+              ]
+            },
+            {
+              "id": "idle-05",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/idle/05.png",
+              "durationMs": 180,
+              "contentBounds": [
+                67,
+                69,
+                157,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "walk",
+          "loop": true,
+          "frames": [
+            {
+              "id": "walk-00",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/walk/00.png",
+              "durationMs": 92,
+              "contentBounds": [
+                72,
+                65,
+                151,
+                182
+              ]
+            },
+            {
+              "id": "walk-01",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/walk/01.png",
+              "durationMs": 92,
+              "contentBounds": [
+                72,
+                67,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "walk-02",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/walk/02.png",
+              "durationMs": 92,
+              "contentBounds": [
+                72,
+                66,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "walk-03",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/walk/03.png",
+              "durationMs": 92,
+              "contentBounds": [
+                72,
+                64,
+                151,
+                182
+              ]
+            },
+            {
+              "id": "walk-04",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/walk/04.png",
+              "durationMs": 92,
+              "contentBounds": [
+                72,
+                66,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "walk-05",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/walk/05.png",
+              "durationMs": 92,
+              "contentBounds": [
+                72,
+                70,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "walk-06",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/walk/06.png",
+              "durationMs": 92,
+              "contentBounds": [
+                72,
+                65,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "walk-07",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/walk/07.png",
+              "durationMs": 92,
+              "contentBounds": [
+                72,
+                68,
+                152,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sprint",
+          "loop": true,
+          "frames": [
+            {
+              "id": "sprint-00",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/sprint/00.png",
+              "durationMs": 72,
+              "contentBounds": [
+                72,
+                73,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "sprint-01",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/sprint/01.png",
+              "durationMs": 72,
+              "contentBounds": [
+                71,
+                75,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "sprint-02",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/sprint/02.png",
+              "durationMs": 72,
+              "contentBounds": [
+                71,
+                72,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "sprint-03",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/sprint/03.png",
+              "durationMs": 72,
+              "contentBounds": [
+                71,
+                78,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "sprint-04",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/sprint/04.png",
+              "durationMs": 72,
+              "contentBounds": [
+                72,
+                72,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "sprint-05",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/sprint/05.png",
+              "durationMs": 72,
+              "contentBounds": [
+                72,
+                72,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "sprint-06",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/sprint/06.png",
+              "durationMs": 72,
+              "contentBounds": [
+                71,
+                73,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "sprint-07",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/sprint/07.png",
+              "durationMs": 72,
+              "contentBounds": [
+                72,
+                77,
+                152,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jump",
+          "loop": false,
+          "frames": [
+            {
+              "id": "jump-00",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/jump/00.png",
+              "durationMs": 86,
+              "contentBounds": [
+                72,
+                73,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "jump-01",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/jump/01.png",
+              "durationMs": 86,
+              "contentBounds": [
+                71,
+                71,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "jump-02",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/jump/02.png",
+              "durationMs": 86,
+              "contentBounds": [
+                71,
+                69,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "jump-03",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/jump/03.png",
+              "durationMs": 86,
+              "contentBounds": [
+                68,
+                70,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "jump-04",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/jump/04.png",
+              "durationMs": 86,
+              "contentBounds": [
+                71,
+                70,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "jump-05",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/jump/05.png",
+              "durationMs": 86,
+              "contentBounds": [
+                68,
+                69,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "jump-06",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/jump/06.png",
+              "durationMs": 86,
+              "contentBounds": [
+                71,
+                72,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "jump-07",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/jump/07.png",
+              "durationMs": 86,
+              "contentBounds": [
+                72,
+                72,
+                152,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "attack",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-00",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                65,
+                69,
+                159,
+                182
+              ]
+            },
+            {
+              "id": "attack-01",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                64,
+                70,
+                159,
+                182
+              ]
+            },
+            {
+              "id": "attack-02",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                49,
+                70,
+                174,
+                182
+              ]
+            },
+            {
+              "id": "attack-03",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                51,
+                70,
+                173,
+                182
+              ]
+            },
+            {
+              "id": "attack-04",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                44,
+                70,
+                180,
+                182
+              ]
+            },
+            {
+              "id": "attack-05",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                45,
+                70,
+                178,
+                182
+              ]
+            },
+            {
+              "id": "attack-06",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                41,
+                62,
+                182,
+                182
+              ]
+            },
+            {
+              "id": "attack-07",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                72,
+                67,
+                151,
+                182
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "arena-rebel",
+      "label": "Arena Rebel",
+      "frameCount": 38,
+      "source": {
+        "kind": "openai-image-generation-reference-sheet",
+        "sha256": "4613e94356b83c66eed0461caace4e96f897a6e90d849139893705d19ea1e0d7",
+        "originalFile": "arena-rebel-imagegen-v1.png"
+      },
+      "animations": [
+        {
+          "id": "idle",
+          "loop": true,
+          "frames": [
+            {
+              "id": "idle-00",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/idle/00.png",
+              "durationMs": 180,
+              "contentBounds": [
+                58,
+                46,
+                165,
+                182
+              ]
+            },
+            {
+              "id": "idle-01",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/idle/01.png",
+              "durationMs": 180,
+              "contentBounds": [
+                58,
+                46,
+                166,
+                182
+              ]
+            },
+            {
+              "id": "idle-02",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/idle/02.png",
+              "durationMs": 180,
+              "contentBounds": [
+                58,
+                48,
+                166,
+                182
+              ]
+            },
+            {
+              "id": "idle-03",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/idle/03.png",
+              "durationMs": 180,
+              "contentBounds": [
+                58,
+                47,
+                166,
+                182
+              ]
+            },
+            {
+              "id": "idle-04",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/idle/04.png",
+              "durationMs": 180,
+              "contentBounds": [
+                58,
+                48,
+                165,
+                182
+              ]
+            },
+            {
+              "id": "idle-05",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/idle/05.png",
+              "durationMs": 180,
+              "contentBounds": [
+                58,
+                47,
+                166,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "walk",
+          "loop": true,
+          "frames": [
+            {
+              "id": "walk-00",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/walk/00.png",
+              "durationMs": 92,
+              "contentBounds": [
+                61,
+                49,
+                162,
+                182
+              ]
+            },
+            {
+              "id": "walk-01",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/walk/01.png",
+              "durationMs": 92,
+              "contentBounds": [
+                61,
+                49,
+                162,
+                182
+              ]
+            },
+            {
+              "id": "walk-02",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/walk/02.png",
+              "durationMs": 92,
+              "contentBounds": [
+                61,
+                48,
+                163,
+                182
+              ]
+            },
+            {
+              "id": "walk-03",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/walk/03.png",
+              "durationMs": 92,
+              "contentBounds": [
+                60,
+                49,
+                163,
+                182
+              ]
+            },
+            {
+              "id": "walk-04",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/walk/04.png",
+              "durationMs": 92,
+              "contentBounds": [
+                61,
+                50,
+                162,
+                182
+              ]
+            },
+            {
+              "id": "walk-05",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/walk/05.png",
+              "durationMs": 92,
+              "contentBounds": [
+                61,
+                48,
+                163,
+                182
+              ]
+            },
+            {
+              "id": "walk-06",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/walk/06.png",
+              "durationMs": 92,
+              "contentBounds": [
+                60,
+                48,
+                163,
+                182
+              ]
+            },
+            {
+              "id": "walk-07",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/walk/07.png",
+              "durationMs": 92,
+              "contentBounds": [
+                61,
+                48,
+                163,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sprint",
+          "loop": true,
+          "frames": [
+            {
+              "id": "sprint-00",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/sprint/00.png",
+              "durationMs": 72,
+              "contentBounds": [
+                60,
+                52,
+                163,
+                182
+              ]
+            },
+            {
+              "id": "sprint-01",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/sprint/01.png",
+              "durationMs": 72,
+              "contentBounds": [
+                61,
+                52,
+                162,
+                182
+              ]
+            },
+            {
+              "id": "sprint-02",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/sprint/02.png",
+              "durationMs": 72,
+              "contentBounds": [
+                61,
+                51,
+                163,
+                182
+              ]
+            },
+            {
+              "id": "sprint-03",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/sprint/03.png",
+              "durationMs": 72,
+              "contentBounds": [
+                60,
+                49,
+                164,
+                182
+              ]
+            },
+            {
+              "id": "sprint-04",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/sprint/04.png",
+              "durationMs": 72,
+              "contentBounds": [
+                60,
+                49,
+                163,
+                182
+              ]
+            },
+            {
+              "id": "sprint-05",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/sprint/05.png",
+              "durationMs": 72,
+              "contentBounds": [
+                60,
+                47,
+                163,
+                182
+              ]
+            },
+            {
+              "id": "sprint-06",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/sprint/06.png",
+              "durationMs": 72,
+              "contentBounds": [
+                60,
+                52,
+                163,
+                182
+              ]
+            },
+            {
+              "id": "sprint-07",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/sprint/07.png",
+              "durationMs": 72,
+              "contentBounds": [
+                61,
+                49,
+                163,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jump",
+          "loop": false,
+          "frames": [
+            {
+              "id": "jump-00",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/jump/00.png",
+              "durationMs": 86,
+              "contentBounds": [
+                60,
+                53,
+                164,
+                182
+              ]
+            },
+            {
+              "id": "jump-01",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/jump/01.png",
+              "durationMs": 86,
+              "contentBounds": [
+                63,
+                53,
+                161,
+                182
+              ]
+            },
+            {
+              "id": "jump-02",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/jump/02.png",
+              "durationMs": 86,
+              "contentBounds": [
+                61,
+                55,
+                163,
+                182
+              ]
+            },
+            {
+              "id": "jump-03",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/jump/03.png",
+              "durationMs": 86,
+              "contentBounds": [
+                60,
+                54,
+                163,
+                182
+              ]
+            },
+            {
+              "id": "jump-04",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/jump/04.png",
+              "durationMs": 86,
+              "contentBounds": [
+                59,
+                53,
+                165,
+                182
+              ]
+            },
+            {
+              "id": "jump-05",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/jump/05.png",
+              "durationMs": 86,
+              "contentBounds": [
+                27,
+                53,
+                196,
+                182
+              ]
+            },
+            {
+              "id": "jump-06",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/jump/06.png",
+              "durationMs": 86,
+              "contentBounds": [
+                61,
+                55,
+                163,
+                182
+              ]
+            },
+            {
+              "id": "jump-07",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/jump/07.png",
+              "durationMs": 86,
+              "contentBounds": [
+                61,
+                62,
+                163,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "attack",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-00",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                58,
+                51,
+                165,
+                182
+              ]
+            },
+            {
+              "id": "attack-01",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                59,
+                50,
+                164,
+                182
+              ]
+            },
+            {
+              "id": "attack-02",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                58,
+                50,
+                165,
+                182
+              ]
+            },
+            {
+              "id": "attack-03",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                54,
+                57,
+                170,
+                182
+              ]
+            },
+            {
+              "id": "attack-04",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                38,
+                56,
+                185,
+                182
+              ]
+            },
+            {
+              "id": "attack-05",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                34,
+                57,
+                189,
+                182
+              ]
+            },
+            {
+              "id": "attack-06",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                39,
+                54,
+                184,
+                182
+              ]
+            },
+            {
+              "id": "attack-07",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                54,
+                55,
+                170,
+                182
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tech-nomad",
+      "label": "Tech Nomad",
+      "frameCount": 38,
+      "source": {
+        "kind": "openai-image-generation-reference-sheet",
+        "sha256": "2238110d0b299ace18560b6c56e3fc50afbc571f5df034f71a25a5c2588957b8",
+        "originalFile": "tech-nomad-imagegen-v1.png"
+      },
+      "animations": [
+        {
+          "id": "idle",
+          "loop": true,
+          "frames": [
+            {
+              "id": "idle-00",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/idle/00.png",
+              "durationMs": 180,
+              "contentBounds": [
+                66,
+                48,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "idle-01",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/idle/01.png",
+              "durationMs": 180,
+              "contentBounds": [
+                66,
+                48,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "idle-02",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/idle/02.png",
+              "durationMs": 180,
+              "contentBounds": [
+                66,
+                48,
+                157,
+                182
+              ]
+            },
+            {
+              "id": "idle-03",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/idle/03.png",
+              "durationMs": 180,
+              "contentBounds": [
+                66,
+                48,
+                157,
+                182
+              ]
+            },
+            {
+              "id": "idle-04",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/idle/04.png",
+              "durationMs": 180,
+              "contentBounds": [
+                66,
+                48,
+                158,
+                182
+              ]
+            },
+            {
+              "id": "idle-05",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/idle/05.png",
+              "durationMs": 180,
+              "contentBounds": [
+                66,
+                48,
+                158,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "walk",
+          "loop": true,
+          "frames": [
+            {
+              "id": "walk-00",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/walk/00.png",
+              "durationMs": 92,
+              "contentBounds": [
+                68,
+                51,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "walk-01",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/walk/01.png",
+              "durationMs": 92,
+              "contentBounds": [
+                68,
+                54,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "walk-02",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/walk/02.png",
+              "durationMs": 92,
+              "contentBounds": [
+                69,
+                53,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "walk-03",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/walk/03.png",
+              "durationMs": 92,
+              "contentBounds": [
+                30,
+                53,
+                194,
+                182
+              ]
+            },
+            {
+              "id": "walk-04",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/walk/04.png",
+              "durationMs": 92,
+              "contentBounds": [
+                72,
+                54,
+                151,
+                182
+              ]
+            },
+            {
+              "id": "walk-05",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/walk/05.png",
+              "durationMs": 92,
+              "contentBounds": [
+                28,
+                55,
+                195,
+                182
+              ]
+            },
+            {
+              "id": "walk-06",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/walk/06.png",
+              "durationMs": 92,
+              "contentBounds": [
+                70,
+                55,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "walk-07",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/walk/07.png",
+              "durationMs": 92,
+              "contentBounds": [
+                68,
+                57,
+                156,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sprint",
+          "loop": true,
+          "frames": [
+            {
+              "id": "sprint-00",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/sprint/00.png",
+              "durationMs": 72,
+              "contentBounds": [
+                66,
+                57,
+                157,
+                182
+              ]
+            },
+            {
+              "id": "sprint-01",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/sprint/01.png",
+              "durationMs": 72,
+              "contentBounds": [
+                68,
+                58,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "sprint-02",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/sprint/02.png",
+              "durationMs": 72,
+              "contentBounds": [
+                69,
+                58,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "sprint-03",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/sprint/03.png",
+              "durationMs": 72,
+              "contentBounds": [
+                68,
+                59,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "sprint-04",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/sprint/04.png",
+              "durationMs": 72,
+              "contentBounds": [
+                66,
+                58,
+                157,
+                182
+              ]
+            },
+            {
+              "id": "sprint-05",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/sprint/05.png",
+              "durationMs": 72,
+              "contentBounds": [
+                69,
+                60,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "sprint-06",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/sprint/06.png",
+              "durationMs": 72,
+              "contentBounds": [
+                68,
+                58,
+                155,
+                182
+              ]
+            },
+            {
+              "id": "sprint-07",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/sprint/07.png",
+              "durationMs": 72,
+              "contentBounds": [
+                69,
+                61,
+                154,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jump",
+          "loop": false,
+          "frames": [
+            {
+              "id": "jump-00",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/jump/00.png",
+              "durationMs": 86,
+              "contentBounds": [
+                69,
+                61,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "jump-01",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/jump/01.png",
+              "durationMs": 86,
+              "contentBounds": [
+                70,
+                61,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "jump-02",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/jump/02.png",
+              "durationMs": 86,
+              "contentBounds": [
+                70,
+                63,
+                153,
+                182
+              ]
+            },
+            {
+              "id": "jump-03",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/jump/03.png",
+              "durationMs": 86,
+              "contentBounds": [
+                67,
+                69,
+                157,
+                182
+              ]
+            },
+            {
+              "id": "jump-04",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/jump/04.png",
+              "durationMs": 86,
+              "contentBounds": [
+                71,
+                66,
+                152,
+                182
+              ]
+            },
+            {
+              "id": "jump-05",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/jump/05.png",
+              "durationMs": 86,
+              "contentBounds": [
+                70,
+                62,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "jump-06",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/jump/06.png",
+              "durationMs": 86,
+              "contentBounds": [
+                69,
+                62,
+                154,
+                182
+              ]
+            },
+            {
+              "id": "jump-07",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/jump/07.png",
+              "durationMs": 86,
+              "contentBounds": [
+                70,
+                62,
+                154,
+                182
+              ]
+            }
+          ]
+        },
+        {
+          "id": "attack",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-00",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                48,
+                60,
+                175,
+                182
+              ]
+            },
+            {
+              "id": "attack-01",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                43,
+                60,
+                180,
+                182
+              ]
+            },
+            {
+              "id": "attack-02",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                52,
+                60,
+                171,
+                182
+              ]
+            },
+            {
+              "id": "attack-03",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                41,
+                59,
+                183,
+                182
+              ]
+            },
+            {
+              "id": "attack-04",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                47,
+                59,
+                177,
+                182
+              ]
+            },
+            {
+              "id": "attack-05",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                41,
+                60,
+                183,
+                182
+              ]
+            },
+            {
+              "id": "attack-06",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                61,
+                60,
+                162,
+                182
+              ]
+            },
+            {
+              "id": "attack-07",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                70,
+                59,
+                154,
+                182
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

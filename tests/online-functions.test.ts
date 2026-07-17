@@ -28,6 +28,26 @@ beforeEach(() => {
 });
 
 describe('online Netlify function handlers', () => {
+  it('publishes shared story hub occupants and removes them on leave', async () => {
+    const { handler: heartbeat } = await import('../netlify/functions/story-hub-presence.mjs');
+    const { handler: leave } = await import('../netlify/functions/story-hub-leave.mjs');
+    const avatar = {
+      name: 'NOVA', avatarSet: 'crimson-ranger', lineage: 'human', bodyPreset: 'standard', bodyTone: 'tan', hairStyle: 'spiked', hairColor: '#2d68d8', outfit: 'kore-cyan', accessory: 'headphones'
+    };
+    const first = await post(heartbeat, { sessionId: 'session-one', playerId: 'player-one', displayName: 'Nova', avatar, x: -4, y: 0.82, pose: 'idle', facing: 1 });
+    const second = await post(heartbeat, { sessionId: 'session-two', playerId: 'player-two', displayName: 'Rival', avatar: { ...avatar, hairStyle: 'bob' }, x: 8, y: 0.82, pose: 'walk', facing: -1 });
+    expect(first.players).toHaveLength(1);
+    expect(second.players).toHaveLength(2);
+    expect(second.players).toEqual(expect.arrayContaining([
+      expect.objectContaining({ sessionId: 'session-one', displayName: 'NOVA', avatar: expect.objectContaining({ avatarSet: 'crimson-ranger' }) }),
+      expect.objectContaining({ sessionId: 'session-two', displayName: 'RIVAL', pose: 'walk', facing: -1 })
+    ]));
+
+    expect(await post(leave, { sessionId: 'session-two' })).toEqual({ ok: true });
+    const afterLeave = await post(heartbeat, { sessionId: 'session-one', playerId: 'player-one', displayName: 'Nova', avatar, x: -3, y: 0.82, pose: 'walk', facing: 1 });
+    expect(afterLeave.players.map((player: { sessionId: string }) => player.sessionId)).toEqual(['session-one']);
+  });
+
   it('keeps ranked/casual matchmaking separate and removes rooms on leave', async () => {
     const { handler: matchmake } = await import('../netlify/functions/online-matchmake.mjs');
     const { handler: leave } = await import('../netlify/functions/online-leave.mjs');
