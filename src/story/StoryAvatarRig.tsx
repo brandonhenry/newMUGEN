@@ -2,6 +2,7 @@ import { useTexture } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
+import { STORY_AVATAR_MESH_CENTER_Y, storyAvatarPlaneHeight } from './actorGrounding';
 import { getStorySpriteAnimation, STORY_SPRITE_MANIFEST } from './streetAvatarCatalog';
 import type { StoryAvatarDefinition, StoryHubAvatarPose, StorySpriteAnimation } from './types';
 
@@ -35,7 +36,7 @@ export function StoryAvatarRig({ avatar, pose = 'idle', facing = 1, reducedMotio
   const materialRef = useRef<THREE.MeshBasicMaterial>(null);
   const poseStartedAtRef = useRef(0);
   const lastPoseRef = useRef(pose);
-  const planeHeight = 3.2 * STORY_SPRITE_MANIFEST.frameSize.height / 176;
+  const planeHeight = storyAvatarPlaneHeight();
   const planeWidth = planeHeight * STORY_SPRITE_MANIFEST.frameSize.width / STORY_SPRITE_MANIFEST.frameSize.height;
 
   useEffect(() => {
@@ -64,7 +65,7 @@ export function StoryAvatarRig({ avatar, pose = 'idle', facing = 1, reducedMotio
   });
 
   return <group scale={[facing, 1, 1]}>
-    <mesh position={[0, 0.63, 0.85]} renderOrder={20}>
+    <mesh position={[0, STORY_AVATAR_MESH_CENTER_Y, 0.85]} renderOrder={20}>
       <planeGeometry args={[planeWidth, planeHeight]} />
       <meshBasicMaterial ref={materialRef} map={textures[0]} transparent alphaTest={0.5} depthTest={false} depthWrite={false} toneMapped={false} />
     </mesh>

@@ -1,4 +1,5 @@
 import { STORY_MODE_WORLDS } from './modeWorlds';
+import { STORY_GROUNDED_ACTOR_CENTER_Y } from './actorGrounding';
 import { createStoryWorldEnvironment, createStoryWorldProps } from './worldEnvironments';
 import type {
   StoryAdventureWorldId,
@@ -39,7 +40,7 @@ function landmark(id: string, label: string, subtitle: string, x: number, y: num
 
 const WORLD_ROUTE: StoryHubDefinition = {
   id: 'kore-world-route', name: 'K.O.R.E. Central Route', subtitle: 'Eight worlds. Every road starts here.',
-  spawn: [0, 0.82], checkpoint: [0, 0.82], bounds: { minX: -64, maxX: 64, floorY: 0 }, theme: 'route',
+  spawn: [0, STORY_GROUNDED_ACTOR_CENTER_Y], checkpoint: [0, STORY_GROUNDED_ACTOR_CENTER_Y], bounds: { minX: -64, maxX: 64, floorY: 0 }, theme: 'route',
   environment: createStoryWorldEnvironment('route'), adventure: true,
   platforms: [
     { id: 'ground', position: [0, -0.5], size: [130, 1] },
@@ -87,7 +88,7 @@ function region(input: RegionInput): StoryHubDefinition {
       id: `${input.id}-enemy-${index + 1}`,
       name: `${REGION_LABELS[input.id].split(' ')[0]} ${archetype === 'ground' ? 'Stalker' : archetype === 'flying' ? 'Wisp' : 'Caster'}`,
       archetype,
-      position: [-halfWidth + 13 + enemySpan * index / 9, archetype === 'flying' ? 3.2 + (index % 2) * 0.7 : 0.82],
+      position: [-halfWidth + 13 + enemySpan * index / 9, archetype === 'flying' ? 3.2 + (index % 2) * 0.7 : STORY_GROUNDED_ACTOR_CENTER_Y],
       patrolRadius: 2.2 + (index % 3) * 0.45,
       sprite: input.sprites[index % input.sprites.length],
       accent: REGION_ACCENTS[input.id]
@@ -96,7 +97,7 @@ function region(input: RegionInput): StoryHubDefinition {
   const platformX = [-0.66, -0.38, -0.1, 0.2, 0.48, 0.72].map((ratio) => ratio * halfWidth);
   return {
     id: `kore-${input.id}`, name: REGION_LABELS[input.id], subtitle: input.subtitle,
-    spawn: [-halfWidth + 5.5, 0.82], checkpoint: [-halfWidth + 5.5, 0.82], bounds: { minX: -halfWidth, maxX: halfWidth, floorY: 0 },
+    spawn: [-halfWidth + 5.5, STORY_GROUNDED_ACTOR_CENTER_Y], checkpoint: [-halfWidth + 5.5, STORY_GROUNDED_ACTOR_CENTER_Y], bounds: { minX: -halfWidth, maxX: halfWidth, floorY: 0 },
     theme: input.theme, environment: createStoryWorldEnvironment(input.theme), adventure: true,
     platforms: [
       { id: 'ground', position: [0, -0.5], size: [input.width + 2, 1] },

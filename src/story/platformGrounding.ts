@@ -1,12 +1,18 @@
-import type { StoryPlatformDefinition } from './types';
+import type { StoryPlatformDefinition, StoryWorldEnvironmentDefinition } from './types';
 
 export type StoryPlatformSurfacePlacement = {
   height: number;
   centerY: number;
 };
 
-export function storyPlatformSurfacePlacement(platform: StoryPlatformDefinition): StoryPlatformSurfacePlacement {
+export function storyPlatformSurfacePlacement(
+  platform: StoryPlatformDefinition,
+  surface?: StoryWorldEnvironmentDefinition['surface']
+): StoryPlatformSurfacePlacement {
   const height = platform.oneWay ? 0.52 : 0.82;
   const colliderTop = platform.size[1] / 2;
-  return { height, centerY: colliderTop - height / 2 };
+  const sourceHeight = surface?.frame[3] ?? 0;
+  const insetPixels = Math.min(sourceHeight, Math.max(0, surface?.walkSurfaceInsetPixels ?? 0));
+  const visualInset = sourceHeight > 0 ? height * insetPixels / sourceHeight : 0;
+  return { height, centerY: colliderTop - height / 2 - visualInset };
 }

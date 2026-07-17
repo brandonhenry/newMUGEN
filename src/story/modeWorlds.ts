@@ -1,5 +1,6 @@
 import { sanitizeStoryHubDefinition, KORE_CENTRAL_HUB } from './hubData';
 import { createStoryWorldEnvironment, createStoryWorldProps } from './worldEnvironments';
+import { STORY_GROUNDED_ACTOR_CENTER_Y } from './actorGrounding';
 import type { HubDestination, StoryHubDefinition, StoryModeWorldId, StoryPortalDefinition, StoryPortalKind, StoryWorldLandmarkDefinition, StoryWorldThemeId } from './types';
 
 type StationInput = {
@@ -51,7 +52,7 @@ function world(input: ModeWorldInput): StoryHubDefinition {
     id: `kore-${input.id}-world`,
     name: input.name,
     subtitle: input.subtitle,
-    spawn: [westReturn + 5, 0.82],
+    spawn: [westReturn + 5, STORY_GROUNDED_ACTOR_CENTER_Y],
     bounds: { minX: -halfWidth, maxX: halfWidth, floorY: 0 },
     theme: input.theme,
     environment: createStoryWorldEnvironment(input.theme),

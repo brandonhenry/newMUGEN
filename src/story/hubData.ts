@@ -100,6 +100,14 @@ function sanitizeEnvironment(value: unknown): StoryWorldEnvironmentDefinition | 
     Array.isArray(surface.frame) && surface.frame.length === 4 && surface.frame.every(Number.isFinite) &&
     Array.isArray(surface.atlasSize) && surface.atlasSize.length === 2 && surface.atlasSize.every((entry) => Number.isFinite(entry) && entry > 0)
   );
+  const sanitizedSurface = validSurface && surface ? {
+    asset: surface.asset,
+    frame: surface.frame,
+    atlasSize: surface.atlasSize,
+    ...(Number.isFinite(surface.walkSurfaceInsetPixels) ? {
+      walkSurfaceInsetPixels: Math.min(surface.frame[3], Math.max(0, Number(surface.walkSurfaceInsetPixels)))
+    } : {})
+  } as StoryWorldEnvironmentDefinition['surface'] : undefined;
   return {
     background: typeof record.background === 'string' ? record.background : '#071120',
     haze: typeof record.haze === 'string' ? record.haze : '#20374a',
@@ -108,7 +116,7 @@ function sanitizeEnvironment(value: unknown): StoryWorldEnvironmentDefinition | 
     accent: typeof record.accent === 'string' ? record.accent : '#2ee6ff',
     particle: ['none', 'embers', 'snow', 'sand', 'motes', 'data'].includes(record.particle ?? '') ? record.particle! : 'motes',
     layers,
-    ...(validSurface ? { surface: surface! } : {})
+    ...(sanitizedSurface ? { surface: sanitizedSurface } : {})
   };
 }
 

@@ -11,6 +11,7 @@ import { STORY_ADVENTURE_ASSET_PATHS, STORY_ENEMY_SPRITE_PATHS, storyWorldAssetP
 import { adventureAttackHits, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureEnemyStats, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, shouldRespawnAdventureEnemy, stepAdventureProjectile, type AdventureDamageFeedback } from './adventureCombat';
 import { STORY_ADVENTURE_STAT_CAP, STORY_ADVENTURE_STAT_KEYS, allocateAdventureStat, awardAdventureExperience, canRespecAdventureStats, experienceToNextLevel, getAdventureDerivedStats, readAdventureProgress, respecAdventureStats, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_REGION_LABELS, STORY_WORLDS, isStoryAdventureRegionId, isStoryAdventureWorldId, isStoryWorldId } from './adventureWorlds';
+import { STORY_GROUNDED_ACTOR_CENTER_Y, storyAvatarGroundingOffsetForWorld } from './actorGrounding';
 import { connectStoryHubMultiplayer, readOrCreateStoryHubGuestIdentity, readStoryHubOnlinePreference, STORY_HUB_CHALLENGE_TIMEOUT_MS, writeStoryHubOnlinePreference, type StoryHubMultiplayerSession } from './hubMultiplayer';
 import { KORE_CENTRAL_HUB } from './hubData';
 import { storyPlatformSurfacePlacement } from './platformGrounding';
@@ -25,7 +26,6 @@ const CITY_ASSET_ROOT = '/story/hub/warped-city-2';
 const PORTAL_ASSET_ROOT = '/story/hub/warped-city-portals';
 const DOOR_ASSET_ROOT = '/story/hub/door-transitions';
 const ARCADE_ASSET_ROOT = '/story/hub/arcade-machines';
-const AVATAR_GROUNDING_OFFSET_Y = -0.5;
 const MODE_DOOR_BASELINE_OFFSET_Y = -0.62;
 const DOOR_TRAVEL_FRAME_SEQUENCE = [0, 1, 2, 3, 4, 5, 5, 4, 3, 2, 1, 0, 0, 1, 2, 3, 4, 5, 5, 4, 3, 2, 1, 0] as const;
 
@@ -347,7 +347,7 @@ function PackPlatformVisual({ platform, hub }: { platform: StoryPlatformDefiniti
   const source = useTexture(surface ? storyWorldAssetPath(surface.asset) : STORY_ADVENTURE_ASSET_PATHS['pixel-terrain']);
   useMemo(() => configurePixelTexture(source), [source]);
   const tileSize = platform.oneWay ? 0.9 : 1.05;
-  const surfacePlacement = storyPlatformSurfacePlacement(platform);
+  const surfacePlacement = storyPlatformSurfacePlacement(platform, surface);
   const count = Math.max(1, Math.ceil(platform.size[0] / tileSize));
   const frame = surface?.frame ?? theme.tile;
   const atlasSize = surface?.atlasSize ?? [352, 176];
@@ -497,9 +497,10 @@ function HubCamera({ playerPosition, bounds }: { playerPosition: MutableRefObjec
   return null;
 }
 
-function RemoteStoryPlayer({ presence, reducedMotion, lane, selected, onSelect }: {
+function RemoteStoryPlayer({ presence, reducedMotion, groundingOffsetY, lane, selected, onSelect }: {
   presence: StoryHubPresence;
   reducedMotion: boolean;
+  groundingOffsetY: number;
   lane: number;
   selected: boolean;
   onSelect: (presence: StoryHubPresence) => void;
@@ -515,7 +516,7 @@ function RemoteStoryPlayer({ presence, reducedMotion, lane, selected, onSelect }
     event.stopPropagation();
     onSelect(presence);
   }}>
-    <group position={[0, AVATAR_GROUNDING_OFFSET_Y, 0]}>
+    <group position={[0, groundingOffsetY, 0]}>
       <StoryAvatarRig avatar={presence.avatar} pose={presence.pose} facing={presence.facing} reducedMotion={reducedMotion} />
     </group>
     <mesh position={[0, 1.42, 0.1]} renderOrder={50}>
@@ -766,7 +767,7 @@ function AdventureEnemy({ spawn, level, playerPosition, attackEvent, reducedMoti
     <group ref={damageLayer} position={[spawn.position[0], spawn.position[1], 0.9]}>
       {damagePops.map((pop) => <Html key={pop.id} center position={[0, 1.02, 0.7]} zIndexRange={[10, 0]} className="story-enemy-damage-shell">
         <output
-          className={`story-enemy-damage ${pop.critical ? 'is-critical' : ''} ${pop.finishing ? 'is-finishing' : ''} ${reducedMotion ? 'is-reduced-motion' : ''}`}
+          className={`story-enemy-damage palette-${(pop.id - 1) % 5} ${pop.critical ? 'is-critical' : ''} ${pop.finishing ? 'is-finishing' : ''} ${reducedMotion ? 'is-reduced-motion' : ''}`}
           data-testid={`story-enemy-damage-${spawn.id}-${pop.id}`}
           aria-label={`${pop.damage} damage${pop.critical ? ', critical hit' : ''}${pop.finishing ? ', finishing hit' : ''}`}
           style={{ '--story-damage-accent': spawn.accent, '--story-damage-x': `${pop.offsetX}px`, '--story-damage-end-x': `${pop.endOffsetX}px` } as CSSProperties}
@@ -788,10 +789,11 @@ function AdventureEnemies(props: Omit<Parameters<typeof AdventureEnemy>[0], 'spa
   return <>{spawns.map((spawn) => <AdventureEnemy key={spawn.id} spawn={spawn} {...enemyProps} />)}</>;
 }
 
-function StoryPlayerController({ hub, avatar, avatarVisible, playerPosition, readInput, disabled, reducedMotion, quickMatchAvailable, derivedStats, impactEvent, onAttack, onQuickMatch, onNearbyPortal, onActivatePortal, onExit, onPause, onStateSample, onReady }: {
+function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, playerPosition, readInput, disabled, reducedMotion, quickMatchAvailable, derivedStats, impactEvent, onAttack, onQuickMatch, onNearbyPortal, onActivatePortal, onExit, onPause, onStateSample, onReady }: {
   hub: StoryHubDefinition;
   avatar: StoryProfileV4['avatar'];
   avatarVisible: boolean;
+  groundingOffsetY: number;
   playerPosition: MutableRefObject<THREE.Vector3>;
   readInput: () => StoryHubInput;
   disabled: boolean;
@@ -924,8 +926,8 @@ function StoryPlayerController({ hub, avatar, avatarVisible, playerPosition, rea
       for (const platform of hub.platforms) {
         if (platform.oneWay && now < dropThroughUntil.current) continue;
         const top = platform.position[1] + platform.size[1] / 2;
-        const previousBottom = position.current.y - 0.82;
-        const nextBottom = nextY - 0.82;
+        const previousBottom = position.current.y - STORY_GROUNDED_ACTOR_CENTER_Y;
+        const nextBottom = nextY - STORY_GROUNDED_ACTOR_CENTER_Y;
         const left = platform.position[0] - platform.size[0] / 2;
         const right = platform.position[0] + platform.size[0] / 2;
         const edgeCatch = platform.oneWay ? 0.72 : 0.46;
@@ -941,14 +943,14 @@ function StoryPlayerController({ hub, avatar, avatarVisible, playerPosition, rea
     }
     if (landing) {
       nextX = landingX;
-      nextY = landing.position[1] + landing.size[1] / 2 + 0.82;
+      nextY = landing.position[1] + landing.size[1] / 2 + STORY_GROUNDED_ACTOR_CENTER_Y;
       velocityY.current = 0;
       groundedUntil.current = now + 0.1;
       groundedPlatform.current = landing.id;
       jumpsUsed.current = 0;
     }
-    if (nextY < hub.bounds.floorY + 0.82) {
-      nextY = hub.bounds.floorY + 0.82;
+    if (nextY < hub.bounds.floorY + STORY_GROUNDED_ACTOR_CENTER_Y) {
+      nextY = hub.bounds.floorY + STORY_GROUNDED_ACTOR_CENTER_Y;
       velocityY.current = 0;
       groundedUntil.current = now + 0.1;
       groundedPlatform.current = 'ground';
@@ -980,7 +982,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, playerPosition, rea
 
   return <RigidBody ref={bodyRef} type="kinematicPosition" position={[hub.spawn[0], hub.spawn[1], 0]} colliders={false} enabledRotations={[false, false, false]}>
     <CuboidCollider args={[0.36, 0.8, 0.3]} />
-    <group ref={avatarGroup} position={[0, AVATAR_GROUNDING_OFFSET_Y, 0]} visible={avatarVisible}>
+    <group ref={avatarGroup} position={[0, groundingOffsetY, 0]} visible={avatarVisible}>
       <StoryAvatarRig avatar={avatar} pose={visualState.pose} facing={visualState.facing} reducedMotion={reducedMotion} />
     </group>
   </RigidBody>;
@@ -1015,6 +1017,7 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
 }) {
   const playerPosition = useRef(new THREE.Vector3(hub.spawn[0], hub.spawn[1], 0));
   const derivedStats = useMemo(() => getAdventureDerivedStats(progress), [progress]);
+  const groundingOffsetY = storyAvatarGroundingOffsetForWorld(Boolean(hub.enemySpawns?.some((enemy) => enemy.archetype !== 'flying')));
   return <Canvas shadows dpr={[0.65, 1.25]} gl={{ antialias: true, powerPreference: 'high-performance' }} data-testid="story-hub-canvas">
     <OrthographicCamera makeDefault position={[hub.spawn[0], 4.6, 18]} zoom={58} near={0.1} far={100} />
     <HubCamera playerPosition={playerPosition} bounds={hub.bounds} />
@@ -1026,9 +1029,9 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
           <PlatformVisual platform={platform} hub={hub} />
         </RigidBody>)}
         {hub.portals.map((portal) => <PortalVisual key={portal.id} portal={portal} nearby={nearbyPortal?.id === portal.id} assigned={assignedPortalId === portal.id} reducedMotion={reducedMotion} />)}
-        {remotePlayers.map((presence, index) => <RemoteStoryPlayer key={presence.sessionId} presence={presence} reducedMotion={reducedMotion} lane={index % 5} selected={selectedPlayerSessionId === presence.sessionId} onSelect={onSelectPlayer} />)}
+        {remotePlayers.map((presence, index) => <RemoteStoryPlayer key={presence.sessionId} presence={presence} reducedMotion={reducedMotion} groundingOffsetY={groundingOffsetY} lane={index % 5} selected={selectedPlayerSessionId === presence.sessionId} onSelect={onSelectPlayer} />)}
         {hub.enemySpawns && hub.enemySpawns.length > 0 && <AdventureEnemies spawns={hub.enemySpawns} level={progress.level} playerPosition={playerPosition} attackEvent={attackEvent} reducedMotion={reducedMotion} onPlayerDamage={onPlayerDamage} onDefeated={onEnemyDefeated} />}
-        <StoryPlayerController hub={hub} avatar={profile.avatar} avatarVisible={avatarVisible} playerPosition={playerPosition} readInput={readInput} disabled={disabled} reducedMotion={reducedMotion} quickMatchAvailable={quickMatchAvailable} derivedStats={derivedStats} impactEvent={impactEvent} onAttack={onAttack} onQuickMatch={onQuickMatch} onNearbyPortal={onNearbyPortal} onActivatePortal={onActivatePortal} onExit={onExit} onPause={onPause} onStateSample={onStateSample} onReady={onReady} />
+        <StoryPlayerController hub={hub} avatar={profile.avatar} avatarVisible={avatarVisible} groundingOffsetY={groundingOffsetY} playerPosition={playerPosition} readInput={readInput} disabled={disabled} reducedMotion={reducedMotion} quickMatchAvailable={quickMatchAvailable} derivedStats={derivedStats} impactEvent={impactEvent} onAttack={onAttack} onQuickMatch={onQuickMatch} onNearbyPortal={onNearbyPortal} onActivatePortal={onActivatePortal} onExit={onExit} onPause={onPause} onStateSample={onStateSample} onReady={onReady} />
       </Physics>
     </Suspense>
   </Canvas>;

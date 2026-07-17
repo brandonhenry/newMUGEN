@@ -113,7 +113,9 @@ const PROPS: Record<StoryWorldThemeId, PropInput[]> = {
   ruins: [['rocky-pass/crystal-1.png', [25, 25], [2.4, 2.4]], ['rocky-pass/crystal-2.png', [26, 20], [2.8, 2.2]], ['gothic-cemetery/statue.png', [63, 75], [3.6, 4.3]], ['gothic-church/column.png', [114, 190], [4.6, 7.7], undefined, 0.78]]
 };
 
-const SURFACES: Record<StoryWorldThemeId, [string, [number, number, number, number], [number, number]]> = {
+type SurfaceInput = [string, [number, number, number, number], [number, number], walkSurfaceInsetPixels?: number];
+
+const SURFACES: Record<StoryWorldThemeId, SurfaceInput> = {
   city: ['warped-city/tileset.png', [48, 16, 32, 16], [384, 256]],
   arcade: ['stomper/brick.png', [0, 0, 16, 16], [16, 16]],
   versus: ['zone-202/tileset.png', [0, 0, 48, 16], [48, 112]],
@@ -121,12 +123,12 @@ const SURFACES: Record<StoryWorldThemeId, [string, [number, number, number, numb
   training: ['warped-city/tileset.png', [48, 16, 32, 16], [384, 256]],
   tournament: ['tournament-gold/tileset.png', [0, 16, 32, 16], [208, 128]],
   route: ['magical-road/tileset.png', [32, 16, 32, 16], [128, 96]],
-  village: ['seasonal/grass-terrain.png', [48, 16, 32, 16], [272, 160]],
-  forest: ['tall-forest/tileset.png', [16, 80, 32, 16], [112, 144]],
+  village: ['seasonal/grass-terrain.png', [48, 16, 32, 16], [272, 160], 1],
+  forest: ['tall-forest/tileset.png', [16, 80, 32, 16], [112, 144], 1],
   mine: ['warped-caves/tileset.png', [32, 16, 32, 16], [384, 192]],
   crypt: ['gothic-cemetery/tileset.png', [336, 16, 32, 16], [448, 160]],
   underworld: ['emberdeep/tileset.png', [32, 16, 32, 16], [384, 192]],
-  snow: ['seasonal/snow-terrain.png', [48, 16, 32, 16], [272, 160]],
+  snow: ['seasonal/snow-terrain.png', [48, 16, 32, 16], [272, 160], 1],
   desert: ['sunscar-pixel/tileset.png', [48, 16, 32, 16], [224, 128]],
   ruins: ['rocky-pass/tileset.png', [48, 16, 32, 16], [224, 128]]
 };
@@ -137,11 +139,16 @@ function makeLayer(theme: StoryWorldThemeId, input: LayerInput, index: number): 
 }
 
 export function createStoryWorldEnvironment(theme: StoryWorldThemeId): StoryWorldEnvironmentDefinition {
-  const [file, frame, atlasSize] = SURFACES[theme];
+  const [file, frame, atlasSize, walkSurfaceInsetPixels] = SURFACES[theme];
   return {
     ...PALETTES[theme],
     layers: LAYERS[theme].map((input, index) => makeLayer(theme, input, index)),
-    surface: { asset: worldPackAsset(file), frame, atlasSize }
+    surface: {
+      asset: worldPackAsset(file),
+      frame,
+      atlasSize,
+      ...(walkSurfaceInsetPixels ? { walkSurfaceInsetPixels } : {})
+    }
   };
 }
 

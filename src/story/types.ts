@@ -260,6 +260,8 @@ export type StoryWorldEnvironmentDefinition = {
     asset: StoryWorldAssetId;
     frame: [number, number, number, number];
     atlasSize: [number, number];
+    /** Source-pixel inset for atlases whose painted cap sits below the physics walk line. */
+    walkSurfaceInsetPixels?: number;
   };
 };
 
