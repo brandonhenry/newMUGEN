@@ -42,12 +42,22 @@ describe('story hub data', () => {
       expect(world.spawn[0]).toBeGreaterThanOrEqual(world.bounds.minX);
       expect(world.spawn[0]).toBeLessThanOrEqual(world.bounds.maxX);
       if (worldId !== 'central') {
+        expect(world.bounds.maxX - world.bounds.minX, `${worldId} width`).toBeGreaterThanOrEqual(96);
+        expect(world.environment?.layers.length, `${worldId} environment layers`).toBeGreaterThanOrEqual(3);
+        expect(world.environment?.layers.every((layer) => layer.asset?.startsWith('world:')), `${worldId} real art layers`).toBe(true);
+        expect(world.environment?.layers.every((layer) => !layer.motif), `${worldId} placeholder motifs`).toBe(true);
+        expect(world.environment?.surface?.asset.startsWith('world:'), `${worldId} authored traversal surface`).toBe(true);
+        expect(world.props?.filter((prop) => prop.asset.startsWith('world:')).length, `${worldId} pack props`).toBeGreaterThanOrEqual(7);
+        expect(world.landmarks?.length, `${worldId} landmarks`).toBeGreaterThanOrEqual(5);
         expect(world.portals.some(({ destination, kind }) => destination === 'central' && kind === 'mode-door')).toBe(true);
+        expect(world.portals.filter(({ destination, kind }) => destination === 'central' && kind === 'mode-door')).toHaveLength(2);
         expect(world.portals.some(({ destination }) => destination === worldId || (worldId === 'versus' && destination === 'online'))).toBe(true);
       }
     }
     expect(STORY_MODE_WORLDS.arcade.portals.filter(({ kind }) => kind === 'arcade-machine')).toHaveLength(6);
     expect(STORY_MODE_WORLDS.versus.portals.filter(({ kind }) => kind === 'versus-machine')).toHaveLength(5);
     expect(STORY_MODE_WORLDS.versus.portals.filter(({ quickMatch }) => quickMatch)).toHaveLength(4);
+    expect(new Set(['arcade', 'versus', 'online', 'training', 'tournament'].map((id) => STORY_MODE_WORLDS[id as keyof typeof STORY_MODE_WORLDS].theme))).toHaveLength(5);
+    expect(new Set(['arcade', 'versus', 'online', 'training', 'tournament'].map((id) => STORY_MODE_WORLDS[id as keyof typeof STORY_MODE_WORLDS].environment?.layers.map((layer) => layer.asset).join('|')))).toHaveLength(5);
   });
 });

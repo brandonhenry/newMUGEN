@@ -171,8 +171,9 @@ test('adventure combat levels the player and Central Route shrine respecs stats'
   await expect(hub).toHaveAttribute('data-world', 'emberdeep', { timeout: 4_000 });
   await expect(page.getByTestId('story-door-transition')).toBeHidden({ timeout: 4_000 });
 
+  const emberSpawnX = Number(await hub.getAttribute('data-player-x'));
   await page.keyboard.down('ArrowRight');
-  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 4_000 }).toBeGreaterThan(-31.5);
+  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 4_000 }).toBeGreaterThan(emberSpawnX + 5.5);
   await page.keyboard.up('ArrowRight');
   for (let hit = 0; hit < 8; hit += 1) {
     await page.keyboard.press('u');
@@ -190,7 +191,7 @@ test('adventure combat levels the player and Central Route shrine respecs stats'
   await stats.getByRole('button', { name: 'Close adventure stats' }).click();
 
   await page.keyboard.down('ArrowLeft');
-  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 5_000 }).toBeLessThan(-41.5);
+  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 5_000 }).toBeLessThan(emberSpawnX - 1.5);
   await page.keyboard.up('ArrowLeft');
   await expect(hub).toHaveAttribute('data-nearby-portal', 'emberdeep-return-west', { timeout: 3_000 });
   await page.getByRole('button', { name: 'Enter', exact: true }).click();

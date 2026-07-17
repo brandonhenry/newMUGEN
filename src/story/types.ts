@@ -181,6 +181,11 @@ export type StoryPortalDestination = HubDestination | StoryAdventureWorldId;
 export type StoryPortalKind = 'storefront' | 'mode-door' | 'adventure-gate' | 'shrine' | 'arcade-machine' | 'versus-machine' | 'terminal';
 export type StoryWorldThemeId =
   | 'city'
+  | 'arcade'
+  | 'versus'
+  | 'online'
+  | 'training'
+  | 'tournament'
   | 'route'
   | 'village'
   | 'forest'
@@ -206,8 +211,70 @@ export type StoryAdventureAssetId =
   | 'pixel-terrain'
   | 'pixel-trap';
 
+export type StoryWorldAssetId = StoryAdventureAssetId
+  | 'city-back'
+  | 'city-middle'
+  | 'city-front'
+  | 'city-light'
+  | 'city-banner-wide'
+  | 'city-banner-tall'
+  | `world:${string}`;
+
+export type StoryWorldBackdropMotif =
+  | 'city'
+  | 'arena'
+  | 'servers'
+  | 'laboratory'
+  | 'stadium'
+  | 'village'
+  | 'forest'
+  | 'cavern'
+  | 'crypt'
+  | 'volcanic'
+  | 'mountains'
+  | 'dunes'
+  | 'ruins';
+
+export type StoryWorldBackdropLayerDefinition = {
+  id: string;
+  depth: number;
+  y: number;
+  height: number;
+  opacity: number;
+  parallax: number;
+  color: string;
+  asset?: StoryWorldAssetId;
+  motif?: StoryWorldBackdropMotif;
+  repeatEvery?: number;
+};
+
+export type StoryWorldEnvironmentDefinition = {
+  background: string;
+  haze: string;
+  light: string;
+  ground: string;
+  accent: string;
+  particle: 'none' | 'embers' | 'snow' | 'sand' | 'motes' | 'data';
+  layers: StoryWorldBackdropLayerDefinition[];
+  surface?: {
+    asset: StoryWorldAssetId;
+    frame: [number, number, number, number];
+    atlasSize: [number, number];
+  };
+};
+
+export type StoryWorldLandmarkDefinition = {
+  id: string;
+  label: string;
+  subtitle: string;
+  position: [number, number, number];
+  size: [number, number];
+  color: string;
+  kind: 'district' | 'vista' | 'lore' | 'secret';
+};
+
 export type StoryAtlasFrame = {
-  asset: StoryAdventureAssetId;
+  asset: StoryWorldAssetId;
   frame: [number, number, number, number];
   atlasSize: [number, number];
 };
@@ -260,6 +327,8 @@ export type StoryHubDefinition = {
   platforms: StoryPlatformDefinition[];
   portals: StoryPortalDefinition[];
   theme?: StoryWorldThemeId;
+  environment?: StoryWorldEnvironmentDefinition;
+  landmarks?: StoryWorldLandmarkDefinition[];
   checkpoint?: [number, number];
   props?: StoryWorldPropDefinition[];
   enemySpawns?: StoryEnemySpawnDefinition[];

@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -16,6 +17,7 @@ type AdventureAssetManifest = {
 
 const assetRoot = resolve(process.cwd(), 'public/story/adventure');
 const manifest = JSON.parse(readFileSync(resolve(assetRoot, 'asset-manifest.json'), 'utf8')) as AdventureAssetManifest;
+const integrity = JSON.parse(readFileSync(resolve(assetRoot, 'asset-integrity.json'), 'utf8')) as { algorithm: string; files: Record<string, string> };
 
 describe('story adventure asset manifest', () => {
   it('tracks each shipped source sheet with dimensions, attribution, and a license', () => {
@@ -42,5 +44,14 @@ describe('story adventure asset manifest', () => {
     expect(dawnlike?.requiredEasterEgg).toContain('Emberdeep');
     expect(crawler?.authors).toContain('Anokolisa');
     expect(readdirSync(assetRoot).some((file) => file.toLowerCase().endsWith('.zip'))).toBe(false);
+  });
+
+  it('pins every shipped adventure sheet to a reviewed SHA-256 checksum', () => {
+    expect(integrity.algorithm).toBe('sha256');
+    expect(Object.keys(integrity.files)).toHaveLength(21);
+    for (const [file, expected] of Object.entries(integrity.files)) {
+      const contents = readFileSync(resolve(assetRoot, file));
+      expect(createHash('sha256').update(contents).digest('hex'), file).toBe(expected);
+    }
   });
 });

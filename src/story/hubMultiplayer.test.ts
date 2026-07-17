@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { makeDefaultStoryAvatar } from './avatarCatalog';
+import { storyWorldBounds } from './adventureWorlds';
 import {
   readOrCreateStoryHubGuestIdentity,
   readStoryHubOnlinePreference,
@@ -46,7 +47,7 @@ describe('story hub multiplayer', () => {
       sessionId: 'peerone',
       playerId: 'playerone',
       displayName: 'NOVA',
-      x: 19.5,
+      x: storyWorldBounds('versus').maxX - 0.5,
       y: 0.82,
       pose: 'attack',
       facing: -1,

@@ -1,4 +1,4 @@
-import type { StoryAdventureAssetId } from './types';
+import type { StoryAdventureAssetId, StoryWorldAssetId } from './types';
 
 export const STORY_ADVENTURE_ASSET_PATHS: Record<StoryAdventureAssetId, string> = {
   'dawn-tree': '/story/adventure/dawnlike/Tree0.png',
@@ -26,3 +26,31 @@ export const STORY_ENEMY_SPRITE_PATHS = {
   elemental: '/story/adventure/dawnlike/Elemental0.png',
   reptile: '/story/adventure/dawnlike/Reptile0.png'
 } as const;
+
+export const STORY_WORLD_ASSET_PATHS: Partial<Record<StoryWorldAssetId, string>> = {
+  ...STORY_ADVENTURE_ASSET_PATHS,
+  'city-back': '/story/hub/warped-city-2/city-back.png',
+  'city-middle': '/story/hub/warped-city-2/city-middle.png',
+  'city-front': '/story/hub/warped-city-2/city-front.png',
+  'city-light': '/story/hub/warped-city-2/street-light.png',
+  'city-banner-wide': '/story/hub/warped-city-2/banner-wide.png',
+  'city-banner-tall': '/story/hub/warped-city-2/banner-tall.png'
+};
+
+export function worldPackAsset(relativePath: string): StoryWorldAssetId {
+  return `world:${relativePath}`;
+}
+
+export function isStoryWorldAssetId(value: unknown): value is StoryWorldAssetId {
+  return typeof value === 'string' && (
+    Object.prototype.hasOwnProperty.call(STORY_WORLD_ASSET_PATHS, value) ||
+    /^world:[a-z0-9][a-z0-9-]*(?:\/[a-z0-9][a-z0-9.-]*)+\.png$/.test(value)
+  );
+}
+
+export function storyWorldAssetPath(asset: StoryWorldAssetId): string {
+  if (asset.startsWith('world:')) return `/story/worlds/${asset.slice('world:'.length)}`;
+  const path = STORY_WORLD_ASSET_PATHS[asset];
+  if (!path) throw new Error(`Unknown story world asset: ${asset}`);
+  return path;
+}

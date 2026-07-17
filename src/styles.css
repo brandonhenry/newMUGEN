@@ -778,6 +778,60 @@ body {
   visibility: hidden;
 }
 
+.story-world-landmark-shell {
+  pointer-events: none;
+  user-select: none;
+}
+
+.story-world-landmark {
+  display: grid;
+  width: 154px;
+  border-radius: 13px;
+  padding: 7px 10px 8px;
+  color: #ffffff;
+  background: rgba(2, 6, 21, 0.76);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--story-landmark-color) 36%, transparent) inset,
+    0 14px 34px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(7px);
+}
+
+.story-world-landmark small {
+  color: var(--story-landmark-color);
+  font-size: 7px;
+  font-weight: 950;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.story-world-landmark strong {
+  overflow: hidden;
+  font-size: 11px;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.story-world-landmark span {
+  overflow: hidden;
+  color: rgba(247, 247, 242, 0.58);
+  font-size: 7px;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.story-world-landmark.is-secret {
+  opacity: 0.76;
+  filter: saturate(0.82);
+}
+
+.story-hub-screen[data-controls-open='true'] .story-world-landmark-shell {
+  opacity: 0;
+  visibility: hidden;
+}
+
 .story-destination-sign {
   display: grid;
   grid-template-columns: 28px minmax(0, 1fr);
@@ -2179,6 +2233,15 @@ body {
   }
 
   .story-hub-location p {
+    display: none;
+  }
+
+  .story-world-landmark {
+    width: 128px;
+    padding: 6px 8px;
+  }
+
+  .story-world-landmark span {
     display: none;
   }
 

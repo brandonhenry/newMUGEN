@@ -1,0 +1,1139 @@
+{
+  "version": 1,
+  "direction": "crisp authored pixel-art parallax",
+  "packs": [
+    {
+      "id": "warped-city",
+      "author": "Ansimuz",
+      "source": "https://opengameart.org/content/warped-city",
+      "archive": "https://opengameart.org/sites/default/files/warped_city_files.zip",
+      "archiveSha256": "cf0e69a203206f529adbaf1f82d4c5f165ca9cdb49d3995ec88d135b37e40e3e",
+      "license": "CC0-1.0",
+      "assets": [
+        {
+          "file": "warped-city/skyline-a.png",
+          "sourceFile": "warped city files/ENVIRONMENT/background/skyline-a.png",
+          "width": 128,
+          "height": 240,
+          "sha256": "9690f126ffb767e69d6d879e40cc61121e96ebaac931eeb7dbf3aa20aaf8e0d1"
+        },
+        {
+          "file": "warped-city/skyline-b.png",
+          "sourceFile": "warped city files/ENVIRONMENT/background/skyline-b.png",
+          "width": 128,
+          "height": 240,
+          "sha256": "01320f59567ece2430f1ce75f01b81167604468b7211f2450fdafb0ef3aeb6c6"
+        },
+        {
+          "file": "warped-city/buildings.png",
+          "sourceFile": "warped city files/ENVIRONMENT/background/buildings-bg.png",
+          "width": 144,
+          "height": 124,
+          "sha256": "e0b53de4254d477bd387460eb3c9a083a3f0e796b2d905d9591118165d3f6878"
+        },
+        {
+          "file": "warped-city/near-buildings.png",
+          "sourceFile": "warped city files/ENVIRONMENT/background/near-buildings-bg.png",
+          "width": 493,
+          "height": 209,
+          "sha256": "737fbd32d2b12ae0a74b79cedfe3713091aad48c8225dc8922ac07fd168d7b49"
+        },
+        {
+          "file": "warped-city/monitor.png",
+          "sourceFile": "warped city files/ENVIRONMENT/props/monitorface/monitor-face-1.png",
+          "width": 21,
+          "height": 18,
+          "sha256": "0b0606400e982d664b6b07179569288c8b7dcbca0b28ae115ae0e7b6e8733b2e"
+        },
+        {
+          "file": "warped-city/neon-banner.png",
+          "sourceFile": "warped city files/ENVIRONMENT/props/banner-neon/banner-neon-1.png",
+          "width": 19,
+          "height": 48,
+          "sha256": "3cd75adc55dccfc7f289172cb95be209cc454f60281f3d17f83303f8c59ea85c"
+        },
+        {
+          "file": "warped-city/arrow.png",
+          "sourceFile": "warped city files/ENVIRONMENT/props/banner-arrow.png",
+          "width": 16,
+          "height": 34,
+          "sha256": "c026ef617dafa5f5664e413f04c40f3f2a3b212328157e44034f8abf92975888"
+        },
+        {
+          "file": "warped-city/antenna.png",
+          "sourceFile": "warped city files/ENVIRONMENT/props/antenna.png",
+          "width": 22,
+          "height": 96,
+          "sha256": "6bdeb06919133f6c7a601fd5078e83efe22ef8b99fe35c71ea81baea0531b1f5"
+        },
+        {
+          "file": "warped-city/tileset.png",
+          "sourceFile": "warped city files/ENVIRONMENT/tileset.png",
+          "width": 384,
+          "height": 256,
+          "sha256": "b978215cc0f92771473d01ad36d35859add55816e648a95fabeb4557a681a5c0"
+        }
+      ]
+    },
+    {
+      "id": "stomper",
+      "author": "Ansimuz",
+      "source": "https://opengameart.org/content/stomper-platform-assets",
+      "archive": "https://opengameart.org/sites/default/files/stomper_asset_files.zip",
+      "archiveSha256": "3fa51d1b8fb1ef13216a32954d7cee71f10e3d5f4f64d3b38efa08ae5719de80",
+      "license": "CC0-1.0",
+      "assets": [
+        {
+          "file": "stomper/back.png",
+          "sourceFile": "Stomper Asset Files/environment/layers/back.png",
+          "width": 128,
+          "height": 240,
+          "sha256": "9d850cd2dee322c7e429cf0f7ac9e4abd7ed0f78a7e8b3fa4e7d422d9e57fe80"
+        },
+        {
+          "file": "stomper/back-glow.png",
+          "sourceFile": "Stomper Asset Files/environment/Back animated/back-animated2.png",
+          "width": 128,
+          "height": 240,
+          "sha256": "c02b3788b23b9e6144630d43c7694f8baed6e2f549cc1c0a5180fb9a80f00441"
+        },
+        {
+          "file": "stomper/plant.png",
+          "sourceFile": "Stomper Asset Files/environment/layers/plant.png",
+          "width": 31,
+          "height": 33,
+          "sha256": "af13c0a63bd2abf91c7c5c56d6ba85ff74a3f9daba19a09706500ec5f2f65eb0"
+        },
+        {
+          "file": "stomper/brick.png",
+          "sourceFile": "Stomper Asset Files/environment/brick.png",
+          "width": 16,
+          "height": 16,
+          "sha256": "3db7377c4f775a89414507712572abebb6aa7237d04c38f630a483cfb636e0f3"
+        },
+        {
+          "file": "stomper/tileset.png",
+          "sourceFile": "Stomper Asset Files/environment/layers/tileset.png",
+          "width": 128,
+          "height": 64,
+          "sha256": "3804491905b914e50ae8d681d454876846aefdc47064899344ba5088f5122dcb"
+        }
+      ]
+    },
+    {
+      "id": "zone-202",
+      "author": "Ansimuz",
+      "source": "https://opengameart.org/content/warped-zone-202",
+      "archive": "https://opengameart.org/sites/default/files/Warped%20Zone%20202.zip",
+      "archiveSha256": "98691e3480dc69c31e0b99bd3708881e1e02b5aa43d7e794fbb6dd759d44364e",
+      "license": "CC0-1.0",
+      "assets": [
+        {
+          "file": "zone-202/back.png",
+          "sourceFile": "Warped Zone 202/back.png",
+          "width": 48,
+          "height": 112,
+          "sha256": "00c33a0b20d129c76f3d92f449986d1871593c3cacae3ae4efcd56509c220ca8"
+        },
+        {
+          "file": "zone-202/back-2.png",
+          "sourceFile": "Warped Zone 202/back-2.png",
+          "width": 96,
+          "height": 112,
+          "sha256": "f9f21a211719098cb45931b2f955d2c3f1a9096189a7aa2aea2d884b78d59645"
+        },
+        {
+          "file": "zone-202/tileset.png",
+          "sourceFile": "Warped Zone 202/tileset.png",
+          "width": 48,
+          "height": 112,
+          "sha256": "c60394b5d0063f1f30b3faa8890e7a69ed00e2d63964aee9dc2535c28236a0fa"
+        }
+      ]
+    },
+    {
+      "id": "sci-fi-lab",
+      "author": "Ansimuz",
+      "source": "https://opengameart.org/content/warped-sci-fi-lab",
+      "archive": "https://opengameart.org/sites/default/files/scifi_lab_files.zip",
+      "archiveSha256": "af2eb52debbafc46355726c44cc34b16cfb037d6f6e19fa19c4f020c05d1d85a",
+      "license": "CC0-1.0",
+      "assets": [
+        {
+          "file": "sci-fi-lab/back.png",
+          "sourceFile": "Scifi lab Files/layers/back.png",
+          "width": 320,
+          "height": 240,
+          "sha256": "8153966f484a5191260c9bebb2c4a50e4c75803a7cc9ff3cb7d6db322c73125d"
+        },
+        {
+          "file": "sci-fi-lab/middle.png",
+          "sourceFile": "Scifi lab Files/layers/middle.png",
+          "width": 320,
+          "height": 240,
+          "sha256": "c02b614d6cf87ad80d9da2270cf37e9a094b84237517b721801e4a70392a2ac5"
+        },
+        {
+          "file": "sci-fi-lab/front.png",
+          "sourceFile": "Scifi lab Files/layers/front.png",
+          "width": 320,
+          "height": 240,
+          "sha256": "87879668e46eca8e8e1f8f61ad9abe5d07919aebd3894e09203498ccdaa4dba1"
+        },
+        {
+          "file": "sci-fi-lab/support.png",
+          "sourceFile": "Scifi lab Files/layers/Props/support.png",
+          "width": 16,
+          "height": 240,
+          "sha256": "c0f38b4a0d8960c6b928387884bd1c47a82c440ea5e72d63a092310ea45865bc"
+        },
+        {
+          "file": "sci-fi-lab/tank-1.png",
+          "sourceFile": "Scifi lab Files/layers/Props/tank-1.png",
+          "width": 48,
+          "height": 122,
+          "sha256": "82fb1e348037138f3d939902dcc000c23bfff07acfc7d407f2557bcda5c24013"
+        },
+        {
+          "file": "sci-fi-lab/tank-2.png",
+          "sourceFile": "Scifi lab Files/layers/Props/tank-2.png",
+          "width": 48,
+          "height": 122,
+          "sha256": "4a0c7a8a8648abde018613e1e431e35a300735a3e973371fe74145b28c55527c"
+        },
+        {
+          "file": "sci-fi-lab/tank-3.png",
+          "sourceFile": "Scifi lab Files/layers/Props/tank-3.png",
+          "width": 48,
+          "height": 122,
+          "sha256": "b2a0dae6d8dcc6f6be68bfbf925ebe60defcc063670466e2caf277b32f079aa8"
+        }
+      ]
+    },
+    {
+      "id": "gothic-town",
+      "author": "Ansimuz",
+      "source": "https://opengameart.org/content/gothicvania-town",
+      "archive": "https://opengameart.org/sites/default/files/gothicvania-town-files.zip",
+      "archiveSha256": "11c32d7416814e1832c502e76426623065792c3d95a8514be42e59fe6b0b0651",
+      "license": "CC0-1.0",
+      "assets": [
+        {
+          "file": "gothic-town/background.png",
+          "sourceFile": "GothicVania-town-files/PNG/environment/layers/background.png",
+          "width": 384,
+          "height": 288,
+          "sha256": "d6b4bf1d0f8eb596f8b565e20f7f8cbbaa269532acd5051e4fa21fb1fa32453f"
+        },
+        {
+          "file": "gothic-town/middleground.png",
+          "sourceFile": "GothicVania-town-files/PNG/environment/layers/middleground.png",
+          "width": 384,
+          "height": 288,
+          "sha256": "1f0d786720176fae6979c05700f1d5abb39beee08ec51dfaa9667c3a1e6b0eb4"
+        },
+        {
+          "file": "gothic-town/tileset.png",
+          "sourceFile": "GothicVania-town-files/PNG/environment/layers/tileset.png",
+          "width": 592,
+          "height": 192,
+          "sha256": "2e5a9d79f040ad184883a93b2794346518f42ad4d9930a029c9df765b94fd4e7"
+        },
+        {
+          "file": "gothic-town/house-a.png",
+          "sourceFile": "GothicVania-town-files/PNG/environment/props-sliced/house-a.png",
+          "width": 168,
+          "height": 183,
+          "sha256": "b1b9c2e31867c3522a8681ddb6294c3213248b089d25b36653eb263229daa946"
+        },
+        {
+          "file": "gothic-town/house-b.png",
+          "sourceFile": "GothicVania-town-files/PNG/environment/props-sliced/house-b.png",
+          "width": 210,
+          "height": 244,
+          "sha256": "0d83dd406829276d7525b68cbb4086f430e880dc448059c3723f6f2d04cc985b"
+        },
+        {
+          "file": "gothic-town/house-c.png",
+          "sourceFile": "GothicVania-town-files/PNG/environment/props-sliced/house-c.png",
+          "width": 221,
+          "height": 183,
+          "sha256": "7a040ac38fc3581f635c8ffbf4d01ff9edbc887329b97b8e10778e179db90cd6"
+        },
+        {
+          "file": "gothic-town/well.png",
+          "sourceFile": "GothicVania-town-files/PNG/environment/props-sliced/well.png",
+          "width": 65,
+          "height": 65,
+          "sha256": "938190bf4f037659702a4656aadb34f7c62a4a6d34d480b0a7dddd4d093c22fa"
+        },
+        {
+          "file": "gothic-town/wagon.png",
+          "sourceFile": "GothicVania-town-files/PNG/environment/props-sliced/wagon.png",
+          "width": 93,
+          "height": 75,
+          "sha256": "38f717ab974f72e4d52702274aca79e0b680a05acfaf0704e8b433713c81c9e0"
+        },
+        {
+          "file": "gothic-town/street-lamp.png",
+          "sourceFile": "GothicVania-town-files/PNG/environment/props-sliced/street-lamp.png",
+          "width": 35,
+          "height": 108,
+          "sha256": "b22a694461c34c40051266120e44bde7795589c16649cda31e23089178d4859c"
+        }
+      ]
+    },
+    {
+      "id": "tall-forest",
+      "author": "Ansimuz",
+      "source": "https://opengameart.org/content/sunnyland-tall-forest-environment",
+      "archive": "https://opengameart.org/sites/default/files/tall_forest_files.zip",
+      "archiveSha256": "4b301344afea3366ac8e5d5b066e8d33e2fd0df66a2acf728e79bbfedb3a1328",
+      "license": "CC0-1.0",
+      "assets": [
+        {
+          "file": "tall-forest/back.png",
+          "sourceFile": "Tall Forest Files/Layers/back.png",
+          "width": 144,
+          "height": 240,
+          "sha256": "fa29066e0372c9202d460106c04bd090474b6452e2fcaed239db98a175e4bf97"
+        },
+        {
+          "file": "tall-forest/far.png",
+          "sourceFile": "Tall Forest Files/Layers/far.png",
+          "width": 176,
+          "height": 240,
+          "sha256": "51c5e3cbb65d4d0d63433d6c46c702f56f3d5bdd3880871ac5407185c921416a"
+        },
+        {
+          "file": "tall-forest/middle.png",
+          "sourceFile": "Tall Forest Files/Layers/middle.png",
+          "width": 192,
+          "height": 240,
+          "sha256": "747e92a1ddc97e0af3f166ac10725b922e29555e76e37cab9bac968c418a100f"
+        },
+        {
+          "file": "tall-forest/tileset.png",
+          "sourceFile": "Tall Forest Files/Layers/tileset.png",
+          "width": 112,
+          "height": 144,
+          "sha256": "a71518b07cc92100b0d5668abf8a63e620748678e09bb1a3126af7e88d7f0da2"
+        },
+        {
+          "file": "tall-forest/plant.png",
+          "sourceFile": "Tall Forest Files/Layers/Props/Plant.png",
+          "width": 42,
+          "height": 27,
+          "sha256": "283b62c8ce436775892f79f059ec0f981a93476270cb446c1718c3b4346ac2c9"
+        },
+        {
+          "file": "tall-forest/rock.png",
+          "sourceFile": "Tall Forest Files/Layers/Props/Rock.png",
+          "width": 32,
+          "height": 32,
+          "sha256": "780f1f7dc7b6cb2d8ce22dd8a7aa0da8cc826b915ac0baa7fda34e64ce0a9889"
+        }
+      ]
+    },
+    {
+      "id": "forest-illusion",
+      "author": "Ansimuz",
+      "source": "https://opengameart.org/content/sunnyland-forest-of-illusion",
+      "archive": "https://opengameart.org/sites/default/files/forest_of_illusion_files.zip",
+      "archiveSha256": "d2e19d577bf538c9cabbd089c8fa1c402d90b23fe6d724c4f93c940ff6e8ab5a",
+      "license": "CC0-1.0",
+      "assets": [
+        {
+          "file": "forest-illusion/back.png",
+          "sourceFile": "Forest of Illusion Files/Layers/back.png",
+          "width": 160,
+          "height": 272,
+          "sha256": "4d49348250f6529ec6b55075e8eef197126ca38c6dcc90505b238e43b0a45fd0"
+        },
+        {
+          "file": "forest-illusion/middle.png",
+          "sourceFile": "Forest of Illusion Files/Layers/middle.png",
+          "width": 384,
+          "height": 272,
+          "sha256": "ec54a506d09297981e7fed1ffa340755b4eafdaf13f33bdfad698cbca457ac85"
+        },
+        {
+          "file": "forest-illusion/tiles.png",
+          "sourceFile": "Forest of Illusion Files/Layers/tiles.png",
+          "width": 176,
+          "height": 96,
+          "sha256": "f287846e0b4610691b29e7bf9b956aaeaffeb31e287899332fa0b51db9838f27"
+        }
+      ]
+    },
+    {
+      "id": "warped-caves",
+      "author": "Ansimuz",
+      "source": "https://opengameart.org/content/warped-caves-pixel-art-pack",
+      "archive": "https://opengameart.org/sites/default/files/warped-files_1.zip",
+      "archiveSha256": "f0f7ad1a4b142c889a89899592db636c57943e0fa62fe5d5ee34677bd6c6a67e",
+      "license": "CC0-1.0",
+      "assets": [
+        {
+          "file": "warped-caves/background.png",
+          "sourceFile": "warped-files/PNG/environment/layers/background.png",
+          "width": 240,
+          "height": 176,
+          "sha256": "6533232edacdc741231f631c825ebbb7fe6dd969a05a9e87f6b82886de77d27a"
+        },
+        {
+          "file": "warped-caves/middleground.png",
+          "sourceFile": "warped-files/PNG/environment/layers/middleground.png",
+          "width": 272,
+          "height": 176,
+          "sha256": "b07f41fd439fb36c35643190fd89b6bf4ca9fc3a53fa641b79c14787bf507df2"
+        },
+        {
+          "file": "warped-caves/walls.png",
+          "sourceFile": "warped-files/PNG/environment/layers/walls.png",
+          "width": 160,
+          "height": 128,
+          "sha256": "b308d993d0bb10f98d3cb44ee02dd55a3ad6a44f9c27ce4269c528ae71e4cac8"
+        },
+        {
+          "file": "warped-caves/tileset.png",
+          "sourceFile": "warped-files/PNG/environment/layers/tilesets.png",
+          "width": 384,
+          "height": 192,
+          "sha256": "3f92df591689c1ade49cf54b0087160cac3ed408553859a99dbb708df9a44d04"
+        },
+        {
+          "file": "warped-caves/gate.png",
+          "sourceFile": "warped-files/PNG/environment/props/gate-01.png",
+          "width": 48,
+          "height": 48,
+          "sha256": "56ee2ec6a187c76a51d0e8e4525d3965b9bc529d84c0aa8721d76e6af856f9a7"
+        },
+        {
+          "file": "warped-caves/stalactite.png",
+          "sourceFile": "warped-files/PNG/environment/props/stalactite.png",
+          "width": 38,
+          "height": 53,
+          "sha256": "1dd97092ed54cb78a1571488fb5fd8df66663e72a079f38caf7b1129666f3306"
+        },
+        {
+          "file": "warped-caves/stone-head.png",
+          "sourceFile": "warped-files/PNG/environment/props/stone-head.png",
+          "width": 55,
+          "height": 51,
+          "sha256": "7a163aef164880de9c52c3513bf55cf7266129ea7d39a4a35156fc05baa354a1"
+        }
+      ]
+    },
+    {
+      "id": "gothic-cemetery",
+      "author": "Ansimuz",
+      "source": "https://opengameart.org/content/gothicvania-cemetery-pack",
+      "archive": "https://opengameart.org/sites/default/files/gothicvania-cemetery-files_1.zip",
+      "archiveSha256": "992f3792b49391da4d97c29da47c8f3d2f438ca10d7db03f9a3166d655600871",
+      "license": "CC0-1.0",
+      "assets": [
+        {
+          "file": "gothic-cemetery/background.png",
+          "sourceFile": "gothicvania-cemetery-files/PNG/Environment/background.png",
+          "width": 384,
+          "height": 224,
+          "sha256": "c4552118e583615935a50c20032b6ba6ab4e14568ef20a2ac4e02f4810eedeae"
+        },
+        {
+          "file": "gothic-cemetery/mountains.png",
+          "sourceFile": "gothicvania-cemetery-files/PNG/Environment/mountains.png",
+          "width": 192,
+          "height": 179,
+          "sha256": "5f400ca5356a7e1e213f7eab644ea1765d29c1047c5a8c3059a14e32d6daf5d1"
+        },
+        {
+          "file": "gothic-cemetery/graveyard.png",
+          "sourceFile": "gothicvania-cemetery-files/PNG/Environment/graveyard.png",
+          "width": 384,
+          "height": 123,
+          "sha256": "8dc724ff2f060e4c75645a8f20a0205c32077804e0306ee86bf4510adb6bcffc"
+        },
+        {
+          "file": "gothic-cemetery/tileset.png",
+          "sourceFile": "gothicvania-cemetery-files/PNG/Environment/tileset.png",
+          "width": 448,
+          "height": 160,
+          "sha256": "301621df46098257f4f8ed843418b94a3bf5fcd76d609325287a51aa0831a942"
+        },
+        {
+          "file": "gothic-cemetery/tree.png",
+          "sourceFile": "gothicvania-cemetery-files/PNG/Environment/sliced-objects/tree-2.png",
+          "width": 166,
+          "height": 117,
+          "sha256": "8785812649f4ba31fb6542ed9b3e954fc3dddf2e1925497958c04a4486c3652a"
+        },
+        {
+          "file": "gothic-cemetery/statue.png",
+          "sourceFile": "gothicvania-cemetery-files/PNG/Environment/sliced-objects/statue.png",
+          "width": 63,
+          "height": 75,
+          "sha256": "0b5587d559150405e80a527260734fc6fd16db4ee45d5e39037b56e412ed64ee"
+        },
+        {
+          "file": "gothic-cemetery/stone.png",
+          "sourceFile": "gothicvania-cemetery-files/PNG/Environment/sliced-objects/stone-3.png",
+          "width": 27,
+          "height": 33,
+          "sha256": "709704359334e393d45701d0087bf707d5d4fa34fda6a9a15d45799b21eea042"
+        }
+      ]
+    },
+    {
+      "id": "gothic-church",
+      "author": "Ansimuz",
+      "source": "https://opengameart.org/content/gothicvania-church-pack",
+      "archive": "https://opengameart.org/sites/default/files/gothicvania%20church%20files.zip",
+      "archiveSha256": "c4c78b80905022d3325212b58271044bdd4b92d1f7724fe94aee0107ba3c8169",
+      "license": "CC0-1.0",
+      "assets": [
+        {
+          "file": "gothic-church/backgrounds.png",
+          "sourceFile": "gothicvania church files/ENVIRONMENT/backgrounds.png",
+          "width": 624,
+          "height": 192,
+          "sha256": "66c1949966b09d182c8451d50b51f31699d634a3956e89efef3d614621a8b30b"
+        },
+        {
+          "file": "gothic-church/tileset.png",
+          "sourceFile": "gothicvania church files/ENVIRONMENT/tileset.png",
+          "width": 336,
+          "height": 224,
+          "sha256": "ed53fc7673da26646e76a5d06462ae6df1acee0ff992ce02271936602b47be1b"
+        },
+        {
+          "file": "gothic-church/column.png",
+          "sourceFile": "gothicvania church files/ENVIRONMENT/column.png",
+          "width": 114,
+          "height": 190,
+          "sha256": "ea58276e4b676613a6e1a293b544e88f90dd4fe5da2444769f11f15702a285ec"
+        }
+      ]
+    },
+    {
+      "id": "fort-illusion",
+      "author": "Ansimuz",
+      "source": "https://opengameart.org/content/fort-of-illusion",
+      "archive": "https://opengameart.org/sites/default/files/fort_of_illusion_files.zip",
+      "archiveSha256": "350f2b572128c1104f0178291d44986f704d2e1bd08cdf81acc21f7173a7cba6",
+      "license": "CC0-1.0",
+      "assets": [
+        {
+          "file": "fort-illusion/mountains.png",
+          "sourceFile": "Fort of Illusion Files/Layers/mountains.png",
+          "width": 256,
+          "height": 272,
+          "sha256": "802e0e3fea996170dcd97eeac114d5fefa439a86a281b03f0fdbaa53ad56c229"
+        },
+        {
+          "file": "fort-illusion/back.png",
+          "sourceFile": "Fort of Illusion Files/Layers/back.png",
+          "width": 64,
+          "height": 272,
+          "sha256": "e645ff422449508d822cb76dd9497ee155f7f5a872a039a391f60b6bc4096568"
+        },
+        {
+          "file": "fort-illusion/front.png",
+          "sourceFile": "Fort of Illusion Files/Layers/front.png",
+          "width": 112,
+          "height": 128,
+          "sha256": "4347693c2702d0384a7c6be9be97f898022d71ecfc6c568922b29dc954639576"
+        },
+        {
+          "file": "fort-illusion/tileset.png",
+          "sourceFile": "Fort of Illusion Files/Layers/tileset.png",
+          "width": 208,
+          "height": 128,
+          "sha256": "5ba6a6359e7e2b8d59964d663096721c4ebe6750beba38b56246809259a214c6"
+        },
+        {
+          "file": "fort-illusion/flag.png",
+          "sourceFile": "Fort of Illusion Files/Layers/Props/flag.png",
+          "width": 16,
+          "height": 63,
+          "sha256": "96d809fd9eaa7e0290fd8b8f2a349d76a39f394d5a4b58becf8817eaf1d8b346"
+        },
+        {
+          "file": "fort-illusion/banner.png",
+          "sourceFile": "Fort of Illusion Files/Layers/Props/banner.png",
+          "width": 48,
+          "height": 59,
+          "sha256": "2e284bfb9e3b910ddb16ff7bb9dc657153531c592213bd84dad1fe47196bd6b7"
+        },
+        {
+          "file": "fort-illusion/door.png",
+          "sourceFile": "Fort of Illusion Files/Layers/Props/door.png",
+          "width": 96,
+          "height": 80,
+          "sha256": "5db96837bc8181d1b91a11f6e94c9877945fc239ff1c86748ed5c41b64e6ef3b"
+        }
+      ]
+    },
+    {
+      "id": "magical-road",
+      "author": "Ansimuz",
+      "source": "https://opengameart.org/content/magical-road-pixel-art-environment",
+      "archive": "https://opengameart.org/sites/default/files/magical_road_files.zip",
+      "archiveSha256": "5f48880e66b251f556b8f985d7c17690ac73dcfd2c7ef9d3bb4e0bd8ea27b693",
+      "license": "CC0-1.0",
+      "assets": [
+        {
+          "file": "magical-road/back.png",
+          "sourceFile": "Magical Road Files/Layers/back.png",
+          "width": 112,
+          "height": 240,
+          "sha256": "4e15bef9c32d86da2510b02eadf8f3d9dc859cb5ef8f8c0915658a144636b121"
+        },
+        {
+          "file": "magical-road/middle.png",
+          "sourceFile": "Magical Road Files/Layers/middle.png",
+          "width": 64,
+          "height": 240,
+          "sha256": "a83c53f9da868da9b2cbcd38e209848c3c6078e77917ccc334d037cc69b3c4cb"
+        },
+        {
+          "file": "magical-road/tree.png",
+          "sourceFile": "Magical Road Files/Layers/tree.png",
+          "width": 86,
+          "height": 181,
+          "sha256": "efdff6ef222137ca4d5f01127008fd110053d1a89a5cd703d99f52c97d86a6b7"
+        },
+        {
+          "file": "magical-road/tileset.png",
+          "sourceFile": "Magical Road Files/Layers/tileset.png",
+          "width": 128,
+          "height": 96,
+          "sha256": "2b1d7097b7926ab42ddd23bf66ab914d7fecd1a6844c028aed386af69e20d000"
+        }
+      ]
+    },
+    {
+      "id": "magic-cliffs",
+      "author": "Ansimuz",
+      "source": "https://opengameart.org/content/magic-cliffs-environment",
+      "archive": "https://opengameart.org/sites/default/files/Magic-Cliffs-Environment.zip",
+      "archiveSha256": "40cdd806231c28246f54f60c3533d65ce085cf12106602a119933818e785287f",
+      "license": "CC0-1.0",
+      "assets": [
+        {
+          "file": "magic-cliffs/sky.png",
+          "sourceFile": "Magic-Cliffs-Environment/PNG/sky.png",
+          "width": 112,
+          "height": 304,
+          "sha256": "14647767ade1fe1a2a91505a63a2865048154ed4bd6fd935447171d5c135d32e"
+        },
+        {
+          "file": "magic-cliffs/clouds.png",
+          "sourceFile": "Magic-Cliffs-Environment/PNG/clouds.png",
+          "width": 544,
+          "height": 236,
+          "sha256": "c89579fc9375948db303facb6f02b58372fa60df0964b188e19897000cdc5e1f"
+        },
+        {
+          "file": "magic-cliffs/sea.png",
+          "sourceFile": "Magic-Cliffs-Environment/PNG/sea.png",
+          "width": 112,
+          "height": 96,
+          "sha256": "55b18e97d89e7e5924f677d6fe50dfbb86b7e328f16af31082e9afe1b165acb7"
+        },
+        {
+          "file": "magic-cliffs/far-grounds.png",
+          "sourceFile": "Magic-Cliffs-Environment/PNG/far-grounds.png",
+          "width": 616,
+          "height": 110,
+          "sha256": "4a6a79783e86d42ec91c4a7b4de5ec8fbbd4af87218712a66d461753327f1298"
+        },
+        {
+          "file": "magic-cliffs/tileset.png",
+          "sourceFile": "Magic-Cliffs-Environment/PNG/tileset.png",
+          "width": 928,
+          "height": 320,
+          "sha256": "ae44c01f236d8ce3e50f954c61e6b6fdca0b6eff777f4ab2516249bc9ba4d6be"
+        }
+      ]
+    },
+    {
+      "id": "rocky-pass",
+      "author": "Ansimuz",
+      "source": "https://opengameart.org/content/gothicvania-rocky-pass-environment",
+      "archive": "https://opengameart.org/sites/default/files/rocky_pass_files.zip",
+      "archiveSha256": "4cc3641d3d00f65feebb52b36f41664c5d1323c142a8116dfdcb82c2e1f48c6e",
+      "license": "CC0-1.0",
+      "assets": [
+        {
+          "file": "rocky-pass/back.png",
+          "sourceFile": "Rocky Pass Files/PNG/back.png",
+          "width": 512,
+          "height": 240,
+          "sha256": "f2bbaa17d011bd213dd05c2540fc376261af35f07277d63aef145a3e0471b1f9"
+        },
+        {
+          "file": "rocky-pass/middle.png",
+          "sourceFile": "Rocky Pass Files/PNG/middle.png",
+          "width": 512,
+          "height": 240,
+          "sha256": "f3754be7248e51480299561fe7b690cbb2ca194f7cd3df517bc7091666ad3aef"
+        },
+        {
+          "file": "rocky-pass/near.png",
+          "sourceFile": "Rocky Pass Files/PNG/near.png",
+          "width": 512,
+          "height": 240,
+          "sha256": "a305b74be4e9a0ea7bd6df9f120409356e6b1ac89d2fc60f1615873f250e90b1"
+        },
+        {
+          "file": "rocky-pass/tileset.png",
+          "sourceFile": "Rocky Pass Files/PNG/tileset.png",
+          "width": 224,
+          "height": 128,
+          "sha256": "d301576df877e03fa6cba50407c99ab0497c2e0b79cc313569d350aaa14f2ceb"
+        },
+        {
+          "file": "rocky-pass/crystal-1.png",
+          "sourceFile": "Rocky Pass Files/PNG/Props/crystal-1.png",
+          "width": 25,
+          "height": 25,
+          "sha256": "ddb4dd40022d52ea3dbb558606270b6f54f8c7dd10788612d9b9984244f7ccda"
+        },
+        {
+          "file": "rocky-pass/crystal-2.png",
+          "sourceFile": "Rocky Pass Files/PNG/Props/crystal-2.png",
+          "width": 26,
+          "height": 20,
+          "sha256": "2a3fa1eac6c5d97787296113128600addc397f06d7f12fa0cf9e014ddfed0798"
+        }
+      ]
+    },
+    {
+      "id": "ocean-view",
+      "author": "Ansimuz",
+      "source": "https://opengameart.org/content/warped-ocean-view",
+      "archive": "https://opengameart.org/sites/default/files/ocean_view_files.zip",
+      "archiveSha256": "48656c8f77213b1714c45b1cda0a65ac593c9cf83d81c397d4854beeb7ac7514",
+      "license": "CC0-1.0",
+      "assets": [
+        {
+          "file": "ocean-view/night-back.png",
+          "sourceFile": "Ocean View Files/Layers/Night/Back.png",
+          "width": 336,
+          "height": 240,
+          "sha256": "045bc7636f4a28b7e2b8b47e350b0c449a45195fc8291fff21c68249a71d8d7d"
+        },
+        {
+          "file": "ocean-view/night-middle.png",
+          "sourceFile": "Ocean View Files/Layers/Night/Middle.png",
+          "width": 144,
+          "height": 240,
+          "sha256": "0faa0849180be375a04a789cb648963fa7f478b0996856bb4b37691de9791e3f"
+        },
+        {
+          "file": "ocean-view/night-clouds.png",
+          "sourceFile": "Ocean View Files/Layers/Night/Clouds.png",
+          "width": 320,
+          "height": 240,
+          "sha256": "77de6a86282fd10a131f38857c419ae874dc8668c6487b9b320c9a08701188bd"
+        },
+        {
+          "file": "ocean-view/night-tower.png",
+          "sourceFile": "Ocean View Files/Layers/Night/props/tower.png",
+          "width": 16,
+          "height": 112,
+          "sha256": "5d87158ccf7ffa0faaa4a3bd865b84a7fbf0efee2a287d9eec1f384743d35563"
+        },
+        {
+          "file": "ocean-view/night-dome.png",
+          "sourceFile": "Ocean View Files/Layers/Night/props/dome-1.png",
+          "width": 80,
+          "height": 96,
+          "sha256": "07dd5f0855ff556f36e2588eb50db6d96c6a5582a12b95e87e39261929541a3b"
+        },
+        {
+          "file": "ocean-view/day-clouds.png",
+          "sourceFile": "Ocean View Files/Layers/Day/Clouds.png",
+          "width": 320,
+          "height": 240,
+          "sha256": "113f0a876605ac63987f486a0dc94cae901b90be24028653db9c0fd95faf0846"
+        },
+        {
+          "file": "ocean-view/tile.png",
+          "sourceFile": "Ocean View Files/Layers/Night/Tile.png",
+          "width": 176,
+          "height": 128,
+          "sha256": "a8086b46cb2e5c1ffc8e5ee8fafa692d0384de825ab128fb6f0fff1a9c8d2818"
+        }
+      ]
+    },
+    {
+      "id": "desert-platformer",
+      "author": "KingCreator11",
+      "source": "https://opengameart.org/content/2d-desert-platformer-pack",
+      "archive": "https://opengameart.org/sites/default/files/desert%20platformer%20pack.zip",
+      "archiveSha256": "ef28eb76382bd7b52c1f11722f85655c3d1939ce22f9ca2fa2726df2a9740a73",
+      "license": "CC0-1.0",
+      "assets": [
+        {
+          "file": "desert-platformer/back-1.png",
+          "sourceFile": "desert platformer pack/background/background1.png",
+          "width": 720,
+          "height": 450,
+          "sha256": "7399329e3249d6f89b755bbccf3893975608ff05c8a2ba844d9854a4746e29fc"
+        },
+        {
+          "file": "desert-platformer/back-2.png",
+          "sourceFile": "desert platformer pack/background/background2.png",
+          "width": 720,
+          "height": 450,
+          "sha256": "c35f7937927a6e2eb20a4ffe825774c824c091c84cecd585b59d5a1c57c6e12c"
+        },
+        {
+          "file": "desert-platformer/back-3.png",
+          "sourceFile": "desert platformer pack/background/background3.png",
+          "width": 720,
+          "height": 450,
+          "sha256": "4944e4ae99eb7dcc71f7096acf31902b1fbabfd23dc6c24164c80d369620796d"
+        },
+        {
+          "file": "desert-platformer/back-4.png",
+          "sourceFile": "desert platformer pack/background/background4.png",
+          "width": 720,
+          "height": 450,
+          "sha256": "88192b7d351c1e8d2daf198096a5903ff67102702131928486a64c4fec40a558"
+        },
+        {
+          "file": "desert-platformer/back-5.png",
+          "sourceFile": "desert platformer pack/background/background5.png",
+          "width": 720,
+          "height": 450,
+          "sha256": "9baf896bcc22cf9c914935f326725e9ff6b74f83d8975685612d9a5aff00e749"
+        },
+        {
+          "file": "desert-platformer/tile.png",
+          "sourceFile": "desert platformer pack/Tile/world2Tile1.png",
+          "width": 128,
+          "height": 128,
+          "sha256": "1f0d62f582cbd0cea20bae2de9cb42429f53b81c4f30702293af0d489f8ebf26"
+        }
+      ]
+    },
+    {
+      "id": "space-background",
+      "author": "Ansimuz",
+      "source": "https://opengameart.org/content/space-background-3",
+      "archive": "https://opengameart.org/sites/default/files/space_background_pack.zip",
+      "archiveSha256": "e223101b6868efadaafe229b521dbe16844d64561bb5ae132bdd029e246f9c56",
+      "license": "CC0-1.0",
+      "assets": [
+        {
+          "file": "space-background/background.png",
+          "sourceFile": "space_background_pack/layers/parallax-space-backgound.png",
+          "width": 272,
+          "height": 160,
+          "sha256": "5fd52292e7afe67ef96350ac633f0a537bc23c3d00b32415c5f90938df2ca51d"
+        },
+        {
+          "file": "space-background/stars.png",
+          "sourceFile": "space_background_pack/layers/parallax-space-stars.png",
+          "width": 272,
+          "height": 160,
+          "sha256": "f9754dfeba4585c31ebe63a468c9ee9e2700c59e37ac487544cbf660a5df7848"
+        },
+        {
+          "file": "space-background/far-planets.png",
+          "sourceFile": "space_background_pack/layers/parallax-space-far-planets.png",
+          "width": 272,
+          "height": 160,
+          "sha256": "b79800ccb6795a8ff80760d5a8fe0a89caaeb083c0ec25a7fc9b546ce56b5dce"
+        },
+        {
+          "file": "space-background/big-planet.png",
+          "sourceFile": "space_background_pack/layers/parallax-space-big-planet.png",
+          "width": 88,
+          "height": 87,
+          "sha256": "14b38679f167fd9ba402a4f2b17e3141db09912eab89fce9886a4382b3e5ee6d"
+        },
+        {
+          "file": "space-background/ring-planet.png",
+          "sourceFile": "space_background_pack/layers/parallax-space-ring-planet.png",
+          "width": 51,
+          "height": 115,
+          "sha256": "a52ffdf427ed12cd94fb832ff6d8e8a294aa48c00ed222e1b6008ae93fde0d87"
+        }
+      ]
+    },
+    {
+      "id": "city-parallax",
+      "author": "Gustavo Saraiva",
+      "source": "https://opengameart.org/content/city-parallax-pixel-art",
+      "archive": "https://opengameart.org/sites/default/files/City.zip",
+      "archiveSha256": "f4ca82cc5eda5074226454dd4208f9fb05d7393dbb0f57266787e299ec1abb23",
+      "license": "CC0-1.0",
+      "assets": [
+        {
+          "file": "city-parallax/background.png",
+          "sourceFile": "City/Background 1.png",
+          "width": 240,
+          "height": 135,
+          "sha256": "f9910ceb7327030aab44596f0d1e5485642da1098556fdcb693f06a8289fa652"
+        },
+        {
+          "file": "city-parallax/middle.png",
+          "sourceFile": "City/Middle.png",
+          "width": 240,
+          "height": 135,
+          "sha256": "f056722283c033b605a7e6392a7e40848435ad581e22f4935f9fd924e0aa46cc"
+        },
+        {
+          "file": "city-parallax/foreground.png",
+          "sourceFile": "City/Foreground.png",
+          "width": 240,
+          "height": 135,
+          "sha256": "4026a5f7902e2c1379548ec9da109441d8cc1f6597728a0bd5c392826ee6e89a"
+        }
+      ]
+    },
+    {
+      "id": "seasonal",
+      "author": "GrafxKid",
+      "source": "https://grafxkid.itch.io/seasonal-tilesets",
+      "archive": "itch://seasonal-tilesets/2495172",
+      "archiveSha256": "44d1225eb7bc7e19bdab1b1476ade77367b1a6b3afe3987c62977adcca025d7d",
+      "license": "CC0-1.0",
+      "assets": [
+        {
+          "file": "seasonal/grass-hills.png",
+          "sourceFile": "Seasonal Tilesets/1 - Grassland/Background parts/2 - Hills.png",
+          "width": 288,
+          "height": 208,
+          "sha256": "630b19545babebf470b0107884eced6efa65cd5aa25fc2fe1454c7c413e8e041"
+        },
+        {
+          "file": "seasonal/grass-foreground.png",
+          "sourceFile": "Seasonal Tilesets/1 - Grassland/Background parts/1 - Foreground_scenery.png",
+          "width": 288,
+          "height": 208,
+          "sha256": "03ed02a472ffd1fad1f88f188b10e230d57c7c4175bbae865036dbbc2e997619"
+        },
+        {
+          "file": "seasonal/grass-terrain.png",
+          "sourceFile": "Seasonal Tilesets/1 - Grassland/Terrain (16 x 16).png",
+          "width": 272,
+          "height": 160,
+          "sha256": "192b358873adaf8dd64065fb96116fa58c42b7c152247cfa88b038528ac4899e"
+        },
+        {
+          "file": "seasonal/autumn-trees.png",
+          "sourceFile": "Seasonal Tilesets/2 - Autumn Forest/Background parts/2 - Trees.png",
+          "width": 288,
+          "height": 208,
+          "sha256": "0b362a1773ecaa2b2d8879f7eaf3ce27f91ba7220c5d49c3195fb2e5842d75e4"
+        },
+        {
+          "file": "seasonal/autumn-distant.png",
+          "sourceFile": "Seasonal Tilesets/2 - Autumn Forest/Background parts/6 - Distant_trees.png",
+          "width": 288,
+          "height": 208,
+          "sha256": "26c2e2e36e691be068ecc4e95e01c685a0eaa883e87cf1587a6c2fd2796ae5dc"
+        },
+        {
+          "file": "seasonal/autumn-leaves.png",
+          "sourceFile": "Seasonal Tilesets/2 - Autumn Forest/Background parts/1 - Leaf_top.png",
+          "width": 288,
+          "height": 208,
+          "sha256": "4f152d38a3db6e8c2ebdef18c8a6d7dc11953721fd38fd9d0222c138b39590ce"
+        },
+        {
+          "file": "seasonal/autumn-terrain.png",
+          "sourceFile": "Seasonal Tilesets/2 - Autumn Forest/Terrain (16 x 16).png",
+          "width": 272,
+          "height": 160,
+          "sha256": "4b2ec28343bebc40fee106cfebd9151ad0373b1ab1f5b8e073db4c85a374f6c3"
+        },
+        {
+          "file": "seasonal/snow-big-mountain.png",
+          "sourceFile": "Seasonal Tilesets/4 - Winter World/Background parts/3 - Big_mountain_BG.png",
+          "width": 288,
+          "height": 208,
+          "sha256": "13835f8b4ffdce086bdfb9e1af174843eb6fc2f4efef838636e692392ffc51ad"
+        },
+        {
+          "file": "seasonal/snow-small-mountains.png",
+          "sourceFile": "Seasonal Tilesets/4 - Winter World/Background parts/2 - Smaller_mountains.png",
+          "width": 288,
+          "height": 208,
+          "sha256": "9a7d85d0cc268433a775a182a4f68c3ca476f9e2bef041c61c09fdd46c52a3eb"
+        },
+        {
+          "file": "seasonal/snow-foreground.png",
+          "sourceFile": "Seasonal Tilesets/4 - Winter World/Background parts/1 - Snowy_foreground_area.png",
+          "width": 288,
+          "height": 208,
+          "sha256": "2457a2289341b04e500925448a88b6e6afc203ef0a987224729f4ff332e68623"
+        },
+        {
+          "file": "seasonal/snow-terrain.png",
+          "sourceFile": "Seasonal Tilesets/4 - Winter World/Terrain (16 x 16).png",
+          "width": 272,
+          "height": 160,
+          "sha256": "7172349315365b8ea4ea6a67d098a81c1bec9caace88e478542f0f0b44adcf23"
+        },
+        {
+          "file": "seasonal/lava.png",
+          "sourceFile": "Seasonal Tilesets/5 - Misc. universal tiles/Lava_frames (16 x 32).png",
+          "width": 64,
+          "height": 32,
+          "sha256": "7e5e468f7edb2936c273663907f09102d3056152244aec18a40c5a4edb42fa79"
+        },
+        {
+          "file": "seasonal/house.png",
+          "sourceFile": "Seasonal Tilesets/5 - Misc. universal tiles/House (112 x 96).png",
+          "width": 240,
+          "height": 96,
+          "sha256": "5471e74e0c0e26da5cdb862f0e01307d0e134b7524c06dc8dacf5f9b0464941e"
+        }
+      ]
+    },
+    {
+      "id": "emberdeep",
+      "author": "Ansimuz / K.O.R.E.",
+      "source": "https://opengameart.org/content/warped-caves-pixel-art-pack",
+      "archive": "derived",
+      "archiveSha256": "f0f7ad1a4b142c889a89899592db636c57943e0fa62fe5d5ee34677bd6c6a67e",
+      "license": "CC0-1.0",
+      "derivedFrom": "warped-caves",
+      "assets": [
+        {
+          "file": "emberdeep/background.png",
+          "sourceFile": "CC0 palette derivative of warped-caves/background.png",
+          "width": 240,
+          "height": 176,
+          "sha256": "3b81d22071d3dd2597cec965b75d3558dd4852990e5c11daffee0ba8e68eed24"
+        },
+        {
+          "file": "emberdeep/middleground.png",
+          "sourceFile": "CC0 palette derivative of warped-caves/middleground.png",
+          "width": 272,
+          "height": 176,
+          "sha256": "8227bd45f3d8d978aea99f2640a9a1aa6dadcd68179f9d9e0d449c2568000d5f"
+        },
+        {
+          "file": "emberdeep/walls.png",
+          "sourceFile": "CC0 palette derivative of warped-caves/walls.png",
+          "width": 160,
+          "height": 128,
+          "sha256": "36915ef236f8e58ce87a6176f695428e5ee89567131f59fb74b5ef5d37308696"
+        },
+        {
+          "file": "emberdeep/tileset.png",
+          "sourceFile": "CC0 palette derivative of warped-caves/tileset.png",
+          "width": 384,
+          "height": 192,
+          "sha256": "b49ebb1fdb74caa9a00455db23db80313bb010ecc9a9da29c275a9d3c7c13558"
+        }
+      ]
+    },
+    {
+      "id": "tournament-gold",
+      "author": "Ansimuz / K.O.R.E.",
+      "source": "https://opengameart.org/content/fort-of-illusion",
+      "archive": "derived",
+      "archiveSha256": "350f2b572128c1104f0178291d44986f704d2e1bd08cdf81acc21f7173a7cba6",
+      "license": "CC0-1.0",
+      "derivedFrom": "fort-illusion",
+      "assets": [
+        {
+          "file": "tournament-gold/mountains.png",
+          "sourceFile": "CC0 palette derivative of fort-illusion/mountains.png",
+          "width": 256,
+          "height": 272,
+          "sha256": "0f9a2dc2612d9027872011b3da1ce03ef3007388fc68b87cfd82d62d8158d420"
+        },
+        {
+          "file": "tournament-gold/back.png",
+          "sourceFile": "CC0 palette derivative of fort-illusion/back.png",
+          "width": 64,
+          "height": 272,
+          "sha256": "d0021e830ab58b2923ccde0b15669fbf9b57c492b6f8504675b37352dddec32d"
+        },
+        {
+          "file": "tournament-gold/front.png",
+          "sourceFile": "CC0 palette derivative of fort-illusion/front.png",
+          "width": 112,
+          "height": 128,
+          "sha256": "a218d629b85026160348bebd0e198bbbc489875b34e15db57b599b5424bec043"
+        },
+        {
+          "file": "tournament-gold/tileset.png",
+          "sourceFile": "CC0 palette derivative of fort-illusion/tileset.png",
+          "width": 208,
+          "height": 128,
+          "sha256": "24358e56474ed255abb9b4e6945996d728b98a12ab01ba4226872646534043f4"
+        },
+        {
+          "file": "tournament-gold/flag.png",
+          "sourceFile": "CC0 palette derivative of fort-illusion/flag.png",
+          "width": 16,
+          "height": 63,
+          "sha256": "988a6c01414f9dc6090a545b60db07c81903c9cea4b12b30d672f0f8d2176399"
+        },
+        {
+          "file": "tournament-gold/banner.png",
+          "sourceFile": "CC0 palette derivative of fort-illusion/banner.png",
+          "width": 48,
+          "height": 59,
+          "sha256": "e3829cbf8cf348fc7c489cb4d22e94c61fe803fde5f235cad600bbb0fffdafd5"
+        },
+        {
+          "file": "tournament-gold/door.png",
+          "sourceFile": "CC0 palette derivative of fort-illusion/door.png",
+          "width": 96,
+          "height": 80,
+          "sha256": "590dab37d5338c4fe614fd57970a8a34504097d1cf6ecc1f4a8dc53857860f51"
+        }
+      ]
+    },
+    {
+      "id": "sunscar-pixel",
+      "author": "Ansimuz / K.O.R.E.",
+      "source": "https://opengameart.org/content/gothicvania-rocky-pass-environment",
+      "archive": "derived",
+      "archiveSha256": "4cc3641d3d00f65feebb52b36f41664c5d1323c142a8116dfdcb82c2e1f48c6e",
+      "license": "CC0-1.0",
+      "derivedFrom": "rocky-pass",
+      "assets": [
+        {
+          "file": "sunscar-pixel/back.png",
+          "sourceFile": "CC0 palette derivative of rocky-pass/back.png",
+          "width": 512,
+          "height": 240,
+          "sha256": "c302ade7654c4a1bb47349ee5c7702b302f436b70a66d7057f6542a94ba6d6c6"
+        },
+        {
+          "file": "sunscar-pixel/middle.png",
+          "sourceFile": "CC0 palette derivative of rocky-pass/middle.png",
+          "width": 512,
+          "height": 240,
+          "sha256": "186fa7c69ea7b470b15fe0f61fc354fa48509bc5c7bc1d28776c970d4c8fb610"
+        },
+        {
+          "file": "sunscar-pixel/near.png",
+          "sourceFile": "CC0 palette derivative of rocky-pass/near.png",
+          "width": 512,
+          "height": 240,
+          "sha256": "6b44a67cf3731ed46575adcdbc406aa96c37026df7bdbb6e7ad62fd40aacc7fc"
+        },
+        {
+          "file": "sunscar-pixel/tileset.png",
+          "sourceFile": "CC0 palette derivative of rocky-pass/tileset.png",
+          "width": 224,
+          "height": 128,
+          "sha256": "5b830742968c8834a1353fda2d0c30dfb907793c01ba8140b6222b4ca6b249c2"
+        }
+      ]
+    }
+  ]
+}

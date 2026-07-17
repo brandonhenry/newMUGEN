@@ -7,7 +7,7 @@ import * as THREE from 'three';
 import type { OnlinePlayerProfile } from '../lib/online/leaderboard';
 import { addFriendEntry, isFriend, readMatchHistory } from '../lib/socialHistory';
 import type { InputFrame } from '../types';
-import { STORY_ADVENTURE_ASSET_PATHS, STORY_ENEMY_SPRITE_PATHS } from './adventureAssets';
+import { STORY_ADVENTURE_ASSET_PATHS, STORY_ENEMY_SPRITE_PATHS, storyWorldAssetPath } from './adventureAssets';
 import { adventureAttackHits, getAdventureEnemyStats, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, shouldRespawnAdventureEnemy, stepAdventureProjectile } from './adventureCombat';
 import { STORY_ADVENTURE_STAT_CAP, STORY_ADVENTURE_STAT_KEYS, allocateAdventureStat, awardAdventureExperience, canRespecAdventureStats, experienceToNextLevel, getAdventureDerivedStats, readAdventureProgress, respecAdventureStats, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_REGION_LABELS, STORY_WORLDS, isStoryAdventureRegionId, isStoryAdventureWorldId, isStoryWorldId } from './adventureWorlds';
@@ -15,7 +15,7 @@ import { connectStoryHubMultiplayer, readOrCreateStoryHubGuestIdentity, readStor
 import { KORE_CENTRAL_HUB } from './hubData';
 import { getStorySpriteAnimationDurationMs } from './streetAvatarCatalog';
 import { StoryAvatarRig, type StoryAvatarPose } from './StoryAvatarRig';
-import type { HubDestination, StoryEnemySpawnDefinition, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StoryWorldId, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
+import type { HubDestination, StoryEnemySpawnDefinition, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StoryWorldBackdropLayerDefinition, StoryWorldId, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
 
 type StoryHubInput = Pick<InputFrame, 'left' | 'right' | 'down' | 'up' | 'jump' | 'confirm' | 'jab' | 'kick' | 'heavy' | 'special' | 'block' | 'back' | 'pause'>;
 type SetVirtualAction = (player: 1 | 2, action: keyof InputFrame, pressed: boolean) => void;
@@ -86,22 +86,27 @@ function configurePixelTexture(texture: THREE.Texture, repeatX = 1, repeatY = 1)
   return texture;
 }
 
-function PixelLayer({ path, position, size, repeatX, opacity = 1 }: { path: string; position: [number, number, number]; size: [number, number]; repeatX: number; opacity?: number }) {
+function PixelLayer({ path, position, size, repeatX, opacity = 1, color = '#ffffff' }: { path: string; position: [number, number, number]; size: [number, number]; repeatX: number; opacity?: number; color?: string }) {
   const source = useTexture(path);
   const texture = useMemo(() => configurePixelTexture(source.clone(), repeatX), [repeatX, source]);
   useEffect(() => () => texture.dispose(), [texture]);
   return <mesh position={position}>
     <planeGeometry args={size} />
-    <meshBasicMaterial map={texture} transparent opacity={opacity} alphaTest={0.02} depthWrite={false} toneMapped={false} />
+    <meshBasicMaterial map={texture} color={color} transparent opacity={opacity} alphaTest={0.02} depthWrite={false} toneMapped={false} />
   </mesh>;
 }
 
-function PixelProp({ path, position, size }: { path: string; position: [number, number, number]; size: [number, number] }) {
+function PixelProp({ path, position, size, mirrored = false, opacity = 1 }: { path: string; position: [number, number, number]; size: [number, number]; mirrored?: boolean; opacity?: number }) {
   const texture = useTexture(path);
-  useMemo(() => configurePixelTexture(texture), [texture]);
-  return <mesh position={position}>
+  useMemo(() => {
+    configurePixelTexture(texture);
+    texture.wrapS = THREE.ClampToEdgeWrapping;
+    texture.wrapT = THREE.ClampToEdgeWrapping;
+    texture.needsUpdate = true;
+  }, [texture]);
+  return <mesh position={position} scale={[mirrored ? -1 : 1, 1, 1]}>
     <planeGeometry args={size} />
-    <meshBasicMaterial map={texture} transparent alphaTest={0.02} depthWrite={false} toneMapped={false} />
+    <meshBasicMaterial map={texture} transparent opacity={opacity} alphaTest={0.02} depthWrite={false} toneMapped={false} />
   </mesh>;
 }
 
@@ -122,8 +127,8 @@ function atlasGeometry(frame: [number, number, number, number], atlasSize: [numb
   return geometry;
 }
 
-function AtlasSprite({ prop }: { prop: StoryWorldPropDefinition }) {
-  const source = useTexture(STORY_ADVENTURE_ASSET_PATHS[prop.asset]);
+function CroppedAtlasSprite({ prop }: { prop: StoryWorldPropDefinition }) {
+  const source = useTexture(storyWorldAssetPath(prop.asset));
   useMemo(() => configurePixelTexture(source), [source]);
   const geometry = useMemo(() => atlasGeometry(prop.frame, prop.atlasSize, prop.size), [prop.atlasSize, prop.frame, prop.size]);
   useEffect(() => () => geometry.dispose(), [geometry]);
@@ -132,7 +137,16 @@ function AtlasSprite({ prop }: { prop: StoryWorldPropDefinition }) {
   </mesh>;
 }
 
-const THEME_STYLE: Record<Exclude<StoryWorldThemeId, 'city'>, { background: string; haze: string; light: string; ground: string; tile: [number, number, number, number] }> = {
+function AtlasSprite({ prop }: { prop: StoryWorldPropDefinition }) {
+  const fullImage = prop.frame[0] === 0 && prop.frame[1] === 0 && prop.frame[2] === prop.atlasSize[0] && prop.frame[3] === prop.atlasSize[1];
+  return fullImage
+    ? <PixelProp path={storyWorldAssetPath(prop.asset)} position={prop.position} size={prop.size} mirrored={prop.mirrored} opacity={prop.opacity} />
+    : <CroppedAtlasSprite prop={prop} />;
+}
+
+type AdventureThemeId = Exclude<StoryWorldThemeId, 'city' | 'arcade' | 'versus' | 'online' | 'training' | 'tournament'>;
+
+const THEME_STYLE: Record<AdventureThemeId, { background: string; haze: string; light: string; ground: string; tile: [number, number, number, number] }> = {
   route: { background: '#10243a', haze: '#2a6f78', light: '#ffe071', ground: '#294a45', tile: [96, 0, 16, 16] },
   village: { background: '#163127', haze: '#3d7043', light: '#7ee787', ground: '#345d38', tile: [96, 0, 16, 16] },
   forest: { background: '#0b201d', haze: '#1f4b38', light: '#52e1a1', ground: '#243e2e', tile: [112, 0, 16, 16] },
@@ -144,36 +158,137 @@ const THEME_STYLE: Record<Exclude<StoryWorldThemeId, 'city'>, { background: stri
   ruins: { background: '#28173e', haze: '#68458d', light: '#ff83d1', ground: '#6c4576', tile: [192, 0, 16, 16] }
 };
 
-function AdventureWorld({ hub, reducedMotion }: { hub: StoryHubDefinition; reducedMotion: boolean }) {
-  const theme = hub.theme && hub.theme !== 'city' ? THEME_STYLE[hub.theme] : THEME_STYLE.route;
-  const motes = useMemo(() => Array.from({ length: 34 }, (_, index) => ({
-    x: hub.bounds.minX + 2 + ((index * 13.7) % Math.max(4, hub.bounds.maxX - hub.bounds.minX - 4)),
-    y: 1.2 + ((index * 2.13) % 9),
-    size: 0.035 + (index % 4) * 0.018
-  })), [hub.bounds.maxX, hub.bounds.minX]);
-  const motesRef = useRef<THREE.Group>(null);
-  useFrame((state) => {
-    if (!reducedMotion && motesRef.current) motesRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.42) * 0.16;
+function adventureTheme(themeId?: StoryWorldThemeId) {
+  return themeId && Object.prototype.hasOwnProperty.call(THEME_STYLE, themeId) ? THEME_STYLE[themeId as AdventureThemeId] : THEME_STYLE.route;
+}
+
+function useParallax(group: MutableRefObject<THREE.Group | null>, amount: number) {
+  const { camera } = useThree();
+  useFrame(() => {
+    if (group.current) group.current.position.x = camera.position.x * amount;
   });
+}
+
+function AssetBackdropLayer({ layer, worldWidth }: { layer: StoryWorldBackdropLayerDefinition; worldWidth: number }) {
+  const group = useRef<THREE.Group>(null);
+  const instances = useRef<THREE.InstancedMesh>(null);
+  useParallax(group, layer.parallax);
+  const source = useTexture(storyWorldAssetPath(layer.asset!));
+  useMemo(() => {
+    configurePixelTexture(source);
+    source.wrapS = THREE.ClampToEdgeWrapping;
+    source.wrapT = THREE.ClampToEdgeWrapping;
+    source.needsUpdate = true;
+  }, [source]);
+  const tileWidth = layer.repeatEvery ?? 12;
+  const count = Math.min(80, Math.max(3, Math.ceil((worldWidth + 48) / tileWidth) + 1));
+  useLayoutEffect(() => {
+    if (!instances.current) return;
+    const matrix = new THREE.Matrix4();
+    const startX = -(count * tileWidth) / 2 + tileWidth / 2;
+    for (let index = 0; index < count; index += 1) {
+      matrix.makeTranslation(startX + index * tileWidth, layer.y, layer.depth);
+      instances.current.setMatrixAt(index, matrix);
+    }
+    instances.current.instanceMatrix.needsUpdate = true;
+  }, [count, layer.depth, layer.y, tileWidth]);
+  return <group ref={group}>
+    <instancedMesh ref={instances} args={[undefined, undefined, count]}>
+      <planeGeometry args={[tileWidth + 0.015, layer.height]} />
+      <meshBasicMaterial map={source} color={layer.color} transparent opacity={layer.opacity} alphaTest={0.02} depthWrite={false} toneMapped={false} />
+    </instancedMesh>
+  </group>;
+}
+
+function MotifBackdropLayer({ layer, bounds }: { layer: StoryWorldBackdropLayerDefinition; bounds: StoryHubDefinition['bounds'] }) {
+  const group = useRef<THREE.Group>(null);
+  const mesh = useRef<THREE.InstancedMesh>(null);
+  useParallax(group, layer.parallax);
+  const repeatEvery = layer.repeatEvery ?? 6;
+  const count = Math.min(72, Math.ceil((bounds.maxX - bounds.minX + 160) / repeatEvery));
+  const shapes = useMemo(() => Array.from({ length: count }, (_, index) => {
+    const motifFactor = layer.motif === 'forest' ? 1.18 : layer.motif === 'servers' || layer.motif === 'laboratory' ? 0.8 : layer.motif === 'mountains' || layer.motif === 'volcanic' ? 1.25 : 1;
+    const height = layer.height * (0.28 + ((index * 7) % 9) / 16) * motifFactor;
+    const angled = layer.motif === 'mountains' || layer.motif === 'volcanic' || layer.motif === 'dunes';
+    const width = repeatEvery * (layer.motif === 'forest' ? 0.24 : angled ? 1.02 : 0.58 + (index % 3) * 0.12);
+    return { x: bounds.minX - 80 + index * repeatEvery, width, height, rotation: angled ? Math.PI / 4 : 0 };
+  }), [bounds.minX, count, layer.height, layer.motif, repeatEvery]);
+  useLayoutEffect(() => {
+    if (!mesh.current) return;
+    const matrix = new THREE.Matrix4();
+    shapes.forEach((shape, index) => {
+      const baseY = layer.y - layer.height / 2;
+      const rotation = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), shape.rotation);
+      matrix.compose(new THREE.Vector3(shape.x, baseY + shape.height / 2, layer.depth), rotation, new THREE.Vector3(shape.width, shape.height, 1));
+      mesh.current!.setMatrixAt(index, matrix);
+    });
+    mesh.current.instanceMatrix.needsUpdate = true;
+  }, [layer.depth, layer.height, layer.y, shapes]);
+  return <group ref={group}>
+    <instancedMesh ref={mesh} args={[undefined, undefined, count]}>
+      <planeGeometry args={[1, 1]} />
+      <meshBasicMaterial color={layer.color} transparent opacity={layer.opacity} depthWrite={false} />
+    </instancedMesh>
+  </group>;
+}
+
+function WorldBackdropLayer({ layer, hub }: { layer: StoryWorldBackdropLayerDefinition; hub: StoryHubDefinition }) {
+  const worldWidth = hub.bounds.maxX - hub.bounds.minX;
+  return layer.asset ? <AssetBackdropLayer layer={layer} worldWidth={worldWidth} /> : <MotifBackdropLayer layer={layer} bounds={hub.bounds} />;
+}
+
+function WorldLandmark({ landmark }: { landmark: StoryWorldLandmarkDefinition }) {
+  const [, height] = landmark.size;
+  return <group position={landmark.position}>
+    <mesh position={[0, -height * 0.48, 0.14]} rotation={[-Math.PI / 2, 0, 0]}>
+      <ringGeometry args={[0.3, 0.48, 20]} />
+      <meshBasicMaterial color={landmark.color} transparent opacity={landmark.kind === 'secret' ? 0.32 : 0.58} depthWrite={false} />
+    </mesh>
+    <mesh position={[0, -height * 0.08, 0.08]}>
+      <planeGeometry args={[0.035, Math.max(1.8, height * 0.52)]} />
+      <meshBasicMaterial color={landmark.color} transparent opacity={0.24} depthWrite={false} />
+    </mesh>
+    <Html center position={[0, 0.05, 0.45]} zIndexRange={[5, 0]} className="story-world-landmark-shell">
+      <div className={`story-world-landmark is-${landmark.kind}`} style={{ '--story-landmark-color': landmark.color } as CSSProperties}>
+        <small>{landmark.kind}</small><strong>{landmark.label}</strong><span>{landmark.subtitle}</span>
+      </div>
+    </Html>
+  </group>;
+}
+
+function WorldParticles({ hub, reducedMotion }: { hub: StoryHubDefinition; reducedMotion: boolean }) {
+  const environment = hub.environment!;
+  const group = useRef<THREE.Group>(null);
+  const width = hub.bounds.maxX - hub.bounds.minX;
+  const particles = useMemo(() => Array.from({ length: Math.min(64, Math.max(28, Math.round(width / 2.5))) }, (_, index) => ({
+    x: hub.bounds.minX + 2 + ((index * 13.7) % Math.max(4, width - 4)), y: 0.9 + ((index * 2.13) % 10), size: 0.035 + index % 4 * 0.018
+  })), [hub.bounds.minX, width]);
+  useFrame((state) => {
+    if (!reducedMotion && group.current) {
+      group.current.position.y = Math.sin(state.clock.elapsedTime * (environment.particle === 'snow' ? 0.2 : 0.42)) * 0.18;
+      group.current.position.x = environment.particle === 'sand' ? Math.sin(state.clock.elapsedTime * 0.26) * 0.45 : 0;
+    }
+  });
+  if (environment.particle === 'none') return null;
+  return <group ref={group} position={[0, 0, -1.5]}>
+    {particles.map((particle, index) => <mesh key={index} position={[particle.x, particle.y, 0]} scale={particle.size * (environment.particle === 'snow' ? 1.8 : 1)}>
+      {environment.particle === 'data' ? <boxGeometry /> : environment.particle === 'snow' || environment.particle === 'sand' ? <circleGeometry args={[1, 4]} /> : <octahedronGeometry />}
+      <meshBasicMaterial color={index % 4 === 0 ? '#ffffff' : environment.accent} transparent opacity={environment.particle === 'embers' ? 0.62 : 0.4} depthWrite={false} />
+    </mesh>)}
+  </group>;
+}
+
+function AuthoredWorld({ hub, reducedMotion }: { hub: StoryHubDefinition; reducedMotion: boolean }) {
+  const environment = hub.environment!;
   return <>
-    <color attach="background" args={[theme.background]} />
-    <ambientLight intensity={1.25} />
-    <pointLight position={[0, 5, 5]} color={theme.light} intensity={6} distance={32} />
-    <mesh position={[0, 5, -12]}>
-      <planeGeometry args={[Math.max(100, hub.bounds.maxX - hub.bounds.minX + 20), 24]} />
-      <meshBasicMaterial color={theme.haze} transparent opacity={0.5} depthWrite={false} />
-    </mesh>
-    <mesh position={[0, 2.2, -7]}>
-      <planeGeometry args={[Math.max(100, hub.bounds.maxX - hub.bounds.minX + 20), 5.5]} />
-      <meshBasicMaterial color={theme.ground} transparent opacity={0.7} depthWrite={false} />
-    </mesh>
+    <color attach="background" args={[environment.background]} />
+    <ambientLight intensity={1.18} />
+    <pointLight position={[0, 6, 5]} color={environment.light} intensity={7} distance={38} />
+    <mesh position={[0, 5, -16]}><planeGeometry args={[hub.bounds.maxX - hub.bounds.minX + 180, 28]} /><meshBasicMaterial color={environment.haze} transparent opacity={0.25} depthWrite={false} /></mesh>
+    {environment.layers.map((layer) => <WorldBackdropLayer key={layer.id} layer={layer} hub={hub} />)}
+    {hub.landmarks?.map((entry) => <WorldLandmark key={entry.id} landmark={entry} />)}
     {hub.props?.map((prop) => <AtlasSprite key={prop.id} prop={prop} />)}
-    <group ref={motesRef} position={[0, 0, -1.5]}>
-      {motes.map((mote, index) => <mesh key={index} position={[mote.x, mote.y, 0]} scale={mote.size}>
-        <octahedronGeometry />
-        <meshBasicMaterial color={index % 4 === 0 ? '#ffffff' : theme.light} transparent opacity={0.42} />
-      </mesh>)}
-    </group>
+    <WorldParticles hub={hub} reducedMotion={reducedMotion} />
   </>;
 }
 
@@ -222,16 +337,19 @@ function CityHubWorld({ reducedMotion }: { reducedMotion: boolean }) {
 }
 
 function HubWorld({ hub, reducedMotion }: { hub: StoryHubDefinition; reducedMotion: boolean }) {
-  return hub.adventure ? <AdventureWorld hub={hub} reducedMotion={reducedMotion} /> : <CityHubWorld reducedMotion={reducedMotion} />;
+  return hub.environment ? <AuthoredWorld hub={hub} reducedMotion={reducedMotion} /> : <CityHubWorld reducedMotion={reducedMotion} />;
 }
 
-function AdventurePlatformVisual({ platform, themeId = 'route' }: { platform: StoryPlatformDefinition; themeId?: StoryWorldThemeId }) {
-  const theme = themeId !== 'city' ? THEME_STYLE[themeId] : THEME_STYLE.route;
-  const source = useTexture(STORY_ADVENTURE_ASSET_PATHS['pixel-terrain']);
+function PackPlatformVisual({ platform, hub }: { platform: StoryPlatformDefinition; hub: StoryHubDefinition }) {
+  const theme = adventureTheme(hub.theme);
+  const surface = hub.environment?.surface;
+  const source = useTexture(surface ? storyWorldAssetPath(surface.asset) : STORY_ADVENTURE_ASSET_PATHS['pixel-terrain']);
   useMemo(() => configurePixelTexture(source), [source]);
   const tileSize = platform.oneWay ? 0.9 : 1.05;
   const count = Math.max(1, Math.ceil(platform.size[0] / tileSize));
-  const geometry = useMemo(() => atlasGeometry(theme.tile, [352, 176], [tileSize + 0.03, platform.oneWay ? 0.52 : 0.82]), [theme.tile, tileSize, platform.oneWay]);
+  const frame = surface?.frame ?? theme.tile;
+  const atlasSize = surface?.atlasSize ?? [352, 176];
+  const geometry = useMemo(() => atlasGeometry(frame, atlasSize, [tileSize + 0.03, platform.oneWay ? 0.52 : 0.82]), [atlasSize, frame, tileSize, platform.oneWay]);
   const material = useMemo(() => new THREE.MeshBasicMaterial({ map: source, transparent: true, alphaTest: 0.02, toneMapped: false }), [source]);
   const instances = useRef<THREE.InstancedMesh>(null);
   useLayoutEffect(() => {
@@ -248,13 +366,13 @@ function AdventurePlatformVisual({ platform, themeId = 'route' }: { platform: St
   return <group>
     <mesh position={[0, platform.id === 'ground' ? -3.5 : 0, 0.06]}>
       <planeGeometry args={[platform.size[0], platform.id === 'ground' ? 7 : platform.size[1]]} />
-      <meshBasicMaterial color={theme.ground} />
+      <meshBasicMaterial color={hub.environment?.ground ?? theme.ground} />
     </mesh>
     <instancedMesh ref={instances} args={[geometry, material, count]} />
   </group>;
 }
 
-function CityPlatformVisual({ platform }: { platform: StoryPlatformDefinition }) {
+function CityPlatformVisual({ platform, color = '#ffffff' }: { platform: StoryPlatformDefinition; color?: string }) {
   const source = useTexture(`${CITY_ASSET_ROOT}/ground-platform.png`);
   const fillSource = useTexture(`${CITY_ASSET_ROOT}/ground-fill.png`);
   const tileWorldWidth = 2;
@@ -268,17 +386,17 @@ function CityPlatformVisual({ platform }: { platform: StoryPlatformDefinition })
   return <group>
     {fillDepth > 0 && <mesh position={[0, visualCenterY - visualHeight / 2 - fillDepth / 2 + 0.02, 0.08]}>
       <planeGeometry args={[platform.size[0], fillDepth]} />
-      <meshBasicMaterial map={fillTexture} toneMapped={false} />
+      <meshBasicMaterial map={fillTexture} color={color} toneMapped={false} />
     </mesh>}
     <mesh position={[0, visualCenterY, 0.2]}>
       <planeGeometry args={[platform.size[0], visualHeight]} />
-      <meshBasicMaterial map={texture} transparent alphaTest={0.02} toneMapped={false} />
+      <meshBasicMaterial map={texture} color={color} transparent alphaTest={0.02} toneMapped={false} />
     </mesh>
   </group>;
 }
 
 function PlatformVisual({ platform, hub }: { platform: StoryPlatformDefinition; hub: StoryHubDefinition }) {
-  return hub.adventure ? <AdventurePlatformVisual platform={platform} themeId={hub.theme} /> : <CityPlatformVisual platform={platform} />;
+  return hub.environment?.surface ? <PackPlatformVisual platform={platform} hub={hub} /> : <CityPlatformVisual platform={platform} color={hub.environment?.ground} />;
 }
 
 const CABINET_FRAMES = Array.from({ length: 16 }, (_, index) => `${ARCADE_ASSET_ROOT}/red-${String(index).padStart(2, '0')}.png`);
@@ -954,6 +1072,12 @@ function AdventureStatsPanel({ progress, canRespec, onAllocate, onRespec, onClos
   </div>;
 }
 
+function readDevPreviewWorldId(): StoryWorldId {
+  if (typeof window === 'undefined' || !['localhost', '127.0.0.1'].includes(window.location.hostname)) return 'central';
+  const candidate = new URLSearchParams(window.location.search).get('storyWorld');
+  return isStoryWorldId(candidate) ? candidate : 'central';
+}
+
 export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, readInputs, setVirtualAction, onDestination, onOnlineSpar, onExit }: {
   profile: StoryProfileV4;
   onlineProfile?: OnlinePlayerProfile | null;
@@ -964,7 +1088,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   onOnlineSpar: (opponent: StoryHubPresence) => void;
   onExit: () => void;
 }) {
-  const [activeWorldId, setActiveWorldId] = useState<StoryWorldId>('central');
+  const [activeWorldId, setActiveWorldId] = useState<StoryWorldId>(readDevPreviewWorldId);
   const activeHub = STORY_WORLDS[activeWorldId];
   const [nearbyPortal, setNearbyPortal] = useState<StoryPortalDefinition | null>(null);
   const [pauseOpen, setPauseOpen] = useState(false);
@@ -976,8 +1100,8 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const [playerHealth, setPlayerHealth] = useState(() => getAdventureDerivedStats(readAdventureProgress()).maxHealth);
   const [attackEvent, setAttackEvent] = useState<StoryAdventureAttackEvent | null>(null);
   const [impactEvent, setImpactEvent] = useState<StoryPlayerImpactEvent | null>(null);
-  const [playerX, setPlayerX] = useState(KORE_CENTRAL_HUB.spawn[0]);
-  const [playerY, setPlayerY] = useState(KORE_CENTRAL_HUB.spawn[1]);
+  const [playerX, setPlayerX] = useState(activeHub.spawn[0]);
+  const [playerY, setPlayerY] = useState(activeHub.spawn[1]);
   const [playerPose, setPlayerPose] = useState<StoryAvatarPose>('idle');
   const [hubReady, setHubReady] = useState(false);
   const [onlineEnabled, setOnlineEnabled] = useState(readStoryHubOnlinePreference);
@@ -1003,7 +1127,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const playerInvulnerableUntilRef = useRef(0);
   const attackSequenceRef = useRef(0);
   const impactSequenceRef = useRef(0);
-  const playerStateRef = useRef<StoryHubPlayerState>({ x: KORE_CENTRAL_HUB.spawn[0], y: KORE_CENTRAL_HUB.spawn[1], pose: 'idle', facing: 1, worldId: 'central' });
+  const playerStateRef = useRef<StoryHubPlayerState>({ x: activeHub.spawn[0], y: activeHub.spawn[1], pose: 'idle', facing: 1, worldId: activeWorldId });
   const readInput = useCallback(() => readInputs()[0], [readInputs]);
   const handleHubReady = useCallback(() => setHubReady(true), []);
   const handlePlayerState = useCallback((state: StoryHubPlayerState) => {
@@ -1410,7 +1534,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
         <p>{activeHub.subtitle}</p>
       </div>
       <div className="story-hub-header-actions">
-        <button type="button" className="story-hub-controls-toggle" aria-expanded={controlsOpen} aria-controls="story-hub-controls-panel" onClick={() => setControlsOpen((current) => !current)}>
+        <button type="button" className="story-hub-controls-toggle" aria-label="Controls" aria-expanded={controlsOpen} aria-controls="story-hub-controls-panel" onClick={() => setControlsOpen((current) => !current)}>
           <Keyboard size={19} /> <span>Controls</span>
         </button>
         <div className={`story-hub-presence-card is-${connectionStatus}`}>
