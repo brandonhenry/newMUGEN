@@ -75,6 +75,14 @@ def build() -> None:
         platform.save(platform_path, optimize=True)
         outputs.append({"file": platform_path.name, "size": list(platform.size), "sha256": sha256(platform_path.read_bytes())})
 
+        # Matching industrial wall panel from the same reviewed tileset. This
+        # sits directly beneath the walkable cap so the world never falls away
+        # into an untextured band below the player's feet.
+        ground_fill = tileset.crop((480, 64, 544, 128))
+        ground_fill_path = ROOT / "ground-fill.png"
+        ground_fill.save(ground_fill_path, optimize=True)
+        outputs.append({"file": ground_fill_path.name, "size": list(ground_fill.size), "sha256": sha256(ground_fill_path.read_bytes())})
+
     manifest = {
         "id": "warped-city-2",
         "author": "Ansimuz",

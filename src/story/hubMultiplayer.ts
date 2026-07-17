@@ -18,6 +18,7 @@ export const STORY_HUB_GUEST_IDENTITY_KEY = 'kore.story.hub.guest.v1';
 const HEARTBEAT_MS = 650;
 const LOCAL_PRESENCE_TTL_MS = 4_000;
 export const STORY_HUB_CHALLENGE_TIMEOUT_MS = 30_000;
+const STORY_WORLD_IDS = new Set(['central', 'arcade', 'versus', 'online', 'training', 'tournament']);
 
 type HubChannelMessage =
   | { type: 'presence'; presence: StoryHubPresence }
@@ -100,6 +101,7 @@ export function sanitizeStoryHubPresence(value: unknown, now = Date.now()): Stor
     y: Math.max(0.82, Math.min(12, finiteNumber(record.y, 0.82))),
     pose,
     facing: record.facing === -1 ? -1 : 1,
+    worldId: STORY_WORLD_IDS.has(String(record.worldId)) ? record.worldId : 'central',
     updatedAt: Math.max(0, Math.round(finiteNumber(record.updatedAt, now))),
     ...(challenge ? { challenge } : {})
   };

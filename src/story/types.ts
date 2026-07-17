@@ -115,6 +115,7 @@ export type StoryHubPlayerState = {
   y: number;
   pose: StoryHubAvatarPose;
   facing: -1 | 1;
+  worldId?: StoryModeWorldId;
 };
 
 export type StoryHubChallengeStatus = 'pending' | 'accepted' | 'declined' | 'revoked' | 'expired';
@@ -150,6 +151,7 @@ export type StoryHubPresenceResult = {
 export type StoryHubConnectionStatus = 'connecting' | 'online' | 'local' | 'reconnecting' | 'offline';
 
 export type HubDestination =
+  | 'central'
   | 'story'
   | 'friends'
   | 'online'
@@ -162,6 +164,9 @@ export type HubDestination =
   | 'options'
   | 'exit';
 
+export type StoryModeWorldId = 'central' | 'arcade' | 'versus' | 'online' | 'training' | 'tournament';
+export type StoryPortalKind = 'storefront' | 'mode-door' | 'arcade-machine' | 'versus-machine' | 'terminal';
+
 export type StoryPortalDefinition = {
   id: string;
   label: string;
@@ -171,6 +176,9 @@ export type StoryPortalDefinition = {
   size: [number, number];
   accent: string;
   locked?: boolean;
+  kind?: StoryPortalKind;
+  stationNumber?: number;
+  quickMatch?: boolean;
 };
 
 export type StoryPlatformDefinition = {

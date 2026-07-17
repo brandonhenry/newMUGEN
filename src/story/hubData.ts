@@ -2,8 +2,10 @@ import rawHub from './koreCentralHub.json';
 import type { HubDestination, StoryHubDefinition, StoryPlatformDefinition, StoryPortalDefinition } from './types';
 
 const HUB_DESTINATIONS: readonly HubDestination[] = [
-  'story', 'friends', 'online', 'arcade', 'versus', 'training', 'tournament', 'characters', 'avatarStudio', 'options', 'exit'
+  'central', 'story', 'friends', 'online', 'arcade', 'versus', 'training', 'tournament', 'characters', 'avatarStudio', 'options', 'exit'
 ];
+
+const PORTAL_KINDS = ['storefront', 'mode-door', 'arcade-machine', 'versus-machine', 'terminal'] as const;
 
 export const FALLBACK_STORY_HUB: StoryHubDefinition = {
   id: 'kore-central',
@@ -55,7 +57,10 @@ function sanitizePortals(value: unknown, bounds: StoryHubDefinition['bounds']): 
       position: record.position,
       size: record.size,
       accent: typeof record.accent === 'string' ? record.accent : '#2ee6ff',
-      ...(record.locked ? { locked: true } : {})
+      ...(record.locked ? { locked: true } : {}),
+      ...(PORTAL_KINDS.includes(record.kind as typeof PORTAL_KINDS[number]) ? { kind: record.kind } : {}),
+      ...(Number.isInteger(record.stationNumber) && Number(record.stationNumber) > 0 ? { stationNumber: Number(record.stationNumber) } : {}),
+      ...(record.quickMatch ? { quickMatch: true } : {})
     }];
   });
 }

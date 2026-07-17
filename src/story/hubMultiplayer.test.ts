@@ -39,6 +39,7 @@ describe('story hub multiplayer', () => {
       y: -50,
       pose: 'attack',
       facing: -1,
+      worldId: 'versus',
       updatedAt: 100
     });
     expect(presence).toMatchObject({
@@ -49,6 +50,7 @@ describe('story hub multiplayer', () => {
       y: 0.82,
       pose: 'attack',
       facing: -1,
+      worldId: 'versus',
       avatar: { hairStyle: 'short' }
     });
     expect(sanitizeStoryHubPresenceResult({ players: [presence, null], serverTime: 123 }).players).toHaveLength(1);
@@ -58,6 +60,7 @@ describe('story hub multiplayer', () => {
       sessionId: 'runner',
       pose: 'sprint'
     })?.pose).toBe('sprint');
+    expect(sanitizeStoryHubPresence({ sessionId: 'bad-world', worldId: 'secret-zone' })?.worldId).toBe('central');
   });
 
   it('sanitizes challenges and expires pending requests after thirty seconds', () => {

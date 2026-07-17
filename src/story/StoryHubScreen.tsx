@@ -9,17 +9,22 @@ import { addFriendEntry, isFriend, readMatchHistory } from '../lib/socialHistory
 import type { InputFrame } from '../types';
 import { connectStoryHubMultiplayer, readOrCreateStoryHubGuestIdentity, readStoryHubOnlinePreference, STORY_HUB_CHALLENGE_TIMEOUT_MS, writeStoryHubOnlinePreference, type StoryHubMultiplayerSession } from './hubMultiplayer';
 import { KORE_CENTRAL_HUB } from './hubData';
+import { isStoryModeWorldId, MODE_WORLD_DESTINATIONS, STORY_MODE_WORLDS } from './modeWorlds';
 import { StoryAvatarRig, type StoryAvatarPose } from './StoryAvatarRig';
-import type { HubDestination, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryPlatformDefinition, StoryPortalDefinition, StoryProfileV4 } from './types';
+import type { HubDestination, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryModeWorldId, StoryPlatformDefinition, StoryPortalDefinition, StoryProfileV4 } from './types';
 
 type StoryHubInput = Pick<InputFrame, 'left' | 'right' | 'down' | 'up' | 'jump' | 'confirm' | 'jab' | 'kick' | 'heavy' | 'special' | 'block' | 'back' | 'pause'>;
 type SetVirtualAction = (player: 1 | 2, action: keyof InputFrame, pressed: boolean) => void;
 
 const CITY_ASSET_ROOT = '/story/hub/warped-city-2';
 const PORTAL_ASSET_ROOT = '/story/hub/warped-city-portals';
+const DOOR_ASSET_ROOT = '/story/hub/door-transitions';
+const ARCADE_ASSET_ROOT = '/story/hub/arcade-machines';
 const AVATAR_GROUNDING_OFFSET_Y = -0.5;
+const DOOR_TRAVEL_FRAME_SEQUENCE = [0, 1, 2, 3, 4, 5, 5, 4, 3, 2, 1, 0, 0, 1, 2, 3, 4, 5, 5, 4, 3, 2, 1, 0] as const;
 
 const DESTINATION_ICONS: Record<HubDestination, LucideIcon> = {
+  central: Map,
   story: BookOpen,
   friends: ContactRound,
   online: Globe2,
@@ -34,6 +39,7 @@ const DESTINATION_ICONS: Record<HubDestination, LucideIcon> = {
 };
 
 const DESTINATION_STOREFRONTS: Record<HubDestination, string> = {
+  central: 'online.png',
   story: 'story.png',
   friends: 'friends.png',
   online: 'online.png',
@@ -47,14 +53,14 @@ const DESTINATION_STOREFRONTS: Record<HubDestination, string> = {
   exit: 'exit.png'
 };
 
-function configurePixelTexture(texture: THREE.Texture, repeatX = 1) {
+function configurePixelTexture(texture: THREE.Texture, repeatX = 1, repeatY = 1) {
   texture.colorSpace = THREE.SRGBColorSpace;
   texture.magFilter = THREE.NearestFilter;
   texture.minFilter = THREE.NearestFilter;
   texture.generateMipmaps = false;
   texture.wrapS = THREE.RepeatWrapping;
-  texture.wrapT = THREE.ClampToEdgeWrapping;
-  texture.repeat.set(repeatX, 1);
+  texture.wrapT = repeatY === 1 ? THREE.ClampToEdgeWrapping : THREE.RepeatWrapping;
+  texture.repeat.set(repeatX, repeatY);
   texture.needsUpdate = true;
   return texture;
 }
@@ -124,13 +130,20 @@ function HubWorld({ reducedMotion }: { reducedMotion: boolean }) {
 
 function PlatformVisual({ platform }: { platform: StoryPlatformDefinition }) {
   const source = useTexture(`${CITY_ASSET_ROOT}/ground-platform.png`);
+  const fillSource = useTexture(`${CITY_ASSET_ROOT}/ground-fill.png`);
   const tileWorldWidth = 2;
   const visualHeight = 1;
   const repeatX = Math.max(1, platform.size[0] / tileWorldWidth);
   const visualCenterY = platform.size[1] / 2 - visualHeight / 2;
   const texture = useMemo(() => configurePixelTexture(source.clone(), repeatX), [repeatX, source]);
-  useEffect(() => () => texture.dispose(), [texture]);
+  const fillDepth = platform.id === 'ground' ? 7 : 0;
+  const fillTexture = useMemo(() => configurePixelTexture(fillSource.clone(), repeatX, Math.max(1, fillDepth / 2)), [fillDepth, fillSource, repeatX]);
+  useEffect(() => () => { texture.dispose(); fillTexture.dispose(); }, [fillTexture, texture]);
   return <group>
+    {fillDepth > 0 && <mesh position={[0, visualCenterY - visualHeight / 2 - fillDepth / 2 + 0.02, 0.08]}>
+      <planeGeometry args={[platform.size[0], fillDepth]} />
+      <meshBasicMaterial map={fillTexture} toneMapped={false} />
+    </mesh>}
     <mesh position={[0, visualCenterY, 0.2]}>
       <planeGeometry args={[platform.size[0], visualHeight]} />
       <meshBasicMaterial map={texture} transparent alphaTest={0.02} toneMapped={false} />
@@ -138,20 +151,49 @@ function PlatformVisual({ platform }: { platform: StoryPlatformDefinition }) {
   </group>;
 }
 
-function PortalVisual({ portal, nearby }: { portal: StoryPortalDefinition; nearby: boolean }) {
+const CABINET_FRAMES = Array.from({ length: 16 }, (_, index) => `${ARCADE_ASSET_ROOT}/red-${String(index).padStart(2, '0')}.png`);
+
+function AnimatedCabinet({ position = [0, 0, 0], mirrored = false, scale = 1 }: { position?: [number, number, number]; mirrored?: boolean; scale?: number }) {
+  const textures = useTexture(CABINET_FRAMES) as THREE.Texture[];
+  const materialRef = useRef<THREE.MeshBasicMaterial>(null);
+  useMemo(() => textures.forEach((texture) => configurePixelTexture(texture)), [textures]);
+  useFrame((state) => {
+    if (!materialRef.current) return;
+    const next = textures[Math.floor(state.clock.elapsedTime * 9) % textures.length];
+    if (materialRef.current.map !== next) materialRef.current.map = next;
+  });
+  return <mesh position={position} scale={[mirrored ? -scale : scale, scale, scale]} renderOrder={20}>
+    <planeGeometry args={[2.25, 2.25]} />
+    <meshBasicMaterial ref={materialRef} map={textures[0]} transparent alphaTest={0.02} toneMapped={false} depthWrite={false} />
+  </mesh>;
+}
+
+function PortalVisual({ portal, nearby, assigned }: { portal: StoryPortalDefinition; nearby: boolean; assigned: boolean }) {
   const storefront = useTexture(`${PORTAL_ASSET_ROOT}/${DESTINATION_STOREFRONTS[portal.destination]}`);
+  const closedDoor = useTexture(`${DOOR_ASSET_ROOT}/frame-0.png`);
   useMemo(() => configurePixelTexture(storefront), [storefront]);
+  useMemo(() => configurePixelTexture(closedDoor), [closedDoor]);
   const DestinationIcon = DESTINATION_ICONS[portal.destination];
   const storefrontSize = portal.destination === 'story' ? 4.45 : portal.position[1] > 4 ? 3.15 : 3.55;
   return <group position={[portal.position[0], portal.position[1], 0]}>
-    <mesh position={[0, 0, -0.25]} scale={nearby ? 1.06 : 1}>
+    {portal.kind === 'mode-door' ? <mesh position={[0, -0.62, -0.18]} scale={nearby || assigned ? 1.06 : 1}>
+      <planeGeometry args={[2.45, 3.4]} />
+      <meshBasicMaterial map={closedDoor} transparent alphaTest={0.02} toneMapped={false} />
+    </mesh> : portal.kind === 'arcade-machine' ? <AnimatedCabinet position={[0, -0.14, 0]} scale={nearby || assigned ? 1.08 : 1} /> : portal.kind === 'versus-machine' ? <>
+      <AnimatedCabinet position={[-0.56, -0.14, -0.18]} scale={nearby || assigned ? 0.94 : 0.88} />
+      <AnimatedCabinet position={[0.56, -0.14, -0.16]} mirrored scale={nearby || assigned ? 0.94 : 0.88} />
+    </> : portal.kind === 'terminal' ? <>
+      <AnimatedCabinet position={[0, -0.14, 0]} scale={nearby || assigned ? 1.08 : 1} />
+      <mesh position={[0, 0.04, 0.02]} renderOrder={22}><planeGeometry args={[0.72, 0.48]} /><meshBasicMaterial color={portal.accent} transparent opacity={0.42} depthWrite={false} /></mesh>
+    </> : <mesh position={[0, 0, -0.25]} scale={nearby ? 1.06 : 1}>
       <planeGeometry args={[storefrontSize, storefrontSize]} />
       <meshBasicMaterial map={storefront} transparent alphaTest={0.02} toneMapped={false} />
-    </mesh>
+    </mesh>}
+    {assigned && <mesh position={[0, -1.08, 0.05]} renderOrder={23}><ringGeometry args={[0.72, 0.9, 24]} /><meshBasicMaterial color="#ffe071" transparent opacity={0.9} depthWrite={false} /></mesh>}
     <Html center position={[0, portal.size[1] / 2 + 0.52, 0.7]} zIndexRange={[8, 0]} className="story-destination-sign-shell">
-      <div data-testid={`story-destination-${portal.id}`} className={`story-destination-sign ${nearby ? 'is-nearby' : ''} ${portal.locked ? 'is-locked' : ''}`} style={{ '--story-destination-accent': portal.accent } as CSSProperties}>
+      <div data-testid={`story-destination-${portal.id}`} className={`story-destination-sign ${nearby ? 'is-nearby' : ''} ${assigned ? 'is-assigned' : ''} ${portal.locked ? 'is-locked' : ''}`} style={{ '--story-destination-accent': portal.accent } as CSSProperties}>
         <span aria-hidden="true">{portal.locked ? <LockKeyhole size={16} /> : <DestinationIcon size={16} />}</span>
-        <strong>{portal.label}</strong>
+        <strong>{assigned ? `Go Here · ${portal.label}` : portal.label}</strong>
         <small>{portal.subtitle}</small>
       </div>
     </Html>
@@ -215,13 +257,16 @@ function RemoteStoryPlayer({ presence, reducedMotion, lane, selected, onSelect }
   </group>;
 }
 
-function StoryPlayerController({ hub, avatar, playerPosition, readInput, disabled, reducedMotion, onNearbyPortal, onActivatePortal, onExit, onPause, onStateSample, onReady }: {
+function StoryPlayerController({ hub, avatar, avatarVisible, playerPosition, readInput, disabled, reducedMotion, quickMatchAvailable, onQuickMatch, onNearbyPortal, onActivatePortal, onExit, onPause, onStateSample, onReady }: {
   hub: StoryHubDefinition;
   avatar: StoryProfileV4['avatar'];
+  avatarVisible: boolean;
   playerPosition: MutableRefObject<THREE.Vector3>;
   readInput: () => StoryHubInput;
   disabled: boolean;
   reducedMotion: boolean;
+  quickMatchAvailable: boolean;
+  onQuickMatch: () => void;
   onNearbyPortal: (portal: StoryPortalDefinition | null) => void;
   onActivatePortal: (portal: StoryPortalDefinition) => void;
   onExit: () => void;
@@ -363,6 +408,7 @@ function StoryPlayerController({ hub, avatar, playerPosition, readInput, disable
       onNearbyPortal(nearby);
     }
     if (interactEdge && nearby) onActivatePortal(nearby);
+    else if (interactEdge && quickMatchAvailable) onQuickMatch();
     if (now - lastSampleAt.current > 0.12) {
       lastSampleAt.current = now;
       onStateSample({ x: nextX, y: nextY, pose: nextPose, facing: facing.current });
@@ -372,17 +418,22 @@ function StoryPlayerController({ hub, avatar, playerPosition, readInput, disable
 
   return <RigidBody ref={bodyRef} type="kinematicPosition" position={[hub.spawn[0], hub.spawn[1], 0]} colliders={false} enabledRotations={[false, false, false]}>
     <CuboidCollider args={[0.36, 0.8, 0.3]} />
-    <group position={[0, AVATAR_GROUNDING_OFFSET_Y, 0]}>
+    <group position={[0, AVATAR_GROUNDING_OFFSET_Y, 0]} visible={avatarVisible}>
       <StoryAvatarRig avatar={avatar} pose={visualState.pose} facing={visualState.facing} reducedMotion={reducedMotion} />
     </group>
   </RigidBody>;
 }
 
-function HubCanvas({ profile, reducedMotion, readInput, disabled, nearbyPortal, remotePlayers, selectedPlayerSessionId, onSelectPlayer, onNearbyPortal, onActivatePortal, onExit, onPause, onStateSample, onReady }: {
+function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVisible, quickMatchAvailable, assignedPortalId, nearbyPortal, remotePlayers, selectedPlayerSessionId, onQuickMatch, onSelectPlayer, onNearbyPortal, onActivatePortal, onExit, onPause, onStateSample, onReady }: {
+  hub: StoryHubDefinition;
   profile: StoryProfileV4;
   reducedMotion: boolean;
   readInput: () => StoryHubInput;
   disabled: boolean;
+  avatarVisible: boolean;
+  quickMatchAvailable: boolean;
+  assignedPortalId?: string;
+  onQuickMatch: () => void;
   nearbyPortal: StoryPortalDefinition | null;
   remotePlayers: StoryHubPresence[];
   selectedPlayerSessionId?: string;
@@ -394,7 +445,6 @@ function HubCanvas({ profile, reducedMotion, readInput, disabled, nearbyPortal, 
   onStateSample: (state: StoryHubPlayerState) => void;
   onReady: () => void;
 }) {
-  const hub = KORE_CENTRAL_HUB;
   const playerPosition = useRef(new THREE.Vector3(hub.spawn[0], hub.spawn[1], 0));
   return <Canvas shadows dpr={[0.65, 1.25]} gl={{ antialias: true, powerPreference: 'high-performance' }} data-testid="story-hub-canvas">
     <OrthographicCamera makeDefault position={[hub.spawn[0], 4.6, 18]} zoom={58} near={0.1} far={100} />
@@ -406,9 +456,9 @@ function HubCanvas({ profile, reducedMotion, readInput, disabled, nearbyPortal, 
           <CuboidCollider args={[platform.size[0] / 2, platform.size[1] / 2, 1]} sensor={Boolean(platform.oneWay)} />
           <PlatformVisual platform={platform} />
         </RigidBody>)}
-        {hub.portals.map((portal) => <PortalVisual key={portal.id} portal={portal} nearby={nearbyPortal?.id === portal.id} />)}
+        {hub.portals.map((portal) => <PortalVisual key={portal.id} portal={portal} nearby={nearbyPortal?.id === portal.id} assigned={assignedPortalId === portal.id} />)}
         {remotePlayers.map((presence, index) => <RemoteStoryPlayer key={presence.sessionId} presence={presence} reducedMotion={reducedMotion} lane={index % 5} selected={selectedPlayerSessionId === presence.sessionId} onSelect={onSelectPlayer} />)}
-        <StoryPlayerController hub={hub} avatar={profile.avatar} playerPosition={playerPosition} readInput={readInput} disabled={disabled} reducedMotion={reducedMotion} onNearbyPortal={onNearbyPortal} onActivatePortal={onActivatePortal} onExit={onExit} onPause={onPause} onStateSample={onStateSample} onReady={onReady} />
+        <StoryPlayerController hub={hub} avatar={profile.avatar} avatarVisible={avatarVisible} playerPosition={playerPosition} readInput={readInput} disabled={disabled} reducedMotion={reducedMotion} quickMatchAvailable={quickMatchAvailable} onQuickMatch={onQuickMatch} onNearbyPortal={onNearbyPortal} onActivatePortal={onActivatePortal} onExit={onExit} onPause={onPause} onStateSample={onStateSample} onReady={onReady} />
       </Physics>
     </Suspense>
   </Canvas>;
@@ -437,6 +487,8 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   onOnlineSpar: (opponent: StoryHubPresence) => void;
   onExit: () => void;
 }) {
+  const [activeWorldId, setActiveWorldId] = useState<StoryModeWorldId>('central');
+  const activeHub = STORY_MODE_WORLDS[activeWorldId];
   const [nearbyPortal, setNearbyPortal] = useState<StoryPortalDefinition | null>(null);
   const [storyLockedOpen, setStoryLockedOpen] = useState(false);
   const [pauseOpen, setPauseOpen] = useState(false);
@@ -456,21 +508,24 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const [challengeClock, setChallengeClock] = useState(Date.now());
   const [localSessionId, setLocalSessionId] = useState('');
   const [socialRevision, setSocialRevision] = useState(0);
+  const [doorTravel, setDoorTravel] = useState<{ target: StoryModeWorldId; step: number } | null>(null);
+  const [quickMatch, setQuickMatch] = useState<{ status: 'idle' | 'searching' | 'assigned' | 'offline'; portalId?: string }>({ status: 'idle' });
   const multiplayerSessionRef = useRef<StoryHubMultiplayerSession | null>(null);
   const launchedChallengeIdsRef = useRef(new Set<string>());
   const noticedChallengeIdsRef = useRef(new Set<string>());
   const pauseGuardUntilRef = useRef(0);
   const pauseKeyHeldRef = useRef(false);
-  const playerStateRef = useRef<StoryHubPlayerState>({ x: KORE_CENTRAL_HUB.spawn[0], y: KORE_CENTRAL_HUB.spawn[1], pose: 'idle', facing: 1 });
+  const playerStateRef = useRef<StoryHubPlayerState>({ x: KORE_CENTRAL_HUB.spawn[0], y: KORE_CENTRAL_HUB.spawn[1], pose: 'idle', facing: 1, worldId: 'central' });
   const readInput = useCallback(() => peekInputs()[0], [peekInputs]);
   const handleHubReady = useCallback(() => setHubReady(true), []);
   const handlePlayerState = useCallback((state: StoryHubPlayerState) => {
-    playerStateRef.current = state;
+    const worldState = { ...state, worldId: activeWorldId };
+    playerStateRef.current = worldState;
     setPlayerX(state.x);
     setPlayerY(state.y);
     setPlayerPose(state.pose);
-    multiplayerSessionRef.current?.update(state);
-  }, []);
+    multiplayerSessionRef.current?.update(worldState);
+  }, [activeWorldId]);
   const toggleOnline = useCallback(() => {
     setOnlineEnabled((current) => writeStoryHubOnlinePreference(!current));
   }, []);
@@ -488,13 +543,108 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     closePause();
     onDestination('avatarStudio');
   }, [closePause, onDestination]);
+
+  const beginWorldTravel = useCallback((target: StoryModeWorldId) => {
+    if (doorTravel || target === activeWorldId) return;
+    setNearbyPortal(null);
+    setSelectedPlayer(null);
+    setDoorTravel({ target, step: 0 });
+  }, [activeWorldId, doorTravel]);
+
   const activatePortal = useCallback((portal: StoryPortalDefinition) => {
     if (portal.locked || portal.destination === 'story') {
       setStoryLockedOpen(true);
       return;
     }
+    if (portal.destination === 'central') {
+      beginWorldTravel('central');
+      return;
+    }
+    if (activeWorldId === 'central' && MODE_WORLD_DESTINATIONS.includes(portal.destination as StoryModeWorldId)) {
+      beginWorldTravel(portal.destination as StoryModeWorldId);
+      return;
+    }
+    if (quickMatch.status === 'assigned' && portal.id === quickMatch.portalId) {
+      setQuickMatch({ status: 'idle' });
+      onDestination('online');
+      return;
+    }
     onDestination(portal.destination);
-  }, [onDestination]);
+  }, [activeWorldId, beginWorldTravel, onDestination, quickMatch.portalId, quickMatch.status]);
+
+  const exitCurrentWorld = useCallback(() => {
+    if (activeWorldId === 'central') onExit();
+    else beginWorldTravel('central');
+  }, [activeWorldId, beginWorldTravel, onExit]);
+
+  const quickMatchPortals = useMemo(() => activeHub.portals.filter((portal) => portal.quickMatch), [activeHub]);
+  const quickMatchAvailable = quickMatchPortals.length > 0;
+  const startQuickMatch = useCallback(() => {
+    if (!quickMatchAvailable) return;
+    if (quickMatch.status === 'searching') {
+      setQuickMatch({ status: 'idle' });
+      return;
+    }
+    if (!onlineEnabled) {
+      setQuickMatch({ status: 'offline' });
+      return;
+    }
+    if (quickMatch.status === 'assigned') {
+      setQuickMatch({ status: 'idle' });
+      return;
+    }
+    setQuickMatch({ status: 'searching' });
+  }, [onlineEnabled, quickMatch.status, quickMatchAvailable]);
+
+  useEffect(() => {
+    if (!doorTravel) return undefined;
+    const timer = window.setTimeout(() => {
+      setDoorTravel((current) => {
+        if (!current) return null;
+        const nextStep = current.step + 1;
+        if (nextStep === 12) {
+          const nextHub = STORY_MODE_WORLDS[current.target];
+          setActiveWorldId(current.target);
+          setNearbyPortal(null);
+          setHubReady(false);
+          setPlayerX(nextHub.spawn[0]);
+          setPlayerY(nextHub.spawn[1]);
+          setPlayerPose('idle');
+          playerStateRef.current = { x: nextHub.spawn[0], y: nextHub.spawn[1], pose: 'idle', facing: 1, worldId: current.target };
+          multiplayerSessionRef.current?.update(playerStateRef.current);
+        }
+        return nextStep >= 24 ? null : { ...current, step: nextStep };
+      });
+    }, reducedMotion ? 35 : 70);
+    return () => window.clearTimeout(timer);
+  }, [doorTravel, reducedMotion]);
+
+  useEffect(() => {
+    setQuickMatch({ status: 'idle' });
+  }, [activeWorldId]);
+
+  useEffect(() => {
+    if (quickMatch.status !== 'searching') return undefined;
+    const timer = window.setTimeout(() => {
+      const seed = Array.from(profile.avatar.name).reduce((total, character) => total + character.charCodeAt(0), 0);
+      const assigned = quickMatchPortals[seed % Math.max(1, quickMatchPortals.length)];
+      setQuickMatch(assigned ? { status: 'assigned', portalId: assigned.id } : { status: 'idle' });
+    }, reducedMotion ? 300 : 1_600);
+    return () => window.clearTimeout(timer);
+  }, [profile.avatar.name, quickMatch.status, quickMatchPortals, reducedMotion]);
+
+  useEffect(() => {
+    if (!quickMatchAvailable) return undefined;
+    const onFindMatch = (event: KeyboardEvent) => {
+      if (event.key.toLowerCase() !== 'f' || event.repeat) return;
+      if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement || pauseOpen || controlsOpen || storyLockedOpen || doorTravel) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      startQuickMatch();
+    };
+    window.addEventListener('keydown', onFindMatch, true);
+    return () => window.removeEventListener('keydown', onFindMatch, true);
+  }, [controlsOpen, doorTravel, pauseOpen, quickMatchAvailable, startQuickMatch, storyLockedOpen]);
 
   useEffect(() => {
     const onShift = (event: KeyboardEvent, pressed: boolean) => {
@@ -665,21 +815,25 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     return () => window.removeEventListener('keydown', onKeyDown, true);
   }, [storyLockedOpen]);
 
-  const playerCount = onlineEnabled ? remotePlayers.length + 1 : 1;
+  const visibleRemotePlayers = remotePlayers.filter((presence) => (presence.worldId ?? 'central') === activeWorldId);
+  const playerCount = onlineEnabled ? visibleRemotePlayers.length + 1 : 1;
   const statusLabel = connectionStatus === 'online' ? 'Live' : connectionStatus === 'local' ? 'Local Link' : connectionStatus === 'reconnecting' ? 'Reconnecting' : connectionStatus === 'connecting' ? 'Connecting' : 'Offline';
   const incomingSeconds = incomingChallenge ? Math.max(0, Math.ceil((incomingChallenge.expiresAt - challengeClock) / 1_000)) : 0;
   const outgoingSeconds = outgoingChallenge ? Math.max(0, Math.ceil((outgoingChallenge.expiresAt - challengeClock) / 1_000)) : 0;
 
-  return <div className="story-hub-screen" data-testid="story-hub-screen" data-hub-ready={hubReady ? 'true' : 'false'} data-controls-open={controlsOpen ? 'true' : 'false'} data-player-x={playerX.toFixed(2)} data-player-y={playerY.toFixed(2)} data-player-pose={playerPose} data-nearby-portal={nearbyPortal?.id ?? ''} data-online={onlineEnabled ? 'true' : 'false'} data-connection-status={connectionStatus} data-player-count={playerCount}>
+  const assignedPortal = quickMatch.status === 'assigned' ? activeHub.portals.find((portal) => portal.id === quickMatch.portalId) : null;
+  const doorFrame = doorTravel ? DOOR_TRAVEL_FRAME_SEQUENCE[doorTravel.step] ?? 0 : 0;
+
+  return <div className="story-hub-screen" data-testid="story-hub-screen" data-world={activeWorldId} data-hub-ready={hubReady ? 'true' : 'false'} data-controls-open={controlsOpen ? 'true' : 'false'} data-quick-match={quickMatchAvailable ? 'true' : 'false'} data-player-x={playerX.toFixed(2)} data-player-y={playerY.toFixed(2)} data-player-pose={playerPose} data-nearby-portal={nearbyPortal?.id ?? ''} data-online={onlineEnabled ? 'true' : 'false'} data-connection-status={connectionStatus} data-player-count={playerCount}>
     <div className="story-hub-canvas-shell">
-      <HubCanvas profile={profile} reducedMotion={reducedMotion} readInput={readInput} disabled={storyLockedOpen || pauseOpen || controlsOpen || Boolean(selectedPlayer) || Boolean(incomingChallenge)} nearbyPortal={nearbyPortal} remotePlayers={remotePlayers} selectedPlayerSessionId={selectedPlayer?.sessionId} onSelectPlayer={selectRemotePlayer} onNearbyPortal={setNearbyPortal} onActivatePortal={activatePortal} onExit={onExit} onPause={openPause} onStateSample={handlePlayerState} onReady={handleHubReady} />
+      <HubCanvas key={activeHub.id} hub={activeHub} profile={profile} reducedMotion={reducedMotion} readInput={readInput} disabled={storyLockedOpen || pauseOpen || controlsOpen || Boolean(selectedPlayer) || Boolean(incomingChallenge) || Boolean(doorTravel)} avatarVisible={!doorTravel || doorTravel.step < 4 || doorTravel.step >= 18} quickMatchAvailable={quickMatchAvailable} assignedPortalId={quickMatch.portalId} nearbyPortal={nearbyPortal} remotePlayers={visibleRemotePlayers} selectedPlayerSessionId={selectedPlayer?.sessionId} onQuickMatch={startQuickMatch} onSelectPlayer={selectRemotePlayer} onNearbyPortal={setNearbyPortal} onActivatePortal={activatePortal} onExit={exitCurrentWorld} onPause={openPause} onStateSample={handlePlayerState} onReady={handleHubReady} />
     </div>
 
     <header className="story-hub-header story-enter-1">
       <div className="story-hub-location">
-        <span><Map size={16} /> Central District</span>
-        <h1>{KORE_CENTRAL_HUB.name}</h1>
-        <p>{KORE_CENTRAL_HUB.subtitle}</p>
+        <span><Map size={16} /> {activeWorldId === 'central' ? 'Central District' : `${activeWorldId} world`}</span>
+        <h1>{activeHub.name}</h1>
+        <p>{activeHub.subtitle}</p>
       </div>
       <div className="story-hub-header-actions">
         <button type="button" className="story-hub-controls-toggle" aria-expanded={controlsOpen} aria-controls="story-hub-controls-panel" onClick={() => setControlsOpen((current) => !current)}>
@@ -691,8 +845,8 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
             <WifiOff className="is-offline-icon" size={16} />
           </span>
           <span><small>{statusLabel}</small><strong><UsersRound size={15} /> {playerCount} {playerCount === 1 ? 'Player' : 'Players'}</strong></span>
-          <div className="story-hub-remote-names" aria-label="Players in K.O.R.E. Central">
-            {remotePlayers.slice(0, 3).map((presence) => <i key={presence.sessionId} data-testid={`story-hub-remote-${presence.sessionId}`}>{presence.displayName}</i>)}
+          <div className="story-hub-remote-names" aria-label={`Players in ${activeHub.name}`}>
+            {visibleRemotePlayers.slice(0, 3).map((presence) => <i key={presence.sessionId} data-testid={`story-hub-remote-${presence.sessionId}`}>{presence.displayName}</i>)}
           </div>
         </div>
         <div className="story-hub-player-card">
@@ -789,6 +943,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
         <div><strong>Double Jump</strong><kbd>Space ×2</kbd><span>South button ×2</span></div>
         <div><strong>Attack</strong><kbd>U / J / I</kbd><span>Face buttons</span></div>
         <div><strong>Interact</strong><kbd>K / Enter</kbd><span>Special button</span></div>
+        {quickMatchAvailable && <div><strong>Find Match</strong><kbd>F / Y</kbd><span>Queue from anywhere</span></div>}
         <div><strong>Pause</strong><kbd>Esc</kbd><span>Start / Menu</span></div>
       </div>
       <p>Touch controls appear automatically on touch devices.</p>
@@ -802,9 +957,24 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       <button type="button" disabled={!nearbyPortal} onClick={() => nearbyPortal && activatePortal(nearbyPortal)}>{nearbyPortal?.locked ? 'Inspect' : 'Enter'}</button>
     </div>
 
+    {quickMatchAvailable && <button type="button" className={`story-quick-match is-${quickMatch.status}`} onClick={startQuickMatch} aria-live="polite" data-testid="story-quick-match">
+      <span className="story-quick-match-key"><kbd>F</kbd><i>/</i><kbd>Y</kbd></span>
+      <span>
+        <small>{quickMatch.status === 'searching' ? 'Searching network…' : quickMatch.status === 'assigned' ? `Station ${String(assignedPortal?.stationNumber ?? '').padStart(2, '0')} ready` : quickMatch.status === 'offline' ? 'Offline mode enabled' : 'Instant matchmaking'}</small>
+        <strong>{quickMatch.status === 'searching' ? 'Cancel Search' : quickMatch.status === 'assigned' ? `Go to ${assignedPortal?.label ?? 'assigned station'}` : quickMatch.status === 'offline' ? 'Go online from Pause' : 'Find Match'}</strong>
+      </span>
+      <Gamepad2 size={21} />
+    </button>}
+
     <div className="story-hub-control-hint story-enter-3" aria-hidden="true">
-      <span>Move</span><b>← →</b><span>Run</span><b>Shift</b><span>Double Jump</span><b>Space ×2</b><span>Attack</span><b>U / J</b><span>Interact</span><b>K / Enter</b><span>Pause</span><b>Esc</b>
+      <span>Move</span><b>← →</b><span>Run</span><b>Shift</b><span>Double Jump</span><b>Space ×2</b><span>Attack</span><b>U / J</b>{quickMatchAvailable && <><span>Match</span><b>F / Y</b></>}<span>Interact</span><b>K / Enter</b><span>Pause</span><b>Esc</b>
     </div>
+
+    {doorTravel && <div className="story-door-transition" aria-label={`Traveling to ${STORY_MODE_WORLDS[doorTravel.target].name}`} data-testid="story-door-transition">
+      <div className="story-door-transition-glow" />
+      <img src={`${DOOR_ASSET_ROOT}/frame-${doorFrame}.png`} alt="" />
+      <span>{doorTravel.step < 12 ? 'Departing' : `Arriving · ${STORY_MODE_WORLDS[doorTravel.target].name}`}</span>
+    </div>}
 
     <div className="story-touch-controls" aria-label="Story hub touch controls">
       <div>

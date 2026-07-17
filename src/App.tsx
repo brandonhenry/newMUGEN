@@ -5515,16 +5515,7 @@ export default function App() {
 	      setMode('online');
 	      setPrivateRoomIntent(null);
 	      if (!onlineProfile) {
-	        promptForUsername({
-	          source: 'story_hub_online',
-	          body: 'Choose the name other players will see online.',
-	          onConfirm: () => setScreen('select'),
-	          onBack: () => {
-	            setMode('ai');
-	            setScreen('storyHub');
-	          }
-	        });
-	        return;
+	        saveOnlineProfile(readOrCreateStoryHubGuestIdentity(), 'story_hub_matchmaking');
 	      }
 	      setScreen('select');
 	      return;
@@ -5576,7 +5567,7 @@ export default function App() {
 	      setNavigationHome('menu');
 	      setScreen('menu');
 	    }
-	  }, [captureAppAnalytics, effectiveUnlockedCharacterIds, onlineProfile, openFriendList, p1Id, p2Id, promptForUsername, resetArcadeRun, resetRandomSelections, roster]);
+	  }, [captureAppAnalytics, effectiveUnlockedCharacterIds, onlineProfile, openFriendList, p1Id, p2Id, resetArcadeRun, resetRandomSelections, roster, saveOnlineProfile]);
 	  const launchStoryHubSpar = useCallback((opponent: StoryHubPresence) => {
 	    const identity = onlineProfile ?? readOrCreateStoryHubGuestIdentity();
 	    if (!onlineProfile) saveOnlineProfile(identity, 'story_hub_spar');
