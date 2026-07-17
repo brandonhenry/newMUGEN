@@ -2,8 +2,12 @@ import { describe, expect, it } from 'vitest';
 import { sanitizeAdventureProgress } from './adventureProgress';
 import {
   STORY_ENEMY_RESPAWN_MS,
+  STORY_DAMAGE_POP_MS,
+  STORY_DAMAGE_POP_REDUCED_MS,
   adventureAttackHits,
   canDamageAdventurePlayer,
+  createAdventureDamageFeedback,
+  createAdventureHitReaction,
   getAdventureEnemyStats,
   resolveAdventurePlayerAttack,
   resolveAdventurePlayerDamage,
@@ -38,5 +42,21 @@ describe('story adventure combat math', () => {
     expect(shouldRespawnAdventureEnemy(STORY_ENEMY_RESPAWN_MS, 0, true)).toBe(false);
     expect(shouldRespawnAdventureEnemy(STORY_ENEMY_RESPAWN_MS - 1, 0, false)).toBe(false);
     expect(shouldRespawnAdventureEnemy(STORY_ENEMY_RESPAWN_MS, 0, false)).toBe(true);
+  });
+
+  it('creates staggered normal, critical, finishing, and reduced-motion damage feedback', () => {
+    const normal = createAdventureDamageFeedback({ damage: 12.4, critical: false, finishing: false, sequence: 0, reducedMotion: false });
+    const critical = createAdventureDamageFeedback({ damage: 35, critical: true, finishing: false, sequence: 1, reducedMotion: false });
+    const finishing = createAdventureDamageFeedback({ damage: 90, critical: true, finishing: true, sequence: 2, reducedMotion: true });
+    expect(normal).toMatchObject({ damage: 12, critical: false, finishing: false, durationMs: STORY_DAMAGE_POP_MS });
+    expect(critical.critical).toBe(true);
+    expect(new Set([normal.offsetX, critical.offsetX, finishing.offsetX]).size).toBe(3);
+    expect(finishing).toMatchObject({ damage: 90, critical: true, finishing: true, durationMs: STORY_DAMAGE_POP_REDUCED_MS });
+  });
+
+  it('gives confirmed hits a damped shake and brief stagger while respecting reduced motion', () => {
+    expect(createAdventureHitReaction(false, false)).toEqual({ shakeDurationMs: 170, shakeStrength: 0.16, staggerMs: 105, defeatLingerMs: 190 });
+    expect(createAdventureHitReaction(true, false)).toEqual({ shakeDurationMs: 230, shakeStrength: 0.24, staggerMs: 150, defeatLingerMs: 190 });
+    expect(createAdventureHitReaction(true, true)).toEqual({ shakeDurationMs: 0, shakeStrength: 0, staggerMs: 150, defeatLingerMs: 80 });
   });
 });

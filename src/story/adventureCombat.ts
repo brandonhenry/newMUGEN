@@ -5,6 +5,51 @@ export const STORY_ATTACK_REACH = 1.65;
 export const STORY_ATTACK_VERTICAL_REACH = 1.25;
 export const STORY_PLAYER_INVULNERABILITY_MS = 650;
 export const STORY_ENEMY_RESPAWN_MS = 10_000;
+export const STORY_DAMAGE_POP_MS = 760;
+export const STORY_DAMAGE_POP_REDUCED_MS = 260;
+
+export type AdventureDamageFeedback = {
+  damage: number;
+  critical: boolean;
+  finishing: boolean;
+  offsetX: number;
+  endOffsetX: number;
+  durationMs: number;
+};
+
+export type AdventureHitReaction = {
+  shakeDurationMs: number;
+  shakeStrength: number;
+  staggerMs: number;
+  defeatLingerMs: number;
+};
+
+export function createAdventureHitReaction(critical: boolean, reducedMotion: boolean): AdventureHitReaction {
+  return {
+    shakeDurationMs: reducedMotion ? 0 : critical ? 230 : 170,
+    shakeStrength: reducedMotion ? 0 : critical ? 0.24 : 0.16,
+    staggerMs: critical ? 150 : 105,
+    defeatLingerMs: reducedMotion ? 80 : 190
+  };
+}
+
+export function createAdventureDamageFeedback(input: {
+  damage: number;
+  critical: boolean;
+  finishing: boolean;
+  sequence: number;
+  reducedMotion: boolean;
+}): AdventureDamageFeedback {
+  const lane = [-18, 2, 20][Math.abs(Math.round(input.sequence)) % 3];
+  return {
+    damage: Math.max(1, Math.round(Number.isFinite(input.damage) ? input.damage : 1)),
+    critical: Boolean(input.critical),
+    finishing: Boolean(input.finishing),
+    offsetX: lane,
+    endOffsetX: lane + (lane <= 0 ? -8 : 8),
+    durationMs: input.reducedMotion ? STORY_DAMAGE_POP_REDUCED_MS : STORY_DAMAGE_POP_MS
+  };
+}
 
 export type AdventureEnemyScaledStats = {
   maxHealth: number;

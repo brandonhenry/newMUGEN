@@ -8,7 +8,7 @@ import type { OnlinePlayerProfile } from '../lib/online/leaderboard';
 import { addFriendEntry, isFriend, readMatchHistory } from '../lib/socialHistory';
 import type { InputFrame } from '../types';
 import { STORY_ADVENTURE_ASSET_PATHS, STORY_ENEMY_SPRITE_PATHS, storyWorldAssetPath } from './adventureAssets';
-import { adventureAttackHits, getAdventureEnemyStats, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, shouldRespawnAdventureEnemy, stepAdventureProjectile } from './adventureCombat';
+import { adventureAttackHits, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureEnemyStats, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, shouldRespawnAdventureEnemy, stepAdventureProjectile, type AdventureDamageFeedback } from './adventureCombat';
 import { STORY_ADVENTURE_STAT_CAP, STORY_ADVENTURE_STAT_KEYS, allocateAdventureStat, awardAdventureExperience, canRespecAdventureStats, experienceToNextLevel, getAdventureDerivedStats, readAdventureProgress, respecAdventureStats, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_REGION_LABELS, STORY_WORLDS, isStoryAdventureRegionId, isStoryAdventureWorldId, isStoryWorldId } from './adventureWorlds';
 import { connectStoryHubMultiplayer, readOrCreateStoryHubGuestIdentity, readStoryHubOnlinePreference, STORY_HUB_CHALLENGE_TIMEOUT_MS, writeStoryHubOnlinePreference, type StoryHubMultiplayerSession } from './hubMultiplayer';
@@ -575,6 +575,7 @@ function EnemySprite({ sprite, facing, flashUntil }: { sprite: StoryEnemySpawnDe
 }
 
 type AdventureProjectileRuntime = { active: boolean; x: number; y: number; velocityX: number; velocityY: number; expiresAt: number };
+type AdventureDamagePop = AdventureDamageFeedback & { id: number };
 
 function AdventureEnemy({ spawn, level, playerPosition, attackEvent, reducedMotion, onPlayerDamage, onDefeated }: {
   spawn: StoryEnemySpawnDefinition;
@@ -586,6 +587,8 @@ function AdventureEnemy({ spawn, level, playerPosition, attackEvent, reducedMoti
   onDefeated: (xp: number) => void;
 }) {
   const group = useRef<THREE.Group>(null);
+  const enemyBody = useRef<THREE.Group>(null);
+  const damageLayer = useRef<THREE.Group>(null);
   const projectileMeshes = useRef<Array<THREE.Mesh | null>>([]);
   const projectiles = useRef<AdventureProjectileRuntime[]>(Array.from({ length: 3 }, () => ({ active: false, x: 0, y: 0, velocityX: 0, velocityY: 0, expiresAt: 0 })));
   const stats = useMemo(() => getAdventureEnemyStats(spawn.archetype, level), [level, spawn.archetype]);
@@ -595,8 +598,17 @@ function AdventureEnemy({ spawn, level, playerPosition, attackEvent, reducedMoti
   const health = useRef(stats.maxHealth);
   const alive = useRef(true);
   const defeatedAt = useRef(0);
+  const defeatLingerMs = useRef(190);
   const flashUntil = useRef(0);
+  const shakeStartedAt = useRef(0);
+  const shakeUntil = useRef(0);
+  const shakeStrength = useRef(0);
+  const shakeDirection = useRef<-1 | 1>(1);
+  const staggerUntil = useRef(0);
   const lastAttackAt = useRef(0);
+  const damageSequence = useRef(0);
+  const damageTimers = useRef<number[]>([]);
+  const [damagePops, setDamagePops] = useState<AdventureDamagePop[]>([]);
   const [visual, setVisual] = useState({ health: stats.maxHealth, alive: true, critical: false, facing: -1 as -1 | 1 });
   const { camera } = useThree();
 
@@ -605,8 +617,11 @@ function AdventureEnemy({ spawn, level, playerPosition, attackEvent, reducedMoti
     alive.current = true;
     x.current = spawn.position[0];
     y.current = spawn.position[1];
+    setDamagePops([]);
     setVisual({ health: stats.maxHealth, alive: true, critical: false, facing: -1 });
   }, [spawn.id, spawn.position, stats.maxHealth]);
+
+  useEffect(() => () => damageTimers.current.forEach((timer) => window.clearTimeout(timer)), []);
 
   useEffect(() => {
     if (!attackEvent || !alive.current) return;
@@ -615,11 +630,28 @@ function AdventureEnemy({ spawn, level, playerPosition, attackEvent, reducedMoti
     }
     if (!adventureAttackHits({ playerX: attackEvent.x, playerY: attackEvent.y, facing: attackEvent.facing, enemyX: x.current, enemyY: y.current })) return;
     health.current = Math.max(0, health.current - attackEvent.damage);
+    const hitAt = performance.now();
+    const finishing = health.current <= 0;
+    const popId = ++damageSequence.current;
+    const feedback = createAdventureDamageFeedback({ damage: attackEvent.damage, critical: attackEvent.critical, finishing, sequence: popId, reducedMotion });
+    const reaction = createAdventureHitReaction(attackEvent.critical, reducedMotion);
+    setDamagePops((current) => [...current.slice(-3), { id: popId, ...feedback }]);
+    const damageTimer = window.setTimeout(() => {
+      setDamagePops((current) => current.filter((pop) => pop.id !== popId));
+      damageTimers.current = damageTimers.current.filter((timer) => timer !== damageTimer);
+    }, feedback.durationMs);
+    damageTimers.current.push(damageTimer);
     x.current += attackEvent.facing * 0.46;
-    flashUntil.current = performance.now() + (reducedMotion ? 90 : 240);
+    flashUntil.current = hitAt + (reducedMotion ? 90 : 240);
+    shakeStartedAt.current = hitAt;
+    shakeUntil.current = hitAt + reaction.shakeDurationMs;
+    shakeStrength.current = reaction.shakeStrength;
+    shakeDirection.current = attackEvent.facing;
+    staggerUntil.current = hitAt + reaction.staggerMs;
+    defeatLingerMs.current = reaction.defeatLingerMs;
     if (health.current <= 0) {
       alive.current = false;
-      defeatedAt.current = performance.now();
+      defeatedAt.current = hitAt;
       setVisual({ health: 0, alive: false, critical: attackEvent.critical, facing: facing.current });
       onDefeated(stats.xp);
       return;
@@ -631,8 +663,23 @@ function AdventureEnemy({ spawn, level, playerPosition, attackEvent, reducedMoti
     const now = performance.now();
     const delta = Math.min(frameDelta, 1 / 30);
     if (!group.current) return;
+    if (damageLayer.current) damageLayer.current.position.set(x.current, y.current, 0.9);
+    if (enemyBody.current) {
+      if (!reducedMotion && now < shakeUntil.current) {
+        const duration = Math.max(1, shakeUntil.current - shakeStartedAt.current);
+        const progress = THREE.MathUtils.clamp((now - shakeStartedAt.current) / duration, 0, 1);
+        const envelope = 1 - progress;
+        const wave = Math.sin(progress * Math.PI * 7);
+        enemyBody.current.position.x = wave * shakeStrength.current * envelope * shakeDirection.current;
+        enemyBody.current.position.y = Math.abs(wave) * shakeStrength.current * 0.18 * envelope;
+        enemyBody.current.rotation.z = wave * 0.065 * envelope;
+      } else {
+        enemyBody.current.position.set(0, 0, 0);
+        enemyBody.current.rotation.z = 0;
+      }
+    }
     if (!alive.current) {
-      group.current.visible = false;
+      group.current.visible = now - defeatedAt.current < defeatLingerMs.current;
       const onScreen = Math.abs(x.current - camera.position.x) < 12;
       if (shouldRespawnAdventureEnemy(now, defeatedAt.current, onScreen)) {
         alive.current = true;
@@ -670,7 +717,7 @@ function AdventureEnemy({ spawn, level, playerPosition, attackEvent, reducedMoti
     } else {
       move = Math.sin(state.clock.elapsedTime * 0.72 + spawn.position[0]) >= 0 ? 1 : -1;
     }
-    x.current += move * stats.speed * delta;
+    if (now >= staggerUntil.current) x.current += move * stats.speed * delta;
     x.current = THREE.MathUtils.clamp(x.current, spawn.position[0] - spawn.patrolRadius * 2.5, spawn.position[0] + spawn.patrolRadius * 2.5);
     if (move !== 0 && facing.current !== (move > 0 ? 1 : -1)) {
       facing.current = move > 0 ? 1 : -1;
@@ -706,13 +753,28 @@ function AdventureEnemy({ spawn, level, playerPosition, attackEvent, reducedMoti
 
   return <>
     <group ref={group} position={[spawn.position[0], spawn.position[1], 0.42]} name={`story-enemy-${spawn.id}`}>
-      <EnemySprite sprite={spawn.sprite} facing={visual.facing} flashUntil={flashUntil} />
+      <group ref={enemyBody}>
+        <EnemySprite sprite={spawn.sprite} facing={visual.facing} flashUntil={flashUntil} />
+      </group>
       <Html center position={[0, 1.18, 0.3]} zIndexRange={[7, 0]} className="story-enemy-bar-shell">
         <div className={`story-enemy-bar ${visual.critical ? 'is-critical' : ''}`} data-testid={`story-enemy-health-${spawn.id}`}>
           <span><i style={{ width: `${Math.max(0, visual.health / stats.maxHealth) * 100}%` }} /></span>
           <small>{spawn.name} · Lv {level}</small>
         </div>
       </Html>
+    </group>
+    <group ref={damageLayer} position={[spawn.position[0], spawn.position[1], 0.9]}>
+      {damagePops.map((pop) => <Html key={pop.id} center position={[0, 1.02, 0.7]} zIndexRange={[10, 0]} className="story-enemy-damage-shell">
+        <output
+          className={`story-enemy-damage ${pop.critical ? 'is-critical' : ''} ${pop.finishing ? 'is-finishing' : ''} ${reducedMotion ? 'is-reduced-motion' : ''}`}
+          data-testid={`story-enemy-damage-${spawn.id}-${pop.id}`}
+          aria-label={`${pop.damage} damage${pop.critical ? ', critical hit' : ''}${pop.finishing ? ', finishing hit' : ''}`}
+          style={{ '--story-damage-accent': spawn.accent, '--story-damage-x': `${pop.offsetX}px`, '--story-damage-end-x': `${pop.endOffsetX}px` } as CSSProperties}
+        >
+          <span>{pop.damage}</span>
+          {pop.critical && <small>{pop.finishing ? 'FINISH!' : 'CRITICAL!'}</small>}
+        </output>
+      </Html>)}
     </group>
     {projectiles.current.map((_, index) => <mesh key={index} ref={(mesh) => { projectileMeshes.current[index] = mesh; }} visible={false}>
       <circleGeometry args={[0.18, 8]} />

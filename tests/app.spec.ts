@@ -175,11 +175,16 @@ test('adventure combat levels the player and Central Route shrine respecs stats'
   await page.keyboard.down('ArrowRight');
   await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 4_000 }).toBeGreaterThan(emberSpawnX + 5.5);
   await page.keyboard.up('ArrowRight');
+  let damageFeedbackSeen = false;
   for (let hit = 0; hit < 8; hit += 1) {
     await page.keyboard.press('u');
+    await page.waitForTimeout(80);
+    const damageFeedback = page.locator('[data-testid^="story-enemy-damage-"]:visible');
+    if (await damageFeedback.count() > 0) damageFeedbackSeen = true;
     await page.waitForTimeout(850);
     if (await page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v1') ?? 'null')?.level) === 2) break;
   }
+  expect(damageFeedbackSeen).toBe(true);
   await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v1') ?? 'null')?.level), { timeout: 5_000 }).toBe(2);
   await expect(hub).toHaveAttribute('data-player-level', '2');
 

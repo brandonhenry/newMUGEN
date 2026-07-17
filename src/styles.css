@@ -1860,6 +1860,90 @@ body {
   white-space: nowrap;
 }
 
+.story-enemy-damage-shell {
+  pointer-events: none;
+  user-select: none;
+}
+
+.story-enemy-damage {
+  --story-damage-accent: #ff8a3d;
+  --story-damage-x: 0px;
+  --story-damage-end-x: 0px;
+  position: relative;
+  display: grid;
+  justify-items: center;
+  min-width: 82px;
+  color: #ffffff;
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--story-damage-accent) 72%, transparent));
+  font-variant-numeric: tabular-nums;
+  line-height: 0.78;
+  text-align: center;
+  animation: story-enemy-damage-pop 760ms cubic-bezier(0.12, 0.9, 0.18, 1) both;
+}
+
+.story-enemy-damage span {
+  color: #ff8a3d;
+  background: linear-gradient(180deg, #ffffff 0 12%, #fff07a 34%, #ff8a24 68%, #ff3c5c 100%);
+  background-clip: text;
+  font-size: 32px;
+  font-weight: 1000;
+  letter-spacing: -0.07em;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 2px #210412;
+  paint-order: stroke fill;
+  text-shadow: 0 3px 0 #210412, 0 5px 0 rgba(0, 0, 0, 0.46);
+}
+
+.story-enemy-damage small {
+  margin-top: 7px;
+  border-radius: 5px;
+  padding: 3px 6px 2px;
+  color: #240318;
+  background: #fff07a;
+  box-shadow: 0 2px 0 #240318, 0 0 12px rgba(255, 240, 122, 0.7);
+  font-size: 7px;
+  font-weight: 1000;
+  letter-spacing: 0.12em;
+}
+
+.story-enemy-damage.is-critical span {
+  background-image: linear-gradient(180deg, #ffffff 0 10%, #ff9ee5 31%, #ff467f 65%, #9b58ff 100%);
+  font-size: 39px;
+  -webkit-text-stroke-width: 2.4px;
+}
+
+.story-enemy-damage.is-critical small {
+  color: #ffffff;
+  background: linear-gradient(90deg, #ff467f, #9b58ff);
+  box-shadow: 0 2px 0 #240318, 0 0 14px rgba(255, 70, 127, 0.76);
+}
+
+.story-enemy-damage.is-finishing span {
+  background-image: linear-gradient(180deg, #ffffff 0 12%, #7dfff0 34%, #2ee6ff 67%, #8f6dff 100%);
+  font-size: 44px;
+  -webkit-text-stroke-width: 2.7px;
+}
+
+.story-enemy-damage.is-reduced-motion {
+  animation-name: story-enemy-damage-pop-reduced;
+  animation-duration: 260ms;
+}
+
+@keyframes story-enemy-damage-pop {
+  0% { opacity: 0; filter: blur(4px) drop-shadow(0 0 0 transparent); transform: translate3d(var(--story-damage-x), 18px, 0) scale(0.42) rotate(-4deg); }
+  16% { opacity: 1; filter: blur(0) drop-shadow(0 0 14px color-mix(in srgb, var(--story-damage-accent) 76%, transparent)); transform: translate3d(var(--story-damage-x), -3px, 0) scale(1.26) rotate(2deg); }
+  38% { opacity: 1; transform: translate3d(var(--story-damage-x), -14px, 0) scale(1) rotate(0); }
+  76% { opacity: 1; filter: blur(0) drop-shadow(0 0 9px color-mix(in srgb, var(--story-damage-accent) 52%, transparent)); }
+  100% { opacity: 0; filter: blur(2px) drop-shadow(0 0 2px transparent); transform: translate3d(var(--story-damage-end-x), -62px, 0) scale(0.9) rotate(2deg); }
+}
+
+@keyframes story-enemy-damage-pop-reduced {
+  0% { opacity: 0; filter: blur(4px); transform: translate3d(var(--story-damage-x), -16px, 0) scale(0.88); }
+  35% { opacity: 1; filter: blur(0); transform: translate3d(var(--story-damage-x), -16px, 0) scale(1); }
+  100% { opacity: 0; filter: blur(0); transform: translate3d(var(--story-damage-x), -18px, 0) scale(1); }
+}
+
 .story-adventure-hud {
   position: absolute;
   top: max(118px, calc(env(safe-area-inset-top) + 108px));
@@ -2325,7 +2409,8 @@ body {
 
   .story-destination-sign.is-assigned,
   .story-door-transition,
-  .story-quick-match {
+  .story-quick-match,
+  .story-enemy-damage {
     animation: none;
     transition-duration: 1ms;
   }
