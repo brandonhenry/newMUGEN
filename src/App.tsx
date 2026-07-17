@@ -5750,7 +5750,7 @@ export default function App() {
               profile={storyProfile}
               onlineProfile={onlineProfile}
               reducedMotion={settings.display.reducedMotion}
-              peekInputs={peekInputs}
+              readInputs={readInputsForStep}
               setVirtualAction={setVirtualAction}
               onDestination={launchStoryHubDestination}
               onOnlineSpar={launchStoryHubSpar}

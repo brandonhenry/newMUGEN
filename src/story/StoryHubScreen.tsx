@@ -477,11 +477,11 @@ function TouchButton({ label, action, setVirtualAction, className, children }: {
   >{children}</button>;
 }
 
-export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, peekInputs, setVirtualAction, onDestination, onOnlineSpar, onExit }: {
+export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, readInputs, setVirtualAction, onDestination, onOnlineSpar, onExit }: {
   profile: StoryProfileV4;
   onlineProfile?: OnlinePlayerProfile | null;
   reducedMotion: boolean;
-  peekInputs: () => [InputFrame, InputFrame];
+  readInputs: () => [InputFrame, InputFrame];
   setVirtualAction: SetVirtualAction;
   onDestination: (destination: HubDestination) => void;
   onOnlineSpar: (opponent: StoryHubPresence) => void;
@@ -516,7 +516,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const pauseGuardUntilRef = useRef(0);
   const pauseKeyHeldRef = useRef(false);
   const playerStateRef = useRef<StoryHubPlayerState>({ x: KORE_CENTRAL_HUB.spawn[0], y: KORE_CENTRAL_HUB.spawn[1], pose: 'idle', facing: 1, worldId: 'central' });
-  const readInput = useCallback(() => peekInputs()[0], [peekInputs]);
+  const readInput = useCallback(() => readInputs()[0], [readInputs]);
   const handleHubReady = useCallback(() => setHubReady(true), []);
   const handlePlayerState = useCallback((state: StoryHubPlayerState) => {
     const worldState = { ...state, worldId: activeWorldId };

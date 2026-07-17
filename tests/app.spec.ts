@@ -121,7 +121,7 @@ test('Play creates a story avatar and enters K.O.R.E. Central', async ({ page })
   await expect(hub).toBeVisible();
 });
 
-test('saved story profiles skip creation and hub Arcade returns to the hub', async ({ page }) => {
+test('saved story profiles enter Arcade World, retain jump controls, and launch a cabinet', async ({ page }) => {
   await page.addInitScript(() => {
     window.localStorage.setItem('kore.story.profile.v4', JSON.stringify({
       version: 4,
@@ -147,6 +147,23 @@ test('saved story profiles skip creation and hub Arcade returns to the hub', asy
   await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 2_000 }).toBeGreaterThan(5.8);
   await expect(hub).toHaveAttribute('data-nearby-portal', 'arcade-gate', { timeout: 3_000 });
   await page.getByRole('button', { name: 'Enter', exact: true }).click();
+  await expect(page.getByTestId('story-door-transition')).toBeVisible();
+  await expect(hub).toHaveAttribute('data-world', 'arcade', { timeout: 4_000 });
+  await expect(page.getByTestId('story-door-transition')).toBeHidden({ timeout: 4_000 });
+  await page.waitForTimeout(350);
+  await expect(hub).toHaveAttribute('data-world', 'arcade');
+
+  const arcadeGroundY = Number(await hub.getAttribute('data-player-y'));
+  await page.keyboard.press('Space');
+  await expect.poll(async () => Number(await hub.getAttribute('data-player-y')), { timeout: 1_500 }).toBeGreaterThan(arcadeGroundY + 0.5);
+  await expect(hub).toHaveAttribute('data-player-pose', 'jump');
+  await expect.poll(async () => Number(await hub.getAttribute('data-player-y')), { timeout: 2_500 }).toBeLessThan(arcadeGroundY + 0.2);
+
+  await page.keyboard.down('ArrowRight');
+  await page.waitForTimeout(350);
+  await page.keyboard.up('ArrowRight');
+  await expect(hub).toHaveAttribute('data-nearby-portal', 'arcade-cabinet-1', { timeout: 3_000 });
+  await page.keyboard.press('Enter');
   await expect(page.locator('.select-screen')).toBeVisible({ timeout: 8_000 });
   await page.getByRole('button', { name: 'Back', exact: true }).click();
   await expect(hub).toBeVisible({ timeout: 8_000 });
