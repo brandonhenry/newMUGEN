@@ -35,7 +35,9 @@ function world(id: Exclude<StoryModeWorldId, 'central'>, name: string, subtitle:
     id: `kore-${id}-world`,
     name,
     subtitle,
-    spawn: [-16.2, 0.82],
+    // Arrive close enough to see the return door, but outside its interaction
+    // sensor so a held travel input can never bounce the player back out.
+    spawn: [-14.6, 0.82],
     bounds: { minX: -20, maxX: 20, floorY: 0 },
     platforms: [ground],
     portals: [

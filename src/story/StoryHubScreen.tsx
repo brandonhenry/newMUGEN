@@ -316,7 +316,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, playerPosition, rea
     // A confirm used to enter the hub can still be held on its first frames. Wait
     // for a clean release before accepting action edges so it cannot trigger the
     // portal beside the spawn or lock the player in a dialog.
-    if (!actionInputArmed.current) {
+    if (!actionInputArmed.current && !disabled) {
       if (!jumpPressed && !interactPressed && !attackPressed && !backPressed && !pausePressed) releasedInputFrames.current += 1;
       else releasedInputFrames.current = 0;
       if (releasedInputFrames.current >= 2) actionInputArmed.current = true;
