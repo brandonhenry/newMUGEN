@@ -2,6 +2,7 @@ import { getBlobStore } from './_blob-store.mjs';
 
 export const STORY_HUB_STORE_NAME = 'kore-story-hub-presence';
 export const STORY_HUB_PRESENCE_TTL_MS = 8_000;
+export const STORY_HUB_CHALLENGE_TIMEOUT_MS = 30_000;
 const BODY_PRESETS = new Set(['compact', 'standard', 'tall']);
 const BODY_TONES = new Set(['blue', 'dark', 'gray', 'green', 'light', 'pale', 'red', 'tan', 'white', 'yellow']);
 const LINEAGES = new Set(['human', 'sylvan', 'emberkin', 'synth']);
@@ -32,6 +33,36 @@ function numberInRange(value, min, max, fallback) {
   return Number.isFinite(number) ? Math.max(min, Math.min(max, number)) : fallback;
 }
 
+const CHALLENGE_STATUSES = new Set(['pending', 'accepted', 'declined', 'revoked', 'expired']);
+
+export function normalizeStoryHubChallenge(value, now = Date.now()) {
+  if (!value || typeof value !== 'object') return null;
+  const id = cleanHubId(value.id, 120);
+  const challengerSessionId = cleanHubId(value.challengerSessionId, 120);
+  const targetSessionId = cleanHubId(value.targetSessionId, 120);
+  if (!id || !challengerSessionId || !targetSessionId || challengerSessionId === targetSessionId) return null;
+  const createdAt = Math.max(0, Math.round(Number(value.createdAt) || now));
+  const updatedAt = Math.max(createdAt, Math.round(Number(value.updatedAt) || createdAt));
+  const expiresAt = Math.min(
+    createdAt + STORY_HUB_CHALLENGE_TIMEOUT_MS,
+    Math.max(createdAt, Math.round(Number(value.expiresAt) || createdAt + STORY_HUB_CHALLENGE_TIMEOUT_MS))
+  );
+  const requestedStatus = CHALLENGE_STATUSES.has(value.status) ? value.status : 'pending';
+  return {
+    id,
+    challengerSessionId,
+    challengerPlayerId: cleanHubId(value.challengerPlayerId, 96) || `story-${challengerSessionId}`,
+    challengerDisplayName: cleanName(value.challengerDisplayName),
+    targetSessionId,
+    targetPlayerId: cleanHubId(value.targetPlayerId, 96) || `story-${targetSessionId}`,
+    targetDisplayName: cleanName(value.targetDisplayName),
+    status: requestedStatus === 'pending' && expiresAt <= now ? 'expired' : requestedStatus,
+    createdAt,
+    updatedAt,
+    expiresAt
+  };
+}
+
 function cleanAvatar(value, displayName) {
   const avatar = value && typeof value === 'object' ? value : {};
   return {
@@ -52,6 +83,7 @@ export function normalizeStoryHubPresence(value, now = Date.now()) {
   const sessionId = cleanHubId(value?.sessionId);
   if (!sessionId) return null;
   const displayName = cleanName(value?.displayName);
+  const challenge = normalizeStoryHubChallenge(value?.challenge, now);
   return {
     sessionId,
     playerId: cleanHubId(value?.playerId, 96) || `story-${sessionId}`,
@@ -61,7 +93,8 @@ export function normalizeStoryHubPresence(value, now = Date.now()) {
     y: numberInRange(value?.y, 0.82, 12, 0.82),
     pose: value?.pose === 'walk' || value?.pose === 'sprint' || value?.pose === 'jump' || value?.pose === 'attack' ? value.pose : 'idle',
     facing: value?.facing === -1 ? -1 : 1,
-    updatedAt: now
+    updatedAt: now,
+    ...(challenge ? { challenge } : {})
   };
 }
 

@@ -1,20 +1,23 @@
 import { Html, OrthographicCamera, useTexture } from '@react-three/drei';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { CuboidCollider, Physics, RigidBody, type RapierRigidBody } from '@react-three/rapier';
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, BookOpen, ContactRound, DoorOpen, Dumbbell, Gamepad2, Gauge, Globe2, Keyboard, LockKeyhole, LogOut, Map, Palette, Pause, Pencil, Play, Settings, Swords, Trophy, UserRound, UsersRound, Wifi, WifiOff, X, type LucideIcon } from 'lucide-react';
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, BarChart3, BookOpen, CheckCircle2, Clock3, ContactRound, DoorOpen, Dumbbell, Gamepad2, Gauge, Globe2, Handshake, History, Keyboard, LockKeyhole, LogOut, Map, Palette, Pause, Pencil, Play, RotateCcw, Settings, Swords, Trophy, UserPlus, UserRound, UsersRound, Wifi, WifiOff, X, XCircle, type LucideIcon } from 'lucide-react';
 import { Suspense, type CSSProperties, type MutableRefObject, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import type { OnlinePlayerProfile } from '../lib/online/leaderboard';
+import { addFriendEntry, isFriend, readMatchHistory } from '../lib/socialHistory';
 import type { InputFrame } from '../types';
-import { connectStoryHubMultiplayer, readStoryHubOnlinePreference, writeStoryHubOnlinePreference, type StoryHubMultiplayerSession } from './hubMultiplayer';
+import { connectStoryHubMultiplayer, readOrCreateStoryHubGuestIdentity, readStoryHubOnlinePreference, STORY_HUB_CHALLENGE_TIMEOUT_MS, writeStoryHubOnlinePreference, type StoryHubMultiplayerSession } from './hubMultiplayer';
 import { KORE_CENTRAL_HUB } from './hubData';
 import { StoryAvatarRig, type StoryAvatarPose } from './StoryAvatarRig';
-import type { HubDestination, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryPlatformDefinition, StoryPortalDefinition, StoryProfileV4 } from './types';
+import type { HubDestination, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryPlatformDefinition, StoryPortalDefinition, StoryProfileV4 } from './types';
 
 type StoryHubInput = Pick<InputFrame, 'left' | 'right' | 'down' | 'up' | 'jump' | 'confirm' | 'jab' | 'kick' | 'heavy' | 'special' | 'block' | 'back' | 'pause'>;
 type SetVirtualAction = (player: 1 | 2, action: keyof InputFrame, pressed: boolean) => void;
 
 const CITY_ASSET_ROOT = '/story/hub/warped-city-2';
+const PORTAL_ASSET_ROOT = '/story/hub/warped-city-portals';
+const AVATAR_GROUNDING_OFFSET_Y = -0.5;
 
 const DESTINATION_ICONS: Record<HubDestination, LucideIcon> = {
   story: BookOpen,
@@ -28,6 +31,20 @@ const DESTINATION_ICONS: Record<HubDestination, LucideIcon> = {
   avatarStudio: Palette,
   options: Settings,
   exit: LogOut
+};
+
+const DESTINATION_STOREFRONTS: Record<HubDestination, string> = {
+  story: 'story.png',
+  friends: 'friends.png',
+  online: 'online.png',
+  arcade: 'arcade.png',
+  versus: 'versus.png',
+  training: 'training.png',
+  tournament: 'tournament.png',
+  characters: 'characters.png',
+  avatarStudio: 'avatar-studio.png',
+  options: 'options.png',
+  exit: 'exit.png'
 };
 
 function configurePixelTexture(texture: THREE.Texture, repeatX = 1) {
@@ -122,13 +139,14 @@ function PlatformVisual({ platform }: { platform: StoryPlatformDefinition }) {
 }
 
 function PortalVisual({ portal, nearby }: { portal: StoryPortalDefinition; nearby: boolean }) {
-  const screen = useTexture(`${CITY_ASSET_ROOT}/banner-screen.png`);
-  useMemo(() => configurePixelTexture(screen), [screen]);
+  const storefront = useTexture(`${PORTAL_ASSET_ROOT}/${DESTINATION_STOREFRONTS[portal.destination]}`);
+  useMemo(() => configurePixelTexture(storefront), [storefront]);
   const DestinationIcon = DESTINATION_ICONS[portal.destination];
+  const storefrontSize = portal.destination === 'story' ? 4.45 : portal.position[1] > 4 ? 3.15 : 3.55;
   return <group position={[portal.position[0], portal.position[1], 0]}>
     <mesh position={[0, 0, -0.25]} scale={nearby ? 1.06 : 1}>
-      <planeGeometry args={[portal.size[0] * 1.16, portal.size[1] * 1.08]} />
-      <meshBasicMaterial map={screen} transparent alphaTest={0.02} toneMapped={false} />
+      <planeGeometry args={[storefrontSize, storefrontSize]} />
+      <meshBasicMaterial map={storefront} transparent alphaTest={0.02} toneMapped={false} />
     </mesh>
     <Html center position={[0, portal.size[1] / 2 + 0.52, 0.7]} zIndexRange={[8, 0]} className="story-destination-sign-shell">
       <div data-testid={`story-destination-${portal.id}`} className={`story-destination-sign ${nearby ? 'is-nearby' : ''} ${portal.locked ? 'is-locked' : ''}`} style={{ '--story-destination-accent': portal.accent } as CSSProperties}>
@@ -158,7 +176,13 @@ function HubCamera({ playerPosition, bounds }: { playerPosition: MutableRefObjec
   return null;
 }
 
-function RemoteStoryPlayer({ presence, reducedMotion, lane }: { presence: StoryHubPresence; reducedMotion: boolean; lane: number }) {
+function RemoteStoryPlayer({ presence, reducedMotion, lane, selected, onSelect }: {
+  presence: StoryHubPresence;
+  reducedMotion: boolean;
+  lane: number;
+  selected: boolean;
+  onSelect: (presence: StoryHubPresence) => void;
+}) {
   const groupRef = useRef<THREE.Group>(null);
   const target = useMemo(() => new THREE.Vector3(presence.x, presence.y, 0.35 + lane * 0.025), [lane, presence.x, presence.y]);
   useFrame((_, delta) => {
@@ -166,14 +190,28 @@ function RemoteStoryPlayer({ presence, reducedMotion, lane }: { presence: StoryH
     target.set(presence.x, presence.y, 0.35 + lane * 0.025);
     groupRef.current.position.lerp(target, 1 - Math.pow(0.008, delta));
   });
-  return <group ref={groupRef} position={[presence.x, presence.y, 0.35 + lane * 0.025]}>
-    <group position={[0, -0.25, 0]}>
+  return <group ref={groupRef} position={[presence.x, presence.y, 0.35 + lane * 0.025]} onClick={(event) => {
+    event.stopPropagation();
+    onSelect(presence);
+  }}>
+    <group position={[0, AVATAR_GROUNDING_OFFSET_Y, 0]}>
       <StoryAvatarRig avatar={presence.avatar} pose={presence.pose} facing={presence.facing} reducedMotion={reducedMotion} />
     </group>
     <mesh position={[0, 1.42, 0.1]} renderOrder={50}>
       <planeGeometry args={[0.74, 0.09]} />
-      <meshBasicMaterial color="#2ee6ff" transparent opacity={0.78} depthWrite={false} />
+      <meshBasicMaterial color={selected ? '#ffe071' : '#2ee6ff'} transparent opacity={selected ? 1 : 0.78} depthWrite={false} />
     </mesh>
+    <Html center position={[0, 1.75, 0.4]} zIndexRange={[12, 1]} className="story-remote-player-tag-shell">
+      <button
+        type="button"
+        data-testid={`story-hub-player-${presence.sessionId}`}
+        className={`story-remote-player-tag ${selected ? 'is-selected' : ''}`}
+        onClick={(event) => { event.stopPropagation(); onSelect(presence); }}
+      >
+        <strong>{presence.displayName}</strong>
+        <small>{selected ? 'Player menu open' : 'View player'}</small>
+      </button>
+    </Html>
   </group>;
 }
 
@@ -198,6 +236,7 @@ function StoryPlayerController({ hub, avatar, playerPosition, readInput, disable
   const [visualState, setVisualState] = useState<{ pose: StoryAvatarPose; facing: -1 | 1 }>({ pose: 'idle', facing: 1 });
   const groundedUntil = useRef(0);
   const groundedPlatform = useRef<string | null>('ground');
+  const jumpsUsed = useRef(0);
   const jumpBufferedUntil = useRef(0);
   const dropThroughUntil = useRef(0);
   const previousButtons = useRef({ jump: false, interact: false, attack: false, back: false, pause: false });
@@ -241,7 +280,15 @@ function StoryPlayerController({ hub, avatar, playerPosition, readInput, disable
     if (backEdge) onExit();
     if (pauseEdge) onPause();
     if (attackEdge) attackUntil.current = now + 0.66;
-    if (jumpEdge) jumpBufferedUntil.current = now + 0.12;
+    if (jumpEdge && groundedUntil.current < now && jumpsUsed.current < 2) {
+      velocityY.current = 11.4;
+      jumpsUsed.current = 2;
+      groundedPlatform.current = null;
+      groundedUntil.current = 0;
+      jumpBufferedUntil.current = 0;
+    } else if (jumpEdge) {
+      jumpBufferedUntil.current = now + 0.12;
+    }
     if (jumpEdge && input.down && groundedPlatform.current && groundedPlatform.current !== 'ground') {
       dropThroughUntil.current = now + 0.28;
       groundedPlatform.current = null;
@@ -256,38 +303,50 @@ function StoryPlayerController({ hub, avatar, playerPosition, readInput, disable
     if (horizontal !== 0) facing.current = horizontal > 0 ? 1 : -1;
     if (jumpBufferedUntil.current >= now && groundedUntil.current >= now) {
       velocityY.current = 7.8;
+      jumpsUsed.current = 1;
       groundedPlatform.current = null;
       groundedUntil.current = 0;
       jumpBufferedUntil.current = 0;
     }
     velocityY.current += -22 * delta;
     const moveSpeed = sprinting ? 8.4 : 5.2;
-    const nextX = THREE.MathUtils.clamp(position.current.x + horizontal * moveSpeed * delta, hub.bounds.minX + 0.5, hub.bounds.maxX - 0.5);
+    let nextX = THREE.MathUtils.clamp(position.current.x + horizontal * moveSpeed * delta, hub.bounds.minX + 0.5, hub.bounds.maxX - 0.5);
     let nextY = position.current.y + velocityY.current * delta;
     let landing: StoryPlatformDefinition | null = null;
+    let landingX = nextX;
     if (velocityY.current <= 0) {
       for (const platform of hub.platforms) {
         if (platform.oneWay && now < dropThroughUntil.current) continue;
         const top = platform.position[1] + platform.size[1] / 2;
         const previousBottom = position.current.y - 0.82;
         const nextBottom = nextY - 0.82;
-        const withinX = nextX >= platform.position[0] - platform.size[0] / 2 - 0.34 && nextX <= platform.position[0] + platform.size[0] / 2 + 0.34;
-        if (withinX && previousBottom >= top - 0.12 && nextBottom <= top) {
-          if (!landing || top > landing.position[1] + landing.size[1] / 2) landing = platform;
+        const left = platform.position[0] - platform.size[0] / 2;
+        const right = platform.position[0] + platform.size[0] / 2;
+        const edgeCatch = platform.oneWay ? 0.72 : 0.46;
+        const withinX = nextX >= left - edgeCatch && nextX <= right + edgeCatch;
+        const crossesForgivingTop = previousBottom >= top - 0.42 && nextBottom <= top + 0.16;
+        if (withinX && crossesForgivingTop) {
+          if (!landing || top > landing.position[1] + landing.size[1] / 2) {
+            landing = platform;
+            landingX = THREE.MathUtils.clamp(nextX, left + 0.12, right - 0.12);
+          }
         }
       }
     }
     if (landing) {
+      nextX = landingX;
       nextY = landing.position[1] + landing.size[1] / 2 + 0.82;
       velocityY.current = 0;
       groundedUntil.current = now + 0.1;
       groundedPlatform.current = landing.id;
+      jumpsUsed.current = 0;
     }
     if (nextY < hub.bounds.floorY + 0.82) {
       nextY = hub.bounds.floorY + 0.82;
       velocityY.current = 0;
       groundedUntil.current = now + 0.1;
       groundedPlatform.current = 'ground';
+      jumpsUsed.current = 0;
     }
     position.current = { x: nextX, y: nextY };
     playerPosition.current.set(nextX, nextY, 0);
@@ -313,19 +372,21 @@ function StoryPlayerController({ hub, avatar, playerPosition, readInput, disable
 
   return <RigidBody ref={bodyRef} type="kinematicPosition" position={[hub.spawn[0], hub.spawn[1], 0]} colliders={false} enabledRotations={[false, false, false]}>
     <CuboidCollider args={[0.36, 0.8, 0.3]} />
-    <group position={[0, -0.38, 0]}>
+    <group position={[0, AVATAR_GROUNDING_OFFSET_Y, 0]}>
       <StoryAvatarRig avatar={avatar} pose={visualState.pose} facing={visualState.facing} reducedMotion={reducedMotion} />
     </group>
   </RigidBody>;
 }
 
-function HubCanvas({ profile, reducedMotion, readInput, disabled, nearbyPortal, remotePlayers, onNearbyPortal, onActivatePortal, onExit, onPause, onStateSample, onReady }: {
+function HubCanvas({ profile, reducedMotion, readInput, disabled, nearbyPortal, remotePlayers, selectedPlayerSessionId, onSelectPlayer, onNearbyPortal, onActivatePortal, onExit, onPause, onStateSample, onReady }: {
   profile: StoryProfileV4;
   reducedMotion: boolean;
   readInput: () => StoryHubInput;
   disabled: boolean;
   nearbyPortal: StoryPortalDefinition | null;
   remotePlayers: StoryHubPresence[];
+  selectedPlayerSessionId?: string;
+  onSelectPlayer: (presence: StoryHubPresence) => void;
   onNearbyPortal: (portal: StoryPortalDefinition | null) => void;
   onActivatePortal: (portal: StoryPortalDefinition) => void;
   onExit: () => void;
@@ -346,7 +407,7 @@ function HubCanvas({ profile, reducedMotion, readInput, disabled, nearbyPortal, 
           <PlatformVisual platform={platform} />
         </RigidBody>)}
         {hub.portals.map((portal) => <PortalVisual key={portal.id} portal={portal} nearby={nearbyPortal?.id === portal.id} />)}
-        {remotePlayers.map((presence, index) => <RemoteStoryPlayer key={presence.sessionId} presence={presence} reducedMotion={reducedMotion} lane={index % 5} />)}
+        {remotePlayers.map((presence, index) => <RemoteStoryPlayer key={presence.sessionId} presence={presence} reducedMotion={reducedMotion} lane={index % 5} selected={selectedPlayerSessionId === presence.sessionId} onSelect={onSelectPlayer} />)}
         <StoryPlayerController hub={hub} avatar={profile.avatar} playerPosition={playerPosition} readInput={readInput} disabled={disabled} reducedMotion={reducedMotion} onNearbyPortal={onNearbyPortal} onActivatePortal={onActivatePortal} onExit={onExit} onPause={onPause} onStateSample={onStateSample} onReady={onReady} />
       </Physics>
     </Suspense>
@@ -366,13 +427,14 @@ function TouchButton({ label, action, setVirtualAction, className, children }: {
   >{children}</button>;
 }
 
-export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, peekInputs, setVirtualAction, onDestination, onExit }: {
+export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, peekInputs, setVirtualAction, onDestination, onOnlineSpar, onExit }: {
   profile: StoryProfileV4;
   onlineProfile?: OnlinePlayerProfile | null;
   reducedMotion: boolean;
   peekInputs: () => [InputFrame, InputFrame];
   setVirtualAction: SetVirtualAction;
   onDestination: (destination: HubDestination) => void;
+  onOnlineSpar: (opponent: StoryHubPresence) => void;
   onExit: () => void;
 }) {
   const [nearbyPortal, setNearbyPortal] = useState<StoryPortalDefinition | null>(null);
@@ -380,12 +442,23 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const [pauseOpen, setPauseOpen] = useState(false);
   const [controlsOpen, setControlsOpen] = useState(false);
   const [playerX, setPlayerX] = useState(KORE_CENTRAL_HUB.spawn[0]);
+  const [playerY, setPlayerY] = useState(KORE_CENTRAL_HUB.spawn[1]);
   const [playerPose, setPlayerPose] = useState<StoryAvatarPose>('idle');
   const [hubReady, setHubReady] = useState(false);
   const [onlineEnabled, setOnlineEnabled] = useState(readStoryHubOnlinePreference);
   const [connectionStatus, setConnectionStatus] = useState<StoryHubConnectionStatus>(onlineEnabled ? 'connecting' : 'offline');
   const [remotePlayers, setRemotePlayers] = useState<StoryHubPresence[]>([]);
+  const [selectedPlayer, setSelectedPlayer] = useState<StoryHubPresence | null>(null);
+  const [playerPanelView, setPlayerPanelView] = useState<'actions' | 'stats' | 'history'>('actions');
+  const [playerActionMessage, setPlayerActionMessage] = useState('');
+  const [challenges, setChallenges] = useState<StoryHubChallenge[]>([]);
+  const [challengeNotice, setChallengeNotice] = useState<{ id: string; text: string } | null>(null);
+  const [challengeClock, setChallengeClock] = useState(Date.now());
+  const [localSessionId, setLocalSessionId] = useState('');
+  const [socialRevision, setSocialRevision] = useState(0);
   const multiplayerSessionRef = useRef<StoryHubMultiplayerSession | null>(null);
+  const launchedChallengeIdsRef = useRef(new Set<string>());
+  const noticedChallengeIdsRef = useRef(new Set<string>());
   const pauseGuardUntilRef = useRef(0);
   const pauseKeyHeldRef = useRef(false);
   const playerStateRef = useRef<StoryHubPlayerState>({ x: KORE_CENTRAL_HUB.spawn[0], y: KORE_CENTRAL_HUB.spawn[1], pose: 'idle', facing: 1 });
@@ -394,6 +467,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const handlePlayerState = useCallback((state: StoryHubPlayerState) => {
     playerStateRef.current = state;
     setPlayerX(state.x);
+    setPlayerY(state.y);
     setPlayerPose(state.pose);
     multiplayerSessionRef.current?.update(state);
   }, []);
@@ -444,6 +518,8 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     multiplayerSessionRef.current?.close();
     multiplayerSessionRef.current = null;
     setRemotePlayers([]);
+    setChallenges([]);
+    setLocalSessionId('');
     if (!onlineEnabled) {
       setConnectionStatus('offline');
       return undefined;
@@ -453,14 +529,101 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       onlineProfile,
       initialState: playerStateRef.current,
       onPlayers: setRemotePlayers,
+      onChallenges: setChallenges,
       onStatus: setConnectionStatus
     });
     multiplayerSessionRef.current = session;
+    setLocalSessionId(session.sessionId);
     return () => {
       session.close();
       if (multiplayerSessionRef.current === session) multiplayerSessionRef.current = null;
     };
   }, [onlineEnabled, onlineProfile, profile]);
+
+  useEffect(() => {
+    if (!selectedPlayer) return;
+    const current = remotePlayers.find((presence) => presence.sessionId === selectedPlayer.sessionId);
+    if (current) setSelectedPlayer(current);
+    else setSelectedPlayer(null);
+  }, [remotePlayers, selectedPlayer?.sessionId]);
+
+  const socialProfile = useMemo<OnlinePlayerProfile>(() => onlineProfile ?? readOrCreateStoryHubGuestIdentity(), [onlineProfile]);
+  const selectedHistory = useMemo(() => selectedPlayer
+    ? readMatchHistory(socialProfile).filter((entry) => entry.opponent.playerId === selectedPlayer.playerId || entry.opponent.displayName === selectedPlayer.displayName)
+    : [], [selectedPlayer, socialProfile, socialRevision]);
+  const selectedStats = useMemo(() => ({
+    matches: selectedHistory.length,
+    wins: selectedHistory.filter((entry) => entry.result === 'win').length,
+    losses: selectedHistory.filter((entry) => entry.result === 'loss').length,
+    draws: selectedHistory.filter((entry) => entry.result === 'draw').length
+  }), [selectedHistory]);
+  const selectedIsFriend = selectedPlayer ? isFriend(socialProfile, selectedPlayer.playerId) : false;
+  const outgoingChallenge = challenges.find((challenge) => challenge.challengerSessionId === localSessionId && challenge.status === 'pending' && challenge.expiresAt > challengeClock) ?? null;
+  const incomingChallenge = challenges.find((challenge) => challenge.targetSessionId === localSessionId && challenge.status === 'pending' && challenge.expiresAt > challengeClock) ?? null;
+
+  useEffect(() => {
+    if (!outgoingChallenge && !incomingChallenge) return undefined;
+    const timer = window.setInterval(() => setChallengeClock(Date.now()), 250);
+    return () => window.clearInterval(timer);
+  }, [incomingChallenge?.id, outgoingChallenge?.id]);
+
+  useEffect(() => {
+    const accepted = challenges.find((challenge) => challenge.status === 'accepted'
+      && (challenge.challengerSessionId === localSessionId || challenge.targetSessionId === localSessionId)
+      && !launchedChallengeIdsRef.current.has(challenge.id));
+    if (!accepted || !localSessionId) return;
+    const opponentSessionId = accepted.challengerSessionId === localSessionId ? accepted.targetSessionId : accepted.challengerSessionId;
+    const opponent = remotePlayers.find((presence) => presence.sessionId === opponentSessionId);
+    if (!opponent) return;
+    launchedChallengeIdsRef.current.add(accepted.id);
+    onOnlineSpar(opponent);
+  }, [challenges, localSessionId, onOnlineSpar, remotePlayers]);
+
+  useEffect(() => {
+    const terminal = challenges.find((challenge) => challenge.status !== 'pending'
+      && challenge.status !== 'accepted'
+      && (challenge.challengerSessionId === localSessionId || challenge.targetSessionId === localSessionId)
+      && !noticedChallengeIdsRef.current.has(`${challenge.id}:${challenge.status}`));
+    if (!terminal || !localSessionId) return;
+    noticedChallengeIdsRef.current.add(`${terminal.id}:${terminal.status}`);
+    const opponentName = terminal.challengerSessionId === localSessionId ? terminal.targetDisplayName : terminal.challengerDisplayName;
+    const text = terminal.status === 'declined'
+      ? `${opponentName} declined the spar.`
+      : terminal.status === 'revoked'
+        ? `${opponentName} revoked the challenge.`
+        : `The challenge with ${opponentName} expired.`;
+    setChallengeNotice({ id: `${terminal.id}:${terminal.status}`, text });
+    const timer = window.setTimeout(() => setChallengeNotice(null), 5_000);
+    return () => window.clearTimeout(timer);
+  }, [challenges, localSessionId]);
+
+  const selectRemotePlayer = useCallback((presence: StoryHubPresence) => {
+    setSelectedPlayer(presence);
+    setPlayerPanelView('actions');
+    setPlayerActionMessage('');
+  }, []);
+  const addSelectedFriend = useCallback(() => {
+    if (!selectedPlayer) return;
+    addFriendEntry(socialProfile, { playerId: selectedPlayer.playerId, displayName: selectedPlayer.displayName });
+    setSocialRevision((current) => current + 1);
+    setPlayerActionMessage(`${selectedPlayer.displayName} added to Friends.`);
+  }, [selectedPlayer, socialProfile]);
+  const challengeSelectedPlayer = useCallback(() => {
+    if (!selectedPlayer || !onlineEnabled || outgoingChallenge || incomingChallenge) return;
+    multiplayerSessionRef.current?.challenge(selectedPlayer);
+    setChallengeClock(Date.now());
+    setPlayerActionMessage(`Challenge sent to ${selectedPlayer.displayName}.`);
+  }, [incomingChallenge, onlineEnabled, outgoingChallenge, selectedPlayer]);
+  const respondToIncomingChallenge = useCallback((response: 'accepted' | 'declined') => {
+    if (!incomingChallenge) return;
+    multiplayerSessionRef.current?.respondToChallenge(incomingChallenge, response);
+    setChallengeClock(Date.now());
+  }, [incomingChallenge]);
+  const revokeOutgoingChallenge = useCallback(() => {
+    if (!outgoingChallenge) return;
+    multiplayerSessionRef.current?.revokeChallenge(outgoingChallenge);
+    setChallengeClock(Date.now());
+  }, [outgoingChallenge]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -469,6 +632,10 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       pauseKeyHeldRef.current = true;
       event.preventDefault();
       event.stopImmediatePropagation();
+      if (selectedPlayer) {
+        setSelectedPlayer(null);
+        return;
+      }
       if (controlsOpen) {
         setControlsOpen(false);
         return;
@@ -485,7 +652,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       window.removeEventListener('keydown', onKeyDown, true);
       window.removeEventListener('keyup', onKeyUp, true);
     };
-  }, [closePause, controlsOpen, openPause, pauseOpen, storyLockedOpen]);
+  }, [closePause, controlsOpen, openPause, pauseOpen, selectedPlayer, storyLockedOpen]);
 
   useEffect(() => {
     if (!storyLockedOpen) return undefined;
@@ -500,10 +667,12 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
 
   const playerCount = onlineEnabled ? remotePlayers.length + 1 : 1;
   const statusLabel = connectionStatus === 'online' ? 'Live' : connectionStatus === 'local' ? 'Local Link' : connectionStatus === 'reconnecting' ? 'Reconnecting' : connectionStatus === 'connecting' ? 'Connecting' : 'Offline';
+  const incomingSeconds = incomingChallenge ? Math.max(0, Math.ceil((incomingChallenge.expiresAt - challengeClock) / 1_000)) : 0;
+  const outgoingSeconds = outgoingChallenge ? Math.max(0, Math.ceil((outgoingChallenge.expiresAt - challengeClock) / 1_000)) : 0;
 
-  return <div className="story-hub-screen" data-testid="story-hub-screen" data-hub-ready={hubReady ? 'true' : 'false'} data-controls-open={controlsOpen ? 'true' : 'false'} data-player-x={playerX.toFixed(2)} data-player-pose={playerPose} data-nearby-portal={nearbyPortal?.id ?? ''} data-online={onlineEnabled ? 'true' : 'false'} data-connection-status={connectionStatus} data-player-count={playerCount}>
+  return <div className="story-hub-screen" data-testid="story-hub-screen" data-hub-ready={hubReady ? 'true' : 'false'} data-controls-open={controlsOpen ? 'true' : 'false'} data-player-x={playerX.toFixed(2)} data-player-y={playerY.toFixed(2)} data-player-pose={playerPose} data-nearby-portal={nearbyPortal?.id ?? ''} data-online={onlineEnabled ? 'true' : 'false'} data-connection-status={connectionStatus} data-player-count={playerCount}>
     <div className="story-hub-canvas-shell">
-      <HubCanvas profile={profile} reducedMotion={reducedMotion} readInput={readInput} disabled={storyLockedOpen || pauseOpen || controlsOpen} nearbyPortal={nearbyPortal} remotePlayers={remotePlayers} onNearbyPortal={setNearbyPortal} onActivatePortal={activatePortal} onExit={onExit} onPause={openPause} onStateSample={handlePlayerState} onReady={handleHubReady} />
+      <HubCanvas profile={profile} reducedMotion={reducedMotion} readInput={readInput} disabled={storyLockedOpen || pauseOpen || controlsOpen || Boolean(selectedPlayer) || Boolean(incomingChallenge)} nearbyPortal={nearbyPortal} remotePlayers={remotePlayers} selectedPlayerSessionId={selectedPlayer?.sessionId} onSelectPlayer={selectRemotePlayer} onNearbyPortal={setNearbyPortal} onActivatePortal={activatePortal} onExit={onExit} onPause={openPause} onStateSample={handlePlayerState} onReady={handleHubReady} />
     </div>
 
     <header className="story-hub-header story-enter-1">
@@ -533,6 +702,81 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       </div>
     </header>
 
+    {selectedPlayer && <section className="story-player-panel" role="dialog" aria-modal="false" aria-labelledby="story-player-panel-title" data-testid="story-player-panel">
+      <header>
+        <div className="story-player-panel-status" aria-hidden="true"><span /></div>
+        <div>
+          <small>Central Citizen</small>
+          <h2 id="story-player-panel-title">{selectedPlayer.displayName}</h2>
+          <p>{selectedPlayer.playerId.slice(0, 24)}</p>
+        </div>
+        <button type="button" className="story-player-panel-close" aria-label="Close player menu" onClick={() => setSelectedPlayer(null)}><X size={19} /></button>
+      </header>
+
+      <nav className="story-player-panel-tabs" aria-label="Player information">
+        <button type="button" className={playerPanelView === 'actions' ? 'is-active' : ''} onClick={() => setPlayerPanelView('actions')}><Handshake size={17} /> Actions</button>
+        <button type="button" className={playerPanelView === 'stats' ? 'is-active' : ''} onClick={() => setPlayerPanelView('stats')}><BarChart3 size={17} /> Stats</button>
+        <button type="button" className={playerPanelView === 'history' ? 'is-active' : ''} onClick={() => setPlayerPanelView('history')}><History size={17} /> History</button>
+      </nav>
+
+      {playerPanelView === 'actions' && <div className="story-player-actions">
+        <button type="button" className="is-spar" disabled={!onlineEnabled || Boolean(outgoingChallenge || incomingChallenge)} onClick={challengeSelectedPlayer}>
+          <Swords size={20} /><span><strong>Online Spar</strong><small>{onlineEnabled ? 'Send a 30-second challenge' : 'Go online from Pause first'}</small></span>
+        </button>
+        <button type="button" disabled={selectedIsFriend} onClick={addSelectedFriend}>
+          {selectedIsFriend ? <CheckCircle2 size={20} /> : <UserPlus size={20} />}<span><strong>{selectedIsFriend ? 'Friend Added' : 'Add Friend'}</strong><small>{selectedIsFriend ? 'Already in your friend list' : 'Save this player locally'}</small></span>
+        </button>
+        <button type="button" onClick={() => setPlayerPanelView('stats')}>
+          <BarChart3 size={20} /><span><strong>View Stats</strong><small>See your head-to-head record</small></span>
+        </button>
+        <button type="button" onClick={() => setPlayerPanelView('history')}>
+          <History size={20} /><span><strong>Match History</strong><small>Review recent fights together</small></span>
+        </button>
+      </div>}
+
+      {playerPanelView === 'stats' && <div className="story-player-stats" data-testid="story-player-stats">
+        <div><strong>{selectedStats.matches}</strong><span>Matches</span></div>
+        <div><strong>{selectedStats.wins}</strong><span>Wins</span></div>
+        <div><strong>{selectedStats.losses}</strong><span>Losses</span></div>
+        <div><strong>{selectedStats.draws}</strong><span>Draws</span></div>
+        <p>{selectedStats.matches ? 'Head-to-head results stored on this device.' : 'No shared matches recorded on this device yet.'}</p>
+      </div>}
+
+      {playerPanelView === 'history' && <div className="story-player-history" data-testid="story-player-history">
+        {selectedHistory.length === 0 && <div className="story-player-empty"><Clock3 size={24} /><strong>No matches yet</strong><span>Challenge this player to start your history.</span></div>}
+        {selectedHistory.slice(0, 6).map((entry) => <article key={entry.id} className={`is-${entry.result}`}>
+          <span>{entry.result}</span>
+          <div><strong>{entry.score[0]}–{entry.score[1]}</strong><small>{entry.mode.replace('trainingOnline', 'online spar')} · {entry.opponent.characterId}</small></div>
+          <time dateTime={new Date(entry.createdAt).toISOString()}>{new Date(entry.createdAt).toLocaleDateString()}</time>
+        </article>)}
+      </div>}
+
+      {playerActionMessage && <p className="story-player-action-message" role="status">{playerActionMessage}</p>}
+    </section>}
+
+    {incomingChallenge && <aside className="story-challenge-card is-incoming" role="dialog" aria-modal="false" aria-labelledby="story-incoming-challenge-title" data-testid="story-incoming-challenge">
+      <div className="story-challenge-timer"><Clock3 size={17} /><strong>{incomingSeconds}s</strong></div>
+      <small>Online Spar Challenge</small>
+      <h2 id="story-incoming-challenge-title">{incomingChallenge.challengerDisplayName}</h2>
+      <p>wants to fight you in K.O.R.E. Online.</p>
+      <div>
+        <button type="button" className="is-accept" autoFocus onClick={() => respondToIncomingChallenge('accepted')}><CheckCircle2 size={18} /> Accept</button>
+        <button type="button" onClick={() => respondToIncomingChallenge('declined')}><XCircle size={18} /> Decline</button>
+      </div>
+    </aside>}
+
+    {outgoingChallenge && <aside className="story-challenge-card is-outgoing" aria-live="polite" data-testid="story-outgoing-challenge">
+      <div className="story-challenge-timer"><Clock3 size={17} /><strong>{outgoingSeconds}s</strong></div>
+      <small>Challenge Sent</small>
+      <h2>{outgoingChallenge.targetDisplayName}</h2>
+      <p>Waiting for their answer. You can revoke at any time.</p>
+      <button type="button" className="story-challenge-revoke" onClick={revokeOutgoingChallenge}><RotateCcw size={17} /> Revoke Challenge</button>
+    </aside>}
+
+    {challengeNotice && <aside className="story-challenge-notice" role="status" data-testid="story-challenge-notice">
+      <XCircle size={18} /><span>{challengeNotice.text}</span><button type="button" aria-label="Dismiss challenge notice" onClick={() => setChallengeNotice(null)}><X size={16} /></button>
+    </aside>}
+
     {controlsOpen && <section id="story-hub-controls-panel" className="story-hub-controls-panel" role="dialog" aria-modal="false" aria-labelledby="story-hub-controls-title">
       <header>
         <span><Keyboard size={18} /> Navigation Guide</span>
@@ -542,7 +786,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       <div className="story-hub-controls-grid">
         <div><strong>Move</strong><kbd>← →</kbd><span>Left stick / D-pad</span></div>
         <div><strong>Run</strong><kbd>Shift</kbd><span>L1 / R1</span></div>
-        <div><strong>Jump</strong><kbd>Space</kbd><span>South button</span></div>
+        <div><strong>Double Jump</strong><kbd>Space ×2</kbd><span>South button ×2</span></div>
         <div><strong>Attack</strong><kbd>U / J / I</kbd><span>Face buttons</span></div>
         <div><strong>Interact</strong><kbd>K / Enter</kbd><span>Special button</span></div>
         <div><strong>Pause</strong><kbd>Esc</kbd><span>Start / Menu</span></div>
@@ -559,7 +803,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     </div>
 
     <div className="story-hub-control-hint story-enter-3" aria-hidden="true">
-      <span>Move</span><b>← →</b><span>Run</span><b>Shift</b><span>Jump</span><b>Space</b><span>Attack</span><b>U / J</b><span>Interact</span><b>K / Enter</b><span>Pause</span><b>Esc</b>
+      <span>Move</span><b>← →</b><span>Run</span><b>Shift</b><span>Double Jump</span><b>Space ×2</b><span>Attack</span><b>U / J</b><span>Interact</span><b>K / Enter</b><span>Pause</span><b>Esc</b>
     </div>
 
     <div className="story-touch-controls" aria-label="Story hub touch controls">
@@ -569,7 +813,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
         <TouchButton label="Move right" action="right" setVirtualAction={setVirtualAction}><ArrowRight /></TouchButton>
       </div>
       <div className="story-touch-actions">
-        <TouchButton label="Jump" action="jump" setVirtualAction={setVirtualAction}><ArrowUp /></TouchButton>
+        <TouchButton label="Jump or double jump" action="jump" setVirtualAction={setVirtualAction}><ArrowUp /></TouchButton>
         <TouchButton label="Run" action="block" className="is-run" setVirtualAction={setVirtualAction}><Gauge /></TouchButton>
         <TouchButton label="Attack" action="jab" className="is-attack" setVirtualAction={setVirtualAction}><Swords /></TouchButton>
         <TouchButton label="Interact" action="confirm" className="is-interact" setVirtualAction={setVirtualAction}><DoorOpen /></TouchButton>

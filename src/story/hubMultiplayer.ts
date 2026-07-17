@@ -2,6 +2,8 @@ import type { OnlinePlayerProfile } from '../lib/online/leaderboard';
 import { sanitizeStoryAvatar, sanitizeStoryName } from './avatarCatalog';
 import type {
   StoryHubConnectionStatus,
+  StoryHubChallenge,
+  StoryHubChallengeStatus,
   StoryHubPlayerState,
   StoryHubPresence,
   StoryHubPresenceResult,
@@ -15,6 +17,7 @@ export const STORY_HUB_ONLINE_PREFERENCE_KEY = 'kore.story.hub.online.v1';
 export const STORY_HUB_GUEST_IDENTITY_KEY = 'kore.story.hub.guest.v1';
 const HEARTBEAT_MS = 650;
 const LOCAL_PRESENCE_TTL_MS = 4_000;
+export const STORY_HUB_CHALLENGE_TIMEOUT_MS = 30_000;
 
 type HubChannelMessage =
   | { type: 'presence'; presence: StoryHubPresence }
@@ -22,7 +25,12 @@ type HubChannelMessage =
 
 export type StoryHubMultiplayerSession = {
   sessionId: string;
+  playerId: string;
+  displayName: string;
   update: (state: StoryHubPlayerState) => void;
+  challenge: (target: StoryHubPresence) => StoryHubChallenge;
+  respondToChallenge: (challenge: StoryHubChallenge, response: 'accepted' | 'declined') => void;
+  revokeChallenge: (challenge: StoryHubChallenge) => void;
   close: () => void;
 };
 
@@ -31,6 +39,7 @@ export type ConnectStoryHubMultiplayerOptions = {
   onlineProfile?: OnlinePlayerProfile | null;
   initialState: StoryHubPlayerState;
   onPlayers: (players: StoryHubPresence[]) => void;
+  onChallenges?: (challenges: StoryHubChallenge[]) => void;
   onStatus: (status: StoryHubConnectionStatus) => void;
 };
 
@@ -46,12 +55,42 @@ function finiteNumber(value: unknown, fallback = 0) {
   return Number.isFinite(number) ? number : fallback;
 }
 
+const CHALLENGE_STATUSES: readonly StoryHubChallengeStatus[] = ['pending', 'accepted', 'declined', 'revoked', 'expired'];
+
+export function sanitizeStoryHubChallenge(value: unknown, now = Date.now()): StoryHubChallenge | null {
+  if (!value || typeof value !== 'object') return null;
+  const record = value as Partial<StoryHubChallenge>;
+  const id = cleanId(record.id, 120);
+  const challengerSessionId = cleanId(record.challengerSessionId, 120);
+  const targetSessionId = cleanId(record.targetSessionId, 120);
+  if (!id || !challengerSessionId || !targetSessionId || challengerSessionId === targetSessionId) return null;
+  const createdAt = Math.max(0, Math.round(finiteNumber(record.createdAt, now)));
+  const updatedAt = Math.max(createdAt, Math.round(finiteNumber(record.updatedAt, createdAt)));
+  const expiresAt = Math.min(createdAt + STORY_HUB_CHALLENGE_TIMEOUT_MS, Math.max(createdAt, Math.round(finiteNumber(record.expiresAt, createdAt + STORY_HUB_CHALLENGE_TIMEOUT_MS))));
+  const requestedStatus = CHALLENGE_STATUSES.includes(record.status as StoryHubChallengeStatus) ? record.status as StoryHubChallengeStatus : 'pending';
+  const status = requestedStatus === 'pending' && expiresAt <= now ? 'expired' : requestedStatus;
+  return {
+    id,
+    challengerSessionId,
+    challengerPlayerId: cleanId(record.challengerPlayerId) || `story-${challengerSessionId}`,
+    challengerDisplayName: sanitizeStoryName(record.challengerDisplayName) || 'PLAYER',
+    targetSessionId,
+    targetPlayerId: cleanId(record.targetPlayerId) || `story-${targetSessionId}`,
+    targetDisplayName: sanitizeStoryName(record.targetDisplayName) || 'PLAYER',
+    status,
+    createdAt,
+    updatedAt,
+    expiresAt
+  };
+}
+
 export function sanitizeStoryHubPresence(value: unknown, now = Date.now()): StoryHubPresence | null {
   if (!value || typeof value !== 'object') return null;
   const record = value as Partial<StoryHubPresence>;
   const sessionId = cleanId(record.sessionId, 120);
   if (!sessionId) return null;
   const pose = record.pose === 'walk' || record.pose === 'sprint' || record.pose === 'jump' || record.pose === 'attack' ? record.pose : 'idle';
+  const challenge = sanitizeStoryHubChallenge(record.challenge, now);
   return {
     sessionId,
     playerId: cleanId(record.playerId) || `story-${sessionId}`,
@@ -61,7 +100,8 @@ export function sanitizeStoryHubPresence(value: unknown, now = Date.now()): Stor
     y: Math.max(0.82, Math.min(12, finiteNumber(record.y, 0.82))),
     pose,
     facing: record.facing === -1 ? -1 : 1,
-    updatedAt: Math.max(0, Math.round(finiteNumber(record.updatedAt, now)))
+    updatedAt: Math.max(0, Math.round(finiteNumber(record.updatedAt, now))),
+    ...(challenge ? { challenge } : {})
   };
 }
 
@@ -115,11 +155,13 @@ function isLocalHub() {
 export function connectStoryHubMultiplayer(options: ConnectStoryHubMultiplayerOptions): StoryHubMultiplayerSession {
   const sessionId = makeSessionId();
   const remotePlayers = new Map<string, StoryHubPresence>();
+  const challenges = new Map<string, StoryHubChallenge>();
   const guestIdentity = readOrCreateStoryHubGuestIdentity();
   const playerId = cleanId(options.onlineProfile?.playerId) || guestIdentity.playerId;
   const authoredName = sanitizeStoryName(options.profile.avatar.name);
   const displayName = sanitizeStoryName(options.onlineProfile?.displayName) || (authoredName !== 'PLAYER' ? authoredName : '') || guestIdentity.displayName;
   let currentState = options.initialState;
+  let currentChallenge: StoryHubChallenge | null = null;
   let stopped = false;
   let timer = 0;
   let lastStatus: StoryHubConnectionStatus | null = null;
@@ -136,18 +178,43 @@ export function connectStoryHubMultiplayer(options: ConnectStoryHubMultiplayerOp
     displayName,
     avatar: options.profile.avatar,
     ...currentState,
-    updatedAt: Date.now()
+    updatedAt: Date.now(),
+    ...(currentChallenge ? { challenge: currentChallenge } : {})
   });
+  const emitChallenges = () => {
+    const now = Date.now();
+    const active = [...challenges.values()].map((challenge) => challenge.status === 'pending' && challenge.expiresAt <= now
+      ? { ...challenge, status: 'expired' as const, updatedAt: Math.max(challenge.updatedAt, challenge.expiresAt) }
+      : challenge);
+    active.forEach((challenge) => challenges.set(challenge.id, challenge));
+    options.onChallenges?.(active.sort((a, b) => b.updatedAt - a.updatedAt));
+  };
+  const ingestChallenge = (value: StoryHubChallenge | undefined) => {
+    const challenge = sanitizeStoryHubChallenge(value);
+    if (!challenge) return;
+    const existing = challenges.get(challenge.id);
+    if (existing && existing.updatedAt > challenge.updatedAt) return;
+    challenges.set(challenge.id, challenge);
+    if (currentChallenge?.id === challenge.id && challenge.updatedAt >= currentChallenge.updatedAt) currentChallenge = challenge;
+  };
   const emitPlayers = () => {
     const cutoff = Date.now() - LOCAL_PRESENCE_TTL_MS;
     remotePlayers.forEach((presence, id) => {
       if (presence.updatedAt < cutoff) remotePlayers.delete(id);
     });
     options.onPlayers([...remotePlayers.values()].sort((a, b) => a.displayName.localeCompare(b.displayName)));
+    emitChallenges();
   };
   const ingest = (presence: StoryHubPresence) => {
     if (presence.sessionId === sessionId) return;
     remotePlayers.set(presence.sessionId, presence);
+    ingestChallenge(presence.challenge);
+  };
+  const publishLocalPresence = () => {
+    const presence = ownPresence();
+    ingestChallenge(presence.challenge);
+    channel?.postMessage({ type: 'presence', presence } satisfies HubChannelMessage);
+    emitChallenges();
   };
 
   if (channel) {
@@ -208,8 +275,46 @@ export function connectStoryHubMultiplayer(options: ConnectStoryHubMultiplayerOp
 
   return {
     sessionId,
+    playerId,
+    displayName,
     update(state) {
       currentState = state;
+    },
+    challenge(target) {
+      const now = Date.now();
+      const challenge: StoryHubChallenge = {
+        id: `spar-${sessionId}-${target.sessionId}-${now}`,
+        challengerSessionId: sessionId,
+        challengerPlayerId: playerId,
+        challengerDisplayName: displayName,
+        targetSessionId: target.sessionId,
+        targetPlayerId: target.playerId,
+        targetDisplayName: target.displayName,
+        status: 'pending',
+        createdAt: now,
+        updatedAt: now,
+        expiresAt: now + STORY_HUB_CHALLENGE_TIMEOUT_MS
+      };
+      currentChallenge = challenge;
+      challenges.set(challenge.id, challenge);
+      publishLocalPresence();
+      return challenge;
+    },
+    respondToChallenge(challenge, response) {
+      if (challenge.targetSessionId !== sessionId && challenge.targetPlayerId !== playerId) return;
+      const next = sanitizeStoryHubChallenge({ ...challenge, status: response, updatedAt: Date.now() });
+      if (!next) return;
+      currentChallenge = next;
+      challenges.set(next.id, next);
+      publishLocalPresence();
+    },
+    revokeChallenge(challenge) {
+      if (challenge.challengerSessionId !== sessionId && challenge.challengerPlayerId !== playerId) return;
+      const next = sanitizeStoryHubChallenge({ ...challenge, status: 'revoked', updatedAt: Date.now() });
+      if (!next) return;
+      currentChallenge = next;
+      challenges.set(next.id, next);
+      publishLocalPresence();
     },
     close() {
       window.removeEventListener('pagehide', close);

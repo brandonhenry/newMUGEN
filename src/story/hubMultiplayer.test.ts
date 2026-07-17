@@ -3,6 +3,7 @@ import { makeDefaultStoryAvatar } from './avatarCatalog';
 import {
   readOrCreateStoryHubGuestIdentity,
   readStoryHubOnlinePreference,
+  sanitizeStoryHubChallenge,
   sanitizeStoryHubPresence,
   sanitizeStoryHubPresenceResult,
   writeStoryHubOnlinePreference
@@ -57,5 +58,46 @@ describe('story hub multiplayer', () => {
       sessionId: 'runner',
       pose: 'sprint'
     })?.pose).toBe('sprint');
+  });
+
+  it('sanitizes challenges and expires pending requests after thirty seconds', () => {
+    const now = 10_000;
+    const challenge = sanitizeStoryHubChallenge({
+      id: 'spar!one',
+      challengerSessionId: 'session-one',
+      challengerPlayerId: 'player-one',
+      challengerDisplayName: 'Nova!*',
+      targetSessionId: 'session-two',
+      targetPlayerId: 'player-two',
+      targetDisplayName: 'Rival',
+      status: 'pending',
+      createdAt: now,
+      updatedAt: now,
+      expiresAt: now + 90_000
+    }, now);
+
+    expect(challenge).toMatchObject({
+      id: 'sparone',
+      challengerDisplayName: 'NOVA',
+      targetDisplayName: 'RIVAL',
+      status: 'pending',
+      expiresAt: now + 30_000
+    });
+    expect(sanitizeStoryHubChallenge(challenge, now + 30_001)?.status).toBe('expired');
+    expect(sanitizeStoryHubChallenge({ ...challenge, targetSessionId: 'session-one' }, now)).toBeNull();
+
+    const presence = sanitizeStoryHubPresence({
+      sessionId: 'session-one',
+      playerId: 'player-one',
+      displayName: 'Nova',
+      avatar: makeDefaultStoryAvatar(),
+      x: 0,
+      y: 1,
+      pose: 'idle',
+      facing: 1,
+      updatedAt: now,
+      challenge
+    }, now);
+    expect(presence?.challenge).toEqual(challenge);
   });
 });

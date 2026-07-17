@@ -226,7 +226,8 @@ import {
   submitArcadeRunScore
 } from './lib/arcadeRun';
 import { readStoryProfile, writeStoryProfile } from './story/profile';
-import { LEGACY_STORY_PROFILE_STORAGE_KEY, STORY_PROFILE_STORAGE_KEY, type HubDestination, type StoryProfileV4 } from './story/types';
+import { readOrCreateStoryHubGuestIdentity } from './story/hubMultiplayer';
+import { LEGACY_STORY_PROFILE_STORAGE_KEY, STORY_PROFILE_STORAGE_KEY, type HubDestination, type StoryHubPresence, type StoryProfileV4 } from './story/types';
 import {
   applyVoxelBodyScale,
   computeVoxelBodyNormalization,
@@ -5576,6 +5577,20 @@ export default function App() {
 	      setScreen('menu');
 	    }
 	  }, [captureAppAnalytics, effectiveUnlockedCharacterIds, onlineProfile, openFriendList, p1Id, p2Id, promptForUsername, resetArcadeRun, resetRandomSelections, roster]);
+	  const launchStoryHubSpar = useCallback((opponent: StoryHubPresence) => {
+	    const identity = onlineProfile ?? readOrCreateStoryHubGuestIdentity();
+	    if (!onlineProfile) saveOnlineProfile(identity, 'story_hub_spar');
+	    setNavigationHome('storyHub');
+	    resetRandomSelections();
+	    setSelectedTrainingMode('online');
+	    setMode('trainingOnline');
+	    captureAppAnalytics('navigation_clicked', {
+	      source: 'story_hub_challenge',
+	      destination: 'online_spar',
+	      opponent_player_id: opponent.playerId
+	    });
+	    setScreen('training');
+	  }, [captureAppAnalytics, onlineProfile, resetRandomSelections, saveOnlineProfile]);
 	  const finishArcadeRun = useCallback((run: ArcadeRunState) => {
 	    const previousBest = readLocalArcadeRunHighScore(onlineProfile, p1Id);
 	    const best = Math.max(previousBest, run.score);
@@ -5747,6 +5762,7 @@ export default function App() {
               peekInputs={peekInputs}
               setVirtualAction={setVirtualAction}
               onDestination={launchStoryHubDestination}
+              onOnlineSpar={launchStoryHubSpar}
               onExit={() => {
                 setNavigationHome('menu');
                 setScreen('menu');

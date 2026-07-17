@@ -117,12 +117,29 @@ export type StoryHubPlayerState = {
   facing: -1 | 1;
 };
 
+export type StoryHubChallengeStatus = 'pending' | 'accepted' | 'declined' | 'revoked' | 'expired';
+
+export type StoryHubChallenge = {
+  id: string;
+  challengerSessionId: string;
+  challengerPlayerId: string;
+  challengerDisplayName: string;
+  targetSessionId: string;
+  targetPlayerId: string;
+  targetDisplayName: string;
+  status: StoryHubChallengeStatus;
+  createdAt: number;
+  updatedAt: number;
+  expiresAt: number;
+};
+
 export type StoryHubPresence = StoryHubPlayerState & {
   sessionId: string;
   playerId: string;
   displayName: string;
   avatar: StoryAvatarDefinition;
   updatedAt: number;
+  challenge?: StoryHubChallenge;
 };
 
 export type StoryHubPresenceResult = {

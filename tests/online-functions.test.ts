@@ -34,12 +34,18 @@ describe('online Netlify function handlers', () => {
     const avatar = {
       name: 'NOVA', avatarSet: 'crimson-ranger', lineage: 'human', bodyPreset: 'standard', bodyTone: 'tan', hairStyle: 'spiked', hairColor: '#2d68d8', outfit: 'kore-cyan', accessory: 'headphones'
     };
-    const first = await post(heartbeat, { sessionId: 'session-one', playerId: 'player-one', displayName: 'Nova', avatar, x: -4, y: 0.82, pose: 'idle', facing: 1 });
+    const challenge = {
+      id: 'spar-session-one-session-two',
+      challengerSessionId: 'session-one', challengerPlayerId: 'player-one', challengerDisplayName: 'Nova',
+      targetSessionId: 'session-two', targetPlayerId: 'player-two', targetDisplayName: 'Rival',
+      status: 'pending', createdAt: Date.now(), updatedAt: Date.now(), expiresAt: Date.now() + 30_000
+    };
+    const first = await post(heartbeat, { sessionId: 'session-one', playerId: 'player-one', displayName: 'Nova', avatar, x: -4, y: 0.82, pose: 'idle', facing: 1, challenge });
     const second = await post(heartbeat, { sessionId: 'session-two', playerId: 'player-two', displayName: 'Rival', avatar: { ...avatar, hairStyle: 'bob' }, x: 8, y: 0.82, pose: 'walk', facing: -1 });
     expect(first.players).toHaveLength(1);
     expect(second.players).toHaveLength(2);
     expect(second.players).toEqual(expect.arrayContaining([
-      expect.objectContaining({ sessionId: 'session-one', displayName: 'NOVA', avatar: expect.objectContaining({ avatarSet: 'crimson-ranger' }) }),
+      expect.objectContaining({ sessionId: 'session-one', displayName: 'NOVA', avatar: expect.objectContaining({ avatarSet: 'crimson-ranger' }), challenge: expect.objectContaining({ id: challenge.id, status: 'pending', targetSessionId: 'session-two' }) }),
       expect.objectContaining({ sessionId: 'session-two', displayName: 'RIVAL', pose: 'walk', facing: -1 })
     ]));
 

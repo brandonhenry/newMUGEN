@@ -180,6 +180,36 @@ test('story hub shares avatars and persists the pause-menu offline choice', asyn
   await expect(firstHub).toHaveAttribute('data-player-count', '2', { timeout: 8_000 });
   await expect(secondHub).toHaveAttribute('data-player-count', '2', { timeout: 8_000 });
 
+  await page.locator('.story-remote-player-tag').click();
+  const firstPlayerPanel = page.getByTestId('story-player-panel');
+  await expect(firstPlayerPanel).toBeVisible();
+  await firstPlayerPanel.getByRole('button', { name: /Online Spar/ }).click();
+  await expect(page.getByTestId('story-outgoing-challenge')).toContainText('30s');
+  await expect(secondPage.getByTestId('story-incoming-challenge')).toBeVisible({ timeout: 5_000 });
+  await page.getByRole('button', { name: 'Revoke Challenge' }).click();
+  await expect(secondPage.getByTestId('story-incoming-challenge')).toBeHidden({ timeout: 5_000 });
+
+  await secondPage.locator('.story-remote-player-tag').click();
+  const secondPlayerPanel = secondPage.getByTestId('story-player-panel');
+  await secondPlayerPanel.getByRole('button', { name: /Online Spar/ }).click();
+  await expect(page.getByTestId('story-incoming-challenge')).toBeVisible({ timeout: 5_000 });
+  await page.getByRole('button', { name: 'Decline' }).click();
+  await expect(secondPage.getByTestId('story-outgoing-challenge')).toBeHidden({ timeout: 5_000 });
+  await expect(secondPage.getByTestId('story-challenge-notice')).toContainText('declined');
+  await firstPlayerPanel.getByRole('button', { name: 'Close player menu' }).click();
+  await secondPlayerPanel.getByRole('button', { name: 'Close player menu' }).click();
+
+  await page.locator('.story-remote-player-tag').click();
+  await page.getByTestId('story-player-panel').getByRole('button', { name: /Online Spar/ }).click();
+  await expect(secondPage.getByTestId('story-incoming-challenge')).toBeVisible({ timeout: 5_000 });
+  await secondPage.getByRole('button', { name: 'Accept' }).click();
+  await expect(page.locator('.training-select-screen')).toBeVisible({ timeout: 5_000 });
+  await expect(secondPage.locator('.training-select-screen')).toBeVisible({ timeout: 5_000 });
+  await page.getByRole('button', { name: 'Back', exact: true }).click();
+  await secondPage.getByRole('button', { name: 'Back', exact: true }).click();
+  await expect(firstHub).toBeVisible({ timeout: 5_000 });
+  await expect(secondHub).toBeVisible({ timeout: 5_000 });
+
   await secondPage.keyboard.press('Escape');
   await expect(secondPage.getByRole('heading', { name: 'Hub Paused' })).toBeVisible();
   await secondPage.getByRole('button', { name: 'Resume' }).click();
@@ -227,6 +257,14 @@ test('story hub accepts controller and touch movement, run, attack, and pause', 
   await page.getByRole('button', { name: 'Play', exact: true }).click();
   const hub = page.getByTestId('story-hub-screen');
   await expect(hub).toHaveAttribute('data-hub-ready', 'true', { timeout: 15_000 });
+
+  const groundY = Number(await hub.getAttribute('data-player-y'));
+  await page.keyboard.press('Space');
+  await page.waitForTimeout(140);
+  await page.keyboard.press('Space');
+  await expect.poll(async () => Number(await hub.getAttribute('data-player-y')), { timeout: 1_500 }).toBeGreaterThan(groundY + 2.2);
+  await expect(hub).toHaveAttribute('data-player-pose', 'jump');
+  await expect.poll(async () => Number(await hub.getAttribute('data-player-y')), { timeout: 2_500 }).toBeLessThan(groundY + 0.2);
 
   const beforeTouch = Number(await hub.getAttribute('data-player-x'));
   const moveRight = page.getByRole('button', { name: 'Move right' });
