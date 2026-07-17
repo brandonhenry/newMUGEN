@@ -26,6 +26,8 @@ describe('story adventure world network', () => {
       expect(world.environment?.layers.every((layer) => !layer.motif), `${id} placeholder motifs`).toBe(true);
       expect(world.environment?.surface?.asset.startsWith('world:'), `${id} authored traversal surface`).toBe(true);
       expect(world.props?.filter((prop) => prop.asset.startsWith('world:')).length, `${id} pack props`).toBeGreaterThanOrEqual(7);
+      const propPoints = [world.bounds.minX, ...(world.props?.filter((prop) => prop.asset.startsWith('world:')).map(({ position }) => position[0]) ?? []).sort((a, b) => a - b), world.bounds.maxX];
+      expect(Math.max(...propPoints.slice(1).map((point, index) => point - propPoints[index])), `${id} prop coverage`).toBeLessThanOrEqual(18);
       expect(world.landmarks?.length, `${id} landmarks`).toBeGreaterThanOrEqual(5);
       expect(new Set(world.environment?.layers.map(({ id: layerId }) => layerId)).size).toBe(world.environment?.layers.length);
       expect(world.enemySpawns).toHaveLength(10);

@@ -13,6 +13,7 @@ import { STORY_ADVENTURE_STAT_CAP, STORY_ADVENTURE_STAT_KEYS, allocateAdventureS
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_REGION_LABELS, STORY_WORLDS, isStoryAdventureRegionId, isStoryAdventureWorldId, isStoryWorldId } from './adventureWorlds';
 import { connectStoryHubMultiplayer, readOrCreateStoryHubGuestIdentity, readStoryHubOnlinePreference, STORY_HUB_CHALLENGE_TIMEOUT_MS, writeStoryHubOnlinePreference, type StoryHubMultiplayerSession } from './hubMultiplayer';
 import { KORE_CENTRAL_HUB } from './hubData';
+import { storyPlatformSurfacePlacement } from './platformGrounding';
 import { getStorySpriteAnimationDurationMs } from './streetAvatarCatalog';
 import { StoryAvatarRig, type StoryAvatarPose } from './StoryAvatarRig';
 import type { HubDestination, StoryEnemySpawnDefinition, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StoryWorldBackdropLayerDefinition, StoryWorldId, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
@@ -346,10 +347,11 @@ function PackPlatformVisual({ platform, hub }: { platform: StoryPlatformDefiniti
   const source = useTexture(surface ? storyWorldAssetPath(surface.asset) : STORY_ADVENTURE_ASSET_PATHS['pixel-terrain']);
   useMemo(() => configurePixelTexture(source), [source]);
   const tileSize = platform.oneWay ? 0.9 : 1.05;
+  const surfacePlacement = storyPlatformSurfacePlacement(platform);
   const count = Math.max(1, Math.ceil(platform.size[0] / tileSize));
   const frame = surface?.frame ?? theme.tile;
   const atlasSize = surface?.atlasSize ?? [352, 176];
-  const geometry = useMemo(() => atlasGeometry(frame, atlasSize, [tileSize + 0.03, platform.oneWay ? 0.52 : 0.82]), [atlasSize, frame, tileSize, platform.oneWay]);
+  const geometry = useMemo(() => atlasGeometry(frame, atlasSize, [tileSize + 0.03, surfacePlacement.height]), [atlasSize, frame, surfacePlacement.height, tileSize]);
   const material = useMemo(() => new THREE.MeshBasicMaterial({ map: source, transparent: true, alphaTest: 0.02, toneMapped: false }), [source]);
   const instances = useRef<THREE.InstancedMesh>(null);
   useLayoutEffect(() => {
@@ -357,11 +359,11 @@ function PackPlatformVisual({ platform, hub }: { platform: StoryPlatformDefiniti
     const matrix = new THREE.Matrix4();
     for (let index = 0; index < count; index += 1) {
       const x = -platform.size[0] / 2 + tileSize / 2 + index * tileSize;
-      matrix.makeTranslation(x, platform.size[1] / 2 - (platform.oneWay ? 0.2 : 0.36), 0.24);
+      matrix.makeTranslation(x, surfacePlacement.centerY, 0.24);
       instances.current.setMatrixAt(index, matrix);
     }
     instances.current.instanceMatrix.needsUpdate = true;
-  }, [count, platform.oneWay, platform.size, tileSize]);
+  }, [count, platform.size, surfacePlacement.centerY, tileSize]);
   useEffect(() => () => { geometry.dispose(); material.dispose(); }, [geometry, material]);
   return <group>
     <mesh position={[0, platform.id === 'ground' ? -3.5 : 0, 0.06]}>
@@ -401,13 +403,13 @@ function PlatformVisual({ platform, hub }: { platform: StoryPlatformDefinition; 
 
 const CABINET_FRAMES = Array.from({ length: 16 }, (_, index) => `${ARCADE_ASSET_ROOT}/red-${String(index).padStart(2, '0')}.png`);
 
-function AnimatedCabinet({ position = [0, 0, 0], mirrored = false, scale = 1 }: { position?: [number, number, number]; mirrored?: boolean; scale?: number }) {
+function AnimatedCabinet({ position = [0, 0, 0], mirrored = false, scale = 1, reducedMotion = false }: { position?: [number, number, number]; mirrored?: boolean; scale?: number; reducedMotion?: boolean }) {
   const textures = useTexture(CABINET_FRAMES) as THREE.Texture[];
   const materialRef = useRef<THREE.MeshBasicMaterial>(null);
   useMemo(() => textures.forEach((texture) => configurePixelTexture(texture)), [textures]);
   useFrame((state) => {
     if (!materialRef.current) return;
-    const next = textures[Math.floor(state.clock.elapsedTime * 9) % textures.length];
+    const next = reducedMotion ? textures[0] : textures[Math.floor(state.clock.elapsedTime * 9) % textures.length];
     if (materialRef.current.map !== next) materialRef.current.map = next;
   });
   return <mesh position={position} scale={[mirrored ? -scale : scale, scale, scale]} renderOrder={20}>
@@ -425,10 +427,10 @@ function ModeDoor({ emphasized }: { emphasized: boolean }) {
   </mesh>;
 }
 
-function RecalibrationShrine({ emphasized }: { emphasized: boolean }) {
+function RecalibrationShrine({ emphasized, reducedMotion }: { emphasized: boolean; reducedMotion: boolean }) {
   const group = useRef<THREE.Group>(null);
   useFrame((state) => {
-    if (group.current) group.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.9) * 0.035;
+    if (group.current) group.current.rotation.z = reducedMotion ? 0 : Math.sin(state.clock.elapsedTime * 0.9) * 0.035;
   });
   return <group ref={group} position={[0, -0.24, -0.08]} scale={emphasized ? 1.08 : 1}>
     <mesh position={[0, -0.68, 0]}><cylinderGeometry args={[0.72, 0.92, 0.32, 6]} /><meshBasicMaterial color="#26364f" /></mesh>
@@ -446,16 +448,24 @@ function Storefront({ destination, size, emphasized }: { destination: HubDestina
   </mesh>;
 }
 
-function PortalVisual({ portal, nearby, assigned }: { portal: StoryPortalDefinition; nearby: boolean; assigned: boolean }) {
+function PortalVisual({ portal, nearby, assigned, reducedMotion }: { portal: StoryPortalDefinition; nearby: boolean; assigned: boolean; reducedMotion: boolean }) {
   const hubDestination = isHubDestination(portal.destination) ? portal.destination : 'story';
   const DestinationIcon = DESTINATION_ICONS[portal.destination];
   const storefrontSize = portal.destination === 'story' ? 4.45 : portal.position[1] > 4 ? 3.15 : 3.55;
   return <group position={[portal.position[0], portal.position[1], 0]}>
-    {portal.kind === 'mode-door' || portal.kind === 'adventure-gate' ? <ModeDoor emphasized={nearby || assigned} /> : portal.kind === 'shrine' ? <RecalibrationShrine emphasized={nearby} /> : portal.kind === 'arcade-machine' ? <AnimatedCabinet position={[0, -0.14, 0]} scale={nearby || assigned ? 1.08 : 1} /> : portal.kind === 'versus-machine' ? <>
-      <AnimatedCabinet position={[-0.56, -0.14, -0.18]} scale={nearby || assigned ? 0.94 : 0.88} />
-      <AnimatedCabinet position={[0.56, -0.14, -0.16]} mirrored scale={nearby || assigned ? 0.94 : 0.88} />
+    <mesh position={[0, -1.08, 0.04]} renderOrder={18}>
+      <ringGeometry args={[0.68, portal.kind === 'mode-door' || portal.kind === 'adventure-gate' ? 0.98 : 0.86, 24]} />
+      <meshBasicMaterial color={assigned ? '#ffe071' : portal.accent} transparent opacity={nearby || assigned ? 0.78 : 0.3} depthWrite={false} />
+    </mesh>
+    {(portal.kind === 'mode-door' || portal.kind === 'adventure-gate') && <mesh position={[0, -1.08, 0.035]} renderOrder={17}>
+      <ringGeometry args={[1.08, 1.17, 24]} />
+      <meshBasicMaterial color={portal.accent} transparent opacity={nearby ? 0.55 : 0.2} depthWrite={false} />
+    </mesh>}
+    {portal.kind === 'mode-door' || portal.kind === 'adventure-gate' ? <ModeDoor emphasized={nearby || assigned} /> : portal.kind === 'shrine' ? <RecalibrationShrine emphasized={nearby} reducedMotion={reducedMotion} /> : portal.kind === 'arcade-machine' ? <AnimatedCabinet position={[0, -0.14, 0]} scale={nearby || assigned ? 1.08 : 1} reducedMotion={reducedMotion} /> : portal.kind === 'versus-machine' ? <>
+      <AnimatedCabinet position={[-0.56, -0.14, -0.18]} scale={nearby || assigned ? 0.94 : 0.88} reducedMotion={reducedMotion} />
+      <AnimatedCabinet position={[0.56, -0.14, -0.16]} mirrored scale={nearby || assigned ? 0.94 : 0.88} reducedMotion={reducedMotion} />
     </> : portal.kind === 'terminal' ? <>
-      <AnimatedCabinet position={[0, -0.14, 0]} scale={nearby || assigned ? 1.08 : 1} />
+      <AnimatedCabinet position={[0, -0.14, 0]} scale={nearby || assigned ? 1.08 : 1} reducedMotion={reducedMotion} />
       <mesh position={[0, 0.04, 0.02]} renderOrder={22}><planeGeometry args={[0.72, 0.48]} /><meshBasicMaterial color={portal.accent} transparent opacity={0.42} depthWrite={false} /></mesh>
     </> : <Storefront destination={hubDestination} size={storefrontSize} emphasized={nearby} />}
     {assigned && <mesh position={[0, -1.08, 0.05]} renderOrder={23}><ringGeometry args={[0.72, 0.9, 24]} /><meshBasicMaterial color="#ffe071" transparent opacity={0.9} depthWrite={false} /></mesh>}
@@ -953,7 +963,7 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
           <CuboidCollider args={[platform.size[0] / 2, platform.size[1] / 2, 1]} sensor={Boolean(platform.oneWay)} />
           <PlatformVisual platform={platform} hub={hub} />
         </RigidBody>)}
-        {hub.portals.map((portal) => <PortalVisual key={portal.id} portal={portal} nearby={nearbyPortal?.id === portal.id} assigned={assignedPortalId === portal.id} />)}
+        {hub.portals.map((portal) => <PortalVisual key={portal.id} portal={portal} nearby={nearbyPortal?.id === portal.id} assigned={assignedPortalId === portal.id} reducedMotion={reducedMotion} />)}
         {remotePlayers.map((presence, index) => <RemoteStoryPlayer key={presence.sessionId} presence={presence} reducedMotion={reducedMotion} lane={index % 5} selected={selectedPlayerSessionId === presence.sessionId} onSelect={onSelectPlayer} />)}
         {hub.enemySpawns && hub.enemySpawns.length > 0 && <AdventureEnemies spawns={hub.enemySpawns} level={progress.level} playerPosition={playerPosition} attackEvent={attackEvent} reducedMotion={reducedMotion} onPlayerDamage={onPlayerDamage} onDefeated={onEnemyDefeated} />}
         <StoryPlayerController hub={hub} avatar={profile.avatar} avatarVisible={avatarVisible} playerPosition={playerPosition} readInput={readInput} disabled={disabled} reducedMotion={reducedMotion} quickMatchAvailable={quickMatchAvailable} derivedStats={derivedStats} impactEvent={impactEvent} onAttack={onAttack} onQuickMatch={onQuickMatch} onNearbyPortal={onNearbyPortal} onActivatePortal={onActivatePortal} onExit={onExit} onPause={onPause} onStateSample={onStateSample} onReady={onReady} />
@@ -1078,6 +1088,15 @@ function readDevPreviewWorldId(): StoryWorldId {
   return isStoryWorldId(candidate) ? candidate : 'central';
 }
 
+function devPreviewHub(hub: StoryHubDefinition): StoryHubDefinition {
+  if (typeof window === 'undefined' || !['localhost', '127.0.0.1'].includes(window.location.hostname)) return hub;
+  const previewParam = new URLSearchParams(window.location.search).get('storyX');
+  if (previewParam === null) return hub;
+  const previewX = Number(previewParam);
+  if (!Number.isFinite(previewX)) return hub;
+  return { ...hub, spawn: [THREE.MathUtils.clamp(previewX, hub.bounds.minX + 1, hub.bounds.maxX - 1), hub.spawn[1]] };
+}
+
 export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, readInputs, setVirtualAction, onDestination, onOnlineSpar, onExit }: {
   profile: StoryProfileV4;
   onlineProfile?: OnlinePlayerProfile | null;
@@ -1089,7 +1108,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   onExit: () => void;
 }) {
   const [activeWorldId, setActiveWorldId] = useState<StoryWorldId>(readDevPreviewWorldId);
-  const activeHub = STORY_WORLDS[activeWorldId];
+  const activeHub = useMemo(() => devPreviewHub(STORY_WORLDS[activeWorldId]), [activeWorldId]);
   const [nearbyPortal, setNearbyPortal] = useState<StoryPortalDefinition | null>(null);
   const [pauseOpen, setPauseOpen] = useState(false);
   const [controlsOpen, setControlsOpen] = useState(false);

@@ -48,6 +48,8 @@ describe('story hub data', () => {
         expect(world.environment?.layers.every((layer) => !layer.motif), `${worldId} placeholder motifs`).toBe(true);
         expect(world.environment?.surface?.asset.startsWith('world:'), `${worldId} authored traversal surface`).toBe(true);
         expect(world.props?.filter((prop) => prop.asset.startsWith('world:')).length, `${worldId} pack props`).toBeGreaterThanOrEqual(7);
+        const propPoints = [world.bounds.minX, ...(world.props?.filter((prop) => prop.asset.startsWith('world:')).map(({ position }) => position[0]) ?? []).sort((a, b) => a - b), world.bounds.maxX];
+        expect(Math.max(...propPoints.slice(1).map((point, index) => point - propPoints[index])), `${worldId} prop coverage`).toBeLessThanOrEqual(18);
         expect(world.landmarks?.length, `${worldId} landmarks`).toBeGreaterThanOrEqual(5);
         expect(world.portals.some(({ destination, kind }) => destination === 'central' && kind === 'mode-door')).toBe(true);
         expect(world.portals.filter(({ destination, kind }) => destination === 'central' && kind === 'mode-door')).toHaveLength(2);

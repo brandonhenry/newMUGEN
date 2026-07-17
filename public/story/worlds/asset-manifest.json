@@ -1033,6 +1033,27 @@
           "width": 384,
           "height": 192,
           "sha256": "b49ebb1fdb74caa9a00455db23db80313bb010ecc9a9da29c275a9d3c7c13558"
+        },
+        {
+          "file": "emberdeep/gate.png",
+          "sourceFile": "CC0 palette derivative of warped-caves/gate.png",
+          "width": 48,
+          "height": 48,
+          "sha256": "0ed72763aac003f0a15de4aab1f9afec94cb8ac2970a1fc39a2f63271591e284"
+        },
+        {
+          "file": "emberdeep/stalactite.png",
+          "sourceFile": "CC0 palette derivative of warped-caves/stalactite.png",
+          "width": 38,
+          "height": 53,
+          "sha256": "1c2feef37b73d794733a81e0520db4defc9686dcfcd9437620c0170177135b53"
+        },
+        {
+          "file": "emberdeep/stone-head.png",
+          "sourceFile": "CC0 palette derivative of warped-caves/stone-head.png",
+          "width": 55,
+          "height": 51,
+          "sha256": "823aecc71a44244ab690f10792f414f08a77ffdf8a08d8360589d8d11979c35f"
         }
       ]
     },
@@ -1132,6 +1153,123 @@
           "width": 224,
           "height": 128,
           "sha256": "5b830742968c8834a1353fda2d0c30dfb907793c01ba8140b6222b4ca6b249c2"
+        },
+        {
+          "file": "sunscar-pixel/crystal-1.png",
+          "sourceFile": "CC0 palette derivative of rocky-pass/crystal-1.png",
+          "width": 25,
+          "height": 25,
+          "sha256": "47d04802066c9433b6fbffbaf8d53e05a2c73c67356bd6a07da99a79fc456be1"
+        },
+        {
+          "file": "sunscar-pixel/crystal-2.png",
+          "sourceFile": "CC0 palette derivative of rocky-pass/crystal-2.png",
+          "width": 26,
+          "height": 20,
+          "sha256": "d6a47f5ace288a69c8092569bd574f13624ad7937e78f3890a6a9b867e369c36"
+        }
+      ]
+    },
+    {
+      "id": "frostpeak-details",
+      "author": "GrafxKid / K.O.R.E.",
+      "source": "https://grafxkid.itch.io/seasonal-tilesets",
+      "archive": "derived",
+      "archiveSha256": "44d1225eb7bc7e19bdab1b1476ade77367b1a6b3afe3987c62977adcca025d7d",
+      "license": "CC0-1.0",
+      "derivedFrom": "seasonal",
+      "assets": [
+        {
+          "file": "frostpeak-details/house.png",
+          "sourceFile": "CC0 palette derivative of seasonal/house.png",
+          "width": 240,
+          "height": 96,
+          "sha256": "b6931d7602059e4eba9637a71523a24d6fee235ca8e59428b616ee6df8b8e8f8"
+        }
+      ]
+    },
+    {
+      "id": "tournament-cathedral",
+      "author": "Ansimuz / K.O.R.E.",
+      "source": "https://opengameart.org/content/gothicvania-church-pack",
+      "archive": "derived",
+      "archiveSha256": "c4c78b80905022d3325212b58271044bdd4b92d1f7724fe94aee0107ba3c8169",
+      "license": "CC0-1.0",
+      "derivedFrom": "gothic-church",
+      "assets": [
+        {
+          "file": "tournament-cathedral/backgrounds.png",
+          "sourceFile": "CC0 palette derivative of gothic-church/backgrounds.png",
+          "width": 624,
+          "height": 192,
+          "sha256": "f1aee0ea86d8ec2f881aa18d54b2682c104ec664411acad30eda62e403a12dc7"
+        },
+        {
+          "file": "tournament-cathedral/column.png",
+          "sourceFile": "CC0 palette derivative of gothic-church/column.png",
+          "width": 114,
+          "height": 190,
+          "sha256": "fb0cbc2c74f50389f43de88bb31ffc87c189854c780187f650295be9b48ecb65"
+        },
+        {
+          "file": "tournament-cathedral/tileset.png",
+          "sourceFile": "CC0 palette derivative of gothic-church/tileset.png",
+          "width": 336,
+          "height": 224,
+          "sha256": "29d4f468615c8a9130580bc2e4935bd946f6f77f7c9c425b381fa720224202ec"
+        }
+      ]
+    },
+    {
+      "id": "sunscar-settlement",
+      "author": "Ansimuz / K.O.R.E.",
+      "source": "https://opengameart.org/content/gothicvania-town",
+      "archive": "derived",
+      "archiveSha256": "11c32d7416814e1832c502e76426623065792c3d95a8514be42e59fe6b0b0651",
+      "license": "CC0-1.0",
+      "derivedFrom": "gothic-town",
+      "assets": [
+        {
+          "file": "sunscar-settlement/house-a.png",
+          "sourceFile": "CC0 palette derivative of gothic-town/house-a.png",
+          "width": 168,
+          "height": 183,
+          "sha256": "fcdc054b3fcb9887ed71903b9547b2cbf648de7f84968cd6d8488d2ec0ec2161"
+        },
+        {
+          "file": "sunscar-settlement/house-b.png",
+          "sourceFile": "CC0 palette derivative of gothic-town/house-b.png",
+          "width": 210,
+          "height": 244,
+          "sha256": "82a3c6f5694abc625f5dc0c15843422066c3953b26f4dc926412501549f1dce5"
+        },
+        {
+          "file": "sunscar-settlement/house-c.png",
+          "sourceFile": "CC0 palette derivative of gothic-town/house-c.png",
+          "width": 221,
+          "height": 183,
+          "sha256": "1a679ca1c08e90e593f044c8711a3b897765c318438bebb0d0aff6261be64290"
+        },
+        {
+          "file": "sunscar-settlement/wagon.png",
+          "sourceFile": "CC0 palette derivative of gothic-town/wagon.png",
+          "width": 93,
+          "height": 75,
+          "sha256": "0cfadd99ecc91cddd4c47051b40448207c195783ef0e30759a9c501cad3b09b1"
+        },
+        {
+          "file": "sunscar-settlement/well.png",
+          "sourceFile": "CC0 palette derivative of gothic-town/well.png",
+          "width": 65,
+          "height": 65,
+          "sha256": "729acbb8ab306860c105805e58e407b8174f81a4b31a243302b8e632262ff269"
+        },
+        {
+          "file": "sunscar-settlement/street-lamp.png",
+          "sourceFile": "CC0 palette derivative of gothic-town/street-lamp.png",
+          "width": 35,
+          "height": 108,
+          "sha256": "c4ab26be6d010423640590d33ae97072fd9367652407035698c5aba8a08e8bb7"
         }
       ]
     }

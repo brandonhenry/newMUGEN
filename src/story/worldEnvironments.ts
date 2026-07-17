@@ -3,7 +3,7 @@ import type { StoryWorldBackdropLayerDefinition, StoryWorldEnvironmentDefinition
 
 type EnvironmentPalette = Omit<StoryWorldEnvironmentDefinition, 'layers'>;
 type LayerInput = [file: string, depth: number, height: number, parallax: number, repeatEvery: number, opacity?: number, y?: number];
-type PropInput = [file: string, pixels: [number, number], size: [number, number], y?: number];
+type PropInput = [file: string, pixels: [number, number], size: [number, number], y?: number, opacity?: number];
 
 const PALETTES: Record<StoryWorldThemeId, EnvironmentPalette> = {
   city: { background: '#160721', haze: '#30143d', light: '#ff2f79', ground: '#25122f', accent: '#2ee6ff', particle: 'data' },
@@ -31,7 +31,7 @@ const LAYERS: Record<StoryWorldThemeId, LayerInput[]> = {
   arcade: [
     ['city-parallax/background.png', -16, 18, 0.05, 32], ['city-parallax/middle.png', -13, 18, 0.13, 32],
     ['stomper/back.png', -10, 18, 0.22, 9.6], ['stomper/back-glow.png', -8, 18, 0.3, 9.6, 0.74],
-    ['city-parallax/foreground.png', -5.5, 18, 0.46, 32]
+    ['city-parallax/foreground.png', -5.5, 18, 0.46, 32, 0.38]
   ],
   versus: [
     ['city-parallax/background.png', -17, 18, 0.04, 32], ['city-parallax/middle.png', -14, 18, 0.1, 32, 0.66],
@@ -50,7 +50,7 @@ const LAYERS: Record<StoryWorldThemeId, LayerInput[]> = {
   ],
   tournament: [
     ['tournament-gold/mountains.png', -15, 18, 0.06, 16.9], ['tournament-gold/back.png', -10, 18, 0.2, 4.25],
-    ['tournament-gold/front.png', -5, 10, 0.48, 8.75]
+    ['tournament-cathedral/backgrounds.png', -7, 14, 0.34, 39, 0.9], ['tournament-gold/front.png', -4.5, 9, 0.5, 8.75, 0.62]
   ],
   route: [
     ['magical-road/back.png', -16, 19, 0.05, 8.9], ['warped-city/skyline-a.png', -14, 19, 0.1, 10.1, 0.8],
@@ -96,39 +96,39 @@ const LAYERS: Record<StoryWorldThemeId, LayerInput[]> = {
 };
 
 const PROPS: Record<StoryWorldThemeId, PropInput[]> = {
-  city: [['warped-city/monitor.png', [21, 18], [2.3, 2]], ['warped-city/neon-banner.png', [19, 48], [1.5, 3.8]], ['warped-city/antenna.png', [22, 96], [1.4, 6]]],
-  arcade: [['stomper/plant.png', [31, 33], [2.4, 2.5]], ['warped-city/monitor.png', [21, 18], [2.8, 2.4]], ['warped-city/neon-banner.png', [19, 48], [1.6, 4]]],
-  versus: [['fort-illusion/flag.png', [16, 63], [1.4, 5.5]], ['fort-illusion/banner.png', [48, 59], [3.6, 4.4]], ['fort-illusion/door.png', [96, 80], [5.5, 4.6]]],
-  online: [['ocean-view/night-tower.png', [16, 112], [1.4, 8]], ['ocean-view/night-dome.png', [80, 96], [5, 6]], ['warped-city/antenna.png', [22, 96], [1.4, 6]]],
-  training: [['sci-fi-lab/tank-1.png', [48, 122], [3, 7.6]], ['sci-fi-lab/tank-2.png', [48, 122], [3, 7.6]], ['sci-fi-lab/tank-3.png', [48, 122], [3, 7.6]], ['sci-fi-lab/support.png', [16, 240], [1.1, 11]]],
-  tournament: [['tournament-gold/flag.png', [16, 63], [1.4, 5.5]], ['tournament-gold/banner.png', [48, 59], [3.6, 4.4]], ['tournament-gold/door.png', [96, 80], [5.5, 4.6]]],
-  route: [['magical-road/tree.png', [86, 181], [5.5, 11.6]], ['warped-city/monitor.png', [21, 18], [2.4, 2]], ['warped-city/antenna.png', [22, 96], [1.5, 6.5]], ['warped-city/arrow.png', [16, 34], [1.5, 3.2]]],
+  city: [['warped-city/monitor.png', [21, 18], [2.3, 2]], ['warped-city/neon-banner.png', [19, 48], [1.5, 3.8]], ['warped-city/antenna.png', [22, 96], [1.4, 6]], ['warped-city/arrow.png', [16, 34], [1.4, 3]]],
+  arcade: [['stomper/plant.png', [31, 33], [2.4, 2.5]], ['warped-city/monitor.png', [21, 18], [2.8, 2.4]], ['warped-city/neon-banner.png', [19, 48], [1.6, 4]], ['warped-city/arrow.png', [16, 34], [1.5, 3.2]]],
+  versus: [['fort-illusion/flag.png', [16, 63], [1.4, 5.5]], ['fort-illusion/banner.png', [48, 59], [3.6, 4.4]], ['fort-illusion/door.png', [96, 80], [5.5, 4.6]], ['warped-city/monitor.png', [21, 18], [2.5, 2.2]]],
+  online: [['ocean-view/night-tower.png', [16, 112], [1.4, 8]], ['ocean-view/night-dome.png', [80, 96], [5, 6]], ['warped-city/antenna.png', [22, 96], [1.4, 6]], ['warped-city/monitor.png', [21, 18], [2.5, 2.2]]],
+  training: [['sci-fi-lab/tank-1.png', [48, 122], [3, 7.6]], ['sci-fi-lab/tank-2.png', [48, 122], [3, 7.6]], ['sci-fi-lab/tank-3.png', [48, 122], [3, 7.6]], ['sci-fi-lab/support.png', [16, 240], [1.1, 11]], ['warped-city/monitor.png', [21, 18], [2.5, 2.2]]],
+  tournament: [['tournament-gold/flag.png', [16, 63], [1.4, 5.5]], ['tournament-gold/banner.png', [48, 59], [3.6, 4.4]], ['tournament-gold/door.png', [96, 80], [5.5, 4.6]], ['tournament-cathedral/column.png', [114, 190], [4.6, 7.7], undefined, 0.84]],
+  route: [['magical-road/tree.png', [86, 181], [5.5, 11.6], undefined, 0.9], ['warped-city/monitor.png', [21, 18], [2.4, 2]], ['warped-city/antenna.png', [22, 96], [1.5, 6.5]], ['warped-city/arrow.png', [16, 34], [1.5, 3.2]], ['warped-city/neon-banner.png', [19, 48], [1.5, 3.8]]],
   village: [['gothic-town/house-a.png', [168, 183], [9, 9.8]], ['gothic-town/house-b.png', [210, 244], [9, 10.5]], ['gothic-town/house-c.png', [221, 183], [10, 8.3]], ['gothic-town/well.png', [65, 65], [3.4, 3.4]], ['gothic-town/wagon.png', [93, 75], [4.5, 3.6]], ['gothic-town/street-lamp.png', [35, 108], [1.5, 4.6]]],
-  forest: [['tall-forest/plant.png', [42, 27], [3.8, 2.5]], ['tall-forest/rock.png', [32, 32], [2.8, 2.8]], ['magical-road/tree.png', [86, 181], [6, 12]]],
+  forest: [['tall-forest/plant.png', [42, 27], [3.8, 2.5]], ['tall-forest/rock.png', [32, 32], [2.8, 2.8]], ['magical-road/tree.png', [86, 181], [6, 12], undefined, 0.9], ['gothic-cemetery/tree.png', [166, 117], [8, 5.6], undefined, 0.84]],
   mine: [['warped-caves/gate.png', [48, 48], [5.2, 5.2]], ['warped-caves/stalactite.png', [38, 53], [3.2, 4.5], 7], ['warped-caves/stone-head.png', [55, 51], [4, 3.7]]],
   crypt: [['gothic-cemetery/tree.png', [166, 117], [9, 6.4]], ['gothic-cemetery/statue.png', [63, 75], [3.6, 4.3]], ['gothic-cemetery/stone.png', [27, 33], [2.2, 2.7]], ['gothic-church/column.png', [114, 190], [5.2, 8.7]]],
-  underworld: [['warped-caves/gate.png', [48, 48], [5.2, 5.2]], ['warped-caves/stone-head.png', [55, 51], [4, 3.7]], ['rocky-pass/crystal-1.png', [25, 25], [2.2, 2.2]]],
-  snow: [['seasonal/house.png', [240, 96], [10, 4]], ['rocky-pass/crystal-1.png', [25, 25], [2.2, 2.2]], ['rocky-pass/crystal-2.png', [26, 20], [2.5, 1.9]]],
-  desert: [['gothic-town/wagon.png', [93, 75], [4.5, 3.6]], ['gothic-town/well.png', [65, 65], [3.4, 3.4]], ['seasonal/house.png', [240, 96], [10, 4]]],
-  ruins: [['rocky-pass/crystal-1.png', [25, 25], [2.4, 2.4]], ['rocky-pass/crystal-2.png', [26, 20], [2.8, 2.2]], ['gothic-cemetery/statue.png', [63, 75], [3.6, 4.3]]]
+  underworld: [['emberdeep/gate.png', [48, 48], [5.2, 5.2]], ['emberdeep/stone-head.png', [55, 51], [4, 3.7]], ['emberdeep/stalactite.png', [38, 53], [3.2, 4.5], 7], ['rocky-pass/crystal-1.png', [25, 25], [2.2, 2.2]]],
+  snow: [['frostpeak-details/house.png', [240, 96], [10, 4]], ['rocky-pass/crystal-1.png', [25, 25], [2.2, 2.2]], ['rocky-pass/crystal-2.png', [26, 20], [2.5, 1.9]], ['tall-forest/rock.png', [32, 32], [2.8, 2.8]]],
+  desert: [['sunscar-settlement/wagon.png', [93, 75], [4.5, 3.6]], ['sunscar-settlement/well.png', [65, 65], [3.4, 3.4]], ['sunscar-settlement/house-a.png', [168, 183], [7.5, 8.2]], ['sunscar-settlement/house-b.png', [210, 244], [7.4, 8.6]], ['sunscar-settlement/house-c.png', [221, 183], [8.2, 7]], ['sunscar-settlement/street-lamp.png', [35, 108], [1.4, 4.3]], ['sunscar-pixel/crystal-1.png', [25, 25], [2.2, 2.2]], ['sunscar-pixel/crystal-2.png', [26, 20], [2.5, 1.9]]],
+  ruins: [['rocky-pass/crystal-1.png', [25, 25], [2.4, 2.4]], ['rocky-pass/crystal-2.png', [26, 20], [2.8, 2.2]], ['gothic-cemetery/statue.png', [63, 75], [3.6, 4.3]], ['gothic-church/column.png', [114, 190], [4.6, 7.7], undefined, 0.78]]
 };
 
 const SURFACES: Record<StoryWorldThemeId, [string, [number, number, number, number], [number, number]]> = {
-  city: ['warped-city/tileset.png', [0, 0, 32, 16], [384, 256]],
+  city: ['warped-city/tileset.png', [48, 16, 32, 16], [384, 256]],
   arcade: ['stomper/brick.png', [0, 0, 16, 16], [16, 16]],
   versus: ['zone-202/tileset.png', [0, 0, 48, 16], [48, 112]],
-  online: ['ocean-view/tile.png', [64, 0, 32, 16], [176, 128]],
-  training: ['warped-city/tileset.png', [0, 0, 32, 16], [384, 256]],
-  tournament: ['tournament-gold/tileset.png', [0, 0, 48, 16], [208, 128]],
-  route: ['magical-road/tileset.png', [0, 0, 32, 16], [128, 96]],
-  village: ['seasonal/grass-terrain.png', [0, 0, 48, 16], [272, 160]],
-  forest: ['tall-forest/tileset.png', [0, 0, 32, 16], [112, 144]],
-  mine: ['warped-caves/tileset.png', [0, 0, 48, 16], [384, 192]],
-  crypt: ['gothic-cemetery/tileset.png', [0, 0, 48, 16], [448, 160]],
-  underworld: ['emberdeep/tileset.png', [0, 0, 48, 16], [384, 192]],
-  snow: ['seasonal/snow-terrain.png', [0, 0, 48, 16], [272, 160]],
-  desert: ['sunscar-pixel/tileset.png', [0, 0, 48, 16], [224, 128]],
-  ruins: ['rocky-pass/tileset.png', [0, 0, 48, 16], [224, 128]]
+  online: ['ocean-view/tile.png', [48, 16, 32, 16], [176, 128]],
+  training: ['warped-city/tileset.png', [48, 16, 32, 16], [384, 256]],
+  tournament: ['tournament-gold/tileset.png', [0, 16, 32, 16], [208, 128]],
+  route: ['magical-road/tileset.png', [32, 16, 32, 16], [128, 96]],
+  village: ['seasonal/grass-terrain.png', [48, 16, 32, 16], [272, 160]],
+  forest: ['tall-forest/tileset.png', [16, 80, 32, 16], [112, 144]],
+  mine: ['warped-caves/tileset.png', [32, 16, 32, 16], [384, 192]],
+  crypt: ['gothic-cemetery/tileset.png', [336, 16, 32, 16], [448, 160]],
+  underworld: ['emberdeep/tileset.png', [32, 16, 32, 16], [384, 192]],
+  snow: ['seasonal/snow-terrain.png', [48, 16, 32, 16], [272, 160]],
+  desert: ['sunscar-pixel/tileset.png', [48, 16, 32, 16], [224, 128]],
+  ruins: ['rocky-pass/tileset.png', [48, 16, 32, 16], [224, 128]]
 };
 
 function makeLayer(theme: StoryWorldThemeId, input: LayerInput, index: number): StoryWorldBackdropLayerDefinition {
@@ -148,18 +148,26 @@ export function createStoryWorldEnvironment(theme: StoryWorldThemeId): StoryWorl
 export function createStoryWorldProps(theme: StoryWorldThemeId, minX: number, maxX: number): StoryWorldPropDefinition[] {
   const templates = PROPS[theme];
   const width = maxX - minX;
-  const positions = [-0.43, -0.29, -0.14, 0.03, 0.19, 0.35, 0.45].map((ratio) => minX + width * (ratio + 0.5));
+  const count = Math.min(15, Math.max(9, Math.ceil(width / 12)));
+  const positions = Array.from({ length: count }, (_, index) => {
+    const ratio = count === 1 ? 0.5 : 0.05 + (index / (count - 1)) * 0.9;
+    const stagger = ((index * 7 + theme.length) % 5 - 2) * Math.min(0.45, width / 420);
+    return minX + width * ratio + stagger;
+  });
   return positions.map((x, index) => {
-    const [file, pixels, size, authoredY] = templates[index % templates.length];
+    const [file, pixels, size, authoredY, authoredOpacity] = templates[index % templates.length];
+    const depthTier = index % 4;
+    const scale = [0.86, 1, 0.92, 1.08][depthTier];
+    const scaledSize: [number, number] = [size[0] * scale, size[1] * scale];
     return {
       id: `${theme}-pack-prop-${index + 1}`,
       asset: worldPackAsset(file),
       frame: [0, 0, pixels[0], pixels[1]],
       atlasSize: pixels,
-      position: [x, authoredY ?? size[1] / 2 - 0.08, -2.2 - (index % 3) * 0.08],
-      size,
-      mirrored: index % 4 === 3,
-      opacity: 0.96
+      position: [x, authoredY ?? scaledSize[1] / 2 - 0.08, -2.18 - depthTier * 0.16],
+      size: scaledSize,
+      mirrored: index % 4 === 3 || index % 7 === 5,
+      opacity: authoredOpacity ?? [0.98, 0.94, 0.9, 0.86][depthTier]
     };
   });
 }

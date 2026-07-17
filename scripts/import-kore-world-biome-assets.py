@@ -222,7 +222,7 @@ def import_world_packs(archive_dir: Path | None) -> None:
 
     cave_pack = next(item for item in packs_manifest if item["id"] == "warped-caves")
     ember_assets = []
-    for source_name in ("background.png", "middleground.png", "walls.png", "tileset.png"):
+    for source_name in ("background.png", "middleground.png", "walls.png", "tileset.png", "gate.png", "stalactite.png", "stone-head.png"):
         destination = WORLD_ROOT / "emberdeep" / source_name
         size = palette_variant(WORLD_ROOT / "warped-caves" / source_name, destination, (42, 8, 15), (255, 100, 50))
         relative = destination.relative_to(WORLD_ROOT).as_posix()
@@ -233,7 +233,10 @@ def import_world_packs(archive_dir: Path | None) -> None:
 
     for derived_id, source_id, source_names, low, high in (
         ("tournament-gold", "fort-illusion", ("mountains.png", "back.png", "front.png", "tileset.png", "flag.png", "banner.png", "door.png"), (30, 19, 18), (255, 224, 113)),
-        ("sunscar-pixel", "rocky-pass", ("back.png", "middle.png", "near.png", "tileset.png"), (63, 30, 25), (255, 216, 132)),
+        ("sunscar-pixel", "rocky-pass", ("back.png", "middle.png", "near.png", "tileset.png", "crystal-1.png", "crystal-2.png"), (63, 30, 25), (255, 216, 132)),
+        ("frostpeak-details", "seasonal", ("house.png",), (78, 122, 160), (238, 251, 255)),
+        ("tournament-cathedral", "gothic-church", ("backgrounds.png", "column.png", "tileset.png"), (28, 20, 17), (255, 224, 113)),
+        ("sunscar-settlement", "gothic-town", ("house-a.png", "house-b.png", "house-c.png", "wagon.png", "well.png", "street-lamp.png"), (67, 34, 25), (255, 211, 125)),
     ):
         assets = []
         for source_name in source_names:
@@ -254,6 +257,9 @@ def import_world_packs(archive_dir: Path | None) -> None:
     credit_rows.append("| emberdeep | Ansimuz / K.O.R.E. | CC0-1.0 | Palette derivative of Warped Caves |")
     credit_rows.append("| tournament-gold | Ansimuz / K.O.R.E. | CC0-1.0 | Palette derivative of Fort of Illusion |")
     credit_rows.append("| sunscar-pixel | Ansimuz / K.O.R.E. | CC0-1.0 | Palette derivative of Rocky Pass |")
+    credit_rows.append("| frostpeak-details | GrafxKid / K.O.R.E. | CC0-1.0 | Palette derivative of Seasonal Tilesets |")
+    credit_rows.append("| tournament-cathedral | Ansimuz / K.O.R.E. | CC0-1.0 | Palette derivative of GothicVania Church |")
+    credit_rows.append("| sunscar-settlement | Ansimuz / K.O.R.E. | CC0-1.0 | Palette derivative of GothicVania Town |")
     (WORLD_ROOT / "CREDITS.md").write_text("\n".join(credit_rows) + "\n")
     print(f"Imported {len(integrity)} reviewed world assets from {len(PACKS)} CC0 packs")
 

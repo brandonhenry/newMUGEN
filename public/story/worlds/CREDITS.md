@@ -26,3 +26,6 @@ Only reviewed CC0 assets are shipped. Source archives are checksum-pinned and ex
 | emberdeep | Ansimuz / K.O.R.E. | CC0-1.0 | Palette derivative of Warped Caves |
 | tournament-gold | Ansimuz / K.O.R.E. | CC0-1.0 | Palette derivative of Fort of Illusion |
 | sunscar-pixel | Ansimuz / K.O.R.E. | CC0-1.0 | Palette derivative of Rocky Pass |
+| frostpeak-details | GrafxKid / K.O.R.E. | CC0-1.0 | Palette derivative of Seasonal Tilesets |
+| tournament-cathedral | Ansimuz / K.O.R.E. | CC0-1.0 | Palette derivative of GothicVania Church |
+| sunscar-settlement | Ansimuz / K.O.R.E. | CC0-1.0 | Palette derivative of GothicVania Town |
