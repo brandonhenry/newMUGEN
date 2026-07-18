@@ -25,7 +25,7 @@ import { StoryAvatarRig, type StoryAvatarPose } from './StoryAvatarRig';
 import { joinStoryParty, leaveStoryParty, updateStoryPartyRoom } from './storyParty';
 import { createStoryWorldProps } from './worldEnvironments';
 import { createAdventureSurfaceHub, firstStoryAdventureSurfaceMap, getStoryAdventureSurfaceMap } from './adventureSurfaceMaps';
-import { STORY_NPC_SPRITES, STORY_NPC_VISIBLE_WORLD_HEIGHT, storyNpcPlaneSize } from './adventureNpcs';
+import { STORY_NPC_SPRITES, STORY_NPC_VISIBLE_WORLD_HEIGHT, storyNpcFootContactSinkY, storyNpcPlaneSize } from './adventureNpcs';
 import { adventureUtcDate, getStoryDailyActivities } from './adventureObjectives';
 import type { AdventureMusicContext, AdventureMusicTrackDefinition, HubDestination, StoryAdventureRunGraph, StoryAttackInput, StoryAvatarSet, StoryEnemyId, StoryEnemySpawnDefinition, StoryEnemyTier, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryMountDefinition, StoryMountId, StoryNpcDefinition, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StorySpriteProjectileDefinition, StoryWorldBackdropLayerDefinition, StoryWorldId, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
 
@@ -568,6 +568,7 @@ function AdventureNpcVisual({ npc, attackEvent, playerPosition, maxHealth, reduc
   const frameHeight = sprite?.frameSize.height ?? 192;
   const baseline = sprite?.frameSize.baseline ?? 188;
   const footAnchorFromBottom = (frameHeight - baseline) / frameHeight;
+  const footContactSinkY = storyNpcFootContactSinkY(planeSize, frameHeight, surfaceInsetY);
   useMemo(() => textures.forEach((texture) => configurePixelTexture(texture)), [textures]);
   useEffect(() => () => {
     if (counterTimer.current !== null) window.clearTimeout(counterTimer.current);
@@ -616,7 +617,7 @@ function AdventureNpcVisual({ npc, attackEvent, playerPosition, maxHealth, reduc
     if (textureIndex >= 0) materialRef.current.map = textures[textureIndex];
   });
   return <group position={[npc.position[0], npc.position[1], -0.05]}>
-    <mesh position={[0, storyGroundAnchoredPlaneCenterY(planeSize, footAnchorFromBottom) - surfaceInsetY, 0]}><planeGeometry args={[planeSize, planeSize]} /><meshBasicMaterial ref={materialRef} map={textures[0]} transparent alphaTest={0.02} depthWrite={false} toneMapped={false} /></mesh>
+    <mesh position={[0, storyGroundAnchoredPlaneCenterY(planeSize, footAnchorFromBottom) - surfaceInsetY - footContactSinkY, 0]}><planeGeometry args={[planeSize, planeSize]} /><meshBasicMaterial ref={materialRef} map={textures[0]} transparent alphaTest={0.02} depthWrite={false} toneMapped={false} /></mesh>
     {phase !== 'idle' && <Html center position={[0, STORY_NPC_VISIBLE_WORLD_HEIGHT - STORY_GROUNDED_ACTOR_CENTER_Y + 0.42, 0.6]} className="story-destination-sign-shell"><div className="story-destination-sign is-nearby"><strong>{phase === 'protect' ? npc.warningBark : `${npc.displayName} counters!`}</strong></div></Html>}
   </group>;
 }

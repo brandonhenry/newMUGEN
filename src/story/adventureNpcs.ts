@@ -98,6 +98,10 @@ export function storyNpcPlaneSize(sprite: StoryNpcSpriteManifest | undefined): n
   return STORY_NPC_VISIBLE_WORLD_HEIGHT * sprite.frameSize.height / Math.max(1, contentHeight);
 }
 
+export function storyNpcFootContactSinkY(planeSize: number, frameHeight: number, surfaceInsetY = 0): number {
+  return Math.max(planeSize / Math.max(1, frameHeight), Math.max(0, surfaceInsetY));
+}
+
 export function storyNpcsForMap(mapId: string) {
   return STORY_NPCS.filter((entry) => entry.mapId === mapId);
 }

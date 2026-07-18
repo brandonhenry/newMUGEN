@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_WORLDS } from './adventureWorlds';
 import { STORY_ADVENTURE_SURFACE_MAPS } from './adventureSurfaceMaps';
-import { STORY_NPCS, STORY_NPC_SPRITES, STORY_NPC_VISIBLE_WORLD_HEIGHT, storyNpcPlaneSize } from './adventureNpcs';
+import { STORY_NPCS, STORY_NPC_SPRITES, STORY_NPC_VISIBLE_WORLD_HEIGHT, storyNpcFootContactSinkY, storyNpcPlaneSize } from './adventureNpcs';
 import { storyAvatarGroundingOffsetForWorld, storyAvatarVisibleFootWorldY, storyGroundAnchoredPlaneCenterY } from './actorGrounding';
 import { adventureRunIsReachable, generateAdventureRunGraph } from './adventureExploration';
 import { storyPlatformSurfacePlacement } from './platformGrounding';
@@ -59,12 +59,16 @@ describe('authored Adventure surface campaign', () => {
           const sprite = STORY_NPC_SPRITES[npc.spriteId];
           const planeSize = storyNpcPlaneSize(sprite);
           const footAnchorFromBottom = (sprite.frameSize.height - sprite.frameSize.baseline) / sprite.frameSize.height;
+          const footContactSinkY = storyNpcFootContactSinkY(planeSize, sprite.frameSize.height, placement.surfaceInsetY);
           const npcFootY = npc.position[1]
             + storyGroundAnchoredPlaneCenterY(planeSize, footAnchorFromBottom)
             - placement.surfaceInsetY
+            - footContactSinkY
             - planeSize / 2
             + planeSize * footAnchorFromBottom;
-          expect(npcFootY, `${map.id}/${npc.id}`).toBeCloseTo(tileTopY, 8);
+          expect(npcFootY, `${map.id}/${npc.id}`).toBeCloseTo(tileTopY - footContactSinkY, 8);
+          expect(npcFootY, `${map.id}/${npc.id} contact`).toBeLessThan(tileTopY);
+          expect(npcFootY, `${map.id}/${npc.id} contact`).toBeGreaterThan(tileTopY - 0.06);
         }
       }
     }
