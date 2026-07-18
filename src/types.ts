@@ -1322,6 +1322,7 @@ export type GameSettings = {
     hitSfx: number;
     muted: boolean;
     menuMusic: boolean;
+    adventureMusic: boolean;
     bgmTrackIndex: number;
   };
 };

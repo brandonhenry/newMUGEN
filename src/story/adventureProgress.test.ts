@@ -1,17 +1,23 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import {
   STORY_ADVENTURE_PROGRESS_KEY,
+  STORY_ROUTE_COIN_CAP,
   allocateAdventureStat,
+  awardRouteCoins,
   awardMountMastery,
   awardAdventureExperience,
   beginAdventureVisit,
+  claimAdventureCache,
+  claimAdventureDaily,
   canRespecAdventureStats,
   discoverAdventureLandmark,
   discoverAdventureVista,
+  collectAdventureRelic,
   experienceToNextLevel,
   getAdventureDerivedStats,
   makeDefaultAdventureProgress,
   readAdventureProgress,
+  restoreAdventureShortcut,
   respecAdventureStats,
   sanitizeAdventureProgress,
   unlockAdventureMount,
@@ -35,13 +41,13 @@ describe('story adventure progression', () => {
     expect(sanitized.unspentPoints).toBe(0);
     expect(sanitized.xp).toBeLessThan(experienceToNextLevel(3));
     expect(sanitized.lifetimeDefeats).toBe(0);
-    expect(sanitized.version).toBe(2);
+    expect(sanitized.version).toBe(3);
     expect(sanitized.discoveries.biomes).toEqual([]);
   });
 
   it('migrates V1 fields and persists discovery and mount mastery', () => {
     const migrated = sanitizeAdventureProgress({ version: 1, level: 8, xp: 12, stats: { power: 3 }, lifetimeDefeats: 4 });
-    expect(migrated).toMatchObject({ version: 2, level: 8, xp: 12, lifetimeDefeats: 4 });
+    expect(migrated).toMatchObject({ version: 3, level: 8, xp: 12, lifetimeDefeats: 4 });
     const visiting = beginAdventureVisit(migrated, 'greenhollow');
     expect(visiting.discoveries.biomes).toContain('greenhollow');
     expect(visiting.visitCounters.greenhollow).toBe(1);
@@ -53,6 +59,22 @@ describe('story adventure progression', () => {
     const ranked = awardMountMastery(unlocked, 'verdant-stag', 20_000);
     expect(ranked.mounts['verdant-stag']?.masteryRank).toBe(10);
     expect(ranked.mounts['verdant-stag']?.variants).toEqual([4, 7, 10]);
+  });
+
+  it('caps coins and makes caches, relics, dailies, and restoration one-time', () => {
+    let progress = awardRouteCoins(makeDefaultAdventureProgress(), STORY_ROUTE_COIN_CAP + 500);
+    expect(progress.routeCoins).toBe(STORY_ROUTE_COIN_CAP);
+    const cache = claimAdventureCache(progress, 'green-cache-1', 40);
+    expect(cache.claimed).toBe(true);
+    expect(claimAdventureCache(cache.progress, 'green-cache-1', 40).claimed).toBe(false);
+    progress = collectAdventureRelic(cache.progress, 'green-relic-1');
+    expect(collectAdventureRelic(progress, 'green-relic-1').relics).toHaveLength(1);
+    const restored = restoreAdventureShortcut(progress, 'green-shortcut');
+    expect(restored.restored).toBe(true);
+    expect(restored.progress.routeCoins).toBe(STORY_ROUTE_COIN_CAP - 100);
+    const daily = claimAdventureDaily(restored.progress, '2026-07-18', 'green-hunt', 60);
+    expect(daily.claimed).toBe(true);
+    expect(claimAdventureDaily(daily.progress, '2026-07-18', 'green-hunt', 60).claimed).toBe(false);
   });
 
   it('levels to 100, awards one point per level, and applies insight XP', () => {

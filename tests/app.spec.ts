@@ -119,6 +119,15 @@ test('Play creates a story avatar and enters K.O.R.E. Central', async ({ page })
   await expect(hub).toHaveAttribute('data-hub-ready', 'true', { timeout: 15_000 });
   await expect(hub).toContainText('K.O.R.E. Central');
   await expect(hub).toContainText('NOVA 7');
+  await expect(page.locator('.local-bgm-player')).toHaveCount(0);
+  await expect(page.getByTestId('stage-ambience-player')).toHaveCount(0);
+  await expect(page.getByTestId('adventure-music-player')).toHaveAttribute('data-active', 'true');
+  await expect.poll(() => page.evaluate(() => {
+    const adventureSources = [...document.querySelectorAll<HTMLAudioElement>('.adventure-music-player audio')]
+      .map((element) => element.currentSrc || element.src)
+      .filter(Boolean);
+    return adventureSources.length > 0 && adventureSources.every((source) => source.includes('/story/audio/stimmerman/'));
+  }), { timeout: 10_000 }).toBe(true);
   await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.profile.v4') ?? 'null')?.avatar?.name)).toBe('NOVA 7');
   await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.profile.v4') ?? 'null')?.avatar?.avatarSet)).toBe('crimson-ranger');
   await expect(page.getByTestId('story-destination-story-gate')).toContainText('World Route');
@@ -165,8 +174,8 @@ test('adventure combat levels the player and Central Route shrine respecs stats'
       updatedAt: 1,
       reviewedAt: 1
     }));
-    window.localStorage.setItem('kore.story.adventure.v2', JSON.stringify({
-      version: 2,
+    window.localStorage.setItem('kore.story.adventure.v3', JSON.stringify({
+      version: 3,
       level: 1,
       xp: 99,
       unspentPoints: 0,
@@ -195,14 +204,11 @@ test('adventure combat levels the player and Central Route shrine respecs stats'
   await expect(hub).toHaveAttribute('data-world', 'emberdeep', { timeout: 4_000 });
   await expect(page.getByTestId('story-door-transition')).toBeHidden({ timeout: 8_000 });
 
-  await page.keyboard.press('m');
-  await page.getByTestId('story-adventure-map').getByRole('button', { name: /Entry Waystone/ }).click();
-  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 3_000 }).toBeLessThan(-250);
-  await page.keyboard.down('Shift');
+  await moveUntilPortal(page, hub, 'ArrowRight', 'surface-map:emberdeep-field-a', 16_000, true);
+  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 3_000 }).toBeLessThan(-40);
   await page.keyboard.down('ArrowRight');
-  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 12_000 }).toBeGreaterThan(-174);
+  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 5_000 }).toBeGreaterThan(-37);
   await page.keyboard.up('ArrowRight');
-  await page.keyboard.up('Shift');
   await page.waitForTimeout(600);
   let damageFeedbackSeen = false;
   for (let hit = 0; hit < 10; hit += 1) {
@@ -214,22 +220,21 @@ test('adventure combat levels the player and Central Route shrine respecs stats'
     const damageFeedback = page.locator('[data-testid^="story-enemy-damage-"]:visible');
     if (await damageFeedback.count() > 0) damageFeedbackSeen = true;
     await page.waitForTimeout(550);
-    if (await page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v2') ?? 'null')?.level) === 2) break;
+    if (await page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v3') ?? 'null')?.level) === 2) break;
   }
   expect(damageFeedbackSeen).toBe(true);
-  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v2') ?? 'null')?.level), { timeout: 5_000 }).toBe(2);
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v3') ?? 'null')?.level), { timeout: 5_000 }).toBe(2);
   await expect(hub).toHaveAttribute('data-player-level', '2');
 
   await page.keyboard.press('p');
   const stats = page.getByTestId('story-adventure-stats');
   await expect(stats).toBeVisible();
   await stats.getByRole('button', { name: 'Add point to Power' }).click();
-  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v2') ?? 'null')?.stats?.power)).toBe(1);
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v3') ?? 'null')?.stats?.power)).toBe(1);
   await stats.getByRole('button', { name: 'Close adventure stats' }).click();
 
-  await page.keyboard.press('m');
-  await page.getByTestId('story-adventure-map').getByRole('button', { name: /Entry Waystone/ }).click();
-  await moveUntilPortal(page, hub, 'ArrowLeft', 'emberdeep-return-west', 9_000, true);
+  await moveUntilPortal(page, hub, 'ArrowLeft', 'surface-map:emberdeep-arrival', 5_000, true);
+  await moveUntilPortal(page, hub, 'ArrowLeft', 'emberdeep-return-route', 16_000, true);
   await expect(page.getByTestId('story-door-transition')).toBeVisible();
   await expect(hub).toHaveAttribute('data-world', 'world-route', { timeout: 4_000 });
   await expect(page.getByTestId('story-door-transition')).toBeHidden({ timeout: 4_000 });
@@ -237,7 +242,7 @@ test('adventure combat levels the player and Central Route shrine respecs stats'
   await page.getByRole('button', { name: 'Recalibrate', exact: true }).click();
   await expect(stats).toBeVisible();
   await stats.getByRole('button', { name: 'Reset all points' }).click();
-  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v2') ?? 'null')?.stats?.power)).toBe(0);
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v3') ?? 'null')?.stats?.power)).toBe(0);
 });
 
 test('saved story profiles enter Arcade World, retain jump controls, and launch a cabinet', async ({ page }) => {

@@ -1,11 +1,13 @@
 import { STORY_MOUNTS } from './adventureExploration';
 import type { StoryAdventureWorldId, StoryMountId } from './types';
 
-export const STORY_ADVENTURE_PROGRESS_VERSION = 2 as const;
-export const STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v2';
-export const LEGACY_STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v1';
+export const STORY_ADVENTURE_PROGRESS_VERSION = 3 as const;
+export const STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v3';
+export const LEGACY_STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v2';
+export const ORIGINAL_STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v1';
 export const STORY_ADVENTURE_MAX_LEVEL = 100;
 export const STORY_ADVENTURE_STAT_CAP = 25;
+export const STORY_ROUTE_COIN_CAP = 99_999;
 
 export const STORY_ADVENTURE_STAT_KEYS = ['power', 'vitality', 'agility', 'guard', 'critical', 'insight'] as const;
 export type StoryAdventureStatKey = typeof STORY_ADVENTURE_STAT_KEYS[number];
@@ -28,7 +30,7 @@ export type StoryMountProgress = {
 };
 
 export type StoryAdventureProgressV2 = {
-  version: typeof STORY_ADVENTURE_PROGRESS_VERSION;
+  version: 2;
   level: number;
   xp: number;
   unspentPoints: number;
@@ -45,8 +47,22 @@ export type StoryAdventureProgressV2 = {
   visitCounters: Partial<Record<Exclude<StoryAdventureWorldId, 'world-route'>, number>>;
 };
 
+export type StoryAdventureProgressV3 = Omit<StoryAdventureProgressV2, 'version'> & {
+  version: typeof STORY_ADVENTURE_PROGRESS_VERSION;
+  routeCoins: number;
+  relics: string[];
+  claimedCaches: string[];
+  claimedObjectives: string[];
+  dailyClaims: Record<string, string[]>;
+  pinnedDaily?: { date: string; worldId: Exclude<StoryAdventureWorldId, 'world-route'>; activityId: string };
+  restoredShortcuts: string[];
+  upgradedWaystones: string[];
+  discoveredSurfaceMaps: string[];
+  depthGenerationVersion: number;
+};
+
 /** @deprecated Kept as a source-compatible alias while callers migrate to V2. */
-export type StoryAdventureProgressV1 = StoryAdventureProgressV2;
+export type StoryAdventureProgressV1 = StoryAdventureProgressV3;
 
 export type StoryAdventureDerivedStats = {
   maxHealth: number;
@@ -93,13 +109,22 @@ export function makeDefaultAdventureProgress(): StoryAdventureProgressV1 {
     lifetimeDefeats: 0,
     discoveries: { biomes: [], landmarks: {}, waystones: [], vistas: [], sanctuaries: [] },
     mounts: {},
-    visitCounters: {}
+    visitCounters: {},
+    routeCoins: 0,
+    relics: [],
+    claimedCaches: [],
+    claimedObjectives: [],
+    dailyClaims: {},
+    restoredShortcuts: [],
+    upgradedWaystones: [],
+    discoveredSurfaceMaps: [],
+    depthGenerationVersion: 2
   };
 }
 
 export function sanitizeAdventureProgress(value: unknown): StoryAdventureProgressV1 {
   if (!value || typeof value !== 'object') return makeDefaultAdventureProgress();
-  const record = value as Partial<StoryAdventureProgressV2> & Partial<LegacyStoryAdventureProgressV1>;
+  const record = value as Partial<StoryAdventureProgressV3> & Partial<StoryAdventureProgressV2> & Partial<LegacyStoryAdventureProgressV1>;
   const level = clamp(finiteInteger(record.level, 1), 1, STORY_ADVENTURE_MAX_LEVEL);
   const rawStats = record.stats && typeof record.stats === 'object' ? record.stats as Partial<StoryAdventureStats> : {};
   const stats = STORY_ADVENTURE_STAT_KEYS.reduce((result, key) => {
@@ -136,6 +161,10 @@ export function sanitizeAdventureProgress(value: unknown): StoryAdventureProgres
     const count = finiteInteger(record.visitCounters?.[id]);
     return count > 0 ? [[id, count]] : [];
   })) as StoryAdventureProgressV2['visitCounters'];
+  const dailyClaims = Object.fromEntries(Object.entries(record.dailyClaims && typeof record.dailyClaims === 'object' ? record.dailyClaims : {}).flatMap(([date, claims]) => /^\d{4}-\d{2}-\d{2}$/.test(date) ? [[date, uniqueStrings(claims, 64)]] : []).slice(-14));
+  const pinned = record.pinnedDaily && typeof record.pinnedDaily === 'object' && /^\d{4}-\d{2}-\d{2}$/.test(record.pinnedDaily.date ?? '') && validBiomes.includes(record.pinnedDaily.worldId as Exclude<StoryAdventureWorldId, 'world-route'>) && typeof record.pinnedDaily.activityId === 'string'
+    ? { date: record.pinnedDaily.date, worldId: record.pinnedDaily.worldId as Exclude<StoryAdventureWorldId, 'world-route'>, activityId: record.pinnedDaily.activityId.slice(0, 160) }
+    : undefined;
   return {
     version: STORY_ADVENTURE_PROGRESS_VERSION,
     level,
@@ -151,7 +180,17 @@ export function sanitizeAdventureProgress(value: unknown): StoryAdventureProgres
       sanctuaries: uniqueStrings(rawDiscoveries.sanctuaries)
     },
     mounts,
-    visitCounters
+    visitCounters,
+    routeCoins: clamp(finiteInteger(record.routeCoins), 0, STORY_ROUTE_COIN_CAP),
+    relics: uniqueStrings(record.relics, 24),
+    claimedCaches: uniqueStrings(record.claimedCaches, 256),
+    claimedObjectives: uniqueStrings(record.claimedObjectives, 256),
+    dailyClaims,
+    ...(pinned ? { pinnedDaily: pinned } : {}),
+    restoredShortcuts: uniqueStrings(record.restoredShortcuts, 16),
+    upgradedWaystones: uniqueStrings(record.upgradedWaystones, 64),
+    discoveredSurfaceMaps: uniqueStrings(record.discoveredSurfaceMaps, 64),
+    depthGenerationVersion: Math.max(2, finiteInteger(record.depthGenerationVersion, 2))
   };
 }
 
@@ -159,7 +198,7 @@ export function readAdventureProgress(): StoryAdventureProgressV1 {
   if (typeof window === 'undefined') return makeDefaultAdventureProgress();
   try {
     const current = window.localStorage.getItem(STORY_ADVENTURE_PROGRESS_KEY);
-    const legacy = window.localStorage.getItem(LEGACY_STORY_ADVENTURE_PROGRESS_KEY);
+    const legacy = window.localStorage.getItem(LEGACY_STORY_ADVENTURE_PROGRESS_KEY) ?? window.localStorage.getItem(ORIGINAL_STORY_ADVENTURE_PROGRESS_KEY);
     const sanitized = sanitizeAdventureProgress(JSON.parse(current ?? legacy ?? 'null'));
     if (!current && legacy) window.localStorage.setItem(STORY_ADVENTURE_PROGRESS_KEY, JSON.stringify(sanitized));
     return sanitized;
@@ -289,4 +328,51 @@ export function awardMountMastery(progress: StoryAdventureProgressV1, mountId: S
   }
   const variants = [4, 7, 10].filter((milestone) => rank >= milestone);
   return sanitizeAdventureProgress({ ...current, mounts: { ...current.mounts, [mountId]: { unlocked: true, masteryRank: rank, masteryXp: xp, variants } } });
+}
+
+export function awardRouteCoins(progress: StoryAdventureProgressV1, amount: number) {
+  const current = sanitizeAdventureProgress(progress);
+  return sanitizeAdventureProgress({ ...current, routeCoins: current.routeCoins + Math.max(0, finiteInteger(amount)) });
+}
+
+export function claimAdventureCache(progress: StoryAdventureProgressV1, cacheId: string, rewardCoins: number) {
+  const current = sanitizeAdventureProgress(progress);
+  if (!cacheId || current.claimedCaches.includes(cacheId)) return { progress: current, claimed: false };
+  return { progress: sanitizeAdventureProgress({ ...current, routeCoins: current.routeCoins + Math.max(0, finiteInteger(rewardCoins)), claimedCaches: [...current.claimedCaches, cacheId] }), claimed: true };
+}
+
+export function collectAdventureRelic(progress: StoryAdventureProgressV1, relicId: string) {
+  const current = sanitizeAdventureProgress(progress);
+  if (!relicId || current.relics.includes(relicId)) return current;
+  return sanitizeAdventureProgress({ ...current, relics: [...current.relics, relicId] });
+}
+
+export function discoverAdventureSurfaceMap(progress: StoryAdventureProgressV1, mapId: string) {
+  const current = sanitizeAdventureProgress(progress);
+  if (!mapId || current.discoveredSurfaceMaps.includes(mapId)) return current;
+  return sanitizeAdventureProgress({ ...current, discoveredSurfaceMaps: [...current.discoveredSurfaceMaps, mapId] });
+}
+
+export function restoreAdventureShortcut(progress: StoryAdventureProgressV1, shortcutId: string, cost = 100) {
+  const current = sanitizeAdventureProgress(progress);
+  if (!shortcutId || current.restoredShortcuts.includes(shortcutId) || current.routeCoins < cost) return { progress: current, restored: false };
+  return { progress: sanitizeAdventureProgress({ ...current, routeCoins: current.routeCoins - cost, restoredShortcuts: [...current.restoredShortcuts, shortcutId] }), restored: true };
+}
+
+export function upgradeAdventureWaystone(progress: StoryAdventureProgressV1, waystoneId: string, cost = 250) {
+  const current = sanitizeAdventureProgress(progress);
+  if (!waystoneId || current.upgradedWaystones.includes(waystoneId) || current.routeCoins < cost) return { progress: current, upgraded: false };
+  return { progress: sanitizeAdventureProgress({ ...current, routeCoins: current.routeCoins - cost, upgradedWaystones: [...current.upgradedWaystones, waystoneId] }), upgraded: true };
+}
+
+export function pinAdventureDaily(progress: StoryAdventureProgressV1, date: string, worldId: Exclude<StoryAdventureWorldId, 'world-route'>, activityId: string) {
+  const current = sanitizeAdventureProgress(progress);
+  return sanitizeAdventureProgress({ ...current, pinnedDaily: { date, worldId, activityId } });
+}
+
+export function claimAdventureDaily(progress: StoryAdventureProgressV1, date: string, activityId: string, rewardCoins: number) {
+  const current = sanitizeAdventureProgress(progress);
+  const claims = current.dailyClaims[date] ?? [];
+  if (claims.includes(activityId)) return { progress: current, claimed: false };
+  return { progress: sanitizeAdventureProgress({ ...current, routeCoins: current.routeCoins + rewardCoins, dailyClaims: { ...current.dailyClaims, [date]: [...claims, activityId] } }), claimed: true };
 }

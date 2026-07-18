@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { STORY_ADVENTURE_WORLDS } from './adventureWorlds';
-import { adventureRunIsReachable, createAdventureVisitSeed, electStoryPartyLeader, generateAdventureRunGraph, sanitizeStoryPartyInstance, STORY_DEPTH_ZONE_MAX, STORY_DEPTH_ZONE_MIN, STORY_MAX_ACTIVE_ENEMIES } from './adventureExploration';
+import { adventureRunIsReachable, adventureRunValidationErrors, createAdventureVisitSeed, electStoryPartyLeader, generateAdventureFallbackGraph, generateAdventureRunGraph, sanitizeStoryPartyInstance, STORY_DEPTH_ZONE_MAX, STORY_DEPTH_ZONE_MIN, STORY_MAX_ACTIVE_ENEMIES } from './adventureExploration';
 
 describe('adventure depth generation', () => {
   it('is deterministic, reachable, and contains the required authored structure', () => {
@@ -13,12 +13,24 @@ describe('adventure depth generation', () => {
     expect(first.zones.length).toBeLessThanOrEqual(STORY_DEPTH_ZONE_MAX);
     expect(first.zones.some((zone) => zone.hidden)).toBe(true);
     expect(first.zones.some((zone) => zone.kind === 'sanctuary')).toBe(true);
+    expect(first.zones.filter((zone) => zone.finale)).toHaveLength(1);
+    expect(first.finaleZoneId).not.toBe(first.sanctuaryZoneId);
+    expect(adventureRunValidationErrors(first)).toEqual([]);
     expect(first.zones.filter((zone) => zone.critical).length).toBeGreaterThanOrEqual(4);
     expect(first.zones.filter((zone) => zone.critical).length).toBeLessThanOrEqual(6);
     expect(first.zones.filter((zone) => !zone.critical).length).toBeGreaterThanOrEqual(2);
     expect(first.zones.filter((zone) => !zone.critical).length).toBeLessThanOrEqual(4);
     expect(first.links.some((link) => ['climb', 'ladder', 'lift', 'updraft'].includes(link.traversal))).toBe(true);
     expect(adventureRunIsReachable(first)).toBe(true);
+  });
+
+  it('provides a prevalidated safe chain while preserving a rejected seed', () => {
+    const world = STORY_ADVENTURE_WORLDS.emberdeep;
+    const fallback = generateAdventureFallbackGraph('emberdeep', 'rejected-seed', world.exploration!, ['forced-test']);
+    expect(fallback.seed).toBe('rejected-seed');
+    expect(fallback.usedFallback).toBe(true);
+    expect(fallback.validationFailures).toEqual(['forced-test']);
+    expect(adventureRunValidationErrors(fallback)).toEqual([]);
   });
 
   it('gives underwater rooms air pockets', () => {
@@ -57,7 +69,7 @@ describe('party generation state', () => {
       id: 'party',
       worldId: 'greenhollow',
       seed: 'shared',
-      generationVersion: 1,
+      generationVersion: 2,
       members: [{ sessionId: 'first', joinedAt: 10, lastSeenAt: 1000 }]
     }, 1000)?.leaderSessionId).toBe('first');
     expect(sanitizeStoryPartyInstance({
@@ -65,7 +77,7 @@ describe('party generation state', () => {
       id: 'future-party',
       worldId: 'greenhollow',
       seed: 'shared',
-      generationVersion: 2,
+      generationVersion: 3,
       members: [{ sessionId: 'first', joinedAt: 10, lastSeenAt: 1000 }]
     }, 1000)).toBeNull();
   });

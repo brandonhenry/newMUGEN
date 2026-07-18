@@ -4,7 +4,7 @@ import { keybindableButtonComboIds } from './buttonCombos';
 import { emptyInputFrame } from '../types';
 
 const SETTINGS_STORAGE_KEY = 'kore.gameSettings';
-const settingsVersion = 17;
+const settingsVersion = 18;
 const legacySmallDefaultCursorId = 'Basic/Default/pointer_a.png';
 const actions = Object.keys(emptyInputFrame()) as ActionName[];
 
@@ -131,6 +131,7 @@ export const defaultGameSettings: GameSettings = {
     hitSfx: 1.35,
     muted: false,
     menuMusic: true,
+    adventureMusic: true,
     bgmTrackIndex: 0
   }
 };
@@ -246,6 +247,7 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
       hitSfx: clampNumber(audio.hitSfx, 0, 2, defaults.audio.hitSfx),
       muted: booleanOr(audio.muted, defaults.audio.muted),
       menuMusic: booleanOr(audio.menuMusic, defaults.audio.menuMusic),
+      adventureMusic: booleanOr(audio.adventureMusic, defaults.audio.adventureMusic),
       bgmTrackIndex: Math.round(clampNumber(audio.bgmTrackIndex, 0, 99, defaults.audio.bgmTrackIndex))
     }
   };

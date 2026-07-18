@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import manifestJson from './storyEnemyManifest.json';
-import { STORY_CHALLENGER_IDS, STORY_ENEMY_CATALOG, STORY_ENEMY_FRAME_SIZE, STORY_ENEMY_IDS, STORY_ENEMY_RUNTIME_SCALE, STORY_REGULAR_ENEMY_IDS, validateStoryEnemyCatalog } from './enemyCatalog';
+import { STORY_CHALLENGER_IDS, STORY_ENEMY_CATALOG, STORY_ENEMY_FRAME_SIZE, STORY_ENEMY_IDS, STORY_ENEMY_RUNTIME_SCALE, STORY_REGULAR_ENEMY_IDS, storyEnemyPlaneSize, validateStoryEnemyCatalog } from './enemyCatalog';
 
 type EnemyManifest = {
   enemies: Array<{
@@ -87,6 +87,20 @@ describe('story enemy catalog', () => {
         expect(enemy.damageMultiplier).toBeGreaterThanOrEqual(1.45);
         expect(enemy.xpMultiplier).toBeGreaterThanOrEqual(6);
       }
+    }
+  });
+
+  it('renders humanoids near player height while preserving intentionally small creatures', () => {
+    for (const enemy of Object.values(STORY_ENEMY_CATALOG)) {
+      const idle = enemy.animations.find((animation) => animation.id === 'idle')!.frames[0];
+      const visiblePixels = idle.contentBounds[3] - idle.contentBounds[1];
+      const renderedVisibleHeight = storyEnemyPlaneSize(enemy) * visiblePixels / STORY_ENEMY_FRAME_SIZE.height;
+      expect(renderedVisibleHeight, enemy.id).toBeCloseTo(enemy.visualHeight, 4);
+    }
+    expect(STORY_ENEMY_CATALOG['hollow-bride'].visualHeight).toBeGreaterThan(3.2);
+    expect(STORY_ENEMY_CATALOG['laughing-oni'].visualHeight).toBeGreaterThan(STORY_ENEMY_CATALOG['hollow-bride'].visualHeight);
+    for (const id of ['tide-slime', 'venom-slime', 'volt-slime', 'magma-slime'] as const) {
+      expect(STORY_ENEMY_CATALOG[id].visualHeight).toBeLessThan(1.6);
     }
   });
 });

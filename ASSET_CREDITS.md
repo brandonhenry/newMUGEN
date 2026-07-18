@@ -9,3 +9,9 @@ The starter fighters use 2D source art, then render as chunky sprite-voxel 3D fi
 - `public/characters/astra/sprite-sheet-online.png`: Previous Astra source, "Ninja [Animated]" by DezrasDragons, OpenGameArt, CC0. Source: https://opengameart.org/content/ninja-animated
 - `public/characters/dax/sprite-sheet-online.png`: "Ninja [Animated]" by Morgan McGuire and DezrasDragons, OpenGameArt, CC0/public domain. Source: https://opengameart.org/content/ninja-animated-0
 - `public/stages/dungeon-world/dungeon_warkarma.glb`: Dungeon Warkarma from the Three.js example model collection. Used as the real 3D world around the centered fight ring.
+
+## Adventure Mode Music
+
+Original music composed and produced by **Stimmerman**. Used with permission.
+
+The Adventure soundtrack imports every chapter from *Queen of the Kingdom*, *Pensive Pieces for Orchestra*, *Modern Metroidvania*, *Indie Rock Ambience*, *High Energy DnB*, *Cozy Island Vol. 1*, *Toe-Tappin' Boss Battles*, *Dark N Cozy*, *Electric Ambience*, and *8-Bit Extravaganza*. Full source URLs, chapter times, gameplay tags, file sizes, and SHA-256 checksums are recorded in `public/story/audio/stimmerman/manifest.json`.

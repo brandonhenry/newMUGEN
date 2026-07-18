@@ -11,7 +11,7 @@ import type {
   StoryTraversalKind
 } from './types';
 
-export const STORY_DEPTH_GENERATION_VERSION = 1 as const;
+export const STORY_DEPTH_GENERATION_VERSION = 2 as const;
 export const STORY_DEPTH_ZONE_MIN = 6;
 export const STORY_DEPTH_ZONE_MAX = 10;
 export const STORY_PARTY_MAX_MEMBERS = 4;
@@ -86,12 +86,14 @@ export function generateAdventureRunGraph(
   const maximumCriticalZones = Math.min(6, zoneCount - 2);
   const criticalZoneCount = minimumCriticalZones + Math.floor(random() * (maximumCriticalZones - minimumCriticalZones + 1));
   const criticalLastIndex = criticalZoneCount - 1;
+  const sanctuaryIndex = Math.max(1, criticalLastIndex - 1);
   const templates = exploration.depthTemplates.length > 0 ? exploration.depthTemplates : [{ id: 'fallback-cave', kind: 'cave' as const, weight: 1, traversal: ['walk' as const] }];
   const zones: StoryGeneratedDepthZone[] = [];
   const links: StoryGeneratedDepthLink[] = [];
 
   for (let index = 0; index < zoneCount; index += 1) {
-    const isSanctuary = index === criticalLastIndex;
+    const isSanctuary = index === sanctuaryIndex;
+    const isFinale = index === criticalLastIndex;
     const template = isSanctuary
       ? ({ id: 'sanctuary', kind: 'sanctuary', weight: 1, traversal: [exploration.mountSanctuary.challenge] } satisfies StoryDepthTemplateDefinition)
       : weightedTemplate(templates, random);
@@ -100,6 +102,9 @@ export function generateAdventureRunGraph(
     const width = 28 + Math.floor(random() * 17);
     const minY = template.kind === 'tower' ? -4 : template.underwater ? -12 : -8;
     const maxY = template.kind === 'tower' ? 26 : template.kind === 'cave' || template.kind === 'mine' ? 14 : 18;
+    const previousDifficulty = zones[index - 1]?.difficulty ?? 1;
+    const requestedDifficulty = isSanctuary ? 1 : isFinale ? 5 : template.difficulty ?? Math.min(4, 1 + Math.floor(index / 2)) as 1 | 2 | 3 | 4;
+    const difficulty = (previousDifficulty >= 4 && requestedDifficulty >= 4 ? 3 : requestedDifficulty) as 1 | 2 | 3 | 4 | 5;
     zones.push({
       id: `${worldId}-depth-${index + 1}`,
       index,
@@ -107,10 +112,18 @@ export function generateAdventureRunGraph(
       depth,
       critical: index <= criticalLastIndex,
       hidden: index > criticalLastIndex && index === zoneCount - 1,
+      finale: isFinale,
+      difficulty,
       underwater: Boolean(template.underwater),
       traversal,
       camera: { minX: -width / 2, maxX: width / 2, minY, maxY },
-      airPockets: template.underwater ? [[-width * 0.28, 5], [width * 0.25, 7]] : []
+      airPockets: template.underwater ? [[-width * 0.28, 5], [width * 0.25, 7]] : [],
+      roomTemplateId: template.id,
+      geometrySeed: Math.floor(random() * 0x7fffffff),
+      enemyLanes: template.enemyLanes ?? [[-width * 0.3, -2], [width * 0.08, width * 0.34]],
+      safeSlots: template.safeSlots ?? [[-width * 0.4, 1]],
+      rewardSlots: template.rewardSlots ?? [[width * 0.38, template.kind === 'tower' ? 9 : 1]],
+      rewardAfterChallenge: !isSanctuary
     });
   }
 
@@ -134,15 +147,20 @@ export function generateAdventureRunGraph(
     if (verticalLink) verticalLink.traversal = 'climb';
   }
 
-  return {
+  const graph: StoryAdventureRunGraph = {
     version: STORY_DEPTH_GENERATION_VERSION,
     worldId,
     seed,
     entryZoneId: zones[0].id,
-    sanctuaryZoneId: zones[criticalLastIndex].id,
+    sanctuaryZoneId: zones[sanctuaryIndex].id,
+    finaleZoneId: zones[criticalLastIndex].id,
+    usedFallback: false,
+    validationFailures: [],
     zones,
     links
   };
+  const validationFailures = adventureRunValidationErrors(graph);
+  return validationFailures.length === 0 ? graph : generateAdventureFallbackGraph(worldId, seed, exploration, validationFailures);
 }
 
 export function adventureRunIsReachable(graph: StoryAdventureRunGraph): boolean {
@@ -156,6 +174,57 @@ export function adventureRunIsReachable(graph: StoryAdventureRunGraph): boolean 
     }
   }
   return graph.zones.every((zone) => seen.has(zone.id));
+}
+
+export function adventureRunValidationErrors(graph: StoryAdventureRunGraph): string[] {
+  const failures: string[] = [];
+  if (graph.zones.length < STORY_DEPTH_ZONE_MIN || graph.zones.length > STORY_DEPTH_ZONE_MAX) failures.push('room-count');
+  if (!adventureRunIsReachable(graph)) failures.push('unreachable-room');
+  if (graph.zones.filter((zone) => zone.hidden).length !== 1) failures.push('hidden-branch');
+  if (graph.zones.filter((zone) => zone.id === graph.sanctuaryZoneId && zone.kind === 'sanctuary').length !== 1) failures.push('sanctuary');
+  if (graph.zones.filter((zone) => zone.id === graph.finaleZoneId && zone.finale).length !== 1) failures.push('finale');
+  if (graph.zones.some((zone) => zone.underwater && zone.airPockets.length === 0)) failures.push('air-pockets');
+  if (graph.zones.some((zone) => zone.kind !== 'sanctuary' && !zone.rewardAfterChallenge)) failures.push('reward-order');
+  const critical = graph.zones.filter((zone) => zone.critical).sort((left, right) => left.index - right.index);
+  if (critical.some((zone, index) => index > 0 && zone.difficulty >= 4 && critical[index - 1].difficulty >= 4)) failures.push('consecutive-high-intensity');
+  return failures;
+}
+
+export function generateAdventureFallbackGraph(
+  worldId: Exclude<StoryAdventureWorldId, 'world-route'>,
+  seed: string,
+  exploration: StoryAdventureExplorationDefinition,
+  validationFailures: string[] = ['forced-fallback']
+): StoryAdventureRunGraph {
+  const challenge = exploration.mountSanctuary.challenge;
+  const zones: StoryGeneratedDepthZone[] = Array.from({ length: 6 }, (_, index) => {
+    const sanctuary = index === 2;
+    const finale = index === 3;
+    const hidden = index === 5;
+    return {
+      id: `${worldId}-safe-${index + 1}`,
+      index,
+      kind: sanctuary ? 'sanctuary' : index === 4 ? 'grotto' : 'cave',
+      depth: index <= 3 ? index : index - 3,
+      critical: index <= 3,
+      hidden,
+      finale,
+      difficulty: (sanctuary ? 1 : finale ? 5 : index === 1 ? 2 : 1) as 1 | 2 | 3 | 4 | 5,
+      underwater: false,
+      traversal: index === 2 ? challenge : index === 1 ? 'climb' : 'walk',
+      camera: { minX: -18, maxX: 18, minY: -6, maxY: 14 },
+      airPockets: [],
+      roomTemplateId: sanctuary ? 'safe-sanctuary' : finale ? 'safe-finale' : 'safe-cave',
+      geometrySeed: hashString(`${seed}:fallback:${index}`),
+      enemyLanes: [[-8, -2], [3, 9]],
+      safeSlots: [[-14, 1]],
+      rewardSlots: [[14, 1]],
+      rewardAfterChallenge: !sanctuary
+    };
+  });
+  const pairs = [[0, 1], [1, 2], [2, 3], [1, 4], [2, 5]] as const;
+  const links = pairs.map(([from, to]) => ({ id: `${zones[from].id}--${zones[to].id}`, from: zones[from].id, to: zones[to].id, traversal: zones[to].traversal }));
+  return { version: STORY_DEPTH_GENERATION_VERSION, worldId, seed, entryZoneId: zones[0].id, sanctuaryZoneId: zones[2].id, finaleZoneId: zones[3].id, usedFallback: true, validationFailures, zones, links };
 }
 
 export function storyDepthZoneLabel(kind: StoryDepthZoneKind) {

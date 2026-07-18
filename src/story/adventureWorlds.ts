@@ -3,6 +3,8 @@ import { STORY_GROUNDED_ACTOR_CENTER_Y } from './actorGrounding';
 import { createStoryWorldEnvironment, createStoryWorldProps } from './worldEnvironments';
 import { STORY_MOUNTS, STORY_WORLD_MOUNT } from './adventureExploration';
 import { getStoryEnemyDefinition } from './enemyCatalog';
+import { STORY_STARTER_NPCS } from './adventureNpcs';
+import { STORY_ADVENTURE_SURFACE_MAPS } from './adventureSurfaceMaps';
 import type {
   StoryAdventureWorldId,
   StoryEnemySpawnDefinition,
@@ -59,6 +61,8 @@ const WORLD_ROUTE: StoryHubDefinition = {
     routeGate('greenhollow', -62), routeGate('thornwood', -46), routeGate('ironroot', -30), routeGate('bonevault', -14),
     routeGate('emberdeep', 14), routeGate('frostpeak', 30), routeGate('sunscar', 46), routeGate('skyglass', 62),
     { id: 'route-respec-shrine', label: 'Recalibration Shrine', subtitle: 'Heal and reset stat points', destination: 'world-route', position: [0, 1.25], size: [2.2, 2.5], accent: '#ffe071', kind: 'shrine' },
+    ...STORY_STARTER_NPCS.map((npc) => ({ id: `npc:${npc.id}`, label: npc.displayName, subtitle: npc.bark, destination: 'world-route' as const, position: npc.position, size: [1.4, 2] as [number, number], accent: '#ffe071', kind: 'npc' as const })),
+    { id: 'restoration:route-board', label: 'Route Restoration Board', subtitle: 'Review regional reconstruction projects', destination: 'world-route', position: [25, 1.1], size: [1.8, 2.2], accent: '#d9a066', kind: 'restoration' },
     { id: 'route-central-return-east', label: 'K.O.R.E. Central', subtitle: 'Express return to the main hub', destination: 'central', position: [87.5, 1.7], size: [2.8, 3.4], accent: '#2ee6ff', kind: 'adventure-gate' }
   ],
   landmarks: [
@@ -71,7 +75,10 @@ const WORLD_ROUTE: StoryHubDefinition = {
     landmark('route-east-outlook', 'East Outlook', 'A quiet view over every road', 76, 6.2, 14, 8, '#8ee8ff', 'secret')
   ],
   props: createStoryWorldProps('route', -90, 90),
-  enemySpawns: []
+  enemySpawns: [],
+  npcs: STORY_STARTER_NPCS,
+  interactables: [{ id: 'route-board', kind: 'restoration', label: 'Route Restoration Board', subtitle: 'Review regional reconstruction projects', position: [25, 1.1] }],
+  musicPhase: 'social'
 };
 
 type RegionInput = {
@@ -267,6 +274,8 @@ export const STORY_ADVENTURE_WORLDS: Record<StoryAdventureWorldId, StoryHubDefin
     landmarks: [landmark('sky-landing', 'Cloud Landing', 'The first stones float just above the route', -63, 5.8, 15, 8, '#c8f7ff'), landmark('sky-bridge', 'Crystal Bridge', 'Light holds the fractured span together', -34, 6.8, 17, 9, '#8ee8ff'), landmark('sky-tower', 'Broken Tower', 'Its upper floors orbit the ruin', 0, 8, 17, 11, '#ff83d1', 'vista'), landmark('sky-gauntlet', 'Trap Gallery', 'Ancient defenses still count every step', 34, 5.7, 16, 8, '#ffe071', 'lore'), landmark('sky-sanctum', 'Glass Sanctum', 'A quiet room above the storm', 63, 7.1, 15, 9, '#ffffff', 'secret')]
   })
 };
+
+for (const id of STORY_ADVENTURE_REGION_IDS) STORY_ADVENTURE_WORLDS[id].surfaceMaps = STORY_ADVENTURE_SURFACE_MAPS[id];
 
 export const STORY_WORLDS: Record<StoryWorldId, StoryHubDefinition> = { ...STORY_MODE_WORLDS, ...STORY_ADVENTURE_WORLDS };
 

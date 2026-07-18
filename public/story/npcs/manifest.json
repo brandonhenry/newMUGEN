@@ -1,0 +1,2661 @@
+{
+  "version": 1,
+  "style": "kore-adventure-npc-v1",
+  "npcs": [
+    {
+      "id": "mina-quill",
+      "sheetPath": "/story/npcs/generated/mina-quill-sheet.png",
+      "previewPath": "/story/npcs/characters/mina-quill/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/mina-quill/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        67,
+        36,
+        124,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/mina-quill/idle/01.png",
+            "/story/npcs/characters/mina-quill/idle/02.png",
+            "/story/npcs/characters/mina-quill/idle/03.png",
+            "/story/npcs/characters/mina-quill/idle/04.png",
+            "/story/npcs/characters/mina-quill/idle/05.png",
+            "/story/npcs/characters/mina-quill/idle/06.png",
+            "/story/npcs/characters/mina-quill/idle/07.png",
+            "/story/npcs/characters/mina-quill/idle/08.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/mina-quill/dialogue/01.png",
+            "/story/npcs/characters/mina-quill/dialogue/02.png",
+            "/story/npcs/characters/mina-quill/dialogue/03.png",
+            "/story/npcs/characters/mina-quill/dialogue/04.png",
+            "/story/npcs/characters/mina-quill/dialogue/05.png",
+            "/story/npcs/characters/mina-quill/dialogue/06.png",
+            "/story/npcs/characters/mina-quill/dialogue/07.png",
+            "/story/npcs/characters/mina-quill/dialogue/08.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/mina-quill/walk/01.png",
+            "/story/npcs/characters/mina-quill/walk/02.png",
+            "/story/npcs/characters/mina-quill/walk/03.png",
+            "/story/npcs/characters/mina-quill/walk/04.png",
+            "/story/npcs/characters/mina-quill/walk/05.png",
+            "/story/npcs/characters/mina-quill/walk/06.png",
+            "/story/npcs/characters/mina-quill/walk/07.png",
+            "/story/npcs/characters/mina-quill/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/mina-quill/protect/01.png",
+            "/story/npcs/characters/mina-quill/protect/02.png",
+            "/story/npcs/characters/mina-quill/protect/03.png",
+            "/story/npcs/characters/mina-quill/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/mina-quill/counter/01.png",
+            "/story/npcs/characters/mina-quill/counter/02.png",
+            "/story/npcs/characters/mina-quill/counter/03.png",
+            "/story/npcs/characters/mina-quill/counter/04.png",
+            "/story/npcs/characters/mina-quill/counter/05.png",
+            "/story/npcs/characters/mina-quill/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "user-supplied",
+        "sha256": "e6d410e995569cc2ca1b2af4693df8b72695c85fd5796f7f540da86f1d38997f"
+      }
+    },
+    {
+      "id": "hana-rook",
+      "sheetPath": "/story/npcs/generated/hana-rook-sheet.png",
+      "previewPath": "/story/npcs/characters/hana-rook/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/hana-rook/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        68,
+        64,
+        124,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/hana-rook/idle/01.png",
+            "/story/npcs/characters/hana-rook/idle/02.png",
+            "/story/npcs/characters/hana-rook/idle/03.png",
+            "/story/npcs/characters/hana-rook/idle/04.png",
+            "/story/npcs/characters/hana-rook/idle/05.png",
+            "/story/npcs/characters/hana-rook/idle/06.png",
+            "/story/npcs/characters/hana-rook/idle/07.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/hana-rook/dialogue/01.png",
+            "/story/npcs/characters/hana-rook/dialogue/02.png",
+            "/story/npcs/characters/hana-rook/dialogue/03.png",
+            "/story/npcs/characters/hana-rook/dialogue/04.png",
+            "/story/npcs/characters/hana-rook/dialogue/05.png",
+            "/story/npcs/characters/hana-rook/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/hana-rook/walk/01.png",
+            "/story/npcs/characters/hana-rook/walk/02.png",
+            "/story/npcs/characters/hana-rook/walk/03.png",
+            "/story/npcs/characters/hana-rook/walk/04.png",
+            "/story/npcs/characters/hana-rook/walk/05.png",
+            "/story/npcs/characters/hana-rook/walk/06.png",
+            "/story/npcs/characters/hana-rook/walk/07.png",
+            "/story/npcs/characters/hana-rook/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/hana-rook/protect/01.png",
+            "/story/npcs/characters/hana-rook/protect/02.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/hana-rook/counter/01.png",
+            "/story/npcs/characters/hana-rook/counter/02.png",
+            "/story/npcs/characters/hana-rook/counter/03.png",
+            "/story/npcs/characters/hana-rook/counter/04.png",
+            "/story/npcs/characters/hana-rook/counter/05.png",
+            "/story/npcs/characters/hana-rook/counter/06.png",
+            "/story/npcs/characters/hana-rook/counter/07.png",
+            "/story/npcs/characters/hana-rook/counter/08.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "user-supplied",
+        "sha256": "1f9adef213e53b1c6c9a14443ad522671a7e8e1f99230a4b389073c032678ae9"
+      }
+    },
+    {
+      "id": "tamsin-reed",
+      "sheetPath": "/story/npcs/generated/tamsin-reed-sheet.png",
+      "previewPath": "/story/npcs/characters/tamsin-reed/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/tamsin-reed/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        69,
+        61,
+        122,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/tamsin-reed/idle/01.png",
+            "/story/npcs/characters/tamsin-reed/idle/02.png",
+            "/story/npcs/characters/tamsin-reed/idle/03.png",
+            "/story/npcs/characters/tamsin-reed/idle/04.png",
+            "/story/npcs/characters/tamsin-reed/idle/05.png",
+            "/story/npcs/characters/tamsin-reed/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/tamsin-reed/dialogue/01.png",
+            "/story/npcs/characters/tamsin-reed/dialogue/02.png",
+            "/story/npcs/characters/tamsin-reed/dialogue/03.png",
+            "/story/npcs/characters/tamsin-reed/dialogue/04.png",
+            "/story/npcs/characters/tamsin-reed/dialogue/05.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/tamsin-reed/walk/01.png",
+            "/story/npcs/characters/tamsin-reed/walk/02.png",
+            "/story/npcs/characters/tamsin-reed/walk/03.png",
+            "/story/npcs/characters/tamsin-reed/walk/04.png",
+            "/story/npcs/characters/tamsin-reed/walk/05.png",
+            "/story/npcs/characters/tamsin-reed/walk/06.png",
+            "/story/npcs/characters/tamsin-reed/walk/07.png",
+            "/story/npcs/characters/tamsin-reed/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/tamsin-reed/protect/01.png",
+            "/story/npcs/characters/tamsin-reed/protect/02.png",
+            "/story/npcs/characters/tamsin-reed/protect/03.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/tamsin-reed/counter/01.png",
+            "/story/npcs/characters/tamsin-reed/counter/02.png",
+            "/story/npcs/characters/tamsin-reed/counter/03.png",
+            "/story/npcs/characters/tamsin-reed/counter/04.png",
+            "/story/npcs/characters/tamsin-reed/counter/05.png",
+            "/story/npcs/characters/tamsin-reed/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "user-supplied",
+        "sha256": "17ce0f9ec2a7e680db1f6ad708cf51b50b776e90c6e354c499a8cc8f6afc4e9f"
+      }
+    },
+    {
+      "id": "elio-fen",
+      "sheetPath": "/story/npcs/generated/elio-fen-sheet.png",
+      "previewPath": "/story/npcs/characters/elio-fen/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/elio-fen/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        64,
+        42,
+        127,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/elio-fen/idle/01.png",
+            "/story/npcs/characters/elio-fen/idle/02.png",
+            "/story/npcs/characters/elio-fen/idle/03.png",
+            "/story/npcs/characters/elio-fen/idle/04.png",
+            "/story/npcs/characters/elio-fen/idle/05.png",
+            "/story/npcs/characters/elio-fen/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/elio-fen/dialogue/01.png",
+            "/story/npcs/characters/elio-fen/dialogue/02.png",
+            "/story/npcs/characters/elio-fen/dialogue/03.png",
+            "/story/npcs/characters/elio-fen/dialogue/04.png",
+            "/story/npcs/characters/elio-fen/dialogue/05.png",
+            "/story/npcs/characters/elio-fen/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/elio-fen/walk/01.png",
+            "/story/npcs/characters/elio-fen/walk/02.png",
+            "/story/npcs/characters/elio-fen/walk/03.png",
+            "/story/npcs/characters/elio-fen/walk/04.png",
+            "/story/npcs/characters/elio-fen/walk/05.png",
+            "/story/npcs/characters/elio-fen/walk/06.png",
+            "/story/npcs/characters/elio-fen/walk/07.png",
+            "/story/npcs/characters/elio-fen/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/elio-fen/protect/01.png",
+            "/story/npcs/characters/elio-fen/protect/02.png",
+            "/story/npcs/characters/elio-fen/protect/03.png",
+            "/story/npcs/characters/elio-fen/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/elio-fen/counter/01.png",
+            "/story/npcs/characters/elio-fen/counter/02.png",
+            "/story/npcs/characters/elio-fen/counter/03.png",
+            "/story/npcs/characters/elio-fen/counter/04.png",
+            "/story/npcs/characters/elio-fen/counter/05.png",
+            "/story/npcs/characters/elio-fen/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "658b9d49f3233603c1d0a9fb3bb43f6022a70a91266b2a40afc08fcc559c0255",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for elio-fen; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pippa-brook",
+      "sheetPath": "/story/npcs/generated/pippa-brook-sheet.png",
+      "previewPath": "/story/npcs/characters/pippa-brook/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/pippa-brook/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        52,
+        52,
+        139,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/pippa-brook/idle/01.png",
+            "/story/npcs/characters/pippa-brook/idle/02.png",
+            "/story/npcs/characters/pippa-brook/idle/03.png",
+            "/story/npcs/characters/pippa-brook/idle/04.png",
+            "/story/npcs/characters/pippa-brook/idle/05.png",
+            "/story/npcs/characters/pippa-brook/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/pippa-brook/dialogue/01.png",
+            "/story/npcs/characters/pippa-brook/dialogue/02.png",
+            "/story/npcs/characters/pippa-brook/dialogue/03.png",
+            "/story/npcs/characters/pippa-brook/dialogue/04.png",
+            "/story/npcs/characters/pippa-brook/dialogue/05.png",
+            "/story/npcs/characters/pippa-brook/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/pippa-brook/walk/01.png",
+            "/story/npcs/characters/pippa-brook/walk/02.png",
+            "/story/npcs/characters/pippa-brook/walk/03.png",
+            "/story/npcs/characters/pippa-brook/walk/04.png",
+            "/story/npcs/characters/pippa-brook/walk/05.png",
+            "/story/npcs/characters/pippa-brook/walk/06.png",
+            "/story/npcs/characters/pippa-brook/walk/07.png",
+            "/story/npcs/characters/pippa-brook/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/pippa-brook/protect/01.png",
+            "/story/npcs/characters/pippa-brook/protect/02.png",
+            "/story/npcs/characters/pippa-brook/protect/03.png",
+            "/story/npcs/characters/pippa-brook/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/pippa-brook/counter/01.png",
+            "/story/npcs/characters/pippa-brook/counter/02.png",
+            "/story/npcs/characters/pippa-brook/counter/03.png",
+            "/story/npcs/characters/pippa-brook/counter/04.png",
+            "/story/npcs/characters/pippa-brook/counter/05.png",
+            "/story/npcs/characters/pippa-brook/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "9c203746c304be5a4d6b830cdbd9ea64e181ceab76a656cd46bafd805323a79d",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for pippa-brook; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "bram-appleby",
+      "sheetPath": "/story/npcs/generated/bram-appleby-sheet.png",
+      "previewPath": "/story/npcs/characters/bram-appleby/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/bram-appleby/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        59,
+        43,
+        133,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/bram-appleby/idle/01.png",
+            "/story/npcs/characters/bram-appleby/idle/02.png",
+            "/story/npcs/characters/bram-appleby/idle/03.png",
+            "/story/npcs/characters/bram-appleby/idle/04.png",
+            "/story/npcs/characters/bram-appleby/idle/05.png",
+            "/story/npcs/characters/bram-appleby/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/bram-appleby/dialogue/01.png",
+            "/story/npcs/characters/bram-appleby/dialogue/02.png",
+            "/story/npcs/characters/bram-appleby/dialogue/03.png",
+            "/story/npcs/characters/bram-appleby/dialogue/04.png",
+            "/story/npcs/characters/bram-appleby/dialogue/05.png",
+            "/story/npcs/characters/bram-appleby/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/bram-appleby/walk/01.png",
+            "/story/npcs/characters/bram-appleby/walk/02.png",
+            "/story/npcs/characters/bram-appleby/walk/03.png",
+            "/story/npcs/characters/bram-appleby/walk/04.png",
+            "/story/npcs/characters/bram-appleby/walk/05.png",
+            "/story/npcs/characters/bram-appleby/walk/06.png",
+            "/story/npcs/characters/bram-appleby/walk/07.png",
+            "/story/npcs/characters/bram-appleby/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/bram-appleby/protect/01.png",
+            "/story/npcs/characters/bram-appleby/protect/02.png",
+            "/story/npcs/characters/bram-appleby/protect/03.png",
+            "/story/npcs/characters/bram-appleby/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/bram-appleby/counter/01.png",
+            "/story/npcs/characters/bram-appleby/counter/02.png",
+            "/story/npcs/characters/bram-appleby/counter/03.png",
+            "/story/npcs/characters/bram-appleby/counter/04.png",
+            "/story/npcs/characters/bram-appleby/counter/05.png",
+            "/story/npcs/characters/bram-appleby/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "55b3995d6736f526a86da80e07ee00ab4508111e456802d04a05d04439f492de",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for bram-appleby; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "syl-veyra",
+      "sheetPath": "/story/npcs/generated/syl-veyra-sheet.png",
+      "previewPath": "/story/npcs/characters/syl-veyra/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/syl-veyra/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        50,
+        49,
+        141,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/syl-veyra/idle/01.png",
+            "/story/npcs/characters/syl-veyra/idle/02.png",
+            "/story/npcs/characters/syl-veyra/idle/03.png",
+            "/story/npcs/characters/syl-veyra/idle/04.png",
+            "/story/npcs/characters/syl-veyra/idle/05.png",
+            "/story/npcs/characters/syl-veyra/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/syl-veyra/dialogue/01.png",
+            "/story/npcs/characters/syl-veyra/dialogue/02.png",
+            "/story/npcs/characters/syl-veyra/dialogue/03.png",
+            "/story/npcs/characters/syl-veyra/dialogue/04.png",
+            "/story/npcs/characters/syl-veyra/dialogue/05.png",
+            "/story/npcs/characters/syl-veyra/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/syl-veyra/walk/01.png",
+            "/story/npcs/characters/syl-veyra/walk/02.png",
+            "/story/npcs/characters/syl-veyra/walk/03.png",
+            "/story/npcs/characters/syl-veyra/walk/04.png",
+            "/story/npcs/characters/syl-veyra/walk/05.png",
+            "/story/npcs/characters/syl-veyra/walk/06.png",
+            "/story/npcs/characters/syl-veyra/walk/07.png",
+            "/story/npcs/characters/syl-veyra/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/syl-veyra/protect/01.png",
+            "/story/npcs/characters/syl-veyra/protect/02.png",
+            "/story/npcs/characters/syl-veyra/protect/03.png",
+            "/story/npcs/characters/syl-veyra/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/syl-veyra/counter/01.png",
+            "/story/npcs/characters/syl-veyra/counter/02.png",
+            "/story/npcs/characters/syl-veyra/counter/03.png",
+            "/story/npcs/characters/syl-veyra/counter/04.png",
+            "/story/npcs/characters/syl-veyra/counter/05.png",
+            "/story/npcs/characters/syl-veyra/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "f66be9d68b0750460498924556f07b7e48355b76ee403c0aaf63c8bc904011bf",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for syl-veyra; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "moss-bell",
+      "sheetPath": "/story/npcs/generated/moss-bell-sheet.png",
+      "previewPath": "/story/npcs/characters/moss-bell/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/moss-bell/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        58,
+        58,
+        133,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/moss-bell/idle/01.png",
+            "/story/npcs/characters/moss-bell/idle/02.png",
+            "/story/npcs/characters/moss-bell/idle/03.png",
+            "/story/npcs/characters/moss-bell/idle/04.png",
+            "/story/npcs/characters/moss-bell/idle/05.png",
+            "/story/npcs/characters/moss-bell/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/moss-bell/dialogue/01.png",
+            "/story/npcs/characters/moss-bell/dialogue/02.png",
+            "/story/npcs/characters/moss-bell/dialogue/03.png",
+            "/story/npcs/characters/moss-bell/dialogue/04.png",
+            "/story/npcs/characters/moss-bell/dialogue/05.png",
+            "/story/npcs/characters/moss-bell/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/moss-bell/walk/01.png",
+            "/story/npcs/characters/moss-bell/walk/02.png",
+            "/story/npcs/characters/moss-bell/walk/03.png",
+            "/story/npcs/characters/moss-bell/walk/04.png",
+            "/story/npcs/characters/moss-bell/walk/05.png",
+            "/story/npcs/characters/moss-bell/walk/06.png",
+            "/story/npcs/characters/moss-bell/walk/07.png",
+            "/story/npcs/characters/moss-bell/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/moss-bell/protect/01.png",
+            "/story/npcs/characters/moss-bell/protect/02.png",
+            "/story/npcs/characters/moss-bell/protect/03.png",
+            "/story/npcs/characters/moss-bell/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/moss-bell/counter/01.png",
+            "/story/npcs/characters/moss-bell/counter/02.png",
+            "/story/npcs/characters/moss-bell/counter/03.png",
+            "/story/npcs/characters/moss-bell/counter/04.png",
+            "/story/npcs/characters/moss-bell/counter/05.png",
+            "/story/npcs/characters/moss-bell/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "baeb700dca67264a5ae7e7ee8ec318f2f965632f6108e182f34757b4ba3da332",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for moss-bell; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nera-thorne",
+      "sheetPath": "/story/npcs/generated/nera-thorne-sheet.png",
+      "previewPath": "/story/npcs/characters/nera-thorne/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/nera-thorne/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        56,
+        49,
+        136,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/nera-thorne/idle/01.png",
+            "/story/npcs/characters/nera-thorne/idle/02.png",
+            "/story/npcs/characters/nera-thorne/idle/03.png",
+            "/story/npcs/characters/nera-thorne/idle/04.png",
+            "/story/npcs/characters/nera-thorne/idle/05.png",
+            "/story/npcs/characters/nera-thorne/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/nera-thorne/dialogue/01.png",
+            "/story/npcs/characters/nera-thorne/dialogue/02.png",
+            "/story/npcs/characters/nera-thorne/dialogue/03.png",
+            "/story/npcs/characters/nera-thorne/dialogue/04.png",
+            "/story/npcs/characters/nera-thorne/dialogue/05.png",
+            "/story/npcs/characters/nera-thorne/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/nera-thorne/walk/01.png",
+            "/story/npcs/characters/nera-thorne/walk/02.png",
+            "/story/npcs/characters/nera-thorne/walk/03.png",
+            "/story/npcs/characters/nera-thorne/walk/04.png",
+            "/story/npcs/characters/nera-thorne/walk/05.png",
+            "/story/npcs/characters/nera-thorne/walk/06.png",
+            "/story/npcs/characters/nera-thorne/walk/07.png",
+            "/story/npcs/characters/nera-thorne/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/nera-thorne/protect/01.png",
+            "/story/npcs/characters/nera-thorne/protect/02.png",
+            "/story/npcs/characters/nera-thorne/protect/03.png",
+            "/story/npcs/characters/nera-thorne/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/nera-thorne/counter/01.png",
+            "/story/npcs/characters/nera-thorne/counter/02.png",
+            "/story/npcs/characters/nera-thorne/counter/03.png",
+            "/story/npcs/characters/nera-thorne/counter/04.png",
+            "/story/npcs/characters/nera-thorne/counter/05.png",
+            "/story/npcs/characters/nera-thorne/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "d41a2add10e8e526aa896d1768c500e4bf84a91cf8ee5e1b0ad1024fcffda9bd",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for nera-thorne; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "orin-pike",
+      "sheetPath": "/story/npcs/generated/orin-pike-sheet.png",
+      "previewPath": "/story/npcs/characters/orin-pike/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/orin-pike/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        62,
+        60,
+        130,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/orin-pike/idle/01.png",
+            "/story/npcs/characters/orin-pike/idle/02.png",
+            "/story/npcs/characters/orin-pike/idle/03.png",
+            "/story/npcs/characters/orin-pike/idle/04.png",
+            "/story/npcs/characters/orin-pike/idle/05.png",
+            "/story/npcs/characters/orin-pike/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/orin-pike/dialogue/01.png",
+            "/story/npcs/characters/orin-pike/dialogue/02.png",
+            "/story/npcs/characters/orin-pike/dialogue/03.png",
+            "/story/npcs/characters/orin-pike/dialogue/04.png",
+            "/story/npcs/characters/orin-pike/dialogue/05.png",
+            "/story/npcs/characters/orin-pike/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/orin-pike/walk/01.png",
+            "/story/npcs/characters/orin-pike/walk/02.png",
+            "/story/npcs/characters/orin-pike/walk/03.png",
+            "/story/npcs/characters/orin-pike/walk/04.png",
+            "/story/npcs/characters/orin-pike/walk/05.png",
+            "/story/npcs/characters/orin-pike/walk/06.png",
+            "/story/npcs/characters/orin-pike/walk/07.png",
+            "/story/npcs/characters/orin-pike/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/orin-pike/protect/01.png",
+            "/story/npcs/characters/orin-pike/protect/02.png",
+            "/story/npcs/characters/orin-pike/protect/03.png",
+            "/story/npcs/characters/orin-pike/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/orin-pike/counter/01.png",
+            "/story/npcs/characters/orin-pike/counter/02.png",
+            "/story/npcs/characters/orin-pike/counter/03.png",
+            "/story/npcs/characters/orin-pike/counter/04.png",
+            "/story/npcs/characters/orin-pike/counter/05.png",
+            "/story/npcs/characters/orin-pike/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "25caaa258d44abbfb148188132bfd31d2f8bb5d468002f34d5bc11fb9b8cdb46",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for orin-pike; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "della-gear",
+      "sheetPath": "/story/npcs/generated/della-gear-sheet.png",
+      "previewPath": "/story/npcs/characters/della-gear/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/della-gear/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        65,
+        61,
+        126,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/della-gear/idle/01.png",
+            "/story/npcs/characters/della-gear/idle/02.png",
+            "/story/npcs/characters/della-gear/idle/03.png",
+            "/story/npcs/characters/della-gear/idle/04.png",
+            "/story/npcs/characters/della-gear/idle/05.png",
+            "/story/npcs/characters/della-gear/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/della-gear/dialogue/01.png",
+            "/story/npcs/characters/della-gear/dialogue/02.png",
+            "/story/npcs/characters/della-gear/dialogue/03.png",
+            "/story/npcs/characters/della-gear/dialogue/04.png",
+            "/story/npcs/characters/della-gear/dialogue/05.png",
+            "/story/npcs/characters/della-gear/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/della-gear/walk/01.png",
+            "/story/npcs/characters/della-gear/walk/02.png",
+            "/story/npcs/characters/della-gear/walk/03.png",
+            "/story/npcs/characters/della-gear/walk/04.png",
+            "/story/npcs/characters/della-gear/walk/05.png",
+            "/story/npcs/characters/della-gear/walk/06.png",
+            "/story/npcs/characters/della-gear/walk/07.png",
+            "/story/npcs/characters/della-gear/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/della-gear/protect/01.png",
+            "/story/npcs/characters/della-gear/protect/02.png",
+            "/story/npcs/characters/della-gear/protect/03.png",
+            "/story/npcs/characters/della-gear/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/della-gear/counter/01.png",
+            "/story/npcs/characters/della-gear/counter/02.png",
+            "/story/npcs/characters/della-gear/counter/03.png",
+            "/story/npcs/characters/della-gear/counter/04.png",
+            "/story/npcs/characters/della-gear/counter/05.png",
+            "/story/npcs/characters/della-gear/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "b2dcabbc18199f858f546369716d3530c432d6dce17455c7d51e926c1e488982",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for della-gear; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "jax-flint",
+      "sheetPath": "/story/npcs/generated/jax-flint-sheet.png",
+      "previewPath": "/story/npcs/characters/jax-flint/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/jax-flint/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        67,
+        52,
+        124,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/jax-flint/idle/01.png",
+            "/story/npcs/characters/jax-flint/idle/02.png",
+            "/story/npcs/characters/jax-flint/idle/03.png",
+            "/story/npcs/characters/jax-flint/idle/04.png",
+            "/story/npcs/characters/jax-flint/idle/05.png",
+            "/story/npcs/characters/jax-flint/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/jax-flint/dialogue/01.png",
+            "/story/npcs/characters/jax-flint/dialogue/02.png",
+            "/story/npcs/characters/jax-flint/dialogue/03.png",
+            "/story/npcs/characters/jax-flint/dialogue/04.png",
+            "/story/npcs/characters/jax-flint/dialogue/05.png",
+            "/story/npcs/characters/jax-flint/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/jax-flint/walk/01.png",
+            "/story/npcs/characters/jax-flint/walk/02.png",
+            "/story/npcs/characters/jax-flint/walk/03.png",
+            "/story/npcs/characters/jax-flint/walk/04.png",
+            "/story/npcs/characters/jax-flint/walk/05.png",
+            "/story/npcs/characters/jax-flint/walk/06.png",
+            "/story/npcs/characters/jax-flint/walk/07.png",
+            "/story/npcs/characters/jax-flint/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/jax-flint/protect/01.png",
+            "/story/npcs/characters/jax-flint/protect/02.png",
+            "/story/npcs/characters/jax-flint/protect/03.png",
+            "/story/npcs/characters/jax-flint/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/jax-flint/counter/01.png",
+            "/story/npcs/characters/jax-flint/counter/02.png",
+            "/story/npcs/characters/jax-flint/counter/03.png",
+            "/story/npcs/characters/jax-flint/counter/04.png",
+            "/story/npcs/characters/jax-flint/counter/05.png",
+            "/story/npcs/characters/jax-flint/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "09505f8147b653131fbe020e11459ceccd5585e49d852bd71fe195c0846b40bf",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for jax-flint; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mara-bell",
+      "sheetPath": "/story/npcs/generated/mara-bell-sheet.png",
+      "previewPath": "/story/npcs/characters/mara-bell/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/mara-bell/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        69,
+        50,
+        123,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/mara-bell/idle/01.png",
+            "/story/npcs/characters/mara-bell/idle/02.png",
+            "/story/npcs/characters/mara-bell/idle/03.png",
+            "/story/npcs/characters/mara-bell/idle/04.png",
+            "/story/npcs/characters/mara-bell/idle/05.png",
+            "/story/npcs/characters/mara-bell/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/mara-bell/dialogue/01.png",
+            "/story/npcs/characters/mara-bell/dialogue/02.png",
+            "/story/npcs/characters/mara-bell/dialogue/03.png",
+            "/story/npcs/characters/mara-bell/dialogue/04.png",
+            "/story/npcs/characters/mara-bell/dialogue/05.png",
+            "/story/npcs/characters/mara-bell/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/mara-bell/walk/01.png",
+            "/story/npcs/characters/mara-bell/walk/02.png",
+            "/story/npcs/characters/mara-bell/walk/03.png",
+            "/story/npcs/characters/mara-bell/walk/04.png",
+            "/story/npcs/characters/mara-bell/walk/05.png",
+            "/story/npcs/characters/mara-bell/walk/06.png",
+            "/story/npcs/characters/mara-bell/walk/07.png",
+            "/story/npcs/characters/mara-bell/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/mara-bell/protect/01.png",
+            "/story/npcs/characters/mara-bell/protect/02.png",
+            "/story/npcs/characters/mara-bell/protect/03.png",
+            "/story/npcs/characters/mara-bell/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/mara-bell/counter/01.png",
+            "/story/npcs/characters/mara-bell/counter/02.png",
+            "/story/npcs/characters/mara-bell/counter/03.png",
+            "/story/npcs/characters/mara-bell/counter/04.png",
+            "/story/npcs/characters/mara-bell/counter/05.png",
+            "/story/npcs/characters/mara-bell/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "fb67e66f66d3a7564a562285764ae139e56f08c88025ce649f66d1044563c2d4",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for mara-bell; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ivo-ossin",
+      "sheetPath": "/story/npcs/generated/ivo-ossin-sheet.png",
+      "previewPath": "/story/npcs/characters/ivo-ossin/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/ivo-ossin/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        59,
+        40,
+        132,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/ivo-ossin/idle/01.png",
+            "/story/npcs/characters/ivo-ossin/idle/02.png",
+            "/story/npcs/characters/ivo-ossin/idle/03.png",
+            "/story/npcs/characters/ivo-ossin/idle/04.png",
+            "/story/npcs/characters/ivo-ossin/idle/05.png",
+            "/story/npcs/characters/ivo-ossin/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/ivo-ossin/dialogue/01.png",
+            "/story/npcs/characters/ivo-ossin/dialogue/02.png",
+            "/story/npcs/characters/ivo-ossin/dialogue/03.png",
+            "/story/npcs/characters/ivo-ossin/dialogue/04.png",
+            "/story/npcs/characters/ivo-ossin/dialogue/05.png",
+            "/story/npcs/characters/ivo-ossin/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/ivo-ossin/walk/01.png",
+            "/story/npcs/characters/ivo-ossin/walk/02.png",
+            "/story/npcs/characters/ivo-ossin/walk/03.png",
+            "/story/npcs/characters/ivo-ossin/walk/04.png",
+            "/story/npcs/characters/ivo-ossin/walk/05.png",
+            "/story/npcs/characters/ivo-ossin/walk/06.png",
+            "/story/npcs/characters/ivo-ossin/walk/07.png",
+            "/story/npcs/characters/ivo-ossin/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/ivo-ossin/protect/01.png",
+            "/story/npcs/characters/ivo-ossin/protect/02.png",
+            "/story/npcs/characters/ivo-ossin/protect/03.png",
+            "/story/npcs/characters/ivo-ossin/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/ivo-ossin/counter/01.png",
+            "/story/npcs/characters/ivo-ossin/counter/02.png",
+            "/story/npcs/characters/ivo-ossin/counter/03.png",
+            "/story/npcs/characters/ivo-ossin/counter/04.png",
+            "/story/npcs/characters/ivo-ossin/counter/05.png",
+            "/story/npcs/characters/ivo-ossin/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "1322b07146e432fade09e914a7e061bbd3d4abbc5be3eb51457dc5352bb29e83",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for ivo-ossin; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "edda-veil",
+      "sheetPath": "/story/npcs/generated/edda-veil-sheet.png",
+      "previewPath": "/story/npcs/characters/edda-veil/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/edda-veil/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        63,
+        39,
+        129,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/edda-veil/idle/01.png",
+            "/story/npcs/characters/edda-veil/idle/02.png",
+            "/story/npcs/characters/edda-veil/idle/03.png",
+            "/story/npcs/characters/edda-veil/idle/04.png",
+            "/story/npcs/characters/edda-veil/idle/05.png",
+            "/story/npcs/characters/edda-veil/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/edda-veil/dialogue/01.png",
+            "/story/npcs/characters/edda-veil/dialogue/02.png",
+            "/story/npcs/characters/edda-veil/dialogue/03.png",
+            "/story/npcs/characters/edda-veil/dialogue/04.png",
+            "/story/npcs/characters/edda-veil/dialogue/05.png",
+            "/story/npcs/characters/edda-veil/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/edda-veil/walk/01.png",
+            "/story/npcs/characters/edda-veil/walk/02.png",
+            "/story/npcs/characters/edda-veil/walk/03.png",
+            "/story/npcs/characters/edda-veil/walk/04.png",
+            "/story/npcs/characters/edda-veil/walk/05.png",
+            "/story/npcs/characters/edda-veil/walk/06.png",
+            "/story/npcs/characters/edda-veil/walk/07.png",
+            "/story/npcs/characters/edda-veil/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/edda-veil/protect/01.png",
+            "/story/npcs/characters/edda-veil/protect/02.png",
+            "/story/npcs/characters/edda-veil/protect/03.png",
+            "/story/npcs/characters/edda-veil/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/edda-veil/counter/01.png",
+            "/story/npcs/characters/edda-veil/counter/02.png",
+            "/story/npcs/characters/edda-veil/counter/03.png",
+            "/story/npcs/characters/edda-veil/counter/04.png",
+            "/story/npcs/characters/edda-veil/counter/05.png",
+            "/story/npcs/characters/edda-veil/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "23f1ea6c2869586a35fe20fafb4d4b66db98be3f49083844342290e2632473b5",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for edda-veil; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "kael-cinder",
+      "sheetPath": "/story/npcs/generated/kael-cinder-sheet.png",
+      "previewPath": "/story/npcs/characters/kael-cinder/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/kael-cinder/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        61,
+        55,
+        130,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/kael-cinder/idle/01.png",
+            "/story/npcs/characters/kael-cinder/idle/02.png",
+            "/story/npcs/characters/kael-cinder/idle/03.png",
+            "/story/npcs/characters/kael-cinder/idle/04.png",
+            "/story/npcs/characters/kael-cinder/idle/05.png",
+            "/story/npcs/characters/kael-cinder/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/kael-cinder/dialogue/01.png",
+            "/story/npcs/characters/kael-cinder/dialogue/02.png",
+            "/story/npcs/characters/kael-cinder/dialogue/03.png",
+            "/story/npcs/characters/kael-cinder/dialogue/04.png",
+            "/story/npcs/characters/kael-cinder/dialogue/05.png",
+            "/story/npcs/characters/kael-cinder/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/kael-cinder/walk/01.png",
+            "/story/npcs/characters/kael-cinder/walk/02.png",
+            "/story/npcs/characters/kael-cinder/walk/03.png",
+            "/story/npcs/characters/kael-cinder/walk/04.png",
+            "/story/npcs/characters/kael-cinder/walk/05.png",
+            "/story/npcs/characters/kael-cinder/walk/06.png",
+            "/story/npcs/characters/kael-cinder/walk/07.png",
+            "/story/npcs/characters/kael-cinder/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/kael-cinder/protect/01.png",
+            "/story/npcs/characters/kael-cinder/protect/02.png",
+            "/story/npcs/characters/kael-cinder/protect/03.png",
+            "/story/npcs/characters/kael-cinder/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/kael-cinder/counter/01.png",
+            "/story/npcs/characters/kael-cinder/counter/02.png",
+            "/story/npcs/characters/kael-cinder/counter/03.png",
+            "/story/npcs/characters/kael-cinder/counter/04.png",
+            "/story/npcs/characters/kael-cinder/counter/05.png",
+            "/story/npcs/characters/kael-cinder/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "0abae83832bfe4c308070c9121bc5470e5b84627c6d92ba5461154f9b39d7af0",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for kael-cinder; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sura-forge",
+      "sheetPath": "/story/npcs/generated/sura-forge-sheet.png",
+      "previewPath": "/story/npcs/characters/sura-forge/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/sura-forge/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        50,
+        28,
+        142,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/sura-forge/idle/01.png",
+            "/story/npcs/characters/sura-forge/idle/02.png",
+            "/story/npcs/characters/sura-forge/idle/03.png",
+            "/story/npcs/characters/sura-forge/idle/04.png",
+            "/story/npcs/characters/sura-forge/idle/05.png",
+            "/story/npcs/characters/sura-forge/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/sura-forge/dialogue/01.png",
+            "/story/npcs/characters/sura-forge/dialogue/02.png",
+            "/story/npcs/characters/sura-forge/dialogue/03.png",
+            "/story/npcs/characters/sura-forge/dialogue/04.png",
+            "/story/npcs/characters/sura-forge/dialogue/05.png",
+            "/story/npcs/characters/sura-forge/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/sura-forge/walk/01.png",
+            "/story/npcs/characters/sura-forge/walk/02.png",
+            "/story/npcs/characters/sura-forge/walk/03.png",
+            "/story/npcs/characters/sura-forge/walk/04.png",
+            "/story/npcs/characters/sura-forge/walk/05.png",
+            "/story/npcs/characters/sura-forge/walk/06.png",
+            "/story/npcs/characters/sura-forge/walk/07.png",
+            "/story/npcs/characters/sura-forge/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/sura-forge/protect/01.png",
+            "/story/npcs/characters/sura-forge/protect/02.png",
+            "/story/npcs/characters/sura-forge/protect/03.png",
+            "/story/npcs/characters/sura-forge/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/sura-forge/counter/01.png",
+            "/story/npcs/characters/sura-forge/counter/02.png",
+            "/story/npcs/characters/sura-forge/counter/03.png",
+            "/story/npcs/characters/sura-forge/counter/04.png",
+            "/story/npcs/characters/sura-forge/counter/05.png",
+            "/story/npcs/characters/sura-forge/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "5544537c8db037d1a47971739bd80cee0d2cdbb2d995beb74af760a740f20c37",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for sura-forge; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ren-ash",
+      "sheetPath": "/story/npcs/generated/ren-ash-sheet.png",
+      "previewPath": "/story/npcs/characters/ren-ash/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/ren-ash/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        56,
+        44,
+        135,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/ren-ash/idle/01.png",
+            "/story/npcs/characters/ren-ash/idle/02.png",
+            "/story/npcs/characters/ren-ash/idle/03.png",
+            "/story/npcs/characters/ren-ash/idle/04.png",
+            "/story/npcs/characters/ren-ash/idle/05.png",
+            "/story/npcs/characters/ren-ash/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/ren-ash/dialogue/01.png",
+            "/story/npcs/characters/ren-ash/dialogue/02.png",
+            "/story/npcs/characters/ren-ash/dialogue/03.png",
+            "/story/npcs/characters/ren-ash/dialogue/04.png",
+            "/story/npcs/characters/ren-ash/dialogue/05.png",
+            "/story/npcs/characters/ren-ash/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/ren-ash/walk/01.png",
+            "/story/npcs/characters/ren-ash/walk/02.png",
+            "/story/npcs/characters/ren-ash/walk/03.png",
+            "/story/npcs/characters/ren-ash/walk/04.png",
+            "/story/npcs/characters/ren-ash/walk/05.png",
+            "/story/npcs/characters/ren-ash/walk/06.png",
+            "/story/npcs/characters/ren-ash/walk/07.png",
+            "/story/npcs/characters/ren-ash/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/ren-ash/protect/01.png",
+            "/story/npcs/characters/ren-ash/protect/02.png",
+            "/story/npcs/characters/ren-ash/protect/03.png",
+            "/story/npcs/characters/ren-ash/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/ren-ash/counter/01.png",
+            "/story/npcs/characters/ren-ash/counter/02.png",
+            "/story/npcs/characters/ren-ash/counter/03.png",
+            "/story/npcs/characters/ren-ash/counter/04.png",
+            "/story/npcs/characters/ren-ash/counter/05.png",
+            "/story/npcs/characters/ren-ash/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "52c20219f33a7020ac5fd8bf8ad977ae048bfba61233ada129629ca4b859b28a",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for ren-ash; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ylva-snow",
+      "sheetPath": "/story/npcs/generated/ylva-snow-sheet.png",
+      "previewPath": "/story/npcs/characters/ylva-snow/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/ylva-snow/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        59,
+        25,
+        132,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/ylva-snow/idle/01.png",
+            "/story/npcs/characters/ylva-snow/idle/02.png",
+            "/story/npcs/characters/ylva-snow/idle/03.png",
+            "/story/npcs/characters/ylva-snow/idle/04.png",
+            "/story/npcs/characters/ylva-snow/idle/05.png",
+            "/story/npcs/characters/ylva-snow/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/ylva-snow/dialogue/01.png",
+            "/story/npcs/characters/ylva-snow/dialogue/02.png",
+            "/story/npcs/characters/ylva-snow/dialogue/03.png",
+            "/story/npcs/characters/ylva-snow/dialogue/04.png",
+            "/story/npcs/characters/ylva-snow/dialogue/05.png",
+            "/story/npcs/characters/ylva-snow/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/ylva-snow/walk/01.png",
+            "/story/npcs/characters/ylva-snow/walk/02.png",
+            "/story/npcs/characters/ylva-snow/walk/03.png",
+            "/story/npcs/characters/ylva-snow/walk/04.png",
+            "/story/npcs/characters/ylva-snow/walk/05.png",
+            "/story/npcs/characters/ylva-snow/walk/06.png",
+            "/story/npcs/characters/ylva-snow/walk/07.png",
+            "/story/npcs/characters/ylva-snow/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/ylva-snow/protect/01.png",
+            "/story/npcs/characters/ylva-snow/protect/02.png",
+            "/story/npcs/characters/ylva-snow/protect/03.png",
+            "/story/npcs/characters/ylva-snow/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/ylva-snow/counter/01.png",
+            "/story/npcs/characters/ylva-snow/counter/02.png",
+            "/story/npcs/characters/ylva-snow/counter/03.png",
+            "/story/npcs/characters/ylva-snow/counter/04.png",
+            "/story/npcs/characters/ylva-snow/counter/05.png",
+            "/story/npcs/characters/ylva-snow/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "884057b101ab8f9e30726712128273c0b453c63fd7a0b39c597cb10e544e040a",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for ylva-snow; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "corin-gale",
+      "sheetPath": "/story/npcs/generated/corin-gale-sheet.png",
+      "previewPath": "/story/npcs/characters/corin-gale/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/corin-gale/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        52,
+        41,
+        140,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/corin-gale/idle/01.png",
+            "/story/npcs/characters/corin-gale/idle/02.png",
+            "/story/npcs/characters/corin-gale/idle/03.png",
+            "/story/npcs/characters/corin-gale/idle/04.png",
+            "/story/npcs/characters/corin-gale/idle/05.png",
+            "/story/npcs/characters/corin-gale/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/corin-gale/dialogue/01.png",
+            "/story/npcs/characters/corin-gale/dialogue/02.png",
+            "/story/npcs/characters/corin-gale/dialogue/03.png",
+            "/story/npcs/characters/corin-gale/dialogue/04.png",
+            "/story/npcs/characters/corin-gale/dialogue/05.png",
+            "/story/npcs/characters/corin-gale/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/corin-gale/walk/01.png",
+            "/story/npcs/characters/corin-gale/walk/02.png",
+            "/story/npcs/characters/corin-gale/walk/03.png",
+            "/story/npcs/characters/corin-gale/walk/04.png",
+            "/story/npcs/characters/corin-gale/walk/05.png",
+            "/story/npcs/characters/corin-gale/walk/06.png",
+            "/story/npcs/characters/corin-gale/walk/07.png",
+            "/story/npcs/characters/corin-gale/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/corin-gale/protect/01.png",
+            "/story/npcs/characters/corin-gale/protect/02.png",
+            "/story/npcs/characters/corin-gale/protect/03.png",
+            "/story/npcs/characters/corin-gale/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/corin-gale/counter/01.png",
+            "/story/npcs/characters/corin-gale/counter/02.png",
+            "/story/npcs/characters/corin-gale/counter/03.png",
+            "/story/npcs/characters/corin-gale/counter/04.png",
+            "/story/npcs/characters/corin-gale/counter/05.png",
+            "/story/npcs/characters/corin-gale/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "e076a768bf858f256479fb17d8589b5b467e108cc32eb200ee70a48f9b41a2e8",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for corin-gale; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mika-hearth",
+      "sheetPath": "/story/npcs/generated/mika-hearth-sheet.png",
+      "previewPath": "/story/npcs/characters/mika-hearth/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/mika-hearth/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        47,
+        52,
+        145,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/mika-hearth/idle/01.png",
+            "/story/npcs/characters/mika-hearth/idle/02.png",
+            "/story/npcs/characters/mika-hearth/idle/03.png",
+            "/story/npcs/characters/mika-hearth/idle/04.png",
+            "/story/npcs/characters/mika-hearth/idle/05.png",
+            "/story/npcs/characters/mika-hearth/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/mika-hearth/dialogue/01.png",
+            "/story/npcs/characters/mika-hearth/dialogue/02.png",
+            "/story/npcs/characters/mika-hearth/dialogue/03.png",
+            "/story/npcs/characters/mika-hearth/dialogue/04.png",
+            "/story/npcs/characters/mika-hearth/dialogue/05.png",
+            "/story/npcs/characters/mika-hearth/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/mika-hearth/walk/01.png",
+            "/story/npcs/characters/mika-hearth/walk/02.png",
+            "/story/npcs/characters/mika-hearth/walk/03.png",
+            "/story/npcs/characters/mika-hearth/walk/04.png",
+            "/story/npcs/characters/mika-hearth/walk/05.png",
+            "/story/npcs/characters/mika-hearth/walk/06.png",
+            "/story/npcs/characters/mika-hearth/walk/07.png",
+            "/story/npcs/characters/mika-hearth/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/mika-hearth/protect/01.png",
+            "/story/npcs/characters/mika-hearth/protect/02.png",
+            "/story/npcs/characters/mika-hearth/protect/03.png",
+            "/story/npcs/characters/mika-hearth/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/mika-hearth/counter/01.png",
+            "/story/npcs/characters/mika-hearth/counter/02.png",
+            "/story/npcs/characters/mika-hearth/counter/03.png",
+            "/story/npcs/characters/mika-hearth/counter/04.png",
+            "/story/npcs/characters/mika-hearth/counter/05.png",
+            "/story/npcs/characters/mika-hearth/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "e6e7c5438ac5063edcc2ec0537d54919f9f5dc0503f9f363d09435c6d2c38664",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for mika-hearth; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sahir-dune",
+      "sheetPath": "/story/npcs/generated/sahir-dune-sheet.png",
+      "previewPath": "/story/npcs/characters/sahir-dune/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/sahir-dune/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        60,
+        36,
+        131,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/sahir-dune/idle/01.png",
+            "/story/npcs/characters/sahir-dune/idle/02.png",
+            "/story/npcs/characters/sahir-dune/idle/03.png",
+            "/story/npcs/characters/sahir-dune/idle/04.png",
+            "/story/npcs/characters/sahir-dune/idle/05.png",
+            "/story/npcs/characters/sahir-dune/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/sahir-dune/dialogue/01.png",
+            "/story/npcs/characters/sahir-dune/dialogue/02.png",
+            "/story/npcs/characters/sahir-dune/dialogue/03.png",
+            "/story/npcs/characters/sahir-dune/dialogue/04.png",
+            "/story/npcs/characters/sahir-dune/dialogue/05.png",
+            "/story/npcs/characters/sahir-dune/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/sahir-dune/walk/01.png",
+            "/story/npcs/characters/sahir-dune/walk/02.png",
+            "/story/npcs/characters/sahir-dune/walk/03.png",
+            "/story/npcs/characters/sahir-dune/walk/04.png",
+            "/story/npcs/characters/sahir-dune/walk/05.png",
+            "/story/npcs/characters/sahir-dune/walk/06.png",
+            "/story/npcs/characters/sahir-dune/walk/07.png",
+            "/story/npcs/characters/sahir-dune/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/sahir-dune/protect/01.png",
+            "/story/npcs/characters/sahir-dune/protect/02.png",
+            "/story/npcs/characters/sahir-dune/protect/03.png",
+            "/story/npcs/characters/sahir-dune/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/sahir-dune/counter/01.png",
+            "/story/npcs/characters/sahir-dune/counter/02.png",
+            "/story/npcs/characters/sahir-dune/counter/03.png",
+            "/story/npcs/characters/sahir-dune/counter/04.png",
+            "/story/npcs/characters/sahir-dune/counter/05.png",
+            "/story/npcs/characters/sahir-dune/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "6b557aeeae1a53a4ee7cee106b1dcf4b131400eed5ce501e7e28309cd66c18f1",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for sahir-dune; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "amara-wells",
+      "sheetPath": "/story/npcs/generated/amara-wells-sheet.png",
+      "previewPath": "/story/npcs/characters/amara-wells/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/amara-wells/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        55,
+        42,
+        137,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/amara-wells/idle/01.png",
+            "/story/npcs/characters/amara-wells/idle/02.png",
+            "/story/npcs/characters/amara-wells/idle/03.png",
+            "/story/npcs/characters/amara-wells/idle/04.png",
+            "/story/npcs/characters/amara-wells/idle/05.png",
+            "/story/npcs/characters/amara-wells/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/amara-wells/dialogue/01.png",
+            "/story/npcs/characters/amara-wells/dialogue/02.png",
+            "/story/npcs/characters/amara-wells/dialogue/03.png",
+            "/story/npcs/characters/amara-wells/dialogue/04.png",
+            "/story/npcs/characters/amara-wells/dialogue/05.png",
+            "/story/npcs/characters/amara-wells/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/amara-wells/walk/01.png",
+            "/story/npcs/characters/amara-wells/walk/02.png",
+            "/story/npcs/characters/amara-wells/walk/03.png",
+            "/story/npcs/characters/amara-wells/walk/04.png",
+            "/story/npcs/characters/amara-wells/walk/05.png",
+            "/story/npcs/characters/amara-wells/walk/06.png",
+            "/story/npcs/characters/amara-wells/walk/07.png",
+            "/story/npcs/characters/amara-wells/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/amara-wells/protect/01.png",
+            "/story/npcs/characters/amara-wells/protect/02.png",
+            "/story/npcs/characters/amara-wells/protect/03.png",
+            "/story/npcs/characters/amara-wells/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/amara-wells/counter/01.png",
+            "/story/npcs/characters/amara-wells/counter/02.png",
+            "/story/npcs/characters/amara-wells/counter/03.png",
+            "/story/npcs/characters/amara-wells/counter/04.png",
+            "/story/npcs/characters/amara-wells/counter/05.png",
+            "/story/npcs/characters/amara-wells/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "5f761b1b3cac591814df034ff836bae0e14d79505eb9e5490222fd78a7c4403d",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for amara-wells; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nilo-glass",
+      "sheetPath": "/story/npcs/generated/nilo-glass-sheet.png",
+      "previewPath": "/story/npcs/characters/nilo-glass/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/nilo-glass/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        49,
+        43,
+        143,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/nilo-glass/idle/01.png",
+            "/story/npcs/characters/nilo-glass/idle/02.png",
+            "/story/npcs/characters/nilo-glass/idle/03.png",
+            "/story/npcs/characters/nilo-glass/idle/04.png",
+            "/story/npcs/characters/nilo-glass/idle/05.png",
+            "/story/npcs/characters/nilo-glass/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/nilo-glass/dialogue/01.png",
+            "/story/npcs/characters/nilo-glass/dialogue/02.png",
+            "/story/npcs/characters/nilo-glass/dialogue/03.png",
+            "/story/npcs/characters/nilo-glass/dialogue/04.png",
+            "/story/npcs/characters/nilo-glass/dialogue/05.png",
+            "/story/npcs/characters/nilo-glass/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/nilo-glass/walk/01.png",
+            "/story/npcs/characters/nilo-glass/walk/02.png",
+            "/story/npcs/characters/nilo-glass/walk/03.png",
+            "/story/npcs/characters/nilo-glass/walk/04.png",
+            "/story/npcs/characters/nilo-glass/walk/05.png",
+            "/story/npcs/characters/nilo-glass/walk/06.png",
+            "/story/npcs/characters/nilo-glass/walk/07.png",
+            "/story/npcs/characters/nilo-glass/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/nilo-glass/protect/01.png",
+            "/story/npcs/characters/nilo-glass/protect/02.png",
+            "/story/npcs/characters/nilo-glass/protect/03.png",
+            "/story/npcs/characters/nilo-glass/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/nilo-glass/counter/01.png",
+            "/story/npcs/characters/nilo-glass/counter/02.png",
+            "/story/npcs/characters/nilo-glass/counter/03.png",
+            "/story/npcs/characters/nilo-glass/counter/04.png",
+            "/story/npcs/characters/nilo-glass/counter/05.png",
+            "/story/npcs/characters/nilo-glass/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "3f352ff4b6c09468d557b58193402dad6bcc9ea1d357470129c2cd16de1f95a1",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for nilo-glass; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "aeri-prism",
+      "sheetPath": "/story/npcs/generated/aeri-prism-sheet.png",
+      "previewPath": "/story/npcs/characters/aeri-prism/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/aeri-prism/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        47,
+        32,
+        145,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/aeri-prism/idle/01.png",
+            "/story/npcs/characters/aeri-prism/idle/02.png",
+            "/story/npcs/characters/aeri-prism/idle/03.png",
+            "/story/npcs/characters/aeri-prism/idle/04.png",
+            "/story/npcs/characters/aeri-prism/idle/05.png",
+            "/story/npcs/characters/aeri-prism/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/aeri-prism/dialogue/01.png",
+            "/story/npcs/characters/aeri-prism/dialogue/02.png",
+            "/story/npcs/characters/aeri-prism/dialogue/03.png",
+            "/story/npcs/characters/aeri-prism/dialogue/04.png",
+            "/story/npcs/characters/aeri-prism/dialogue/05.png",
+            "/story/npcs/characters/aeri-prism/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/aeri-prism/walk/01.png",
+            "/story/npcs/characters/aeri-prism/walk/02.png",
+            "/story/npcs/characters/aeri-prism/walk/03.png",
+            "/story/npcs/characters/aeri-prism/walk/04.png",
+            "/story/npcs/characters/aeri-prism/walk/05.png",
+            "/story/npcs/characters/aeri-prism/walk/06.png",
+            "/story/npcs/characters/aeri-prism/walk/07.png",
+            "/story/npcs/characters/aeri-prism/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/aeri-prism/protect/01.png",
+            "/story/npcs/characters/aeri-prism/protect/02.png",
+            "/story/npcs/characters/aeri-prism/protect/03.png",
+            "/story/npcs/characters/aeri-prism/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/aeri-prism/counter/01.png",
+            "/story/npcs/characters/aeri-prism/counter/02.png",
+            "/story/npcs/characters/aeri-prism/counter/03.png",
+            "/story/npcs/characters/aeri-prism/counter/04.png",
+            "/story/npcs/characters/aeri-prism/counter/05.png",
+            "/story/npcs/characters/aeri-prism/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "a5f3dba8f21e39e9a821dbc066a3d36ba239f6529dc5b72d305e54ad9c5ca737",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for aeri-prism; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "tovan-chime",
+      "sheetPath": "/story/npcs/generated/tovan-chime-sheet.png",
+      "previewPath": "/story/npcs/characters/tovan-chime/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/tovan-chime/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        56,
+        34,
+        135,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/tovan-chime/idle/01.png",
+            "/story/npcs/characters/tovan-chime/idle/02.png",
+            "/story/npcs/characters/tovan-chime/idle/03.png",
+            "/story/npcs/characters/tovan-chime/idle/04.png",
+            "/story/npcs/characters/tovan-chime/idle/05.png",
+            "/story/npcs/characters/tovan-chime/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/tovan-chime/dialogue/01.png",
+            "/story/npcs/characters/tovan-chime/dialogue/02.png",
+            "/story/npcs/characters/tovan-chime/dialogue/03.png",
+            "/story/npcs/characters/tovan-chime/dialogue/04.png",
+            "/story/npcs/characters/tovan-chime/dialogue/05.png",
+            "/story/npcs/characters/tovan-chime/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/tovan-chime/walk/01.png",
+            "/story/npcs/characters/tovan-chime/walk/02.png",
+            "/story/npcs/characters/tovan-chime/walk/03.png",
+            "/story/npcs/characters/tovan-chime/walk/04.png",
+            "/story/npcs/characters/tovan-chime/walk/05.png",
+            "/story/npcs/characters/tovan-chime/walk/06.png",
+            "/story/npcs/characters/tovan-chime/walk/07.png",
+            "/story/npcs/characters/tovan-chime/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/tovan-chime/protect/01.png",
+            "/story/npcs/characters/tovan-chime/protect/02.png",
+            "/story/npcs/characters/tovan-chime/protect/03.png",
+            "/story/npcs/characters/tovan-chime/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/tovan-chime/counter/01.png",
+            "/story/npcs/characters/tovan-chime/counter/02.png",
+            "/story/npcs/characters/tovan-chime/counter/03.png",
+            "/story/npcs/characters/tovan-chime/counter/04.png",
+            "/story/npcs/characters/tovan-chime/counter/05.png",
+            "/story/npcs/characters/tovan-chime/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "c441db591aa6bffbe24bd023a0997b1665f8011bd2bb01bdd71bcb3591cd0a0c",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for tovan-chime; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "lumi-cloud",
+      "sheetPath": "/story/npcs/generated/lumi-cloud-sheet.png",
+      "previewPath": "/story/npcs/characters/lumi-cloud/idle/01.png",
+      "contactSheetPath": "/story/npcs/characters/lumi-cloud/contact-sheet.png",
+      "facing": "right",
+      "frameSize": {
+        "width": 192,
+        "height": 192,
+        "baseline": 188
+      },
+      "referenceContentBounds": [
+        49,
+        32,
+        142,
+        188
+      ],
+      "actions": {
+        "idle": {
+          "frames": [
+            "/story/npcs/characters/lumi-cloud/idle/01.png",
+            "/story/npcs/characters/lumi-cloud/idle/02.png",
+            "/story/npcs/characters/lumi-cloud/idle/03.png",
+            "/story/npcs/characters/lumi-cloud/idle/04.png",
+            "/story/npcs/characters/lumi-cloud/idle/05.png",
+            "/story/npcs/characters/lumi-cloud/idle/06.png"
+          ],
+          "durationMs": 180,
+          "loop": true
+        },
+        "dialogue": {
+          "frames": [
+            "/story/npcs/characters/lumi-cloud/dialogue/01.png",
+            "/story/npcs/characters/lumi-cloud/dialogue/02.png",
+            "/story/npcs/characters/lumi-cloud/dialogue/03.png",
+            "/story/npcs/characters/lumi-cloud/dialogue/04.png",
+            "/story/npcs/characters/lumi-cloud/dialogue/05.png",
+            "/story/npcs/characters/lumi-cloud/dialogue/06.png"
+          ],
+          "durationMs": 150,
+          "loop": true
+        },
+        "walk": {
+          "frames": [
+            "/story/npcs/characters/lumi-cloud/walk/01.png",
+            "/story/npcs/characters/lumi-cloud/walk/02.png",
+            "/story/npcs/characters/lumi-cloud/walk/03.png",
+            "/story/npcs/characters/lumi-cloud/walk/04.png",
+            "/story/npcs/characters/lumi-cloud/walk/05.png",
+            "/story/npcs/characters/lumi-cloud/walk/06.png",
+            "/story/npcs/characters/lumi-cloud/walk/07.png",
+            "/story/npcs/characters/lumi-cloud/walk/08.png"
+          ],
+          "durationMs": 110,
+          "loop": true
+        },
+        "protect": {
+          "frames": [
+            "/story/npcs/characters/lumi-cloud/protect/01.png",
+            "/story/npcs/characters/lumi-cloud/protect/02.png",
+            "/story/npcs/characters/lumi-cloud/protect/03.png",
+            "/story/npcs/characters/lumi-cloud/protect/04.png"
+          ],
+          "durationMs": 115,
+          "loop": false
+        },
+        "counter": {
+          "frames": [
+            "/story/npcs/characters/lumi-cloud/counter/01.png",
+            "/story/npcs/characters/lumi-cloud/counter/02.png",
+            "/story/npcs/characters/lumi-cloud/counter/03.png",
+            "/story/npcs/characters/lumi-cloud/counter/04.png",
+            "/story/npcs/characters/lumi-cloud/counter/05.png",
+            "/story/npcs/characters/lumi-cloud/counter/06.png"
+          ],
+          "durationMs": 90,
+          "loop": false
+        }
+      },
+      "source": {
+        "kind": "imagegen",
+        "sha256": "0ad6b6b868ca49906b476f3f51b6fcb6f71b2379ecb9c8d22a14483baeb95b79",
+        "model": "OpenAI image_gen (session-default model)",
+        "prompt": "One production sprite sheet for lumi-cloud; side-view anime pixel art matching all three canonical starter references, compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop.",
+        "sourceReferences": [
+          {
+            "path": "/story/npcs/sources/mina-quill-reference.png",
+            "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
+          },
+          {
+            "path": "/story/npcs/sources/hana-rook-reference.png",
+            "sha256": "2c206448562b1564f512dac35c7c1ed90611d8ca700d4bd42a9cc82f5157bbf4"
+          },
+          {
+            "path": "/story/npcs/sources/tamsin-reed-reference.png",
+            "sha256": "6b251d57ca112d4a8083477d6d93c0c5a6878649f76fa1ad61d4850ed39e70d0"
+          }
+        ]
+      }
+    }
+  ]
+}

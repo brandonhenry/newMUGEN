@@ -53,6 +53,7 @@ import { CustomMatchSpectator, CustomRoomsExperience, type CustomMatchLaunch } f
 import { SpectatorExperience, parseSpectatorRoute, shareSpectatorLink } from './SpectatorExperience';
 import { CharacterPreviewCanvas, GameScene, MenuAttractScene, MiniGameScene, MoveDemoCanvas, StagePreviewCanvas, UnlockRevealCanvas, UNLOCK_REVEAL_SEQUENCE_SECONDS, clearImageVoxelCacheForFrame, prewarmActiveFighterVoxels, type AssetLoadingState, type PreviewPose, type StagePreviewMode } from './components/GameScene';
 import { StageAmbiencePlayer } from './components/StageAmbiencePlayer';
+import { AdventureMusicPlayer } from './components/AdventureMusicPlayer';
 import { TouchControls } from './components/TouchControls';
 import { KORE_APP_VERSION } from './appVersion';
 import { starterCharacters } from './data/characters';
@@ -227,7 +228,7 @@ import {
 } from './lib/arcadeRun';
 import { readStoryProfile, writeStoryProfile } from './story/profile';
 import { readOrCreateStoryHubGuestIdentity } from './story/hubMultiplayer';
-import { LEGACY_STORY_PROFILE_STORAGE_KEY, STORY_PROFILE_STORAGE_KEY, type HubDestination, type StoryHubPresence, type StoryProfileV4 } from './story/types';
+import { LEGACY_STORY_PROFILE_STORAGE_KEY, STORY_PROFILE_STORAGE_KEY, type AdventureMusicContext, type AdventureMusicTrackDefinition, type HubDestination, type StoryHubPresence, type StoryProfileV4 } from './story/types';
 import {
   applyVoxelBodyScale,
   computeVoxelBodyNormalization,
@@ -990,6 +991,14 @@ const KORE_TITLE_BGM_TRACK = findBgmTrack('SEQ_BGMM_TITLE') ?? FALLBACK_BGM_TRAC
 const KORE_MENU_BGM_TRACK = findBgmTrack('SEQ_BGMM_MAINMENU') ?? FALLBACK_BGM_TRACK;
 const KORE_OPTIONS_BGM_TRACK = findBgmTrack('SEQ_BGMM_OPTION') ?? KORE_MENU_BGM_TRACK;
 const KORE_PAUSE_BGM_TRACK = findBgmTrack('SEQ_BGMB_SETTING') ?? KORE_OPTIONS_BGM_TRACK;
+
+const ADVENTURE_SOCIAL_MUSIC_CONTEXT = {
+  worldId: 'world-route',
+  mapId: 'central-route-social',
+  phase: 'social',
+  encounterIntensity: 0,
+  depth: false
+} satisfies AdventureMusicContext;
 
 const KORE_MENU_BGM_SOURCE: BgmSource = {
   key: 'menu:local-bgm-library',
@@ -3153,6 +3162,16 @@ function LocalBgmPlayer({
     element.volume = volume;
   }, [volume]);
 
+  useEffect(() => () => {
+    const element = audioRef.current;
+    if (!element) return;
+    element.pause();
+    element.removeAttribute('src');
+    element.load();
+    sourceKeyRef.current = null;
+    requestedIndexRef.current = -1;
+  }, []);
+
   return <audio className="local-bgm-player" ref={audioRef} preload="auto" aria-hidden="true" />;
 }
 
@@ -3204,6 +3223,9 @@ export default function App() {
   const [inputPromptMode, setInputPromptMode] = useState<InputPromptMode>('keyboardShortcut');
   const [onlineProfile, setOnlineProfile] = useState<OnlinePlayerProfile | null>(() => readOnlineProfile());
   const [storyProfile, setStoryProfile] = useState<StoryProfileV4 | null>(() => readStoryProfile());
+  const [adventureMusicContext, setAdventureMusicContext] = useState<AdventureMusicContext | null>(null);
+  const [adventureMusicTrack, setAdventureMusicTrack] = useState<AdventureMusicTrackDefinition | null>(null);
+  const [creditsOpen, setCreditsOpen] = useState(false);
   const [friendPresence, setFriendPresence] = useState<Record<string, FriendPresence>>({});
   const [friendInbox, setFriendInbox] = useState<FriendInvite[]>([]);
   const [friendNotifications, setFriendNotifications] = useState<FriendNotification[]>([]);
@@ -5408,8 +5430,10 @@ export default function App() {
     return () => window.clearInterval(timer);
   }, []);
 
+  const adventureAudioOwned = screen === 'storyHub';
   const activeBgmSource = useMemo(() => {
     if (!musicStarted || screen === 'boot') return null;
+    if (adventureAudioOwned) return null;
     if (screen === 'fight' && mode === 'cpu') return settings.audio.menuMusic ? fixedBgmSource('cpu-attract:local-bgm', KORE_MENU_BGM_TRACK) : null;
     if (screen === 'fight' && mode !== 'cpu') return fightPaused ? fixedBgmSource('pause:local-bgm', KORE_PAUSE_BGM_TRACK) : stageBgmSource(selectedStage);
     if (screen === 'arcadeTransition') return stageBgmSource(arcadeTransition?.nextStage ?? selectedStage);
@@ -5420,7 +5444,7 @@ export default function App() {
     if (screen === 'title') return fixedBgmSource('title:local-bgm', KORE_TITLE_BGM_TRACK);
     if (screen === 'settings') return fixedBgmSource('settings:local-bgm', KORE_OPTIONS_BGM_TRACK);
     return KORE_MENU_BGM_SOURCE;
-  }, [activeArcadeMiniGame, arcadeTransition, assetWarmupIntent?.stage, fightPaused, mode, musicStarted, screen, selectedStage, settings.audio.menuMusic, unlockRevealStage]);
+  }, [activeArcadeMiniGame, adventureAudioOwned, arcadeTransition, assetWarmupIntent?.stage, fightPaused, mode, musicStarted, screen, selectedStage, settings.audio.menuMusic, unlockRevealStage]);
   const activeBgmTrackIndex = activeBgmSource?.lockToTrack
     ? activeBgmSource.trackIndex
     : normalizeBgmIndex(settings.audio.bgmTrackIndex, activeBgmSource?.tracks.length ?? 0);
@@ -5723,14 +5747,21 @@ export default function App() {
   return (
     <main className="app-shell" style={appCursorStyle} onKeyDownCapture={handleAppMenuKeyDown}>
       <div className="ambient-grid" />
-      <LocalBgmPlayer
+      {!adventureAudioOwned && <LocalBgmPlayer
         audio={settings.audio}
         started={musicStarted}
         source={activeBgmSource}
         selectedTrackIndex={activeBgmTrackIndex}
         onTrackIndexChange={activeBgmSource?.lockToTrack ? undefined : updateBgmTrackIndex}
-      />
-      <StageAmbiencePlayer audio={settings.audio} stage={activeAmbienceStage} active={Boolean(activeAmbienceStage)} />
+      />}
+      {adventureAudioOwned && <AdventureMusicPlayer
+        audio={settings.audio}
+        enabled={musicStarted && settings.audio.adventureMusic}
+        context={adventureMusicContext ?? ADVENTURE_SOCIAL_MUSIC_CONTEXT}
+        profileKey={storyProfile?.avatar.name ?? onlineProfile?.displayName ?? 'guest'}
+        onTrackChange={setAdventureMusicTrack}
+      />}
+      {!adventureAudioOwned && <StageAmbiencePlayer audio={settings.audio} stage={activeAmbienceStage} active={Boolean(activeAmbienceStage)} />}
       <section className={`screen-panel ${fullBleedScreen ? 'is-full-bleed' : ''}`}>
         {screen === 'title' && <TitleScreen onStart={startFromTitle} cpuAutoAccept={cpuAutoAccept} />}
         {screen === 'avatarCreator' && (
@@ -5752,6 +5783,9 @@ export default function App() {
               reducedMotion={settings.display.reducedMotion}
               readInputs={readInputsForStep}
               setVirtualAction={setVirtualAction}
+              onMusicContext={setAdventureMusicContext}
+              activeMusicTrack={adventureMusicTrack}
+              onCredits={() => setCreditsOpen(true)}
               onDestination={launchStoryHubDestination}
               onOnlineSpar={launchStoryHubSpar}
               onExit={() => {
@@ -5845,6 +5879,7 @@ export default function App() {
               captureAppAnalytics('menu_item_selected', { item: 'settings' });
               setScreen('settings');
             }}
+            onCredits={() => setCreditsOpen(true)}
             onFriends={() => {
               setNavigationHome('menu');
               setInputPromptMode('pointer');
@@ -6807,8 +6842,42 @@ export default function App() {
           onClose={dismissStarterGuide}
         />
       )}
+      {creditsOpen && <CreditsAndLicensesScreen onClose={() => setCreditsOpen(false)} />}
     </main>
   );
+}
+
+const STIMMERMAN_COLLECTION_CREDITS = [
+  ['Queen of the Kingdom', 'https://youtu.be/u4Mi_N04SSQ'],
+  ['Pensive Pieces for Orchestra', 'https://youtu.be/LxgA7WQ0QDU'],
+  ['Modern Metroidvania', 'https://www.youtube.com/watch?v=__PGzYkQe_0'],
+  ['Indie Rock Ambience', 'https://youtu.be/8nrJiYNGOP4'],
+  ['High Energy DnB', 'https://youtu.be/7X3yKTdsZX8'],
+  ['Cozy Island Vol. 1', 'https://youtu.be/sE_2IbJDmz8'],
+  ["Toe-Tappin' Boss Battles", 'https://www.youtube.com/watch?v=KQn7KK8aKg4'],
+  ['Dark N Cozy', 'https://youtu.be/h_gedKXZfck'],
+  ['Electric Ambience', 'https://youtu.be/g9vOWxWYSUA'],
+  ['8-Bit Extravaganza', 'https://youtu.be/gtcRs1C1za4']
+] as const;
+
+function CreditsAndLicensesScreen({ onClose }: { onClose: () => void }) {
+  useEffect(() => {
+    const closeOnEscape = (event: KeyboardEvent) => { if (event.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [onClose]);
+  return <div className="story-gate-overlay credits-licenses-overlay" role="presentation">
+    <section className="story-gate-dialog credits-licenses-dialog" role="dialog" aria-modal="true" aria-labelledby="credits-title">
+      <span>Credits &amp; Licenses</span>
+      <h2 id="credits-title">Adventure Mode Music</h2>
+      <p>Original music composed and produced by <strong>Stimmerman</strong>. Used with permission.</p>
+      <div className="credits-collection-list">
+        {STIMMERMAN_COLLECTION_CREDITS.map(([title, url]) => <a key={title} href={url} target="_blank" rel="noreferrer"><ExternalLink size={15} />{title}</a>)}
+      </div>
+      <p className="credits-license-note">All source arrangements remain credited to Stimmerman. Visual asset attribution and checksums are maintained with the Adventure asset manifests.</p>
+      <button type="button" className="story-primary-button" autoFocus onClick={onClose}><XCircle size={18} /> Close</button>
+    </section>
+  </div>;
 }
 
 type MenuNavigationDirection = 'up' | 'down' | 'left' | 'right';
@@ -8018,6 +8087,7 @@ function MenuScreen({
   onTournament,
   onOnline,
   onSettings,
+  onCredits,
   onFriends,
   onViewer,
   onStages,
@@ -8042,6 +8112,7 @@ function MenuScreen({
   onTournament: () => void;
   onOnline: () => void;
   onSettings: () => void;
+  onCredits: () => void;
   onFriends: () => void;
   onViewer: () => void;
   onStages: () => void;
@@ -8286,6 +8357,7 @@ function MenuScreen({
     { label: 'Characters', action: onViewer },
     ...(isLocalDevHost() ? [{ label: 'Stages', action: onStages }] : []),
     { label: 'Options', action: onSettings },
+    { label: 'Credits & Licenses', action: onCredits },
     { label: 'Exit', action: onExit }
   ];
 
@@ -15516,6 +15588,7 @@ function collectTrackedSettingChanges(previous: GameSettings, next: GameSettings
   add('game', 'menu_attract_mode', previous.performance.menuAttractMode, next.performance.menuAttractMode);
   add('game', 'menu_motion_mode', previous.performance.menuMotionMode, next.performance.menuMotionMode);
   add('audio', 'menu_music', previous.audio.menuMusic, next.audio.menuMusic);
+  add('audio', 'adventure_music', previous.audio.adventureMusic, next.audio.adventureMusic);
   add('audio', 'bgm_track_index', previous.audio.bgmTrackIndex, next.audio.bgmTrackIndex);
   add('audio', 'master', previous.audio.master, next.audio.master);
   add('audio', 'music', previous.audio.music, next.audio.music);
@@ -16095,6 +16168,11 @@ function SettingsScreen({
             label="Main Menu Music"
             checked={settings.audio.menuMusic}
             onChange={(checked) => updateSettings((current) => ({ ...current, audio: { ...current.audio, menuMusic: checked } }))}
+          />
+          <SettingToggle
+            label="Adventure Music"
+            checked={settings.audio.adventureMusic}
+            onChange={(checked) => updateSettings((current) => ({ ...current, audio: { ...current.audio, adventureMusic: checked } }))}
           />
           <SettingRow label="BGM Source" value={`${menuBgmTrackCount} local tracks`}>
             <span className="setting-readout">Repo MP3 Library</span>
