@@ -1702,7 +1702,7 @@ function AdventureHud({ progress, health, maxHealth, breath, underwater, mount, 
     <div className="story-adventure-vitals">
       <div className="story-adventure-level"><small>Level</small><strong>{progress.level}</strong></div>
       <div className="story-adventure-level"><small>Coins</small><strong>{progress.routeCoins}</strong></div>
-      <div className="story-adventure-level"><small>Relics</small><strong>{progress.relics.length}/24</strong></div>
+      <div className="story-adventure-level"><small>Relics</small><strong>{progress.relics.length}</strong></div>
       <div className="story-adventure-bars">
         <div><span><Heart size={12} /> HP</span><strong>{Math.round(health)} / {maxHealth}</strong><i><b style={{ width: `${Math.max(0, Math.min(100, health / maxHealth * 100))}%` }} /></i></div>
         <div><span><Sparkles size={12} /> XP</span><strong>{progress.level >= 100 ? 'MAX' : `${progress.xp} / ${requiredXp}`}</strong><i className="is-xp"><b style={{ width: `${xpPercent}%` }} /></i></div>
