@@ -26,19 +26,30 @@ function frameIndexAt(animation: StorySpriteAnimation, elapsedMs: number, reduce
   return animation.frames.length - 1;
 }
 
-export function StoryAvatarRig({ avatar, pose = 'idle', facing = 1, reducedMotion = false }: {
+export function shouldRestartStoryAvatarAnimation(
+  lastPose: StoryAvatarPose,
+  pose: StoryAvatarPose,
+  lastRestartToken: number,
+  restartToken: number
+) {
+  return lastPose !== pose || lastRestartToken !== restartToken;
+}
+
+export function StoryAvatarRig({ avatar, pose = 'idle', facing = 1, reducedMotion = false, restartToken = 0 }: {
   avatar: StoryAvatarDefinition;
   pose?: StoryAvatarPose;
   facing?: -1 | 1;
   reducedMotion?: boolean;
+  restartToken?: number;
 }) {
   const animation = getStorySpriteAnimation(avatar.avatarSet, animationForPose(pose));
   const paths = useMemo(() => animation.frames.map((frame) => frame.path), [animation]);
   const textures = useTexture(paths) as unknown as THREE.Texture[];
   const materialRef = useRef<THREE.MeshBasicMaterial>(null);
   const meshRef = useRef<THREE.Mesh>(null);
-  const poseStartedAtRef = useRef(0);
+  const poseStartedAtRef = useRef<number | null>(null);
   const lastPoseRef = useRef(pose);
+  const lastRestartTokenRef = useRef(restartToken);
   const planeHeight = storyAvatarPlaneHeight();
   const planeWidth = planeHeight * STORY_SPRITE_MANIFEST.frameSize.width / STORY_SPRITE_MANIFEST.frameSize.height;
 
@@ -53,11 +64,17 @@ export function StoryAvatarRig({ avatar, pose = 'idle', facing = 1, reducedMotio
   }, [textures]);
 
   useFrame((state) => {
-    if (lastPoseRef.current !== pose) {
+    if (poseStartedAtRef.current === null || shouldRestartStoryAvatarAnimation(
+      lastPoseRef.current,
+      pose,
+      lastRestartTokenRef.current,
+      restartToken
+    )) {
       lastPoseRef.current = pose;
+      lastRestartTokenRef.current = restartToken;
       poseStartedAtRef.current = state.clock.elapsedTime;
     }
-    const elapsedMs = (state.clock.elapsedTime - poseStartedAtRef.current) * 1000;
+    const elapsedMs = (state.clock.elapsedTime - (poseStartedAtRef.current ?? state.clock.elapsedTime)) * 1000;
     const frameIndex = frameIndexAt(animation, elapsedMs, reducedMotion);
     const texture = textures[frameIndex] ?? textures[0];
     const visualScale = animation.frames[frameIndex]?.visualScale ?? 1;

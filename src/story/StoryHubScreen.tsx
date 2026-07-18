@@ -1125,7 +1125,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
   const position = useRef({ x: hub.spawn[0], y: hub.spawn[1] });
   const velocityY = useRef(0);
   const facing = useRef<-1 | 1>(1);
-  const [visualState, setVisualState] = useState<{ pose: StoryAvatarPose; facing: -1 | 1 }>({ pose: 'idle', facing: 1 });
+  const [visualState, setVisualState] = useState<{ pose: StoryAvatarPose; facing: -1 | 1; attackSequence: number }>({ pose: 'idle', facing: 1, attackSequence: 0 });
   const groundedUntil = useRef(0);
   const groundedPlatform = useRef<string | null>('ground');
   const jumpsUsed = useRef(0);
@@ -1135,6 +1135,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
   const previousWaterState = useRef(false);
   const attackUntil = useRef(0);
   const attackPose = useRef<StoryAvatarPose>('attack-jab');
+  const attackSequence = useRef(0);
   const bufferedAttack = useRef<StoryBufferedAttackInput>(null);
   const actionInputArmed = useRef(false);
   const releasedInputFrames = useRef(0);
@@ -1210,6 +1211,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
       const attackDurationSeconds = getStoryAttackDurationMs(avatar.avatarSet, bufferedAttackResult.attackInput) / 1000;
       attackUntil.current = now + attackDurationSeconds;
       attackPose.current = STORY_ATTACK_POSES[bufferedAttackResult.attackInput];
+      attackSequence.current += 1;
       onAttack(position.current.x, position.current.y, facing.current, bufferedAttackResult.attackInput, attackDurationSeconds);
     }
     const waterVolume = hub.exploration?.waterVolumes.find((volume) => position.current.x >= volume.bounds[0] && position.current.x <= volume.bounds[1] && position.current.y >= volume.bounds[2] && position.current.y <= volume.bounds[3]);
@@ -1313,7 +1315,9 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
     if (avatarGroup.current) avatarGroup.current.visible = avatarVisible && (performance.now() >= flashUntil.current || Math.floor(performance.now() / 70) % 2 === 0);
 
     const nextPose: StoryAvatarPose = attackUntil.current > now ? attackPose.current : swimming || groundedUntil.current < now ? 'jump' : sprinting || mounted ? 'sprint' : horizontal !== 0 ? 'walk' : 'idle';
-    if (visualState.pose !== nextPose || visualState.facing !== facing.current) setVisualState({ pose: nextPose, facing: facing.current });
+    if (visualState.pose !== nextPose || visualState.facing !== facing.current || visualState.attackSequence !== attackSequence.current) {
+      setVisualState({ pose: nextPose, facing: facing.current, attackSequence: attackSequence.current });
+    }
 
     const nearby = hub.portals
       .filter((portal) => Math.abs(nextX - portal.position[0]) <= portal.size[0] / 2 + 0.85 && Math.abs(nextY - portal.position[1]) <= portal.size[1] / 2 + 0.9)
@@ -1335,7 +1339,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
     <CuboidCollider args={[0.36, 0.8, 0.3]} />
     {mounted && mount && <StoryMountVisual mount={mount} facing={visualState.facing} />}
     <group ref={avatarGroup} position={[mount && mounted ? mount.riderOffset[0] : 0, groundingOffsetY + (mount && mounted ? mount.riderOffset[1] : 0), 0]} visible={avatarVisible}>
-      <StoryAvatarRig avatar={avatar} pose={visualState.pose} facing={visualState.facing} reducedMotion={reducedMotion} />
+      <StoryAvatarRig avatar={avatar} pose={visualState.pose} facing={visualState.facing} reducedMotion={reducedMotion} restartToken={visualState.attackSequence} />
     </group>
   </RigidBody>;
 }
