@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_WORLDS } from './adventureWorlds';
 import { STORY_ADVENTURE_SURFACE_MAPS } from './adventureSurfaceMaps';
-import { STORY_NPCS, STORY_NPC_SPRITES, STORY_NPC_VISIBLE_WORLD_HEIGHT, storyNpcFootContactSinkY, storyNpcPlaneSize } from './adventureNpcs';
+import { STORY_NPCS, STORY_NPC_ENTRANCE_SIDE_CLEARANCE, STORY_NPC_SPRITES, STORY_NPC_VISIBLE_WORLD_HEIGHT, storyNpcFootContactSinkY, storyNpcPlaneSize } from './adventureNpcs';
 import { storyAvatarGroundingOffsetForWorld, storyAvatarVisibleFootWorldY, storyGroundAnchoredPlaneCenterY } from './actorGrounding';
 import { adventureRunIsReachable, generateAdventureRunGraph } from './adventureExploration';
 import { storyPlatformSurfacePlacement } from './platformGrounding';
@@ -59,6 +59,20 @@ describe('authored Adventure surface campaign', () => {
             const overlaps = enemyMaxX >= hazardMinX && enemyMinX <= hazardMaxX;
             expect(overlaps, `${map.id}/${enemy.id}/${hazard.id}`).toBe(false);
           }
+        }
+      }
+    }
+  });
+
+  it('places every NPC beside entrances instead of inside their doorway corridor', () => {
+    const entranceKinds = new Set(['adventure-gate', 'mode-door', 'storefront', 'shrine']);
+    const worlds = [STORY_ADVENTURE_WORLDS['world-route'], ...Object.values(STORY_ADVENTURE_SURFACE_MAPS).flat()];
+    for (const world of worlds) {
+      const entrances = world.portals.filter((portal) => portal.kind && entranceKinds.has(portal.kind));
+      for (const npc of world.npcs ?? []) {
+        for (const entrance of entrances) {
+          const minimumSideDistance = entrance.size[0] / 2 + STORY_NPC_ENTRANCE_SIDE_CLEARANCE;
+          expect(Math.abs(npc.position[0] - entrance.position[0]), `${world.id}/${npc.id}/${entrance.id}`).toBeGreaterThanOrEqual(minimumSideDistance);
         }
       }
     }
