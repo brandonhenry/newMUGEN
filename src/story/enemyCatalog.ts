@@ -51,6 +51,7 @@ type ManifestEnemy = {
 
 const manifest = manifestJson as unknown as { version: number; frameSize: { width: number; height: number; baseline: number }; enemies: ManifestEnemy[] };
 const animationsById = new Map(manifest.enemies.map((enemy) => [enemy.id, enemy]));
+const hasRuntimeEnemyAssets = (id: StoryEnemyId) => animationsById.has(id);
 
 const melee = (animation: string, damageMultiplier = 1, range = 1.05, cooldownMs = 1_000): StoryEnemyAttackDefinition => ({ animation, damageMultiplier, range, cooldownMs });
 const projectile = (animation: string, color: string, damageMultiplier = 0.9, cooldownMs = 1_650): StoryEnemyAttackDefinition => ({
@@ -79,19 +80,19 @@ const CONFIG: Record<StoryEnemyId, Omit<StoryEnemyDefinition, 'id' | 'label' | '
 
 export const STORY_ENEMY_FRAME_SIZE = manifest.frameSize;
 export const STORY_ENEMY_RUNTIME_SCALE = 1.28;
-export const STORY_ENEMY_IDS = Object.keys(CONFIG) as StoryEnemyId[];
+export const STORY_ENEMY_IDS = (Object.keys(CONFIG) as StoryEnemyId[]).filter(hasRuntimeEnemyAssets);
 export const STORY_REGULAR_ENEMY_IDS = STORY_ENEMY_IDS.filter((id) => animationsById.get(id)?.tier === 'regular');
 export const STORY_CHALLENGER_IDS = STORY_ENEMY_IDS.filter((id) => animationsById.get(id)?.tier === 'challenger');
 
 export const STORY_ENEMY_CATALOG = STORY_ENEMY_IDS.reduce((catalog, id) => {
   const assets = animationsById.get(id);
-  if (!assets) throw new Error(`Missing runtime enemy assets for ${id}`);
+  if (!assets) return catalog;
   catalog[id] = { id, label: assets.label, tier: assets.tier, animations: assets.animations, ...CONFIG[id] };
   return catalog;
 }, {} as Record<StoryEnemyId, StoryEnemyDefinition>);
 
 export function getStoryEnemyDefinition(id: StoryEnemyId): StoryEnemyDefinition {
-  return STORY_ENEMY_CATALOG[id];
+  return STORY_ENEMY_CATALOG[id] ?? STORY_ENEMY_CATALOG['veil-shade'] ?? Object.values(STORY_ENEMY_CATALOG)[0]!;
 }
 
 export function getStoryEnemyAnimation(id: StoryEnemyId, animation: string): StoryEnemyAnimationDefinition {
