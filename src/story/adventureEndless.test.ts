@@ -27,9 +27,11 @@ describe('endless adventure generation', () => {
   it('validates 1,000 seeds per biome across early and direct high floors', () => {
     for (const biome of STORY_ADVENTURE_REGION_IDS) {
       const templateIds = new Set<string>();
+      const intents = new Set<string>();
       for (let index = 0; index < 1_000; index += 1) {
         const floorNumber = REPRESENTATIVE_FLOORS[index % REPRESENTATIVE_FLOORS.length];
         const floor = generateAdventureFloor(biome, `property-${index}`, floorNumber);
+        intents.add(floor.intent);
         floor.rooms.forEach((room) => templateIds.add(room.templateId));
         expect(adventureFloorValidationErrors(floor), `${biome} seed ${index} floor ${floorNumber}`).toEqual([]);
         expect(floor.criticalRoomIds.length).toBeGreaterThanOrEqual(4);
@@ -39,8 +41,16 @@ describe('endless adventure generation', () => {
           expect(floor.rooms.filter((room) => room.optional).length).toBeGreaterThanOrEqual(2);
           expect(floor.rooms.filter((room) => room.optional).length).toBeLessThanOrEqual(4);
         }
+        if (floor.intent === 'harvest' || floor.intent === 'exploration') {
+          expect(floor.encounters, `${biome} ${floor.intent} encounters`).toEqual([]);
+          expect(floor.enemySpawns, `${biome} ${floor.intent} enemies`).toEqual([]);
+        }
+        if (floor.intent === 'harvest') expect(floor.hazards, `${biome} harvest hazards`).toEqual([]);
+        expect(floor.platforms.some((platform) => platform.terrainRole === 'wall'), `${biome} structural terrain`).toBe(true);
+        expect(floor.platforms.every((platform) => Number.isInteger(platform.surfaceVariant)), `${biome} terrain variants`).toBe(true);
       }
       expect(templateIds.size).toBeGreaterThanOrEqual(8);
+      expect(intents).toEqual(new Set(['combat', 'harvest', 'exploration', 'boss']));
     }
   }, 30_000);
 

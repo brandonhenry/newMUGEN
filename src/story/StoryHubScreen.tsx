@@ -31,6 +31,7 @@ import { acceptStoryPartyInvite, advanceStoryPartyEndlessFloor, bankStoryPartyEn
 import { unseenStoryPartyRewards, type StoryPartyAuthoritativeSnapshot, type StoryPartyRewardEvent } from './storyPartyProtocol';
 import { createStoryPartyTransport, type StoryPartyTransport } from './storyPartyTransport';
 import { resolveStoryLevelAsset } from './levelAssets';
+import type { StoryLevelAssetRole } from './levelTypes';
 import { createAdventureSurfaceHub, firstStoryAdventureSurfaceMap, getStoryAdventureSurfaceMap } from './adventureSurfaceMaps';
 import { STORY_NPC_POPUP_ANCHOR_Y, STORY_NPC_SPRITES, storyNpcFootContactSinkY, storyNpcPlaneSize, storyNpcWatchFacing } from './adventureNpcs';
 import { adventureUtcDate, getStoryDailyActivities } from './adventureObjectives';
@@ -392,10 +393,24 @@ function PackPlatformVisual({ platform, hub }: { platform: StoryPlatformDefiniti
   const source = useTexture(surface ? storyWorldAssetPath(surface.asset) : STORY_ADVENTURE_ASSET_PATHS['pixel-terrain']);
   useMemo(() => configurePixelTexture(source), [source]);
   const tileSize = platform.oneWay ? 0.9 : 1.05;
-  const surfacePlacement = storyPlatformSurfacePlacement(platform, surface);
+  const variant = surface?.variants?.length
+    ? surface.variants[(platform.surfaceVariant ?? 0) % surface.variants.length]
+    : undefined;
+  const selectedSurface = surface && variant ? {
+    ...surface,
+    frame: variant.frame,
+    walkSurfaceInsetPixels: variant.walkSurfaceInsetPixels ?? surface.walkSurfaceInsetPixels
+  } : surface;
+  const surfacePlacement = storyPlatformSurfacePlacement(platform, selectedSurface);
   const count = Math.max(1, Math.ceil(platform.size[0] / tileSize));
-  const frame = surface?.frame ?? theme.tile;
+  const frame = selectedSurface?.frame ?? theme.tile;
   const atlasSize = surface?.atlasSize ?? [352, 176];
+  const isGround = platform.terrainRole === 'ground' || platform.id === 'ground' || platform.id.endsWith('-ground');
+  const solidFillHeight = platform.oneWay ? 0 : Math.max(0, platform.size[1] - surfacePlacement.height - surfacePlacement.surfaceInsetY);
+  const fillHeight = isGround ? 7 : solidFillHeight;
+  const fillCenterY = isGround
+    ? -platform.size[1] / 2 - fillHeight / 2 + 0.02
+    : -platform.size[1] / 2 + fillHeight / 2;
   const geometry = useMemo(() => atlasGeometry(frame, atlasSize, [tileSize + 0.03, surfacePlacement.height]), [atlasSize, frame, surfacePlacement.height, tileSize]);
   const material = useMemo(() => new THREE.MeshBasicMaterial({ map: source, transparent: true, alphaTest: 0.02, toneMapped: false }), [source]);
   const instances = useRef<THREE.InstancedMesh>(null);
@@ -411,10 +426,10 @@ function PackPlatformVisual({ platform, hub }: { platform: StoryPlatformDefiniti
   }, [count, platform.size, surfacePlacement.centerY, tileSize]);
   useEffect(() => () => { geometry.dispose(); material.dispose(); }, [geometry, material]);
   return <group>
-    <mesh position={[0, platform.id === 'ground' ? -3.5 : 0, 0.06]}>
-      <planeGeometry args={[platform.size[0], platform.id === 'ground' ? 7 : platform.size[1]]} />
+    {fillHeight > 0 && <mesh position={[0, fillCenterY, 0.06]}>
+      <planeGeometry args={[platform.size[0], fillHeight]} />
       <meshBasicMaterial color={hub.environment?.ground ?? theme.ground} />
-    </mesh>
+    </mesh>}
     <instancedMesh ref={instances} args={[geometry, material, count]} />
   </group>;
 }
@@ -2363,11 +2378,25 @@ function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGenerate
     id: `${hazard.id}-water`, bounds: [hazard.bounds[0], hazard.bounds[1], -4, 1.4] as [number, number, number, number], current: [0.2, 0] as [number, number],
     airPockets: [[hazard.bounds[0] + 1.5, 1.2], [hazard.bounds[1] - 1.5, 1.2]] as Array<[number, number]>
   }));
-  const propSockets = floor.rooms.flatMap((room) => room.propSockets.map(([x, y]) => ({ room, x: (room.bounds[0] + room.bounds[1]) / 2 + x + room.mutation.propOffset, y: room.bounds[2] + y })));
+  const propSockets = floor.rooms.flatMap((room) => room.propSockets.map(([x, y], slotIndex) => ({ room, slotIndex, x: (room.bounds[0] + room.bounds[1]) / 2 + x + room.mutation.propOffset, y: room.bounds[2] + y })));
   const assetResolution: NonNullable<StoryHubDefinition['levelMeta']>['assetResolution'] = [];
+  const propRepetitions = new globalThis.Map<string, number>();
+  let propDensity = 0;
+  const propDensityBudget = floor.rooms.length * (floor.intent === 'harvest' || floor.intent === 'exploration' ? 7 : 5);
   const generatedProps = propSockets.flatMap((socket, index): StoryWorldPropDefinition[] => {
-    const selected = resolveStoryLevelAsset(floor.worldId, { semanticTags: [socket.room.templateKind, index % 2 ? 'clutter' : 'framing'] }, index % 2 ? 'clutter' : 'framing', storyEndlessHash(`${floor.seed}:prop:${index}`));
+    const roles: StoryLevelAssetRole[] = ['framing', 'clutter', 'foliage', 'clutter'];
+    const role = roles[socket.slotIndex % roles.length];
+    const cluster = socket.x < (socket.room.bounds[0] + socket.room.bounds[1]) / 2 ? 'cluster-left' : 'cluster-right';
+    const semanticTags = [socket.room.templateKind, role, cluster, floor.intent];
+    const selected = Array.from({ length: 8 }, (_, attempt) => resolveStoryLevelAsset(
+      floor.worldId,
+      { semanticTags },
+      role,
+      storyEndlessHash(`${floor.seed}:prop:${index}:${attempt}`)
+    )).find((candidate) => candidate && (propRepetitions.get(candidate.id) ?? 0) < candidate.repetitionLimit && propDensity + candidate.densityCost <= propDensityBudget);
     if (!selected) return [];
+    propRepetitions.set(selected.id, (propRepetitions.get(selected.id) ?? 0) + 1);
+    propDensity += selected.densityCost;
     assetResolution.push({ slotId: `${socket.room.id}-prop-${index + 1}`, assetId: selected.id });
     return [{
       id: `${floor.seed}-socket-prop-${index + 1}`,
@@ -2382,7 +2411,13 @@ function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGenerate
     ...surface,
     id: `${surface.id}:endless:${floor.floorNumber}`,
     name: `${surface.name} · Depth ${floor.floorNumber}`,
-    subtitle: floor.boss ? `Chapter ${floor.chapter} challenger` : `Generated floor ${floor.floorNumber} · ${floor.criticalRoomIds.length} critical rooms`,
+    subtitle: floor.intent === 'boss'
+      ? `Chapter ${floor.chapter} challenger`
+      : floor.intent === 'harvest'
+        ? `Harvest refuge · ${floor.criticalRoomIds.length} rooms · no hostile encounters`
+        : floor.intent === 'exploration'
+          ? `Discovery route · ${floor.criticalRoomIds.length} rooms · no hostile encounters`
+          : `Combat route · ${floor.criticalRoomIds.length} critical rooms`,
     spawn: floor.spawn,
     checkpoint: floor.spawn,
     bounds: floor.bounds,
@@ -2395,8 +2430,8 @@ function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGenerate
     environment: createStoryDepthEnvironment(surface.environment, { kind: floor.boss ? 'crypt' : 'cave', underwater: false }),
     props: generatedProps,
     landmarks: floor.rooms.filter((room) => room.optional || room.templateKind === 'boss').map((room) => ({
-      id: `${room.id}-landmark`, label: room.templateKind === 'boss' ? 'Challenger Arena' : room.hidden ? 'Hidden Branch' : 'Optional Route',
-      subtitle: room.hidden ? 'A risky route lies beyond the critical path' : 'Read the room before committing',
+      id: `${room.id}-landmark`, label: room.templateKind === 'boss' ? 'Challenger Arena' : room.hidden ? 'Hidden Branch' : floor.intent === 'harvest' ? 'Resource Grove' : 'Optional Route',
+      subtitle: room.hidden ? 'A rewarding route lies beyond the critical path' : floor.intent === 'harvest' ? 'A dense pocket of biome resources' : 'Read the room before committing',
       position: [(room.bounds[0] + room.bounds[1]) / 2, 7 + room.row * 0.4, -1.2] as [number, number, number], size: [12, 8] as [number, number],
       color: surface.environment?.accent ?? '#2ee6ff', kind: room.hidden ? 'secret' as const : room.templateKind === 'boss' ? 'lore' as const : 'district' as const
     })),
@@ -2406,7 +2441,7 @@ function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGenerate
     interactables: eventInteractable ? [eventInteractable] : [],
     resourceNodes: createEndlessFloorResourceNodes(floor.worldId, floor),
     levelMeta,
-    musicPhase: floor.boss ? 'elite' : pressure.rank > 0 ? 'tension' : floor.chapterFloor === 3 ? 'mystery' : 'explore',
+    musicPhase: floor.intent === 'boss' ? 'elite' : floor.intent === 'harvest' ? 'safe' : floor.intent === 'exploration' ? 'mystery' : pressure.rank > 0 ? 'tension' : floor.chapterFloor === 3 ? 'mystery' : 'explore',
     exploration: surface.exploration ? {
       ...surface.exploration,
       safeApproach: [floor.bounds.minX, floor.bounds.minX + 9],

@@ -30,18 +30,31 @@ describe('KORE AI Level Director', () => {
     expect(STORY_ENDLESS_CHUNK_BLUEPRINTS).toHaveLength(48);
     expect(storyChunkCoverageErrors()).toEqual([]);
     const roleCounts = new Map<string, number>();
-    for (const chunk of STORY_ENDLESS_CHUNK_BLUEPRINTS) roleCounts.set(chunk.chunkRole!, (roleCounts.get(chunk.chunkRole!) ?? 0) + 1);
+    for (const chunk of STORY_ENDLESS_CHUNK_BLUEPRINTS) {
+      roleCounts.set(chunk.chunkRole!, (roleCounts.get(chunk.chunkRole!) ?? 0) + 1);
+      expect(chunk.geometry.filter((geometry) => geometry.kind === 'solid' && geometry.surfaceIntent === 'wall').length, chunk.id).toBeGreaterThanOrEqual(2);
+      expect(chunk.slots.filter((slot) => slot.kind === 'prop').length, chunk.id).toBeGreaterThanOrEqual(4);
+    }
     expect(new Set(roleCounts.values())).toEqual(new Set([4]));
     expect(storyAuthoredRoomTemplate('junction', ['west', 'east', 'up'], 0).connectors).toEqual(['west', 'east', 'up']);
   });
 
   it('resolves registered semantic assets for every biome', () => {
-    expect(STORY_LEVEL_ASSET_REGISTRY.length).toBeGreaterThanOrEqual(24);
+    expect(STORY_LEVEL_ASSET_REGISTRY.length).toBeGreaterThanOrEqual(38);
     for (const coverage of storyLevelAssetCoverage()) {
-      expect(coverage.assets, coverage.biomeId).toBeGreaterThanOrEqual(3);
+      expect(coverage.assets, coverage.biomeId).toBeGreaterThanOrEqual(4);
       const selected = resolveStoryLevelAsset(coverage.biomeId, { semanticTags: ['landmark'] }, 'hero', 0);
       expect(selected?.biomes, coverage.biomeId).toContain(coverage.biomeId);
       expect(selected?.roles, coverage.biomeId).toContain('hero');
+    }
+  });
+
+  it('compiles clustered surface dressing and stable terrain variants', () => {
+    for (const blueprint of Object.values(STORY_SURFACE_LEVEL_BLUEPRINTS)) {
+      const compiled = compileStoryLevelBlueprint(blueprint, 'dressing-review', 4);
+      expect(compiled.props.length, blueprint.id).toBeGreaterThanOrEqual(4);
+      expect(compiled.platforms.every((platform) => Number.isInteger(platform.surfaceVariant)), blueprint.id).toBe(true);
+      expect(new Set(compiled.platforms.map((platform) => platform.surfaceVariant)).size, blueprint.id).toBeGreaterThanOrEqual(2);
     }
   });
 

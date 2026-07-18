@@ -7,10 +7,10 @@ const CHUNK_ROLES: StoryRoomTemplateKind[] = [
 ];
 
 const VARIANTS = [
-  { ledges: [[-8, 3.25, 7], [0, 5.0, 8], [8.5, 3.75, 6]] as Array<[number, number, number]>, rhythm: 'low-high-low', decision: 'central height for speed or protected floor' },
-  { ledges: [[-8, 4.0, 8], [-1.5, 6.25, 6], [7.5, 4.75, 9]] as Array<[number, number, number]>, rhythm: 'rising bridge', decision: 'early commitment or late recovery' },
-  { ledges: [[-9, 5.25, 6], [0, 3.5, 10], [9, 6.0, 6]] as Array<[number, number, number]>, rhythm: 'high-low-high', decision: 'drop through center or hold altitude' },
-  { ledges: [[-7.5, 3.5, 9], [1, 7.0, 7], [8, 4.25, 7]] as Array<[number, number, number]>, rhythm: 'late apex', decision: 'safe lower line or exposed apex reward' }
+  { ledges: [[-8, 3.25, 7], [0, 5.0, 8], [8.5, 3.75, 6]] as Array<[number, number, number]>, structures: [[-11, 0, 3, 2.5], [8, 0, 3, 3.25]] as Array<[number, number, number, number]>, rhythm: 'low-high-low', decision: 'central height for speed or protected floor' },
+  { ledges: [[-8, 4.0, 8], [-1.5, 6.25, 6], [7.5, 4.75, 9]] as Array<[number, number, number]>, structures: [[-11, 0, 4, 3], [6.5, 0, 4.5, 2]] as Array<[number, number, number, number]>, rhythm: 'rising bridge', decision: 'early commitment or late recovery' },
+  { ledges: [[-9, 5.25, 6], [0, 3.5, 10], [9, 6.0, 6]] as Array<[number, number, number]>, structures: [[-11.5, 0, 3, 4], [8.5, 0, 3, 4]] as Array<[number, number, number, number]>, rhythm: 'high-low-high', decision: 'drop through center or hold altitude' },
+  { ledges: [[-7.5, 3.5, 9], [1, 7.0, 7], [8, 4.25, 7]] as Array<[number, number, number]>, structures: [[-11, 0, 4, 2], [7, 0, 4, 3.5]] as Array<[number, number, number, number]>, rhythm: 'late apex', decision: 'safe lower line or exposed apex reward' }
 ];
 
 function defaultConnectors(kind: StoryRoomTemplateKind): StoryRoomConnector[] {
@@ -56,6 +56,7 @@ function makeChunkBlueprint(kind: StoryRoomTemplateKind, variant: number): Story
     ],
     geometry: [
       { id: `${id}-floor`, kind: 'solid', rect: [-12, -1, 24, 1], surfaceIntent: 'ground' },
+      ...source.structures.map((rect, index) => ({ id: `${id}-structure-${index + 1}`, kind: 'solid' as const, rect, surfaceIntent: 'wall' as const })),
       ...source.ledges.map(([x, y, width], index) => ({ id: `${id}-ledge-${index + 1}`, kind: 'one-way' as const, rect: [x - width / 2, y, width, 0.5] as [number, number, number, number], surfaceIntent: 'ledge' as const }))
     ],
     connectors: connectors.map((edge) => ({
@@ -71,8 +72,10 @@ function makeChunkBlueprint(kind: StoryRoomTemplateKind, variant: number): Story
       { id: `${id}-enemy-right`, kind: 'enemy-lane', position: [6, STORY_GROUNDED_ACTOR_CENTER_Y], semanticTags: [kind, 'right-lane'], route: kind === 'arena' || boss ? 'critical' : 'ambient' },
       { id: `${id}-hazard`, kind: 'hazard', position: [variant % 2 ? -5.5 : 5.5, 0], bounds: [4, 1.2], semanticTags: [kind, 'telegraphed'], route: 'ambient' },
       { id: `${id}-reward`, kind: 'reward', position: [9, 1.05], semanticTags: [kind, 'protected-alcove'], route: ['branch', 'secret', 'event'].includes(kind) ? 'optional' : 'ambient' },
-      { id: `${id}-prop-a`, kind: 'prop', position: [-10, 1.05], semanticTags: ['framing', kind], route: 'ambient' },
-      { id: `${id}-prop-b`, kind: 'prop', position: [10, 1.05], semanticTags: ['clutter', kind], route: 'ambient' }
+      { id: `${id}-prop-a`, kind: 'prop', position: [-10, 1.05], semanticTags: ['framing', kind, 'cluster-left'], route: 'ambient' },
+      { id: `${id}-prop-b`, kind: 'prop', position: [-7.5, 1.05], semanticTags: ['clutter', kind, 'cluster-left'], route: 'ambient' },
+      { id: `${id}-prop-c`, kind: 'prop', position: [7.5, 1.05], semanticTags: ['foliage', kind, 'cluster-right'], route: 'ambient' },
+      { id: `${id}-prop-d`, kind: 'prop', position: [10, 1.05], semanticTags: ['framing', kind, 'cluster-right'], route: 'ambient' }
     ],
     visual: { paletteId: 'route', structuralMaterial: 'biome', heroRole: boss ? 'hero' : 'structural', densityBudget: boss ? 26 : 18, permittedAssetTags: [kind] },
     constraints: {
@@ -97,12 +100,14 @@ export function storyAuthoredRoomTemplate(kind: StoryRoomTemplateKind, connector
   const candidates = STORY_ENDLESS_CHUNK_BLUEPRINTS.filter((blueprint) => blueprint.chunkRole === kind);
   const blueprint = candidates[Math.abs(ordinal) % candidates.length] ?? STORY_ENDLESS_CHUNK_BLUEPRINTS[0];
   const ledges = blueprint.geometry.filter((geometry) => geometry.kind === 'one-way');
+  const structures = blueprint.geometry.filter((geometry) => geometry.kind === 'solid' && geometry.surfaceIntent !== 'ground');
   const slots = blueprint.slots;
   return {
     id: `${blueprint.id}-${connectorKey(connectors) || 'cap'}`,
     kind,
     connectors,
     platformSockets: ledges.map((geometry) => [geometry.rect[0] + geometry.rect[2] / 2, geometry.rect[1], geometry.rect[2]]),
+    structureSockets: structures.map((geometry) => [geometry.rect[0] + geometry.rect[2] / 2, geometry.rect[1] + geometry.rect[3] / 2, geometry.rect[2], geometry.rect[3]]),
     enemySockets: slots.filter((slot) => slot.kind === 'enemy-lane').map((slot) => slot.position),
     hazardSockets: slots.filter((slot) => slot.kind === 'hazard').map((slot) => slot.position),
     rewardSockets: slots.filter((slot) => slot.kind === 'reward').map((slot) => slot.position),

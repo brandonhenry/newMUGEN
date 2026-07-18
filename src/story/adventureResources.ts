@@ -46,7 +46,7 @@ function awayFromReserved(x: number, portals: StoryPortalDefinition[], npcs: Sto
   return origin;
 }
 
-function makeNode(id: string, resourceId: string, x: number, major: boolean, secondaryResourceId?: string): StoryResourceNodeDefinition {
+function makeNode(id: string, resourceId: string, x: number, major: boolean, secondaryResourceId?: string, baseY = 0): StoryResourceNodeDefinition {
   const resource = STORY_RESOURCE_BY_ID[resourceId];
   const legendary = resource.rarity === 'legendary';
   const majorDeposit = major && (resource.kind === 'ore' || resource.kind === 'rock');
@@ -56,7 +56,7 @@ function makeNode(id: string, resourceId: string, x: number, major: boolean, sec
     resourceId,
     kind: resource.kind,
     rarity: resource.rarity,
-    position: [x, groundedResourceNodeCenterY(size[1], resource.footAnchorY), majorDeposit || legendary ? 0.35 : -0.35],
+    position: [x, baseY + groundedResourceNodeCenterY(size[1], resource.footAnchorY), majorDeposit || legendary ? 0.35 : -0.35],
     size,
     toughness: legendary ? 8 : majorDeposit ? 6 : resource.kind === 'plant' || resource.kind === 'berry' ? 1 : 3,
     respawn: legendary ? 'daily' : majorDeposit ? 'timed' : 'visit',
@@ -111,18 +111,26 @@ export function createDepthResourceNodes(biomeId: StoryBiomeId, zone: StoryGener
 
 export function createEndlessFloorResourceNodes(biomeId: StoryBiomeId, floor: StoryGeneratedFloor) {
   const local = STORY_BIOME_RESOURCE_IDS[biomeId];
-  const rewardRooms = floor.rooms.filter((room) => room.optional && room.column > 0 || room.critical && room.column > 0 && room.column < 3);
-  const count = Math.min(12, 5 + rewardRooms.length + floor.chapterFloor);
+  const rewardRooms = floor.rooms.filter((room) => room.id !== floor.entranceRoomId && room.id !== floor.exitRoomId && (room.optional || room.critical));
+  const count = floor.intent === 'harvest'
+    ? Math.min(24, 14 + rewardRooms.length + floor.chapterFloor)
+    : floor.intent === 'exploration'
+      ? Math.min(16, 8 + rewardRooms.length)
+      : Math.min(12, 5 + rewardRooms.length + floor.chapterFloor);
   return Array.from({ length: count }, (_, index) => {
     const room = rewardRooms[index % Math.max(1, rewardRooms.length)] ?? floor.rooms[0];
     const legendary = floor.boss && index === count - 1;
-    const major = room.optional || index >= count - 3;
-    const resourceId = legendary ? local[3] : index % 5 === 0 ? 'fieldstone' : local[Math.min(2, (index + floor.floorNumber) % 3)];
+    const major = room.optional || index >= count - (floor.intent === 'harvest' ? 6 : 3);
+    const resourceId = legendary
+      ? local[3]
+      : floor.intent === 'harvest'
+        ? local[(index + floor.floorNumber) % 3]
+        : index % 5 === 0 ? 'fieldstone' : local[Math.min(2, (index + floor.floorNumber) % 3)];
     const roomCenter = (room.bounds[0] + room.bounds[1]) / 2;
     const alcove = room.rewardAlcoves[index % Math.max(1, room.rewardAlcoves.length)] ?? [0, 1.05];
     const baseX = roomCenter + alcove[0];
     const x = Math.max(floor.bounds.minX + 8, Math.min(floor.bounds.maxX - 8, baseX + (unit(`${floor.seed}:${floor.floorNumber}:${index}`) - 0.5) * 2));
-    return makeNode(`${room.id}-resource-${index + 1}`, resourceId, x, major, local[2]);
+    return makeNode(`${room.id}-resource-${index + 1}`, resourceId, x, major, local[2], room.bounds[2]);
   });
 }
 

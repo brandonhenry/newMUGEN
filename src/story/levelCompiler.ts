@@ -2,7 +2,7 @@ import { STORY_GROUNDED_ACTOR_CENTER_Y } from './actorGrounding';
 import { resolveStoryLevelAsset } from './levelAssets';
 import { STORY_MOVEMENT_PROFILE, storyConservativeDoubleJumpRise, storyConservativeJumpRun } from './movementProfile';
 import type { StoryPlatformDefinition, StoryWorldPropDefinition } from './types';
-import type { StoryCompiledLevelMeta, StoryLevelBlueprintV1, StoryLevelValidationResult } from './levelTypes';
+import type { StoryCompiledLevelMeta, StoryLevelAssetRole, StoryLevelBlueprintV1, StoryLevelValidationResult } from './levelTypes';
 
 function hashString(value: string) {
   let hash = 2166136261;
@@ -100,16 +100,20 @@ export function compileStoryLevelBlueprint(blueprint: StoryLevelBlueprintV1, see
     size: [geometry.rect[2], geometry.rect[3]],
     collision: geometry.kind,
     terrainRole: geometry.surfaceIntent,
+    surfaceVariant: hashString(`${blueprint.id}:${geometry.id}:terrain`) % 3,
     ...(geometry.kind === 'one-way' ? { oneWay: true } : {})
   }));
   const assetResolution: StoryCompiledLevelMeta['assetResolution'] = [];
   const repetitions = new Map<string, number>();
+  let densityUsed = 0;
   const props = blueprint.biomeId ? blueprint.slots.filter((slot) => slot.kind === 'prop').flatMap((slot, index): StoryWorldPropDefinition[] => {
-    const selected = resolveStoryLevelAsset(blueprint.biomeId!, slot, index === 0 ? 'framing' : 'clutter', hashString(`${seed}:${slot.id}`));
+    const requestedRole = (['structural', 'framing', 'foliage', 'clutter'] as StoryLevelAssetRole[]).find((role) => slot.semanticTags.includes(role)) ?? (index === 0 ? 'framing' : 'clutter');
+    const selected = resolveStoryLevelAsset(blueprint.biomeId!, slot, requestedRole, hashString(`${seed}:${slot.id}`));
     if (!selected) return [];
     const used = repetitions.get(selected.id) ?? 0;
-    if (used >= selected.repetitionLimit) return [];
+    if (used >= selected.repetitionLimit || densityUsed + selected.densityCost > blueprint.visual.densityBudget) return [];
     repetitions.set(selected.id, used + 1);
+    densityUsed += selected.densityCost;
     assetResolution.push({ slotId: slot.id, assetId: selected.id });
     return [{
       id: `${blueprint.id}-${slot.id}-${selected.id}`,

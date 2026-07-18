@@ -24,13 +24,14 @@ export function LevelLabOverlay({ hub, floor }: { hub: StoryHubDefinition; floor
   const metrics = useMemo(() => ({
     platforms: hub.platforms.length,
     props: hub.props?.length ?? 0,
+    resources: hub.resourceNodes?.length ?? 0,
     hazards: hub.hazards?.length ?? 0,
     enemies: hub.enemySpawns?.length ?? 0,
     chunks: hub.levelMeta?.chunkIds.length ?? 0
   }), [hub]);
   return <aside className="story-level-lab" data-testid="story-level-lab" aria-label="KORE Level Lab">
     <header>
-      <span><strong>LEVEL LAB</strong><small>{hub.levelMeta?.blueprintId ?? hub.id} · seed {hub.levelMeta?.seed ?? 'authored'}</small></span>
+      <span><strong>LEVEL LAB</strong><small>{hub.levelMeta?.blueprintId ?? hub.id} · {floor ? `${floor.intent} · ` : ''}seed {hub.levelMeta?.seed ?? 'authored'}</small></span>
       <span className={failures.length ? 'is-fail' : 'is-pass'}>{failures.length ? `${failures.length} failures` : 'PASS'}</span>
     </header>
     <div className="story-level-lab-controls">

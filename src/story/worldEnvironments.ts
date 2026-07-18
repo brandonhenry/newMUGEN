@@ -133,6 +133,22 @@ const SURFACES: Record<StoryWorldThemeId, SurfaceInput> = {
   ruins: ['rocky-pass/tileset.png', [48, 16, 32, 16], [224, 128]]
 };
 
+/**
+ * Authored neighboring cap pieces from each biome atlas. The renderer selects
+ * among these per platform, which keeps one collision language while avoiding
+ * the previous single-tile wallpaper effect.
+ */
+const SURFACE_VARIANT_FRAMES: Partial<Record<StoryWorldThemeId, Array<[number, number, number, number]>>> = {
+  village: [[16, 16, 32, 16], [48, 16, 32, 16], [80, 16, 32, 16]],
+  forest: [[16, 80, 32, 16], [48, 80, 32, 16], [80, 80, 32, 16]],
+  mine: [[0, 16, 32, 16], [32, 16, 32, 16], [64, 16, 32, 16]],
+  crypt: [[304, 16, 32, 16], [336, 16, 32, 16], [368, 16, 32, 16]],
+  underworld: [[0, 16, 32, 16], [32, 16, 32, 16], [64, 16, 32, 16]],
+  snow: [[16, 16, 32, 16], [48, 16, 32, 16], [80, 16, 32, 16]],
+  desert: [[16, 16, 32, 16], [48, 16, 32, 16], [80, 16, 32, 16]],
+  ruins: [[16, 16, 32, 16], [48, 16, 32, 16], [80, 16, 32, 16]]
+};
+
 function makeLayer(theme: StoryWorldThemeId, input: LayerInput, index: number): StoryWorldBackdropLayerDefinition {
   const [file, depth, height, parallax, repeatEvery, opacity = 1, y = height / 2 - 0.5] = input;
   return { id: `${theme}-art-${index + 1}`, asset: worldPackAsset(file), depth, y, height, opacity, parallax, color: '#ffffff', repeatEvery };
@@ -147,7 +163,14 @@ export function createStoryWorldEnvironment(theme: StoryWorldThemeId): StoryWorl
       asset: worldPackAsset(file),
       frame,
       atlasSize,
-      ...(walkSurfaceInsetPixels ? { walkSurfaceInsetPixels } : {})
+      ...(walkSurfaceInsetPixels ? { walkSurfaceInsetPixels } : {}),
+      ...(SURFACE_VARIANT_FRAMES[theme] ? {
+        variants: SURFACE_VARIANT_FRAMES[theme]!.map((variantFrame, index) => ({
+          id: `${theme}-terrain-${index + 1}`,
+          frame: variantFrame,
+          ...(walkSurfaceInsetPixels ? { walkSurfaceInsetPixels } : {})
+        }))
+      } : {})
     }
   };
 }

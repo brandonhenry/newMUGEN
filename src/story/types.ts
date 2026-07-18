@@ -341,6 +341,12 @@ export type StoryWorldEnvironmentDefinition = {
     atlasSize: [number, number];
     /** Source-pixel inset for atlases whose painted cap sits below the physics walk line. */
     walkSurfaceInsetPixels?: number;
+    /** Alternate authored atlas pieces used to break up repeated terrain. */
+    variants?: Array<{
+      id: string;
+      frame: [number, number, number, number];
+      walkSurfaceInsetPixels?: number;
+    }>;
   };
 };
 
@@ -522,6 +528,7 @@ export type StoryRoomTemplateDefinition = {
   kind: StoryRoomTemplateKind;
   connectors: StoryRoomConnector[];
   platformSockets: Array<[number, number, number]>;
+  structureSockets: Array<[number, number, number, number]>;
   enemySockets: Array<[number, number]>;
   hazardSockets: Array<[number, number]>;
   rewardSockets: Array<[number, number]>;
@@ -544,6 +551,7 @@ export type StoryGeneratedRoom = {
   mutation: StoryRoomMutation;
   protectedCorridor: [number, number, number, number];
   platformSockets: Array<[number, number, number]>;
+  structureSockets: Array<[number, number, number, number]>;
   enemyLanes: Array<[number, number]>;
   hazardSockets: Array<[number, number]>;
   rewardAlcoves: Array<[number, number]>;
@@ -566,6 +574,8 @@ export type StoryFloorPressureState = {
   hunterCount: number;
 };
 
+export type StoryFloorIntent = 'combat' | 'harvest' | 'exploration' | 'boss';
+
 export type StoryGeneratedFloor = {
   version: 3 | 4;
   worldId: Exclude<StoryAdventureWorldId, 'world-route'>;
@@ -574,6 +584,7 @@ export type StoryGeneratedFloor = {
   chapter: number;
   chapterFloor: 1 | 2 | 3 | 4;
   boss: boolean;
+  intent: StoryFloorIntent;
   usedFallback: boolean;
   validationFailures: string[];
   grid: { columns: number; rows: number };
@@ -791,6 +802,8 @@ export type StoryPlatformDefinition = {
   oneWay?: boolean;
   collision?: 'solid' | 'one-way';
   terrainRole?: 'ground' | 'ledge' | 'wall' | 'ceiling';
+  /** Stable index into the biome surface's authored atlas variants. */
+  surfaceVariant?: number;
 };
 
 export type StoryHubDefinition = {

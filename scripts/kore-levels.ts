@@ -85,15 +85,19 @@ async function sample() {
   const count = Math.max(1, Number(option('count', '250')) || 250);
   const failures: string[] = [];
   const signatures = new Set<string>();
+  const intents = { combat: 0, harvest: 0, exploration: 0, boss: 0 };
   let fallbacks = 0;
   for (const biome of STORY_ADVENTURE_REGION_IDS) for (let index = 0; index < count; index += 1) {
     const floorNumber = [1, 2, 3, 4, 8, 100, Number.MAX_SAFE_INTEGER][index % 7];
     const floor = generateAdventureFloor(biome, `level-director-${index}`, floorNumber, 4);
+    intents[floor.intent] += 1;
     if (floor.usedFallback) fallbacks += 1;
     failures.push(...floor.validationFailures.map((failure) => `${biome}:${index}:${failure}`));
+    if ((floor.intent === 'harvest' || floor.intent === 'exploration') && floor.enemySpawns.length > 0) failures.push(`${biome}:${index}:peaceful-floor-enemies`);
+    if (!floor.platforms.some((platform) => platform.terrainRole === 'wall')) failures.push(`${biome}:${index}:missing-structural-terrain`);
     signatures.add(floor.rooms.filter((room) => room.critical).sort((a, b) => a.column - b.column || a.row - b.row).map((room) => `${room.column}:${room.row}:${room.templateId}`).join('|'));
   }
-  const result = { valid: failures.length === 0 && fallbacks === 0, seeds: count * STORY_ADVENTURE_REGION_IDS.length, fallbacks, failures, uniqueSignatures: signatures.size };
+  const result = { valid: failures.length === 0 && fallbacks === 0, seeds: count * STORY_ADVENTURE_REGION_IDS.length, fallbacks, failures, uniqueSignatures: signatures.size, intents };
   await writeJson(`sample-${count}.json`, result);
   return result;
 }

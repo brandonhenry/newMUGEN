@@ -3,10 +3,12 @@ import { STORY_BIOME_RESOURCE_IDS, STORY_RESOURCE_BY_ID } from './adventureCraft
 import { STORY_ADVENTURE_SURFACE_MAPS } from './adventureSurfaceMaps';
 import { generateAdventureRunGraph } from './adventureExploration';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_WORLDS } from './adventureWorlds';
+import { generateAdventureFloor } from './adventureEndless';
 import {
   adventureAttackCanHitResource,
   adventureResourceHitStrength,
   createDepthResourceNodes,
+  createEndlessFloorResourceNodes,
   groundedResourceNodeCenterY,
   resourceYield
 } from './adventureResources';
@@ -70,6 +72,23 @@ describe('Adventure gathering nodes', () => {
         expect(nodes.length).toBeLessThanOrEqual(10);
         expect(nodes.every((node) => node.position[0] > zone.camera.minX && node.position[0] < zone.camera.maxX)).toBe(true);
         if (nodes.some(({ rarity }) => rarity === 'legendary')) expect(zone.hidden || zone.finale).toBe(true);
+      }
+    }
+  });
+
+  it('makes harvest floors dense, peaceful, and correctly grounds resources in raised branches', () => {
+    for (const biome of STORY_ADVENTURE_REGION_IDS) {
+      const floor = Array.from({ length: 100 }, (_, index) => generateAdventureFloor(biome, `harvest-review-${index}`, 2)).find((candidate) => candidate.intent === 'harvest');
+      expect(floor, `${biome} harvest floor`).toBeDefined();
+      expect(floor!.enemySpawns).toEqual([]);
+      expect(floor!.hazards).toEqual([]);
+      const nodes = createEndlessFloorResourceNodes(biome, floor!);
+      expect(nodes.length).toBeGreaterThanOrEqual(18);
+      for (const node of nodes) {
+        const room = floor!.rooms.find((candidate) => node.id.startsWith(`${candidate.id}-resource-`))!;
+        const resource = STORY_RESOURCE_BY_ID[node.resourceId];
+        const visibleFootY = node.position[1] + node.size[1] * (0.5 - resource.footAnchorY);
+        expect(visibleFootY, node.id).toBeCloseTo(room.bounds[2] - 0.035, 8);
       }
     }
   });

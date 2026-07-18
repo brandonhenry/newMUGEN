@@ -152,10 +152,11 @@ function template(id: string, kind: StoryRoomTemplateKind, connectors: StoryRoom
       [1, 5.1 + (variant % 2) * 1.1, 8],
       [9 - high, 3.7 + ((variant + 1) % 3) * 0.45, 6 + (variant % 2) * 2]
     ],
+    structureSockets: [[-10.5, 1.25, 3, 2.5], [9.5, 1.5, 3, 3]],
     enemySockets: [[-8, STORY_GROUNDED_ACTOR_CENTER_Y], [-2.5, STORY_GROUNDED_ACTOR_CENTER_Y], [3, STORY_GROUNDED_ACTOR_CENTER_Y], [8, STORY_GROUNDED_ACTOR_CENTER_Y]],
     hazardSockets: [[-1.5, 0], [7.5, 0]],
     rewardSockets: [[9, 1.05], [-9, 5.8]],
-    propSockets: [[-10, 1.05], [10, 1.05], [0, 1.05]],
+    propSockets: [[-10, 1.05], [-7, 1.05], [7, 1.05], [10, 1.05]],
     protectedCorridor: [-13, 13, 0, 2.2],
     mutationBounds: { platformHeight: 0.35, platformWidth: [0.88, 1.12], hazardOffset: 1.2, propOffset: 1 }
   };
@@ -263,6 +264,16 @@ function generateCandidate(worldId: BiomeId, seed: string, floorNumber: number, 
   const chapterFloor = storyEndlessChapterFloor(safeFloor);
   const boss = chapterFloor === 4;
   const random = randomFromSeed(`${worldId}:${seed}:${safeFloor}:attempt:${attempt}:v${generationVersion}`);
+  const intentRoll = generationVersion === 4 && !boss ? random() : 1;
+  const intent: StoryGeneratedFloor['intent'] = boss
+    ? 'boss'
+    : generationVersion === 3
+      ? 'combat'
+      : intentRoll < (chapterFloor === 1 ? 0.32 : 0.22)
+        ? 'harvest'
+        : intentRoll < (chapterFloor === 1 ? 0.60 : 0.44)
+          ? 'exploration'
+          : 'combat';
   const columnCount = generationVersion === 3 ? 4 : boss ? 5 : 5 + Math.floor(random() * 3);
   const path = makePath(random, boss, columnCount);
   const optionalCount = boss ? 0 : generationVersion === 3 ? Math.min(4, 2 + (chapterFloor === 3 ? 1 + Math.floor(random() * 2) : Math.floor(random() * 2))) : 2 + Math.floor(random() * 2);
@@ -295,6 +306,7 @@ function generateCandidate(worldId: BiomeId, seed: string, floorNumber: number, 
       },
       protectedCorridor: selected.protectedCorridor,
       platformSockets: selected.platformSockets,
+      structureSockets: selected.structureSockets,
       enemyLanes: selected.enemySockets,
       hazardSockets: selected.hazardSockets,
       rewardAlcoves: selected.rewardSockets,
@@ -303,14 +315,19 @@ function generateCandidate(worldId: BiomeId, seed: string, floorNumber: number, 
   });
   const criticalRooms = rooms.filter((room) => room.critical);
   const optionalRooms = rooms.filter((room) => room.optional);
-  const combatRooms = boss ? criticalRooms.filter((room) => room.column === Math.floor(columnCount / 2)) : criticalRooms.filter((room) => room.column > 0 && room.column < columnCount - 1);
-  if (!boss) {
+  const combatRooms = intent === 'boss'
+    ? criticalRooms.filter((room) => room.column === Math.floor(columnCount / 2))
+    : intent === 'combat'
+      ? criticalRooms.filter((room) => room.column > 0 && room.column < columnCount - 1)
+      : [];
+  if (intent === 'combat') {
     combatRooms.slice(0, chapterFloor === 1 ? 1 : 2).forEach((room, ordinal) => {
       const selected = roomTemplate(room.connectors, 'arena', worldId, safeFloor, ordinal);
       room.templateKind = 'arena';
       room.templateId = selected.id;
       room.protectedCorridor = selected.protectedCorridor;
       room.platformSockets = selected.platformSockets;
+      room.structureSockets = selected.structureSockets;
       room.enemyLanes = selected.enemySockets;
       room.hazardSockets = selected.hazardSockets;
       room.rewardAlcoves = selected.rewardSockets;
@@ -326,6 +343,7 @@ function generateCandidate(worldId: BiomeId, seed: string, floorNumber: number, 
       eventRoom.templateId = selected.id;
       eventRoom.protectedCorridor = selected.protectedCorridor;
       eventRoom.platformSockets = selected.platformSockets;
+      eventRoom.structureSockets = selected.structureSockets;
       eventRoom.enemyLanes = selected.enemySockets;
       eventRoom.hazardSockets = selected.hazardSockets;
       eventRoom.rewardAlcoves = selected.rewardSockets;
@@ -333,15 +351,27 @@ function generateCandidate(worldId: BiomeId, seed: string, floorNumber: number, 
     }
   }
   const platforms = [
-    { id: `${worldId}-floor-${safeFloor}-ground`, position: [0, -0.5] as [number, number], size: [maxX - minX + 2, 1] as [number, number] },
+    {
+      id: `${worldId}-floor-${safeFloor}-ground`, position: [0, -0.5] as [number, number], size: [maxX - minX + 2, 1] as [number, number],
+      collision: 'solid' as const, terrainRole: 'ground' as const, surfaceVariant: storyEndlessHash(`${seed}:${safeFloor}:ground`) % 3
+    },
     ...rooms.flatMap((room, roomIndex) => {
       const localSeed = `${room.templateId}:${safeFloor}:${roomIndex}`;
       const centerX = (room.bounds[0] + room.bounds[1]) / 2;
-      return room.platformSockets.map(([x, y, width], index) => ({
-        id: `${room.id}-platform-${index + 1}`,
-        position: [centerX + x, room.bounds[2] + y + room.mutation.platformHeightJitter + (storyEndlessHash(`${localSeed}:${index}`) % 3) * 0.12] as [number, number],
-        size: [width * room.mutation.platformWidthScale, 0.42] as [number, number], oneWay: true
-      }));
+      return [
+        ...room.structureSockets.map(([x, y, width, height], index) => ({
+          id: `${room.id}-structure-${index + 1}`,
+          position: [centerX + x, room.bounds[2] + y] as [number, number],
+          size: [width, height] as [number, number], collision: 'solid' as const, terrainRole: 'wall' as const,
+          surfaceVariant: storyEndlessHash(`${localSeed}:structure:${index}`) % 3
+        })),
+        ...room.platformSockets.map(([x, y, width], index) => ({
+          id: `${room.id}-platform-${index + 1}`,
+          position: [centerX + x, room.bounds[2] + y + room.mutation.platformHeightJitter + (storyEndlessHash(`${localSeed}:${index}`) % 3) * 0.12] as [number, number],
+          size: [width * room.mutation.platformWidthScale, 0.42] as [number, number], oneWay: true,
+          collision: 'one-way' as const, terrainRole: 'ledge' as const, surfaceVariant: storyEndlessHash(`${localSeed}:ledge:${index}`) % 3
+        }))
+      ];
     })
   ];
   const traversalRooms = rooms.filter((room) => room.critical && room.column > 0).slice(0, chapterFloor === 1 ? 1 : 2);
@@ -351,7 +381,11 @@ function generateCandidate(worldId: BiomeId, seed: string, floorNumber: number, 
     // as wind can otherwise cross the seam into an apparently safe event beat.
     .filter((room) => !eventRoom || room.column !== eventRoom.column)
     .filter((room) => room.column > 0 && room.column < columnCount - 1);
-  const hazardCount = boss || chapterFloor === 1 ? 0 : chapterFloor === 2 ? 2 : 3;
+  const hazardCount = boss || intent === 'harvest' || chapterFloor === 1
+    ? 0
+    : intent === 'exploration'
+      ? 1
+      : chapterFloor === 2 ? 2 : 3;
   const hazards = shuffled(hazardRoomPool, `${seed}:hazards:${safeFloor}`).slice(0, hazardCount).map((room, index) => {
     const sockets = traversalRooms.some((candidate) => candidate.id === room.id) ? room.hazardSockets.filter(([x]) => Math.abs(x) >= 5) : room.hazardSockets;
     const socket = sockets[index % Math.max(1, sockets.length)] ?? [index % 2 ? 7 : -7, 0];
@@ -405,7 +439,7 @@ function generateCandidate(worldId: BiomeId, seed: string, floorNumber: number, 
   });
   const parTimeSeconds = 120 + criticalRooms.length * 20 + optionalRooms.length * 10;
   const floor: StoryGeneratedFloor = {
-    version: generationVersion, worldId, seed, floorNumber: safeFloor, chapter, chapterFloor, boss,
+    version: generationVersion, worldId, seed, floorNumber: safeFloor, chapter, chapterFloor, boss, intent,
     usedFallback: false, validationFailures: [], grid: { columns: columnCount, rows: STORY_ENDLESS_GRID_ROWS },
     bounds: { minX, maxX, floorY: 0 }, spawn: [minX + 4.5, STORY_GROUNDED_ACTOR_CENTER_Y], exit: [maxX - 4.5, STORY_GROUNDED_ACTOR_CENTER_Y],
     entranceRoomId: cellId(worldId, safeFloor, entranceCell), exitRoomId: cellId(worldId, safeFloor, exitCell),
@@ -480,6 +514,9 @@ export function adventureFloorValidationErrors(floor: StoryGeneratedFloor): stri
     });
   })) failures.push('encounter-compatibility');
   if (floor.enemySpawns.some((enemy) => enemy.position[0] < floor.bounds.minX + 10 || enemy.position[0] > floor.bounds.maxX - 8)) failures.push('enemy-safe-distance');
+  if ((floor.intent === 'harvest' || floor.intent === 'exploration') && (floor.encounters.length > 0 || floor.enemySpawns.length > 0)) failures.push('noncombat-intent-enemies');
+  if (floor.intent === 'harvest' && floor.hazards.length > 0) failures.push('harvest-intent-hazards');
+  if ((floor.intent === 'boss') !== floor.boss) failures.push('floor-intent-cadence');
   if (floor.boss !== (floor.chapterFloor === 4) || (floor.boss && (!floor.bossEnemyId || floor.event))) failures.push('boss-cadence');
   if (floor.event && !floor.rooms.some((room) => room.id === floor.event?.roomId && room.optional)) failures.push('event-placement');
   if (!Number.isFinite(floor.parTimeSeconds) || floor.parTimeSeconds < 180) failures.push('pressure-time');
@@ -499,7 +536,7 @@ export function generateAdventureFallbackFloor(worldId: BiomeId, seed: string, f
     connectors: [...(column > 0 ? ['west' as const] : []), ...(column < safeColumnCount - 1 ? ['east' as const] : [])],
     critical: true, optional: false, hidden: false,
     mutation: { platformHeightJitter: 0, platformWidthScale: 1, hazardOffset: 0, propOffset: 0 },
-    protectedCorridor: [-13, 13, 0, 2.2], platformSockets: [], enemyLanes: [[-5, STORY_GROUNDED_ACTOR_CENTER_Y], [5, STORY_GROUNDED_ACTOR_CENTER_Y]], hazardSockets: [], rewardAlcoves: [[9, 1.05]], propSockets: [[-10, 1.05], [10, 1.05]]
+    protectedCorridor: [-13, 13, 0, 2.2], platformSockets: [], structureSockets: [], enemyLanes: [[-5, STORY_GROUNDED_ACTOR_CENTER_Y], [5, STORY_GROUNDED_ACTOR_CENTER_Y]], hazardSockets: [], rewardAlcoves: [[9, 1.05]], propSockets: [[-10, 1.05], [-7, 1.05], [7, 1.05], [10, 1.05]]
   }));
   if (!floor.boss) {
     for (const column of [1, 2]) {
@@ -508,7 +545,7 @@ export function generateAdventureFallbackFloor(worldId: BiomeId, seed: string, f
         bounds: [minX + column * STORY_ENDLESS_ROOM_WIDTH, minX + (column + 1) * STORY_ENDLESS_ROOM_WIDTH, 4.8, 12.8],
         templateId: 'safe-branch-cap', templateKind: 'branch', connectors: ['down'], critical: false, optional: true, hidden: false,
         mutation: { platformHeightJitter: 0, platformWidthScale: 1, hazardOffset: 0, propOffset: 0 },
-        protectedCorridor: [-13, 13, 0, 2.2], platformSockets: [], enemyLanes: [[-5, STORY_GROUNDED_ACTOR_CENTER_Y]], hazardSockets: [], rewardAlcoves: [[9, 1.05]], propSockets: [[-10, 1.05], [10, 1.05]]
+        protectedCorridor: [-13, 13, 0, 2.2], platformSockets: [], structureSockets: [], enemyLanes: [[-5, STORY_GROUNDED_ACTOR_CENTER_Y]], hazardSockets: [], rewardAlcoves: [[9, 1.05]], propSockets: [[-10, 1.05], [-7, 1.05], [7, 1.05], [10, 1.05]]
       });
       const parent = safeRooms.find((room) => room.column === column && room.row === 0)!;
       parent.connectors = Array.from(new Set([...parent.connectors, 'up']));
@@ -519,12 +556,12 @@ export function generateAdventureFallbackFloor(worldId: BiomeId, seed: string, f
   const existingBoss = floor.enemySpawns.find((enemy) => enemy.boss);
   const bossSpawns = bossRoom && existingBoss ? [{ ...existingBoss, id: `${bossRoom.id}-boss`, position: [(bossRoom.bounds[0] + bossRoom.bounds[1]) / 2, existingBoss.position[1]] as [number, number], encounterZoneId: bossEncounter[0].id, leash: bossEncounter[0].range }] : [];
   return {
-    ...floor, seed, usedFallback: true, validationFailures: failures, rooms: safeRooms,
+    ...floor, seed, intent: floor.boss ? 'boss' : 'exploration', usedFallback: true, validationFailures: failures, rooms: safeRooms,
     grid: { columns: safeColumnCount, rows: STORY_ENDLESS_GRID_ROWS }, bounds: { minX, maxX, floorY: 0 },
     spawn: [minX + 4.5, STORY_GROUNDED_ACTOR_CENTER_Y], exit: [maxX - 4.5, STORY_GROUNDED_ACTOR_CENTER_Y],
     entranceRoomId: safeRooms[0].id, exitRoomId: safeRooms[safeColumnCount - 1].id,
     criticalRoomIds: safeRooms.filter((room) => room.critical).map((room) => room.id), hazards: [], event: null,
-    platforms: [{ id: `${worldId}-floor-${floor.floorNumber}-safe-ground`, position: [0, -0.5], size: [maxX - minX + 2, 1] }, ...safeRooms.flatMap((room) => room.row !== 0 || room.column === 0 || room.column === safeColumnCount - 1 ? [] : [{ id: `${room.id}-platform`, position: [(room.bounds[0] + room.bounds[1]) / 2, 3.5] as [number, number], size: [9, 0.42] as [number, number], oneWay: true }])],
+    platforms: [{ id: `${worldId}-floor-${floor.floorNumber}-safe-ground`, position: [0, -0.5], size: [maxX - minX + 2, 1], collision: 'solid', terrainRole: 'ground', surfaceVariant: 0 }, ...safeRooms.flatMap((room) => room.row !== 0 || room.column === 0 || room.column === safeColumnCount - 1 ? [] : [{ id: `${room.id}-platform`, position: [(room.bounds[0] + room.bounds[1]) / 2, 3.5] as [number, number], size: [9, 0.42] as [number, number], oneWay: true, collision: 'one-way' as const, terrainRole: 'ledge' as const, surfaceVariant: room.column % 3 }])],
     traversal: [], encounters: bossEncounter, enemySpawns: bossSpawns, parTimeSeconds: 200,
     levelMeta: { ...floor.levelMeta!, chunkIds: safeRooms.map((room) => room.templateId), witnessRoute: safeRooms.filter((room) => room.critical).map((room) => [(room.bounds[0] + room.bounds[1]) / 2, STORY_GROUNDED_ACTOR_CENTER_Y]) }
   };

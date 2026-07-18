@@ -46,7 +46,8 @@ function sanitizePlatforms(value: unknown): StoryPlatformDefinition[] {
       size: record.size,
       ...(record.oneWay ? { oneWay: true } : {}),
       ...(['solid', 'one-way'].includes(record.collision ?? '') ? { collision: record.collision } : {}),
-      ...(['ground', 'ledge', 'wall', 'ceiling'].includes(record.terrainRole ?? '') ? { terrainRole: record.terrainRole } : {})
+      ...(['ground', 'ledge', 'wall', 'ceiling'].includes(record.terrainRole ?? '') ? { terrainRole: record.terrainRole } : {}),
+      ...(Number.isInteger(record.surfaceVariant) && Number(record.surfaceVariant) >= 0 ? { surfaceVariant: Number(record.surfaceVariant) } : {})
     }];
   });
 }
@@ -116,6 +117,18 @@ function sanitizeEnvironment(value: unknown): StoryWorldEnvironmentDefinition | 
     atlasSize: surface.atlasSize,
     ...(Number.isFinite(surface.walkSurfaceInsetPixels) ? {
       walkSurfaceInsetPixels: Math.min(surface.frame[3], Math.max(0, Number(surface.walkSurfaceInsetPixels)))
+    } : {}),
+    ...(Array.isArray(surface.variants) ? {
+      variants: surface.variants.flatMap((entry) => {
+        if (!entry || typeof entry !== 'object') return [];
+        const variant = entry as { id?: unknown; frame?: unknown; walkSurfaceInsetPixels?: unknown };
+        if (typeof variant.id !== 'string' || !Array.isArray(variant.frame) || variant.frame.length !== 4 || !variant.frame.every(Number.isFinite)) return [];
+        return [{
+          id: variant.id,
+          frame: variant.frame as [number, number, number, number],
+          ...(Number.isFinite(variant.walkSurfaceInsetPixels) ? { walkSurfaceInsetPixels: Math.max(0, Number(variant.walkSurfaceInsetPixels)) } : {})
+        }];
+      })
     } : {})
   } as StoryWorldEnvironmentDefinition['surface'] : undefined;
   return {

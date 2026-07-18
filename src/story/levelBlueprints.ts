@@ -111,6 +111,18 @@ function makeSurfaceBlueprint(biomeId: BiomeId, mapRole: StoryAdventureMapRole):
     required: kind !== 'reward'
   }));
   const propTags = biomeId === 'greenhollow' ? ['settlement'] : biomeId === 'thornwood' ? ['tree'] : biomeId === 'ironroot' ? ['stone'] : biomeId === 'bonevault' ? ['tomb'] : biomeId === 'emberdeep' ? ['basalt'] : biomeId === 'frostpeak' ? ['snow'] : biomeId === 'sunscar' ? ['caravan'] : ['glass'];
+  const propSlots = platformXs.flatMap((x, platformIndex) => {
+    if (Math.abs(x) < 8) return [];
+    const clusterSide = x < 0 ? 'cluster-left' : 'cluster-right';
+    const offsets = platformIndex % 2 === 0 ? [-2.5, 1.75] : [0];
+    return offsets.map((offset, clusterIndex) => ({
+      id: `${id}-prop-${platformIndex + 1}-${clusterIndex + 1}`,
+      kind: 'prop' as const,
+      position: [snap(x + offset), 0] as [number, number],
+      semanticTags: [...propTags, clusterIndex === 0 && platformIndex % 3 === 0 ? 'framing' : clusterIndex === 1 ? 'foliage' : 'clutter', clusterSide, platformIndex === 0 ? 'entrance' : 'path'],
+      route: 'ambient' as const
+    }));
+  });
   return {
     version: 1,
     id,
@@ -135,7 +147,7 @@ function makeSurfaceBlueprint(biomeId: BiomeId, mapRole: StoryAdventureMapRole):
     ],
     slots: [
       { id: `${id}-hero-slot`, kind: 'landmark', position: [0, mapRole === 'mastery' ? 9 : 6.5], beatId: beats[Math.floor(beats.length / 2)].id, semanticTags: [...propTags, 'landmark'], route: 'ambient' },
-      ...platformXs.filter((_, index) => index % 2 === 0).map((x, index) => ({ id: `${id}-prop-${index + 1}`, kind: 'prop' as const, position: [x + (index % 2 ? -3 : 3), 0] as [number, number], semanticTags: [...propTags, index === 0 ? 'entrance' : 'path'], route: 'ambient' as const }))
+      ...propSlots
     ],
     visual: { paletteId: THEMES[biomeId], structuralMaterial: THEMES[biomeId], heroRole: 'hero', densityBudget: mapRole === 'arrival' ? 18 : mapRole === 'mastery' ? 28 : 24, permittedAssetTags: propTags },
     constraints: {
