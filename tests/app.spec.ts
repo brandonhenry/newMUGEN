@@ -1204,16 +1204,64 @@ test('starter guide pages with gamepad L1 and R1 while open', async ({ page }) =
   await expect(guide.getByRole('heading', { name: 'Welcome' })).toBeVisible();
 });
 
-test('starter guide opens from Console About', async ({ page }) => {
+test('starter guide opens from Konsole About', async ({ page }) => {
   await forceMenuLagHealthy(page);
   await startFromSplash(page);
   await page.getByRole('button', { name: 'Options' }).click();
-  await page.getByRole('button', { name: 'Console' }).click();
+  await page.getByRole('button', { name: 'Konsole' }).click();
   await page.getByRole('button', { name: 'About' }).click();
 
   await page.getByRole('button', { name: 'Open Starter Guide' }).click();
 
   await expect(page.getByTestId('starter-guide-dialog')).toBeVisible({ timeout: 2_000 });
+});
+
+test('keeps credits and licenses in the Options Konsole sidebar', async ({ page }) => {
+  await forceMenuLagHealthy(page);
+  await startFromSplash(page);
+
+  await expect(page.getByRole('button', { name: 'Credits & Licenses' })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Options' }).click();
+  await page.getByRole('button', { name: 'Konsole' }).click();
+  await page.getByRole('button', { name: 'Credits & Licenses' }).click();
+
+  await expect(page.getByRole('heading', { name: 'Credits & Licenses' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Stimmerman' })).toBeVisible();
+  await expect(page.getByText('Original music composed and produced by')).toContainText('Stimmerman');
+  await expect(page.getByLabel('Stimmerman source collections').getByRole('link')).toHaveCount(10);
+  await expect(page.getByRole('link', { name: /Queen of the Kingdom/ })).toHaveAttribute('href', 'https://youtu.be/u4Mi_N04SSQ');
+  await expect(page.getByRole('link', { name: /Adventure art/ })).toHaveAttribute('href', '/story/adventure/CREDITS.md');
+});
+
+test('Adventure pause credits shortcut opens Konsole credits and returns to Adventure', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.localStorage.setItem('kore.story.profile.v4', JSON.stringify({
+      version: 4,
+      avatarStyle: 'kore-street-v1',
+      avatar: {
+        name: 'CREDITS', avatarSet: 'crimson-ranger', lineage: 'human', bodyPreset: 'standard', bodyTone: 'tan', hairStyle: 'short', hairColor: '#15131a', outfit: 'kore-cyan', accessory: 'none'
+      },
+      createdAt: 1,
+      updatedAt: 1,
+      reviewedAt: 1
+    }));
+  });
+  await forceMenuLagHealthy(page);
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Play', exact: true }).click();
+
+  const hub = page.getByTestId('story-hub-screen');
+  await expect(hub).toHaveAttribute('data-hub-ready', 'true', { timeout: 15_000 });
+  await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: 'Credits & Licenses' }).click();
+
+  await expect(page.getByRole('button', { name: 'Konsole' })).toHaveClass(/active/);
+  await expect(page.locator('.options-sidebar').getByRole('button', { name: 'Credits & Licenses' })).toHaveClass(/active/);
+  await expect(page.getByRole('heading', { name: 'Stimmerman' })).toBeVisible();
+
+  await page.getByRole('button', { name: 'Back', exact: true }).click();
+  await expect(hub).toBeVisible({ timeout: 10_000 });
+  await expect(page.getByTestId('adventure-music-player')).toHaveAttribute('data-active', 'true');
 });
 
 test('menu lag prompt can be skipped once per detector version', async ({ page }) => {
@@ -1895,7 +1943,7 @@ test('shows desktop installer downloads from the console installers tab', async 
 
   await startFromSplash(page);
   await page.getByRole('button', { name: 'Options' }).click();
-  await page.getByRole('button', { name: 'Console' }).click();
+  await page.getByRole('button', { name: 'Konsole' }).click();
   await page.getByRole('button', { name: 'Installers' }).click();
 
   await expect(page.getByLabel('Desktop installers')).toBeVisible();
@@ -1938,7 +1986,7 @@ test('shows installer preparation state when manifest is unavailable', async ({ 
 
   await startFromSplash(page);
   await page.getByRole('button', { name: 'Options' }).click();
-  await page.getByRole('button', { name: 'Console' }).click();
+  await page.getByRole('button', { name: 'Konsole' }).click();
   await page.getByRole('button', { name: 'Installers' }).click();
 
   await expect(page.getByText('Installers are being prepared')).toBeVisible();
@@ -1948,7 +1996,7 @@ test('shows installer preparation state when manifest is unavailable', async ({ 
 test('shows device support debug checks from console sidebar', async ({ page }) => {
   await startFromSplash(page);
   await page.getByRole('button', { name: 'Options' }).click();
-  await page.getByRole('button', { name: 'Console' }).click();
+  await page.getByRole('button', { name: 'Konsole' }).click();
   await page.getByRole('button', { name: 'Debug' }).click();
 
   await expect(page.getByLabel('Device debug checks')).toBeVisible();
@@ -1961,7 +2009,7 @@ test('allows the console about disclaimer to scroll in short viewports', async (
   await page.setViewportSize({ width: 1210, height: 350 });
   await startFromSplash(page);
   await page.getByRole('button', { name: 'Options' }).click();
-  await page.getByRole('button', { name: 'Console' }).click();
+  await page.getByRole('button', { name: 'Konsole' }).click();
   await page.getByRole('button', { name: 'About' }).click();
 
   const aboutPanel = page.getByLabel('About game');

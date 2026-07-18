@@ -3225,7 +3225,7 @@ export default function App() {
   const [storyProfile, setStoryProfile] = useState<StoryProfileV4 | null>(() => readStoryProfile());
   const [adventureMusicContext, setAdventureMusicContext] = useState<AdventureMusicContext | null>(null);
   const [adventureMusicTrack, setAdventureMusicTrack] = useState<AdventureMusicTrackDefinition | null>(null);
-  const [creditsOpen, setCreditsOpen] = useState(false);
+  const [settingsDestination, setSettingsDestination] = useState<SettingsDestination | null>(null);
   const [friendPresence, setFriendPresence] = useState<Record<string, FriendPresence>>({});
   const [friendInbox, setFriendInbox] = useState<FriendInvite[]>([]);
   const [friendNotifications, setFriendNotifications] = useState<FriendNotification[]>([]);
@@ -5579,6 +5579,7 @@ export default function App() {
 	      return;
 	    }
 	    if (destination === 'options') {
+	      setSettingsDestination(null);
 	      setScreen('settings');
 	      return;
 	    }
@@ -5785,7 +5786,11 @@ export default function App() {
               setVirtualAction={setVirtualAction}
               onMusicContext={setAdventureMusicContext}
               activeMusicTrack={adventureMusicTrack}
-              onCredits={() => setCreditsOpen(true)}
+              onCredits={() => {
+                setNavigationHome('storyHub');
+                setSettingsDestination({ tab: 'console', section: 5 });
+                setScreen('settings');
+              }}
               onDestination={launchStoryHubDestination}
               onOnlineSpar={launchStoryHubSpar}
               onExit={() => {
@@ -5876,10 +5881,10 @@ export default function App() {
             }}
             onSettings={() => {
               setNavigationHome('menu');
+              setSettingsDestination(null);
               captureAppAnalytics('menu_item_selected', { item: 'settings' });
               setScreen('settings');
             }}
-            onCredits={() => setCreditsOpen(true)}
             onFriends={() => {
               setNavigationHome('menu');
               setInputPromptMode('pointer');
@@ -6569,6 +6574,7 @@ export default function App() {
         )}
         {screen === 'settings' && (
           <SettingsScreen
+            initialDestination={settingsDestination}
             mode={mode}
             setMode={setMatchMode}
             cpuDifficulty={effectiveCpuDifficulty}
@@ -6842,7 +6848,6 @@ export default function App() {
           onClose={dismissStarterGuide}
         />
       )}
-      {creditsOpen && <CreditsAndLicensesScreen onClose={() => setCreditsOpen(false)} />}
     </main>
   );
 }
@@ -6859,26 +6864,6 @@ const STIMMERMAN_COLLECTION_CREDITS = [
   ['Electric Ambience', 'https://youtu.be/g9vOWxWYSUA'],
   ['8-Bit Extravaganza', 'https://youtu.be/gtcRs1C1za4']
 ] as const;
-
-function CreditsAndLicensesScreen({ onClose }: { onClose: () => void }) {
-  useEffect(() => {
-    const closeOnEscape = (event: KeyboardEvent) => { if (event.key === 'Escape') onClose(); };
-    window.addEventListener('keydown', closeOnEscape);
-    return () => window.removeEventListener('keydown', closeOnEscape);
-  }, [onClose]);
-  return <div className="story-gate-overlay credits-licenses-overlay" role="presentation">
-    <section className="story-gate-dialog credits-licenses-dialog" role="dialog" aria-modal="true" aria-labelledby="credits-title">
-      <span>Credits &amp; Licenses</span>
-      <h2 id="credits-title">Adventure Mode Music</h2>
-      <p>Original music composed and produced by <strong>Stimmerman</strong>. Used with permission.</p>
-      <div className="credits-collection-list">
-        {STIMMERMAN_COLLECTION_CREDITS.map(([title, url]) => <a key={title} href={url} target="_blank" rel="noreferrer"><ExternalLink size={15} />{title}</a>)}
-      </div>
-      <p className="credits-license-note">All source arrangements remain credited to Stimmerman. Visual asset attribution and checksums are maintained with the Adventure asset manifests.</p>
-      <button type="button" className="story-primary-button" autoFocus onClick={onClose}><XCircle size={18} /> Close</button>
-    </section>
-  </div>;
-}
 
 type MenuNavigationDirection = 'up' | 'down' | 'left' | 'right';
 
@@ -8087,7 +8072,6 @@ function MenuScreen({
   onTournament,
   onOnline,
   onSettings,
-  onCredits,
   onFriends,
   onViewer,
   onStages,
@@ -8112,7 +8096,6 @@ function MenuScreen({
   onTournament: () => void;
   onOnline: () => void;
   onSettings: () => void;
-  onCredits: () => void;
   onFriends: () => void;
   onViewer: () => void;
   onStages: () => void;
@@ -8357,7 +8340,6 @@ function MenuScreen({
     { label: 'Characters', action: onViewer },
     ...(isLocalDevHost() ? [{ label: 'Stages', action: onStages }] : []),
     { label: 'Options', action: onSettings },
-    { label: 'Credits & Licenses', action: onCredits },
     { label: 'Exit', action: onExit }
   ];
 
@@ -15522,6 +15504,7 @@ function buildImportedStageDraft(draft: StageImportDraft, pieces: StagePieceDraf
 }
 
 type SettingsTab = 'game' | 'controls' | 'camera' | 'display' | 'audio' | 'console';
+type SettingsDestination = { tab: SettingsTab; section: number };
 
 const settingsTabs: SettingsTab[] = ['game', 'controls', 'camera', 'display', 'audio', 'console'];
 const cursorScaleLabels: Record<KoreCursorScale, string> = {
@@ -15534,7 +15517,7 @@ const tabLabels: Record<SettingsTab, string> = {
   camera: 'Camera',
   display: 'Display',
   audio: 'Audio',
-  console: 'Console'
+  console: 'Konsole'
 };
 const sidebars: Record<SettingsTab, string[]> = {
   game: ['Match Rules', 'Player Profile', 'Training', 'Assist', 'Performance', 'Defaults'],
@@ -15542,7 +15525,7 @@ const sidebars: Record<SettingsTab, string[]> = {
   camera: ['Fight Camera', 'Tracking', 'Zoom', 'Defaults'],
   display: ['HUD', 'Touch Controls', 'Cursor', 'Motion', 'Debug'],
   audio: ['Menu Music', 'Stage Music', 'Mix'],
-  console: ['Terminal', 'Memory Card', 'Installers', 'Debug', 'About']
+  console: ['Terminal', 'Memory Card', 'Installers', 'Debug', 'About', 'Credits & Licenses']
 };
 
 function collectTrackedSettingChanges(previous: GameSettings, next: GameSettings): AnalyticsProperties[] {
@@ -15654,6 +15637,7 @@ function formatActionLabel(action: ActionName, scheme: ControlScheme) {
 }
 
 function SettingsScreen({
+  initialDestination,
   mode,
   setMode,
   cpuDifficulty,
@@ -15675,6 +15659,7 @@ function SettingsScreen({
   onBack,
   onAnalytics
 }: {
+  initialDestination: SettingsDestination | null;
   mode: MatchMode;
   setMode: (mode: MatchMode) => void;
   cpuDifficulty: CpuDifficulty;
@@ -15696,13 +15681,20 @@ function SettingsScreen({
   onBack: () => void;
   onAnalytics: AnalyticsCapture;
 }) {
-  const [activeTab, setActiveTab] = useState<SettingsTab>('controls');
+  const [activeTab, setActiveTab] = useState<SettingsTab>(() => initialDestination?.tab ?? 'controls');
   const [activePlayer, setActivePlayer] = useState<1 | 2>(1);
   const [remapRequest, setRemapRequest] = useState<{ player: 1 | 2; action: ActionName } | null>(null);
   const [comboRemapRequest, setComboRemapRequest] = useState<{ player: 1 | 2; comboId: ButtonComboId } | null>(null);
   const [duplicateRequest, setDuplicateRequest] = useState<{ key: string; owner: string } | null>(null);
   const [inputTest, setInputTest] = useState('Press a key to test bindings');
-  const [activeSections, setActiveSections] = useState<Record<SettingsTab, number>>({ game: 0, controls: 0, camera: 0, display: 0, audio: 0, console: 0 });
+  const [activeSections, setActiveSections] = useState<Record<SettingsTab, number>>(() => ({
+    game: 0,
+    controls: 0,
+    camera: 0,
+    display: 0,
+    audio: 0,
+    console: initialDestination?.tab === 'console' ? initialDestination.section : 0
+  }));
   const selectedCursor = getKoreCursorOption(settings.display.cursorId);
   const [cursorStyleFilter, setCursorStyleFilter] = useState<KoreCursorStyle>(selectedCursor.style);
   const [cursorScaleFilter, setCursorScaleFilter] = useState<KoreCursorScale>(selectedCursor.scale);
@@ -16522,7 +16514,51 @@ function OptionsConsole({
           </button>
         </article>
       </SettingsSection>
+      <SettingsSection index={5} title="Credits & Licenses" active={activeSectionIndex === 5} showTitle={false}>
+        <CreditsAndLicensesPanel />
+      </SettingsSection>
     </div>
+  );
+}
+
+function CreditsAndLicensesPanel() {
+  return (
+    <article className="credits-licenses-panel" aria-labelledby="credits-title">
+      <header className="credits-licenses-heading">
+        <h2 id="credits-title"><BookOpen size={18} /> CREDITS &amp; LICENSES</h2>
+        <strong>ATTRIBUTION</strong>
+      </header>
+      <div className="credits-licenses-content">
+        <section className="credits-feature">
+          <span>Adventure Mode Music</span>
+          <h3>Stimmerman</h3>
+          <p>Original music composed and produced by <strong>Stimmerman</strong>. Used with permission.</p>
+        </section>
+        <nav className="credits-collection-list" aria-label="Stimmerman source collections">
+          {STIMMERMAN_COLLECTION_CREDITS.map(([title, url]) => (
+            <a key={title} href={url} target="_blank" rel="noreferrer">
+              <span>{title}</span>
+              <ExternalLink size={16} aria-hidden="true" />
+            </a>
+          ))}
+        </nav>
+        <section className="credits-asset-summary" aria-labelledby="asset-credits-title">
+          <div>
+            <span>Visual Assets</span>
+            <h3 id="asset-credits-title">Artists &amp; licenses</h3>
+            <p>DawnLike by DragonDePlatino — CC BY 4.0 · Pixel Crawler by Anokolisa — included terms · Pixel Adventure by Pixel Frog — CC0 1.0.</p>
+            <p>Additional CC0 work by Ansimuz, GrafxKid, alizard, ScratchIO, KingCreator11, and Gustavo Saraiva.</p>
+          </div>
+          <div className="credits-manifest-links" aria-label="Detailed attribution files">
+            <a href="/story/adventure/CREDITS.md" target="_blank" rel="noreferrer">Adventure art <ExternalLink size={15} /></a>
+            <a href="/story/exploration/CREDITS.md" target="_blank" rel="noreferrer">Exploration art <ExternalLink size={15} /></a>
+            <a href="/story/worlds/CREDITS.md" target="_blank" rel="noreferrer">World art <ExternalLink size={15} /></a>
+            <a href="/story/audio/stimmerman/CREDITS.md" target="_blank" rel="noreferrer">Music credit <ExternalLink size={15} /></a>
+          </div>
+        </section>
+        <p className="credits-license-note">Source URLs, modification notes, license terms, and checksums are preserved in the shipped Adventure manifests.</p>
+      </div>
+    </article>
   );
 }
 
