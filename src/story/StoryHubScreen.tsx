@@ -31,7 +31,7 @@ import { unseenStoryPartyRewards, type StoryPartyAuthoritativeSnapshot, type Sto
 import { createStoryPartyTransport, type StoryPartyTransport } from './storyPartyTransport';
 import { createStoryWorldProps } from './worldEnvironments';
 import { createAdventureSurfaceHub, firstStoryAdventureSurfaceMap, getStoryAdventureSurfaceMap } from './adventureSurfaceMaps';
-import { STORY_NPC_SPRITES, STORY_NPC_VISIBLE_WORLD_HEIGHT, storyNpcFootContactSinkY, storyNpcPlaneSize, storyNpcWatchFacing } from './adventureNpcs';
+import { STORY_NPC_POPUP_ANCHOR_Y, STORY_NPC_SPRITES, storyNpcFootContactSinkY, storyNpcPlaneSize, storyNpcWatchFacing } from './adventureNpcs';
 import { adventureUtcDate, getStoryDailyActivities } from './adventureObjectives';
 import { STORY_ARMOR_SET_BONUSES, STORY_BIOME_IDS, STORY_RECIPE_BY_ID, STORY_RECIPES, STORY_RESOURCES, canCraftRecipe, storyRecipeStationLabel, type StoryBiomeId, type StoryCraftingContext } from './adventureCrafting';
 import { adventureAttackCanHitResource, adventureResourceHitStrength, createEndlessFloorResourceNodes, resourceYield } from './adventureResources';
@@ -540,6 +540,15 @@ function PortalVisual({ portal, theme, nearby, assigned, reducedMotion, compactD
   const baseStorefrontSize = portal.destination === 'story' ? 4.45 : portal.position[1] > 4 ? 3.15 : 3.55;
   const storefrontSize = baseStorefrontSize * doorwayScale;
   const storefrontCenterY = (storefrontSize - baseStorefrontSize) / 2;
+  const popupY = portal.kind === 'npc'
+    ? STORY_NPC_POPUP_ANCHOR_Y
+    : biomeDoor
+      ? biomeDoor.displaySize[1] / 2 + 0.25
+      : modeDoor
+        ? modeDoorCenterY + modeDoorHeight / 2 + 0.25
+        : compactDoorways
+          ? storefrontCenterY + storefrontSize / 2 + 0.25
+          : portal.size[1] / 2 + 0.52;
   return <group position={[portal.position[0], portal.position[1], 0]}>
     <mesh position={[0, -1.08, 0.04]} renderOrder={18}>
       <ringGeometry args={[0.68, portal.kind === 'mode-door' || portal.kind === 'adventure-gate' ? 0.98 : 0.86, 24]} />
@@ -557,7 +566,7 @@ function PortalVisual({ portal, theme, nearby, assigned, reducedMotion, compactD
       <mesh position={[0, 0.04, 0.02]} renderOrder={22}><planeGeometry args={[0.72, 0.48]} /><meshBasicMaterial color={portal.accent} transparent opacity={0.42} depthWrite={false} /></mesh>
     </> : <Storefront destination={hubDestination} size={storefrontSize} centerY={storefrontCenterY} emphasized={nearby} />}
     {assigned && <mesh position={[0, -1.08, 0.05]} renderOrder={23}><ringGeometry args={[0.72, 0.9, 24]} /><meshBasicMaterial color="#ffe071" transparent opacity={0.9} depthWrite={false} /></mesh>}
-    {(nearby || assigned || !['npc', 'chest', 'relic', 'checkpoint', 'restoration', 'crafting'].includes(portal.kind ?? '')) && <Html center position={[0, biomeDoor ? biomeDoor.displaySize[1] / 2 + 0.25 : modeDoor ? modeDoorCenterY + modeDoorHeight / 2 + 0.25 : compactDoorways ? storefrontCenterY + storefrontSize / 2 + 0.25 : portal.size[1] / 2 + 0.52, 0.7]} zIndexRange={[8, 0]} className="story-destination-sign-shell">
+    {(nearby || assigned || !['npc', 'chest', 'relic', 'checkpoint', 'restoration', 'crafting'].includes(portal.kind ?? '')) && <Html center position={[0, popupY, 0.7]} zIndexRange={[8, 0]} className="story-destination-sign-shell">
       <div data-testid={`story-destination-${portal.id}`} className={`story-destination-sign ${nearby ? 'is-nearby' : ''} ${assigned ? 'is-assigned' : ''} ${portal.locked ? 'is-locked' : ''}`} style={{ '--story-destination-accent': portal.accent } as CSSProperties}>
         <span aria-hidden="true">{portal.locked ? <LockKeyhole size={16} /> : <DestinationIcon size={16} />}</span>
         <strong>{assigned ? `Go Here · ${portal.label}` : portal.label}</strong>
@@ -650,7 +659,7 @@ function AdventureNpcVisual({ npc, attackEvent, playerPosition, maxHealth, reduc
   });
   return <group position={[npc.position[0], npc.position[1], -0.05]}>
     <mesh ref={meshRef} position={[0, storyGroundAnchoredPlaneCenterY(planeSize, footAnchorFromBottom) - surfaceInsetY - footContactSinkY, 0]}><planeGeometry args={[planeSize, planeSize]} /><meshBasicMaterial ref={materialRef} map={textures[0]} transparent alphaTest={0.02} depthWrite={false} toneMapped={false} /></mesh>
-    {phase !== 'idle' && <Html center position={[0, STORY_NPC_VISIBLE_WORLD_HEIGHT - STORY_GROUNDED_ACTOR_CENTER_Y + 0.42, 0.6]} className="story-destination-sign-shell"><div className="story-destination-sign is-nearby"><strong>{phase === 'protect' ? npc.warningBark : `${npc.displayName} counters!`}</strong></div></Html>}
+    {phase !== 'idle' && <Html center position={[0, STORY_NPC_POPUP_ANCHOR_Y, 0.6]} className="story-destination-sign-shell"><div className="story-destination-sign is-nearby"><strong>{phase === 'protect' ? npc.warningBark : `${npc.displayName} counters!`}</strong></div></Html>}
   </group>;
 }
 

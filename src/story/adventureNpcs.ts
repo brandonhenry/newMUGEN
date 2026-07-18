@@ -1,5 +1,6 @@
 import npcManifest from './storyNpcManifest.json';
 import rosterExpansion from './storyRosterExpansion.json';
+import { STORY_GROUNDED_ACTOR_CENTER_Y } from './actorGrounding';
 import type { StoryAdventureMapRole, StoryAdventureWorldId, StoryNpcDefinition, StoryNpcDefenseProfile, StoryNpcSpriteManifest } from './types';
 
 type BiomeId = Exclude<StoryAdventureWorldId, 'world-route'>;
@@ -124,6 +125,9 @@ export const STORY_NPC_SPRITES: Record<string, StoryNpcSpriteManifest> = Object.
 export const STORY_NPC_VISIBLE_WORLD_HEIGHT = 3.05;
 export const STORY_NPC_FOOT_CONTACT_SINK_Y = 0.055;
 export const STORY_NPC_ENTRANCE_SIDE_CLEARANCE = 1.25;
+// Html popups are centered on their world anchor, so this includes enough room
+// for the lower half of the card to clear the NPC's visible head.
+export const STORY_NPC_POPUP_ANCHOR_Y = STORY_NPC_VISIBLE_WORLD_HEIGHT - STORY_GROUNDED_ACTOR_CENTER_Y + 0.82;
 export const STORY_NPC_WATCH_RADIUS_X = 4.5;
 export const STORY_NPC_WATCH_RADIUS_Y = 2.4;
 
