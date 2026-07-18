@@ -48,7 +48,7 @@ describe('story adventure asset manifest', () => {
 
   it('pins every shipped adventure sheet to a reviewed SHA-256 checksum', () => {
     expect(integrity.algorithm).toBe('sha256');
-    expect(Object.keys(integrity.files)).toHaveLength(21);
+    expect(Object.keys(integrity.files)).toHaveLength(9);
     for (const [file, expected] of Object.entries(integrity.files)) {
       const contents = readFileSync(resolve(assetRoot, file));
       expect(createHash('sha256').update(contents).digest('hex'), file).toBe(expected);

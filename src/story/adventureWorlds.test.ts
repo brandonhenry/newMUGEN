@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_WORLDS, STORY_WORLDS, isStoryWorldId } from './adventureWorlds';
+import { STORY_REGULAR_ENEMY_IDS } from './enemyCatalog';
 
 describe('story adventure world network', () => {
   it('provides eight directly reachable regions from the central route', () => {
@@ -32,7 +33,9 @@ describe('story adventure world network', () => {
       expect(new Set(world.environment?.layers.map(({ id: layerId }) => layerId)).size).toBe(world.environment?.layers.length);
       expect(world.enemySpawns).toHaveLength(10);
       expect(world.portals.filter((portal) => portal.destination === 'world-route')).toHaveLength(2);
-      expect(new Set(world.enemySpawns?.map((enemy) => enemy.archetype))).toEqual(new Set(['ground', 'flying', 'ranged']));
+      expect(world.enemySpawns?.every((enemy) => STORY_REGULAR_ENEMY_IDS.includes(enemy.enemyId))).toBe(true);
+      expect(world.exploration?.encounters).toHaveLength(5);
+      expect(world.exploration?.encounters.every((encounter) => world.enemySpawns?.filter((enemy) => enemy.encounterZoneId === encounter.id).length === 2)).toBe(true);
       expect(world.exploration?.districts).toHaveLength(8);
       expect(world.exploration?.safeApproach[1]! - world.exploration?.safeApproach[0]!).toBeGreaterThanOrEqual(80);
     }

@@ -224,6 +224,13 @@ export type StoryWorldThemeId =
   | 'desert'
   | 'ruins';
 export type StoryEnemyArchetype = 'ground' | 'flying' | 'ranged';
+export type StoryEnemyId =
+  | 'veil-shade' | 'cinder-wisp' | 'nightshade-bulb' | 'graveblade'
+  | 'tide-slime' | 'venom-slime' | 'volt-slime' | 'magma-slime'
+  | 'ember-fist' | 'dusk-ronin' | 'crescent-rogue' | 'chimera-android'
+  | 'silver-duelist' | 'crimson-countess' | 'laughing-oni' | 'hollow-bride';
+export type StoryEnemyTier = 'regular' | 'challenger';
+export type StoryEnemyBehavior = 'chaser' | 'bruiser' | 'ambusher' | 'duelist' | 'caster' | 'flying';
 export type StoryMountId = 'verdant-stag' | 'bramble-lynx' | 'ironhorn-beetle' | 'pale-warg' | 'cinder-drake' | 'frost-ram' | 'dune-strider' | 'glasswing';
 export type StoryTraversalKind = 'walk' | 'climb' | 'ladder' | 'lift' | 'break-wall' | 'swim' | 'glide' | 'updraft' | 'drop';
 export type StoryDepthZoneKind = 'cave' | 'underwater' | 'tower' | 'ruin' | 'mine' | 'crypt' | 'grotto' | 'sanctuary';
@@ -232,10 +239,6 @@ export type StoryAdventureAssetId =
   | 'dawn-wall'
   | 'dawn-ore'
   | 'dawn-reptile'
-  | 'dawn-slime'
-  | 'dawn-undead'
-  | 'dawn-demon'
-  | 'dawn-elemental'
   | 'crawler-buildings'
   | 'crawler-dungeon'
   | 'crawler-tree'
@@ -323,15 +326,13 @@ export type StoryWorldPropDefinition = StoryAtlasFrame & {
 
 export type StoryEnemySpawnDefinition = {
   id: string;
-  name: string;
-  archetype: StoryEnemyArchetype;
+  enemyId: StoryEnemyId;
   position: [number, number];
   patrolRadius: number;
-  sprite: 'skeleton' | 'skeleton-mage' | 'orc' | 'orc-shaman' | 'slime' | 'demon' | 'elemental' | 'reptile';
   accent: string;
   encounterZoneId?: string;
+  encounterIndex?: number;
   scale?: number;
-  elite?: boolean;
   leash?: [number, number];
 };
 

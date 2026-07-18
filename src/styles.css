@@ -493,6 +493,47 @@ body {
   height: 100% !important;
 }
 
+.story-challenger-banner {
+  position: absolute;
+  z-index: 18;
+  top: 28%;
+  left: 50%;
+  display: grid;
+  min-width: min(420px, calc(100vw - 40px));
+  gap: 5px;
+  padding: 14px 24px 16px;
+  translate: -50% 0;
+  border: 1px solid rgba(255, 224, 113, 0.72);
+  border-radius: 12px;
+  color: #fff8cf;
+  background: linear-gradient(90deg, rgba(22, 4, 18, 0), rgba(45, 15, 34, 0.97) 14%, rgba(45, 15, 34, 0.97) 86%, rgba(22, 4, 18, 0));
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  pointer-events: none;
+  animation: story-challenger-arrival 1.65s ease both;
+}
+
+.story-challenger-banner small {
+  color: #ffe071;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.story-challenger-banner strong {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 38px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+@keyframes story-challenger-arrival {
+  0% { opacity: 0; transform: scaleX(0.55); }
+  16%, 76% { opacity: 1; transform: scaleX(1); }
+  100% { opacity: 0; transform: scaleX(1.08); }
+}
+
 .story-hub-screen::after {
   content: '';
   position: absolute;
@@ -1856,6 +1897,21 @@ body {
   scale: 1.04;
 }
 
+.story-enemy-bar.is-elite {
+  width: 178px;
+  padding: 7px 8px;
+  background: rgba(45, 15, 34, 0.94);
+  box-shadow: 0 0 0 1px rgba(255, 224, 113, 0.72), 0 10px 28px rgba(0, 0, 0, 0.5);
+}
+
+.story-enemy-bar.is-elite > span {
+  height: 8px;
+}
+
+.story-enemy-bar.is-elite > span i {
+  background: linear-gradient(90deg, #ff4e72, #ffe071);
+}
+
 .story-enemy-bar > span {
   display: block;
   height: 5px;
@@ -2516,6 +2572,7 @@ body {
   .story-destination-sign.is-assigned,
   .story-door-transition,
   .story-quick-match,
+  .story-challenger-banner,
   .story-enemy-damage {
     animation: none;
     transition-duration: 1ms;

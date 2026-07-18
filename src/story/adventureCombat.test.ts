@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { sanitizeAdventureProgress } from './adventureProgress';
 import {
-  STORY_ENEMY_RESPAWN_MS,
   STORY_DAMAGE_POP_MS,
   STORY_DAMAGE_POP_REDUCED_MS,
   STORY_ATTACK_PROFILES,
@@ -16,7 +15,6 @@ import {
   resolveAdventurePlayerAttack,
   resolveAdventurePlayerDamage,
   resolveStoryAttackInput,
-  shouldRespawnAdventureEnemy,
   stepAdventureProjectile,
   storyPlayerProjectileHits
 } from './adventureCombat';
@@ -98,11 +96,8 @@ describe('story adventure combat math', () => {
     expect(getAdventureAttackFrameHitbox('arena-rebel', 574)).toBeNull();
   });
 
-  it('steps projectiles safely and waits for offscreen enemy respawns', () => {
+  it('steps projectiles safely', () => {
     expect(stepAdventureProjectile({ x: 0, y: 1, velocityX: 10, velocityY: -2, deltaSeconds: 0.25 })).toEqual({ x: 1, y: 0.8 });
-    expect(shouldRespawnAdventureEnemy(STORY_ENEMY_RESPAWN_MS, 0, true)).toBe(false);
-    expect(shouldRespawnAdventureEnemy(STORY_ENEMY_RESPAWN_MS - 1, 0, false)).toBe(false);
-    expect(shouldRespawnAdventureEnemy(STORY_ENEMY_RESPAWN_MS, 0, false)).toBe(true);
   });
 
   it('moves special projectile PNG entities independently and collides from their own bounds', () => {

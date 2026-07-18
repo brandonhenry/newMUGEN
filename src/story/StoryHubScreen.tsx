@@ -7,11 +7,13 @@ import * as THREE from 'three';
 import type { OnlinePlayerProfile } from '../lib/online/leaderboard';
 import { addFriendEntry, isFriend, readMatchHistory } from '../lib/socialHistory';
 import type { InputFrame } from '../types';
-import { STORY_ADVENTURE_ASSET_PATHS, STORY_ENEMY_SPRITE_PATHS, storyWorldAssetPath } from './adventureAssets';
-import { STORY_ATTACK_VISUAL_SYNC_DELAY_MS, adventureAttackHits, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureAttackFrameHitbox, getAdventureEnemyStats, getStoryAttackDurationMs, getStoryProjectileSpawnPosition, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, resolveStoryAttackInput, shouldRespawnAdventureEnemy, stepAdventureProjectile, storyPlayerProjectileHits, type AdventureDamageFeedback } from './adventureCombat';
+import { STORY_ADVENTURE_ASSET_PATHS, storyWorldAssetPath } from './adventureAssets';
+import { STORY_ATTACK_VISUAL_SYNC_DELAY_MS, adventureAttackHits, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureAttackFrameHitbox, getAdventureEnemyStats, getStoryAttackDurationMs, getStoryProjectileSpawnPosition, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, resolveStoryAttackInput, stepAdventureProjectile, storyPlayerProjectileHits, type AdventureDamageFeedback } from './adventureCombat';
+import { makeStoryEncounterProgress, recordChallengerDefeat, recordRegularDefeat, resetActiveChallenger, storyEncounterMovementLock, type StoryEncounterProgress } from './adventureEncounters';
 import { STORY_ADVENTURE_STAT_CAP, STORY_ADVENTURE_STAT_KEYS, allocateAdventureStat, awardAdventureExperience, awardMountMastery, beginAdventureVisit, canRespecAdventureStats, discoverAdventureLandmark, discoverAdventureVista, discoverAdventureWaystone, experienceToNextLevel, getAdventureDerivedStats, readAdventureProgress, respecAdventureStats, unlockAdventureMount, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_REGION_LABELS, STORY_WORLDS, isStoryAdventureRegionId, isStoryAdventureWorldId, isStoryWorldId } from './adventureWorlds';
 import { createAdventureVisitSeed, generateAdventureRunGraph, STORY_BREATH_DRAIN_PER_SECOND, STORY_BREATH_REFILL_PER_SECOND, STORY_MAX_BREATH, STORY_MOUNTS, STORY_WORLD_MOUNT, storyDepthZoneLabel, type StoryPartyInstance } from './adventureExploration';
+import { getStoryEnemyAnimation, getStoryEnemyDefinition, STORY_CHALLENGER_IDS, type StoryEnemyAttackDefinition } from './enemyCatalog';
 import { STORY_GROUNDED_ACTOR_CENTER_Y, storyAvatarGroundingOffsetForWorld, storyGroundAnchoredPlaneCenterY, storyScaledGroundAnchorOffsetY } from './actorGrounding';
 import { STORY_BIOME_DOOR_ASSET, STORY_BIOME_DOOR_ATLAS_SIZE, STORY_BIOME_DOOR_GROUND_SINK_Y, storyBiomeDoorFrame, type StoryBiomeDoorFrame } from './biomeDoors';
 import { connectStoryHubMultiplayer, readOrCreateStoryHubGuestIdentity, readStoryHubOnlinePreference, STORY_HUB_CHALLENGE_TIMEOUT_MS, writeStoryHubOnlinePreference, type StoryHubMultiplayerSession } from './hubMultiplayer';
@@ -21,7 +23,7 @@ import { getStorySpriteProjectile, STORY_ATTACK_POSES } from './streetAvatarCata
 import { StoryAvatarRig, type StoryAvatarPose } from './StoryAvatarRig';
 import { joinStoryParty, leaveStoryParty, updateStoryPartyRoom } from './storyParty';
 import { createStoryWorldProps } from './worldEnvironments';
-import type { HubDestination, StoryAdventureRunGraph, StoryAttackInput, StoryAvatarSet, StoryEnemySpawnDefinition, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryMountDefinition, StoryMountId, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StorySpriteProjectileDefinition, StoryWorldBackdropLayerDefinition, StoryWorldId, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
+import type { HubDestination, StoryAdventureRunGraph, StoryAttackInput, StoryAvatarSet, StoryEnemyId, StoryEnemySpawnDefinition, StoryEnemyTier, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryMountDefinition, StoryMountId, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StorySpriteProjectileDefinition, StoryWorldBackdropLayerDefinition, StoryWorldId, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
 
 type StoryHubInput = Pick<InputFrame, 'left' | 'right' | 'down' | 'up' | 'jump' | 'jab' | 'kick' | 'heavy' | 'special' | 'block' | 'back' | 'pause'> & { interact: boolean };
 type SetVirtualAction = (player: 1 | 2, action: keyof InputFrame, pressed: boolean) => void;
@@ -569,46 +571,56 @@ function RemoteStoryPlayer({ presence, reducedMotion, groundingOffsetY, lane, se
   </group>;
 }
 
-const DAWN_ENEMY_ATLASES: Record<'slime' | 'demon' | 'elemental' | 'reptile', [number, number]> = {
-  slime: [128, 80],
-  demon: [128, 144],
-  elemental: [128, 176],
-  reptile: [128, 248]
-};
-
-function EnemySprite({ sprite, facing, flashUntil }: { sprite: StoryEnemySpawnDefinition['sprite']; facing: -1 | 1; flashUntil: MutableRefObject<number> }) {
-  const source = useTexture(STORY_ENEMY_SPRITE_PATHS[sprite]);
-  const texture = useMemo(() => {
+function EnemySprite({ enemyId, animationId, animationStartedAt, facing, flashUntil, fading = false }: {
+  enemyId: StoryEnemyId;
+  animationId: string;
+  animationStartedAt: number;
+  facing: -1 | 1;
+  flashUntil: MutableRefObject<number>;
+  fading?: boolean;
+}) {
+  const definition = getStoryEnemyDefinition(enemyId);
+  const animation = getStoryEnemyAnimation(enemyId, animationId);
+  const framePaths = useMemo(() => animation.frames.map((frame) => frame.path), [animation.frames]);
+  const sources = useTexture(framePaths) as THREE.Texture[];
+  const textures = useMemo(() => sources.map((source) => {
     const clone = source.clone();
     configurePixelTexture(clone);
     clone.wrapS = THREE.ClampToEdgeWrapping;
     clone.wrapT = THREE.ClampToEdgeWrapping;
-    if (sprite === 'skeleton' || sprite === 'skeleton-mage' || sprite === 'orc' || sprite === 'orc-shaman') {
-      clone.repeat.set(0.25, 1);
-      clone.offset.set(0, 0);
-    } else {
-      const [width, height] = DAWN_ENEMY_ATLASES[sprite];
-      clone.repeat.set(16 / width, 16 / height);
-      clone.offset.set(0, 1 - 16 / height);
-    }
-    clone.needsUpdate = true;
     return clone;
-  }, [source, sprite]);
+  }), [sources]);
   const material = useRef<THREE.MeshBasicMaterial>(null);
-  const crawler = sprite === 'skeleton' || sprite === 'skeleton-mage' || sprite === 'orc' || sprite === 'orc-shaman';
-  useFrame((state) => {
-    if (crawler) texture.offset.x = (Math.floor(state.clock.elapsedTime * 5) % 4) * 0.25;
-    if (material.current) material.current.color.set(performance.now() < flashUntil.current ? '#ff6f91' : '#ffffff');
+  const mesh = useRef<THREE.Mesh>(null);
+  useFrame(() => {
+    const elapsed = Math.max(0, performance.now() - animationStartedAt);
+    const duration = Math.max(1, animation.frames.reduce((sum, frame) => sum + frame.durationMs, 0));
+    const cursor = animation.loop ? elapsed % duration : Math.min(duration - 1, elapsed);
+    let frameIndex = 0;
+    let accumulated = 0;
+    for (let index = 0; index < animation.frames.length; index += 1) {
+      accumulated += animation.frames[index].durationMs;
+      if (cursor < accumulated) { frameIndex = index; break; }
+    }
+    if (material.current && material.current.map !== textures[frameIndex]) {
+      material.current.map = textures[frameIndex];
+      material.current.needsUpdate = true;
+    }
+    if (material.current) {
+      material.current.color.set(performance.now() < flashUntil.current ? '#ff6f91' : '#ffffff');
+      material.current.opacity = fading ? Math.max(0, 1 - elapsed / 520) : 1;
+    }
+    if (mesh.current) mesh.current.scale.x = facing;
   });
-  useEffect(() => () => texture.dispose(), [texture]);
-  const size = crawler ? 1.7 : 1.45;
-  return <mesh position={[0, storyGroundAnchoredPlaneCenterY(size), 0]} scale={[facing, 1, 1]}>
+  useEffect(() => () => textures.forEach((texture) => texture.dispose()), [textures]);
+  const size = 1.72 * definition.worldScale;
+  return <mesh ref={mesh} position={[0, storyGroundAnchoredPlaneCenterY(size), 0]} scale={[facing, 1, 1]}>
     <planeGeometry args={[size, size]} />
-    <meshBasicMaterial ref={material} map={texture} transparent alphaTest={0.02} depthWrite={false} toneMapped={false} />
+    <meshBasicMaterial ref={material} map={textures[0]} transparent opacity={1} alphaTest={0.02} depthWrite={false} toneMapped={false} />
   </mesh>;
 }
 
-type AdventureProjectileRuntime = { active: boolean; x: number; y: number; velocityX: number; velocityY: number; expiresAt: number };
+type AdventureProjectileRuntime = { active: boolean; x: number; y: number; velocityX: number; velocityY: number; expiresAt: number; damage: number; radius: number; color: string };
 type StoryPlayerProjectileRuntime = {
   active: boolean;
   released: boolean;
@@ -724,24 +736,32 @@ function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attack
   attackEvent: StoryAdventureAttackEvent | null;
   reducedMotion: boolean;
   onPlayerDamage: (damage: number, sourceX: number) => void;
-  onDefeated: (xp: number) => void;
+  onDefeated: (spawn: StoryEnemySpawnDefinition, xp: number, tier: StoryEnemyTier) => void;
 }) {
+  const definition = getStoryEnemyDefinition(spawn.enemyId);
+  const archetype = definition.archetype;
+  const displayScale = spawn.scale ?? 1;
   const group = useRef<THREE.Group>(null);
   const enemyBody = useRef<THREE.Group>(null);
   const damageLayer = useRef<THREE.Group>(null);
   const projectileMeshes = useRef<Array<THREE.Mesh | null>>([]);
-  const projectiles = useRef<AdventureProjectileRuntime[]>(Array.from({ length: 3 }, () => ({ active: false, x: 0, y: 0, velocityX: 0, velocityY: 0, expiresAt: 0 })));
+  const projectiles = useRef<AdventureProjectileRuntime[]>(Array.from({ length: 3 }, () => ({ active: false, x: 0, y: 0, velocityX: 0, velocityY: 0, expiresAt: 0, damage: 0, radius: 0.2, color: spawn.accent })));
   const stats = useMemo(() => {
-    const base = getAdventureEnemyStats(spawn.archetype, level);
-    return spawn.elite ? { ...base, maxHealth: Math.round(base.maxHealth * 5.5), damage: Math.round(base.damage * 1.6), speed: base.speed * 0.78, xp: base.xp * 8, attackCooldownMs: Math.round(base.attackCooldownMs * 1.18) } : base;
-  }, [level, spawn.archetype, spawn.elite]);
+    const base = getAdventureEnemyStats(archetype, level);
+    return {
+      ...base,
+      maxHealth: Math.round(base.maxHealth * definition.healthMultiplier),
+      damage: Math.round(base.damage * definition.damageMultiplier),
+      speed: base.speed * definition.speedMultiplier,
+      xp: Math.round(base.xp * definition.xpMultiplier)
+    };
+  }, [archetype, definition, level]);
   const x = useRef(spawn.position[0]);
   const y = useRef(spawn.position[1]);
   const facing = useRef<-1 | 1>(-1);
   const health = useRef(stats.maxHealth);
   const alive = useRef(true);
-  const defeatedAt = useRef(0);
-  const defeatLingerMs = useRef(190);
+  const defeatReported = useRef(false);
   const flashUntil = useRef(0);
   const shakeStartedAt = useRef(0);
   const shakeUntil = useRef(0);
@@ -749,20 +769,36 @@ function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attack
   const shakeDirection = useRef<-1 | 1>(1);
   const staggerUntil = useRef(0);
   const lastAttackAt = useRef(0);
+  const attackCursor = useRef(0);
+  const activeEnemyAttack = useRef<{ definition: StoryEnemyAttackDefinition; startedAt: number; hit: boolean } | null>(null);
+  const animationId = useRef('idle');
+  const animationStartedAt = useRef(performance.now());
+  const animationLockedUntil = useRef(0);
   const damageSequence = useRef(0);
   const lastRegisteredAttackId = useRef(0);
   const damageTimers = useRef<number[]>([]);
   const [damagePops, setDamagePops] = useState<AdventureDamagePop[]>([]);
-  const [visual, setVisual] = useState({ health: stats.maxHealth, alive: true, critical: false, facing: -1 as -1 | 1 });
-  const { camera } = useThree();
+  const [visual, setVisual] = useState({ health: stats.maxHealth, alive: true, critical: false, facing: -1 as -1 | 1, animationId: 'idle', animationStartedAt: performance.now() });
+
+  const playAnimation = useCallback((next: string, restart = false) => {
+    if (!restart && animationId.current === next) return;
+    animationId.current = next;
+    animationStartedAt.current = performance.now();
+    setVisual((current) => ({ ...current, animationId: next, animationStartedAt: animationStartedAt.current }));
+  }, []);
 
   useEffect(() => {
     health.current = stats.maxHealth;
     alive.current = true;
+    defeatReported.current = false;
     x.current = spawn.position[0];
     y.current = spawn.position[1];
+    activeEnemyAttack.current = null;
+    animationLockedUntil.current = 0;
+    animationId.current = 'idle';
+    animationStartedAt.current = performance.now();
     setDamagePops([]);
-    setVisual({ health: stats.maxHealth, alive: true, critical: false, facing: -1 });
+    setVisual({ health: stats.maxHealth, alive: true, critical: false, facing: -1, animationId: 'idle', animationStartedAt: animationStartedAt.current });
   }, [spawn.id, spawn.position, stats.maxHealth]);
 
   useEffect(() => () => damageTimers.current.forEach((timer) => window.clearTimeout(timer)), []);
@@ -789,16 +825,29 @@ function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attack
     shakeStrength.current = reaction.shakeStrength;
     shakeDirection.current = currentAttack.facing;
     staggerUntil.current = hitAt + reaction.staggerMs;
-    defeatLingerMs.current = reaction.defeatLingerMs;
     if (health.current <= 0) {
       alive.current = false;
-      defeatedAt.current = hitAt;
-      setVisual({ health: 0, alive: false, critical: currentAttack.critical, facing: facing.current });
-      onDefeated(stats.xp);
+      activeEnemyAttack.current = null;
+      const hasDeath = definition.animations.some((animation) => animation.id === 'dead');
+      const deathAnimation = hasDeath ? getStoryEnemyAnimation(spawn.enemyId, 'dead') : getStoryEnemyAnimation(spawn.enemyId, 'idle');
+      const deathDuration = hasDeath ? deathAnimation.frames.reduce((sum, frame) => sum + frame.durationMs, 0) : 520;
+      animationId.current = hasDeath ? 'dead' : 'idle';
+      animationStartedAt.current = hitAt;
+      setVisual({ health: 0, alive: false, critical: currentAttack.critical, facing: facing.current, animationId: animationId.current, animationStartedAt: hitAt });
+      const defeatTimer = window.setTimeout(() => {
+        if (defeatReported.current) return;
+        defeatReported.current = true;
+        onDefeated(spawn, stats.xp, definition.tier);
+      }, reducedMotion ? Math.min(180, deathDuration) : deathDuration);
+      damageTimers.current.push(defeatTimer);
       return;
     }
-    setVisual({ health: health.current, alive: true, critical: currentAttack.critical, facing: facing.current });
-  }, [onDefeated, reducedMotion, stats.xp]);
+    const hurtAnimation = getStoryEnemyAnimation(spawn.enemyId, 'hurt');
+    const hurtDuration = hurtAnimation.frames.reduce((sum, frame) => sum + frame.durationMs, 0);
+    animationLockedUntil.current = hitAt + (reducedMotion ? Math.min(120, hurtDuration) : hurtDuration);
+    playAnimation('hurt', true);
+    setVisual((current) => ({ ...current, health: health.current, alive: true, critical: currentAttack.critical, facing: facing.current }));
+  }, [definition.animations, definition.tier, onDefeated, playAnimation, reducedMotion, spawn, stats.xp]);
 
   useFrame((state, frameDelta) => {
     const now = performance.now();
@@ -836,7 +885,8 @@ function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attack
           hitboxSize: launchedProjectile.definition.hitboxSize,
           targetX: x.current,
           targetY: y.current,
-          targetKind: spawn.archetype
+          targetKind: archetype,
+          targetHalfSize: { width: definition.hitbox[0], height: definition.hitbox[1] }
         })) {
         launchedProjectile.active = false;
         registerAttackHit(launchedProjectile.attack);
@@ -850,14 +900,14 @@ function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attack
         for (const projectile of projectiles.current) {
           if (projectile.active && adventureAttackHits({ playerX: attackX, playerY: attackY, facing: attackEvent.facing, enemyX: projectile.x, enemyY: projectile.y, targetKind: 'projectile', attackBox })) projectile.active = false;
         }
-        if (lastRegisteredAttackId.current !== attackEvent.id && adventureAttackHits({ playerX: attackX, playerY: attackY, facing: attackEvent.facing, enemyX: x.current, enemyY: y.current, targetKind: spawn.archetype, attackBox })) {
+        if (lastRegisteredAttackId.current !== attackEvent.id && adventureAttackHits({ playerX: attackX, playerY: attackY, facing: attackEvent.facing, enemyX: x.current, enemyY: y.current, targetKind: archetype, targetHalfSize: { width: definition.hitbox[0], height: definition.hitbox[1] }, attackBox })) {
           registerAttackHit(attackEvent);
         }
       }
     }
     if (damageLayer.current) damageLayer.current.position.set(x.current, y.current, 0.9);
     if (enemyBody.current) {
-      const groundedVisualOffset = storyScaledGroundAnchorOffsetY(spawn.scale ?? 1);
+      const groundedVisualOffset = storyScaledGroundAnchorOffsetY(displayScale);
       if (!reducedMotion && now < shakeUntil.current) {
         const duration = Math.max(1, shakeUntil.current - shakeStartedAt.current);
         const progress = THREE.MathUtils.clamp((now - shakeStartedAt.current) / duration, 0, 1);
@@ -872,15 +922,7 @@ function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attack
       }
     }
     if (!alive.current) {
-      group.current.visible = now - defeatedAt.current < defeatLingerMs.current;
-      const onScreen = Math.abs(x.current - camera.position.x) < 12;
-      if (shouldRespawnAdventureEnemy(now, defeatedAt.current, onScreen)) {
-        alive.current = true;
-        health.current = stats.maxHealth;
-        x.current = spawn.position[0];
-        y.current = spawn.position[1];
-        setVisual({ health: stats.maxHealth, alive: true, critical: false, facing: facing.current });
-      }
+      group.current.visible = !defeatReported.current;
       return;
     }
     group.current.visible = true;
@@ -890,39 +932,75 @@ function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attack
     const distance = Math.abs(dx);
     const direction = dx >= 0 ? 1 : -1;
     let move = 0;
-    if (spawn.archetype === 'ranged') {
-      if (distance < 3.7) move = -direction;
-      else if (distance > 6.5 && distance < 10) move = direction;
-      if (distance < 9 && Math.abs(playerY - y.current) < 4 && now - lastAttackAt.current >= stats.attackCooldownMs) {
-        const projectile = projectiles.current.find((candidate) => !candidate.active);
-        if (projectile) {
-          projectile.active = true;
-          projectile.x = x.current;
-          projectile.y = y.current + 0.15;
-          projectile.velocityX = direction * 5.4;
-          projectile.velocityY = (playerY - y.current) * 0.28;
-          projectile.expiresAt = now + 2_400;
-          lastAttackAt.current = now;
+    const currentEnemyAttack = activeEnemyAttack.current;
+    if (currentEnemyAttack) {
+      const animation = getStoryEnemyAnimation(spawn.enemyId, currentEnemyAttack.definition.animation);
+      const elapsed = now - currentEnemyAttack.startedAt;
+      const duration = animation.frames.reduce((sum, frame) => sum + frame.durationMs, 0);
+      let frameIndex = animation.frames.length - 1;
+      let frameEnd = 0;
+      for (let index = 0; index < animation.frames.length; index += 1) {
+        frameEnd += animation.frames[index].durationMs;
+        if (elapsed < frameEnd) { frameIndex = index; break; }
+      }
+      const activeRange = animation.activeFrameRange ?? [Math.max(0, animation.frames.length - 2), animation.frames.length - 1];
+      if (!currentEnemyAttack.hit && frameIndex >= activeRange[0] && frameIndex <= activeRange[1]) {
+        currentEnemyAttack.hit = true;
+        const projectileDefinition = currentEnemyAttack.definition.projectile;
+        if (projectileDefinition) {
+          const projectile = projectiles.current.find((candidate) => !candidate.active);
+          if (projectile) {
+            projectile.active = true;
+            projectile.x = x.current + direction * 0.28;
+            projectile.y = y.current + 0.25;
+            projectile.velocityX = direction * projectileDefinition.speed;
+            projectile.velocityY = (playerY - y.current) * 0.22;
+            projectile.expiresAt = now + projectileDefinition.lifetimeMs;
+            projectile.damage = Math.max(1, Math.round(stats.damage * currentEnemyAttack.definition.damageMultiplier));
+            projectile.radius = projectileDefinition.radius;
+            projectile.color = projectileDefinition.color;
+          }
+        } else if (distance <= currentEnemyAttack.definition.range && Math.abs(playerY - y.current) < 1.15) {
+          onPlayerDamage(Math.max(1, Math.round(stats.damage * currentEnemyAttack.definition.damageMultiplier)), x.current);
         }
       }
-    } else if (distance < (spawn.archetype === 'flying' ? 9 : 7)) {
-      move = direction;
+      if (elapsed >= duration) {
+        activeEnemyAttack.current = null;
+        lastAttackAt.current = now;
+        playAnimation('idle', true);
+      }
     } else {
-      move = Math.sin(state.clock.elapsedTime * 0.72 + spawn.position[0]) >= 0 ? 1 : -1;
+      const nextAttack = definition.attacks[attackCursor.current % definition.attacks.length];
+      const canAttack = now - lastAttackAt.current >= nextAttack.cooldownMs
+        && Math.abs(playerY - y.current) < (nextAttack.projectile ? 4 : 1.2)
+        && distance <= nextAttack.range;
+      if (canAttack && now >= staggerUntil.current && now >= animationLockedUntil.current) {
+        attackCursor.current += 1;
+        activeEnemyAttack.current = { definition: nextAttack, startedAt: now, hit: false };
+        playAnimation(nextAttack.animation, true);
+      } else if (definition.behavior === 'caster' || archetype === 'ranged') {
+        if (distance < 3.7) move = -direction;
+        else if (distance > 6.5 && distance < 10) move = direction;
+      } else if (definition.behavior === 'duelist') {
+        if (distance < 1.2 && now - lastAttackAt.current < nextAttack.cooldownMs * 0.55) move = -direction;
+        else if (distance < 8) move = direction;
+      } else if (definition.behavior === 'ambusher') {
+        move = distance < 5.2 ? direction : 0;
+      } else if (distance < (archetype === 'flying' ? 9 : 7)) {
+        move = direction;
+      } else {
+        move = Math.sin(state.clock.elapsedTime * 0.72 + spawn.position[0]) >= 0 ? 1 : -1;
+      }
     }
-    if (now >= staggerUntil.current) x.current += move * stats.speed * delta;
+    if (now >= staggerUntil.current && now >= animationLockedUntil.current) x.current += move * stats.speed * delta;
     x.current = THREE.MathUtils.clamp(x.current, spawn.leash?.[0] ?? spawn.position[0] - spawn.patrolRadius * 2.5, spawn.leash?.[1] ?? spawn.position[0] + spawn.patrolRadius * 2.5);
     if (move !== 0 && facing.current !== (move > 0 ? 1 : -1)) {
       facing.current = move > 0 ? 1 : -1;
       setVisual((current) => ({ ...current, facing: facing.current }));
     }
-    y.current = spawn.archetype === 'flying' && !reducedMotion ? spawn.position[1] + Math.sin(state.clock.elapsedTime * 2.1 + spawn.position[0]) * 0.34 : spawn.position[1];
+    if (!activeEnemyAttack.current && now >= staggerUntil.current && now >= animationLockedUntil.current) playAnimation(move === 0 ? 'idle' : definition.animations.some((animation) => animation.id === 'run') ? 'run' : 'walk');
+    y.current = archetype === 'flying' && !reducedMotion ? spawn.position[1] + Math.sin(state.clock.elapsedTime * 2.1 + spawn.position[0]) * 0.34 : spawn.position[1];
     group.current.position.set(x.current, y.current, 0.42);
-
-    if (spawn.archetype !== 'ranged' && Math.abs(playerX - x.current) < 0.72 && Math.abs(playerY - y.current) < 1.05 && now - lastAttackAt.current >= stats.attackCooldownMs) {
-      lastAttackAt.current = now;
-      onPlayerDamage(stats.damage, x.current);
-    }
     projectiles.current.forEach((projectile, index) => {
       const mesh = projectileMeshes.current[index];
       if (!mesh) return;
@@ -936,28 +1014,31 @@ function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attack
       projectile.y = next.y;
       mesh.visible = true;
       mesh.position.set(projectile.x, projectile.y, 0.58);
-      if (Math.abs(playerX - projectile.x) < 0.55 && Math.abs(playerY - projectile.y) < 0.8) {
+      mesh.scale.setScalar(projectile.radius / 0.18);
+      const material = mesh.material as THREE.MeshBasicMaterial;
+      material.color.set(projectile.color);
+      if (Math.abs(playerX - projectile.x) < 0.42 + projectile.radius && Math.abs(playerY - projectile.y) < 0.65 + projectile.radius) {
         projectile.active = false;
         mesh.visible = false;
-        onPlayerDamage(stats.damage, projectile.x);
+        onPlayerDamage(projectile.damage, projectile.x);
       }
     });
   });
 
   return <>
     <group ref={group} position={[spawn.position[0], spawn.position[1], 0.42]} name={`story-enemy-${spawn.id}`}>
-      <group ref={enemyBody} position={[0, storyScaledGroundAnchorOffsetY(spawn.scale ?? 1), 0]} scale={[spawn.scale ?? 1, spawn.scale ?? 1, 1]}>
-        <EnemySprite sprite={spawn.sprite} facing={visual.facing} flashUntil={flashUntil} />
+      <group ref={enemyBody} position={[0, storyScaledGroundAnchorOffsetY(displayScale), 0]} scale={[displayScale, displayScale, 1]}>
+        <EnemySprite enemyId={spawn.enemyId} animationId={visual.animationId} animationStartedAt={visual.animationStartedAt} facing={visual.facing} flashUntil={flashUntil} fading={!visual.alive && !definition.animations.some((animation) => animation.id === 'dead')} />
       </group>
-      <Html center position={[0, 1.18 * (spawn.scale ?? 1), 0.3]} zIndexRange={[7, 0]} className="story-enemy-bar-shell">
-        <div className={`story-enemy-bar ${visual.critical ? 'is-critical' : ''} ${spawn.elite ? 'is-elite' : ''}`} data-testid={`story-enemy-health-${spawn.id}`}>
+      <Html center position={[0, 1.35 * displayScale, 0.3]} zIndexRange={[7, 0]} className="story-enemy-bar-shell">
+        <div className={`story-enemy-bar ${visual.critical ? 'is-critical' : ''} ${definition.tier === 'challenger' ? 'is-elite' : ''}`} data-testid={`story-enemy-health-${spawn.id}`}>
           <span><i style={{ width: `${Math.max(0, visual.health / stats.maxHealth) * 100}%` }} /></span>
-          <small>{spawn.name} · Lv {level}</small>
+          <small>{definition.label} · Lv {level}</small>
         </div>
       </Html>
     </group>
     <group ref={damageLayer} position={[spawn.position[0], spawn.position[1], 0.9]}>
-      {damagePops.map((pop) => <Html key={pop.id} center position={[0, 1.02 * (spawn.scale ?? 1), 0.7]} zIndexRange={[10, 0]} className="story-enemy-damage-shell">
+      {damagePops.map((pop) => <Html key={pop.id} center position={[0, 1.12 * displayScale, 0.7]} zIndexRange={[10, 0]} className="story-enemy-damage-shell">
         <output
           className={`story-enemy-damage palette-${(pop.id - 1) % 5} ${pop.critical ? 'is-critical' : ''} ${pop.finishing ? 'is-finishing' : ''} ${reducedMotion ? 'is-reduced-motion' : ''}`}
           data-testid={`story-enemy-damage-${spawn.id}-${pop.id}`}
@@ -1012,12 +1093,13 @@ function StoryMountVisual({ mount, facing }: { mount: StoryMountDefinition; faci
   </group>;
 }
 
-function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, playerPosition, readInput, disabled, reducedMotion, quickMatchAvailable, derivedStats, mounted, mount, mountMasteryRank, impactEvent, onAttack, onQuickMatch, onNearbyPortal, onActivatePortal, onWaterState, onExit, onPause, onStateSample, onReady }: {
+function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, playerPosition, movementLock, readInput, disabled, reducedMotion, quickMatchAvailable, derivedStats, mounted, mount, mountMasteryRank, impactEvent, onAttack, onQuickMatch, onNearbyPortal, onActivatePortal, onWaterState, onExit, onPause, onStateSample, onReady }: {
   hub: StoryHubDefinition;
   avatar: StoryProfileV4['avatar'];
   avatarVisible: boolean;
   groundingOffsetY: number;
   playerPosition: MutableRefObject<THREE.Vector3>;
+  movementLock: [number, number] | null;
   readInput: () => StoryHubInput;
   disabled: boolean;
   reducedMotion: boolean;
@@ -1170,7 +1252,10 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
     const baseMoveSpeed = sprinting ? derivedStats.sprintSpeed : derivedStats.walkSpeed;
     const mountSpeed = mounted && mount ? mount.speedMultiplier * (1 + mountMasteryRank * 0.012) : 1;
     const moveSpeed = baseMoveSpeed * mountSpeed * (swimming ? 0.64 : 1);
-    let nextX = THREE.MathUtils.clamp(position.current.x + horizontal * moveSpeed * delta, hub.bounds.minX + 0.5, hub.bounds.maxX - 0.5);
+    const horizontalBounds: [number, number] = movementLock
+      ? [Math.max(hub.bounds.minX, movementLock[0]) + 0.5, Math.min(hub.bounds.maxX, movementLock[1]) - 0.5]
+      : [hub.bounds.minX + 0.5, hub.bounds.maxX - 0.5];
+    let nextX = THREE.MathUtils.clamp(position.current.x + horizontal * moveSpeed * delta, horizontalBounds[0], horizontalBounds[1]);
     let nextY = position.current.y + velocityY.current * delta;
     if (swimming && waterVolume) {
       nextX = THREE.MathUtils.clamp(nextX + waterVolume.current[0] * delta, waterVolume.bounds[0] + 0.4, waterVolume.bounds[1] - 0.4);
@@ -1245,7 +1330,13 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
   </RigidBody>;
 }
 
-function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVisible, quickMatchAvailable, assignedPortalId, nearbyPortal, remotePlayers, selectedPlayerSessionId, progress, mounted, mount, attackEvent, impactEvent, onAttack, onPlayerDamage, onEnemyDefeated, onQuickMatch, onSelectPlayer, onNearbyPortal, onActivatePortal, onWaterState, onExit, onPause, onStateSample, onReady }: {
+function readForcedChallengerId(): StoryEnemyId | undefined {
+  if (typeof window === 'undefined' || !['localhost', '127.0.0.1'].includes(window.location.hostname)) return undefined;
+  const candidate = new URLSearchParams(window.location.search).get('forceStoryChallenger');
+  return STORY_CHALLENGER_IDS.includes(candidate as StoryEnemyId) ? candidate as StoryEnemyId : undefined;
+}
+
+function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVisible, quickMatchAvailable, assignedPortalId, nearbyPortal, remotePlayers, selectedPlayerSessionId, progress, mounted, mount, attackEvent, impactEvent, encounterSeed, initialEncounterProgress, onEncounterProgressChange, onChallengerStarted, onAttack, onPlayerDamage, onEnemyDefeated, onQuickMatch, onSelectPlayer, onNearbyPortal, onActivatePortal, onWaterState, onExit, onPause, onStateSample, onReady }: {
   hub: StoryHubDefinition;
   profile: StoryProfileV4;
   reducedMotion: boolean;
@@ -1263,6 +1354,10 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
   mount: StoryMountDefinition | null;
   attackEvent: StoryAdventureAttackEvent | null;
   impactEvent: StoryPlayerImpactEvent | null;
+  encounterSeed: string;
+  initialEncounterProgress: StoryEncounterProgress;
+  onEncounterProgressChange: (progress: StoryEncounterProgress) => void;
+  onChallengerStarted: () => void;
   onAttack: (x: number, y: number, facing: -1 | 1, attackInput: StoryAttackInput, durationSeconds: number) => void;
   onPlayerDamage: (damage: number, sourceX: number) => void;
   onEnemyDefeated: (xp: number) => void;
@@ -1277,10 +1372,80 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
 }) {
   const playerPosition = useRef(new THREE.Vector3(hub.spawn[0], hub.spawn[1], 0));
   const playerProjectile = useRef<StoryPlayerProjectileRuntime | null>(null);
+  const encounterProgressRef = useRef(initialEncounterProgress);
+  const [encounterProgress, setEncounterProgress] = useState(initialEncounterProgress);
+  const [challengerNoticeVisible, setChallengerNoticeVisible] = useState(Boolean(initialEncounterProgress.activeChallenge));
   const derivedStats = useMemo(() => getAdventureDerivedStats(progress), [progress]);
   const mountMasteryRank = mount ? progress.mounts[mount.id]?.masteryRank ?? 0 : 0;
-  const groundingOffsetY = storyAvatarGroundingOffsetForWorld(Boolean(hub.enemySpawns?.some((enemy) => enemy.archetype !== 'flying')));
-  return <Canvas shadows dpr={[0.65, 1.25]} gl={{ antialias: true, powerPreference: 'high-performance' }} data-testid="story-hub-canvas">
+  const enemySpawns = hub.enemySpawns ?? [];
+  const activeRegularSpawns = useMemo(() => enemySpawns.filter((spawn) => !encounterProgress.defeatedRegularIds.includes(spawn.id)), [encounterProgress.defeatedRegularIds, enemySpawns]);
+  const activeChallenge = encounterProgress.activeChallenge;
+  const movementLock = storyEncounterMovementLock(encounterProgress, hub.exploration?.encounters ?? []);
+  const activeChallengerSpawn = useMemo((): StoryEnemySpawnDefinition | null => {
+    if (!activeChallenge) return null;
+    const zone = hub.exploration?.encounters.find((candidate) => candidate.id === activeChallenge.zoneId);
+    if (!zone) return null;
+    const definition = getStoryEnemyDefinition(activeChallenge.enemyId);
+    return {
+      id: `${hub.id}-${zone.id}-${activeChallenge.enemyId}-${activeChallenge.reset}`,
+      enemyId: activeChallenge.enemyId,
+      position: [zone.range[1] - 2.25, definition.archetype === 'flying' ? 3.4 : STORY_GROUNDED_ACTOR_CENTER_Y],
+      patrolRadius: Math.max(2.8, (zone.range[1] - zone.range[0]) / 3),
+      accent: '#ffe071',
+      encounterZoneId: zone.id,
+      encounterIndex: 4,
+      leash: zone.range
+    };
+  }, [activeChallenge, hub.exploration?.encounters, hub.id]);
+  const groundingOffsetY = storyAvatarGroundingOffsetForWorld(Boolean([...activeRegularSpawns, ...(activeChallengerSpawn ? [activeChallengerSpawn] : [])].some((enemy) => getStoryEnemyDefinition(enemy.enemyId).archetype !== 'flying')));
+
+  const commitEncounterProgress = useCallback((next: StoryEncounterProgress) => {
+    encounterProgressRef.current = next;
+    setEncounterProgress(next);
+    onEncounterProgressChange(next);
+  }, [onEncounterProgressChange]);
+
+  const handleEnemyDefeated = useCallback((spawn: StoryEnemySpawnDefinition, xp: number, tier: StoryEnemyTier) => {
+    onEnemyDefeated(xp);
+    if (tier === 'challenger') {
+      commitEncounterProgress(recordChallengerDefeat(encounterProgressRef.current));
+      return;
+    }
+    const zone = hub.exploration?.encounters.find((candidate) => candidate.id === spawn.encounterZoneId);
+    if (!zone) return;
+    const result = recordRegularDefeat({
+      progress: encounterProgressRef.current,
+      spawnId: spawn.id,
+      zone,
+      encounterIndex: spawn.encounterIndex ?? 0,
+      spawns: enemySpawns,
+      seed: encounterSeed,
+      forceChallenger: readForcedChallengerId()
+    });
+    commitEncounterProgress(result.progress);
+    if (result.challengeStarted) {
+      setChallengerNoticeVisible(true);
+      onChallengerStarted();
+    }
+  }, [commitEncounterProgress, encounterSeed, enemySpawns, hub.exploration?.encounters, onChallengerStarted, onEnemyDefeated]);
+
+  useEffect(() => {
+    encounterProgressRef.current = initialEncounterProgress;
+    setEncounterProgress(initialEncounterProgress);
+  }, [initialEncounterProgress]);
+
+  useEffect(() => {
+    if (!impactEvent?.respawn || !encounterProgressRef.current.activeChallenge) return;
+    commitEncounterProgress(resetActiveChallenger(encounterProgressRef.current));
+  }, [commitEncounterProgress, impactEvent]);
+
+  useEffect(() => {
+    if (!challengerNoticeVisible) return undefined;
+    const timer = window.setTimeout(() => setChallengerNoticeVisible(false), reducedMotion ? 650 : 1_650);
+    return () => window.clearTimeout(timer);
+  }, [challengerNoticeVisible, reducedMotion, activeChallenge?.enemyId]);
+
+  return <><Canvas shadows dpr={[0.65, 1.25]} gl={{ antialias: true, powerPreference: 'high-performance' }} data-testid="story-hub-canvas">
     <OrthographicCamera makeDefault position={[hub.spawn[0], 4.6, 18]} zoom={58} near={0.1} far={100} />
     <HubCamera playerPosition={playerPosition} bounds={hub.bounds} verticalBounds={hub.id === 'kore-central' ? undefined : hub.exploration?.camera} />
     <Suspense fallback={null}>
@@ -1293,11 +1458,17 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
         {hub.portals.map((portal) => <PortalVisual key={portal.id} portal={portal} theme={hub.theme} nearby={nearbyPortal?.id === portal.id} assigned={assignedPortalId === portal.id} reducedMotion={reducedMotion} />)}
         {remotePlayers.map((presence, index) => <RemoteStoryPlayer key={presence.sessionId} presence={presence} reducedMotion={reducedMotion} groundingOffsetY={groundingOffsetY} lane={index % 5} selected={selectedPlayerSessionId === presence.sessionId} onSelect={onSelectPlayer} />)}
         {attackEvent?.projectile && <StoryPlayerProjectile key={attackEvent.id} attackEvent={attackEvent as StoryAdventureAttackEvent & { projectile: StorySpriteProjectileDefinition }} playerPosition={playerPosition} avatarRigOffset={[mounted && mount ? mount.riderOffset[0] : 0, groundingOffsetY + (mounted && mount ? mount.riderOffset[1] : 0)]} runtime={playerProjectile} />}
-        {hub.enemySpawns && hub.enemySpawns.length > 0 && <AdventureEnemies spawns={hub.enemySpawns} level={progress.level} playerPosition={playerPosition} playerProjectile={playerProjectile} attackEvent={attackEvent} reducedMotion={reducedMotion} onPlayerDamage={onPlayerDamage} onDefeated={onEnemyDefeated} />}
-        <StoryPlayerController hub={hub} avatar={profile.avatar} avatarVisible={avatarVisible} groundingOffsetY={groundingOffsetY} playerPosition={playerPosition} readInput={readInput} disabled={disabled} reducedMotion={reducedMotion} quickMatchAvailable={quickMatchAvailable} derivedStats={derivedStats} mounted={mounted} mount={mount} mountMasteryRank={mountMasteryRank} impactEvent={impactEvent} onAttack={onAttack} onQuickMatch={onQuickMatch} onNearbyPortal={onNearbyPortal} onActivatePortal={onActivatePortal} onWaterState={onWaterState} onExit={onExit} onPause={onPause} onStateSample={onStateSample} onReady={onReady} />
+        {activeRegularSpawns.length > 0 && <AdventureEnemies spawns={activeRegularSpawns} level={progress.level} playerPosition={playerPosition} playerProjectile={playerProjectile} attackEvent={attackEvent} reducedMotion={reducedMotion} onPlayerDamage={onPlayerDamage} onDefeated={handleEnemyDefeated} />}
+        {activeChallengerSpawn && <AdventureEnemy key={activeChallengerSpawn.id} spawn={activeChallengerSpawn} level={progress.level} playerPosition={playerPosition} playerProjectile={playerProjectile} attackEvent={attackEvent} reducedMotion={reducedMotion} onPlayerDamage={onPlayerDamage} onDefeated={handleEnemyDefeated} />}
+        <StoryPlayerController hub={hub} avatar={profile.avatar} avatarVisible={avatarVisible} groundingOffsetY={groundingOffsetY} playerPosition={playerPosition} movementLock={movementLock} readInput={readInput} disabled={disabled} reducedMotion={reducedMotion} quickMatchAvailable={quickMatchAvailable} derivedStats={derivedStats} mounted={mounted} mount={mount} mountMasteryRank={mountMasteryRank} impactEvent={impactEvent} onAttack={onAttack} onQuickMatch={onQuickMatch} onNearbyPortal={onNearbyPortal} onActivatePortal={onActivatePortal} onWaterState={onWaterState} onExit={onExit} onPause={onPause} onStateSample={onStateSample} onReady={onReady} />
       </Physics>
     </Suspense>
-  </Canvas>;
+  </Canvas>
+    {challengerNoticeVisible && activeChallenge && <div className="story-challenger-banner" role="status" data-testid="story-challenger-banner">
+      <small>Challenger Approaching</small>
+      <strong>{getStoryEnemyDefinition(activeChallenge.enemyId).label}</strong>
+    </div>}
+  </>;
 }
 
 function TouchButton({ label, action, setVirtualAction, className, children }: { label: string; action: keyof InputFrame; setVirtualAction: SetVirtualAction; className?: string; children: ReactNode }) {
@@ -1485,15 +1656,15 @@ function createDepthHub(surface: StoryHubDefinition, graph: StoryAdventureRunGra
   if (!zone || !graph || !isStoryAdventureRegionId(surface.id.replace(/^kore-/, ''))) return surface;
   const width = zone.camera.maxX - zone.camera.minX;
   const links = graph.links.filter((link) => link.from === zone.id || link.to === zone.id);
-  const sourceEnemies = surface.enemySpawns?.filter((enemy) => !enemy.elite).slice(0, zone.kind === 'sanctuary' ? 0 : zone.hidden ? 4 : 3) ?? [];
+  const sourceEnemies = surface.enemySpawns?.slice(0, zone.kind === 'sanctuary' ? 0 : zone.hidden ? 4 : 3) ?? [];
   const generatedEnemies = sourceEnemies.map((enemy, index): StoryEnemySpawnDefinition => ({
     ...enemy,
     id: `${zone.id}-enemy-${index + 1}`,
-    name: `${storyDepthZoneLabel(zone.kind)} ${enemy.archetype === 'flying' ? 'Wisp' : enemy.archetype === 'ranged' ? 'Keeper' : 'Stalker'}`,
-    position: [zone.camera.minX + width * (0.38 + index * 0.18), enemy.archetype === 'flying' ? 3.4 : STORY_GROUNDED_ACTOR_CENTER_Y],
+    position: [zone.camera.minX + width * (0.38 + index * 0.18), getStoryEnemyDefinition(enemy.enemyId).archetype === 'flying' ? 3.4 : STORY_GROUNDED_ACTOR_CENTER_Y],
     patrolRadius: 2.4,
     encounterZoneId: `${zone.id}-encounter`,
-    ...(zone.hidden && index === sourceEnemies.length - 1 ? { elite: true, scale: 2.25, leash: [zone.camera.minX + 4, zone.camera.maxX - 4] as [number, number] } : {})
+    encounterIndex: zone.hidden ? 4 : Math.min(4, Math.max(0, zone.depth)),
+    leash: [zone.camera.minX + 4, zone.camera.maxX - 4]
   }));
   const returnPortal: StoryPortalDefinition = {
     id: 'depth-return-surface', label: 'Return to Surface', subtitle: 'Leave the shifting depths', destination: graph.worldId,
@@ -1583,6 +1754,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const [partyInstance, setPartyInstance] = useState<StoryPartyInstance | null>(null);
   const [currentDepthZoneId, setCurrentDepthZoneId] = useState<string | null>(null);
   const [discoveredRunZones, setDiscoveredRunZones] = useState<string[]>([]);
+  const [encounterProgressByHub, setEncounterProgressByHub] = useState<Record<string, StoryEncounterProgress>>({});
   const baseHub = useMemo(() => devPreviewHub(STORY_WORLDS[activeWorldId]), [activeWorldId]);
   const activeHub = useMemo(() => createDepthHub(baseHub, runGraph, currentDepthZoneId), [baseHub, currentDepthZoneId, runGraph]);
   const [nearbyPortal, setNearbyPortal] = useState<StoryPortalDefinition | null>(null);
@@ -1691,6 +1863,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   useEffect(() => {
     if (!isStoryAdventureRegionId(activeWorldId)) {
       lastVisitedWorldRef.current = '';
+      setEncounterProgressByHub({});
       setRunGraph(null);
       setCurrentDepthZoneId(null);
       setDiscoveredRunZones([]);
@@ -1705,6 +1878,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     const visit = next.visitCounters[activeWorldId] ?? 1;
     const seed = createAdventureVisitSeed(activeWorldId, String(visit), localSessionId || 'solo');
     const graph = generateAdventureRunGraph(activeWorldId, seed, STORY_WORLDS[activeWorldId].exploration!);
+    setEncounterProgressByHub({});
     setRunGraph(graph);
     setCurrentDepthZoneId(null);
     setDiscoveredRunZones([graph.entryZoneId]);
@@ -1785,12 +1959,6 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       updateAdventureProgress(awardMountMastery(adventureProgressRef.current, activeMountId, awards));
     }
   }, [activeMountId, mounted, playerX, updateAdventureProgress]);
-
-  useEffect(() => {
-    if (!mounted) return;
-    const elite = activeHub.enemySpawns?.find((enemy) => enemy.elite && Math.abs(playerX - enemy.position[0]) < 9);
-    if (elite) setMounted(false);
-  }, [activeHub.enemySpawns, mounted, playerX]);
 
   useEffect(() => {
     if (!activeHub.adventure) return undefined;
@@ -2259,6 +2427,15 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
 
   const assignedPortal = quickMatch.status === 'assigned' ? activeHub.portals.find((portal) => portal.id === quickMatch.portalId) : null;
   const doorFrame = doorTravel ? DOOR_TRAVEL_FRAME_SEQUENCE[doorTravel.step] ?? 0 : 0;
+  const encounterSeed = partyInstance?.seed ?? runGraph?.seed ?? `${activeWorldId}:central`;
+  const activeEncounterProgress = useMemo(
+    () => encounterProgressByHub[activeHub.id] ?? makeStoryEncounterProgress(),
+    [activeHub.id, encounterProgressByHub]
+  );
+  const handleEncounterProgressChange = useCallback((next: StoryEncounterProgress) => {
+    setEncounterProgressByHub((current) => ({ ...current, [activeHub.id]: next }));
+  }, [activeHub.id]);
+  const handleChallengerStarted = useCallback(() => setMounted(false), []);
   const fastTravelToWaystone = useCallback((waystoneId: string, position: [number, number]) => {
     if (!adventureProgressRef.current.discoveries.waystones.includes(waystoneId) || !isStoryAdventureRegionId(activeWorldId)) return;
     setCurrentDepthZoneId(null);
@@ -2271,7 +2448,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
 
   return <div className="story-hub-screen" data-testid="story-hub-screen" data-world={activeWorldId} data-hub-ready={hubReady ? 'true' : 'false'} data-controls-open={controlsOpen ? 'true' : 'false'} data-map-open={mapOpen ? 'true' : 'false'} data-stats-open={statsOpen ? 'true' : 'false'} data-quick-match={quickMatchAvailable ? 'true' : 'false'} data-player-x={playerX.toFixed(2)} data-player-y={playerY.toFixed(2)} data-player-pose={playerPose} data-player-projectile-asset={attackEvent?.projectile?.frames[0]?.path ?? ''} data-player-projectile-launch={attackEvent?.projectile?.launchPoint.join(',') ?? ''} data-player-health={playerHealth} data-player-level={adventureProgress.level} data-party-id={partyInstance?.id ?? ''} data-nearby-portal={nearbyPortal?.id ?? ''} data-online={onlineEnabled ? 'true' : 'false'} data-connection-status={connectionStatus} data-player-count={playerCount}>
     <div className="story-hub-canvas-shell">
-      <HubCanvas key={activeHub.id} hub={activeHub} profile={profile} reducedMotion={reducedMotion} readInput={readInput} disabled={pauseOpen || controlsOpen || mapOpen || statsOpen || Boolean(selectedPlayer) || Boolean(incomingChallenge) || Boolean(doorTravel)} avatarVisible={!doorTravel || doorTravel.step < 4 || doorTravel.step >= 18} quickMatchAvailable={quickMatchAvailable} assignedPortalId={quickMatch.portalId} nearbyPortal={nearbyPortal} remotePlayers={visibleRemotePlayers} selectedPlayerSessionId={selectedPlayer?.sessionId} progress={adventureProgress} mounted={mounted} mount={activeMount} attackEvent={attackEvent} impactEvent={impactEvent} onAttack={handleAdventureAttack} onPlayerDamage={handlePlayerDamage} onEnemyDefeated={handleEnemyDefeated} onQuickMatch={startQuickMatch} onSelectPlayer={selectRemotePlayer} onNearbyPortal={setNearbyPortal} onActivatePortal={activatePortal} onWaterState={handleWaterState} onExit={exitCurrentWorld} onPause={openPause} onStateSample={handlePlayerState} onReady={handleHubReady} />
+      <HubCanvas key={activeHub.id} hub={activeHub} profile={profile} reducedMotion={reducedMotion} readInput={readInput} disabled={pauseOpen || controlsOpen || mapOpen || statsOpen || Boolean(selectedPlayer) || Boolean(incomingChallenge) || Boolean(doorTravel)} avatarVisible={!doorTravel || doorTravel.step < 4 || doorTravel.step >= 18} quickMatchAvailable={quickMatchAvailable} assignedPortalId={quickMatch.portalId} nearbyPortal={nearbyPortal} remotePlayers={visibleRemotePlayers} selectedPlayerSessionId={selectedPlayer?.sessionId} progress={adventureProgress} mounted={mounted} mount={activeMount} attackEvent={attackEvent} impactEvent={impactEvent} encounterSeed={encounterSeed} initialEncounterProgress={activeEncounterProgress} onEncounterProgressChange={handleEncounterProgressChange} onChallengerStarted={handleChallengerStarted} onAttack={handleAdventureAttack} onPlayerDamage={handlePlayerDamage} onEnemyDefeated={handleEnemyDefeated} onQuickMatch={startQuickMatch} onSelectPlayer={selectRemotePlayer} onNearbyPortal={setNearbyPortal} onActivatePortal={activatePortal} onWaterState={handleWaterState} onExit={exitCurrentWorld} onPause={openPause} onStateSample={handlePlayerState} onReady={handleHubReady} />
     </div>
 
     <header className="story-hub-header story-enter-1">

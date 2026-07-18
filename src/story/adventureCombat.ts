@@ -9,7 +9,6 @@ export const STORY_ATTACK_BOTTOM_OFFSET = -0.45;
 export const STORY_ATTACK_TOP_OFFSET = 2.2;
 export const STORY_ATTACK_VISUAL_SYNC_DELAY_MS = 24;
 export const STORY_PLAYER_INVULNERABILITY_MS = 650;
-export const STORY_ENEMY_RESPAWN_MS = 10_000;
 export const STORY_DAMAGE_POP_MS = 760;
 export const STORY_DAMAGE_POP_REDUCED_MS = 260;
 
@@ -193,9 +192,10 @@ export function adventureAttackHits(input: {
   enemyX: number;
   enemyY: number;
   targetKind?: AdventureAttackTargetKind;
+  targetHalfSize?: { width: number; height: number };
   attackBox?: AdventureAttackBox;
 }) {
-  const target = ATTACK_TARGET_HALF_SIZE[input.targetKind ?? 'ground'];
+  const target = input.targetHalfSize ?? ATTACK_TARGET_HALF_SIZE[input.targetKind ?? 'ground'];
   const attackBox = input.attackBox ?? {
     forwardReach: STORY_ATTACK_REACH,
     rearReach: STORY_ATTACK_REAR_OVERLAP,
@@ -219,6 +219,7 @@ export function storyPlayerProjectileHits(input: {
   targetX: number;
   targetY: number;
   targetKind?: AdventureAttackTargetKind;
+  targetHalfSize?: { width: number; height: number };
 }) {
   const [width, height] = input.hitboxSize;
   return adventureAttackHits({
@@ -228,6 +229,7 @@ export function storyPlayerProjectileHits(input: {
     enemyX: input.targetX,
     enemyY: input.targetY,
     targetKind: input.targetKind,
+    targetHalfSize: input.targetHalfSize,
     attackBox: {
       forwardReach: Math.max(0, width / 2),
       rearReach: Math.max(0, width / 2),
@@ -264,10 +266,6 @@ export function getStoryProjectileSpawnPosition(input: {
 
 export function canDamageAdventurePlayer(nowMs: number, invulnerableUntilMs: number) {
   return nowMs >= invulnerableUntilMs;
-}
-
-export function shouldRespawnAdventureEnemy(nowMs: number, defeatedAtMs: number, onScreen: boolean) {
-  return !onScreen && nowMs - defeatedAtMs >= STORY_ENEMY_RESPAWN_MS;
 }
 
 export function stepAdventureProjectile(input: {
