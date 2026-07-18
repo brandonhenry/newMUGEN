@@ -54,6 +54,7 @@ import { SpectatorExperience, parseSpectatorRoute, shareSpectatorLink } from './
 import { CharacterPreviewCanvas, GameScene, MenuAttractScene, MiniGameScene, MoveDemoCanvas, StagePreviewCanvas, UnlockRevealCanvas, UNLOCK_REVEAL_SEQUENCE_SECONDS, clearImageVoxelCacheForFrame, prewarmActiveFighterVoxels, type AssetLoadingState, type PreviewPose, type StagePreviewMode } from './components/GameScene';
 import { StageAmbiencePlayer } from './components/StageAmbiencePlayer';
 import { AdventureMusicPlayer } from './components/AdventureMusicPlayer';
+import { AdventureSoundscape } from './components/AdventureSoundscape';
 import { TouchControls } from './components/TouchControls';
 import { KORE_APP_VERSION } from './appVersion';
 import { starterCharacters } from './data/characters';
@@ -5849,6 +5850,11 @@ export default function App() {
         context={adventureMusicContext ?? ADVENTURE_SOCIAL_MUSIC_CONTEXT}
         profileKey={storyProfile?.avatar.name ?? onlineProfile?.displayName ?? 'guest'}
         onTrackChange={setAdventureMusicTrack}
+      />}
+      {adventureAudioOwned && <AdventureSoundscape
+        audio={settings.audio}
+        active={musicStarted}
+        context={adventureMusicContext ?? ADVENTURE_SOCIAL_MUSIC_CONTEXT}
       />}
       {!adventureAudioOwned && <StageAmbiencePlayer audio={settings.audio} stage={activeAmbienceStage} active={Boolean(activeAmbienceStage)} />}
       <section className={`screen-panel ${fullBleedScreen ? 'is-full-bleed' : ''}`}>

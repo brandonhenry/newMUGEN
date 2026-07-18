@@ -9,6 +9,7 @@ import { createAnalyticsId, type AnalyticsCapture } from '../lib/analytics';
 import { addFriendEntry, isFriend, readMatchHistory } from '../lib/socialHistory';
 import type { InputFrame } from '../types';
 import { STORY_ADVENTURE_ASSET_PATHS, storyWorldAssetPath } from './adventureAssets';
+import { emitAdventureAudioEvent } from './adventureAudio';
 import { STORY_ATTACK_VISUAL_SYNC_DELAY_MS, advanceStoryAttackInputBuffer, adventureAttackHits, canAdventureEnemyDamagePlayer, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureAttackFrameHitbox, getAdventureEnemyStats, getStoryAttackDurationMs, getStoryProjectileSpawnPosition, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, resolveStoryAttackInput, stepAdventureProjectile, storyPlayerProjectileHits, type AdventureDamageFeedback, type StoryBufferedAttackInput } from './adventureCombat';
 import { makeStoryEncounterProgress, recordChallengerDefeat, recordRegularDefeat, rerollStoryRegularSpawns, resetActiveChallenger, storyEncounterMovementLock, type StoryEncounterProgress } from './adventureEncounters';
 import { STORY_ADVENTURE_STAT_CAP, STORY_ADVENTURE_STAT_KEYS, allocateAdventureStat, awardAdventureExperience, awardMountMastery, beginAdventureVisit, canRespecAdventureStats, claimAdventureCache, collectAdventureRelic, discoverAdventureLandmark, discoverAdventureSurfaceMap, discoverAdventureVista, discoverAdventureWaystone, experienceToNextLevel, getAdventureDerivedStats, pinAdventureDaily, readAdventureProgress, respecAdventureStats, restoreAdventureShortcut, unlockAdventureMount, upgradeAdventureWaystone, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
@@ -960,6 +961,7 @@ function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attack
     health.current = Math.max(0, health.current - currentAttack.damage);
     const hitAt = performance.now();
     const finishing = health.current <= 0;
+    emitAdventureAudioEvent({ kind: 'enemy-hit', attackInput: currentAttack.attackInput, critical: currentAttack.critical, finishing });
     const popId = ++damageSequence.current;
     const feedback = createAdventureDamageFeedback({ damage: currentAttack.damage, critical: currentAttack.critical, finishing, sequence: popId, reducedMotion });
     const reaction = createAdventureHitReaction(currentAttack.critical, reducedMotion);
@@ -2031,6 +2033,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const activeVisitRef = useRef<{ id: string; worldId: StoryWorldId; startedAt: number } | null>(null);
   const encounterStartedAtRef = useRef<Record<string, number>>({});
   const playerStateRef = useRef<StoryHubPlayerState>({ x: activeHub.spawn[0], y: activeHub.spawn[1], pose: 'idle', facing: 1, worldId: activeWorldId });
+  const audioMotionRef = useRef<{ worldId: StoryWorldId; x: number; y: number; pose: StoryAvatarPose; distance: number }>({ worldId: activeWorldId, x: activeHub.spawn[0], y: activeHub.spawn[1], pose: 'idle', distance: 0 });
   const readInput = useCallback(() => {
     const input = readInputs()[0];
     return { ...input, interact: storyInteractRef.current || input.charge };
@@ -2068,17 +2071,36 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const handleHubReady = useCallback(() => setHubReady(true), []);
   const handlePlayerState = useCallback((state: StoryHubPlayerState) => {
     const worldState = { ...state, worldId: activeWorldId };
+    const motion = audioMotionRef.current;
+    if (motion.worldId !== activeWorldId) {
+      audioMotionRef.current = { worldId: activeWorldId, x: state.x, y: state.y, pose: state.pose, distance: 0 };
+    } else {
+      if (motion.pose !== 'jump' && state.pose === 'jump') emitAdventureAudioEvent({ kind: 'jump' });
+      if (motion.pose === 'jump' && state.pose !== 'jump') emitAdventureAudioEvent({ kind: 'land', intensity: Math.min(1, 0.65 + Math.abs(state.y - motion.y) * 0.12) });
+      const travel = Math.abs(state.x - motion.x);
+      const movingOnFoot = !mounted && !underwater && (state.pose === 'walk' || state.pose === 'sprint');
+      motion.distance = movingOnFoot ? motion.distance + travel : 0;
+      const stride = state.pose === 'sprint' ? 1.12 : 0.82;
+      if (movingOnFoot && motion.distance >= stride) {
+        emitAdventureAudioEvent({ kind: 'step', sprinting: state.pose === 'sprint' });
+        motion.distance %= stride;
+      }
+      motion.x = state.x;
+      motion.y = state.y;
+      motion.pose = state.pose;
+    }
     playerStateRef.current = worldState;
     setPlayerX(state.x);
     setPlayerY(state.y);
     setPlayerPose(state.pose);
     multiplayerSessionRef.current?.update(worldState);
-  }, [activeWorldId]);
+  }, [activeWorldId, mounted, underwater]);
   const handleWaterState = useCallback((nextUnderwater: boolean, airPocket?: [number, number]) => {
+    if (nextUnderwater !== underwater) emitAdventureAudioEvent({ kind: 'water', entered: nextUnderwater });
     setUnderwater(nextUnderwater);
     if (nextUnderwater) setMounted(false);
     if (airPocket) lastAirPocketRef.current = airPocket;
-  }, []);
+  }, [underwater]);
   useEffect(() => { adventureProgressRef.current = adventureProgress; }, [adventureProgress]);
   useEffect(() => { currentDepthZoneRef.current = currentDepthZoneId; }, [currentDepthZoneId]);
   useEffect(() => {
@@ -2329,6 +2351,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     setPlayerHealth(maxHealth);
   }, [activeWorldId, nearbyPortal?.kind, updateAdventureProgress]);
   const handleAdventureAttack = useCallback((x: number, y: number, facing: -1 | 1, attackInput: StoryAttackInput, durationSeconds: number) => {
+    emitAdventureAudioEvent({ kind: 'attack', attackInput });
     const resolved = resolveAdventurePlayerAttack(adventureProgressRef.current, attackInput);
     const startedAt = performance.now() + STORY_ATTACK_VISUAL_SYNC_DELAY_MS;
     const projectile = attackInput === 'special' ? getStorySpriteProjectile(profile.avatar.avatarSet) : undefined;
@@ -2351,6 +2374,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     playerInvulnerableUntilRef.current = performance.now() + 650;
     if (mounted) setMounted(false);
     const resolved = resolveAdventurePlayerDamage(baseDamage, adventureProgressRef.current);
+    emitAdventureAudioEvent({ kind: 'player-hit', damage: resolved.damage });
     const nextHealth = Math.max(0, playerHealthRef.current - resolved.damage);
     if (nextHealth <= 0) {
       const maxHealth = getAdventureDerivedStats(adventureProgressRef.current).maxHealth;
@@ -2417,6 +2441,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   }, [activeWorldId, doorTravel]);
 
   const activatePortal = useCallback((portal: StoryPortalDefinition) => {
+    if (portal.kind === 'adventure-gate' || portal.kind === 'mode-door' || portal.kind === 'shrine') emitAdventureAudioEvent({ kind: 'portal' });
     if (portal.surfaceMapTarget && isStoryAdventureRegionId(activeWorldId)) {
       setCurrentDepthZoneId(null);
       setSurfaceEntry(portal.surfaceEntry === 'east' ? 'east' : 'west');
