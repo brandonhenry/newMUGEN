@@ -76,6 +76,7 @@ const CONFIG: Record<StoryEnemyId, Omit<StoryEnemyDefinition, 'id' | 'label' | '
 };
 
 export const STORY_ENEMY_FRAME_SIZE = manifest.frameSize;
+export const STORY_ENEMY_RUNTIME_SCALE = 1.28;
 export const STORY_ENEMY_IDS = Object.keys(CONFIG) as StoryEnemyId[];
 export const STORY_REGULAR_ENEMY_IDS = STORY_ENEMY_IDS.filter((id) => animationsById.get(id)?.tier === 'regular');
 export const STORY_CHALLENGER_IDS = STORY_ENEMY_IDS.filter((id) => animationsById.get(id)?.tier === 'challenger');

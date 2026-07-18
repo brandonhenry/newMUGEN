@@ -13,7 +13,7 @@ import { makeStoryEncounterProgress, recordChallengerDefeat, recordRegularDefeat
 import { STORY_ADVENTURE_STAT_CAP, STORY_ADVENTURE_STAT_KEYS, allocateAdventureStat, awardAdventureExperience, awardMountMastery, beginAdventureVisit, canRespecAdventureStats, discoverAdventureLandmark, discoverAdventureVista, discoverAdventureWaystone, experienceToNextLevel, getAdventureDerivedStats, readAdventureProgress, respecAdventureStats, unlockAdventureMount, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_REGION_LABELS, STORY_WORLDS, isStoryAdventureRegionId, isStoryAdventureWorldId, isStoryWorldId } from './adventureWorlds';
 import { createAdventureVisitSeed, generateAdventureRunGraph, STORY_BREATH_DRAIN_PER_SECOND, STORY_BREATH_REFILL_PER_SECOND, STORY_MAX_BREATH, STORY_MOUNTS, STORY_WORLD_MOUNT, storyDepthZoneLabel, type StoryPartyInstance } from './adventureExploration';
-import { getStoryEnemyAnimation, getStoryEnemyDefinition, STORY_CHALLENGER_IDS, type StoryEnemyAttackDefinition } from './enemyCatalog';
+import { getStoryEnemyAnimation, getStoryEnemyDefinition, STORY_CHALLENGER_IDS, STORY_ENEMY_RUNTIME_SCALE, type StoryEnemyAttackDefinition } from './enemyCatalog';
 import { STORY_GROUNDED_ACTOR_CENTER_Y, storyAvatarGroundingOffsetForWorld, storyGroundAnchoredPlaneCenterY, storyScaledGroundAnchorOffsetY } from './actorGrounding';
 import { STORY_BIOME_DOOR_ASSET, STORY_BIOME_DOOR_ATLAS_SIZE, STORY_BIOME_DOOR_GROUND_SINK_Y, storyBiomeDoorFrame, type StoryBiomeDoorFrame } from './biomeDoors';
 import { connectStoryHubMultiplayer, readOrCreateStoryHubGuestIdentity, readStoryHubOnlinePreference, STORY_HUB_CHALLENGE_TIMEOUT_MS, writeStoryHubOnlinePreference, type StoryHubMultiplayerSession } from './hubMultiplayer';
@@ -613,7 +613,7 @@ function EnemySprite({ enemyId, animationId, animationStartedAt, facing, flashUn
     if (mesh.current) mesh.current.scale.x = facing;
   });
   useEffect(() => () => textures.forEach((texture) => texture.dispose()), [textures]);
-  const size = 1.72 * definition.worldScale;
+  const size = 1.72 * definition.worldScale * STORY_ENEMY_RUNTIME_SCALE;
   return <mesh ref={mesh} position={[0, storyGroundAnchoredPlaneCenterY(size), 0]} scale={[facing, 1, 1]}>
     <planeGeometry args={[size, size]} />
     <meshBasicMaterial ref={material} map={textures[0]} transparent opacity={1} alphaTest={0.02} depthWrite={false} toneMapped={false} />
@@ -886,7 +886,7 @@ function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attack
           targetX: x.current,
           targetY: y.current,
           targetKind: archetype,
-          targetHalfSize: { width: definition.hitbox[0], height: definition.hitbox[1] }
+          targetHalfSize: { width: definition.hitbox[0] * STORY_ENEMY_RUNTIME_SCALE, height: definition.hitbox[1] * STORY_ENEMY_RUNTIME_SCALE }
         })) {
         launchedProjectile.active = false;
         registerAttackHit(launchedProjectile.attack);
@@ -900,7 +900,7 @@ function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attack
         for (const projectile of projectiles.current) {
           if (projectile.active && adventureAttackHits({ playerX: attackX, playerY: attackY, facing: attackEvent.facing, enemyX: projectile.x, enemyY: projectile.y, targetKind: 'projectile', attackBox })) projectile.active = false;
         }
-        if (lastRegisteredAttackId.current !== attackEvent.id && adventureAttackHits({ playerX: attackX, playerY: attackY, facing: attackEvent.facing, enemyX: x.current, enemyY: y.current, targetKind: archetype, targetHalfSize: { width: definition.hitbox[0], height: definition.hitbox[1] }, attackBox })) {
+        if (lastRegisteredAttackId.current !== attackEvent.id && adventureAttackHits({ playerX: attackX, playerY: attackY, facing: attackEvent.facing, enemyX: x.current, enemyY: y.current, targetKind: archetype, targetHalfSize: { width: definition.hitbox[0] * STORY_ENEMY_RUNTIME_SCALE, height: definition.hitbox[1] * STORY_ENEMY_RUNTIME_SCALE }, attackBox })) {
           registerAttackHit(attackEvent);
         }
       }
@@ -960,7 +960,7 @@ function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attack
             projectile.radius = projectileDefinition.radius;
             projectile.color = projectileDefinition.color;
           }
-        } else if (distance <= currentEnemyAttack.definition.range && Math.abs(playerY - y.current) < 1.15) {
+        } else if (distance <= currentEnemyAttack.definition.range * STORY_ENEMY_RUNTIME_SCALE && Math.abs(playerY - y.current) < 1.15 * STORY_ENEMY_RUNTIME_SCALE) {
           onPlayerDamage(Math.max(1, Math.round(stats.damage * currentEnemyAttack.definition.damageMultiplier)), x.current);
         }
       }
@@ -973,7 +973,7 @@ function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attack
       const nextAttack = definition.attacks[attackCursor.current % definition.attacks.length];
       const canAttack = now - lastAttackAt.current >= nextAttack.cooldownMs
         && Math.abs(playerY - y.current) < (nextAttack.projectile ? 4 : 1.2)
-        && distance <= nextAttack.range;
+        && distance <= nextAttack.range * (nextAttack.projectile ? 1 : STORY_ENEMY_RUNTIME_SCALE);
       if (canAttack && now >= staggerUntil.current && now >= animationLockedUntil.current) {
         attackCursor.current += 1;
         activeEnemyAttack.current = { definition: nextAttack, startedAt: now, hit: false };
@@ -1030,7 +1030,7 @@ function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attack
       <group ref={enemyBody} position={[0, storyScaledGroundAnchorOffsetY(displayScale), 0]} scale={[displayScale, displayScale, 1]}>
         <EnemySprite enemyId={spawn.enemyId} animationId={visual.animationId} animationStartedAt={visual.animationStartedAt} facing={visual.facing} flashUntil={flashUntil} fading={!visual.alive && !definition.animations.some((animation) => animation.id === 'dead')} />
       </group>
-      <Html center position={[0, 1.35 * displayScale, 0.3]} zIndexRange={[7, 0]} className="story-enemy-bar-shell">
+      <Html center position={[0, 1.35 * displayScale * definition.worldScale * STORY_ENEMY_RUNTIME_SCALE, 0.3]} zIndexRange={[7, 0]} className="story-enemy-bar-shell">
         <div className={`story-enemy-bar ${visual.critical ? 'is-critical' : ''} ${definition.tier === 'challenger' ? 'is-elite' : ''}`} data-testid={`story-enemy-health-${spawn.id}`}>
           <span><i style={{ width: `${Math.max(0, visual.health / stats.maxHealth) * 100}%` }} /></span>
           <small>{definition.label} · Lv {level}</small>
@@ -1038,7 +1038,7 @@ function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attack
       </Html>
     </group>
     <group ref={damageLayer} position={[spawn.position[0], spawn.position[1], 0.9]}>
-      {damagePops.map((pop) => <Html key={pop.id} center position={[0, 1.12 * displayScale, 0.7]} zIndexRange={[10, 0]} className="story-enemy-damage-shell">
+      {damagePops.map((pop) => <Html key={pop.id} center position={[0, 1.12 * displayScale * definition.worldScale * STORY_ENEMY_RUNTIME_SCALE, 0.7]} zIndexRange={[10, 0]} className="story-enemy-damage-shell">
         <output
           className={`story-enemy-damage palette-${(pop.id - 1) % 5} ${pop.critical ? 'is-critical' : ''} ${pop.finishing ? 'is-finishing' : ''} ${reducedMotion ? 'is-reduced-motion' : ''}`}
           data-testid={`story-enemy-damage-${spawn.id}-${pop.id}`}

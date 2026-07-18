@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import manifestJson from './storyEnemyManifest.json';
-import { STORY_CHALLENGER_IDS, STORY_ENEMY_CATALOG, STORY_ENEMY_FRAME_SIZE, STORY_ENEMY_IDS, STORY_REGULAR_ENEMY_IDS, validateStoryEnemyCatalog } from './enemyCatalog';
+import { STORY_CHALLENGER_IDS, STORY_ENEMY_CATALOG, STORY_ENEMY_FRAME_SIZE, STORY_ENEMY_IDS, STORY_ENEMY_RUNTIME_SCALE, STORY_REGULAR_ENEMY_IDS, validateStoryEnemyCatalog } from './enemyCatalog';
 
 type EnemyManifest = {
   enemies: Array<{
@@ -25,6 +25,7 @@ describe('story enemy catalog', () => {
     expect(STORY_ENEMY_IDS).toHaveLength(16);
     expect(STORY_REGULAR_ENEMY_IDS).toHaveLength(8);
     expect(STORY_CHALLENGER_IDS).toHaveLength(8);
+    expect(STORY_ENEMY_RUNTIME_SCALE).toBeGreaterThanOrEqual(1.25);
     expect(new Set(manifest.enemies.map((enemy) => enemy.id))).toEqual(new Set(STORY_ENEMY_IDS));
   });
 
