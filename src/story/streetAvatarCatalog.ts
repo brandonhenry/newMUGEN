@@ -1,5 +1,5 @@
 import manifestJson from './storyStreetAvatarManifest.json';
-import type { StoryAttackAnimationId, StoryAttackInput, StoryAvatarSet, StoryHubAvatarPose, StorySpriteAnimation, StorySpriteManifest, StorySpriteSetDefinition } from './types';
+import type { StoryAttackAnimationId, StoryAttackInput, StoryAvatarSet, StoryHubAvatarPose, StorySpriteAnimation, StorySpriteManifest, StorySpriteProjectileDefinition, StorySpriteSetDefinition } from './types';
 
 export const STORY_ATTACK_ANIMATION_IDS: Record<StoryAttackInput, StoryAttackAnimationId> = {
   jab: 'attack',
@@ -25,6 +25,10 @@ export const STORY_SPRITE_SETS = STORY_SPRITE_MANIFEST.sets;
 export function getStorySpriteSet(setId: StoryAvatarSet): StorySpriteSetDefinition {
   return STORY_SPRITE_SETS.find((set) => set.id === setId)
     ?? STORY_SPRITE_SETS.find((set) => set.id === STORY_SPRITE_MANIFEST.defaultSet)!;
+}
+
+export function getStorySpriteProjectile(setId: StoryAvatarSet): StorySpriteProjectileDefinition | undefined {
+  return getStorySpriteSet(setId).projectile;
 }
 
 export function getStorySpriteAnimation(setId: StoryAvatarSet, animationId: string): StorySpriteAnimation {
@@ -63,6 +67,21 @@ export function validateStorySpriteManifest(value: unknown): string[] {
     if (!expectedSets.has(set.id)) errors.push(`unknown avatar set: ${set.id}`);
     if (!set.source?.sha256 || !set.source?.originalFile) errors.push(`${set.id} is missing source provenance`);
     if (!set.attackSource?.sha256 || set.attackSource?.originalFile !== 'attacks-v2-source.png') errors.push(`${set.id} is missing supplemental attack provenance`);
+    if (set.projectile) {
+      const projectile = set.projectile;
+      if (projectile.id !== 'special') errors.push(`${set.id} has an invalid projectile move`);
+      if (!projectile.source?.sha256 || projectile.source.originalFile !== 'projectile-special-source.png') errors.push(`${set.id} is missing projectile provenance`);
+      if (projectile.frameSize.width !== 192 || projectile.frameSize.height !== 96) errors.push(`${set.id} has an invalid projectile frame size`);
+      if (projectile.frames.length !== 6) errors.push(`${set.id} must have six projectile frames`);
+      if (projectile.releaseDelayMs < 0 || projectile.speed <= 0 || projectile.lifetimeMs <= 0) errors.push(`${set.id} has invalid projectile timing`);
+      if (projectile.worldSize.some((value) => value <= 0) || projectile.hitboxSize.some((value) => value <= 0)) errors.push(`${set.id} has invalid projectile dimensions`);
+      for (const frame of projectile.frames) {
+        if (!frame.path.startsWith(`/story/avatars/kore-street-v1/sets/${set.id}/projectiles/special/`)) errors.push(`${set.id}/${frame.id} has an invalid projectile path`);
+        if (frame.durationMs <= 0) errors.push(`${set.id}/${frame.id} has an invalid projectile duration`);
+        const [left, top, right, bottom] = frame.contentBounds;
+        if (left < 0 || top < 0 || right > 192 || bottom > 96 || left >= right || top >= bottom) errors.push(`${set.id}/${frame.id} has invalid projectile bounds`);
+      }
+    }
     const animationIds = new Set<string>();
     const uniquePaths = new Set<string>();
     for (const animation of set.animations ?? []) {

@@ -833,7 +833,102 @@
             6
           ]
         }
-      ]
+      ],
+      "projectile": {
+        "id": "special",
+        "source": {
+          "kind": "openai-image-generation-projectile-strip",
+          "sha256": "f9694281e0af8aae0311e525adea5889672bc3e2bf642a319473538058db80fe",
+          "originalFile": "projectile-special-source.png"
+        },
+        "frameSize": {
+          "width": 192,
+          "height": 96
+        },
+        "frames": [
+          {
+            "id": "projectile-special-00",
+            "path": "/story/avatars/kore-street-v1/sets/solar-runner/projectiles/special/00.png",
+            "durationMs": 72,
+            "contentBounds": [
+              52,
+              3,
+              139,
+              94
+            ]
+          },
+          {
+            "id": "projectile-special-01",
+            "path": "/story/avatars/kore-street-v1/sets/solar-runner/projectiles/special/01.png",
+            "durationMs": 72,
+            "contentBounds": [
+              22,
+              3,
+              169,
+              94
+            ]
+          },
+          {
+            "id": "projectile-special-02",
+            "path": "/story/avatars/kore-street-v1/sets/solar-runner/projectiles/special/02.png",
+            "durationMs": 72,
+            "contentBounds": [
+              50,
+              2,
+              142,
+              94
+            ]
+          },
+          {
+            "id": "projectile-special-03",
+            "path": "/story/avatars/kore-street-v1/sets/solar-runner/projectiles/special/03.png",
+            "durationMs": 72,
+            "contentBounds": [
+              57,
+              2,
+              134,
+              94
+            ]
+          },
+          {
+            "id": "projectile-special-04",
+            "path": "/story/avatars/kore-street-v1/sets/solar-runner/projectiles/special/04.png",
+            "durationMs": 72,
+            "contentBounds": [
+              30,
+              2,
+              147,
+              94
+            ]
+          },
+          {
+            "id": "projectile-special-05",
+            "path": "/story/avatars/kore-street-v1/sets/solar-runner/projectiles/special/05.png",
+            "durationMs": 72,
+            "contentBounds": [
+              55,
+              2,
+              137,
+              94
+            ]
+          }
+        ],
+        "releaseDelayMs": 375,
+        "speed": 10.0,
+        "lifetimeMs": 800,
+        "spawnOffset": [
+          1.05,
+          0.8
+        ],
+        "worldSize": [
+          1.85,
+          1.05
+        ],
+        "hitboxSize": [
+          1.2,
+          0.8
+        ]
+      }
     },
     {
       "id": "street-shadow",
@@ -2471,7 +2566,102 @@
             6
           ]
         }
-      ]
+      ],
+      "projectile": {
+        "id": "special",
+        "source": {
+          "kind": "openai-image-generation-projectile-strip",
+          "sha256": "47d3318b177c3da3fa18897899bc6975d7ec6f9a8d9b4a283c0a3c783981be3f",
+          "originalFile": "projectile-special-source.png"
+        },
+        "frameSize": {
+          "width": 192,
+          "height": 96
+        },
+        "frames": [
+          {
+            "id": "projectile-special-00",
+            "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/projectiles/special/00.png",
+            "durationMs": 72,
+            "contentBounds": [
+              2,
+              25,
+              190,
+              70
+            ]
+          },
+          {
+            "id": "projectile-special-01",
+            "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/projectiles/special/01.png",
+            "durationMs": 72,
+            "contentBounds": [
+              2,
+              34,
+              190,
+              62
+            ]
+          },
+          {
+            "id": "projectile-special-02",
+            "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/projectiles/special/02.png",
+            "durationMs": 72,
+            "contentBounds": [
+              2,
+              34,
+              190,
+              61
+            ]
+          },
+          {
+            "id": "projectile-special-03",
+            "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/projectiles/special/03.png",
+            "durationMs": 72,
+            "contentBounds": [
+              2,
+              34,
+              190,
+              61
+            ]
+          },
+          {
+            "id": "projectile-special-04",
+            "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/projectiles/special/04.png",
+            "durationMs": 72,
+            "contentBounds": [
+              2,
+              36,
+              190,
+              60
+            ]
+          },
+          {
+            "id": "projectile-special-05",
+            "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/projectiles/special/05.png",
+            "durationMs": 72,
+            "contentBounds": [
+              2,
+              2,
+              189,
+              94
+            ]
+          }
+        ],
+        "releaseDelayMs": 375,
+        "speed": 14.0,
+        "lifetimeMs": 800,
+        "spawnOffset": [
+          1.05,
+          0.8
+        ],
+        "worldSize": [
+          1.8,
+          0.7
+        ],
+        "hitboxSize": [
+          1.4,
+          0.35
+        ]
+      }
     },
     {
       "id": "rose-blade",
@@ -4073,7 +4263,102 @@
             6
           ]
         }
-      ]
+      ],
+      "projectile": {
+        "id": "special",
+        "source": {
+          "kind": "openai-image-generation-projectile-strip",
+          "sha256": "bcb8f6160ff89c711313c1542820268dcb0434e727682da10eb55506f870b3d9",
+          "originalFile": "projectile-special-source.png"
+        },
+        "frameSize": {
+          "width": 192,
+          "height": 96
+        },
+        "frames": [
+          {
+            "id": "projectile-special-00",
+            "path": "/story/avatars/kore-street-v1/sets/neon-courier/projectiles/special/00.png",
+            "durationMs": 72,
+            "contentBounds": [
+              63,
+              5,
+              128,
+              90
+            ]
+          },
+          {
+            "id": "projectile-special-01",
+            "path": "/story/avatars/kore-street-v1/sets/neon-courier/projectiles/special/01.png",
+            "durationMs": 72,
+            "contentBounds": [
+              28,
+              16,
+              163,
+              79
+            ]
+          },
+          {
+            "id": "projectile-special-02",
+            "path": "/story/avatars/kore-street-v1/sets/neon-courier/projectiles/special/02.png",
+            "durationMs": 72,
+            "contentBounds": [
+              16,
+              11,
+              175,
+              84
+            ]
+          },
+          {
+            "id": "projectile-special-03",
+            "path": "/story/avatars/kore-street-v1/sets/neon-courier/projectiles/special/03.png",
+            "durationMs": 72,
+            "contentBounds": [
+              45,
+              2,
+              147,
+              94
+            ]
+          },
+          {
+            "id": "projectile-special-04",
+            "path": "/story/avatars/kore-street-v1/sets/neon-courier/projectiles/special/04.png",
+            "durationMs": 72,
+            "contentBounds": [
+              51,
+              2,
+              141,
+              94
+            ]
+          },
+          {
+            "id": "projectile-special-05",
+            "path": "/story/avatars/kore-street-v1/sets/neon-courier/projectiles/special/05.png",
+            "durationMs": 72,
+            "contentBounds": [
+              54,
+              2,
+              137,
+              94
+            ]
+          }
+        ],
+        "releaseDelayMs": 375,
+        "speed": 11.0,
+        "lifetimeMs": 800,
+        "spawnOffset": [
+          1.05,
+          0.8
+        ],
+        "worldSize": [
+          1.45,
+          0.9
+        ],
+        "hitboxSize": [
+          0.8,
+          0.6
+        ]
+      }
     },
     {
       "id": "ember-scout",
@@ -5723,7 +6008,102 @@
             6
           ]
         }
-      ]
+      ],
+      "projectile": {
+        "id": "special",
+        "source": {
+          "kind": "openai-image-generation-projectile-strip",
+          "sha256": "b67bfa24f90afc6f27653944db352f96f4b20b70192c3a37426f5c4dca441932",
+          "originalFile": "projectile-special-source.png"
+        },
+        "frameSize": {
+          "width": 192,
+          "height": 96
+        },
+        "frames": [
+          {
+            "id": "projectile-special-00",
+            "path": "/story/avatars/kore-street-v1/sets/synth-drifter/projectiles/special/00.png",
+            "durationMs": 72,
+            "contentBounds": [
+              36,
+              11,
+              156,
+              85
+            ]
+          },
+          {
+            "id": "projectile-special-01",
+            "path": "/story/avatars/kore-street-v1/sets/synth-drifter/projectiles/special/01.png",
+            "durationMs": 72,
+            "contentBounds": [
+              2,
+              25,
+              190,
+              70
+            ]
+          },
+          {
+            "id": "projectile-special-02",
+            "path": "/story/avatars/kore-street-v1/sets/synth-drifter/projectiles/special/02.png",
+            "durationMs": 72,
+            "contentBounds": [
+              2,
+              25,
+              190,
+              70
+            ]
+          },
+          {
+            "id": "projectile-special-03",
+            "path": "/story/avatars/kore-street-v1/sets/synth-drifter/projectiles/special/03.png",
+            "durationMs": 72,
+            "contentBounds": [
+              2,
+              19,
+              190,
+              77
+            ]
+          },
+          {
+            "id": "projectile-special-04",
+            "path": "/story/avatars/kore-street-v1/sets/synth-drifter/projectiles/special/04.png",
+            "durationMs": 72,
+            "contentBounds": [
+              2,
+              4,
+              190,
+              92
+            ]
+          },
+          {
+            "id": "projectile-special-05",
+            "path": "/story/avatars/kore-street-v1/sets/synth-drifter/projectiles/special/05.png",
+            "durationMs": 72,
+            "contentBounds": [
+              8,
+              2,
+              183,
+              94
+            ]
+          }
+        ],
+        "releaseDelayMs": 375,
+        "speed": 13.0,
+        "lifetimeMs": 800,
+        "spawnOffset": [
+          1.05,
+          0.8
+        ],
+        "worldSize": [
+          2.0,
+          0.65
+        ],
+        "hitboxSize": [
+          1.4,
+          0.4
+        ]
+      }
     },
     {
       "id": "forest-warden",
@@ -7361,7 +7741,102 @@
             6
           ]
         }
-      ]
+      ],
+      "projectile": {
+        "id": "special",
+        "source": {
+          "kind": "openai-image-generation-projectile-strip",
+          "sha256": "e34c4d1757e83fce0bfb1f259d2098ab963631a4d353b6bca9ea272d57c73d9a",
+          "originalFile": "projectile-special-source.png"
+        },
+        "frameSize": {
+          "width": 192,
+          "height": 96
+        },
+        "frames": [
+          {
+            "id": "projectile-special-00",
+            "path": "/story/avatars/kore-street-v1/sets/solar-brawler/projectiles/special/00.png",
+            "durationMs": 72,
+            "contentBounds": [
+              44,
+              2,
+              147,
+              94
+            ]
+          },
+          {
+            "id": "projectile-special-01",
+            "path": "/story/avatars/kore-street-v1/sets/solar-brawler/projectiles/special/01.png",
+            "durationMs": 72,
+            "contentBounds": [
+              2,
+              15,
+              190,
+              80
+            ]
+          },
+          {
+            "id": "projectile-special-02",
+            "path": "/story/avatars/kore-street-v1/sets/solar-brawler/projectiles/special/02.png",
+            "durationMs": 72,
+            "contentBounds": [
+              3,
+              2,
+              189,
+              93
+            ]
+          },
+          {
+            "id": "projectile-special-03",
+            "path": "/story/avatars/kore-street-v1/sets/solar-brawler/projectiles/special/03.png",
+            "durationMs": 72,
+            "contentBounds": [
+              2,
+              5,
+              190,
+              90
+            ]
+          },
+          {
+            "id": "projectile-special-04",
+            "path": "/story/avatars/kore-street-v1/sets/solar-brawler/projectiles/special/04.png",
+            "durationMs": 72,
+            "contentBounds": [
+              47,
+              2,
+              145,
+              94
+            ]
+          },
+          {
+            "id": "projectile-special-05",
+            "path": "/story/avatars/kore-street-v1/sets/solar-brawler/projectiles/special/05.png",
+            "durationMs": 72,
+            "contentBounds": [
+              35,
+              2,
+              156,
+              94
+            ]
+          }
+        ],
+        "releaseDelayMs": 375,
+        "speed": 8.0,
+        "lifetimeMs": 800,
+        "spawnOffset": [
+          1.05,
+          0.8
+        ],
+        "worldSize": [
+          1.25,
+          1.0
+        ],
+        "hitboxSize": [
+          0.75,
+          0.75
+        ]
+      }
     },
     {
       "id": "void-operative",
@@ -8186,7 +8661,102 @@
             6
           ]
         }
-      ]
+      ],
+      "projectile": {
+        "id": "special",
+        "source": {
+          "kind": "openai-image-generation-projectile-strip",
+          "sha256": "4944eb8fd6ce0bb752b63ebd020466fc093b7afdd788bb514948a31e38260aa6",
+          "originalFile": "projectile-special-source.png"
+        },
+        "frameSize": {
+          "width": 192,
+          "height": 96
+        },
+        "frames": [
+          {
+            "id": "projectile-special-00",
+            "path": "/story/avatars/kore-street-v1/sets/void-operative/projectiles/special/00.png",
+            "durationMs": 72,
+            "contentBounds": [
+              54,
+              2,
+              137,
+              94
+            ]
+          },
+          {
+            "id": "projectile-special-01",
+            "path": "/story/avatars/kore-street-v1/sets/void-operative/projectiles/special/01.png",
+            "durationMs": 72,
+            "contentBounds": [
+              9,
+              2,
+              183,
+              94
+            ]
+          },
+          {
+            "id": "projectile-special-02",
+            "path": "/story/avatars/kore-street-v1/sets/void-operative/projectiles/special/02.png",
+            "durationMs": 72,
+            "contentBounds": [
+              2,
+              9,
+              190,
+              87
+            ]
+          },
+          {
+            "id": "projectile-special-03",
+            "path": "/story/avatars/kore-street-v1/sets/void-operative/projectiles/special/03.png",
+            "durationMs": 72,
+            "contentBounds": [
+              2,
+              11,
+              190,
+              85
+            ]
+          },
+          {
+            "id": "projectile-special-04",
+            "path": "/story/avatars/kore-street-v1/sets/void-operative/projectiles/special/04.png",
+            "durationMs": 72,
+            "contentBounds": [
+              37,
+              2,
+              154,
+              94
+            ]
+          },
+          {
+            "id": "projectile-special-05",
+            "path": "/story/avatars/kore-street-v1/sets/void-operative/projectiles/special/05.png",
+            "durationMs": 72,
+            "contentBounds": [
+              59,
+              2,
+              132,
+              94
+            ]
+          }
+        ],
+        "releaseDelayMs": 375,
+        "speed": 8.5,
+        "lifetimeMs": 800,
+        "spawnOffset": [
+          1.05,
+          0.8
+        ],
+        "worldSize": [
+          1.3,
+          0.95
+        ],
+        "hitboxSize": [
+          0.8,
+          0.7
+        ]
+      }
     },
     {
       "id": "circuit-mage",
@@ -9011,7 +9581,102 @@
             6
           ]
         }
-      ]
+      ],
+      "projectile": {
+        "id": "special",
+        "source": {
+          "kind": "openai-image-generation-projectile-strip",
+          "sha256": "03757300263ba2143d0c4fa27ffa44f815893cd77ae3c7f7c16d2ec8108211e4",
+          "originalFile": "projectile-special-source.png"
+        },
+        "frameSize": {
+          "width": 192,
+          "height": 96
+        },
+        "frames": [
+          {
+            "id": "projectile-special-00",
+            "path": "/story/avatars/kore-street-v1/sets/circuit-mage/projectiles/special/00.png",
+            "durationMs": 72,
+            "contentBounds": [
+              58,
+              2,
+              133,
+              94
+            ]
+          },
+          {
+            "id": "projectile-special-01",
+            "path": "/story/avatars/kore-street-v1/sets/circuit-mage/projectiles/special/01.png",
+            "durationMs": 72,
+            "contentBounds": [
+              2,
+              13,
+              190,
+              83
+            ]
+          },
+          {
+            "id": "projectile-special-02",
+            "path": "/story/avatars/kore-street-v1/sets/circuit-mage/projectiles/special/02.png",
+            "durationMs": 72,
+            "contentBounds": [
+              2,
+              17,
+              190,
+              79
+            ]
+          },
+          {
+            "id": "projectile-special-03",
+            "path": "/story/avatars/kore-street-v1/sets/circuit-mage/projectiles/special/03.png",
+            "durationMs": 72,
+            "contentBounds": [
+              2,
+              18,
+              190,
+              77
+            ]
+          },
+          {
+            "id": "projectile-special-04",
+            "path": "/story/avatars/kore-street-v1/sets/circuit-mage/projectiles/special/04.png",
+            "durationMs": 72,
+            "contentBounds": [
+              2,
+              7,
+              190,
+              89
+            ]
+          },
+          {
+            "id": "projectile-special-05",
+            "path": "/story/avatars/kore-street-v1/sets/circuit-mage/projectiles/special/05.png",
+            "durationMs": 72,
+            "contentBounds": [
+              38,
+              2,
+              153,
+              94
+            ]
+          }
+        ],
+        "releaseDelayMs": 375,
+        "speed": 13.5,
+        "lifetimeMs": 800,
+        "spawnOffset": [
+          1.05,
+          0.8
+        ],
+        "worldSize": [
+          2.0,
+          0.65
+        ],
+        "hitboxSize": [
+          1.4,
+          0.4
+        ]
+      }
     },
     {
       "id": "street-medic",
@@ -11486,7 +12151,102 @@
             6
           ]
         }
-      ]
+      ],
+      "projectile": {
+        "id": "special",
+        "source": {
+          "kind": "openai-image-generation-projectile-strip",
+          "sha256": "280b3b49eb9d65023e49fb978bd9c49559ae9cbbe3270b96922da88fb8d83107",
+          "originalFile": "projectile-special-source.png"
+        },
+        "frameSize": {
+          "width": 192,
+          "height": 96
+        },
+        "frames": [
+          {
+            "id": "projectile-special-00",
+            "path": "/story/avatars/kore-street-v1/sets/tech-nomad/projectiles/special/00.png",
+            "durationMs": 72,
+            "contentBounds": [
+              47,
+              30,
+              145,
+              65
+            ]
+          },
+          {
+            "id": "projectile-special-01",
+            "path": "/story/avatars/kore-street-v1/sets/tech-nomad/projectiles/special/01.png",
+            "durationMs": 72,
+            "contentBounds": [
+              15,
+              21,
+              177,
+              74
+            ]
+          },
+          {
+            "id": "projectile-special-02",
+            "path": "/story/avatars/kore-street-v1/sets/tech-nomad/projectiles/special/02.png",
+            "durationMs": 72,
+            "contentBounds": [
+              2,
+              18,
+              190,
+              77
+            ]
+          },
+          {
+            "id": "projectile-special-03",
+            "path": "/story/avatars/kore-street-v1/sets/tech-nomad/projectiles/special/03.png",
+            "durationMs": 72,
+            "contentBounds": [
+              2,
+              23,
+              190,
+              72
+            ]
+          },
+          {
+            "id": "projectile-special-04",
+            "path": "/story/avatars/kore-street-v1/sets/tech-nomad/projectiles/special/04.png",
+            "durationMs": 72,
+            "contentBounds": [
+              2,
+              26,
+              190,
+              70
+            ]
+          },
+          {
+            "id": "projectile-special-05",
+            "path": "/story/avatars/kore-street-v1/sets/tech-nomad/projectiles/special/05.png",
+            "durationMs": 72,
+            "contentBounds": [
+              29,
+              2,
+              162,
+              94
+            ]
+          }
+        ],
+        "releaseDelayMs": 375,
+        "speed": 12.0,
+        "lifetimeMs": 800,
+        "spawnOffset": [
+          1.05,
+          0.8
+        ],
+        "worldSize": [
+          1.5,
+          0.75
+        ],
+        "hitboxSize": [
+          0.9,
+          0.55
+        ]
+      }
     }
   ]
 }

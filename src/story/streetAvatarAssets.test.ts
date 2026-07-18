@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { describe, expect, it } from 'vitest';
-import { getStorySpriteAnimationDurationMs, STORY_SPRITE_MANIFEST, validateStorySpriteManifest } from './streetAvatarCatalog';
+import { getStorySpriteAnimationDurationMs, getStorySpriteProjectile, STORY_SPRITE_MANIFEST, validateStorySpriteManifest } from './streetAvatarCatalog';
 
 const PUBLIC_ROOT = resolve(process.cwd(), 'public');
 const ASSET_ROOT = resolve(PUBLIC_ROOT, 'story/avatars/kore-street-v1');
@@ -64,7 +64,7 @@ describe('K.O.R.E. full-frame street avatar assets', () => {
     });
   });
 
-  it('retains detached slash and projectile pixels in their character frames', () => {
+  it('retains authored slash and aura pixels in their original basic-attack frames', () => {
     const attackFor = (setId: string) => STORY_SPRITE_MANIFEST.sets
       .find((set) => set.id === setId)!
       .animations.find((animation) => animation.id === 'attack')!;
@@ -75,6 +75,45 @@ describe('K.O.R.E. full-frame street avatar assets', () => {
     expect(contentWidth(attackFor('street-shadow').frames[7].contentBounds)).toBeGreaterThan(170);
     expect(attackFor('forest-warden').frames).toHaveLength(7);
     expect(contentWidth(attackFor('forest-warden').frames[6].contentBounds)).toBeGreaterThan(180);
+  });
+
+  it('ships body-free projectile PNGs as separate special-move entities', () => {
+    const projectileSetIds = STORY_SPRITE_MANIFEST.sets.filter((set) => set.projectile).map((set) => set.id);
+    expect(projectileSetIds).toEqual([
+      'solar-runner', 'crimson-ranger', 'neon-courier', 'synth-drifter',
+      'solar-brawler', 'void-operative', 'circuit-mage', 'tech-nomad'
+    ]);
+    const avatarPaths = new Set(STORY_SPRITE_MANIFEST.sets.flatMap((set) => set.animations.flatMap((animation) => animation.frames.map((frame) => frame.path))));
+    const projectilePaths = new Set(STORY_SPRITE_MANIFEST.sets.flatMap((set) => set.projectile?.frames.map((frame) => frame.path) ?? []));
+    expect(projectilePaths.size).toBe(48);
+    projectilePaths.forEach((path) => {
+      expect(path).toContain('/projectiles/special/');
+      expect(avatarPaths.has(path)).toBe(false);
+    });
+    projectileSetIds.forEach((setId) => {
+      const projectile = getStorySpriteProjectile(setId)!;
+      expect(projectile.source).toMatchObject({ kind: 'openai-image-generation-projectile-strip', originalFile: 'projectile-special-source.png' });
+      expect(projectile.frames).toHaveLength(6);
+      expect(projectile.releaseDelayMs).toBe(375);
+      expect(projectile.lifetimeMs).toBeLessThanOrEqual(850);
+      expect(existsSync(resolve(ASSET_ROOT, `sets/${setId}/projectile-special-source.png`))).toBe(true);
+    });
+
+    const validation = spawnSync('python3', ['-c', [
+      'from pathlib import Path',
+      'from PIL import Image',
+      `root=Path(${JSON.stringify(resolve(ASSET_ROOT, 'sets'))})`,
+      "paths=list(root.glob('*/projectiles/special/*.png'))",
+      'assert len(paths)==48, len(paths)',
+      'for path in paths:',
+      " im=Image.open(path).convert('RGBA')",
+      ' assert im.size==(192,96), (path, im.size)',
+      ' alpha=im.getchannel("A")',
+      ' assert alpha.getbbox(), path',
+      ' assert all(im.getpixel(point)[3] == 0 for point in ((0,0),(191,0),(0,95),(191,95))), path',
+      ' assert sum(1 for value in alpha.getdata() if value) < 9000, f"{path}: projectile art covers a body-sized canvas area"'
+    ].join('\n')], { encoding: 'utf8' });
+    expect(validation.status, validation.stderr).toBe(0);
   });
 
   it('exports a strict binary transparent matte with transparent canvas corners', () => {
@@ -101,5 +140,6 @@ describe('K.O.R.E. full-frame street avatar assets', () => {
     expect(existsSync(resolve(PUBLIC_ROOT, 'story/avatars/kore-multipart-v1'))).toBe(false);
     expect(existsSync(resolve(ASSET_ROOT, 'contact-sheet.png'))).toBe(true);
     expect(existsSync(resolve(ASSET_ROOT, 'attack-contact-sheet.png'))).toBe(true);
+    expect(existsSync(resolve(ASSET_ROOT, 'projectile-contact-sheet.png'))).toBe(true);
   });
 });

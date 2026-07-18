@@ -16,8 +16,10 @@ import {
   resolveAdventurePlayerDamage,
   resolveStoryAttackInput,
   shouldRespawnAdventureEnemy,
-  stepAdventureProjectile
+  stepAdventureProjectile,
+  storyPlayerProjectileHits
 } from './adventureCombat';
+import { getStorySpriteProjectile } from './streetAvatarCatalog';
 
 describe('story adventure combat math', () => {
   it('scales distinct enemy archetypes to the player level', () => {
@@ -99,6 +101,16 @@ describe('story adventure combat math', () => {
     expect(shouldRespawnAdventureEnemy(STORY_ENEMY_RESPAWN_MS, 0, true)).toBe(false);
     expect(shouldRespawnAdventureEnemy(STORY_ENEMY_RESPAWN_MS - 1, 0, false)).toBe(false);
     expect(shouldRespawnAdventureEnemy(STORY_ENEMY_RESPAWN_MS, 0, false)).toBe(true);
+  });
+
+  it('moves special projectile PNG entities independently and collides from their own bounds', () => {
+    const projectile = getStorySpriteProjectile('solar-runner')!;
+    expect(projectile.frames.every((frame) => frame.path.includes('/projectiles/special/'))).toBe(true);
+    expect(stepAdventureProjectile({ x: 2, y: 1.6, velocityX: projectile.speed, velocityY: 0, deltaSeconds: 0.1 })).toEqual({ x: 3, y: 1.6 });
+    expect(storyPlayerProjectileHits({ projectileX: 3, projectileY: 1.6, hitboxSize: projectile.hitboxSize, targetX: 3.8, targetY: 1.6, targetKind: 'ground' })).toBe(true);
+    expect(storyPlayerProjectileHits({ projectileX: 3, projectileY: 1.6, hitboxSize: projectile.hitboxSize, targetX: 5.5, targetY: 1.6, targetKind: 'ground' })).toBe(false);
+    expect(storyPlayerProjectileHits({ projectileX: 3, projectileY: 1.6, hitboxSize: projectile.hitboxSize, targetX: 3.4, targetY: 1.6, targetKind: 'projectile' })).toBe(true);
+    expect(getStorySpriteProjectile('street-shadow')).toBeUndefined();
   });
 
   it('creates staggered normal, critical, finishing, and reduced-motion damage feedback', () => {

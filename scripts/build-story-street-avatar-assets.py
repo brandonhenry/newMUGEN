@@ -25,6 +25,8 @@ ROOT = Path("public/story/avatars/kore-street-v1")
 RUNTIME_MANIFEST = Path("src/story/storyStreetAvatarManifest.json")
 FRAME_SIZE = (320, 192)
 BASELINE = 182
+PROJECTILE_FRAME_SIZE = (192, 96)
+PROJECTILE_FRAME_COUNT = 6
 
 SHEETS: dict[str, dict[str, Any]] = {
     "solar-runner": {
@@ -162,6 +164,17 @@ SUPPLEMENTAL_ATTACK_RANGES = {
     "attack-special": (3, 6),
 }
 
+PROJECTILES: dict[str, dict[str, Any]] = {
+    "solar-runner": {"speed": 10.0, "lifetimeMs": 800, "worldSize": (1.85, 1.05), "hitboxSize": (1.2, 0.8)},
+    "crimson-ranger": {"speed": 14.0, "lifetimeMs": 800, "worldSize": (1.8, 0.7), "hitboxSize": (1.4, 0.35)},
+    "neon-courier": {"speed": 11.0, "lifetimeMs": 800, "worldSize": (1.45, 0.9), "hitboxSize": (0.8, 0.6)},
+    "synth-drifter": {"speed": 13.0, "lifetimeMs": 800, "worldSize": (2.0, 0.65), "hitboxSize": (1.4, 0.4)},
+    "solar-brawler": {"speed": 8.0, "lifetimeMs": 800, "worldSize": (1.25, 1.0), "hitboxSize": (0.75, 0.75)},
+    "void-operative": {"speed": 8.5, "lifetimeMs": 800, "worldSize": (1.3, 0.95), "hitboxSize": (0.8, 0.7)},
+    "circuit-mage": {"speed": 13.5, "lifetimeMs": 800, "worldSize": (2.0, 0.65), "hitboxSize": (1.4, 0.4)},
+    "tech-nomad": {"speed": 12.0, "lifetimeMs": 800, "worldSize": (1.5, 0.75), "hitboxSize": (0.9, 0.55)},
+}
+
 
 def load_sources() -> dict[str, Path]:
     loaded = {}
@@ -190,6 +203,22 @@ def load_attack_sources() -> dict[str, bytes]:
         with Image.open(BytesIO(source_bytes)) as image:
             if image.size != (1536, 1024):
                 raise ValueError(f"Expected 1536x1024 supplemental {set_id} sheet, got {image.size}")
+        loaded[set_id] = source_bytes
+    return loaded
+
+
+def load_projectile_sources() -> dict[str, bytes]:
+    loaded = {}
+    for set_id in PROJECTILES:
+        source_path = ROOT / "sets" / set_id / "projectile-special-source.png"
+        if not source_path.exists():
+            raise FileNotFoundError(f"Missing projectile source sheet for {set_id}")
+        source_bytes = source_path.read_bytes()
+        with Image.open(BytesIO(source_bytes)) as image:
+            if image.width < PROJECTILE_FRAME_COUNT or image.height < 1 or image.mode != "RGBA":
+                raise ValueError(f"Invalid transparent projectile source for {set_id}: {image.size} {image.mode}")
+            if image.getpixel((0, 0))[3] != 0:
+                raise ValueError(f"Projectile source for {set_id} must have a transparent matte")
         loaded[set_id] = source_bytes
     return loaded
 
@@ -682,6 +711,25 @@ def extract_supplemental_attacks(source: Image.Image, set_id: str) -> dict[str, 
     return animations
 
 
+def extract_projectile_frames(source: Image.Image, set_id: str) -> list[Image.Image]:
+    """Split one projectile-only strip into six transparent, body-free runtime PNGs."""
+    source = source.convert("RGBA")
+    frames: list[Image.Image] = []
+    for index in range(PROJECTILE_FRAME_COUNT):
+        left = round(source.width * index / PROJECTILE_FRAME_COUNT)
+        right = round(source.width * (index + 1) / PROJECTILE_FRAME_COUNT)
+        crop = source.crop((left, 0, right, source.height))
+        content_bounds = crop.getbbox()
+        if not content_bounds:
+            raise ValueError(f"Empty projectile frame {set_id}/{index}")
+        crop = crop.crop(content_bounds)
+        crop.thumbnail((PROJECTILE_FRAME_SIZE[0] - 4, PROJECTILE_FRAME_SIZE[1] - 4), Image.Resampling.NEAREST)
+        frame = Image.new("RGBA", PROJECTILE_FRAME_SIZE)
+        frame.alpha_composite(crop, ((PROJECTILE_FRAME_SIZE[0] - crop.width) // 2, (PROJECTILE_FRAME_SIZE[1] - crop.height) // 2))
+        frames.append(frame)
+    return frames
+
+
 def checkerboard_contact_sheet(sets: list[tuple[str, str, list[tuple[str, Path]]]], path: Path) -> None:
     columns = 8
     cell_width = FRAME_SIZE[0] + 16
@@ -706,6 +754,7 @@ def checkerboard_contact_sheet(sets: list[tuple[str, str, list[tuple[str, Path]]
 def build() -> None:
     sources = load_sources()
     attack_sources = load_attack_sources()
+    projectile_sources = load_projectile_sources()
     build_root = ROOT.with_name(f".{ROOT.name}-building")
     if build_root.exists():
         shutil.rmtree(build_root)
@@ -713,6 +762,7 @@ def build() -> None:
     manifest_sets = []
     contact_sets = []
     attack_contact_sets = []
+    projectile_contact_sets = []
     total_unique_frames = 0
 
     for set_id, definition in SHEETS.items():
@@ -820,11 +870,51 @@ def build() -> None:
             insert_at = next((index for index, animation in enumerate(animations) if animation["id"] == "attack"), len(animations))
             animations.insert(insert_at, {"id": "jump", "loop": False, "frames": alias_frames})
 
+        projectile_manifest = None
+        if set_id in PROJECTILES:
+            projectile_source_bytes = projectile_sources[set_id]
+            (set_root / "projectile-special-source.png").write_bytes(projectile_source_bytes)
+            projectile_root = set_root / "projectiles" / "special"
+            projectile_root.mkdir(parents=True)
+            with Image.open(BytesIO(projectile_source_bytes)) as projectile_source_image:
+                projectile_frames = extract_projectile_frames(projectile_source_image, set_id)
+            projectile_runtime_frames = []
+            projectile_contact_frames = []
+            for index, projectile_frame in enumerate(projectile_frames):
+                frame_id = f"projectile-special-{index:02d}"
+                frame_path = projectile_root / f"{index:02d}.png"
+                projectile_frame.save(frame_path, optimize=True)
+                projectile_contact_frames.append((frame_id, frame_path))
+                projectile_runtime_frames.append({
+                    "id": frame_id,
+                    "path": f"/story/avatars/kore-street-v1/sets/{set_id}/projectiles/special/{index:02d}.png",
+                    "durationMs": 72,
+                    "contentBounds": list(projectile_frame.getbbox() or (0, 0, 0, 0)),
+                })
+            projectile_config = PROJECTILES[set_id]
+            projectile_manifest = {
+                "id": "special",
+                "source": {
+                    "kind": "openai-image-generation-projectile-strip",
+                    "sha256": hashlib.sha256(projectile_source_bytes).hexdigest(),
+                    "originalFile": "projectile-special-source.png",
+                },
+                "frameSize": {"width": PROJECTILE_FRAME_SIZE[0], "height": PROJECTILE_FRAME_SIZE[1]},
+                "frames": projectile_runtime_frames,
+                "releaseDelayMs": 375,
+                "speed": projectile_config["speed"],
+                "lifetimeMs": projectile_config["lifetimeMs"],
+                "spawnOffset": [1.05, 0.8],
+                "worldSize": list(projectile_config["worldSize"]),
+                "hitboxSize": list(projectile_config["hitboxSize"]),
+            }
+            projectile_contact_sets.append((set_id, definition["label"], projectile_contact_frames))
+
         unique_count = sum(len(crops) for crops in source_crops.values())
         total_unique_frames += unique_count
         source_kind = "openai-image-generation-reference-sheet" if definition.get("generated") else "user-supplied-reference-sheet"
         source_name = f"{set_id}-imagegen-v1.png" if definition.get("generated") else source_path.name
-        manifest_sets.append({
+        manifest_set = {
             "id": set_id,
             "label": definition["label"],
             "frameCount": unique_count,
@@ -835,7 +925,10 @@ def build() -> None:
                 "originalFile": "attacks-v2-source.png",
             },
             "animations": animations,
-        })
+        }
+        if projectile_manifest:
+            manifest_set["projectile"] = projectile_manifest
+        manifest_sets.append(manifest_set)
         contact_sets.append((set_id, definition["label"], contact_frames))
         attack_contact_sets.append((set_id, definition["label"], [frame for frame in contact_frames if frame[0].startswith("attack")]))
         del source_crops, supplemental_crops, source, source_bytes, attack_source_bytes, frame, crop, crops
@@ -843,6 +936,7 @@ def build() -> None:
 
     checkerboard_contact_sheet(contact_sets, build_root / "contact-sheet.png")
     checkerboard_contact_sheet(attack_contact_sets, build_root / "attack-contact-sheet.png")
+    checkerboard_contact_sheet(projectile_contact_sets, build_root / "projectile-contact-sheet.png")
     manifest = {
         "version": 3,
         "avatarStyle": "kore-street-v1",
@@ -860,6 +954,8 @@ def build() -> None:
         "Four animation sheets supplied by the project owner and ten original Image API-generated K.O.R.E. presets "
         "are imported without runtime recoloring or redraws. Each preset also carries an identity-referenced "
         "Image API supplemental sheet containing heavy, kick, and signature attack rows. "
+        "Eight signature moves also include a separate projectile-only PNG strip and six transparent runtime frames; "
+        "the character body is never reused as projectile art. "
         "Frames use an exterior-only transparent matte, conservative source-silhouette restoration, "
         "a shared 320×192 canvas with body-anchored attack effects, and baseline 182.\n"
     )

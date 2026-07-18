@@ -41,12 +41,33 @@ export type StorySpriteSourceProvenance = {
   originalFile: string;
 };
 
+export type StorySpriteProjectileFrame = {
+  id: string;
+  path: string;
+  durationMs: number;
+  contentBounds: [number, number, number, number];
+};
+
+export type StorySpriteProjectileDefinition = {
+  id: 'special';
+  source: StorySpriteSourceProvenance;
+  frameSize: { width: number; height: number };
+  frames: StorySpriteProjectileFrame[];
+  releaseDelayMs: number;
+  speed: number;
+  lifetimeMs: number;
+  spawnOffset: [number, number];
+  worldSize: [number, number];
+  hitboxSize: [number, number];
+};
+
 export type StorySpriteSetDefinition = {
   id: StoryAvatarSet;
   label: string;
   frameCount: number;
   source: StorySpriteSourceProvenance;
   attackSource: StorySpriteSourceProvenance;
+  projectile?: StorySpriteProjectileDefinition;
   animations: StorySpriteAnimation[];
 };
 

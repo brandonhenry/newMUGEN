@@ -212,6 +212,31 @@ export function adventureAttackHits(input: {
   return overlapsHorizontally && overlapsVertically;
 }
 
+export function storyPlayerProjectileHits(input: {
+  projectileX: number;
+  projectileY: number;
+  hitboxSize: [number, number];
+  targetX: number;
+  targetY: number;
+  targetKind?: AdventureAttackTargetKind;
+}) {
+  const [width, height] = input.hitboxSize;
+  return adventureAttackHits({
+    playerX: input.projectileX,
+    playerY: input.projectileY,
+    facing: 1,
+    enemyX: input.targetX,
+    enemyY: input.targetY,
+    targetKind: input.targetKind,
+    attackBox: {
+      forwardReach: Math.max(0, width / 2),
+      rearReach: Math.max(0, width / 2),
+      bottomOffset: -Math.max(0, height / 2),
+      topOffset: Math.max(0, height / 2)
+    }
+  });
+}
+
 export function canDamageAdventurePlayer(nowMs: number, invulnerableUntilMs: number) {
   return nowMs >= invulnerableUntilMs;
 }

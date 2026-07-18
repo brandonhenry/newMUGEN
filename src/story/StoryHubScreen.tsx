@@ -8,7 +8,7 @@ import type { OnlinePlayerProfile } from '../lib/online/leaderboard';
 import { addFriendEntry, isFriend, readMatchHistory } from '../lib/socialHistory';
 import type { InputFrame } from '../types';
 import { STORY_ADVENTURE_ASSET_PATHS, STORY_ENEMY_SPRITE_PATHS, storyWorldAssetPath } from './adventureAssets';
-import { STORY_ATTACK_VISUAL_SYNC_DELAY_MS, adventureAttackHits, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureAttackFrameHitbox, getAdventureEnemyStats, getStoryAttackDurationMs, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, resolveStoryAttackInput, shouldRespawnAdventureEnemy, stepAdventureProjectile, type AdventureDamageFeedback } from './adventureCombat';
+import { STORY_ATTACK_VISUAL_SYNC_DELAY_MS, adventureAttackHits, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureAttackFrameHitbox, getAdventureEnemyStats, getStoryAttackDurationMs, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, resolveStoryAttackInput, shouldRespawnAdventureEnemy, stepAdventureProjectile, storyPlayerProjectileHits, type AdventureDamageFeedback } from './adventureCombat';
 import { STORY_ADVENTURE_STAT_CAP, STORY_ADVENTURE_STAT_KEYS, allocateAdventureStat, awardAdventureExperience, awardMountMastery, beginAdventureVisit, canRespecAdventureStats, discoverAdventureLandmark, discoverAdventureVista, discoverAdventureWaystone, experienceToNextLevel, getAdventureDerivedStats, readAdventureProgress, respecAdventureStats, unlockAdventureMount, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_REGION_LABELS, STORY_WORLDS, isStoryAdventureRegionId, isStoryAdventureWorldId, isStoryWorldId } from './adventureWorlds';
 import { createAdventureVisitSeed, generateAdventureRunGraph, STORY_BREATH_DRAIN_PER_SECOND, STORY_BREATH_REFILL_PER_SECOND, STORY_MAX_BREATH, STORY_MOUNTS, STORY_WORLD_MOUNT, storyDepthZoneLabel, type StoryPartyInstance } from './adventureExploration';
@@ -17,11 +17,11 @@ import { STORY_BIOME_DOOR_ASSET, STORY_BIOME_DOOR_ATLAS_SIZE, STORY_BIOME_DOOR_G
 import { connectStoryHubMultiplayer, readOrCreateStoryHubGuestIdentity, readStoryHubOnlinePreference, STORY_HUB_CHALLENGE_TIMEOUT_MS, writeStoryHubOnlinePreference, type StoryHubMultiplayerSession } from './hubMultiplayer';
 import { KORE_CENTRAL_HUB } from './hubData';
 import { storyPlatformSurfacePlacement } from './platformGrounding';
-import { STORY_ATTACK_POSES } from './streetAvatarCatalog';
+import { getStorySpriteProjectile, STORY_ATTACK_POSES } from './streetAvatarCatalog';
 import { StoryAvatarRig, type StoryAvatarPose } from './StoryAvatarRig';
 import { joinStoryParty, leaveStoryParty, updateStoryPartyRoom } from './storyParty';
 import { createStoryWorldProps } from './worldEnvironments';
-import type { HubDestination, StoryAdventureRunGraph, StoryAttackInput, StoryAvatarSet, StoryEnemySpawnDefinition, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryMountDefinition, StoryMountId, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StoryWorldBackdropLayerDefinition, StoryWorldId, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
+import type { HubDestination, StoryAdventureRunGraph, StoryAttackInput, StoryAvatarSet, StoryEnemySpawnDefinition, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryMountDefinition, StoryMountId, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StorySpriteProjectileDefinition, StoryWorldBackdropLayerDefinition, StoryWorldId, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
 
 type StoryHubInput = Pick<InputFrame, 'left' | 'right' | 'down' | 'up' | 'jump' | 'jab' | 'kick' | 'heavy' | 'special' | 'block' | 'back' | 'pause'> & { interact: boolean };
 type SetVirtualAction = (player: 1 | 2, action: keyof InputFrame, pressed: boolean) => void;
@@ -76,7 +76,7 @@ function isHubDestination(value: string): value is HubDestination {
   return Object.prototype.hasOwnProperty.call(DESTINATION_STOREFRONTS, value);
 }
 
-type StoryAdventureAttackEvent = { id: number; x: number; y: number; facing: -1 | 1; damage: number; critical: boolean; knockbackMultiplier: number; attackInput: StoryAttackInput; avatarSet: StoryAvatarSet; startedAt: number; activeUntil: number };
+type StoryAdventureAttackEvent = { id: number; x: number; y: number; facing: -1 | 1; damage: number; critical: boolean; knockbackMultiplier: number; attackInput: StoryAttackInput; avatarSet: StoryAvatarSet; startedAt: number; activeUntil: number; projectile?: StorySpriteProjectileDefinition };
 type StoryPlayerImpactEvent = { id: number; sourceX: number; knockback: number; respawn?: [number, number] };
 
 function configurePixelTexture(texture: THREE.Texture, repeatX = 1, repeatY = 1) {
@@ -609,12 +609,105 @@ function EnemySprite({ sprite, facing, flashUntil }: { sprite: StoryEnemySpawnDe
 }
 
 type AdventureProjectileRuntime = { active: boolean; x: number; y: number; velocityX: number; velocityY: number; expiresAt: number };
+type StoryPlayerProjectileRuntime = {
+  active: boolean;
+  released: boolean;
+  x: number;
+  y: number;
+  facing: -1 | 1;
+  releaseAt: number;
+  expiresAt: number;
+  attack: StoryAdventureAttackEvent;
+  definition: StorySpriteProjectileDefinition;
+};
 type AdventureDamagePop = AdventureDamageFeedback & { id: number };
 
-function AdventureEnemy({ spawn, level, playerPosition, attackEvent, reducedMotion, onPlayerDamage, onDefeated }: {
+function StoryPlayerProjectile({ attackEvent, playerPosition, runtime }: {
+  attackEvent: StoryAdventureAttackEvent & { projectile: StorySpriteProjectileDefinition };
+  playerPosition: MutableRefObject<THREE.Vector3>;
+  runtime: MutableRefObject<StoryPlayerProjectileRuntime | null>;
+}) {
+  const group = useRef<THREE.Group>(null);
+  const material = useRef<THREE.MeshBasicMaterial>(null);
+  const framePaths = useMemo(() => attackEvent.projectile.frames.map((frame) => frame.path), [attackEvent.projectile.frames]);
+  const sourceTextures = useTexture(framePaths) as THREE.Texture[];
+  const textures = useMemo(() => sourceTextures.map((source) => configurePixelTexture(source.clone())), [sourceTextures]);
+
+  useEffect(() => {
+    const definition = attackEvent.projectile;
+    runtime.current = {
+      active: false,
+      released: false,
+      x: attackEvent.x,
+      y: attackEvent.y,
+      facing: attackEvent.facing,
+      releaseAt: attackEvent.startedAt + definition.releaseDelayMs,
+      expiresAt: attackEvent.startedAt + definition.releaseDelayMs + definition.lifetimeMs,
+      attack: attackEvent,
+      definition
+    };
+    return () => {
+      if (runtime.current?.attack.id === attackEvent.id) runtime.current = null;
+    };
+  }, [attackEvent, runtime]);
+  useEffect(() => () => textures.forEach((texture) => texture.dispose()), [textures]);
+
+  useFrame((_, delta) => {
+    const mesh = group.current;
+    const current = runtime.current;
+    if (!mesh || !current || current.attack.id !== attackEvent.id) return;
+    const now = performance.now();
+    if (now < current.releaseAt || now >= current.expiresAt || !current.active && current.released) {
+      if (now >= current.expiresAt) current.active = false;
+      mesh.visible = false;
+      return;
+    }
+    if (!current.released) {
+      current.released = true;
+      current.active = true;
+      current.x = playerPosition.current.x + current.facing * current.definition.spawnOffset[0];
+      current.y = playerPosition.current.y + current.definition.spawnOffset[1];
+    }
+    if (!current.active) {
+      mesh.visible = false;
+      return;
+    }
+    const next = stepAdventureProjectile({
+      x: current.x,
+      y: current.y,
+      velocityX: current.facing * current.definition.speed,
+      velocityY: 0,
+      deltaSeconds: delta
+    });
+    current.x = next.x;
+    current.y = next.y;
+    const elapsed = Math.max(0, now - current.releaseAt);
+    const frameIndex = Math.min(
+      current.definition.frames.length - 1,
+      Math.floor(elapsed / current.definition.lifetimeMs * current.definition.frames.length)
+    );
+    if (material.current?.map !== textures[frameIndex]) {
+      material.current!.map = textures[frameIndex];
+      material.current!.needsUpdate = true;
+    }
+    mesh.visible = true;
+    mesh.position.set(current.x, current.y, 0.88);
+    mesh.scale.x = current.facing;
+  });
+
+  return <group ref={group} visible={false} name={`story-player-projectile-${attackEvent.avatarSet}`}>
+    <mesh>
+      <planeGeometry args={attackEvent.projectile.worldSize} />
+      <meshBasicMaterial ref={material} map={textures[0]} transparent alphaTest={0.02} depthWrite={false} toneMapped={false} />
+    </mesh>
+  </group>;
+}
+
+function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attackEvent, reducedMotion, onPlayerDamage, onDefeated }: {
   spawn: StoryEnemySpawnDefinition;
   level: number;
   playerPosition: MutableRefObject<THREE.Vector3>;
+  playerProjectile: MutableRefObject<StoryPlayerProjectileRuntime | null>;
   attackEvent: StoryAdventureAttackEvent | null;
   reducedMotion: boolean;
   onPlayerDamage: (damage: number, sourceX: number) => void;
@@ -705,7 +798,38 @@ function AdventureEnemy({ spawn, level, playerPosition, attackEvent, reducedMoti
       projectiles.current.forEach((projectile) => { projectile.active = false; });
       return;
     }
-    if (attackEvent && now <= attackEvent.activeUntil) {
+    const launchedProjectile = playerProjectile.current;
+    if (launchedProjectile?.active) {
+      for (const enemyProjectile of projectiles.current) {
+        if (enemyProjectile.active && storyPlayerProjectileHits({
+          projectileX: launchedProjectile.x,
+          projectileY: launchedProjectile.y,
+          hitboxSize: launchedProjectile.definition.hitboxSize,
+          targetX: enemyProjectile.x,
+          targetY: enemyProjectile.y,
+          targetKind: 'projectile'
+        })) {
+          enemyProjectile.active = false;
+          launchedProjectile.active = false;
+          break;
+        }
+      }
+      if (alive.current
+        && launchedProjectile.active
+        && lastRegisteredAttackId.current !== launchedProjectile.attack.id
+        && storyPlayerProjectileHits({
+          projectileX: launchedProjectile.x,
+          projectileY: launchedProjectile.y,
+          hitboxSize: launchedProjectile.definition.hitboxSize,
+          targetX: x.current,
+          targetY: y.current,
+          targetKind: spawn.archetype
+        })) {
+        launchedProjectile.active = false;
+        registerAttackHit(launchedProjectile.attack);
+      }
+    }
+    if (attackEvent && !attackEvent.projectile && now <= attackEvent.activeUntil) {
       const attackBox = getAdventureAttackFrameHitbox(attackEvent.avatarSet, attackEvent.attackInput, now - attackEvent.startedAt);
       if (attackBox) {
         const attackX = playerPosition.current.x;
@@ -1139,6 +1263,7 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
   onReady: () => void;
 }) {
   const playerPosition = useRef(new THREE.Vector3(hub.spawn[0], hub.spawn[1], 0));
+  const playerProjectile = useRef<StoryPlayerProjectileRuntime | null>(null);
   const derivedStats = useMemo(() => getAdventureDerivedStats(progress), [progress]);
   const mountMasteryRank = mount ? progress.mounts[mount.id]?.masteryRank ?? 0 : 0;
   const groundingOffsetY = storyAvatarGroundingOffsetForWorld(Boolean(hub.enemySpawns?.some((enemy) => enemy.archetype !== 'flying')));
@@ -1154,7 +1279,8 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
         </RigidBody>)}
         {hub.portals.map((portal) => <PortalVisual key={portal.id} portal={portal} theme={hub.theme} nearby={nearbyPortal?.id === portal.id} assigned={assignedPortalId === portal.id} reducedMotion={reducedMotion} />)}
         {remotePlayers.map((presence, index) => <RemoteStoryPlayer key={presence.sessionId} presence={presence} reducedMotion={reducedMotion} groundingOffsetY={groundingOffsetY} lane={index % 5} selected={selectedPlayerSessionId === presence.sessionId} onSelect={onSelectPlayer} />)}
-        {hub.enemySpawns && hub.enemySpawns.length > 0 && <AdventureEnemies spawns={hub.enemySpawns} level={progress.level} playerPosition={playerPosition} attackEvent={attackEvent} reducedMotion={reducedMotion} onPlayerDamage={onPlayerDamage} onDefeated={onEnemyDefeated} />}
+        {attackEvent?.projectile && <StoryPlayerProjectile key={attackEvent.id} attackEvent={attackEvent as StoryAdventureAttackEvent & { projectile: StorySpriteProjectileDefinition }} playerPosition={playerPosition} runtime={playerProjectile} />}
+        {hub.enemySpawns && hub.enemySpawns.length > 0 && <AdventureEnemies spawns={hub.enemySpawns} level={progress.level} playerPosition={playerPosition} playerProjectile={playerProjectile} attackEvent={attackEvent} reducedMotion={reducedMotion} onPlayerDamage={onPlayerDamage} onDefeated={onEnemyDefeated} />}
         <StoryPlayerController hub={hub} avatar={profile.avatar} avatarVisible={avatarVisible} groundingOffsetY={groundingOffsetY} playerPosition={playerPosition} readInput={readInput} disabled={disabled} reducedMotion={reducedMotion} quickMatchAvailable={quickMatchAvailable} derivedStats={derivedStats} mounted={mounted} mount={mount} mountMasteryRank={mountMasteryRank} impactEvent={impactEvent} onAttack={onAttack} onQuickMatch={onQuickMatch} onNearbyPortal={onNearbyPortal} onActivatePortal={onActivatePortal} onWaterState={onWaterState} onExit={onExit} onPause={onPause} onStateSample={onStateSample} onReady={onReady} />
       </Physics>
     </Suspense>
@@ -1700,11 +1826,23 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     setPlayerHealth(maxHealth);
   }, [activeWorldId, nearbyPortal?.kind, updateAdventureProgress]);
   const handleAdventureAttack = useCallback((x: number, y: number, facing: -1 | 1, attackInput: StoryAttackInput, durationSeconds: number) => {
-    if (!isStoryAdventureRegionId(activeWorldId)) return;
     const resolved = resolveAdventurePlayerAttack(adventureProgressRef.current, attackInput);
     const startedAt = performance.now() + STORY_ATTACK_VISUAL_SYNC_DELAY_MS;
-    setAttackEvent({ id: ++attackSequenceRef.current, x, y, facing, attackInput, avatarSet: profile.avatar.avatarSet, startedAt, activeUntil: startedAt + Math.max(100, durationSeconds * 1_000), ...resolved });
-  }, [activeWorldId, profile.avatar.avatarSet]);
+    const projectile = attackInput === 'special' ? getStorySpriteProjectile(profile.avatar.avatarSet) : undefined;
+    const projectileEnd = projectile ? projectile.releaseDelayMs + projectile.lifetimeMs : 0;
+    setAttackEvent({
+      id: ++attackSequenceRef.current,
+      x,
+      y,
+      facing,
+      attackInput,
+      avatarSet: profile.avatar.avatarSet,
+      startedAt,
+      activeUntil: startedAt + Math.max(100, durationSeconds * 1_000, projectileEnd),
+      projectile,
+      ...resolved
+    });
+  }, [profile.avatar.avatarSet]);
   const handlePlayerDamage = useCallback((baseDamage: number, sourceX: number) => {
     if (!isStoryAdventureRegionId(activeWorldId) || performance.now() < playerInvulnerableUntilRef.current) return;
     playerInvulnerableUntilRef.current = performance.now() + 650;
@@ -2118,7 +2256,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     setImpactEvent({ id: ++impactSequenceRef.current, sourceX: position[0], knockback: 0, respawn: position });
   }, [activeWorldId]);
 
-  return <div className="story-hub-screen" data-testid="story-hub-screen" data-world={activeWorldId} data-hub-ready={hubReady ? 'true' : 'false'} data-controls-open={controlsOpen ? 'true' : 'false'} data-map-open={mapOpen ? 'true' : 'false'} data-stats-open={statsOpen ? 'true' : 'false'} data-quick-match={quickMatchAvailable ? 'true' : 'false'} data-player-x={playerX.toFixed(2)} data-player-y={playerY.toFixed(2)} data-player-pose={playerPose} data-player-health={playerHealth} data-player-level={adventureProgress.level} data-party-id={partyInstance?.id ?? ''} data-nearby-portal={nearbyPortal?.id ?? ''} data-online={onlineEnabled ? 'true' : 'false'} data-connection-status={connectionStatus} data-player-count={playerCount}>
+  return <div className="story-hub-screen" data-testid="story-hub-screen" data-world={activeWorldId} data-hub-ready={hubReady ? 'true' : 'false'} data-controls-open={controlsOpen ? 'true' : 'false'} data-map-open={mapOpen ? 'true' : 'false'} data-stats-open={statsOpen ? 'true' : 'false'} data-quick-match={quickMatchAvailable ? 'true' : 'false'} data-player-x={playerX.toFixed(2)} data-player-y={playerY.toFixed(2)} data-player-pose={playerPose} data-player-projectile-asset={attackEvent?.projectile?.frames[0]?.path ?? ''} data-player-health={playerHealth} data-player-level={adventureProgress.level} data-party-id={partyInstance?.id ?? ''} data-nearby-portal={nearbyPortal?.id ?? ''} data-online={onlineEnabled ? 'true' : 'false'} data-connection-status={connectionStatus} data-player-count={playerCount}>
     <div className="story-hub-canvas-shell">
       <HubCanvas key={activeHub.id} hub={activeHub} profile={profile} reducedMotion={reducedMotion} readInput={readInput} disabled={pauseOpen || controlsOpen || mapOpen || statsOpen || Boolean(selectedPlayer) || Boolean(incomingChallenge) || Boolean(doorTravel)} avatarVisible={!doorTravel || doorTravel.step < 4 || doorTravel.step >= 18} quickMatchAvailable={quickMatchAvailable} assignedPortalId={quickMatch.portalId} nearbyPortal={nearbyPortal} remotePlayers={visibleRemotePlayers} selectedPlayerSessionId={selectedPlayer?.sessionId} progress={adventureProgress} mounted={mounted} mount={activeMount} attackEvent={attackEvent} impactEvent={impactEvent} onAttack={handleAdventureAttack} onPlayerDamage={handlePlayerDamage} onEnemyDefeated={handleEnemyDefeated} onQuickMatch={startQuickMatch} onSelectPlayer={selectRemotePlayer} onNearbyPortal={setNearbyPortal} onActivatePortal={activatePortal} onWaterState={handleWaterState} onExit={exitCurrentWorld} onPause={openPause} onStateSample={handlePlayerState} onReady={handleHubReady} />
     </div>

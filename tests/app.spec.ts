@@ -136,6 +136,7 @@ test('Play creates a story avatar and enters K.O.R.E. Central', async ({ page })
   await page.keyboard.press('k');
   await expect(hub).toHaveAttribute('data-world', 'central');
   await expect(hub).toHaveAttribute('data-player-pose', 'attack-special');
+  await expect(hub).toHaveAttribute('data-player-projectile-asset', '/story/avatars/kore-street-v1/sets/crimson-ranger/projectiles/special/00.png');
   await page.waitForTimeout(1_250);
   await page.keyboard.press('e');
   await expect(page.getByTestId('story-door-transition')).toBeVisible();
