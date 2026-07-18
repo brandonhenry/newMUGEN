@@ -165,14 +165,16 @@ SUPPLEMENTAL_ATTACK_RANGES = {
 }
 
 PROJECTILES: dict[str, dict[str, Any]] = {
-    "solar-runner": {"speed": 10.0, "lifetimeMs": 800, "worldSize": (1.85, 1.05), "hitboxSize": (1.2, 0.8)},
-    "crimson-ranger": {"speed": 14.0, "lifetimeMs": 800, "worldSize": (1.8, 0.7), "hitboxSize": (1.4, 0.35)},
-    "neon-courier": {"speed": 11.0, "lifetimeMs": 800, "worldSize": (1.45, 0.9), "hitboxSize": (0.8, 0.6)},
-    "synth-drifter": {"speed": 13.0, "lifetimeMs": 800, "worldSize": (2.0, 0.65), "hitboxSize": (1.4, 0.4)},
-    "solar-brawler": {"speed": 8.0, "lifetimeMs": 800, "worldSize": (1.25, 1.0), "hitboxSize": (0.75, 0.75)},
-    "void-operative": {"speed": 8.5, "lifetimeMs": 800, "worldSize": (1.3, 0.95), "hitboxSize": (0.8, 0.7)},
-    "circuit-mage": {"speed": 13.5, "lifetimeMs": 800, "worldSize": (2.0, 0.65), "hitboxSize": (1.4, 0.4)},
-    "tech-nomad": {"speed": 12.0, "lifetimeMs": 800, "worldSize": (1.5, 0.75), "hitboxSize": (0.9, 0.55)},
+    # launchPoint is the visible hand, bow, gauntlet, or focus point in the
+    # 320x192 attack-special release frame (frame 3), not a generic body offset.
+    "solar-runner": {"speed": 10.0, "lifetimeMs": 800, "launchPoint": (185, 108), "worldSize": (1.85, 1.05), "hitboxSize": (1.2, 0.8)},
+    "crimson-ranger": {"speed": 14.0, "lifetimeMs": 800, "launchPoint": (203, 109), "worldSize": (1.8, 0.7), "hitboxSize": (1.4, 0.35)},
+    "neon-courier": {"speed": 11.0, "lifetimeMs": 800, "launchPoint": (218, 121), "worldSize": (1.45, 0.9), "hitboxSize": (0.8, 0.6)},
+    "synth-drifter": {"speed": 13.0, "lifetimeMs": 800, "launchPoint": (194, 126), "worldSize": (2.0, 0.65), "hitboxSize": (1.4, 0.4)},
+    "solar-brawler": {"speed": 8.0, "lifetimeMs": 800, "launchPoint": (198, 119), "worldSize": (1.25, 1.0), "hitboxSize": (0.75, 0.75)},
+    "void-operative": {"speed": 8.5, "lifetimeMs": 800, "launchPoint": (194, 123), "worldSize": (1.3, 0.95), "hitboxSize": (0.8, 0.7)},
+    "circuit-mage": {"speed": 13.5, "lifetimeMs": 800, "launchPoint": (238, 121), "worldSize": (2.0, 0.65), "hitboxSize": (1.4, 0.4)},
+    "tech-nomad": {"speed": 12.0, "lifetimeMs": 800, "launchPoint": (198, 123), "worldSize": (1.5, 0.75), "hitboxSize": (0.9, 0.55)},
 }
 
 
@@ -633,7 +635,16 @@ def keep_primary_body_components(image: Image.Image) -> Image.Image:
             components.append(component)
     if not components:
         return result
-    body = max(components, key=len)
+    rgba_pixels = result.load()
+    def body_score(component: list[tuple[int, int]]) -> tuple[int, int]:
+        dark_pixels = sum(
+            1 for x, y in component
+            if max(rgba_pixels[x, y][:3]) < 110
+            and max(rgba_pixels[x, y][:3]) - min(rgba_pixels[x, y][:3]) > 4
+        )
+        return dark_pixels, len(component)
+
+    body = max(components, key=body_score)
     body_left = min(x for x, _ in body)
     body_top = min(y for _, y in body)
     body_right = max(x for x, _ in body) + 1
@@ -813,11 +824,38 @@ def checkerboard_contact_sheet(sets: list[tuple[str, str, list[tuple[str, Path]]
     sheet.save(path, optimize=True)
 
 
+def projectile_origin_contact_sheet(entries: list[tuple[str, str, Path, tuple[int, int]]], path: Path) -> None:
+    columns = 4
+    cell_width = FRAME_SIZE[0] + 16
+    cell_height = 221
+    rows = (len(entries) + columns - 1) // columns
+    sheet = Image.new("RGBA", (columns * cell_width, rows * cell_height), "#101722")
+    draw = ImageDraw.Draw(sheet)
+    for index, (set_id, label, frame_path, launch_point) in enumerate(entries):
+        cell_x = index % columns * cell_width
+        cell_y = index // columns * cell_height
+        for y in range(4, 196, 8):
+            for x in range(8, cell_width - 8, 8):
+                fill = "#3d4654" if ((x // 8) + (y // 8)) % 2 else "#252d39"
+                draw.rectangle((cell_x + x, cell_y + y, cell_x + x + 7, cell_y + y + 7), fill=fill)
+        with Image.open(frame_path) as frame:
+            sheet.alpha_composite(frame.convert("RGBA"), (cell_x + 8, cell_y + 4))
+        marker_x = cell_x + 8 + launch_point[0]
+        marker_y = cell_y + 4 + launch_point[1]
+        draw.ellipse((marker_x - 7, marker_y - 7, marker_x + 7, marker_y + 7), outline="#ff4fd8", width=2)
+        draw.line((marker_x - 11, marker_y, marker_x + 11, marker_y), fill="#59f6ff", width=2)
+        draw.line((marker_x, marker_y - 11, marker_x, marker_y + 11), fill="#59f6ff", width=2)
+        draw.text((cell_x + 8, cell_y + 200), f"{label} · release ({launch_point[0]}, {launch_point[1]})", fill="#edf3ff")
+    sheet.save(path, optimize=True)
+
+
 def build() -> None:
     sources = load_sources()
     attack_sources = load_attack_sources()
     projectile_sources = load_projectile_sources()
-    build_root = ROOT.with_name(f".{ROOT.name}-building")
+    # Keep the transient build outside the legacy tracked `.kore-...-building`
+    # snapshot so a rebuild never deletes or mutates that repository artifact.
+    build_root = ROOT.with_name(f".{ROOT.name}-rebuild-tmp")
     if build_root.exists():
         shutil.rmtree(build_root)
     build_root.mkdir(parents=True)
@@ -826,6 +864,7 @@ def build() -> None:
     attack_contact_sets = []
     special_body_contact_sets = []
     projectile_contact_sets = []
+    projectile_origin_entries = []
     total_unique_frames = 0
 
     for set_id, definition in SHEETS.items():
@@ -967,11 +1006,13 @@ def build() -> None:
                 "releaseDelayMs": 375,
                 "speed": projectile_config["speed"],
                 "lifetimeMs": projectile_config["lifetimeMs"],
-                "spawnOffset": [1.05, 0.8],
+                "launchPoint": list(projectile_config["launchPoint"]),
                 "worldSize": list(projectile_config["worldSize"]),
                 "hitboxSize": list(projectile_config["hitboxSize"]),
             }
             projectile_contact_sets.append((set_id, definition["label"], projectile_contact_frames))
+            release_frame_path = frames_root / "attack-special" / "03.png"
+            projectile_origin_entries.append((set_id, definition["label"], release_frame_path, projectile_config["launchPoint"]))
 
         unique_count = sum(len(crops) for crops in source_crops.values())
         total_unique_frames += unique_count
@@ -1002,6 +1043,7 @@ def build() -> None:
     checkerboard_contact_sheet(attack_contact_sets, build_root / "attack-contact-sheet.png")
     checkerboard_contact_sheet(special_body_contact_sets, build_root / "special-body-contact-sheet.png")
     checkerboard_contact_sheet(projectile_contact_sets, build_root / "projectile-contact-sheet.png")
+    projectile_origin_contact_sheet(projectile_origin_entries, build_root / "projectile-origin-contact-sheet.png")
     manifest = {
         "version": 3,
         "avatarStyle": "kore-street-v1",

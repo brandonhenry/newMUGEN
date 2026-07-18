@@ -117,6 +117,20 @@ describe('K.O.R.E. full-frame street avatar assets', () => {
       ' assert sum(1 for value in alpha.getdata() if value) < 9000, f"{path}: projectile art covers a body-sized canvas area"'
     ].join('\n')], { encoding: 'utf8' });
     expect(validation.status, validation.stderr).toBe(0);
+
+    const humanSpecialPaths = projectileSetIds.flatMap((setId) => STORY_SPRITE_MANIFEST.sets
+      .find((set) => set.id === setId)!
+      .animations.find((animation) => animation.id === 'attack-special')!
+      .frames.map((frame) => resolve(PUBLIC_ROOT, frame.path.replace(/^\//, ''))));
+    const humanValidation = spawnSync('python3', ['-c', [
+      'from PIL import Image',
+      `paths=${JSON.stringify(humanSpecialPaths)}`,
+      'for path in paths:',
+      " pixels=Image.open(path).convert('RGBA').get_flattened_data()",
+      ' dark=sum(1 for r,g,b,a in pixels if a and max(r,g,b)<110 and max(r,g,b)-min(r,g,b)>4)',
+      ' assert dark>=1200, f"{path}: projectile effect replaced the human silhouette ({dark} dark body pixels)"'
+    ].join('\n')], { encoding: 'utf8' });
+    expect(humanValidation.status, humanValidation.stderr).toBe(0);
   });
 
   it('exports a strict binary transparent matte with transparent canvas corners', () => {
