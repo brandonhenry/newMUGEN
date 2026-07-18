@@ -27,6 +27,7 @@ import { createStoryWorldProps } from './worldEnvironments';
 import { createAdventureSurfaceHub, firstStoryAdventureSurfaceMap, getStoryAdventureSurfaceMap } from './adventureSurfaceMaps';
 import { STORY_NPC_SPRITES, STORY_NPC_VISIBLE_WORLD_HEIGHT, storyNpcFootContactSinkY, storyNpcPlaneSize } from './adventureNpcs';
 import { adventureUtcDate, getStoryDailyActivities } from './adventureObjectives';
+import { AdventureStatPointNotification, type AdventureStatPointNotice } from './AdventureStatPointNotification';
 import type { AdventureMusicContext, AdventureMusicTrackDefinition, HubDestination, StoryAdventureRunGraph, StoryAttackInput, StoryAvatarSet, StoryEnemyId, StoryEnemySpawnDefinition, StoryEnemyTier, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryMountDefinition, StoryMountId, StoryNpcDefinition, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StorySpriteProjectileDefinition, StoryWorldBackdropLayerDefinition, StoryWorldId, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
 
 type StoryHubInput = Pick<InputFrame, 'left' | 'right' | 'down' | 'up' | 'jump' | 'jab' | 'kick' | 'heavy' | 'special' | 'block' | 'back' | 'pause'> & { interact: boolean };
@@ -2000,6 +2001,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const [challenges, setChallenges] = useState<StoryHubChallenge[]>([]);
   const [challengeNotice, setChallengeNotice] = useState<{ id: string; text: string } | null>(null);
   const [npcNotice, setNpcNotice] = useState<{ id: string; name: string; text: string } | null>(null);
+  const [statPointNotice, setStatPointNotice] = useState<AdventureStatPointNotice | null>(null);
   const [musicCombatActive, setMusicCombatActive] = useState(false);
   const [challengeClock, setChallengeClock] = useState(Date.now());
   const [localSessionId, setLocalSessionId] = useState('');
@@ -2016,6 +2018,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const playerInvulnerableUntilRef = useRef(0);
   const attackSequenceRef = useRef(0);
   const impactSequenceRef = useRef(0);
+  const statPointNoticeSequenceRef = useRef(0);
   const lastAirPocketRef = useRef<[number, number] | null>(null);
   const lastMasteryXRef = useRef(activeHub.spawn[0]);
   const masteryDistanceRef = useRef(0);
@@ -2027,6 +2030,18 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     const input = readInputs()[0];
     return { ...input, interact: storyInteractRef.current || input.charge };
   }, [readInputs]);
+  useEffect(() => {
+    if (!statPointNotice) return undefined;
+    if (statsOpen) {
+      setStatPointNotice(null);
+      return undefined;
+    }
+    const noticeId = statPointNotice.id;
+    const timer = window.setTimeout(() => {
+      setStatPointNotice((current) => current?.id === noticeId ? null : current);
+    }, 7_500);
+    return () => window.clearTimeout(timer);
+  }, [statPointNotice, statsOpen]);
   useEffect(() => {
     const setInteract = (event: KeyboardEvent, pressed: boolean) => {
       if (event.code !== 'KeyE') return;
@@ -2298,6 +2313,12 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       const maxHealth = getAdventureDerivedStats(next).maxHealth;
       playerHealthRef.current = maxHealth;
       setPlayerHealth(maxHealth);
+      setStatPointNotice({
+        id: ++statPointNoticeSequenceRef.current,
+        gained: result.levelsGained,
+        available: next.unspentPoints,
+        level: next.level
+      });
     }
   }, [updateAdventureProgress]);
   const toggleOnline = useCallback(() => {
@@ -2783,6 +2804,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     </header>
 
     {activeHub.adventure && <AdventureHud progress={adventureProgress} health={playerHealth} maxHealth={derivedAdventureStats.maxHealth} breath={breath} underwater={underwater} mount={activeMount} mounted={mounted} mountUnlocked={mountUnlocked} onMount={toggleMount} onMap={() => { setStatsOpen(false); setMapOpen(true); }} onStats={() => { setMapOpen(false); setStatsOpen(true); }} />}
+    {statPointNotice && !statsOpen && <AdventureStatPointNotification key={statPointNotice.id} notice={statPointNotice} reducedMotion={reducedMotion} onUpgrade={() => { setStatPointNotice(null); setMapOpen(false); setStatsOpen(true); }} onDismiss={() => setStatPointNotice(null)} />}
 
     {selectedPlayer && <section className="story-player-panel" role="dialog" aria-modal="false" aria-labelledby="story-player-panel-title" data-testid="story-player-panel">
       <header>
