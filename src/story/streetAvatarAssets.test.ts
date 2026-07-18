@@ -91,11 +91,14 @@ describe('K.O.R.E. full-frame street avatar assets', () => {
       expect(avatarPaths.has(path)).toBe(false);
     });
     projectileSetIds.forEach((setId) => {
+      const set = STORY_SPRITE_MANIFEST.sets.find((candidate) => candidate.id === setId)!;
       const projectile = getStorySpriteProjectile(setId)!;
+      const bodySpecial = set.animations.find((animation) => animation.id === 'attack-special')!;
       expect(projectile.source).toMatchObject({ kind: 'openai-image-generation-projectile-strip', originalFile: 'projectile-special-source.png' });
       expect(projectile.frames).toHaveLength(6);
       expect(projectile.releaseDelayMs).toBe(375);
       expect(projectile.lifetimeMs).toBeLessThanOrEqual(850);
+      expect(bodySpecial.frames.every((frame) => frame.contentBounds[3] - frame.contentBounds[1] >= 100), `${setId} special must retain a human body in every avatar frame`).toBe(true);
       expect(existsSync(resolve(ASSET_ROOT, `sets/${setId}/projectile-special-source.png`))).toBe(true);
     });
 
@@ -140,6 +143,7 @@ describe('K.O.R.E. full-frame street avatar assets', () => {
     expect(existsSync(resolve(PUBLIC_ROOT, 'story/avatars/kore-multipart-v1'))).toBe(false);
     expect(existsSync(resolve(ASSET_ROOT, 'contact-sheet.png'))).toBe(true);
     expect(existsSync(resolve(ASSET_ROOT, 'attack-contact-sheet.png'))).toBe(true);
+    expect(existsSync(resolve(ASSET_ROOT, 'special-body-contact-sheet.png'))).toBe(true);
     expect(existsSync(resolve(ASSET_ROOT, 'projectile-contact-sheet.png'))).toBe(true);
   });
 });

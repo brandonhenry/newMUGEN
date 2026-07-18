@@ -606,6 +606,52 @@ def largest_component_pixel_count(image: Image.Image) -> int:
     return sum(primary_alpha_component(mask, image.width, image.height))
 
 
+def keep_primary_body_components(image: Image.Image) -> Image.Image:
+    """Remove detached projectile cells while retaining the connected avatar body."""
+    result = image.convert("RGBA").copy()
+    alpha_pixels = result.getchannel("A").load()
+    visited = bytearray(result.width * result.height)
+    components: list[list[tuple[int, int]]] = []
+    for y in range(result.height):
+        for x in range(result.width):
+            index = y * result.width + x
+            if visited[index] or not alpha_pixels[x, y]:
+                continue
+            visited[index] = 1
+            queue: deque[tuple[int, int]] = deque([(x, y)])
+            component: list[tuple[int, int]] = []
+            while queue:
+                current_x, current_y = queue.popleft()
+                component.append((current_x, current_y))
+                for neighbor_y in range(max(0, current_y - 1), min(result.height, current_y + 2)):
+                    for neighbor_x in range(max(0, current_x - 1), min(result.width, current_x + 2)):
+                        neighbor_index = neighbor_y * result.width + neighbor_x
+                        if visited[neighbor_index] or not alpha_pixels[neighbor_x, neighbor_y]:
+                            continue
+                        visited[neighbor_index] = 1
+                        queue.append((neighbor_x, neighbor_y))
+            components.append(component)
+    if not components:
+        return result
+    body = max(components, key=len)
+    body_left = min(x for x, _ in body)
+    body_top = min(y for _, y in body)
+    body_right = max(x for x, _ in body) + 1
+    body_bottom = max(y for _, y in body) + 1
+    pixels = result.load()
+    for component in components:
+        if component is body:
+            continue
+        center_x = sum(x for x, _ in component) / len(component)
+        center_y = sum(y for _, y in component) / len(component)
+        if body_left - 2 <= center_x <= body_right + 2 and body_top - 2 <= center_y <= body_bottom + 2:
+            continue
+        for x, y in component:
+            pixels[x, y] = (0, 0, 0, 0)
+    content_bounds = result.getbbox()
+    return result.crop(content_bounds) if content_bounds else result
+
+
 def extract_generated_animations(source: Image.Image, set_id: str) -> dict[str, list[Image.Image]]:
     transparent = remove_generated_gray_matte(source)
     walk_y_start, walk_y_end = GENERATED_ROW_BANDS["walk"]
@@ -707,6 +753,22 @@ def extract_supplemental_attacks(source: Image.Image, set_id: str) -> dict[str, 
         ]
         while len(crops) < 8:
             crops.insert(len(crops) - 1, crops[-1].copy())
+        if animation_id == "attack-special" and set_id in PROJECTILES:
+            crops = [keep_primary_body_components(crop) for crop in crops]
+            # A projectile-only source cell is not an avatar pose. Generated
+            # arrows, pulses, and discs are often much shorter than the human
+            # silhouette; keep them exclusively in the projectile strip and
+            # hold the nearest real body/recovery pose in the avatar track.
+            heights = [crop.getbbox()[3] - crop.getbbox()[1] for crop in crops]
+            typical_height = sorted(heights)[len(heights) // 2]
+            body_indices = [index for index, height in enumerate(heights) if height >= typical_height * 0.8]
+            if not body_indices:
+                raise ValueError(f"No human body poses detected in {set_id}/{animation_id}")
+            for index, height in enumerate(heights):
+                if height >= typical_height * 0.8:
+                    continue
+                nearest_body = min(body_indices, key=lambda candidate: (abs(candidate - index), candidate < index))
+                crops[index] = crops[nearest_body].copy()
         animations[animation_id] = crops
     return animations
 
@@ -762,6 +824,7 @@ def build() -> None:
     manifest_sets = []
     contact_sets = []
     attack_contact_sets = []
+    special_body_contact_sets = []
     projectile_contact_sets = []
     total_unique_frames = 0
 
@@ -931,11 +994,13 @@ def build() -> None:
         manifest_sets.append(manifest_set)
         contact_sets.append((set_id, definition["label"], contact_frames))
         attack_contact_sets.append((set_id, definition["label"], [frame for frame in contact_frames if frame[0].startswith("attack")]))
+        special_body_contact_sets.append((set_id, definition["label"], [frame for frame in contact_frames if frame[0].startswith("attack-special")]))
         del source_crops, supplemental_crops, source, source_bytes, attack_source_bytes, frame, crop, crops
         gc.collect()
 
     checkerboard_contact_sheet(contact_sets, build_root / "contact-sheet.png")
     checkerboard_contact_sheet(attack_contact_sets, build_root / "attack-contact-sheet.png")
+    checkerboard_contact_sheet(special_body_contact_sets, build_root / "special-body-contact-sheet.png")
     checkerboard_contact_sheet(projectile_contact_sets, build_root / "projectile-contact-sheet.png")
     manifest = {
         "version": 3,
