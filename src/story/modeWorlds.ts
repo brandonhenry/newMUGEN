@@ -1,4 +1,5 @@
 import { sanitizeStoryHubDefinition, KORE_CENTRAL_HUB } from './hubData';
+import { STORY_MODE_DOOR_DISPLAY_SIZE } from './biomeDoors';
 import { createStoryWorldEnvironment, createStoryWorldProps } from './worldEnvironments';
 import { STORY_GROUNDED_ACTOR_CENTER_Y } from './actorGrounding';
 import type { HubDestination, StoryHubDefinition, StoryModeWorldId, StoryPortalDefinition, StoryPortalKind, StoryWorldLandmarkDefinition, StoryWorldThemeId } from './types';
@@ -32,7 +33,7 @@ function station(input: StationInput): StoryPortalDefinition {
     subtitle: input.subtitle,
     destination: input.destination,
     position: [input.x, input.kind === 'mode-door' ? 1.7 : 1.25],
-    size: input.kind === 'mode-door' ? [2.5, 3.4] : [2.6, 2.7],
+    size: input.kind === 'mode-door' ? [...STORY_MODE_DOOR_DISPLAY_SIZE] : [2.6, 2.7],
     accent: input.accent,
     kind: input.kind,
     ...(input.stationNumber ? { stationNumber: input.stationNumber } : {}),

@@ -17,7 +17,7 @@ import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_REGION_LABELS, STORY_WORLDS
 import { createAdventureVisitSeed, generateAdventureRunGraph, STORY_BREATH_DRAIN_PER_SECOND, STORY_BREATH_REFILL_PER_SECOND, STORY_MAX_BREATH, STORY_MOUNTS, STORY_WORLD_MOUNT, storyDepthZoneLabel, type StoryPartyInstance } from './adventureExploration';
 import { getStoryEnemyAnimation, getStoryEnemyDefinition, storyEnemyPlaneSize, STORY_CHALLENGER_IDS, STORY_ENEMY_RUNTIME_SCALE, type StoryEnemyAttackDefinition } from './enemyCatalog';
 import { STORY_GROUNDED_ACTOR_CENTER_Y, storyAvatarGroundingOffsetForWorld, storyGroundAnchoredPlaneCenterY, storyScaledGroundAnchorOffsetY } from './actorGrounding';
-import { storyPortalDoorFrame, type StoryBiomeDoorFrame } from './biomeDoors';
+import { STORY_MODE_DOOR_DISPLAY_SIZE, storyPortalDoorFrame, type StoryBiomeDoorFrame } from './biomeDoors';
 import { createStoryDepthEnvironment } from './depthEnvironment';
 import { connectStoryHubMultiplayer, readOrCreateStoryHubGuestIdentity, readStoryHubOnlinePreference, STORY_HUB_CHALLENGE_TIMEOUT_MS, writeStoryHubOnlinePreference, type StoryHubMultiplayerSession } from './hubMultiplayer';
 import { KORE_CENTRAL_HUB } from './hubData';
@@ -39,7 +39,8 @@ const CITY_ASSET_ROOT = '/story/hub/warped-city-2';
 const PORTAL_ASSET_ROOT = '/story/hub/warped-city-portals';
 const DOOR_ASSET_ROOT = '/story/hub/door-transitions';
 const ARCADE_ASSET_ROOT = '/story/hub/arcade-machines';
-const MODE_DOOR_BASELINE_OFFSET_Y = -0.62;
+// Preserve the authored threshold while scaling the door upward from the floor.
+const MODE_DOOR_BASELINE_OFFSET_Y = 0.28;
 const NPC_INTERACTION_REFUSAL_UNTIL = new globalThis.Map<string, number>();
 const DOOR_TRAVEL_FRAME_SEQUENCE = [0, 1, 2, 3, 4, 5, 5, 4, 3, 2, 1, 0, 0, 1, 2, 3, 4, 5, 5, 4, 3, 2, 1, 0] as const;
 
@@ -454,7 +455,7 @@ function ModeDoor({ emphasized }: { emphasized: boolean }) {
   const texture = useTexture(`${DOOR_ASSET_ROOT}/frame-0.png`);
   useMemo(() => configurePixelTexture(texture), [texture]);
   return <mesh position={[0, MODE_DOOR_BASELINE_OFFSET_Y, -0.18]} scale={emphasized ? 1.06 : 1}>
-    <planeGeometry args={[2.45, 3.4]} />
+    <planeGeometry args={[...STORY_MODE_DOOR_DISPLAY_SIZE]} />
     <meshBasicMaterial map={texture} transparent alphaTest={0.02} toneMapped={false} />
   </mesh>;
 }
@@ -514,6 +515,7 @@ function Storefront({ destination, size, emphasized }: { destination: HubDestina
 function PortalVisual({ portal, theme, nearby, assigned, reducedMotion }: { portal: StoryPortalDefinition; theme?: StoryWorldThemeId; nearby: boolean; assigned: boolean; reducedMotion: boolean }) {
   const hubDestination = isHubDestination(portal.destination) ? portal.destination : 'story';
   const biomeDoor = storyPortalDoorFrame(portal, theme);
+  const modeDoor = !biomeDoor && (portal.kind === 'mode-door' || portal.kind === 'adventure-gate');
   const DestinationIcon = DESTINATION_ICONS[portal.destination];
   const storefrontSize = portal.destination === 'story' ? 4.45 : portal.position[1] > 4 ? 3.15 : 3.55;
   return <group position={[portal.position[0], portal.position[1], 0]}>
@@ -533,7 +535,7 @@ function PortalVisual({ portal, theme, nearby, assigned, reducedMotion }: { port
       <mesh position={[0, 0.04, 0.02]} renderOrder={22}><planeGeometry args={[0.72, 0.48]} /><meshBasicMaterial color={portal.accent} transparent opacity={0.42} depthWrite={false} /></mesh>
     </> : <Storefront destination={hubDestination} size={storefrontSize} emphasized={nearby} />}
     {assigned && <mesh position={[0, -1.08, 0.05]} renderOrder={23}><ringGeometry args={[0.72, 0.9, 24]} /><meshBasicMaterial color="#ffe071" transparent opacity={0.9} depthWrite={false} /></mesh>}
-    {(nearby || assigned || !['npc', 'chest', 'relic', 'checkpoint', 'restoration'].includes(portal.kind ?? '')) && <Html center position={[0, biomeDoor ? biomeDoor.displaySize[1] / 2 + 0.25 : portal.size[1] / 2 + 0.52, 0.7]} zIndexRange={[8, 0]} className="story-destination-sign-shell">
+    {(nearby || assigned || !['npc', 'chest', 'relic', 'checkpoint', 'restoration'].includes(portal.kind ?? '')) && <Html center position={[0, biomeDoor ? biomeDoor.displaySize[1] / 2 + 0.25 : modeDoor ? MODE_DOOR_BASELINE_OFFSET_Y + STORY_MODE_DOOR_DISPLAY_SIZE[1] / 2 + 0.25 : portal.size[1] / 2 + 0.52, 0.7]} zIndexRange={[8, 0]} className="story-destination-sign-shell">
       <div data-testid={`story-destination-${portal.id}`} className={`story-destination-sign ${nearby ? 'is-nearby' : ''} ${assigned ? 'is-assigned' : ''} ${portal.locked ? 'is-locked' : ''}`} style={{ '--story-destination-accent': portal.accent } as CSSProperties}>
         <span aria-hidden="true">{portal.locked ? <LockKeyhole size={16} /> : <DestinationIcon size={16} />}</span>
         <strong>{assigned ? `Go Here · ${portal.label}` : portal.label}</strong>

@@ -3,8 +3,13 @@ import {
   STORY_BIOME_DOOR_ATLAS_SIZE,
   STORY_BIOME_DOOR_GROUND_SINK_Y,
   STORY_DEPTH_ENTRANCE_ASSET,
+  STORY_DOOR_CHARACTER_HEIGHT_REFERENCE,
+  STORY_HERO_DOOR_DISPLAY_SIZE,
+  STORY_MODE_DOOR_DISPLAY_SIZE,
   STORY_NORMAL_BIOME_DOOR_ASSET,
+  STORY_NORMAL_DOOR_DISPLAY_SIZE,
   STORY_SANCTUARY_ENTRANCE_ASSET,
+  STORY_SPECIAL_DOOR_DISPLAY_SIZE,
   storyBiomeDoorFrame,
   storyPortalDoorFrame
 } from './biomeDoors';
@@ -50,5 +55,18 @@ describe('biome entrance library', () => {
     expect(storyBiomeDoorFrame('arcade', 'arcade')).toBeNull();
     expect(STORY_BIOME_DOOR_ATLAS_SIZE).toEqual([1536, 1024]);
     expect(STORY_BIOME_DOOR_GROUND_SINK_Y).toBeGreaterThan(0);
+  });
+
+  it('keeps every entrance visibly larger than the player character', () => {
+    expect(STORY_NORMAL_DOOR_DISPLAY_SIZE[1]).toBeGreaterThan(STORY_DOOR_CHARACTER_HEIGHT_REFERENCE * 1.75);
+    expect(STORY_HERO_DOOR_DISPLAY_SIZE[1]).toBeGreaterThan(STORY_DOOR_CHARACTER_HEIGHT_REFERENCE * 2);
+    expect(STORY_SPECIAL_DOOR_DISPLAY_SIZE[1]).toBeGreaterThan(STORY_DOOR_CHARACTER_HEIGHT_REFERENCE * 2);
+    expect(STORY_MODE_DOOR_DISPLAY_SIZE[1]).toBeGreaterThan(STORY_DOOR_CHARACTER_HEIGHT_REFERENCE * 1.5);
+
+    for (const biome of BIOMES) {
+      expect(storyBiomeDoorFrame(biome)?.displaySize).toEqual(STORY_HERO_DOOR_DISPLAY_SIZE);
+      expect(storyPortalDoorFrame(portal(biome, `surface-map:${biome}-field-a`))?.displaySize).toEqual(STORY_NORMAL_DOOR_DISPLAY_SIZE);
+      expect(storyPortalDoorFrame(portal(biome, `depth-entry:${biome}-depth`))?.displaySize).toEqual(STORY_SPECIAL_DOOR_DISPLAY_SIZE);
+    }
   });
 });

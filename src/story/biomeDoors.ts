@@ -6,6 +6,11 @@ export const STORY_DEPTH_ENTRANCE_ASSET = '/story/exploration/doors/depth-entran
 export const STORY_SANCTUARY_ENTRANCE_ASSET = '/story/exploration/doors/sanctuary-entrances.png';
 export const STORY_BIOME_DOOR_ATLAS_SIZE = [1536, 1024] as const;
 export const STORY_BIOME_DOOR_GROUND_SINK_Y = 0.32;
+export const STORY_DOOR_CHARACTER_HEIGHT_REFERENCE = 3.2;
+export const STORY_NORMAL_DOOR_DISPLAY_SIZE = [5.8, 5.8] as const;
+export const STORY_HERO_DOOR_DISPLAY_SIZE = [5.4, 7.1] as const;
+export const STORY_SPECIAL_DOOR_DISPLAY_SIZE = [5.3, 7] as const;
+export const STORY_MODE_DOOR_DISPLAY_SIZE = [3.75, 5.2] as const;
 
 export type StoryBiomeId = Exclude<StoryAdventureWorldId, 'world-route'>;
 export type StoryBiomeDoorTier = 'normal' | 'biome-gate' | 'depth' | 'sanctuary';
@@ -59,7 +64,7 @@ function heroFrame(biome: StoryBiomeId, tier: Exclude<StoryBiomeDoorTier, 'norma
     tier,
     asset: STORY_BIOME_DOOR_ASSET,
     atlasSize: STORY_BIOME_DOOR_ATLAS_SIZE,
-    displaySize: [4.4, 5.8],
+    displaySize: STORY_HERO_DOOR_DISPLAY_SIZE,
     groundSinkY: STORY_BIOME_DOOR_GROUND_SINK_Y,
     ...HERO_GATE_BY_BIOME[biome]
   };
@@ -70,7 +75,7 @@ function heroFrame(biome: StoryBiomeId, tier: Exclude<StoryBiomeDoorTier, 'norma
     asset: tier === 'depth' ? STORY_DEPTH_ENTRANCE_ASSET : STORY_SANCTUARY_ENTRANCE_ASSET,
     atlasSize: STORY_BIOME_DOOR_ATLAS_SIZE,
     frame,
-    displaySize: [4.35, 5.75],
+    displaySize: STORY_SPECIAL_DOOR_DISPLAY_SIZE,
     visibleBottomInset: tier === 'depth' ? 28 : 22,
     groundSinkY: tier === 'depth' ? 0.24 : 0.2
   };
@@ -94,7 +99,7 @@ function normalFrame(biome: StoryBiomeId, portalId: string): StoryBiomeDoorFrame
     asset: STORY_NORMAL_BIOME_DOOR_ASSET,
     atlasSize: STORY_BIOME_DOOR_ATLAS_SIZE,
     frame: [column * 256, row * 256, 256, 256],
-    displaySize: [4.6, 4.6],
+    displaySize: STORY_NORMAL_DOOR_DISPLAY_SIZE,
     visibleBottomInset: 20,
     groundSinkY: 0.08
   };
