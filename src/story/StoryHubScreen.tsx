@@ -541,7 +541,7 @@ function PortalVisual({ portal, theme, nearby, assigned, reducedMotion }: { port
   </group>;
 }
 
-function AdventureNpcVisual({ npc, attackEvent, playerPosition, maxHealth, reducedMotion, onPlayerDamage, surfaceInsetY = 0 }: {
+function AdventureNpcVisual({ npc, attackEvent, playerPosition, maxHealth, reducedMotion, onPlayerDamage, surfaceInsetY = 0, surfacePixelWorldHeight = 0 }: {
   npc: StoryNpcDefinition;
   attackEvent: StoryAdventureAttackEvent | null;
   playerPosition: MutableRefObject<THREE.Vector3>;
@@ -549,6 +549,7 @@ function AdventureNpcVisual({ npc, attackEvent, playerPosition, maxHealth, reduc
   reducedMotion: boolean;
   onPlayerDamage: (damage: number, sourceX: number) => void;
   surfaceInsetY?: number;
+  surfacePixelWorldHeight?: number;
 }) {
   const sprite = STORY_NPC_SPRITES[npc.spriteId];
   const idleFrames = sprite?.actions.idle.frames ?? [];
@@ -568,7 +569,7 @@ function AdventureNpcVisual({ npc, attackEvent, playerPosition, maxHealth, reduc
   const frameHeight = sprite?.frameSize.height ?? 192;
   const baseline = sprite?.frameSize.baseline ?? 188;
   const footAnchorFromBottom = (frameHeight - baseline) / frameHeight;
-  const footContactSinkY = storyNpcFootContactSinkY(planeSize, frameHeight, surfaceInsetY);
+  const footContactSinkY = storyNpcFootContactSinkY(planeSize, frameHeight, surfacePixelWorldHeight);
   useMemo(() => textures.forEach((texture) => configurePixelTexture(texture)), [textures]);
   useEffect(() => () => {
     if (counterTimer.current !== null) window.clearTimeout(counterTimer.current);
@@ -1577,6 +1578,13 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
     const ground = storyHubGroundPlatform(hub);
     return ground ? storyPlatformSurfacePlacement(ground, hub.environment?.surface).surfaceInsetY : 0;
   }, [hub]);
+  const groundSurfacePixelWorldHeight = useMemo(() => {
+    const ground = storyHubGroundPlatform(hub);
+    const sourceHeight = hub.environment?.surface?.frame[3] ?? 0;
+    return ground && sourceHeight > 0
+      ? storyPlatformSurfacePlacement(ground, hub.environment?.surface).height / sourceHeight
+      : 0;
+  }, [hub]);
 
   const commitEncounterProgress = useCallback((next: StoryEncounterProgress) => {
     encounterProgressRef.current = next;
@@ -1637,7 +1645,7 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
         <AdventureTraversalVisuals hub={hub} />
         <AdventureHazards hub={hub} playerPosition={playerPosition} onPlayerDamage={onPlayerDamage} />
         {hub.portals.map((portal) => <PortalVisual key={portal.id} portal={portal} theme={hub.theme} nearby={nearbyPortal?.id === portal.id} assigned={assignedPortalId === portal.id} reducedMotion={reducedMotion} />)}
-        {(hub.npcs ?? []).map((npc) => <AdventureNpcVisual key={npc.id} npc={npc} attackEvent={attackEvent} playerPosition={playerPosition} maxHealth={derivedStats.maxHealth} reducedMotion={reducedMotion} onPlayerDamage={onPlayerDamage} surfaceInsetY={groundSurfaceInsetY} />)}
+        {(hub.npcs ?? []).map((npc) => <AdventureNpcVisual key={npc.id} npc={npc} attackEvent={attackEvent} playerPosition={playerPosition} maxHealth={derivedStats.maxHealth} reducedMotion={reducedMotion} onPlayerDamage={onPlayerDamage} surfaceInsetY={groundSurfaceInsetY} surfacePixelWorldHeight={groundSurfacePixelWorldHeight} />)}
         {remotePlayers.map((presence, index) => <RemoteStoryPlayer key={presence.sessionId} presence={presence} reducedMotion={reducedMotion} groundingOffsetY={groundingOffsetY} surfaceInsetY={groundSurfaceInsetY} lane={index % 5} selected={selectedPlayerSessionId === presence.sessionId} onSelect={onSelectPlayer} />)}
         {attackEvent?.projectile && <StoryPlayerProjectile key={attackEvent.id} attackEvent={attackEvent as StoryAdventureAttackEvent & { projectile: StorySpriteProjectileDefinition }} playerPosition={playerPosition} avatarRigOffset={[mounted && mount ? mount.riderOffset[0] : 0, groundingOffsetY - groundSurfaceInsetY + (mounted && mount ? mount.riderOffset[1] : 0)]} runtime={playerProjectile} />}
         {activeRegularSpawns.length > 0 && <AdventureEnemies spawns={activeRegularSpawns} level={progress.level} playerPosition={playerPosition} playerProjectile={playerProjectile} attackEvent={attackEvent} reducedMotion={reducedMotion} onPlayerDamage={onPlayerDamage} onDefeated={handleEnemyDefeated} />}

@@ -91,6 +91,7 @@ export const STORY_NPC_SPRITES: Record<string, StoryNpcSpriteManifest> = Object.
 );
 
 export const STORY_NPC_VISIBLE_WORLD_HEIGHT = 3.05;
+export const STORY_NPC_FOOT_CONTACT_SINK_Y = 0.055;
 
 export function storyNpcPlaneSize(sprite: StoryNpcSpriteManifest | undefined): number {
   if (!sprite) return STORY_NPC_VISIBLE_WORLD_HEIGHT;
@@ -98,8 +99,8 @@ export function storyNpcPlaneSize(sprite: StoryNpcSpriteManifest | undefined): n
   return STORY_NPC_VISIBLE_WORLD_HEIGHT * sprite.frameSize.height / Math.max(1, contentHeight);
 }
 
-export function storyNpcFootContactSinkY(planeSize: number, frameHeight: number, surfaceInsetY = 0): number {
-  return Math.max(planeSize / Math.max(1, frameHeight), Math.max(0, surfaceInsetY));
+export function storyNpcFootContactSinkY(planeSize: number, frameHeight: number, surfacePixelWorldHeight = 0): number {
+  return Math.max(STORY_NPC_FOOT_CONTACT_SINK_Y, planeSize / Math.max(1, frameHeight), Math.max(0, surfacePixelWorldHeight));
 }
 
 export function storyNpcsForMap(mapId: string) {

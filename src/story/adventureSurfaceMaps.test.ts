@@ -59,7 +59,8 @@ describe('authored Adventure surface campaign', () => {
           const sprite = STORY_NPC_SPRITES[npc.spriteId];
           const planeSize = storyNpcPlaneSize(sprite);
           const footAnchorFromBottom = (sprite.frameSize.height - sprite.frameSize.baseline) / sprite.frameSize.height;
-          const footContactSinkY = storyNpcFootContactSinkY(planeSize, sprite.frameSize.height, placement.surfaceInsetY);
+          const surfacePixelWorldHeight = placement.height / world.environment!.surface!.frame[3];
+          const footContactSinkY = storyNpcFootContactSinkY(planeSize, sprite.frameSize.height, surfacePixelWorldHeight);
           const npcFootY = npc.position[1]
             + storyGroundAnchoredPlaneCenterY(planeSize, footAnchorFromBottom)
             - placement.surfaceInsetY
