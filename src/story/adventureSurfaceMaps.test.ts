@@ -46,6 +46,24 @@ describe('authored Adventure surface campaign', () => {
     }
   });
 
+  it('keeps authored hazard volumes out of enemy spawn and patrol space', () => {
+    const playerHalfWidth = 0.45;
+    for (const maps of Object.values(STORY_ADVENTURE_SURFACE_MAPS)) {
+      for (const map of maps) {
+        for (const enemy of map.enemySpawns) {
+          const patrolHalfWidth = enemy.patrolRadius * 2.5;
+          const enemyMinX = enemy.position[0] - patrolHalfWidth - playerHalfWidth;
+          const enemyMaxX = enemy.position[0] + patrolHalfWidth + playerHalfWidth;
+          for (const hazard of map.hazards) {
+            const [hazardMinX, hazardMaxX] = hazard.bounds;
+            const overlaps = enemyMaxX >= hazardMinX && enemyMinX <= hazardMaxX;
+            expect(overlaps, `${map.id}/${enemy.id}/${hazard.id}`).toBe(false);
+          }
+        }
+      }
+    }
+  });
+
   it('places player and NPC visible feet on each authored tile surface', () => {
     for (const maps of Object.values(STORY_ADVENTURE_SURFACE_MAPS)) {
       for (const map of maps) {

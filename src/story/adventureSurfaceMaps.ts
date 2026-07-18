@@ -127,7 +127,7 @@ function interactables(biome: BiomeId, role: StoryAdventureMapRole): StoryIntera
 function hazardsFor(biome: BiomeId, role: StoryAdventureMapRole): StoryHazardDefinition[] {
   if (role === 'arrival') return [];
   const spec = BIOMES[biome];
-  const positions = role === 'field-a' ? [-18, 21] : role === 'field-b' ? [-36, 2, 34] : [-38, -8, 23, 40];
+  const positions = role === 'field-a' ? [-7, 7] : role === 'field-b' ? [-45, 0, 45] : [-45, -6, 31, 46];
   return positions.map((x, index) => ({
     id: `${biome}-${role}-hazard-${index + 1}`,
     kind: spec.hazard,

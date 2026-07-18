@@ -303,6 +303,10 @@ export function canDamageAdventurePlayer(nowMs: number, invulnerableUntilMs: num
   return nowMs >= invulnerableUntilMs;
 }
 
+export function canAdventureEnemyDamagePlayer(alive: boolean, attackActive: boolean) {
+  return alive && attackActive;
+}
+
 export function stepAdventureProjectile(input: {
   x: number;
   y: number;

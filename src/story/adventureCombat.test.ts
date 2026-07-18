@@ -7,6 +7,7 @@ import {
   STORY_ATTACK_PROFILES,
   advanceStoryAttackInputBuffer,
   adventureAttackHits,
+  canAdventureEnemyDamagePlayer,
   canDamageAdventurePlayer,
   createAdventureDamageFeedback,
   createAdventureHitReaction,
@@ -43,6 +44,13 @@ describe('story adventure combat math', () => {
     expect(resolveAdventurePlayerDamage(20, guarded)).toMatchObject({ damage: 15, knockback: 0.575 });
     expect(canDamageAdventurePlayer(1_000, 999)).toBe(true);
     expect(canDamageAdventurePlayer(1_000, 1_001)).toBe(false);
+  });
+
+  it('makes enemy melee attacks and projectiles harmless as soon as their owner dies', () => {
+    expect(canAdventureEnemyDamagePlayer(true, true)).toBe(true);
+    expect(canAdventureEnemyDamagePlayer(true, false)).toBe(false);
+    expect(canAdventureEnemyDamagePlayer(false, true)).toBe(false);
+    expect(canAdventureEnemyDamagePlayer(false, false)).toBe(false);
   });
 
   it('applies all four move multipliers, authored cooldowns, and simultaneous-input priority', () => {

@@ -8,7 +8,7 @@ import type { OnlinePlayerProfile } from '../lib/online/leaderboard';
 import { addFriendEntry, isFriend, readMatchHistory } from '../lib/socialHistory';
 import type { InputFrame } from '../types';
 import { STORY_ADVENTURE_ASSET_PATHS, storyWorldAssetPath } from './adventureAssets';
-import { STORY_ATTACK_VISUAL_SYNC_DELAY_MS, advanceStoryAttackInputBuffer, adventureAttackHits, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureAttackFrameHitbox, getAdventureEnemyStats, getStoryAttackDurationMs, getStoryProjectileSpawnPosition, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, resolveStoryAttackInput, stepAdventureProjectile, storyPlayerProjectileHits, type AdventureDamageFeedback, type StoryBufferedAttackInput } from './adventureCombat';
+import { STORY_ATTACK_VISUAL_SYNC_DELAY_MS, advanceStoryAttackInputBuffer, adventureAttackHits, canAdventureEnemyDamagePlayer, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureAttackFrameHitbox, getAdventureEnemyStats, getStoryAttackDurationMs, getStoryProjectileSpawnPosition, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, resolveStoryAttackInput, stepAdventureProjectile, storyPlayerProjectileHits, type AdventureDamageFeedback, type StoryBufferedAttackInput } from './adventureCombat';
 import { makeStoryEncounterProgress, recordChallengerDefeat, recordRegularDefeat, rerollStoryRegularSpawns, resetActiveChallenger, storyEncounterMovementLock, type StoryEncounterProgress } from './adventureEncounters';
 import { STORY_ADVENTURE_STAT_CAP, STORY_ADVENTURE_STAT_KEYS, allocateAdventureStat, awardAdventureExperience, awardMountMastery, beginAdventureVisit, canRespecAdventureStats, claimAdventureCache, collectAdventureRelic, discoverAdventureLandmark, discoverAdventureSurfaceMap, discoverAdventureVista, discoverAdventureWaystone, experienceToNextLevel, getAdventureDerivedStats, pinAdventureDaily, readAdventureProgress, respecAdventureStats, restoreAdventureShortcut, unlockAdventureMount, upgradeAdventureWaystone, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_REGION_LABELS, STORY_WORLDS, isStoryAdventureRegionId, isStoryAdventureWorldId, isStoryWorldId } from './adventureWorlds';
@@ -918,6 +918,15 @@ function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attack
   const [damagePops, setDamagePops] = useState<AdventureDamagePop[]>([]);
   const [visual, setVisual] = useState({ health: stats.maxHealth, alive: true, critical: false, facing: -1 as -1 | 1, animationId: 'idle', animationStartedAt: performance.now() });
 
+  const retireOffense = useCallback(() => {
+    activeEnemyAttack.current = null;
+    projectiles.current.forEach((projectile, index) => {
+      projectile.active = false;
+      const mesh = projectileMeshes.current[index];
+      if (mesh) mesh.visible = false;
+    });
+  }, []);
+
   const playAnimation = useCallback((next: string, restart = false) => {
     if (!restart && animationId.current === next) return;
     animationId.current = next;
@@ -931,15 +940,18 @@ function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attack
     defeatReported.current = false;
     x.current = spawn.position[0];
     y.current = spawn.position[1];
-    activeEnemyAttack.current = null;
+    retireOffense();
     animationLockedUntil.current = 0;
     animationId.current = 'idle';
     animationStartedAt.current = performance.now();
     setDamagePops([]);
     setVisual({ health: stats.maxHealth, alive: true, critical: false, facing: -1, animationId: 'idle', animationStartedAt: animationStartedAt.current });
-  }, [spawn.id, spawn.position, stats.maxHealth]);
+  }, [retireOffense, spawn.id, spawn.position, stats.maxHealth]);
 
-  useEffect(() => () => damageTimers.current.forEach((timer) => window.clearTimeout(timer)), []);
+  useEffect(() => () => {
+    retireOffense();
+    damageTimers.current.forEach((timer) => window.clearTimeout(timer));
+  }, [retireOffense]);
 
   const registerAttackHit = useCallback((currentAttack: StoryAdventureAttackEvent) => {
     if (!alive.current || lastRegisteredAttackId.current === currentAttack.id) return;
@@ -965,7 +977,7 @@ function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attack
     staggerUntil.current = hitAt + reaction.staggerMs;
     if (health.current <= 0) {
       alive.current = false;
-      activeEnemyAttack.current = null;
+      retireOffense();
       const hasDeath = definition.animations.some((animation) => animation.id === 'dead');
       const deathAnimation = hasDeath ? getStoryEnemyAnimation(spawn.enemyId, 'dead') : getStoryEnemyAnimation(spawn.enemyId, 'idle');
       const deathDuration = hasDeath ? deathAnimation.frames.reduce((sum, frame) => sum + frame.durationMs, 0) : 520;
@@ -985,7 +997,7 @@ function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attack
     animationLockedUntil.current = hitAt + (reducedMotion ? Math.min(120, hurtDuration) : hurtDuration);
     playAnimation('hurt', true);
     setVisual((current) => ({ ...current, health: health.current, alive: true, critical: currentAttack.critical, facing: facing.current }));
-  }, [definition.animations, definition.tier, onDefeated, playAnimation, reducedMotion, spawn, stats.xp]);
+  }, [definition.animations, definition.tier, onDefeated, playAnimation, reducedMotion, retireOffense, spawn, stats.xp]);
 
   useFrame((state, frameDelta) => {
     const now = performance.now();
@@ -996,6 +1008,11 @@ function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attack
     if (playerPosition.current.x < activationMin || playerPosition.current.x > activationMax) {
       group.current.visible = false;
       projectiles.current.forEach((projectile) => { projectile.active = false; });
+      return;
+    }
+    if (!alive.current) {
+      retireOffense();
+      group.current.visible = !defeatReported.current;
       return;
     }
     const launchedProjectile = playerProjectile.current;
@@ -1098,7 +1115,7 @@ function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attack
             projectile.radius = projectileDefinition.radius;
             projectile.color = projectileDefinition.color;
           }
-        } else if (distance <= currentEnemyAttack.definition.range * STORY_ENEMY_RUNTIME_SCALE && Math.abs(playerY - y.current) < 1.15 * STORY_ENEMY_RUNTIME_SCALE) {
+        } else if (canAdventureEnemyDamagePlayer(alive.current, distance <= currentEnemyAttack.definition.range * STORY_ENEMY_RUNTIME_SCALE && Math.abs(playerY - y.current) < 1.15 * STORY_ENEMY_RUNTIME_SCALE)) {
           onPlayerDamage(Math.max(1, Math.round(stats.damage * currentEnemyAttack.definition.damageMultiplier)), x.current);
         }
       }
@@ -1155,7 +1172,7 @@ function AdventureEnemy({ spawn, level, playerPosition, playerProjectile, attack
       mesh.scale.setScalar(projectile.radius / 0.18);
       const material = mesh.material as THREE.MeshBasicMaterial;
       material.color.set(projectile.color);
-      if (Math.abs(playerX - projectile.x) < 0.42 + projectile.radius && Math.abs(playerY - projectile.y) < 0.65 + projectile.radius) {
+      if (canAdventureEnemyDamagePlayer(alive.current, projectile.active) && Math.abs(playerX - projectile.x) < 0.42 + projectile.radius && Math.abs(playerY - projectile.y) < 0.65 + projectile.radius) {
         projectile.active = false;
         mesh.visible = false;
         onPlayerDamage(projectile.damage, projectile.x);
