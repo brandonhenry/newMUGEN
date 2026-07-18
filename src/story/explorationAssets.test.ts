@@ -73,3 +73,23 @@ describe('generated K.O.R.E. atlas', () => {
     expect(createHash('sha256').update(readFileSync(path)).digest('hex')).toBe(atlas.sha256);
   });
 });
+
+describe('generated biome doors', () => {
+  it('ships eight distinct checksum-pinned project-owned entrance frames', () => {
+    const doorRoot = resolve(process.cwd(), 'public/story/exploration/doors');
+    const doors = JSON.parse(readFileSync(resolve(doorRoot, 'biome-doors-manifest.json'), 'utf8')) as {
+      file: string; width: number; height: number; columns: number; rows: number; frameWidth: number; frameHeight: number;
+      sha256: string; license: string; generator: string; prompt: string; frames: Array<{ biome: string; x: number; y: number; width: number; height: number }>;
+    };
+    expect(doors.license).toBe('project-owned-generated');
+    expect(doors.generator).toContain('OpenAI');
+    expect(doors.columns * doors.rows).toBe(8);
+    expect(doors.frames).toHaveLength(8);
+    expect(new Set(doors.frames.map((frame) => frame.biome)).size).toBe(8);
+    expect(doors.frames.every((frame) => frame.width === doors.frameWidth && frame.height === doors.frameHeight)).toBe(true);
+    expect(doors.prompt).toContain('eight large side-view biome entrances');
+    const path = resolve(doorRoot, doors.file);
+    expect(existsSync(path)).toBe(true);
+    expect(createHash('sha256').update(readFileSync(path)).digest('hex')).toBe(doors.sha256);
+  });
+});

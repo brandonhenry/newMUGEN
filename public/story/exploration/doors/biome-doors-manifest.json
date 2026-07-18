@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "file": "biome-doors.png",
+  "width": 1536,
+  "height": 1024,
+  "columns": 4,
+  "rows": 2,
+  "frameWidth": 384,
+  "frameHeight": 512,
+  "sha256": "5a160ac2766a51f8377fe254b5a42dae469063d53be8830befb9f955ec18a2fa",
+  "license": "project-owned-generated",
+  "generator": "OpenAI image generation tool",
+  "toolMode": "generate, then edit for transparent sprite-atlas delivery",
+  "prompt": "Create an original production-ready crisp pixel-art sprite atlas for K.O.R.E. with exactly eight large side-view biome entrances in a clean four-column by two-row grid: Greenhollow mossy timber village gate, Thornwood living-root arch, Ironroot riveted mine portal, Bonevault ossuary crypt door, Emberdeep basalt-and-lava gate, Frostpeak ice-and-stone entrance, Sunscar carved sandstone temple door, and Skyglass luminous crystal sky portal. Each must have a unique silhouette and palette, a readable dark walkable opening, no labels, no logos, no characters, no scenery overlap, and transparent space around every sprite.",
+  "visualDirection": "Seven user-supplied portal and door references were used only for general silhouette and material direction; no source pixels were imported.",
+  "postprocess": "Removed the generated checkerboard matte with edge-connected alpha flood fill; retained native 1536x1024 resolution and RGBA color.",
+  "frames": [
+    { "biome": "greenhollow", "x": 0, "y": 0, "width": 384, "height": 512 },
+    { "biome": "thornwood", "x": 384, "y": 0, "width": 384, "height": 512 },
+    { "biome": "ironroot", "x": 768, "y": 0, "width": 384, "height": 512 },
+    { "biome": "bonevault", "x": 1152, "y": 0, "width": 384, "height": 512 },
+    { "biome": "emberdeep", "x": 0, "y": 512, "width": 384, "height": 512 },
+    { "biome": "frostpeak", "x": 384, "y": 512, "width": 384, "height": 512 },
+    { "biome": "sunscar", "x": 768, "y": 512, "width": 384, "height": 512 },
+    { "biome": "skyglass", "x": 1152, "y": 512, "width": 384, "height": 512 }
+  ]
+}
