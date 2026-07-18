@@ -2,6 +2,7 @@ import { STORY_GROUNDED_ACTOR_CENTER_Y } from './actorGrounding';
 import { getStoryEnemyDefinition, STORY_REGULAR_ENEMY_IDS_BY_BIOME } from './enemyCatalog';
 import { storyNpcsForMap } from './adventureNpcs';
 import { STORY_WORLD_MOUNT } from './adventureExploration';
+import { storyHazardDealsContactDamage } from './adventureHazards';
 import { createStoryWorldProps } from './worldEnvironments';
 import { createSurfaceResourceNodes } from './adventureResources';
 import type {
@@ -133,7 +134,7 @@ function hazardsFor(biome: BiomeId, role: StoryAdventureMapRole): StoryHazardDef
     id: `${biome}-${role}-hazard-${index + 1}`,
     kind: spec.hazard,
     bounds: [x - 2.2, x + 2.2, 0, spec.hazard === 'wind' ? 8 : 1.15],
-    damage: role === 'mastery' ? 18 : 12,
+    damage: storyHazardDealsContactDamage(spec.hazard) ? role === 'mastery' ? 18 : 12 : 0,
     knockback: role === 'mastery' ? 6.5 : 4.5,
     telegraphMs: spec.hazard === 'icicle' || spec.hazard === 'collapsing-floor' ? 700 : 350,
     accent: spec.accent

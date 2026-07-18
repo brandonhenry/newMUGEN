@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_WORLDS } from './adventureWorlds';
 import { STORY_ADVENTURE_SURFACE_MAPS } from './adventureSurfaceMaps';
+import { STORY_HAZARD_SPRITES, storyHazardDealsContactDamage } from './adventureHazards';
 import { STORY_NPCS, STORY_NPC_ENTRANCE_SIDE_CLEARANCE, STORY_NPC_SPRITES, STORY_NPC_VISIBLE_WORLD_HEIGHT, storyNpcFootContactSinkY, storyNpcPlaneSize } from './adventureNpcs';
 import { storyAvatarGroundingOffsetForWorld, storyAvatarVisibleFootWorldY, storyGroundAnchoredPlaneCenterY } from './actorGrounding';
 import { adventureRunIsReachable, generateAdventureRunGraph } from './adventureExploration';
@@ -21,6 +22,10 @@ describe('authored Adventure surface campaign', () => {
       expect(maps.flatMap((map) => map.npcs)).toHaveLength(12);
       for (const map of maps) {
         expect(map.npcs).toHaveLength(3);
+        for (const hazard of map.hazards) {
+          expect(hazard.damage > 0).toBe(storyHazardDealsContactDamage(hazard.kind));
+          if (hazard.damage > 0) expect(STORY_HAZARD_SPRITES[hazard.kind as keyof typeof STORY_HAZARD_SPRITES]).toBeDefined();
+        }
         expect(new Set(map.npcs.map((npc) => npc.role))).toEqual(new Set(['guide', 'specialist', 'resident']));
         expect(map.bounds.maxX - map.bounds.minX).toBeGreaterThanOrEqual(100);
         expect(map.landmarks.filter((landmark) => landmark.id === map.heroLandmarkId)).toHaveLength(1);

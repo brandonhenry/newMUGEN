@@ -13,12 +13,12 @@ import gc
 import hashlib
 import json
 import shutil
-from collections import Counter, deque
+from collections import deque
 from io import BytesIO
 from pathlib import Path
 from typing import Any
 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
 
 ROOT = Path("public/story/avatars/kore-street-v1")
@@ -248,45 +248,53 @@ def load_projectile_sources() -> dict[str, bytes]:
     return loaded
 
 
-def has_transparent_neighbor(image: Image.Image, x: int, y: int) -> bool:
-    pixels = image.load()
-    for neighbor_y in range(max(0, y - 1), min(image.height, y + 2)):
-        for neighbor_x in range(max(0, x - 1), min(image.width, x + 2)):
-            if pixels[neighbor_x, neighbor_y][3] == 0:
-                return True
-    return False
-
-
 def remove_gray_background(crop: Image.Image, background: tuple[int, int, int]) -> Image.Image:
+    """Build one binary-alpha transparent master before any frame is cropped.
+
+    The supplied sheets use a flat gray matte, but their antialiased edges also
+    contain colors blended with that matte.  Remove the exact/near matte first,
+    then peel neutral pixels exposed on the new alpha boundary.  Doing this to
+    the complete sheet prevents crop edges from becoming false foreground.
+    """
     source = crop.convert("RGB")
-    result = Image.new("RGBA", source.size)
-    source_pixels = source.load()
-    result_pixels = result.load()
-    for y in range(source.height):
-        for x in range(source.width):
-            red, green, blue = source_pixels[x, y]
-            distance = max(abs(red - background[0]), abs(green - background[1]), abs(blue - background[2]))
-            result_pixels[x, y] = (0, 0, 0, 0) if distance <= 34 else (red, green, blue, 255)
+    red, green, blue = source.split()
+
+    def within(channel: Image.Image, value: int, tolerance: int) -> Image.Image:
+        reference = Image.new("L", source.size, value)
+        return ImageChops.difference(channel, reference).point(lambda distance: 255 if distance <= tolerance else 0)
+
+    matte_candidates = ImageChops.multiply(within(red, background[0], 34), within(green, background[1], 34))
+    matte_candidates = ImageChops.multiply(matte_candidates, within(blue, background[2], 34))
+
+    # A character may intentionally contain gray pixels close to the sheet
+    # matte. Only the candidate region connected to the sheet exterior is
+    # background; enclosed candidate pixels remain character artwork.
+    connected_matte = matte_candidates.copy()
+    ImageDraw.floodfill(connected_matte, (0, 0), 128)
+    connected_matte = connected_matte.point(lambda value: 255 if value == 128 else 0)
+    alpha = ImageChops.invert(connected_matte)
+
+    maximum = ImageChops.lighter(ImageChops.lighter(red, green), blue)
+    minimum = ImageChops.darker(ImageChops.darker(red, green), blue)
+    neutral = ImageChops.subtract(maximum, minimum).point(lambda chroma: 255 if chroma <= 32 else 0)
+    neutral = ImageChops.multiply(neutral, maximum.point(lambda value: 255 if 58 <= value <= 190 else 0))
+    near_matte = ImageChops.multiply(within(red, background[0], 54), within(green, background[1], 54))
+    near_matte = ImageChops.multiply(near_matte, within(blue, background[2], 54))
+    fringe = ImageChops.multiply(neutral, near_matte)
 
     # The source sheets contain a neutral antialias fringe blended with gray.
     # Peel only neutral boundary pixels; colored artwork, dark outlines and
     # intentional bright whites remain fully opaque.
     for _ in range(6):
-        remove: list[tuple[int, int]] = []
-        pixels = result.load()
-        for y in range(result.height):
-            for x in range(result.width):
-                red, green, blue, alpha = pixels[x, y]
-                if not alpha or not has_transparent_neighbor(result, x, y):
-                    continue
-                value = max(red, green, blue)
-                chroma = value - min(red, green, blue)
-                if 58 <= value <= 190 and chroma <= 32:
-                    remove.append((x, y))
-        if not remove:
+        eroded = alpha.filter(ImageFilter.MinFilter(3))
+        boundary = ImageChops.subtract(alpha, eroded)
+        removal = ImageChops.multiply(boundary, fringe)
+        if not removal.getbbox():
             break
-        for x, y in remove:
-            pixels[x, y] = (0, 0, 0, 0)
+        alpha = ImageChops.subtract(alpha, removal)
+
+    result = source.convert("RGBA")
+    result.putalpha(alpha.point(lambda value: 255 if value else 0))
     return result
 
 
@@ -419,77 +427,6 @@ def inside_primary_span(mask: bytearray, width: int, height: int, x: int, y: int
     )
 
 
-def color_components(image: Image.Image) -> list[tuple[tuple[int, int, int], list[int], bool]]:
-    rgba = image.convert("RGBA")
-    width, height = rgba.size
-    colors = [(red, green, blue) for red, green, blue, _ in rgba.get_flattened_data()]
-    visited = bytearray(width * height)
-    components: list[tuple[tuple[int, int, int], list[int], bool]] = []
-    for start in range(width * height):
-        if visited[start]:
-            continue
-        color = colors[start]
-        visited[start] = 1
-        queue = deque([start])
-        pixels: list[int] = []
-        touches_border = False
-        while queue:
-            key = queue.popleft()
-            pixels.append(key)
-            x, y = key % width, key // width
-            touches_border = touches_border or x == 0 or y == 0 or x == width - 1 or y == height - 1
-            for neighbor_x, neighbor_y in ((x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1)):
-                if not 0 <= neighbor_x < width or not 0 <= neighbor_y < height:
-                    continue
-                neighbor = neighbor_y * width + neighbor_x
-                if not visited[neighbor] and colors[neighbor] == color:
-                    visited[neighbor] = 1
-                    queue.append(neighbor)
-        components.append((color, pixels, touches_border))
-    return components
-
-
-def restore_source_silhouette(
-    source_crop: Image.Image,
-    current: Image.Image,
-    authored_colors: set[tuple[int, int, int]],
-    matte_colors: set[tuple[int, int, int]],
-) -> Image.Image:
-    """Restore source pixels only inside the existing character silhouette.
-
-    This is the same conservative source/silhouette rule used by
-    audit-source-frame-silhouettes.py: a source color must already belong to the
-    authored sprite (or be a tiny adjacent interior component), and every
-    restored pixel must be bracketed by the primary body. Exterior matte can
-    therefore never grow back into the exported frame.
-    """
-    result = current.convert("RGBA").copy()
-    width, height = result.size
-    existing = alpha_mask(result)
-    primary = primary_alpha_component(existing, width, height)
-    source_pixels = source_crop.convert("RGBA").load()
-    if not any(primary):
-        return result
-
-    for color, component, touches_border in color_components(source_crop):
-        if color in matte_colors:
-            continue
-        overlap = any(primary[key] for key in component)
-        adjacent = any(near_mask(primary, width, height, key % width, key // width) for key in component)
-        authored = color in authored_colors
-        if not ((authored and (overlap or adjacent)) or (not authored and not touches_border and len(component) <= 24 and adjacent)):
-            continue
-        for key in component:
-            if existing[key]:
-                continue
-            x, y = key % width, key // width
-            if not inside_primary_span(primary, width, height, x, y):
-                continue
-            red, green, blue, _ = source_pixels[x, y]
-            result.putpixel((x, y), (red, green, blue, 255))
-    return result
-
-
 def fill_small_silhouette_holes(source_crop: Image.Image, current: Image.Image, max_pixels: int = 24) -> Image.Image:
     """Fill enclosed alpha pinholes without closing real limb/weapon gaps."""
     result = current.convert("RGBA").copy()
@@ -524,6 +461,47 @@ def fill_small_silhouette_holes(source_crop: Image.Image, current: Image.Image, 
             x, y = key % width, key // width
             red, green, blue, _ = source_pixels[x, y]
             result.putpixel((x, y), (red, green, blue, 255))
+    return result
+
+
+def fill_dense_interior_gaps(source_crop: Image.Image, current: Image.Image, radius: int = 3) -> Image.Image:
+    """Restore locally enclosed source pixels without growing the silhouette.
+
+    Matte removal can enter a sprite through a tiny outline break and turn an
+    otherwise dense interior patch into an exterior-connected alpha channel.
+    Such a patch is not a conventional enclosed hole, so restore pixels only
+    when opaque artwork brackets them nearby on both horizontal and vertical
+    axes and occupies at least half of the surrounding sample window.
+    """
+    result = current.convert("RGBA").copy()
+    width, height = result.size
+    existing = alpha_mask(result)
+    source_pixels = source_crop.convert("RGBA").load()
+    repairs: list[tuple[int, int]] = []
+
+    for y in range(radius, height - radius):
+        for x in range(radius, width - radius):
+            key = y * width + x
+            if existing[key]:
+                continue
+            left = any(existing[y * width + x - step] for step in range(1, radius + 1))
+            right = any(existing[y * width + x + step] for step in range(1, radius + 1))
+            above = any(existing[(y - step) * width + x] for step in range(1, radius + 1))
+            below = any(existing[(y + step) * width + x] for step in range(1, radius + 1))
+            if not (left and right and above and below):
+                continue
+            occupied = sum(
+                existing[neighbor_y * width + neighbor_x]
+                for neighbor_y in range(y - radius, y + radius + 1)
+                for neighbor_x in range(x - radius, x + radius + 1)
+            )
+            if occupied * 2 < (radius * 2 + 1) ** 2:
+                continue
+            repairs.append((x, y))
+
+    for x, y in repairs:
+        red, green, blue, _ = source_pixels[x, y]
+        result.putpixel((x, y), (red, green, blue, 255))
     return result
 
 
@@ -1019,35 +997,20 @@ def build() -> None:
         if definition.get("generated"):
             source_crops = extract_generated_animations(source, set_id)
         else:
+            # Make the complete sheet transparent first, then cut reviewed
+            # frames from it. Never reintroduce matte-colored source pixels.
+            transparent_source = remove_gray_background(source, background)
             original_crops = {
                 animation_id: [source.crop(bounds) for bounds in bounds_list]
                 for animation_id, bounds_list in definition["bounds"].items()
             }
             initial_crops = {
-                animation_id: [remove_gray_background(crop, background) for crop in crops]
-                for animation_id, crops in original_crops.items()
+                animation_id: [transparent_source.crop(bounds) for bounds in bounds_list]
+                for animation_id, bounds_list in definition["bounds"].items()
             }
-            authored_colors = {
-                (red, green, blue)
-                for crops in initial_crops.values()
-                for crop in crops
-                for red, green, blue, alpha in crop.get_flattened_data()
-                if alpha
-            }
-            source_color_counts = Counter(source.get_flattened_data())
-            matte_colors = {
-                color for color, count in source_color_counts.items()
-                if count >= 256
-                and max(abs(color[channel] - background[channel]) for channel in range(3)) <= 12
-                and max(color) - min(color) <= 12
-            }
-            matte_colors.add(background)
             source_crops = {
                 animation_id: [
-                    fill_small_silhouette_holes(
-                        original,
-                        restore_source_silhouette(original, current, authored_colors, matte_colors),
-                    )
+                    fill_dense_interior_gaps(original, fill_small_silhouette_holes(original, current))
                     for original, current in zip(original_crops[animation_id], initial_crops[animation_id])
                 ]
                 for animation_id in original_crops
@@ -1070,7 +1033,7 @@ def build() -> None:
                 if animation_id.startswith("attack"):
                     attack_fit_scale = attack_crop_fit_scale(crop)
                     crop = fit_attack_crop(crop)
-                    crop = fill_single_alpha_pinholes(crop)
+                crop = fill_single_alpha_pinholes(crop)
                 if crop.width > FRAME_SIZE[0] or crop.height > FRAME_SIZE[1]:
                     raise ValueError(f"Frame {set_id}/{animation_id}/{index} is {crop.width}x{crop.height}, exceeding {FRAME_SIZE[0]}x{FRAME_SIZE[1]}")
                 frame = Image.new("RGBA", FRAME_SIZE)
@@ -1202,7 +1165,7 @@ def build() -> None:
         "Image API supplemental sheet containing heavy, kick, and signature attack rows. "
         "Eight signature moves also include a separate projectile-only PNG strip and six transparent runtime frames; "
         "the character body is never reused as projectile art. "
-        "Frames use an exterior-only transparent matte, conservative source-silhouette restoration, "
+        "Frames are cut from a complete binary-alpha transparent master with neutral matte-fringe removal, "
         "a shared 320×192 canvas with body-anchored attack effects, and baseline 182.\n"
     )
     if ROOT.exists():

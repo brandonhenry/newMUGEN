@@ -171,6 +171,33 @@ describe('K.O.R.E. full-frame street avatar assets', () => {
     expect(validation.status, validation.stderr).toBe(0);
   });
 
+  it('does not restore gray sheet matte inside the Street Shadow silhouette', () => {
+    const validation = spawnSync('python3', ['-c', [
+      'from PIL import Image',
+      `path=${JSON.stringify(resolve(ASSET_ROOT, 'sets/street-shadow/frames/idle/00.png'))}`,
+      "image=Image.open(path).convert('RGBA')",
+      '# This column was a fully opaque gray matte streak between the hair and coat.',
+      'points=((135,113),(135,120),(135,130),(135,137))',
+      'assert all(image.getpixel(point)[3] == 0 for point in points), [(point,image.getpixel(point)) for point in points]'
+    ].join('\n')], { encoding: 'utf8' });
+    expect(validation.status, validation.stderr).toBe(0);
+  });
+
+  it('restores dense interior sprite gaps without growing the exterior silhouette', () => {
+    const validation = spawnSync('python3', ['-c', [
+      'from pathlib import Path',
+      'from PIL import Image',
+      `root=Path(${JSON.stringify(resolve(ASSET_ROOT, 'sets'))})`,
+      "solar=Image.open(root/'solar-runner/frames/sprint/00.png').convert('RGBA')",
+      "rose=Image.open(root/'rose-blade/frames/sprint/01.png').convert('RGBA')",
+      'solar_repairs=((172,143),(173,144),(175,146),(144,153))',
+      'rose_repairs=((125,116),(143,140),(144,141))',
+      'assert all(solar.getpixel(point)[3] == 255 for point in solar_repairs), [(point,solar.getpixel(point)) for point in solar_repairs]',
+      'assert all(rose.getpixel(point)[3] == 255 for point in rose_repairs), [(point,rose.getpixel(point)) for point in rose_repairs]'
+    ].join('\n')], { encoding: 'utf8' });
+    expect(validation.status, validation.stderr).toBe(0);
+  });
+
   it('retains small source-authored silhouette components beside ranged attack bodies', () => {
     const minimumOpaquePixels = {
       'solar-brawler/01': 11925,

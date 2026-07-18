@@ -10,6 +10,7 @@ import { addFriendEntry, isFriend, readMatchHistory } from '../lib/socialHistory
 import type { InputFrame } from '../types';
 import { STORY_ADVENTURE_ASSET_PATHS, storyWorldAssetPath } from './adventureAssets';
 import { emitAdventureAudioEvent } from './adventureAudio';
+import { STORY_HAZARD_SPRITES, storyHazardDealsContactDamage } from './adventureHazards';
 import { STORY_ATTACK_VISUAL_SYNC_DELAY_MS, advanceStoryAttackInputBuffer, adventureAttackHits, canAdventureEnemyDamagePlayer, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureAttackFrameHitbox, getAdventureEnemyStats, getStoryAttackDurationMs, getStoryProjectileSpawnPosition, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, resolveStoryAttackInput, stepAdventureProjectile, storyPlayerProjectileHits, type AdventureDamageFeedback, type StoryBufferedAttackInput } from './adventureCombat';
 import { makeStoryEncounterProgress, recordChallengerDefeat, recordRegularDefeat, rerollStoryRegularSpawns, resetActiveChallenger, storyEncounterMovementLock, type StoryEncounterProgress } from './adventureEncounters';
 import { STORY_ADVENTURE_COMBAT_STAT_KEYS, STORY_ADVENTURE_PARTY_SIZE_CAP, STORY_ADVENTURE_STAT_CAP, acknowledgeAdventurePartyFeatureReveal, addAdventureMaterial, adventureResourceYieldModifiers, allocateAdventureStat, applyAdventureEnemyDefeat, awardMountMastery, beginAdventureVisit, canRespecAdventureStats, claimAdventureCache, collectAdventureRelic, consumeAdventureItem, craftAdventureRecipe, depleteAdventureResourceNode, discoverAdventureLandmark, discoverAdventureSurfaceMap, discoverAdventureVista, discoverAdventureWaystone, equipAdventureArmor, experienceToNextLevel, getAdventureDerivedStats, getAdventurePartySizeProgress, isAdventureResourceNodeAvailable, pinAdventureDaily, readAdventureProgress, respecAdventureStats, restoreAdventureShortcut, unlockAdventureMasteryRecipe, unlockAdventureMount, unlockAdventureSpecialistRecipes, upgradeAdventureWaystone, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
@@ -35,7 +36,7 @@ import { STORY_ARMOR_SET_BONUSES, STORY_BIOME_IDS, STORY_RECIPE_BY_ID, STORY_REC
 import { adventureAttackCanHitResource, adventureResourceHitStrength, createDepthResourceNodes, resourceYield } from './adventureResources';
 import { AdventureStatPointNotification, type AdventureStatPointNotice } from './AdventureStatPointNotification';
 import { getEquippedStoryAvatarSlots, normalizeStoryAvatarRoster, setActiveStoryAvatar } from './profile';
-import type { AdventureMusicContext, AdventureMusicTrackDefinition, HubDestination, StoryAdventureRunGraph, StoryAttackInput, StoryAvatarSet, StoryEnemyDefeatEvent, StoryEnemyId, StoryEnemySpawnDefinition, StoryEnemyTier, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryMountDefinition, StoryMountId, StoryNpcDefinition, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StoryResourceNodeDefinition, StorySpriteProjectileDefinition, StoryWorldBackdropLayerDefinition, StoryWorldId, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
+import type { AdventureMusicContext, AdventureMusicTrackDefinition, HubDestination, StoryAdventureRunGraph, StoryAttackInput, StoryAvatarSet, StoryEnemyDefeatEvent, StoryEnemyId, StoryEnemySpawnDefinition, StoryEnemyTier, StoryHazardDefinition, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryMountDefinition, StoryMountId, StoryNpcDefinition, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StoryResourceNodeDefinition, StorySpriteProjectileDefinition, StoryWorldBackdropLayerDefinition, StoryWorldId, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
 
 type StoryHubInput = Pick<InputFrame, 'left' | 'right' | 'down' | 'up' | 'jump' | 'jab' | 'kick' | 'heavy' | 'special' | 'block' | 'back' | 'pause'> & { interact: boolean };
 type SetVirtualAction = (player: 1 | 2, action: keyof InputFrame, pressed: boolean) => void;
@@ -633,26 +634,84 @@ function AdventureNpcVisual({ npc, attackEvent, playerPosition, maxHealth, reduc
   </group>;
 }
 
-function AdventureHazards({ hub, progress, playerPosition, onPlayerDamage }: { hub: StoryHubDefinition; progress: StoryAdventureProgressV1; playerPosition: MutableRefObject<THREE.Vector3>; onPlayerDamage: (damage: number, sourceX: number) => void }) {
+function AnimatedHazardSprite({ hazard, reducedMotion }: { hazard: StoryHazardDefinition; reducedMotion: boolean }) {
+  const definition = STORY_HAZARD_SPRITES[hazard.kind as keyof typeof STORY_HAZARD_SPRITES];
+  const columns = definition.atlasSize[0] / definition.frameSize[0];
+  const rows = definition.atlasSize[1] / definition.frameSize[1];
+  const source = useTexture(definition.path);
+  const texture = useMemo(() => {
+    const clone = configurePixelTexture(source.clone(), 1 / columns, 1 / rows);
+    clone.offset.set(0, (rows - 1) / rows);
+    return clone;
+  }, [columns, rows, source]);
+  const displayedFrame = useRef(-1);
+  const phase = useMemo(() => [...hazard.id].reduce((sum, character) => sum + character.charCodeAt(0), 0) % definition.frameCount, [definition.frameCount, hazard.id]);
+  useEffect(() => () => texture.dispose(), [texture]);
+  useFrame((state) => {
+    const frame = reducedMotion ? 0 : (Math.floor(state.clock.elapsedTime * 1000 / definition.frameDurationMs) + phase) % definition.frameCount;
+    if (frame === displayedFrame.current) return;
+    displayedFrame.current = frame;
+    texture.offset.set((frame % columns) / columns, (rows - 1 - Math.floor(frame / columns)) / rows);
+    texture.needsUpdate = true;
+  });
+  const [minX, maxX, minY] = hazard.bounds;
+  return <mesh position={[(minX + maxX) / 2, minY + definition.worldHeight / 2 - 0.08, 0.16]} renderOrder={32}>
+    <planeGeometry args={[maxX - minX, definition.worldHeight]} />
+    <meshBasicMaterial map={texture} transparent alphaTest={0.02} depthWrite={false} toneMapped={false} />
+  </mesh>;
+}
+
+function WindHazardVisual({ hazard, reducedMotion }: { hazard: StoryHazardDefinition; reducedMotion: boolean }) {
+  const group = useRef<THREE.Group>(null);
+  const [minX, maxX, minY, maxY] = hazard.bounds;
+  useFrame((state) => {
+    if (!group.current) return;
+    group.current.position.x = reducedMotion ? 0 : Math.sin(state.clock.elapsedTime * 1.8) * 0.28;
+  });
+  return <group ref={group} position={[(minX + maxX) / 2, (minY + maxY) / 2, 0.02]}>
+    {Array.from({ length: 7 }, (_, index) => <mesh key={index} position={[(index % 3 - 1) * 1.15, (index - 3) * 0.86, 0]} rotation={[0, 0, -0.16]}>
+      <planeGeometry args={[1.15 + index % 2 * 0.45, 0.055]} />
+      <meshBasicMaterial color={index % 2 ? '#ffffff' : hazard.accent} transparent opacity={0.34} depthWrite={false} toneMapped={false} />
+    </mesh>)}
+  </group>;
+}
+
+function SinkingSandHazardVisual({ hazard, reducedMotion }: { hazard: StoryHazardDefinition; reducedMotion: boolean }) {
+  const group = useRef<THREE.Group>(null);
+  const [minX, maxX, minY] = hazard.bounds;
+  useFrame((state) => {
+    if (!group.current || reducedMotion) return;
+    group.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.9) * 0.05;
+  });
+  return <group ref={group} position={[(minX + maxX) / 2, minY + 0.12, 0.08]}>
+    {[0.72, 1.18, 1.72].map((radius, index) => <mesh key={radius} scale={[1, 0.22, 1]}>
+      <ringGeometry args={[radius, radius + 0.055, 32]} />
+      <meshBasicMaterial color={index === 1 ? '#fff0a8' : hazard.accent} transparent opacity={0.48 - index * 0.08} depthWrite={false} toneMapped={false} />
+    </mesh>)}
+  </group>;
+}
+
+function AdventureHazards({ hub, progress, playerPosition, reducedMotion, onPlayerDamage }: { hub: StoryHubDefinition; progress: StoryAdventureProgressV1; playerPosition: MutableRefObject<THREE.Vector3>; reducedMotion: boolean; onPlayerDamage: (damage: number, sourceX: number) => void }) {
   const cooldowns = useRef<Record<string, number>>({});
   const stats = useMemo(() => getAdventureDerivedStats(progress), [progress]);
   useFrame(() => {
     const now = performance.now();
     for (const hazard of hub.hazards ?? []) {
+      if (!storyHazardDealsContactDamage(hazard.kind) || hazard.damage <= 0) continue;
       const [minX, maxX, minY, maxY] = hazard.bounds;
       if (playerPosition.current.x < minX || playerPosition.current.x > maxX || playerPosition.current.y < minY || playerPosition.current.y > maxY || now < (cooldowns.current[hazard.id] ?? 0)) continue;
-      if (hazard.kind === 'wind' || hazard.kind === 'sinking-sand' || hazard.kind === 'drowning') continue;
       cooldowns.current[hazard.id] = now + 900;
       const protection = hazard.kind === 'lava' ? stats.lavaDamageMultiplier : hazard.kind === 'icicle' ? stats.icicleDamageMultiplier : 1;
       onPlayerDamage(hazard.damage * protection, (minX + maxX) / 2);
     }
   });
-  return <>{(hub.hazards ?? []).map((hazard) => {
-    const [minX, maxX, minY, maxY] = hazard.bounds;
-    return <group key={hazard.id} position={[(minX + maxX) / 2, Math.max(0.08, (minY + maxY) / 2), -0.12]}>
-      <mesh><boxGeometry args={[maxX - minX, Math.max(0.14, maxY - minY), 0.3]} /><meshBasicMaterial color={hazard.accent} transparent opacity={hazard.kind === 'wind' ? 0.18 : 0.62} /></mesh>
-    </group>;
-  })}</>;
+  return <>{(hub.hazards ?? []).map((hazard) => storyHazardDealsContactDamage(hazard.kind)
+    ? <AnimatedHazardSprite key={hazard.id} hazard={hazard} reducedMotion={reducedMotion} />
+    : hazard.kind === 'wind'
+      ? <WindHazardVisual key={hazard.id} hazard={hazard} reducedMotion={reducedMotion} />
+      : hazard.kind === 'sinking-sand'
+        ? <SinkingSandHazardVisual key={hazard.id} hazard={hazard} reducedMotion={reducedMotion} />
+        : null)}</>;
 }
 
 function AdventureTraversalVisuals({ hub }: { hub: StoryHubDefinition }) {
@@ -1861,7 +1920,7 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
           <PlatformVisual platform={platform} hub={hub} />
         </RigidBody>)}
         <AdventureTraversalVisuals hub={hub} />
-        <AdventureHazards hub={hub} progress={progress} playerPosition={playerPosition} onPlayerDamage={(damage, sourceX) => { if (!disabled) onPlayerDamage(damage, sourceX); }} />
+        <AdventureHazards hub={hub} progress={progress} playerPosition={playerPosition} reducedMotion={reducedMotion} onPlayerDamage={(damage, sourceX) => { if (!disabled) onPlayerDamage(damage, sourceX); }} />
         {hub.portals.map((portal) => <PortalVisual key={portal.id} portal={portal} theme={hub.theme} nearby={nearbyPortal?.id === portal.id} assigned={assignedPortalId === portal.id} reducedMotion={reducedMotion} />)}
         {(hub.npcs ?? []).map((npc) => <AdventureNpcVisual key={npc.id} npc={npc} attackEvent={attackEvent} playerPosition={playerPosition} maxHealth={derivedStats.maxHealth} reducedMotion={reducedMotion} onPlayerDamage={(damage, sourceX) => { if (!disabled) onPlayerDamage(damage, sourceX); }} surfaceInsetY={groundSurfaceInsetY} surfacePixelWorldHeight={groundSurfacePixelWorldHeight} />)}
         {hub.biomeId && (hub.resourceNodes ?? []).map((node) => <AdventureResourceNode key={node.id} node={node} biomeId={hub.biomeId!} progress={progress} attackEvent={attackEvent} playerPosition={playerPosition} playerProjectile={playerProjectile} reducedMotion={reducedMotion} onHarvest={onResourceHarvest} />)}
