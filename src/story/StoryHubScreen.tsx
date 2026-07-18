@@ -425,6 +425,11 @@ function PlatformVisual({ platform, hub }: { platform: StoryPlatformDefinition; 
   return hub.environment?.surface ? <PackPlatformVisual platform={platform} hub={hub} /> : <CityPlatformVisual platform={platform} color={hub.environment?.ground} />;
 }
 
+function storyHubGroundPlatform(hub: StoryHubDefinition): StoryPlatformDefinition | undefined {
+  return hub.platforms.find((platform) => platform.id === 'ground')
+    ?? hub.platforms.find((platform) => !platform.oneWay && Math.abs(platform.position[1] + platform.size[1] / 2 - hub.bounds.floorY) < 0.001);
+}
+
 const CABINET_FRAMES = Array.from({ length: 16 }, (_, index) => `${ARCADE_ASSET_ROOT}/red-${String(index).padStart(2, '0')}.png`);
 
 function AnimatedCabinet({ position = [0, 0, 0], mirrored = false, scale = 1, reducedMotion = false }: { position?: [number, number, number]; mirrored?: boolean; scale?: number; reducedMotion?: boolean }) {
@@ -1273,9 +1278,14 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
   const nearbyId = useRef<string | null>(null);
   const lastSampleAt = useRef(0);
   const flashUntil = useRef(0);
-  const platformSurfaceInsets = useMemo(() => new globalThis.Map(
-    hub.platforms.map((platform) => [platform.id, storyPlatformSurfacePlacement(platform, hub.environment?.surface).surfaceInsetY])
-  ), [hub.environment?.surface, hub.platforms]);
+  const platformSurfaceInsets = useMemo(() => {
+    const insets = new globalThis.Map(
+      hub.platforms.map((platform) => [platform.id, storyPlatformSurfacePlacement(platform, hub.environment?.surface).surfaceInsetY])
+    );
+    const ground = storyHubGroundPlatform(hub);
+    if (ground) insets.set('ground', insets.get(ground.id) ?? 0);
+    return insets;
+  }, [hub]);
   const initialSurfaceInsetY = platformSurfaceInsets.get('ground') ?? 0;
   useEffect(() => onReady?.(), [onReady]);
   useEffect(() => {
@@ -1563,9 +1573,9 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
   }, [activeChallenge, hub.exploration?.encounters, hub.id]);
   const groundingOffsetY = storyAvatarGroundingOffsetForWorld();
   const groundSurfaceInsetY = useMemo(() => {
-    const ground = hub.platforms.find((platform) => platform.id === 'ground');
+    const ground = storyHubGroundPlatform(hub);
     return ground ? storyPlatformSurfacePlacement(ground, hub.environment?.surface).surfaceInsetY : 0;
-  }, [hub.environment?.surface, hub.platforms]);
+  }, [hub]);
 
   const commitEncounterProgress = useCallback((next: StoryEncounterProgress) => {
     encounterProgressRef.current = next;
