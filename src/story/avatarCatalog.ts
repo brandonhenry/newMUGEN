@@ -33,6 +33,100 @@ export const STORY_AVATAR_SET_LABELS: Record<StoryAvatarSet, string> = {
   'tech-nomad': 'Tech Nomad'
 };
 
+export type StoryAvatarSelectionProfile = {
+  role: string;
+  description: string;
+  strengths: string;
+  special: string;
+};
+
+export const STORY_AVATAR_SELECTION_PROFILES: Record<StoryAvatarSet, StoryAvatarSelectionProfile> = {
+  'solar-runner': {
+    role: 'Swift Vanguard',
+    description: 'A fearless pathfinder who meets danger with speed, warmth, and a flash of sunlight.',
+    strengths: 'Fast opening strikes, quick pursuit, and keeping pressure on fleeing enemies.',
+    special: 'Launches a bright solar flare that carries the fight across the battlefield.'
+  },
+  'street-shadow': {
+    role: 'Close-Range Trickster',
+    description: 'A quiet city fighter who slips through danger and strikes before enemies can settle in.',
+    strengths: 'Quick kicks, sudden heavy blows, and fighting confidently at close range.',
+    special: 'Unleashes a shadow-charged burst against nearby enemies.'
+  },
+  'crimson-ranger': {
+    role: 'Long-Range Hunter',
+    description: 'A sharp-eyed trailblazer who stays calm, chooses the right opening, and never wastes a shot.',
+    strengths: 'Keeping distance, punishing faraway threats, and landing swift ranged attacks.',
+    special: 'Fires a fast crimson shot that reaches enemies in an instant.'
+  },
+  'rose-blade': {
+    role: 'Agile Duelist',
+    description: 'A graceful swordfighter whose elegant movements hide a bold and relentless heart.',
+    strengths: 'Fast opening slashes, steady close-range pressure, and precise finishing attacks.',
+    special: 'Sweeps the blade through a powerful rose-lit finishing arc.'
+  },
+  'neon-courier': {
+    role: 'Mobile Blaster',
+    description: 'A daring messenger who treats every battlefield like one more impossible delivery route.',
+    strengths: 'Staying on the move, changing distance quickly, and attacking while enemies regroup.',
+    special: 'Sends a neon charge racing forward to catch distant targets.'
+  },
+  'ember-scout': {
+    role: 'Flamefront Scrapper',
+    description: 'A bold wilderness scout who turns every close call into fuel for the next attack.',
+    strengths: 'Aggressive close-range fighting, strong kicks, and forcing enemies backward.',
+    special: 'Ignites a fierce point-blank blaze for a powerful finish.'
+  },
+  'synth-drifter': {
+    role: 'Precision Blaster',
+    description: 'A wandering machine-soul who studies every threat and answers with cool precision.',
+    strengths: 'Measured attacks, safe spacing, and fast shots against hard-to-reach enemies.',
+    special: 'Releases a focused energy bolt that travels quickly across the field.'
+  },
+  'forest-warden': {
+    role: 'Steady Guardian',
+    description: 'A patient protector who carries the strength of old trees into every dangerous place.',
+    strengths: 'Reliable opening strikes, holding ground, and turning defense into close-range pressure.',
+    special: 'Calls up a forceful sweep of wild energy around the blade.'
+  },
+  'solar-brawler': {
+    role: 'Sun-Powered Bruiser',
+    description: 'A cheerful powerhouse who charges straight toward trouble and hits with unmistakable force.',
+    strengths: 'Heavy attacks, strong knockback, and controlling space with a slow, threatening blast.',
+    special: 'Throws a broad solar burst that steadily drives enemies out of its path.'
+  },
+  'void-operative': {
+    role: 'Patient Controller',
+    description: 'A mysterious tactician who waits for one perfect mistake and makes enemies regret it.',
+    strengths: 'Careful spacing, patient counterattacks, and controlling where enemies can safely stand.',
+    special: 'Sends a lingering void pulse forward to close off an escape route.'
+  },
+  'circuit-mage': {
+    role: 'Arcane Artillery',
+    description: 'A curious spellcaster who blends old mysteries with crackling new power.',
+    strengths: 'Fighting from afar, reaching flying threats, and answering danger with fast magic.',
+    special: 'Casts a swift circuit spell that streaks toward distant enemies.'
+  },
+  'street-medic': {
+    role: 'Fearless Responder',
+    description: 'A level-headed rescuer who runs toward danger and refuses to leave anyone behind.',
+    strengths: 'Clear attack timing, dependable close-range blows, and staying composed under pressure.',
+    special: 'Delivers a decisive point-blank shock to stop an advancing enemy.'
+  },
+  'arena-rebel': {
+    role: 'Crowd-Favorite Fighter',
+    description: 'A bold challenger who brings arena confidence, improvised style, and plenty of heart.',
+    strengths: 'Direct jabs, forceful kicks, and keeping close-range fights moving at a lively pace.',
+    special: 'Finishes with a dramatic rebel strike built for the front line.'
+  },
+  'tech-nomad': {
+    role: 'Versatile Explorer',
+    description: 'A resourceful traveler who brings the right tool, the right plan, and a calm answer to the unknown.',
+    strengths: 'Adapting to changing threats, fighting at any distance, and safely reaching remote enemies.',
+    special: 'Launches a reliable tech charge that covers the path ahead.'
+  }
+};
+
 export const STORY_BODY_PRESETS: readonly StoryBodyPreset[] = ['compact', 'standard', 'tall'];
 export const STORY_BODY_TONES: readonly StoryBodyTone[] = ['blue', 'dark', 'gray', 'green', 'light', 'pale', 'red', 'tan', 'white', 'yellow'];
 export const STORY_AVATAR_LINEAGES: readonly StoryAvatarLineage[] = ['human', 'sylvan', 'emberkin', 'synth'];

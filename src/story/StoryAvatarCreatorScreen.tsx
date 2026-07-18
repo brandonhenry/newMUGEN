@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import {
   makeDefaultStoryAvatar,
   sanitizeStoryName,
+  STORY_AVATAR_SELECTION_PROFILES,
   STORY_AVATAR_SET_LABELS,
   STORY_AVATAR_SETS
 } from './avatarCatalog';
@@ -27,15 +28,16 @@ export default function StoryAvatarCreatorScreen({ profile, preferredName, reduc
   const initialAvatar = useMemo(() => profile?.avatar ?? makeDefaultStoryAvatar(assignedName), [assignedName, profile]);
   const [draft, setDraft] = useState<StoryAvatarDefinition>(initialAvatar);
   const cleanName = sanitizeStoryName(draft.name);
+  const selectionProfile = STORY_AVATAR_SELECTION_PROFILES[draft.avatarSet];
   const update = <K extends keyof StoryAvatarDefinition>(key: K, value: StoryAvatarDefinition[K]) => setDraft((current) => ({ ...current, [key]: value }));
 
   return (
     <div className="story-creator-screen" data-testid="story-avatar-creator">
       <header className="story-creator-header story-enter-1">
         <div>
-          <span><UserRound size={16} /> K.O.R.E. Citizen Registry</span>
-          <h1>{profile ? 'Avatar Studio' : 'Create Your Story Avatar'}</h1>
-          <p>Your existing player name is reused automatically, or K.O.R.E. assigns one for you.</p>
+          <span><UserRound size={16} /> Adventure Party</span>
+          <h1>{profile ? 'Choose Your Adventure Hero' : 'Choose Your Adventurer'}</h1>
+          <p>Choose the hero who will take the next step into Adventure Mode.</p>
         </div>
         <button type="button" className="story-creator-back" onClick={onBack}><ChevronLeft size={20} /> Back</button>
       </header>
@@ -57,19 +59,19 @@ export default function StoryAvatarCreatorScreen({ profile, preferredName, reduc
           </Canvas>
           <div className="story-avatar-preview-name">
             <strong>{cleanName || 'PLAYER'}</strong>
-            <span>Central Citizen</span>
+            <span>{selectionProfile.role}</span>
           </div>
         </section>
 
         <section className="story-creator-controls story-enter-3" aria-label="Avatar options">
           <label className="story-name-field">
-            <span>Hub name</span>
+            <span>Hero Name</span>
             <input value={draft.name} maxLength={12} onChange={(event) => update('name', event.target.value)} onBlur={() => update('name', cleanName)} autoFocus={!profile} />
-            <small>Automatically assigned · {cleanName.length}/12</small>
+            <small>What should everyone call you? · {cleanName.length}/12</small>
           </label>
 
           <div className="story-creator-choice">
-            <span>Avatar</span>
+            <span>Choose Your Hero</span>
             <div>
               <button type="button" aria-label="Previous avatar" onClick={() => update('avatarSet', nextAvatarSet(draft.avatarSet, -1))}>
                 <ChevronLeft size={20} />
@@ -82,15 +84,20 @@ export default function StoryAvatarCreatorScreen({ profile, preferredName, reduc
           </div>
 
           <div className="story-directional-note">
-            <strong>Fourteen complete animated presets</strong>
-            <span>The four supplied characters and ten original nub-foot K.O.R.E. chibis use fixed authored frames. No runtime recoloring, redraw, or procedural body layers are applied.</span>
+            <strong>{selectionProfile.role}</strong>
+            <span>{selectionProfile.description}</span>
+            <dl className="story-avatar-strengths">
+              <div><dt>Strengths</dt><dd>{selectionProfile.strengths}</dd></div>
+              <div><dt>Special Move</dt><dd>{selectionProfile.special}</dd></div>
+            </dl>
+            <small>Every hero can grow stronger as you level up, so choose the fighting style you enjoy.</small>
           </div>
         </section>
       </main>
 
       <footer className="story-creator-footer story-enter-4">
-        <p>{profile ? 'Save your changes and return to K.O.R.E. Central.' : 'Your avatar will be stored on this device and included in memory-card exports.'}</p>
-        <button type="button" className="story-primary-button" onClick={() => onSave({ ...draft, name: cleanName || assignedName })}><Save size={20} /> Save &amp; Enter Hub</button>
+        <p>{profile ? 'Return to K.O.R.E. Central when your hero is ready.' : 'Your chosen hero will be waiting whenever you return to your adventure.'}</p>
+        <button type="button" className="story-primary-button" onClick={() => onSave({ ...draft, name: cleanName || assignedName })}><Save size={20} /> {profile ? 'Return to Adventure' : 'Begin Adventure'}</button>
       </footer>
     </div>
   );

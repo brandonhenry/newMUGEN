@@ -197,6 +197,7 @@ body {
   color: #ffffff;
   font-size: clamp(30px, 5.6vw, 66px);
   line-height: 0.92;
+  text-wrap: balance;
   text-transform: uppercase;
   text-shadow: 0 8px 28px rgba(0, 0, 0, 0.52);
 }
@@ -207,6 +208,7 @@ body {
   color: rgba(247, 247, 242, 0.66);
   font-size: 13px;
   line-height: 1.4;
+  text-wrap: pretty;
 }
 
 .story-creator-back {
@@ -361,6 +363,47 @@ body {
 .story-directional-note span {
   font-size: 10px;
   line-height: 1.65;
+}
+
+.story-avatar-strengths {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 4px 0 0;
+}
+
+.story-avatar-strengths > div {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  min-height: 72px;
+  border-radius: 9px;
+  padding: 10px;
+  background: rgba(2, 6, 21, 0.46);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
+.story-avatar-strengths dt {
+  color: #f7d45a;
+  font-size: 8px;
+  font-weight: 950;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.story-avatar-strengths dd {
+  margin: 0;
+  color: rgba(247, 247, 242, 0.78);
+  font-size: 9px;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.story-directional-note > small {
+  color: rgba(247, 247, 242, 0.48);
+  font-size: 8px;
+  line-height: 1.5;
+  text-wrap: pretty;
 }
 
 .story-creator-choice {
@@ -2515,6 +2558,10 @@ body {
 @media (max-width: 560px) {
   .story-creator-header {
     align-items: start;
+  }
+
+  .story-avatar-strengths {
+    grid-template-columns: 1fr;
   }
 
   .story-creator-header p,
