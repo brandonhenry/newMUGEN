@@ -663,26 +663,20 @@ function AdventureNpcVisual({ npc, attackEvent, playerPosition, maxHealth, reduc
   </group>;
 }
 
-function AnimatedHazardSprite({ hazard, reducedMotion }: { hazard: StoryHazardDefinition; reducedMotion: boolean }) {
+function StationaryHazardSprite({ hazard }: { hazard: StoryHazardDefinition }) {
   const definition = STORY_HAZARD_SPRITES[hazard.kind as keyof typeof STORY_HAZARD_SPRITES];
   const columns = definition.atlasSize[0] / definition.frameSize[0];
   const rows = definition.atlasSize[1] / definition.frameSize[1];
   const source = useTexture(definition.path);
   const texture = useMemo(() => {
     const clone = configurePixelTexture(source.clone(), 1 / columns, 1 / rows);
-    clone.offset.set(0, (rows - 1) / rows);
+    clone.offset.set(
+      (definition.displayFrame % columns) / columns,
+      (rows - 1 - Math.floor(definition.displayFrame / columns)) / rows
+    );
     return clone;
-  }, [columns, rows, source]);
-  const displayedFrame = useRef(-1);
-  const phase = useMemo(() => [...hazard.id].reduce((sum, character) => sum + character.charCodeAt(0), 0) % definition.frameCount, [definition.frameCount, hazard.id]);
+  }, [columns, definition.displayFrame, rows, source]);
   useEffect(() => () => texture.dispose(), [texture]);
-  useFrame((state) => {
-    const frame = reducedMotion ? 0 : (Math.floor(state.clock.elapsedTime * 1000 / definition.frameDurationMs) + phase) % definition.frameCount;
-    if (frame === displayedFrame.current) return;
-    displayedFrame.current = frame;
-    texture.offset.set((frame % columns) / columns, (rows - 1 - Math.floor(frame / columns)) / rows);
-    texture.needsUpdate = true;
-  });
   const [minX, maxX, minY] = hazard.bounds;
   return <mesh position={[(minX + maxX) / 2, minY + definition.worldHeight / 2 - 0.08, 0.16]} renderOrder={32}>
     <planeGeometry args={[maxX - minX, definition.worldHeight]} />
@@ -690,14 +684,9 @@ function AnimatedHazardSprite({ hazard, reducedMotion }: { hazard: StoryHazardDe
   </mesh>;
 }
 
-function WindHazardVisual({ hazard, reducedMotion }: { hazard: StoryHazardDefinition; reducedMotion: boolean }) {
-  const group = useRef<THREE.Group>(null);
+function WindHazardVisual({ hazard }: { hazard: StoryHazardDefinition }) {
   const [minX, maxX, minY, maxY] = hazard.bounds;
-  useFrame((state) => {
-    if (!group.current) return;
-    group.current.position.x = reducedMotion ? 0 : Math.sin(state.clock.elapsedTime * 1.8) * 0.28;
-  });
-  return <group ref={group} position={[(minX + maxX) / 2, (minY + maxY) / 2, 0.02]}>
+  return <group position={[(minX + maxX) / 2, (minY + maxY) / 2, 0.02]}>
     {Array.from({ length: 7 }, (_, index) => <mesh key={index} position={[(index % 3 - 1) * 1.15, (index - 3) * 0.86, 0]} rotation={[0, 0, -0.16]}>
       <planeGeometry args={[1.15 + index % 2 * 0.45, 0.055]} />
       <meshBasicMaterial color={index % 2 ? '#ffffff' : hazard.accent} transparent opacity={0.34} depthWrite={false} toneMapped={false} />
@@ -705,14 +694,9 @@ function WindHazardVisual({ hazard, reducedMotion }: { hazard: StoryHazardDefini
   </group>;
 }
 
-function SinkingSandHazardVisual({ hazard, reducedMotion }: { hazard: StoryHazardDefinition; reducedMotion: boolean }) {
-  const group = useRef<THREE.Group>(null);
+function SinkingSandHazardVisual({ hazard }: { hazard: StoryHazardDefinition }) {
   const [minX, maxX, minY] = hazard.bounds;
-  useFrame((state) => {
-    if (!group.current || reducedMotion) return;
-    group.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.9) * 0.05;
-  });
-  return <group ref={group} position={[(minX + maxX) / 2, minY + 0.12, 0.08]}>
+  return <group position={[(minX + maxX) / 2, minY + 0.12, 0.08]}>
     {[0.72, 1.18, 1.72].map((radius, index) => <mesh key={radius} scale={[1, 0.22, 1]}>
       <ringGeometry args={[radius, radius + 0.055, 32]} />
       <meshBasicMaterial color={index === 1 ? '#fff0a8' : hazard.accent} transparent opacity={0.48 - index * 0.08} depthWrite={false} toneMapped={false} />
@@ -720,7 +704,7 @@ function SinkingSandHazardVisual({ hazard, reducedMotion }: { hazard: StoryHazar
   </group>;
 }
 
-function AdventureHazards({ hub, progress, playerPosition, reducedMotion, onPlayerDamage }: { hub: StoryHubDefinition; progress: StoryAdventureProgressV1; playerPosition: MutableRefObject<THREE.Vector3>; reducedMotion: boolean; onPlayerDamage: (damage: number, sourceX: number) => void }) {
+function AdventureHazards({ hub, progress, playerPosition, onPlayerDamage }: { hub: StoryHubDefinition; progress: StoryAdventureProgressV1; playerPosition: MutableRefObject<THREE.Vector3>; onPlayerDamage: (damage: number, sourceX: number) => void }) {
   const cooldowns = useRef<Record<string, number>>({});
   const stats = useMemo(() => getAdventureDerivedStats(progress), [progress]);
   useFrame(() => {
@@ -735,18 +719,12 @@ function AdventureHazards({ hub, progress, playerPosition, reducedMotion, onPlay
     }
   });
   return <>{(hub.hazards ?? []).map((hazard) => storyHazardDealsContactDamage(hazard.kind)
-    ? <AnimatedHazardSprite key={hazard.id} hazard={hazard} reducedMotion={reducedMotion} />
+    ? <StationaryHazardSprite key={hazard.id} hazard={hazard} />
     : hazard.kind === 'wind'
-      ? <WindHazardVisual key={hazard.id} hazard={hazard} reducedMotion={reducedMotion} />
+      ? <WindHazardVisual key={hazard.id} hazard={hazard} />
       : hazard.kind === 'sinking-sand'
-        ? <SinkingSandHazardVisual key={hazard.id} hazard={hazard} reducedMotion={reducedMotion} />
+        ? <SinkingSandHazardVisual key={hazard.id} hazard={hazard} />
         : null)}</>;
-}
-
-function AdventureTraversalVisuals({ hub }: { hub: StoryHubDefinition }) {
-  return <>{(hub.traversal ?? []).map((piece) => <group key={piece.id} position={[piece.position[0], piece.position[1], -0.22]}>
-    <mesh><boxGeometry args={[piece.size[0], piece.size[1], 0.12]} /><meshBasicMaterial color={piece.route === 'critical' ? '#8ee8ff' : piece.route === 'mount' ? '#ffe071' : '#b8a8ff'} transparent opacity={piece.kind === 'updraft' || piece.kind === 'current' ? 0.16 : 0.32} /></mesh>
-  </group>)}</>;
 }
 
 function HubCamera({ playerPosition, bounds, verticalBounds }: { playerPosition: MutableRefObject<THREE.Vector3>; bounds: StoryHubDefinition['bounds']; verticalBounds?: { minY: number; maxY: number } }) {
@@ -1960,8 +1938,7 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
           <CuboidCollider args={[platform.size[0] / 2, platform.size[1] / 2, 1]} sensor={Boolean(platform.oneWay)} />
           <PlatformVisual platform={platform} hub={hub} />
         </RigidBody>)}
-        <AdventureTraversalVisuals hub={hub} />
-        <AdventureHazards hub={hub} progress={progress} playerPosition={playerPosition} reducedMotion={reducedMotion} onPlayerDamage={(damage, sourceX) => { if (!disabled) onPlayerDamage(damage, sourceX); }} />
+        <AdventureHazards hub={hub} progress={progress} playerPosition={playerPosition} onPlayerDamage={(damage, sourceX) => { if (!disabled) onPlayerDamage(damage, sourceX); }} />
         {hub.portals.map((portal) => <PortalVisual key={portal.id} portal={portal} theme={hub.theme} nearby={nearbyPortal?.id === portal.id} assigned={assignedPortalId === portal.id} reducedMotion={reducedMotion} compactDoorways={hub.id === 'kore-central'} />)}
         {(hub.npcs ?? []).map((npc) => <AdventureNpcVisual key={npc.id} npc={npc} attackEvent={attackEvent} playerPosition={playerPosition} maxHealth={derivedStats.maxHealth} reducedMotion={reducedMotion} onPlayerDamage={(damage, sourceX) => { if (!disabled) onPlayerDamage(damage, sourceX); }} surfaceInsetY={groundSurfaceInsetY} surfacePixelWorldHeight={groundSurfacePixelWorldHeight} />)}
         {hub.biomeId && (hub.resourceNodes ?? []).map((node) => <AdventureResourceNode key={node.id} node={node} biomeId={hub.biomeId!} progress={progress} attackEvent={attackEvent} playerPosition={playerPosition} playerProjectile={playerProjectile} reducedMotion={reducedMotion} onHarvest={onResourceHarvest} />)}

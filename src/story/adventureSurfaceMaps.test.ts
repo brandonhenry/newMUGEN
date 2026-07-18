@@ -71,6 +71,12 @@ describe('authored Adventure surface campaign', () => {
     }
   });
 
+  it('renders contact-damage hazards as stationary environmental props', () => {
+    for (const definition of Object.values(STORY_HAZARD_SPRITES)) {
+      expect(definition.displayFrame).toBe(0);
+    }
+  });
+
   it('places every NPC beside entrances instead of inside their doorway corridor', () => {
     const entranceKinds = new Set(['adventure-gate', 'mode-door', 'storefront', 'shrine']);
     const worlds = [STORY_ADVENTURE_WORLDS['world-route'], ...Object.values(STORY_ADVENTURE_SURFACE_MAPS).flat()];
