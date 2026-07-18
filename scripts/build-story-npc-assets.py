@@ -13,6 +13,7 @@ from PIL import Image, ImageDraw
 
 
 ROOT = Path(__file__).resolve().parents[1]
+ROSTER_REGISTRY_PATH = ROOT / "src/story/storyRosterExpansion.json"
 NPC_ROOT = ROOT / "public/story/npcs"
 GENERATED_ROOT = NPC_ROOT / "generated"
 OUTPUT_ROOT = NPC_ROOT / "characters"
@@ -27,6 +28,30 @@ IMAGEGEN_PROMPT_CONTRACT = (
     "flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; "
     "no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop."
 )
+
+
+def load_expansion_npcs() -> dict[str, dict]:
+    registry = json.loads(ROSTER_REGISTRY_PATH.read_text())
+    entries: dict[str, dict] = {}
+    for biome_id, biome in registry["biomes"].items():
+        for npc in biome["npcs"]:
+            npc_id, display_name, map_role, role, species, design, bark, warning_bark = npc
+            entries[npc_id] = {
+                "displayName": display_name,
+                "biomeId": biome_id,
+                "mapRole": map_role,
+                "role": role,
+                "species": species,
+                "design": design,
+                "bark": bark,
+                "warningBark": warning_bark,
+                "chromaKey": biome["chromaKey"],
+                "palette": biome["palette"],
+            }
+    return entries
+
+
+EXPANSION_NPCS = load_expansion_npcs()
 
 
 @dataclass(frozen=True)
@@ -46,6 +71,7 @@ ASSETS = (
         "kael-cinder", "sura-forge", "ren-ash", "ylva-snow", "corin-gale", "mika-hearth",
         "sahir-dune", "amara-wells", "nilo-glass", "aeri-prism", "tovan-chime", "lumi-cloud",
     )),
+    *tuple(NpcAsset(item, "imagegen", (6, 6, 8, 4, 6)) for item in EXPANSION_NPCS),
 )
 
 
@@ -264,11 +290,31 @@ def build_asset(asset: NpcAsset) -> dict:
         for reference_id in STYLE_REFERENCE_IDS:
             reference = NPC_ROOT / "sources" / f"{reference_id}-reference.png"
             references.append({"path": f"/story/npcs/sources/{reference.name}", "sha256": digest(reference)})
+        metadata = EXPANSION_NPCS.get(asset.id)
+        prompt = IMAGEGEN_PROMPT_CONTRACT.format(identity=asset.id)
+        if metadata:
+            prompt = (
+                f"Original {metadata['species']} NPC {metadata['displayName']} for {metadata['biomeId']}: "
+                f"{metadata['design']}; palette {metadata['palette']}; one 1536x1024 five-row sheet on flat "
+                f"{metadata['chromaKey']}; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; "
+                "right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, "
+                "no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift."
+            )
         source.update({
             "model": IMAGEGEN_MODEL,
-            "prompt": IMAGEGEN_PROMPT_CONTRACT.format(identity=asset.id),
+            "prompt": prompt,
             "sourceReferences": references,
         })
+        if metadata:
+            chroma = GENERATED_ROOT / f"{asset.id}-sheet-chroma.png"
+            if not chroma.is_file():
+                raise FileNotFoundError(chroma)
+            source.update({
+                "chromaKey": metadata["chromaKey"],
+                "chromaSourcePath": f"/story/npcs/generated/{asset.id}-sheet-chroma.png",
+                "chromaSourceSha256": digest(chroma),
+                "registryPath": "/src/story/storyRosterExpansion.json",
+            })
     return {
         "id": asset.id,
         "sheetPath": f"/story/npcs/generated/{asset.id}-sheet.png",
@@ -317,6 +363,8 @@ def main() -> None:
                 raise SystemExit(f"NPC reference bounds missing: {entry['id']}")
             if entry["source"]["kind"] == "imagegen" and (not entry["source"].get("prompt") or len(entry["source"].get("sourceReferences", [])) != 3):
                 raise SystemExit(f"NPC generation provenance incomplete: {entry['id']}")
+            if entry["id"] in EXPANSION_NPCS and not entry["source"].get("chromaSourceSha256"):
+                raise SystemExit(f"NPC chroma provenance incomplete: {entry['id']}")
         print(f"Verified {expected} NPC sprite manifests")
         return
     entries = []

@@ -1,4 +1,5 @@
 import type { StageAmbiencePresetId } from '../types';
+import type { StoryResourceImpactMaterial } from './adventureCrafting';
 import type { AdventureMusicContext, StoryAttackInput } from './types';
 
 export type AdventureSurfaceMaterial = 'grass' | 'wood' | 'metal' | 'stone' | 'ice' | 'sand' | 'crystal' | 'water';
@@ -10,7 +11,7 @@ export type AdventureAudioEvent =
   | { kind: 'attack'; attackInput: StoryAttackInput }
   | { kind: 'enemy-hit'; attackInput: StoryAttackInput; critical: boolean; finishing: boolean }
   | { kind: 'player-hit'; damage: number }
-  | { kind: 'resource-hit'; broken: boolean }
+  | { kind: 'resource-hit'; attackInput: StoryAttackInput; material: StoryResourceImpactMaterial; broken: boolean; major: boolean; legendary: boolean; sequence: number }
   | { kind: 'portal' }
   | { kind: 'water'; entered: boolean };
 
@@ -73,6 +74,24 @@ export const ADVENTURE_HIT_SFX: Record<StoryAttackInput, string> = {
 };
 
 export const ADVENTURE_PLAYER_HIT_SFX = '/sounds/hits/generated/hit-013.wav';
-export const ADVENTURE_RESOURCE_HIT_SFX = '/sounds/hits/generated/hit-005.wav';
-export const ADVENTURE_RESOURCE_BREAK_SFX = '/sounds/hits/generated/hit-012.wav';
 export const ADVENTURE_PORTAL_SFX = '/sounds/stage-ambience/door-wood-open.mp3';
+
+const resourceSfx = (name: string) => `/story/audio/resource-impacts/${name}.ogg`;
+
+export type AdventureResourceSfxProfile = {
+  hit: string[];
+  broken: string[];
+  breakLayer?: string;
+  playbackRate: number;
+};
+
+export const ADVENTURE_RESOURCE_SFX: Record<StoryResourceImpactMaterial, AdventureResourceSfxProfile> = {
+  foliage: { hit: [resourceSfx('foliage-hit')], broken: [resourceSfx('foliage-hit')], playbackRate: 1.08 },
+  wood: { hit: [resourceSfx('wood-hit-01'), resourceSfx('wood-hit-02'), resourceSfx('wood-hit-03')], broken: [resourceSfx('wood-break-01'), resourceSfx('wood-break-02')], playbackRate: 1 },
+  stone: { hit: [resourceSfx('stone-hit')], broken: [resourceSfx('stone-break-01'), resourceSfx('stone-break-02')], playbackRate: 1 },
+  metal: { hit: [resourceSfx('metal-hit-01'), resourceSfx('metal-hit-02')], broken: [resourceSfx('metal-break')], breakLayer: resourceSfx('stone-break-02'), playbackRate: 1.04 },
+  bone: { hit: [resourceSfx('bone-hit')], broken: [resourceSfx('bone-hit')], playbackRate: 1.18 },
+  crystal: { hit: [resourceSfx('crystal-hit-01'), resourceSfx('crystal-hit-02')], broken: [resourceSfx('crystal-break-01'), resourceSfx('crystal-break-02')], playbackRate: 1.08 },
+  ice: { hit: [resourceSfx('crystal-hit-01'), resourceSfx('crystal-hit-02')], broken: [resourceSfx('crystal-break-01'), resourceSfx('crystal-break-02')], playbackRate: 1.28 },
+  volcanic: { hit: [resourceSfx('stone-hit')], broken: [resourceSfx('stone-break-01'), resourceSfx('stone-break-02')], playbackRate: 0.78 }
+};

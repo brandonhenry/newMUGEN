@@ -239,9 +239,10 @@ import {
   readLocalArcadeRunHighScore,
   submitArcadeRunScore
 } from './lib/arcadeRun';
-import { readStoryProfile, writeStoryProfile } from './story/profile';
+import { persistStoryProfile, readStoryProfile } from './story/profile';
 import { readOrCreateStoryHubGuestIdentity } from './story/hubMultiplayer';
-import { LEGACY_STORY_PROFILE_STORAGE_KEY, STORY_PROFILE_STORAGE_KEY, type AdventureMusicContext, type AdventureMusicTrackDefinition, type HubDestination, type StoryHubPresence, type StoryProfileV4 } from './story/types';
+import { LEGACY_STORY_ADVENTURE_PROGRESS_KEY, ORIGINAL_STORY_ADVENTURE_PROGRESS_KEY, STORY_ADVENTURE_PROGRESS_KEY, PREVIOUS_STORY_ADVENTURE_PROGRESS_KEY, readAdventureProgress } from './story/adventureProgress';
+import { LEGACY_STORY_PROFILE_STORAGE_KEY, ORIGINAL_STORY_PROFILE_STORAGE_KEY, PREVIOUS_STORY_PROFILE_STORAGE_KEY, STORY_PROFILE_STORAGE_KEY, STORY_PROFILE_V2_STORAGE_KEY, type AdventureMusicContext, type AdventureMusicTrackDefinition, type HubDestination, type StoryHubPresence, type StoryProfileV4 } from './story/types';
 import {
   applyVoxelBodyScale,
   computeVoxelBodyNormalization,
@@ -605,6 +606,13 @@ const MEMORY_CARD_SAVE_KEYS = [
   { key: UNLOCKED_CHARACTERS_KEY, label: 'Unlocked fighters' },
   { key: STORY_PROFILE_STORAGE_KEY, label: 'Story avatar' },
   { key: LEGACY_STORY_PROFILE_STORAGE_KEY, label: 'Legacy story avatar' },
+  { key: PREVIOUS_STORY_PROFILE_STORAGE_KEY, label: 'Older story avatar' },
+  { key: STORY_PROFILE_V2_STORAGE_KEY, label: 'Story avatar v2' },
+  { key: ORIGINAL_STORY_PROFILE_STORAGE_KEY, label: 'Original story avatar' },
+  { key: STORY_ADVENTURE_PROGRESS_KEY, label: 'Adventure progress' },
+  { key: PREVIOUS_STORY_ADVENTURE_PROGRESS_KEY, label: 'Legacy adventure progress' },
+  { key: LEGACY_STORY_ADVENTURE_PROGRESS_KEY, label: 'Adventure progress v2' },
+  { key: ORIGINAL_STORY_ADVENTURE_PROGRESS_KEY, label: 'Original adventure progress' },
   { key: GAME_SETTINGS_STORAGE_KEY, label: 'Options settings' },
   { key: ONLINE_PROFILE_STORAGE_KEY, label: 'Online profile' },
   { key: LOCAL_LEADERBOARD_STORAGE_KEY, label: 'Local leaderboard' },
@@ -5588,8 +5596,7 @@ export default function App() {
 	    setAvatarCreatorReturnScreen('menu');
 	    setScreen('avatarCreator');
 	  }, [captureAppAnalytics, storyProfile]);
-	  const saveStoryAvatar = useCallback((avatar: StoryProfileV4['avatar']) => {
-	    const next = writeStoryProfile(avatar, storyProfile);
+	  const saveStoryAvatar = useCallback((next: StoryProfileV4) => {
 	    setStoryProfile(next);
 	    setNavigationHome('storyHub');
 	    captureAppAnalytics('positive_milestone_reached', {
@@ -5598,7 +5605,8 @@ export default function App() {
 	    });
 	    captureAppAnalytics('story_profile_saved', {
 	      created: !storyProfile,
-	      avatar_set: avatar.avatarSet
+	      avatar_set: next.avatar.avatarSet,
+	      party_roster_size: next.avatars.length
 	    });
 	    setScreen('storyHub');
 	  }, [captureAppAnalytics, storyProfile]);
@@ -5863,6 +5871,7 @@ export default function App() {
           <Suspense fallback={<div className="story-loading-screen"><Swords size={34} /><strong>Opening Avatar Studio</strong></div>}>
             <StoryAvatarCreatorScreen
               profile={storyProfile}
+              partySize={readAdventureProgress().stats.partySize}
               preferredName={onlineProfile?.displayName}
               reducedMotion={settings.display.reducedMotion}
               onSave={saveStoryAvatar}
@@ -5874,6 +5883,7 @@ export default function App() {
           <Suspense fallback={<div className="story-loading-screen"><Swords size={34} /><strong>Entering K.O.R.E. Central</strong></div>}>
             <StoryHubScreen
               profile={storyProfile}
+              onProfileChange={(nextProfile) => setStoryProfile(persistStoryProfile(nextProfile))}
               onlineProfile={onlineProfile}
               reducedMotion={settings.display.reducedMotion}
               readInputs={readInputsForStep}

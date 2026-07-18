@@ -9,6 +9,7 @@ baseline, and emits a deterministic runtime manifest plus visual contact sheets.
 
 from __future__ import annotations
 
+import argparse
 import colorsys
 import hashlib
 import json
@@ -22,6 +23,7 @@ from PIL import Image, ImageDraw
 
 ROOT = Path("public/story/enemies/kore-enemies-v1")
 RUNTIME_MANIFEST = Path("src/story/storyEnemyManifest.json")
+ROSTER_REGISTRY = Path("src/story/storyRosterExpansion.json")
 FRAME_SIZE = (192, 192)
 BASELINE = 188
 ROW_BANDS = ((18, 190), (195, 385), (390, 580), (585, 775), (780, 985))
@@ -83,6 +85,31 @@ ENEMIES: dict[str, dict[str, Any]] = {
     "volt-slime": {"label": "Volt Slime", "tier": "regular", "sheets": [27], "derive": "tide-slime", "rows": rows(("idle",27,0,8),("walk",27,1,8),("run",27,2,7),("attack-1",27,3,8),("jump",27,4,8))},
     "magma-slime": {"label": "Magma Slime", "tier": "regular", "sheets": [28, 29], "rows": rows(("idle",28,0,8),("walk",28,1,8),("run",28,2,7),("attack-1",28,3,8),("jump",28,4,8),("attack-2",29,0,4),("attack-3",29,1,4),("attack-4",29,2,5),("hurt",29,3,6),("dead",29,4,3))},
 }
+
+EXPANSION_REGISTRY = json.loads(ROSTER_REGISTRY.read_text())
+for biome_id, biome in EXPANSION_REGISTRY["biomes"].items():
+    for enemy in biome["enemies"]:
+        enemy_id, label, tier, archetype, behavior, design, accent, metrics = enemy
+        ENEMIES[enemy_id] = {
+            "label": label,
+            "tier": tier,
+            "archetype": archetype,
+            "behavior": behavior,
+            "biomeId": biome_id,
+            "design": design,
+            "accent": accent,
+            "metrics": metrics,
+            "generated": True,
+            "sheets": [1, 2],
+            "rows": rows(
+                ("idle", 1, 0, 6), ("walk", 1, 1, 8), ("run", 1, 2, 8),
+                ("traverse", 1, 3, 6), ("attack-1", 1, 4, 6),
+                ("attack-2", 2, 0, 6), ("special", 2, 1, 6),
+                ("block", 2, 2, 4), ("hurt", 2, 3, 4), ("dead", 2, 4, 6),
+            ),
+            "chromaKey": biome["chromaKey"],
+            "palette": biome["palette"],
+        }
 
 
 def source_path(number: int) -> Path:
@@ -199,6 +226,62 @@ def normalize(frame: Image.Image) -> tuple[Image.Image, list[int]]:
     return canvas, [x, y, x + frame.width, y + frame.height]
 
 
+def generated_source_path(enemy_id: str, sheet: int, chroma: bool = False) -> Path:
+    suffix = "-chroma" if chroma else ""
+    path = ROOT / "generated" / f"{enemy_id}-sheet-{sheet}{suffix}.png"
+    if not path.is_file():
+        raise FileNotFoundError(path)
+    with Image.open(path) as image:
+        if image.size != (1536, 1024):
+            raise ValueError(f"Expected 1536x1024 generated sheet for {enemy_id}, got {image.size}")
+    return path
+
+
+def generated_centers(sheet: Image.Image, row: int, count: int) -> list[float]:
+    top = round(row * sheet.height / 5)
+    bottom = round((row + 1) * sheet.height / 5)
+    band_top = top + round((bottom - top) * 0.3)
+    band = sheet.getchannel("A").crop((0, band_top, sheet.width, bottom)).point(lambda value: 255 if value > 20 else 0)
+    projection = band.getprojection()[0]
+    columns = [index for index, value in enumerate(projection) if value]
+    runs: list[tuple[int, int]] = []
+    if columns:
+        start = previous = columns[0]
+        for column in columns[1:]:
+            if column - previous > 24:
+                runs.append((start, previous))
+                start = column
+            previous = column
+        runs.append((start, previous))
+    runs = [run for run in runs if run[1] - run[0] >= 18]
+    centers = [(left + right) / 2 for left, right in runs]
+    if len(centers) > count:
+        centers = centers[:count]
+    if len(centers) >= 2 and len(centers) < count:
+        gaps = sorted(centers[index] - centers[index - 1] for index in range(1, len(centers)))
+        spacing = gaps[len(gaps) // 2]
+        while len(centers) < count:
+            centers.append(centers[-1] + spacing)
+    if not centers:
+        centers = [(index + 0.5) * sheet.width / count for index in range(count)]
+    return centers
+
+
+def generated_frame(sheet: Image.Image, row: int, index: int, centers: list[float]) -> Image.Image:
+    if len(centers) == 1:
+        left, right = 0, sheet.width
+    else:
+        left = round(centers[0] - (centers[1] - centers[0]) / 2) if index == 0 else round((centers[index - 1] + centers[index]) / 2)
+        right = round(centers[-1] + (centers[-1] - centers[-2]) / 2) if index == len(centers) - 1 else round((centers[index] + centers[index + 1]) / 2)
+    top = round(row * sheet.height / 5)
+    bottom = round((row + 1) * sheet.height / 5)
+    cell = sheet.crop((max(0, left), top, min(sheet.width, right), bottom))
+    bounds = cell.getchannel("A").point(lambda value: 255 if value > 16 else 0).getbbox()
+    if not bounds:
+        raise ValueError("No generated sprite content found in cell")
+    return cell.crop(bounds)
+
+
 def dominant_hue(image: Image.Image) -> float:
     hues: list[float] = []
     for red, green, blue, alpha in image.get_flattened_data():
@@ -235,7 +318,49 @@ def duration_for(animation: str) -> int:
     return 88
 
 
+def verify_manifest() -> None:
+    manifest_path = ROOT / "manifest.json"
+    payload = json.loads(manifest_path.read_text())
+    if json.loads(RUNTIME_MANIFEST.read_text()) != payload:
+        raise SystemExit("Runtime enemy manifest is missing or stale")
+    if len(payload.get("enemies", [])) != 56:
+        raise SystemExit(f"Expected 56 enemies, found {len(payload.get('enemies', []))}")
+    ids = [enemy["id"] for enemy in payload["enemies"]]
+    if len(set(ids)) != len(ids):
+        raise SystemExit("Enemy manifest contains duplicate IDs")
+    for enemy in payload["enemies"]:
+        animation_ids = {animation["id"] for animation in enemy["animations"]}
+        if "idle" not in animation_ids:
+            raise SystemExit(f"{enemy['id']} has no idle animation")
+        for source in enemy["sources"]:
+            path = Path("public") / source["path"].lstrip("/")
+            if hashlib.sha256(path.read_bytes()).hexdigest() != source["sha256"]:
+                raise SystemExit(f"Enemy source checksum mismatch: {path}")
+            if source.get("kind") == "imagegen":
+                chroma = Path("public") / source["chromaSourcePath"].lstrip("/")
+                if hashlib.sha256(chroma.read_bytes()).hexdigest() != source["chromaSourceSha256"]:
+                    raise SystemExit(f"Enemy chroma checksum mismatch: {chroma}")
+                if not source.get("prompt") or not source.get("model") or not source.get("sourceReferences"):
+                    raise SystemExit(f"Enemy generation provenance incomplete: {enemy['id']}")
+        for animation in enemy["animations"]:
+            if (animation["id"].startswith("attack") or animation["id"] == "special") and not animation.get("activeFrameRange"):
+                raise SystemExit(f"Enemy attack range missing: {enemy['id']}/{animation['id']}")
+            for frame in animation["frames"]:
+                path = Path("public") / frame["path"].lstrip("/")
+                image = Image.open(path)
+                bounds = image.convert("RGBA").getchannel("A").point(lambda value: 255 if value > 16 else 0).getbbox()
+                if image.mode != "RGBA" or image.size != FRAME_SIZE or not bounds or bounds[3] > BASELINE:
+                    raise SystemExit(f"Enemy frame alpha/baseline mismatch: {path}")
+    print("Verified 56 enemy sprite manifests")
+
+
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--verify", action="store_true")
+    args = parser.parse_args()
+    if args.verify:
+        verify_manifest()
+        return
     ROOT.mkdir(parents=True, exist_ok=True)
     (ROOT / "sources").mkdir(exist_ok=True)
     loaded: dict[int, Image.Image] = {}
@@ -250,6 +375,7 @@ def main() -> None:
         loaded[number] = remove_gray_matte(Image.open(committed))
 
     built_frames: dict[str, dict[str, list[Image.Image]]] = {}
+    generated_loaded: dict[tuple[str, int], Image.Image] = {}
     manifest: dict[str, Any] = {"version": 1, "style": "kore-enemies-v1", "frameSize": {"width": FRAME_SIZE[0], "height": FRAME_SIZE[1], "baseline": BASELINE}, "enemies": []}
     for enemy_id, definition in ENEMIES.items():
         enemy_root = ROOT / "sets" / enemy_id
@@ -262,18 +388,29 @@ def main() -> None:
             animation_root.mkdir(parents=True, exist_ok=True)
             images: list[Image.Image] = []
             frames = []
-            y0, y1 = ROW_BANDS[row]
+            if definition.get("generated"):
+                key = (enemy_id, sheet)
+                if key not in generated_loaded:
+                    generated_loaded[key] = Image.open(generated_source_path(enemy_id, sheet)).convert("RGBA")
+                generated_sheet = generated_loaded[key]
+                centers = generated_centers(generated_sheet, row, count)
+            else:
+                y0, y1 = ROW_BANDS[row]
             for index in range(count):
-                x0 = CELL_LEFT + index * CELL_WIDTH
-                cell = loaded[sheet].crop((x0, y0, min(1536, x0 + CELL_WIDTH), y1))
                 try:
-                    cleaned = clean_cell(cell)
+                    if definition.get("generated"):
+                        cleaned = generated_frame(generated_sheet, row, min(index, len(centers) - 1), centers)
+                    else:
+                        x0 = CELL_LEFT + index * CELL_WIDTH
+                        cell = loaded[sheet].crop((x0, y0, min(1536, x0 + CELL_WIDTH), y1))
+                        cleaned = clean_cell(cell)
                 except ValueError as error:
                     # Reviewed rows are left-packed. A missing trailing cell means
                     # the visible sequence ended one pose earlier than estimated.
-                    if index > 0:
-                        break
-                    raise ValueError(f"{enemy_id}/{animation} frame {index + 1} sheet {sheet} row {row}: {error}") from error
+                    if index > 0 and images:
+                        cleaned = images[-1].crop(images[-1].getbbox())
+                    else:
+                        raise ValueError(f"{enemy_id}/{animation} frame {index + 1} sheet {sheet} row {row}: {error}") from error
                 normalized, bounds = normalize(cleaned)
                 frame_path = animation_root / f"{index + 1:02d}.png"
                 normalized.save(frame_path, optimize=True)
@@ -310,7 +447,35 @@ def main() -> None:
                     entry["activeFrameRange"] = [max(0, len(frames) // 3), max(0, len(frames) - 2)]
                 animation_entries.append(entry)
 
-        manifest["enemies"].append({"id": enemy_id, "label": definition["label"], "tier": definition["tier"], "facing": "right", "sources": [source_meta[number] for number in definition["sheets"]], "animations": animation_entries})
+        if definition.get("generated"):
+            prompt = (
+                f"Original {definition['biomeId']} {definition['tier']} enemy {definition['label']}: {definition['design']}; "
+                f"two 1536x1024 five-row right-facing anime pixel-art sheets on flat {definition['chromaKey']}; "
+                "idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; "
+                "hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells."
+            )
+            references = []
+            for reference in (ROOT / "sources/image-01.png", Path("public/story/npcs/sources/mina-quill-reference.png")):
+                references.append({"path": "/" + str(reference), "sha256": hashlib.sha256(reference.read_bytes()).hexdigest()})
+            sources = []
+            for number in definition["sheets"]:
+                alpha = generated_source_path(enemy_id, number)
+                chroma = generated_source_path(enemy_id, number, chroma=True)
+                sources.append({
+                    "kind": "imagegen",
+                    "model": "OpenAI image_gen (session-default model)",
+                    "prompt": prompt,
+                    "path": f"/story/enemies/kore-enemies-v1/generated/{enemy_id}-sheet-{number}.png",
+                    "sha256": hashlib.sha256(alpha.read_bytes()).hexdigest(),
+                    "chromaKey": definition["chromaKey"],
+                    "chromaSourcePath": f"/story/enemies/kore-enemies-v1/generated/{enemy_id}-sheet-{number}-chroma.png",
+                    "chromaSourceSha256": hashlib.sha256(chroma.read_bytes()).hexdigest(),
+                    "sourceReferences": references,
+                    "registryPath": "/src/story/storyRosterExpansion.json",
+                })
+        else:
+            sources = [{"kind": "user-supplied", **source_meta[number]} for number in definition["sheets"]]
+        manifest["enemies"].append({"id": enemy_id, "label": definition["label"], "tier": definition["tier"], "facing": "right", "sources": sources, "animations": animation_entries})
 
     thumb = 72
     sheet = Image.new("RGBA", (thumb * 8, thumb * len(ENEMIES)), (12, 17, 27, 255))

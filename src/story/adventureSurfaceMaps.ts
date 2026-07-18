@@ -1,8 +1,9 @@
 import { STORY_GROUNDED_ACTOR_CENTER_Y } from './actorGrounding';
-import { getStoryEnemyDefinition } from './enemyCatalog';
+import { getStoryEnemyDefinition, STORY_REGULAR_ENEMY_IDS_BY_BIOME } from './enemyCatalog';
 import { storyNpcsForMap } from './adventureNpcs';
 import { STORY_WORLD_MOUNT } from './adventureExploration';
 import { createStoryWorldProps } from './worldEnvironments';
+import { createSurfaceResourceNodes } from './adventureResources';
 import type {
   StoryAdventureMapDefinition,
   StoryAdventureMapRole,
@@ -23,56 +24,56 @@ type MapSpec = { name: string; subtitle: string; hero: string };
 type BiomeSpec = {
   theme: StoryWorldThemeId;
   accent: string;
-  regulars: [StoryEnemyId, StoryEnemyId, StoryEnemyId];
+  regulars: readonly StoryEnemyId[];
   hazard: StoryHazardDefinition['kind'];
   traversal: StoryTraversalPieceDefinition['kind'];
   maps: Record<StoryAdventureMapRole, MapSpec>;
 };
 
 const BIOMES: Record<BiomeId, BiomeSpec> = {
-  greenhollow: { theme: 'village', accent: '#7ee787', regulars: ['volt-slime', 'nightshade-bulb', 'venom-slime'], hazard: 'drowning', traversal: 'current', maps: {
+  greenhollow: { theme: 'village', accent: '#7ee787', regulars: STORY_REGULAR_ENEMY_IDS_BY_BIOME.greenhollow, hazard: 'drowning', traversal: 'current', maps: {
     arrival: { name: 'Windmill Commons', subtitle: 'A generous first step beneath turning sails', hero: 'Great Windmill' },
     'field-a': { name: 'Rooftop Market', subtitle: 'Awnings and chimneys form a second street', hero: 'Copper Market Roofs' },
     'field-b': { name: 'Floodplain Waterworks', subtitle: 'Valves redirect the village current', hero: 'Old Water Wheel' },
     mastery: { name: 'Old Forest Gate', subtitle: 'The village road narrows beneath ancient timber', hero: 'Greenhollow Gate' }
   } },
-  thornwood: { theme: 'forest', accent: '#52e1a1', regulars: ['nightshade-bulb', 'venom-slime', 'veil-shade'], hazard: 'spikes', traversal: 'rope', maps: {
+  thornwood: { theme: 'forest', accent: '#52e1a1', regulars: STORY_REGULAR_ENEMY_IDS_BY_BIOME.thornwood, hazard: 'spikes', traversal: 'rope', maps: {
     arrival: { name: 'Bramble Camp', subtitle: 'Lanterns hold back the first wall of thorns', hero: 'Rootkeeper Camp' },
     'field-a': { name: 'Giantroot Crossing', subtitle: 'An elder root bridges the forest floor', hero: 'Sleeping Giantroot' },
     'field-b': { name: 'Whisper Canopy', subtitle: 'Branch paths trade height for safety', hero: 'Whisper Crown' },
     mastery: { name: 'Heartwood Hollow', subtitle: 'The oldest tree protects a quiet chamber', hero: 'Heartwood Arch' }
   } },
-  ironroot: { theme: 'mine', accent: '#d9a066', regulars: ['graveblade', 'tide-slime', 'volt-slime'], hazard: 'collapsing-floor', traversal: 'lift', maps: {
+  ironroot: { theme: 'mine', accent: '#d9a066', regulars: STORY_REGULAR_ENEMY_IDS_BY_BIOME.ironroot, hazard: 'collapsing-floor', traversal: 'lift', maps: {
     arrival: { name: 'Miner Refuge', subtitle: 'Timber braces and lamp glow mark safe ground', hero: 'Refuge Hoist' },
     'field-a': { name: 'Cart Junction', subtitle: 'Three rail lines cross above the old shaft', hero: 'Triple Rail Switch' },
     'field-b': { name: 'Flooded Shaft', subtitle: 'The lower rail disappears beneath mineral water', hero: 'Drowned Lift' },
     mastery: { name: 'Sunstone Vault', subtitle: 'Amber ore turns the deepest chamber gold', hero: 'Sunstone Heart' }
   } },
-  bonevault: { theme: 'crypt', accent: '#b8a8ff', regulars: ['graveblade', 'veil-shade', 'magma-slime'], hazard: 'saw', traversal: 'falling-platform', maps: {
+  bonevault: { theme: 'crypt', accent: '#b8a8ff', regulars: STORY_REGULAR_ENEMY_IDS_BY_BIOME.bonevault, hazard: 'saw', traversal: 'falling-platform', maps: {
     arrival: { name: 'Keeper Vestibule', subtitle: 'Offerings and violet lamps soften the sealed threshold', hero: 'Keeper Doors' },
     'field-a': { name: 'Crew Ossuary', subtitle: 'Empty alcoves watch a narrow procession', hero: 'Ossuary Gallery' },
     'field-b': { name: 'Bell Nave', subtitle: 'Every moving floor answers a distant bell', hero: 'Bonevault Bell' },
     mastery: { name: 'Violet Tombs', subtitle: 'Cold flame outlines the last unmarked chamber', hero: 'Violet Sepulcher' }
   } },
-  emberdeep: { theme: 'underworld', accent: '#ff6b45', regulars: ['cinder-wisp', 'magma-slime', 'nightshade-bulb'], hazard: 'lava', traversal: 'updraft', maps: {
+  emberdeep: { theme: 'underworld', accent: '#ff6b45', regulars: STORY_REGULAR_ENEMY_IDS_BY_BIOME.emberdeep, hazard: 'lava', traversal: 'updraft', maps: {
     arrival: { name: 'Ashen Camp', subtitle: 'Basalt tents occupy the caldera rim', hero: 'Ash Beacon' },
     'field-a': { name: 'Lavafall Bridge', subtitle: 'Obsidian islands wait between fire pulses', hero: 'Twin Lavafalls' },
     'field-b': { name: 'Relic Forge', subtitle: 'Vent pressure wakes the ancient machinery', hero: 'Relic Anvil' },
     mastery: { name: 'Red Caldera', subtitle: 'The deep world breathes through a broken crown', hero: 'Caldera Crown' }
   } },
-  frostpeak: { theme: 'snow', accent: '#8ee8ff', regulars: ['tide-slime', 'veil-shade', 'graveblade'], hazard: 'icicle', traversal: 'slippery-surface', maps: {
+  frostpeak: { theme: 'snow', accent: '#8ee8ff', regulars: STORY_REGULAR_ENEMY_IDS_BY_BIOME.frostpeak, hazard: 'icicle', traversal: 'slippery-surface', maps: {
     arrival: { name: 'Last Shelter', subtitle: 'A stove and blue flags promise one final rest', hero: 'Last Hearth' },
     'field-a': { name: 'Blue Ice Cave', subtitle: 'Frozen walls preserve a sheltered ascent', hero: 'Blue Ice Window' },
     'field-b': { name: 'Windspine', subtitle: 'Open ridges turn every gust into a route', hero: 'Windspine Flags' },
     mastery: { name: 'Frozen Watch', subtitle: 'A silent tower stands above the weather', hero: 'Frozen Watchtower' }
   } },
-  sunscar: { theme: 'desert', accent: '#ffd166', regulars: ['volt-slime', 'cinder-wisp', 'magma-slime'], hazard: 'sinking-sand', traversal: 'breakable-wall', maps: {
+  sunscar: { theme: 'desert', accent: '#ffd166', regulars: STORY_REGULAR_ENEMY_IDS_BY_BIOME.sunscar, hazard: 'sinking-sand', traversal: 'breakable-wall', maps: {
     arrival: { name: 'Caravan Camp', subtitle: 'Canvas shade and stone markers hold the road', hero: 'Sunscar Caravan' },
     'field-a': { name: 'Wandering Dunes', subtitle: 'The safe line moves with each bank of sand', hero: 'Walking Dune' },
     'field-b': { name: 'Glasswater Oasis', subtitle: 'Clear water reveals architecture below', hero: 'Glasswater Palms' },
     mastery: { name: 'Sunken Temple', subtitle: 'Only the highest arch still meets daylight', hero: 'Buried Sun Arch' }
   } },
-  skyglass: { theme: 'ruins', accent: '#ff83d1', regulars: ['tide-slime', 'venom-slime', 'cinder-wisp'], hazard: 'wind', traversal: 'moving-platform', maps: {
+  skyglass: { theme: 'ruins', accent: '#ff83d1', regulars: STORY_REGULAR_ENEMY_IDS_BY_BIOME.skyglass, hazard: 'wind', traversal: 'moving-platform', maps: {
     arrival: { name: 'Cloud Landing', subtitle: 'Low stones hover beneath a calm updraft', hero: 'Cloud Mooring' },
     'field-a': { name: 'Crystal Bridge', subtitle: 'Chimes stabilize a fractured span', hero: 'Prismatic Bridge' },
     'field-b': { name: 'Broken Tower', subtitle: 'Orbiting floors circle an empty core', hero: 'Orbit Tower' },
@@ -192,13 +193,15 @@ function createMap(biome: BiomeId, role: StoryAdventureMapRole): StoryAdventureM
     { id: `${biome}-${role}-encounter-1`, range: [-42, -13] as [number, number], maxActive: 2 },
     { id: `${biome}-${role}-encounter-2`, range: [13, 42] as [number, number], maxActive: 2, elite: role === 'mastery' }
   ];
+  const hazards = hazardsFor(biome, role);
+  const resourceNodes = createSurfaceResourceNodes({ biomeId: biome, mapId: id, role, bounds: { minX: -56, maxX: 56 }, portals, npcs, hazards });
   return {
     id, biomeId: biome, role, order, name: details.name, subtitle: details.subtitle,
     bounds: { minX: -56, maxX: 56, floorY: 0 }, spawn: [-49, STORY_GROUNDED_ACTOR_CENTER_Y], checkpoint: [-49, STORY_GROUNDED_ACTOR_CENTER_Y],
     platforms: [{ id: `${id}-ground`, position: [0, -0.5], size: [114, 1] }, ...pattern], portals,
     landmarks: [landmark(`${id}-hero`, details.hero, details.subtitle, 0, role === 'mastery' ? 9 : 6.5, spec.accent, role === 'mastery' ? 'vista' : 'district'), landmark(`${id}-secret`, 'Optional Route', 'A quieter line rewards careful movement', role === 'field-a' ? 34 : -32, 8, '#ffe071', 'secret')],
     props: createStoryWorldProps(spec.theme, -56, 56), enemySpawns: enemiesFor(biome, role), encounters,
-    hazards: hazardsFor(biome, role), traversal: traversalFor(biome, role), interactables: mapInteractables, npcs,
+    hazards, traversal: traversalFor(biome, role), interactables: mapInteractables, npcs, resourceNodes,
     musicPhase: role === 'arrival' ? 'safe' : role === 'mastery' ? 'elite' : role === 'field-b' ? 'mystery' : 'explore', heroLandmarkId: `${id}-hero`
   };
 }
@@ -237,6 +240,7 @@ export function createAdventureSurfaceHub(base: StoryHubDefinition, map: StoryAd
     interactables: map.interactables,
     npcs: map.npcs,
     musicPhase: map.musicPhase,
+    resourceNodes: map.resourceNodes,
     exploration: exploration ? {
       ...exploration,
       safeApproach: map.role === 'arrival' ? [-56, 56] : [-56, -44],

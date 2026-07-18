@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import {
+  ADVENTURE_RESOURCE_SFX,
   adventureAmbiencePreset,
   adventureSurfaceMaterial,
   emitAdventureAudioEvent,
@@ -20,6 +21,18 @@ function context(worldId: AdventureMusicContext['worldId'], overrides: Partial<A
 }
 
 describe('Adventure audio environment mapping', () => {
+  it('ships distinct material profiles for every gatherable impact family', () => {
+    expect(Object.keys(ADVENTURE_RESOURCE_SFX).sort()).toEqual(['bone', 'crystal', 'foliage', 'ice', 'metal', 'stone', 'volcanic', 'wood']);
+    for (const profile of Object.values(ADVENTURE_RESOURCE_SFX)) {
+      expect(profile.hit.length).toBeGreaterThan(0);
+      expect(profile.broken.length).toBeGreaterThan(0);
+      expect([...profile.hit, ...profile.broken].every((path) => path.startsWith('/story/audio/resource-impacts/') && path.endsWith('.ogg'))).toBe(true);
+    }
+    expect(ADVENTURE_RESOURCE_SFX.ice.playbackRate).toBeGreaterThan(ADVENTURE_RESOURCE_SFX.crystal.playbackRate);
+    expect(ADVENTURE_RESOURCE_SFX.volcanic.playbackRate).toBeLessThan(ADVENTURE_RESOURCE_SFX.stone.playbackRate);
+    expect(ADVENTURE_RESOURCE_SFX.metal.breakLayer).toContain('stone-break');
+  });
+
   it('gives each biome an intentional walking surface', () => {
     expect(adventureSurfaceMaterial(context('world-route'))).toBe('stone');
     expect(adventureSurfaceMaterial(context('greenhollow'))).toBe('grass');
@@ -53,10 +66,11 @@ describe('Adventure audio events', () => {
     const unsubscribe = subscribeAdventureAudio(listener);
     emitAdventureAudioEvent({ kind: 'step', sprinting: false });
     emitAdventureAudioEvent({ kind: 'enemy-hit', attackInput: 'kick', critical: true, finishing: false });
-    expect(listener).toHaveBeenCalledTimes(2);
+    emitAdventureAudioEvent({ kind: 'resource-hit', attackInput: 'heavy', material: 'wood', broken: true, major: false, legendary: false, sequence: 4 });
+    expect(listener).toHaveBeenCalledTimes(3);
 
     unsubscribe();
     emitAdventureAudioEvent({ kind: 'player-hit', damage: 12 });
-    expect(listener).toHaveBeenCalledTimes(2);
+    expect(listener).toHaveBeenCalledTimes(3);
   });
 });

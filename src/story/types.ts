@@ -1,6 +1,7 @@
-export const STORY_PROFILE_VERSION = 4 as const;
-export const STORY_PROFILE_STORAGE_KEY = 'kore.story.profile.v4';
-export const LEGACY_STORY_PROFILE_STORAGE_KEY = 'kore.story.profile.v3';
+export const STORY_PROFILE_VERSION = 5 as const;
+export const STORY_PROFILE_STORAGE_KEY = 'kore.story.profile.v5';
+export const LEGACY_STORY_PROFILE_STORAGE_KEY = 'kore.story.profile.v4';
+export const PREVIOUS_STORY_PROFILE_STORAGE_KEY = 'kore.story.profile.v3';
 export const STORY_PROFILE_V2_STORAGE_KEY = 'kore.story.profile.v2';
 export const ORIGINAL_STORY_PROFILE_STORAGE_KEY = 'kore.story.profile.v1';
 
@@ -130,14 +131,38 @@ export type StoryProfileV3 = {
   updatedAt: number;
 };
 
-export type StoryProfileV4 = {
-  version: typeof STORY_PROFILE_VERSION;
+export type LegacyStoryProfileV4 = {
+  version: 4;
   avatarStyle: 'kore-street-v1';
   avatar: StoryAvatarDefinition;
   createdAt: number;
   updatedAt: number;
   reviewedAt: number | null;
 };
+
+export type StoryAvatarSlot = {
+  id: string;
+  avatar: StoryAvatarDefinition;
+  createdAt: number;
+  updatedAt: number;
+};
+
+export type StoryProfileV5 = {
+  version: typeof STORY_PROFILE_VERSION;
+  avatarStyle: 'kore-street-v1';
+  /** Active avatar mirror retained for source compatibility with hub and presence callers. */
+  avatar: StoryAvatarDefinition;
+  avatars: StoryAvatarSlot[];
+  activeAvatarId: string;
+  equippedAvatarIds: string[];
+  createdAt: number;
+  updatedAt: number;
+  reviewedAt: number | null;
+};
+
+export type StoryProfile = StoryProfileV5;
+/** @deprecated Source-compatible alias while callers migrate to StoryProfile. */
+export type StoryProfileV4 = StoryProfileV5;
 
 export type StoryHubAvatarPose = 'idle' | 'walk' | 'sprint' | 'jump' | 'attack-jab' | 'attack-heavy' | 'attack-kick' | 'attack-special';
 
@@ -208,7 +233,7 @@ export type StoryAdventureWorldId =
   | 'skyglass';
 export type StoryWorldId = StoryModeWorldId | StoryAdventureWorldId;
 export type StoryPortalDestination = HubDestination | StoryAdventureWorldId;
-export type StoryPortalKind = 'storefront' | 'mode-door' | 'adventure-gate' | 'shrine' | 'arcade-machine' | 'versus-machine' | 'terminal' | 'chest' | 'npc' | 'relic' | 'checkpoint' | 'restoration';
+export type StoryPortalKind = 'storefront' | 'mode-door' | 'adventure-gate' | 'shrine' | 'arcade-machine' | 'versus-machine' | 'terminal' | 'chest' | 'npc' | 'relic' | 'checkpoint' | 'restoration' | 'crafting';
 export type StoryWorldThemeId =
   | 'city'
   | 'arcade'
@@ -230,8 +255,19 @@ export type StoryEnemyId =
   | 'veil-shade' | 'cinder-wisp' | 'nightshade-bulb' | 'graveblade'
   | 'tide-slime' | 'venom-slime' | 'volt-slime' | 'magma-slime'
   | 'ember-fist' | 'dusk-ronin' | 'crescent-rogue' | 'chimera-android'
-  | 'silver-duelist' | 'crimson-countess' | 'laughing-oni' | 'hollow-bride';
+  | 'silver-duelist' | 'crimson-countess' | 'laughing-oni' | 'hollow-bride'
+  | 'haywire-mite' | 'sluice-sprite' | 'bellwing-moth' | 'harvest-warden'
+  | 'millstorm-sage' | 'briar-maw' | 'sporecap-stalker' | 'lantern-bat'
+  | 'rootbound-huntress' | 'heartwood-oracle' | 'rail-jaw' | 'ore-spitter'
+  | 'spark-drone' | 'iron-foreman' | 'sunstone-artificer' | 'crypt-hound'
+  | 'marrow-caster' | 'dirge-moth' | 'ossuary-knight' | 'violet-bellkeeper'
+  | 'slag-beetle' | 'vent-imp' | 'coalwing' | 'caldera-titan'
+  | 'forge-seer' | 'ice-tusk' | 'shard-caller' | 'gale-owl'
+  | 'windspine-reaver' | 'aurora-herald' | 'dune-claw' | 'mirage-cobra'
+  | 'glasswing-vulture' | 'buried-colossus' | 'glasswater-seer' | 'prism-sentinel'
+  | 'chime-orb' | 'rift-ray' | 'orbit-blade' | 'sanctum-architect';
 export type StoryEnemyTier = 'regular' | 'challenger';
+export type StoryEnemyDefeatEvent = { eventId: string; spawnId: string; enemyId: StoryEnemyId; tier: StoryEnemyTier; xp: number };
 export type StoryEnemyBehavior = 'chaser' | 'bruiser' | 'ambusher' | 'duelist' | 'caster' | 'flying';
 export type StoryMountId = 'verdant-stag' | 'bramble-lynx' | 'ironhorn-beetle' | 'pale-warg' | 'cinder-drake' | 'frost-ram' | 'dune-strider' | 'glasswing';
 export type StoryTraversalKind = 'walk' | 'climb' | 'ladder' | 'lift' | 'break-wall' | 'swim' | 'glide' | 'updraft' | 'drop';
@@ -330,6 +366,23 @@ export type StoryWorldPropDefinition = StoryAtlasFrame & {
   size: [number, number];
   mirrored?: boolean;
   opacity?: number;
+};
+
+export type StoryResourceKind = 'tree' | 'berry' | 'plant' | 'ore' | 'rock';
+export type StoryResourceRarity = 'common' | 'uncommon' | 'rare' | 'legendary';
+export type StoryResourceRespawn = 'visit' | 'timed' | 'daily';
+
+export type StoryResourceNodeDefinition = {
+  id: string;
+  resourceId: string;
+  kind: StoryResourceKind;
+  rarity: StoryResourceRarity;
+  position: [number, number, number];
+  size: [number, number];
+  toughness: number;
+  respawn: StoryResourceRespawn;
+  major: boolean;
+  secondaryResourceId?: string;
 };
 
 export type StoryEnemySpawnDefinition = {
@@ -503,6 +556,7 @@ export type StoryInteractableDefinition = {
   relicId?: string;
   cost?: number;
   oneTime?: boolean;
+  craftingBiomeId?: Exclude<StoryAdventureWorldId, 'world-route'>;
 };
 
 export type StoryNpcDefenseProfile = {
@@ -525,7 +579,17 @@ export type StoryNpcSpriteManifest = {
   frameSize: { width: number; height: number; baseline: number };
   referenceContentBounds: [number, number, number, number];
   actions: Record<'idle' | 'dialogue' | 'walk' | 'protect' | 'counter', { frames: string[]; durationMs: number; loop: boolean }>;
-  source: { kind: 'user-supplied' | 'imagegen'; sha256: string; prompt?: string; model?: string; sourceReferences?: Array<{ path: string; sha256: string }> };
+  source: {
+    kind: 'user-supplied' | 'imagegen';
+    sha256: string;
+    prompt?: string;
+    model?: string;
+    sourceReferences?: Array<{ path: string; sha256: string }>;
+    chromaKey?: string;
+    chromaSourcePath?: string;
+    chromaSourceSha256?: string;
+    registryPath?: string;
+  };
 };
 
 export type StoryNpcDefinition = {
@@ -565,6 +629,7 @@ export type StoryAdventureMapDefinition = {
   npcs: StoryNpcDefinition[];
   musicPhase: AdventureMusicPhase;
   heroLandmarkId: string;
+  resourceNodes: StoryResourceNodeDefinition[];
 };
 
 export type AdventureMusicContext = {
@@ -627,4 +692,5 @@ export type StoryHubDefinition = {
   interactables?: StoryInteractableDefinition[];
   npcs?: StoryNpcDefinition[];
   musicPhase?: AdventureMusicPhase;
+  resourceNodes?: StoryResourceNodeDefinition[];
 };

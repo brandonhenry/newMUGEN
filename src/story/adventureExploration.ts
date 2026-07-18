@@ -2,6 +2,7 @@ import type {
   StoryAdventureExplorationDefinition,
   StoryAdventureRunGraph,
   StoryAdventureWorldId,
+  StoryAvatarSet,
   StoryDepthTemplateDefinition,
   StoryDepthZoneKind,
   StoryGeneratedDepthLink,
@@ -14,7 +15,7 @@ import type {
 export const STORY_DEPTH_GENERATION_VERSION = 2 as const;
 export const STORY_DEPTH_ZONE_MIN = 6;
 export const STORY_DEPTH_ZONE_MAX = 10;
-export const STORY_PARTY_MAX_MEMBERS = 4;
+export const STORY_PARTY_MAX_MEMBERS = 5;
 export const STORY_PARTY_RECONNECT_TTL_MS = 30 * 60 * 1000;
 export const STORY_MAX_ACTIVE_ENEMIES = 5;
 export const STORY_MAX_BREATH = 100;
@@ -231,46 +232,115 @@ export function storyDepthZoneLabel(kind: StoryDepthZoneKind) {
   return ({ cave: 'Cave', underwater: 'Sunken Passage', tower: 'High Route', ruin: 'Ruined Hall', mine: 'Deep Shaft', crypt: 'Sealed Crypt', grotto: 'Hidden Grotto', sanctuary: 'Mount Sanctuary' } as const)[kind];
 }
 
-export type StoryPartyMember = { sessionId: string; joinedAt: number; lastSeenAt: number };
+export type StoryPartyMemberState = 'active' | 'ko' | 'disconnected';
+export type StoryPartyMember = {
+  sessionId: string;
+  peerId: string;
+  displayName: string;
+  avatarId: string;
+  avatarSet: StoryAvatarSet;
+  equippedAvatars: Array<{ avatarId: string; avatarSet: StoryAvatarSet }>;
+  capacity: number;
+  joinedAt: number;
+  lastSeenAt: number;
+  state: StoryPartyMemberState;
+  health: number;
+  maxHealth: number;
+};
+export type StoryPartyAiActor = { id: string; ownerSessionId: string; avatarId: string; avatarSet: StoryAvatarSet; slot: number; health: number; maxHealth: number; state: 'active' | 'ko' };
 export type StoryPartyInstance = {
-  version: 1;
+  version: 2;
   id: string;
   worldId: Exclude<StoryAdventureWorldId, 'world-route'>;
   seed: string;
   generationVersion: typeof STORY_DEPTH_GENERATION_VERSION;
   leaderSessionId: string;
+  leaderCapacity: number;
   members: StoryPartyMember[];
-  roomId?: string;
+  aiActors: StoryPartyAiActor[];
+  roomId: string;
+  protocolSequence: number;
   updatedAt: number;
 };
 
-export function electStoryPartyLeader(members: StoryPartyMember[]) {
+export type StoryPartyInvite = {
+  version: 1;
+  id: string;
+  partyId: string;
+  inviterSessionId: string;
+  inviterDisplayName: string;
+  targetSessionId: string;
+  worldId: StoryPartyInstance['worldId'];
+  createdAt: number;
+  expiresAt: number;
+};
+
+export function electStoryPartyLeader<T extends { sessionId: string; joinedAt: number }>(members: T[]) {
   return [...members].sort((left, right) => left.joinedAt - right.joinedAt || left.sessionId.localeCompare(right.sessionId))[0]?.sessionId ?? '';
 }
 
 export function sanitizeStoryPartyInstance(value: unknown, now = Date.now()): StoryPartyInstance | null {
   if (!value || typeof value !== 'object') return null;
   const record = value as Partial<StoryPartyInstance>;
-  if (record.version !== 1 || record.generationVersion !== STORY_DEPTH_GENERATION_VERSION || typeof record.id !== 'string' || typeof record.seed !== 'string' || typeof record.worldId !== 'string') return null;
+  if (record.version !== 2 || record.generationVersion !== STORY_DEPTH_GENERATION_VERSION || typeof record.id !== 'string' || typeof record.seed !== 'string' || typeof record.worldId !== 'string') return null;
   const allowedWorlds = Object.values(STORY_MOUNTS).map((mount) => mount.worldId);
   if (!allowedWorlds.includes(record.worldId as StoryPartyInstance['worldId'])) return null;
+  const clean = (value: unknown, fallback = '') => typeof value === 'string' ? value.replace(/[^a-zA-Z0-9:_ -]/g, '').slice(0, 120) : fallback;
   const members = Array.isArray(record.members) ? record.members.flatMap((member) => {
     if (!member || typeof member.sessionId !== 'string' || !Number.isFinite(member.joinedAt) || !Number.isFinite(member.lastSeenAt)) return [];
     if (now - member.lastSeenAt > STORY_PARTY_RECONNECT_TTL_MS) return [];
-    return [{ sessionId: member.sessionId, joinedAt: member.joinedAt, lastSeenAt: member.lastSeenAt }];
+    const maxHealth = Math.max(1, Math.round(Number(member.maxHealth) || 100));
+    const requestedHealth = Number(member.health);
+    return [{
+      sessionId: clean(member.sessionId),
+      peerId: clean(member.peerId),
+      displayName: clean(member.displayName, 'PLAYER'),
+      avatarId: clean(member.avatarId, 'avatar-1'),
+      avatarSet: typeof member.avatarSet === 'string' ? member.avatarSet as StoryAvatarSet : 'solar-runner',
+      equippedAvatars: Array.isArray(member.equippedAvatars) ? member.equippedAvatars.flatMap((avatar) => avatar && typeof avatar.avatarId === 'string' && typeof avatar.avatarSet === 'string' ? [{ avatarId: clean(avatar.avatarId), avatarSet: avatar.avatarSet as StoryAvatarSet }] : []).slice(0, STORY_PARTY_MAX_MEMBERS) : [],
+      capacity: Math.max(1, Math.min(STORY_PARTY_MAX_MEMBERS, Math.round(Number(member.capacity) || 1))),
+      joinedAt: member.joinedAt,
+      lastSeenAt: member.lastSeenAt,
+      state: member.state === 'ko' ? 'ko' as const : now - member.lastSeenAt > 12_000 ? 'disconnected' as const : 'active' as const,
+      health: Math.max(0, Math.min(maxHealth, Number.isFinite(requestedHealth) ? Math.round(requestedHealth) : maxHealth)),
+      maxHealth
+    }];
   }).sort((left, right) => left.joinedAt - right.joinedAt).slice(0, STORY_PARTY_MAX_MEMBERS) : [];
   if (members.length === 0) return null;
+  const leaderSessionId = typeof record.leaderSessionId === 'string' && members.some((member) => member.sessionId === record.leaderSessionId)
+    ? record.leaderSessionId
+    : electStoryPartyLeader(members);
+  const leaderCapacity = members.find((member) => member.sessionId === leaderSessionId)?.capacity ?? 1;
+  const aiActors = Array.isArray(record.aiActors) ? record.aiActors.flatMap((actor) => {
+    if (!actor || typeof actor.id !== 'string' || typeof actor.avatarId !== 'string' || typeof actor.ownerSessionId !== 'string') return [];
+    const maxHealth = Math.max(1, Math.round(Number(actor.maxHealth) || 100));
+    const requestedHealth = Number(actor.health);
+    return [{ id: clean(actor.id), ownerSessionId: clean(actor.ownerSessionId), avatarId: clean(actor.avatarId), avatarSet: actor.avatarSet as StoryAvatarSet, slot: Math.max(1, Math.min(4, Math.round(Number(actor.slot) || 1))), health: Math.max(0, Math.min(maxHealth, Number.isFinite(requestedHealth) ? Math.round(requestedHealth) : maxHealth)), maxHealth, state: actor.state === 'ko' ? 'ko' as const : 'active' as const }];
+  }).slice(0, Math.max(0, leaderCapacity - members.length)) : [];
   return {
-    version: 1,
+    version: 2,
     id: record.id,
     worldId: record.worldId as StoryPartyInstance['worldId'],
     seed: record.seed,
     generationVersion: STORY_DEPTH_GENERATION_VERSION,
-    leaderSessionId: typeof record.leaderSessionId === 'string' && members.some((member) => member.sessionId === record.leaderSessionId)
-      ? record.leaderSessionId
-      : electStoryPartyLeader(members),
+    leaderSessionId,
+    leaderCapacity,
     members,
-    ...(typeof record.roomId === 'string' && record.roomId ? { roomId: record.roomId.replace(/[^a-zA-Z0-9:_-]/g, '').slice(0, 160) } : {}),
+    aiActors,
+    roomId: typeof record.roomId === 'string' && record.roomId ? record.roomId.replace(/[^a-zA-Z0-9:_-]/g, '').slice(0, 160) : 'surface',
+    protocolSequence: Math.max(0, Math.round(Number(record.protocolSequence) || 0)),
     updatedAt: Number.isFinite(record.updatedAt) ? Number(record.updatedAt) : now
   };
+}
+
+export function sanitizeStoryPartyInvite(value: unknown, now = Date.now()): StoryPartyInvite | null {
+  if (!value || typeof value !== 'object') return null;
+  const record = value as Partial<StoryPartyInvite>;
+  if (record.version !== 1 || typeof record.id !== 'string' || typeof record.partyId !== 'string' || typeof record.inviterSessionId !== 'string' || typeof record.targetSessionId !== 'string' || typeof record.worldId !== 'string') return null;
+  if (!Object.values(STORY_MOUNTS).some((mount) => mount.worldId === record.worldId) || !Number.isFinite(record.expiresAt) || Number(record.expiresAt) <= now) return null;
+  return { version: 1, id: record.id.slice(0, 120), partyId: record.partyId.slice(0, 120), inviterSessionId: record.inviterSessionId.slice(0, 120), inviterDisplayName: typeof record.inviterDisplayName === 'string' ? record.inviterDisplayName.slice(0, 32) : 'PLAYER', targetSessionId: record.targetSessionId.slice(0, 120), worldId: record.worldId as StoryPartyInvite['worldId'], createdAt: Math.max(0, Math.round(Number(record.createdAt) || now)), expiresAt: Math.round(Number(record.expiresAt)) };
+}
+
+export function storyPartyEnemyHealthScale(activeMembers: number) {
+  return 1 + 0.6 * (Math.max(1, Math.min(STORY_PARTY_MAX_MEMBERS, Math.round(activeMembers))) - 1);
 }

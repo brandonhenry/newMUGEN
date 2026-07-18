@@ -1,5 +1,6 @@
 import npcManifest from './storyNpcManifest.json';
-import type { StoryAdventureWorldId, StoryNpcDefinition, StoryNpcDefenseProfile, StoryNpcSpriteManifest } from './types';
+import rosterExpansion from './storyRosterExpansion.json';
+import type { StoryAdventureMapRole, StoryAdventureWorldId, StoryNpcDefinition, StoryNpcDefenseProfile, StoryNpcSpriteManifest } from './types';
 
 type BiomeId = Exclude<StoryAdventureWorldId, 'world-route'>;
 
@@ -77,12 +78,42 @@ const BIOME_NPC_DATA: Record<BiomeId, Array<[string, string, 'guide' | 'speciali
   ]
 };
 
-export const STORY_BIOME_NPCS: StoryNpcDefinition[] = Object.entries(BIOME_NPC_DATA).flatMap(([biome, entries], biomeIndex) => entries.map(([id, displayName, role, bark, warningBark], roleIndex) => {
+const STORY_LEGACY_BIOME_NPCS: StoryNpcDefinition[] = Object.entries(BIOME_NPC_DATA).flatMap(([biome, entries], biomeIndex) => entries.map(([id, displayName, role, bark, warningBark], roleIndex) => {
   const mapRole = role === 'specialist' ? 'field-b' : 'arrival';
   const mapId = `${biome}-${mapRole}`;
   const position: [number, number] = role === 'guide' ? [-20, 0.82] : role === 'resident' ? [18, 0.82] : [-18, 0.82];
   return npc({ id, displayName, role, biomeId: biome as BiomeId, mapId, position, patrolRange: role === 'resident' ? [12, 23] : undefined, spriteId: id, bark, warningBark, defense: biomeDefense(role, biomeIndex + roleIndex) });
 }));
+
+type ExpansionNpcRow = [string, string, StoryAdventureMapRole, 'guide' | 'specialist' | 'resident', 'human' | 'folk', string, string, string];
+type ExpansionBiome = { npcs: ExpansionNpcRow[] };
+
+const EXPANSION_POSITION_X: Record<StoryAdventureMapRole, Record<'guide' | 'specialist' | 'resident', number>> = {
+  arrival: { guide: -20, specialist: 0, resident: 18 },
+  'field-a': { guide: -48, specialist: 0, resident: 48 },
+  'field-b': { guide: -50, specialist: -18, resident: 50 },
+  mastery: { guide: -50, specialist: 0, resident: 50 }
+};
+
+const STORY_EXPANSION_NPCS: StoryNpcDefinition[] = Object.entries(rosterExpansion.biomes as unknown as Record<BiomeId, ExpansionBiome>)
+  .flatMap(([biomeId, biome], biomeIndex) => biome.npcs.map(([id, displayName, mapRole, role, _species, _design, bark, warningBark], roleIndex) => {
+    const x = EXPANSION_POSITION_X[mapRole][role];
+    return npc({
+      id,
+      displayName,
+      role,
+      biomeId: biomeId as BiomeId,
+      mapId: `${biomeId}-${mapRole}`,
+      position: [x, 0.82],
+      patrolRange: role === 'resident' ? [x - 4, x + 4] : undefined,
+      spriteId: id,
+      bark,
+      warningBark,
+      defense: biomeDefense(role, biomeIndex * 2 + roleIndex % 3)
+    });
+  }));
+
+export const STORY_BIOME_NPCS: StoryNpcDefinition[] = [...STORY_LEGACY_BIOME_NPCS, ...STORY_EXPANSION_NPCS];
 
 export const STORY_NPCS = [...STORY_STARTER_NPCS, ...STORY_BIOME_NPCS];
 

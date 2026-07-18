@@ -18,8 +18,10 @@ describe('authored Adventure surface campaign', () => {
       expect(maps[3].encounters.some((encounter) => encounter.elite)).toBe(true);
       expect(maps.flatMap((map) => map.interactables).filter((item) => item.kind === 'chest')).toHaveLength(3);
       expect(maps.flatMap((map) => map.interactables).filter((item) => item.kind === 'relic')).toHaveLength(3);
-      expect(maps.flatMap((map) => map.npcs)).toHaveLength(3);
+      expect(maps.flatMap((map) => map.npcs)).toHaveLength(12);
       for (const map of maps) {
+        expect(map.npcs).toHaveLength(3);
+        expect(new Set(map.npcs.map((npc) => npc.role))).toEqual(new Set(['guide', 'specialist', 'resident']));
         expect(map.bounds.maxX - map.bounds.minX).toBeGreaterThanOrEqual(100);
         expect(map.landmarks.filter((landmark) => landmark.id === map.heroLandmarkId)).toHaveLength(1);
         expect(map.landmarks.length).toBeLessThanOrEqual(2);
@@ -29,13 +31,13 @@ describe('authored Adventure surface campaign', () => {
     }
   });
 
-  it('registers the three starter NPCs and three unique residents per biome', () => {
-    expect(STORY_NPCS).toHaveLength(27);
-    expect(new Set(STORY_NPCS.map((npc) => npc.id)).size).toBe(27);
+  it('registers the three route starters and twelve unique residents per biome', () => {
+    expect(STORY_NPCS).toHaveLength(99);
+    expect(new Set(STORY_NPCS.map((npc) => npc.id)).size).toBe(99);
     expect(STORY_NPCS.filter((npc) => npc.biomeId === 'world-route')).toHaveLength(3);
     for (const biome of STORY_ADVENTURE_REGION_IDS) {
       const residents = STORY_NPCS.filter((npc) => npc.biomeId === biome);
-      expect(residents).toHaveLength(3);
+      expect(residents).toHaveLength(12);
       expect(residents.every((npc) => npc.defense.invulnerable && npc.defense.attackerOnly && npc.defense.counterDamagePercent >= 0.10 && npc.defense.counterDamagePercent <= 0.18)).toBe(true);
     }
     for (const npc of STORY_NPCS) {

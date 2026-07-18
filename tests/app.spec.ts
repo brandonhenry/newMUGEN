@@ -102,17 +102,17 @@ async function moveUntilPortal(page: Page, hub: Locator, direction: 'ArrowLeft' 
 test('Play creates a story avatar and enters K.O.R.E. Central', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await startFromSplash(page);
-  const play = page.getByRole('button', { name: 'Play', exact: true });
+  const play = page.getByRole('button', { name: 'Story', exact: true });
   await expect(play).toBeVisible();
   await expect(play).toBeFocused();
   await play.click();
 
   const creator = page.getByTestId('story-avatar-creator');
   await expect(creator).toBeVisible({ timeout: 10_000 });
-  await creator.getByLabel('Hub name').fill('Nova 7');
+  await creator.getByLabel(/Hero Name/).fill('Nova 7');
   await creator.getByRole('button', { name: 'Next avatar' }).click();
   await expect(creator).toContainText('Crimson Ranger');
-  await creator.getByRole('button', { name: 'Save & Enter Hub' }).click();
+  await creator.getByRole('button', { name: 'Begin Adventure' }).click();
 
   const hub = page.getByTestId('story-hub-screen');
   await expect(hub).toBeVisible({ timeout: 15_000 });
@@ -120,7 +120,6 @@ test('Play creates a story avatar and enters K.O.R.E. Central', async ({ page })
   await expect(hub).toContainText('K.O.R.E. Central');
   await expect(hub).toContainText('NOVA 7');
   await expect(page.locator('.local-bgm-player')).toHaveCount(0);
-  await expect(page.getByTestId('stage-ambience-player')).toHaveCount(0);
   await expect(page.getByTestId('adventure-music-player')).toHaveAttribute('data-active', 'true');
   await expect.poll(() => page.evaluate(() => {
     const adventureSources = [...document.querySelectorAll<HTMLAudioElement>('.adventure-music-player audio')]
@@ -128,8 +127,8 @@ test('Play creates a story avatar and enters K.O.R.E. Central', async ({ page })
       .filter(Boolean);
     return adventureSources.length > 0 && adventureSources.every((source) => source.includes('/story/audio/stimmerman/'));
   }), { timeout: 10_000 }).toBe(true);
-  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.profile.v4') ?? 'null')?.avatar?.name)).toBe('NOVA 7');
-  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.profile.v4') ?? 'null')?.avatar?.avatarSet)).toBe('crimson-ranger');
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.profile.v5') ?? 'null')?.avatars?.[0]?.avatar?.name)).toBe('NOVA 7');
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.profile.v5') ?? 'null')?.avatars?.[0]?.avatar?.avatarSet)).toBe('crimson-ranger');
   await expect(page.getByTestId('story-destination-story-gate')).toContainText('World Route');
   await expect(page.getByTestId('story-destination-friends-lounge')).toContainText('Friends');
 
@@ -159,6 +158,14 @@ test('Play creates a story avatar and enters K.O.R.E. Central', async ({ page })
   await expect(routeMap).toContainText('Skyglass Ruins');
   await page.keyboard.press('Escape');
   await expect(routeMap).toBeHidden();
+  await page.keyboard.press('b');
+  const pack = page.getByTestId('story-adventure-pack');
+  await expect(pack).toBeVisible();
+  await expect(pack.getByRole('button', { name: /Materials/ })).toBeVisible();
+  await expect(pack.getByRole('button', { name: /Craft/ })).toBeVisible();
+  await expect(pack.getByRole('button', { name: /Gear/ })).toBeVisible();
+  await pack.getByRole('button', { name: 'Close Adventure Pack' }).click();
+  await expect(pack).toBeHidden();
 });
 
 test('adventure combat levels the player and Central Route shrine respecs stats', async ({ page }) => {
@@ -187,7 +194,7 @@ test('adventure combat levels the player and Central Route shrine respecs stats'
     }));
   });
   await startFromSplash(page);
-  await page.getByRole('button', { name: 'Play', exact: true }).click();
+  await page.getByRole('button', { name: 'Story', exact: true }).click();
   const hub = page.getByTestId('story-hub-screen');
   await expect(hub).toHaveAttribute('data-hub-ready', 'true', { timeout: 15_000 });
 
@@ -259,7 +266,7 @@ test('saved story profiles enter Arcade World, retain jump controls, and launch 
     }));
   });
   await startFromSplash(page);
-  await page.getByRole('button', { name: 'Play', exact: true }).click();
+  await page.getByRole('button', { name: 'Story', exact: true }).click();
   const hub = page.getByTestId('story-hub-screen');
   await expect(hub).toBeVisible({ timeout: 15_000 });
   await expect(hub).toHaveAttribute('data-hub-ready', 'true', { timeout: 15_000 });
@@ -302,7 +309,7 @@ test('Versus World keeps players in-world and assigns quick-match stations', asy
     }));
   });
   await startFromSplash(page);
-  await page.getByRole('button', { name: 'Play', exact: true }).click();
+  await page.getByRole('button', { name: 'Story', exact: true }).click();
   const hub = page.getByTestId('story-hub-screen');
   await expect(hub).toHaveAttribute('data-hub-ready', 'true', { timeout: 15_000 });
 
@@ -338,14 +345,14 @@ test('story hub shares avatars and persists the pause-menu offline choice', asyn
   });
 
   await startFromSplash(page);
-  await page.getByRole('button', { name: 'Play', exact: true }).click();
+  await page.getByRole('button', { name: 'Story', exact: true }).click();
   const firstHub = page.getByTestId('story-hub-screen');
   await expect(firstHub).toHaveAttribute('data-hub-ready', 'true', { timeout: 15_000 });
   await expect(firstHub).toHaveAttribute('data-online', 'true');
 
   const secondPage = await context.newPage();
   await startFromSplash(secondPage);
-  await secondPage.getByRole('button', { name: 'Play', exact: true }).click();
+  await secondPage.getByRole('button', { name: 'Story', exact: true }).click();
   const secondHub = secondPage.getByTestId('story-hub-screen');
   await expect(secondHub).toHaveAttribute('data-hub-ready', 'true', { timeout: 15_000 });
   await expect(firstHub).toHaveAttribute('data-player-count', '2', { timeout: 8_000 });
@@ -425,7 +432,7 @@ test('story hub accepts controller and touch movement, run, attack, and pause', 
     }));
   });
   await startFromSplash(page);
-  await page.getByRole('button', { name: 'Play', exact: true }).click();
+  await page.getByRole('button', { name: 'Story', exact: true }).click();
   const hub = page.getByTestId('story-hub-screen');
   await expect(hub).toHaveAttribute('data-hub-ready', 'true', { timeout: 15_000 });
 
@@ -1248,7 +1255,7 @@ test('Adventure pause credits shortcut opens Konsole credits and returns to Adve
   });
   await forceMenuLagHealthy(page);
   await startFromSplash(page);
-  await page.getByRole('button', { name: 'Play', exact: true }).click();
+  await page.getByRole('button', { name: 'Story', exact: true }).click();
 
   const hub = page.getByTestId('story-hub-screen');
   await expect(hub).toHaveAttribute('data-hub-ready', 'true', { timeout: 15_000 });

@@ -3,13 +3,14 @@ import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import manifestJson from './storyEnemyManifest.json';
-import { STORY_CHALLENGER_IDS, STORY_ENEMY_CATALOG, STORY_ENEMY_FRAME_SIZE, STORY_ENEMY_IDS, STORY_ENEMY_RUNTIME_SCALE, STORY_REGULAR_ENEMY_IDS, storyEnemyPlaneSize, validateStoryEnemyCatalog } from './enemyCatalog';
+import { STORY_CHALLENGER_IDS, STORY_CHALLENGER_IDS_BY_BIOME, STORY_ENEMY_CATALOG, STORY_ENEMY_FRAME_SIZE, STORY_ENEMY_IDS, STORY_ENEMY_RUNTIME_SCALE, STORY_REGULAR_ENEMY_IDS, STORY_REGULAR_ENEMY_IDS_BY_BIOME, storyEnemyPlaneSize, validateStoryEnemyCatalog } from './enemyCatalog';
+import { STORY_ADVENTURE_REGION_IDS } from './adventureWorlds';
 
 type EnemyManifest = {
   enemies: Array<{
     id: string;
     tier: 'regular' | 'challenger';
-    sources: Array<{ path: string; sha256: string; originalFile: string }>;
+    sources: Array<{ kind: 'user-supplied' | 'imagegen'; path: string; sha256: string; originalFile?: string; chromaSourcePath?: string; chromaSourceSha256?: string; prompt?: string; model?: string }>;
     facing: 'right';
     animations: Array<{ id: string; frames: Array<{ path: string; sha256: string; contentBounds: [number, number, number, number]; derivedFrom?: string }> }>;
   }>;
@@ -20,20 +21,27 @@ const publicRoot = resolve(process.cwd(), 'public');
 const diskPath = (publicPath: string) => resolve(publicRoot, publicPath.replace(/^\//, ''));
 
 describe('story enemy catalog', () => {
-  it('registers exactly the eight regular enemies and eight challengers', () => {
+  it('registers exactly 32 regular enemies and 24 challengers', () => {
     expect(validateStoryEnemyCatalog()).toEqual([]);
-    expect(STORY_ENEMY_IDS).toHaveLength(16);
-    expect(STORY_REGULAR_ENEMY_IDS).toHaveLength(8);
-    expect(STORY_CHALLENGER_IDS).toHaveLength(8);
+    expect(STORY_ENEMY_IDS).toHaveLength(56);
+    expect(STORY_REGULAR_ENEMY_IDS).toHaveLength(32);
+    expect(STORY_CHALLENGER_IDS).toHaveLength(24);
     expect(STORY_ENEMY_RUNTIME_SCALE).toBeGreaterThanOrEqual(1.25);
     expect(new Set(manifest.enemies.map((enemy) => enemy.id))).toEqual(new Set(STORY_ENEMY_IDS));
   });
 
-  it('pins every supplied source sheet to its recorded SHA-256', () => {
+  it('pins every legacy and image-generated source sheet to its recorded SHA-256', () => {
     const sources = manifest.enemies.flatMap((enemy) => enemy.sources);
-    expect(new Set(sources.map((source) => source.path)).size).toBe(29);
+    expect(new Set(sources.map((source) => source.path)).size).toBe(109);
     for (const source of sources) {
-      expect(source.originalFile).toMatch(/^codex-clipboard-[a-f0-9-]+\.png$/);
+      if (source.kind === 'user-supplied') expect(source.originalFile).toMatch(/^codex-clipboard-[a-f0-9-]+\.png$/);
+      else {
+        expect(source.prompt).toBeTruthy();
+        expect(source.model).toBeTruthy();
+        expect(source.chromaSourcePath).toBeTruthy();
+        const chroma = readFileSync(diskPath(source.chromaSourcePath!));
+        expect(createHash('sha256').update(chroma).digest('hex')).toBe(source.chromaSourceSha256);
+      }
       const contents = readFileSync(diskPath(source.path));
       expect(createHash('sha256').update(contents).digest('hex'), source.path).toBe(source.sha256);
     }
@@ -60,7 +68,16 @@ describe('story enemy catalog', () => {
         }
       }
     }
-    expect(frameCount).toBeGreaterThan(800);
+    expect(frameCount).toBeGreaterThan(3_000);
+  });
+
+  it('exports six regulars and three biome-coherent challengers per biome', () => {
+    for (const biome of STORY_ADVENTURE_REGION_IDS) {
+      expect(STORY_REGULAR_ENEMY_IDS_BY_BIOME[biome]).toHaveLength(6);
+      expect(STORY_CHALLENGER_IDS_BY_BIOME[biome]).toHaveLength(3);
+      expect(new Set(STORY_REGULAR_ENEMY_IDS_BY_BIOME[biome]).size).toBe(6);
+      expect(new Set(STORY_CHALLENGER_IDS_BY_BIOME[biome]).size).toBe(3);
+    }
   });
 
   it('palette-maps Tide Slime combat reactions to Venom and Volt without changing their identities', () => {

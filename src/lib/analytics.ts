@@ -113,6 +113,11 @@ export type AnalyticsEventMap = {
   adventure_encounter_completed: BaseEventProperties & { visit_id: string; encounter_id: string; world_id: string; level: number; duration_seconds: number; result: string };
   adventure_reward_collected: BaseEventProperties & { visit_id: string; world_id: string; reward_type: string; level: number };
   adventure_progression_reached: BaseEventProperties & { visit_id: string; world_id: string; milestone_type: string; level: number };
+  adventure_resource_harvested: BaseEventProperties & { world_id: string; resource_id: string; rarity: string; quantity: number; recipe_unlocks: number };
+  adventure_recipes_learned: BaseEventProperties & { source: string; world_id: string; count: number };
+  adventure_item_crafted: BaseEventProperties & { recipe_id: string; crafting_context: string };
+  adventure_armor_equipped: BaseEventProperties & { recipe_id: string; equipped: boolean };
+  adventure_consumable_used: BaseEventProperties & { recipe_id: string; healing: number };
   tournament_list_loaded: BaseEventProperties;
   tournament_mode_selected: BaseEventProperties;
   tournament_entry_started: BaseEventProperties;

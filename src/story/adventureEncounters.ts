@@ -1,5 +1,7 @@
-import { STORY_CHALLENGER_IDS } from './enemyCatalog';
-import type { StoryEnemyId, StoryEnemySpawnDefinition, StoryEncounterZoneDefinition } from './types';
+import { STORY_ROSTER_CHALLENGER_IDS, STORY_ROSTER_CHALLENGER_IDS_BY_BIOME } from './enemyRosterIds';
+import type { StoryAdventureWorldId, StoryEnemyId, StoryEnemySpawnDefinition, StoryEncounterZoneDefinition } from './types';
+
+type BiomeId = Exclude<StoryAdventureWorldId, 'world-route'>;
 
 export const STORY_CHALLENGER_ODDS = [0, 0, 0.35, 0.65, 1] as const;
 
@@ -31,10 +33,11 @@ export function storyChallengerChance(encounterIndex: number): number {
   return STORY_CHALLENGER_ODDS[Math.max(0, Math.min(4, Math.round(encounterIndex)))] ?? 0;
 }
 
-export function selectStoryChallenger(seed: string, zoneId: string, selected: StoryEnemyId[], forced?: StoryEnemyId): StoryEnemyId {
-  if (forced && STORY_CHALLENGER_IDS.includes(forced)) return forced;
-  const available = STORY_CHALLENGER_IDS.filter((id) => !selected.includes(id));
-  const pool = available.length > 0 ? available : STORY_CHALLENGER_IDS;
+export function selectStoryChallenger(seed: string, biomeId: BiomeId, zoneId: string, selected: StoryEnemyId[], forced?: StoryEnemyId): StoryEnemyId {
+  if (forced && STORY_ROSTER_CHALLENGER_IDS.includes(forced)) return forced;
+  const eligible = STORY_ROSTER_CHALLENGER_IDS_BY_BIOME[biomeId];
+  const available = eligible.filter((id) => !selected.includes(id));
+  const pool = available.length > 0 ? available : eligible;
   return [...pool].sort((left, right) => hashString(`${seed}:${zoneId}:${left}`) - hashString(`${seed}:${zoneId}:${right}`))[0];
 }
 
@@ -58,6 +61,7 @@ export function recordRegularDefeat(input: {
   encounterIndex: number;
   spawns: StoryEnemySpawnDefinition[];
   seed: string;
+  biomeId: BiomeId;
   forceChallenger?: StoryEnemyId;
 }): { progress: StoryEncounterProgress; challengeStarted: boolean } {
   const defeatedRegularIds = Array.from(new Set([...input.progress.defeatedRegularIds, input.spawnId]));
@@ -75,7 +79,7 @@ export function recordRegularDefeat(input: {
       challengeStarted: false
     };
   }
-  const enemyId = selectStoryChallenger(input.seed, input.zone.id, input.progress.selectedChallengers, input.forceChallenger);
+  const enemyId = selectStoryChallenger(input.seed, input.biomeId, input.zone.id, input.progress.selectedChallengers, input.forceChallenger);
   return {
     progress: {
       ...input.progress,

@@ -65,15 +65,20 @@ describe('party generation state', () => {
       { sessionId: 'first', joinedAt: 10, lastSeenAt: 100 }
     ])).toBe('first');
     expect(sanitizeStoryPartyInstance({
-      version: 1,
+      version: 2,
       id: 'party',
       worldId: 'greenhollow',
       seed: 'shared',
       generationVersion: 2,
+      leaderSessionId: 'first',
+      leaderCapacity: 1,
+      aiActors: [],
+      roomId: 'surface',
+      protocolSequence: 0,
       members: [{ sessionId: 'first', joinedAt: 10, lastSeenAt: 1000 }]
     }, 1000)?.leaderSessionId).toBe('first');
     expect(sanitizeStoryPartyInstance({
-      version: 1,
+      version: 2,
       id: 'future-party',
       worldId: 'greenhollow',
       seed: 'shared',

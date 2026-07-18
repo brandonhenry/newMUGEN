@@ -1,8 +1,12 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import {
   STORY_ADVENTURE_PROGRESS_KEY,
+  STORY_ADVENTURE_PARTY_SIZE_CAP,
+  STORY_ADVENTURE_COMBAT_STAT_KEYS,
   STORY_ROUTE_COIN_CAP,
+  acknowledgeAdventurePartyFeatureReveal,
   allocateAdventureStat,
+  applyAdventureEnemyDefeat,
   awardRouteCoins,
   awardMountMastery,
   awardAdventureExperience,
@@ -15,8 +19,10 @@ import {
   collectAdventureRelic,
   experienceToNextLevel,
   getAdventureDerivedStats,
+  getAdventurePartySizeEligibility,
   makeDefaultAdventureProgress,
   readAdventureProgress,
+  recordAdventureChallengerDefeat,
   restoreAdventureShortcut,
   respecAdventureStats,
   sanitizeAdventureProgress,
@@ -41,13 +47,14 @@ describe('story adventure progression', () => {
     expect(sanitized.unspentPoints).toBe(0);
     expect(sanitized.xp).toBeLessThan(experienceToNextLevel(3));
     expect(sanitized.lifetimeDefeats).toBe(0);
-    expect(sanitized.version).toBe(3);
+    expect(sanitized.version).toBe(4);
+    expect(sanitized.stats.partySize).toBe(1);
     expect(sanitized.discoveries.biomes).toEqual([]);
   });
 
   it('migrates V1 fields and persists discovery and mount mastery', () => {
     const migrated = sanitizeAdventureProgress({ version: 1, level: 8, xp: 12, stats: { power: 3 }, lifetimeDefeats: 4 });
-    expect(migrated).toMatchObject({ version: 3, level: 8, xp: 12, lifetimeDefeats: 4 });
+    expect(migrated).toMatchObject({ version: 4, level: 8, xp: 12, lifetimeDefeats: 4, defeatedChallengerIds: [], partyFeatureRevealSeen: false });
     const visiting = beginAdventureVisit(migrated, 'greenhollow');
     expect(visiting.discoveries.biomes).toContain('greenhollow');
     expect(visiting.visitCounters.greenhollow).toBe(1);
@@ -104,12 +111,56 @@ describe('story adventure progression', () => {
     });
     const reset = respecAdventureStats(progress);
     expect(reset.unspentPoints).toBe(6);
-    expect(Object.values(reset.stats).every((value) => value === 0)).toBe(true);
+    expect(STORY_ADVENTURE_COMBAT_STAT_KEYS.every((stat) => reset.stats[stat] === 0)).toBe(true);
+    expect(reset.stats.partySize).toBe(1);
     writeAdventureProgress(progress);
     expect(readAdventureProgress()).toEqual(progress);
     expect(window.localStorage.getItem(STORY_ADVENTURE_PROGRESS_KEY)).toContain('"level":7');
     expect(canRespecAdventureStats('world-route', 'shrine')).toBe(true);
     expect(canRespecAdventureStats('world-route', 'adventure-gate')).toBe(false);
     expect(canRespecAdventureStats('emberdeep', 'shrine')).toBe(false);
+  });
+
+  it('unlocks Party Size from unique challenger and level milestones', () => {
+    let progress = sanitizeAdventureProgress({ level: 2, stats: {} });
+    expect(getAdventurePartySizeEligibility(progress.level, 0).maxEligibleSize).toBe(1);
+    const first = recordAdventureChallengerDefeat(progress, 'silver-duelist');
+    expect(first.unique).toBe(true);
+    expect(first.progress.partyFeatureRevealSeen).toBe(false);
+    progress = allocateAdventureStat(first.progress, 'partySize');
+    expect(progress.stats.partySize).toBe(2);
+    expect(progress.unspentPoints).toBe(0);
+    expect(allocateAdventureStat(progress, 'partySize').stats.partySize).toBe(2);
+
+    const repeat = recordAdventureChallengerDefeat(progress, 'silver-duelist');
+    expect(repeat.unique).toBe(false);
+    expect(repeat.progress.defeatedChallengerIds).toEqual(['silver-duelist']);
+    const revealed = acknowledgeAdventurePartyFeatureReveal(repeat.progress);
+    expect(revealed.partyFeatureRevealSeen).toBe(true);
+  });
+
+  it('applies structured challenger rewards once, with XP and unique credit in one ordered result', () => {
+    const seen = new Set<string>();
+    const event = { eventId: 'visit:spawn-1:challenger', spawnId: 'spawn-1', enemyId: 'silver-duelist' as const, tier: 'challenger' as const, xp: 100 };
+    const first = applyAdventureEnemyDefeat(makeDefaultAdventureProgress(), event, seen);
+    expect(first).toMatchObject({ duplicate: false, uniqueChallenger: true, levelsGained: 1, xpAwarded: 100 });
+    expect(first.progress).toMatchObject({ level: 2, lifetimeDefeats: 1, defeatedChallengerIds: ['silver-duelist'] });
+    const duplicate = applyAdventureEnemyDefeat(first.progress, event, seen);
+    expect(duplicate.duplicate).toBe(true);
+    expect(duplicate.progress).toEqual(first.progress);
+  });
+
+  it('gates every Party Size tier, spends points, and refunds on respec', () => {
+    const defeatedChallengerIds = ['silver-duelist', 'crescent-rogue', 'chimera-android', 'hollow-bride', 'ember-fist', 'laughing-oni', 'dusk-ronin', 'crimson-countess', 'harvest-warden', 'millstorm-sage'];
+    let progress = sanitizeAdventureProgress({ level: 30, defeatedChallengerIds, stats: {} });
+    expect(getAdventurePartySizeEligibility(30, 1).maxEligibleSize).toBe(2);
+    expect(getAdventurePartySizeEligibility(10, 3).maxEligibleSize).toBe(3);
+    expect(getAdventurePartySizeEligibility(20, 6).maxEligibleSize).toBe(4);
+    expect(getAdventurePartySizeEligibility(30, 10).maxEligibleSize).toBe(5);
+    for (let index = 1; index < STORY_ADVENTURE_PARTY_SIZE_CAP; index += 1) progress = allocateAdventureStat(progress, 'partySize');
+    expect(progress.stats.partySize).toBe(5);
+    const reset = respecAdventureStats(progress);
+    expect(reset.stats.partySize).toBe(1);
+    expect(reset.unspentPoints).toBe(29);
   });
 });

@@ -1,5 +1,8 @@
 import manifestJson from './storyEnemyManifest.json';
-import type { StoryEnemyArchetype, StoryEnemyBehavior, StoryEnemyId, StoryEnemyTier } from './types';
+import rosterExpansion from './storyRosterExpansion.json';
+import type { StoryAdventureWorldId, StoryEnemyArchetype, StoryEnemyBehavior, StoryEnemyId, StoryEnemyTier } from './types';
+
+type BiomeId = Exclude<StoryAdventureWorldId, 'world-route'>;
 
 export type StoryEnemyFrameDefinition = {
   id: string;
@@ -30,6 +33,7 @@ export type StoryEnemyDefinition = {
   tier: StoryEnemyTier;
   archetype: StoryEnemyArchetype;
   behavior: StoryEnemyBehavior;
+  biomeAffinity: readonly BiomeId[];
   worldScale: number;
   /** Intended visible body height in Adventure world units, excluding transparent frame padding. */
   visualHeight: number;
@@ -59,7 +63,9 @@ const projectile = (animation: string, color: string, damageMultiplier = 0.9, co
   projectile: { speed: 5.6, lifetimeMs: 2_400, radius: 0.26, color }
 });
 
-const CONFIG: Record<StoryEnemyId, Omit<StoryEnemyDefinition, 'id' | 'label' | 'tier' | 'animations'>> = {
+type StoryEnemyCombatConfig = Omit<StoryEnemyDefinition, 'id' | 'label' | 'tier' | 'animations' | 'biomeAffinity'>;
+
+const LEGACY_CONFIG: Partial<Record<StoryEnemyId, StoryEnemyCombatConfig>> = {
   'veil-shade': { archetype: 'ranged', behavior: 'caster', worldScale: 1.05, visualHeight: 2.85, hitbox: [0.55, 0.92], healthMultiplier: 1, damageMultiplier: 1, speedMultiplier: 0.95, xpMultiplier: 1.1, attacks: [melee('attack-1', 0.85, 1.1, 1_150), projectile('attack-2', '#d8e5ff')] },
   'cinder-wisp': { archetype: 'flying', behavior: 'flying', worldScale: 0.82, visualHeight: 1.75, hitbox: [0.5, 0.5], healthMultiplier: 0.9, damageMultiplier: 1.05, speedMultiplier: 1.2, xpMultiplier: 1.15, attacks: [projectile('attack-1', '#ffb02e', 0.85, 1_250), melee('attack-2', 1.2, 1.25, 1_500), projectile('special', '#ff7a21', 1.15, 2_100)] },
   'nightshade-bulb': { archetype: 'ranged', behavior: 'ambusher', worldScale: 0.92, visualHeight: 2.15, hitbox: [0.55, 0.62], healthMultiplier: 1.08, damageMultiplier: 0.95, speedMultiplier: 0.82, xpMultiplier: 1.1, attacks: [melee('attack-1', 0.8, 1.15, 950), melee('attack-2', 1, 1.45, 1_250), projectile('special', '#b449d1', 1.05, 1_850)] },
@@ -78,16 +84,107 @@ const CONFIG: Record<StoryEnemyId, Omit<StoryEnemyDefinition, 'id' | 'label' | '
   'hollow-bride': { archetype: 'ranged', behavior: 'caster', worldScale: 1.12, visualHeight: 3.55, hitbox: [0.62, 1], healthMultiplier: 4.4, damageMultiplier: 1.5, speedMultiplier: 0.9, xpMultiplier: 6, attacks: [melee('attack-1', 0.85, 1.35, 900), projectile('attack-3', '#d62a8b', 1.05, 1_150), projectile('attack-4', '#ff4ea3', 1.35, 1_650)] }
 };
 
+type ExpansionEnemyRow = [
+  StoryEnemyId,
+  string,
+  StoryEnemyTier,
+  StoryEnemyArchetype,
+  StoryEnemyBehavior,
+  string,
+  string,
+  [number, number, number, number, number, number, number, number]
+];
+type ExpansionBiome = { enemies: ExpansionEnemyRow[] };
+
+const LEGACY_CHALLENGER_BY_BIOME: Record<BiomeId, StoryEnemyId> = {
+  greenhollow: 'silver-duelist',
+  thornwood: 'crescent-rogue',
+  ironroot: 'chimera-android',
+  bonevault: 'hollow-bride',
+  emberdeep: 'ember-fist',
+  frostpeak: 'laughing-oni',
+  sunscar: 'dusk-ronin',
+  skyglass: 'crimson-countess'
+};
+
+const LEGACY_REGULARS_BY_BIOME: Record<BiomeId, readonly StoryEnemyId[]> = {
+  greenhollow: ['volt-slime', 'nightshade-bulb', 'venom-slime'],
+  thornwood: ['nightshade-bulb', 'venom-slime', 'veil-shade'],
+  ironroot: ['graveblade', 'tide-slime', 'volt-slime'],
+  bonevault: ['graveblade', 'veil-shade', 'magma-slime'],
+  emberdeep: ['cinder-wisp', 'magma-slime', 'nightshade-bulb'],
+  frostpeak: ['tide-slime', 'veil-shade', 'graveblade'],
+  sunscar: ['volt-slime', 'cinder-wisp', 'magma-slime'],
+  skyglass: ['tide-slime', 'venom-slime', 'cinder-wisp']
+};
+
+const expansionBiomes = rosterExpansion.biomes as unknown as Record<BiomeId, ExpansionBiome>;
+const EXPANSION_ENEMIES = Object.entries(expansionBiomes).flatMap(([biomeId, biome]) =>
+  biome.enemies.map((enemy) => ({ biomeId, enemy }))
+);
+
+const EXPANSION_CONFIG: Partial<Record<StoryEnemyId, StoryEnemyCombatConfig>> = Object.fromEntries(
+  EXPANSION_ENEMIES.map(({ enemy }, index) => {
+    const [id, _label, tier, archetype, behavior, _design, accent, metrics] = enemy;
+    const [worldScale, visualHeight, hitboxWidth, hitboxHeight, healthMultiplier, damageMultiplier, speedMultiplier, xpMultiplier] = metrics;
+    const attackTwo = archetype === 'ground' && behavior !== 'caster'
+      ? melee('attack-2', 1.08, tier === 'challenger' ? 1.65 : 1.3, 1_080 + (index % 3) * 90)
+      : projectile('attack-2', accent, 0.96, 1_360 + (index % 4) * 110);
+    const special = archetype === 'ground' && behavior !== 'caster'
+      ? melee('special', 1.34, tier === 'challenger' ? 1.9 : 1.5, 1_620 + (index % 3) * 120)
+      : projectile('special', accent, 1.2, 1_820 + (index % 4) * 120);
+    return [id, {
+      archetype,
+      behavior,
+      worldScale,
+      visualHeight,
+      hitbox: [hitboxWidth, hitboxHeight],
+      healthMultiplier,
+      damageMultiplier,
+      speedMultiplier,
+      xpMultiplier,
+      attacks: [melee('attack-1', 0.88 + (index % 3) * 0.05, tier === 'challenger' ? 1.45 : 1.15, 820 + (index % 4) * 70), attackTwo, special]
+    } satisfies StoryEnemyCombatConfig];
+  })
+) as Partial<Record<StoryEnemyId, StoryEnemyCombatConfig>>;
+
+const CONFIG = { ...LEGACY_CONFIG, ...EXPANSION_CONFIG } as Record<StoryEnemyId, StoryEnemyCombatConfig>;
+
+const BIOME_AFFINITY_BY_ENEMY = Object.fromEntries(
+  (Object.keys(expansionBiomes) as BiomeId[]).flatMap((biomeId) => [
+    ...expansionBiomes[biomeId].enemies.map((enemy) => [enemy[0], [biomeId]]),
+    [LEGACY_CHALLENGER_BY_BIOME[biomeId], [biomeId]]
+  ])
+) as Partial<Record<StoryEnemyId, BiomeId[]>>;
+for (const [biomeId, regulars] of Object.entries(LEGACY_REGULARS_BY_BIOME) as Array<[BiomeId, readonly StoryEnemyId[]]>) {
+  for (const enemyId of regulars) BIOME_AFFINITY_BY_ENEMY[enemyId] = [...(BIOME_AFFINITY_BY_ENEMY[enemyId] ?? []), biomeId];
+}
+
+export const STORY_REGULAR_ENEMY_IDS_BY_BIOME = Object.fromEntries(
+  (Object.keys(expansionBiomes) as BiomeId[]).map((biomeId) => [biomeId, [
+    ...LEGACY_REGULARS_BY_BIOME[biomeId],
+    ...expansionBiomes[biomeId].enemies.filter((enemy) => enemy[2] === 'regular').map((enemy) => enemy[0])
+  ].filter(hasRuntimeEnemyAssets)])
+) as unknown as Record<BiomeId, readonly StoryEnemyId[]>;
+
+export const STORY_CHALLENGER_IDS_BY_BIOME = Object.fromEntries(
+  (Object.keys(expansionBiomes) as BiomeId[]).map((biomeId) => [biomeId, [
+    LEGACY_CHALLENGER_BY_BIOME[biomeId],
+    ...expansionBiomes[biomeId].enemies.filter((enemy) => enemy[2] === 'challenger').map((enemy) => enemy[0])
+  ].filter(hasRuntimeEnemyAssets)])
+) as unknown as Record<BiomeId, readonly StoryEnemyId[]>;
+
 export const STORY_ENEMY_FRAME_SIZE = manifest.frameSize;
 export const STORY_ENEMY_RUNTIME_SCALE = 1.28;
 export const STORY_ENEMY_IDS = (Object.keys(CONFIG) as StoryEnemyId[]).filter(hasRuntimeEnemyAssets);
+export const STORY_UNAVAILABLE_ENEMY_IDS = (Object.keys(CONFIG) as StoryEnemyId[]).filter((id) => !hasRuntimeEnemyAssets(id));
 export const STORY_REGULAR_ENEMY_IDS = STORY_ENEMY_IDS.filter((id) => animationsById.get(id)?.tier === 'regular');
 export const STORY_CHALLENGER_IDS = STORY_ENEMY_IDS.filter((id) => animationsById.get(id)?.tier === 'challenger');
 
 export const STORY_ENEMY_CATALOG = STORY_ENEMY_IDS.reduce((catalog, id) => {
   const assets = animationsById.get(id);
   if (!assets) return catalog;
-  catalog[id] = { id, label: assets.label, tier: assets.tier, animations: assets.animations, ...CONFIG[id] };
+  catalog[id] = { id, label: assets.label, tier: assets.tier, animations: assets.animations, biomeAffinity: BIOME_AFFINITY_BY_ENEMY[id] ?? [], ...CONFIG[id] };
   return catalog;
 }, {} as Record<StoryEnemyId, StoryEnemyDefinition>);
 
@@ -110,7 +207,7 @@ export function storyEnemyPlaneSize(enemy: StoryEnemyDefinition): number {
 export function validateStoryEnemyCatalog(): string[] {
   const errors: string[] = [];
   if (manifest.version !== 1) errors.push('Enemy manifest version must be 1');
-  if (manifest.enemies.length !== 16) errors.push('Enemy manifest must contain 16 enemies');
+  if (manifest.enemies.length !== 56) errors.push('Enemy manifest must contain 56 enemies');
   for (const id of STORY_ENEMY_IDS) {
     const enemy = STORY_ENEMY_CATALOG[id];
     if (!enemy.animations.some((animation) => animation.id === 'idle')) errors.push(`${id} has no idle animation`);

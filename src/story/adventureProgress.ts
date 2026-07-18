@@ -1,17 +1,30 @@
 import { STORY_MOUNTS } from './adventureExploration';
-import type { StoryAdventureWorldId, StoryMountId } from './types';
+import { STORY_ROSTER_CHALLENGER_IDS } from './enemyRosterIds';
+import type { StoryAdventureWorldId, StoryEnemyDefeatEvent, StoryEnemyId, StoryMountId, StoryResourceNodeDefinition } from './types';
+import { STORY_RECIPE_BY_ID, STORY_RECIPES, STORY_RESOURCE_BY_ID, STORY_STARTER_RECIPE_IDS, advancedRecipesLearned, canCraftRecipe, recipeLearnedFromMastery, recipeLearnedFromRareResource, recipesLearnedFromSpecialist, type StoryActiveEffect, type StoryAdventureInventory, type StoryArmorSlot, type StoryBiomeId, type StoryCraftingContext } from './adventureCrafting';
 
-export const STORY_ADVENTURE_PROGRESS_VERSION = 3 as const;
-export const STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v3';
+export const STORY_ADVENTURE_PROGRESS_VERSION = 4 as const;
+export const STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v4';
+export const PREVIOUS_STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v3';
 export const LEGACY_STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v2';
 export const ORIGINAL_STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v1';
 export const STORY_ADVENTURE_MAX_LEVEL = 100;
 export const STORY_ADVENTURE_STAT_CAP = 25;
+export const STORY_ADVENTURE_PARTY_SIZE_CAP = 5;
 export const STORY_ROUTE_COIN_CAP = 99_999;
 
-export const STORY_ADVENTURE_STAT_KEYS = ['power', 'vitality', 'agility', 'guard', 'critical', 'insight'] as const;
+export const STORY_ADVENTURE_COMBAT_STAT_KEYS = ['power', 'vitality', 'agility', 'guard', 'critical', 'insight'] as const;
+export const STORY_ADVENTURE_STAT_KEYS = [...STORY_ADVENTURE_COMBAT_STAT_KEYS, 'partySize'] as const;
 export type StoryAdventureStatKey = typeof STORY_ADVENTURE_STAT_KEYS[number];
-export type StoryAdventureStats = Record<StoryAdventureStatKey, number>;
+export type StoryAdventureCombatStatKey = typeof STORY_ADVENTURE_COMBAT_STAT_KEYS[number];
+export type StoryAdventureStats = Record<StoryAdventureCombatStatKey, number> & { partySize: number };
+
+export const STORY_PARTY_SIZE_MILESTONES = [
+  { size: 2, challengerCount: 1, level: 2 },
+  { size: 3, challengerCount: 3, level: 10 },
+  { size: 4, challengerCount: 6, level: 20 },
+  { size: 5, challengerCount: 10, level: 30 }
+] as const;
 
 export type LegacyStoryAdventureProgressV1 = {
   version: 1;
@@ -48,7 +61,7 @@ export type StoryAdventureProgressV2 = {
 };
 
 export type StoryAdventureProgressV3 = Omit<StoryAdventureProgressV2, 'version'> & {
-  version: typeof STORY_ADVENTURE_PROGRESS_VERSION;
+  version: 3;
   routeCoins: number;
   relics: string[];
   claimedCaches: string[];
@@ -61,8 +74,22 @@ export type StoryAdventureProgressV3 = Omit<StoryAdventureProgressV2, 'version'>
   depthGenerationVersion: number;
 };
 
+export type StoryAdventureProgressV4 = Omit<StoryAdventureProgressV3, 'version' | 'stats'> & {
+  version: typeof STORY_ADVENTURE_PROGRESS_VERSION;
+  stats: StoryAdventureStats;
+  defeatedChallengerIds: StoryEnemyId[];
+  partyFeatureRevealSeen: boolean;
+  inventory: StoryAdventureInventory;
+  knownRecipes: string[];
+  utilityUnlocks: string[];
+  equippedArmor: Record<StoryArmorSlot, string | null>;
+  activeEffects: StoryActiveEffect[];
+  harvestState: Record<string, { visit?: number; readyAt?: number; day?: string }>;
+  discoveredMaterials: string[];
+};
+
 /** @deprecated Kept as a source-compatible alias while callers migrate to V2. */
-export type StoryAdventureProgressV1 = StoryAdventureProgressV3;
+export type StoryAdventureProgressV1 = StoryAdventureProgressV4;
 
 export type StoryAdventureDerivedStats = {
   maxHealth: number;
@@ -74,6 +101,15 @@ export type StoryAdventureDerivedStats = {
   criticalChance: number;
   criticalMultiplier: number;
   xpMultiplier: number;
+  gatherMultiplier: number;
+  plantYieldBonus: number;
+  woodYieldBonus: number;
+  oreYieldBonus: number;
+  lavaDamageMultiplier: number;
+  icicleDamageMultiplier: number;
+  sandSlowMultiplier: number;
+  windPushMultiplier: number;
+  breathMultiplier: number;
 };
 
 const EMPTY_STATS: StoryAdventureStats = {
@@ -82,7 +118,8 @@ const EMPTY_STATS: StoryAdventureStats = {
   agility: 0,
   guard: 0,
   critical: 0,
-  insight: 0
+  insight: 0,
+  partySize: 1
 };
 
 function finiteInteger(value: unknown, fallback = 0) {
@@ -118,31 +155,64 @@ export function makeDefaultAdventureProgress(): StoryAdventureProgressV1 {
     restoredShortcuts: [],
     upgradedWaystones: [],
     discoveredSurfaceMaps: [],
-    depthGenerationVersion: 2
+    depthGenerationVersion: 2,
+    defeatedChallengerIds: [],
+    partyFeatureRevealSeen: false,
+    inventory: { materials: {}, consumables: {}, armor: [] },
+    knownRecipes: [...STORY_STARTER_RECIPE_IDS],
+    utilityUnlocks: [],
+    equippedArmor: { head: null, coat: null, boots: null },
+    activeEffects: [],
+    harvestState: {},
+    discoveredMaterials: []
+  };
+}
+
+export function getAdventurePartySizeEligibility(level: number, challengerCount: number) {
+  const safeLevel = clamp(finiteInteger(level, 1), 1, STORY_ADVENTURE_MAX_LEVEL);
+  const safeCount = Math.max(0, finiteInteger(challengerCount));
+  const eligible = STORY_PARTY_SIZE_MILESTONES.filter((milestone) => safeLevel >= milestone.level && safeCount >= milestone.challengerCount);
+  const maxEligibleSize = eligible.length > 0 ? eligible[eligible.length - 1].size : 1;
+  return {
+    maxEligibleSize,
+    next: STORY_PARTY_SIZE_MILESTONES.find((milestone) => milestone.size > maxEligibleSize) ?? null
+  };
+}
+
+export function getAdventurePartySizeProgress(progress: Pick<StoryAdventureProgressV1, 'level' | 'stats' | 'defeatedChallengerIds'>) {
+  return {
+    currentSize: progress.stats.partySize,
+    ...getAdventurePartySizeEligibility(progress.level, progress.defeatedChallengerIds.length)
   };
 }
 
 export function sanitizeAdventureProgress(value: unknown): StoryAdventureProgressV1 {
   if (!value || typeof value !== 'object') return makeDefaultAdventureProgress();
-  const record = value as Partial<StoryAdventureProgressV3> & Partial<StoryAdventureProgressV2> & Partial<LegacyStoryAdventureProgressV1>;
+  const record = value as Partial<StoryAdventureProgressV4>;
   const level = clamp(finiteInteger(record.level, 1), 1, STORY_ADVENTURE_MAX_LEVEL);
   const rawStats = record.stats && typeof record.stats === 'object' ? record.stats as Partial<StoryAdventureStats> : {};
-  const stats = STORY_ADVENTURE_STAT_KEYS.reduce((result, key) => {
+  const uniqueStrings = (input: unknown, limit = 256) => Array.from(new Set(Array.isArray(input) ? input.filter((entry): entry is string => typeof entry === 'string' && entry.length > 0).slice(0, limit) : []));
+  const defeatedChallengerIds = uniqueStrings(record.defeatedChallengerIds, 64).filter((id): id is StoryEnemyId => STORY_ROSTER_CHALLENGER_IDS.includes(id as StoryEnemyId));
+  const stats = STORY_ADVENTURE_COMBAT_STAT_KEYS.reduce((result, key) => {
     result[key] = clamp(finiteInteger(rawStats[key]), 0, STORY_ADVENTURE_STAT_CAP);
     return result;
   }, { ...EMPTY_STATS });
 
   let pointsRemaining = level - 1;
-  for (const key of STORY_ADVENTURE_STAT_KEYS) {
+  for (const key of STORY_ADVENTURE_COMBAT_STAT_KEYS) {
     const accepted = Math.min(stats[key], pointsRemaining);
     stats[key] = accepted;
     pointsRemaining -= accepted;
   }
+  const maxEligiblePartySize = getAdventurePartySizeEligibility(level, defeatedChallengerIds.length).maxEligibleSize;
+  const requestedPartySize = clamp(finiteInteger(rawStats.partySize, 1), 1, maxEligiblePartySize);
+  const acceptedPartyPoints = Math.min(requestedPartySize - 1, pointsRemaining);
+  stats.partySize = 1 + acceptedPartyPoints;
+  pointsRemaining -= acceptedPartyPoints;
 
   const required = experienceToNextLevel(level);
   const validBiomes = Object.values(STORY_MOUNTS).map((mount) => mount.worldId);
   const rawDiscoveries = record.discoveries && typeof record.discoveries === 'object' ? record.discoveries as StoryAdventureProgressV2['discoveries'] : makeDefaultAdventureProgress().discoveries;
-  const uniqueStrings = (input: unknown, limit = 256) => Array.from(new Set(Array.isArray(input) ? input.filter((entry): entry is string => typeof entry === 'string' && entry.length > 0).slice(0, limit) : []));
   const biomes = uniqueStrings(rawDiscoveries.biomes).filter((id): id is Exclude<StoryAdventureWorldId, 'world-route'> => validBiomes.includes(id as Exclude<StoryAdventureWorldId, 'world-route'>));
   const landmarks = Object.fromEntries(validBiomes.flatMap((id) => {
     const items = uniqueStrings(rawDiscoveries.landmarks?.[id]);
@@ -165,6 +235,36 @@ export function sanitizeAdventureProgress(value: unknown): StoryAdventureProgres
   const pinned = record.pinnedDaily && typeof record.pinnedDaily === 'object' && /^\d{4}-\d{2}-\d{2}$/.test(record.pinnedDaily.date ?? '') && validBiomes.includes(record.pinnedDaily.worldId as Exclude<StoryAdventureWorldId, 'world-route'>) && typeof record.pinnedDaily.activityId === 'string'
     ? { date: record.pinnedDaily.date, worldId: record.pinnedDaily.worldId as Exclude<StoryAdventureWorldId, 'world-route'>, activityId: record.pinnedDaily.activityId.slice(0, 160) }
     : undefined;
+  const rawInventory = record.inventory && typeof record.inventory === 'object' ? record.inventory : makeDefaultAdventureProgress().inventory;
+  const materials = Object.fromEntries(Object.entries(rawInventory.materials ?? {}).flatMap(([id, quantity]) => STORY_RESOURCE_BY_ID[id] ? [[id, clamp(finiteInteger(quantity), 0, 999)]] : []).filter(([, quantity]) => Number(quantity) > 0));
+  const consumables = Object.fromEntries(Object.entries(rawInventory.consumables ?? {}).flatMap(([id, quantity]) => STORY_RECIPE_BY_ID[id]?.kind === 'consumable' ? [[id, clamp(finiteInteger(quantity), 0, 99)]] : []).filter(([, quantity]) => Number(quantity) > 0));
+  const armor = uniqueStrings(rawInventory.armor, 32).filter((id) => STORY_RECIPE_BY_ID[id]?.kind === 'armor');
+  const inventory: StoryAdventureInventory = { materials, consumables, armor };
+  const knownRecipes = Array.from(new Set([...STORY_STARTER_RECIPE_IDS, ...uniqueStrings(record.knownRecipes, 96).filter((id) => Boolean(STORY_RECIPE_BY_ID[id]))]));
+  const utilityUnlocks = uniqueStrings(record.utilityUnlocks, 16).filter((id) => STORY_RECIPE_BY_ID[id]?.kind === 'utility');
+  const equippedArmor = (['head', 'coat', 'boots'] as const).reduce((result, slot) => {
+    const id = record.equippedArmor?.[slot];
+    result[slot] = typeof id === 'string' && armor.includes(id) && STORY_RECIPE_BY_ID[id]?.armor?.slot === slot ? id : null;
+    return result;
+  }, { head: null, coat: null, boots: null } as Record<StoryArmorSlot, string | null>);
+  const now = Date.now();
+  const today = new Date(now).toISOString().slice(0, 10);
+  const activeEffects = (Array.isArray(record.activeEffects) ? record.activeEffects : []).flatMap((effect) => {
+    if (!effect || typeof effect !== 'object' || !STORY_RECIPE_BY_ID[effect.recipeId]?.consumable?.kind) return [];
+    const expiresAt = Math.min(now + 86_400_000, Math.max(0, Number(effect.expiresAt)));
+    if (expiresAt <= now) return [];
+    return [{ recipeId: effect.recipeId, kind: STORY_RECIPE_BY_ID[effect.recipeId].consumable!.kind!, multiplier: Number.isFinite(effect.multiplier) ? clamp(Number(effect.multiplier), 0, 4) : 1, expiresAt }];
+  }).slice(-12);
+  const harvestState = Object.fromEntries(Object.entries(record.harvestState && typeof record.harvestState === 'object' ? record.harvestState : {}).slice(-1024).flatMap(([id, state]) => {
+    if (!state || typeof state !== 'object' || !id) return [];
+    const visit = finiteInteger(state.visit);
+    const readyAt = Number(state.readyAt);
+    const day = typeof state.day === 'string' && state.day === today ? state.day : undefined;
+    if (Number.isFinite(readyAt) && readyAt <= now && !visit && !day) return [];
+    const clean = { ...(visit > 0 ? { visit } : {}), ...(Number.isFinite(readyAt) && readyAt > now ? { readyAt: Math.min(readyAt, now + 86_400_000) } : {}), ...(day ? { day } : {}) };
+    return Object.keys(clean).length > 0 ? [[id.slice(0, 180), clean]] : [];
+  }));
+  const discoveredMaterials = uniqueStrings(record.discoveredMaterials, 64).filter((id) => Boolean(STORY_RESOURCE_BY_ID[id]));
   return {
     version: STORY_ADVENTURE_PROGRESS_VERSION,
     level,
@@ -190,7 +290,16 @@ export function sanitizeAdventureProgress(value: unknown): StoryAdventureProgres
     restoredShortcuts: uniqueStrings(record.restoredShortcuts, 16),
     upgradedWaystones: uniqueStrings(record.upgradedWaystones, 64),
     discoveredSurfaceMaps: uniqueStrings(record.discoveredSurfaceMaps, 64),
-    depthGenerationVersion: Math.max(2, finiteInteger(record.depthGenerationVersion, 2))
+    depthGenerationVersion: Math.max(2, finiteInteger(record.depthGenerationVersion, 2)),
+    defeatedChallengerIds,
+    partyFeatureRevealSeen: Boolean(record.partyFeatureRevealSeen),
+    inventory,
+    knownRecipes,
+    utilityUnlocks,
+    equippedArmor,
+    activeEffects,
+    harvestState,
+    discoveredMaterials
   };
 }
 
@@ -198,7 +307,7 @@ export function readAdventureProgress(): StoryAdventureProgressV1 {
   if (typeof window === 'undefined') return makeDefaultAdventureProgress();
   try {
     const current = window.localStorage.getItem(STORY_ADVENTURE_PROGRESS_KEY);
-    const legacy = window.localStorage.getItem(LEGACY_STORY_ADVENTURE_PROGRESS_KEY) ?? window.localStorage.getItem(ORIGINAL_STORY_ADVENTURE_PROGRESS_KEY);
+    const legacy = window.localStorage.getItem(PREVIOUS_STORY_ADVENTURE_PROGRESS_KEY) ?? window.localStorage.getItem(LEGACY_STORY_ADVENTURE_PROGRESS_KEY) ?? window.localStorage.getItem(ORIGINAL_STORY_ADVENTURE_PROGRESS_KEY);
     const sanitized = sanitizeAdventureProgress(JSON.parse(current ?? legacy ?? 'null'));
     if (!current && legacy) window.localStorage.setItem(STORY_ADVENTURE_PROGRESS_KEY, JSON.stringify(sanitized));
     return sanitized;
@@ -215,7 +324,11 @@ export function writeAdventureProgress(progress: StoryAdventureProgressV1) {
 
 export function allocateAdventureStat(progress: StoryAdventureProgressV1, stat: StoryAdventureStatKey) {
   const current = sanitizeAdventureProgress(progress);
-  if (current.unspentPoints <= 0 || current.stats[stat] >= STORY_ADVENTURE_STAT_CAP) return current;
+  if (current.unspentPoints <= 0) return current;
+  if (stat === 'partySize') {
+    const maxEligibleSize = getAdventurePartySizeProgress(current).maxEligibleSize;
+    if (current.stats.partySize >= maxEligibleSize || current.stats.partySize >= STORY_ADVENTURE_PARTY_SIZE_CAP) return current;
+  } else if (current.stats[stat] >= STORY_ADVENTURE_STAT_CAP) return current;
   return sanitizeAdventureProgress({
     ...current,
     stats: { ...current.stats, [stat]: current.stats[stat] + 1 }
@@ -227,6 +340,33 @@ export function respecAdventureStats(progress: StoryAdventureProgressV1) {
   return sanitizeAdventureProgress({ ...current, stats: { ...EMPTY_STATS } });
 }
 
+export function recordAdventureChallengerDefeat(progress: StoryAdventureProgressV1, enemyId: StoryEnemyId) {
+  const current = sanitizeAdventureProgress(progress);
+  if (!STORY_ROSTER_CHALLENGER_IDS.includes(enemyId) || current.defeatedChallengerIds.includes(enemyId)) return { progress: current, unique: false };
+  return {
+    progress: sanitizeAdventureProgress({ ...current, defeatedChallengerIds: [...current.defeatedChallengerIds, enemyId] }),
+    unique: true
+  };
+}
+
+export function acknowledgeAdventurePartyFeatureReveal(progress: StoryAdventureProgressV1) {
+  const current = sanitizeAdventureProgress(progress);
+  return current.defeatedChallengerIds.length > 0
+    ? sanitizeAdventureProgress({ ...current, partyFeatureRevealSeen: true })
+    : current;
+}
+
+export function applyAdventureEnemyDefeat(progress: StoryAdventureProgressV1, event: StoryEnemyDefeatEvent, seenEventIds: Set<string>) {
+  const current = sanitizeAdventureProgress(progress);
+  if (seenEventIds.has(event.eventId)) return { progress: current, duplicate: true, uniqueChallenger: false, levelsGained: 0, xpAwarded: 0 };
+  seenEventIds.add(event.eventId);
+  const experience = awardAdventureExperience(current, event.xp);
+  const challenger = event.tier === 'challenger'
+    ? recordAdventureChallengerDefeat(experience.progress, event.enemyId)
+    : { progress: experience.progress, unique: false };
+  return { progress: challenger.progress, duplicate: false, uniqueChallenger: challenger.unique, levelsGained: experience.levelsGained, xpAwarded: experience.xpAwarded };
+}
+
 export function canRespecAdventureStats(worldId: string, nearbyPortalKind?: string) {
   return worldId === 'world-route' && nearbyPortalKind === 'shrine';
 }
@@ -234,7 +374,7 @@ export function canRespecAdventureStats(worldId: string, nearbyPortalKind?: stri
 export function awardAdventureExperience(progress: StoryAdventureProgressV1, baseXp: number) {
   const current = sanitizeAdventureProgress(progress);
   if (current.level >= STORY_ADVENTURE_MAX_LEVEL) return { progress: current, levelsGained: 0, xpAwarded: 0 };
-  const xpAwarded = Math.max(0, Math.round(baseXp * (1 + current.stats.insight * 0.02)));
+  const xpAwarded = Math.max(0, Math.round(baseXp * getAdventureDerivedStats(current).xpMultiplier));
   let level = current.level;
   let xp = current.xp + xpAwarded;
   let levelsGained = 0;
@@ -255,21 +395,42 @@ export function awardAdventureExperience(progress: StoryAdventureProgressV1, bas
   return { progress: next, levelsGained, xpAwarded };
 }
 
-export function getAdventureDerivedStats(progress: StoryAdventureProgressV1): StoryAdventureDerivedStats {
+export function getAdventureDerivedStats(progress: StoryAdventureProgressV1, now = Date.now()): StoryAdventureDerivedStats {
   const current = sanitizeAdventureProgress(progress);
-  const { level, stats } = current;
+  const { level } = current;
+  const armorRecipes = Object.values(current.equippedArmor).flatMap((id) => id && STORY_RECIPE_BY_ID[id]?.armor ? [STORY_RECIPE_BY_ID[id]] : []);
+  const armorStats = armorRecipes.reduce((result, recipe) => ({ ...result, [recipe.armor!.stat]: result[recipe.armor!.stat] + 1 }), { power: 0, vitality: 0, agility: 0, guard: 0, critical: 0, insight: 0 } as Record<StoryAdventureCombatStatKey, number>);
+  const stats = STORY_ADVENTURE_COMBAT_STAT_KEYS.reduce((result, key) => ({ ...result, [key]: current.stats[key] + armorStats[key] }), { ...current.stats });
+  const fullSet = armorRecipes.length === 3 && armorRecipes.every((recipe) => recipe.armor?.setId === armorRecipes[0].armor?.setId) ? armorRecipes[0].armor!.setId : null;
+  const effects = current.activeEffects.filter((effect) => effect.expiresAt > now);
+  const effect = (kind: StoryActiveEffect['kind'], fallback = 1) => {
+    const matches = effects.filter((candidate) => candidate.kind === kind);
+    return matches[matches.length - 1]?.multiplier ?? fallback;
+  };
   const levelOffset = level - 1;
-  const speedMultiplier = 1 + stats.agility * 0.01;
+  const speedMultiplier = (1 + stats.agility * 0.01) * effect('speed');
+  const tempered = effects.some((candidate) => candidate.recipeId === 'tempered-elixir');
+  const rimeguard = effects.some((candidate) => candidate.recipeId === 'rimeguard');
+  const pathfinder = effects.some((candidate) => candidate.recipeId === 'pathfinder-elixir');
   return {
     maxHealth: 100 + levelOffset + stats.vitality * 5,
-    attackDamage: 20 * (1 + levelOffset * 0.02) * (1 + stats.power * 0.02),
+    attackDamage: 20 * (1 + levelOffset * 0.02) * (1 + stats.power * 0.02) * effect('attack'),
     walkSpeed: 5.2 * speedMultiplier,
     sprintSpeed: 8.4 * speedMultiplier,
-    damageTakenMultiplier: 1 - stats.guard * 0.01,
-    knockbackMultiplier: 1 - stats.guard * 0.02,
-    criticalChance: stats.critical * 0.01,
+    damageTakenMultiplier: (1 - stats.guard * 0.01) * effect('guard'),
+    knockbackMultiplier: (1 - stats.guard * 0.02) * (fullSet === 'bonevault' ? 0.7 : 1),
+    criticalChance: stats.critical * 0.01 + (pathfinder ? 0.1 : 0),
     criticalMultiplier: 1.5,
-    xpMultiplier: 1 + stats.insight * 0.02
+    xpMultiplier: (1 + stats.insight * 0.02) * effect('xp'),
+    gatherMultiplier: effect('gather'),
+    plantYieldBonus: (fullSet === 'greenhollow' ? 0.25 : 0) + (current.utilityUnlocks.includes('field-pouch') ? 1 : 0),
+    woodYieldBonus: (fullSet === 'thornwood' ? 0.25 : 0),
+    oreYieldBonus: (fullSet === 'ironroot' ? 1 : 0) + (current.utilityUnlocks.includes('prospector-kit') ? 1 : 0) + (current.utilityUnlocks.includes('soul-sieve') ? 1 : 0),
+    lavaDamageMultiplier: effect('lava') * (fullSet === 'emberdeep' ? 0.5 : 1) * (current.utilityUnlocks.includes('basalt-flask') ? 0.85 : 1),
+    icicleDamageMultiplier: (tempered ? 0 : effect('icicle')) * (fullSet === 'frostpeak' ? 0.5 : 1),
+    sandSlowMultiplier: effect('sand') * (fullSet === 'sunscar' ? 0.5 : 1) * (current.utilityUnlocks.includes('sand-cleats') ? 0.75 : 1),
+    windPushMultiplier: effect('wind') * (fullSet === 'skyglass' ? 0.5 : 1) * (current.utilityUnlocks.includes('wind-sail') ? 0.75 : 1),
+    breathMultiplier: (rimeguard ? 1.5 : 1) * (current.utilityUnlocks.includes('thermal-lining') ? 1.25 : 1)
   };
 }
 
@@ -376,3 +537,95 @@ export function claimAdventureDaily(progress: StoryAdventureProgressV1, date: st
   if (claims.includes(activityId)) return { progress: current, claimed: false };
   return { progress: sanitizeAdventureProgress({ ...current, routeCoins: current.routeCoins + rewardCoins, dailyClaims: { ...current.dailyClaims, [date]: [...claims, activityId] } }), claimed: true };
 }
+
+export function unlockAdventureRecipes(progress: StoryAdventureProgressV1, recipeIds: string[]) {
+  const current = sanitizeAdventureProgress(progress);
+  const accepted = recipeIds.filter((id) => STORY_RECIPE_BY_ID[id] && !current.knownRecipes.includes(id));
+  return { progress: accepted.length > 0 ? sanitizeAdventureProgress({ ...current, knownRecipes: [...current.knownRecipes, ...accepted] }) : current, learned: accepted };
+}
+
+export function unlockAdventureSpecialistRecipes(progress: StoryAdventureProgressV1, biomeId: StoryBiomeId) {
+  return unlockAdventureRecipes(progress, recipesLearnedFromSpecialist(biomeId));
+}
+
+export function unlockAdventureMasteryRecipe(progress: StoryAdventureProgressV1, biomeId: StoryBiomeId) {
+  const id = recipeLearnedFromMastery(biomeId);
+  return unlockAdventureRecipes(progress, id ? [id] : []);
+}
+
+export function addAdventureMaterial(progress: StoryAdventureProgressV1, resourceId: string, quantity: number) {
+  const current = sanitizeAdventureProgress(progress);
+  if (!STORY_RESOURCE_BY_ID[resourceId] || quantity <= 0) return { progress: current, learned: [] as string[] };
+  const materials = { ...current.inventory.materials, [resourceId]: clamp((current.inventory.materials[resourceId] ?? 0) + finiteInteger(quantity), 0, 999) };
+  const rareRecipe = recipeLearnedFromRareResource(resourceId);
+  const candidate = sanitizeAdventureProgress({ ...current, inventory: { ...current.inventory, materials }, discoveredMaterials: [...current.discoveredMaterials, resourceId] });
+  return unlockAdventureRecipes(candidate, [...(rareRecipe ? [rareRecipe] : []), ...advancedRecipesLearned(materials)]);
+}
+
+export function craftAdventureRecipe(progress: StoryAdventureProgressV1, recipeId: string, context: StoryCraftingContext) {
+  const current = sanitizeAdventureProgress(progress);
+  const recipe = STORY_RECIPE_BY_ID[recipeId];
+  if (!recipe || !current.knownRecipes.includes(recipeId) || !canCraftRecipe(recipe, current.inventory, context) || (recipe.kind === 'utility' && current.utilityUnlocks.includes(recipeId))) return { progress: current, crafted: false };
+  const materials = { ...current.inventory.materials };
+  for (const [resourceId, quantity] of Object.entries(recipe.ingredients)) materials[resourceId] = Math.max(0, (materials[resourceId] ?? 0) - quantity);
+  const inventory: StoryAdventureInventory = { ...current.inventory, materials };
+  let utilityUnlocks = current.utilityUnlocks;
+  if (recipe.kind === 'armor') inventory.armor = [...inventory.armor, recipe.id];
+  if (recipe.kind === 'consumable') inventory.consumables = { ...inventory.consumables, [recipe.id]: Math.min(99, (inventory.consumables[recipe.id] ?? 0) + 1) };
+  if (recipe.kind === 'utility') utilityUnlocks = [...utilityUnlocks, recipe.id];
+  return { progress: sanitizeAdventureProgress({ ...current, inventory, utilityUnlocks }), crafted: true };
+}
+
+export function equipAdventureArmor(progress: StoryAdventureProgressV1, recipeId: string) {
+  const current = sanitizeAdventureProgress(progress);
+  const recipe = STORY_RECIPE_BY_ID[recipeId];
+  if (!recipe?.armor || !current.inventory.armor.includes(recipeId)) return current;
+  return sanitizeAdventureProgress({ ...current, equippedArmor: { ...current.equippedArmor, [recipe.armor.slot]: current.equippedArmor[recipe.armor.slot] === recipeId ? null : recipeId } });
+}
+
+export function consumeAdventureItem(progress: StoryAdventureProgressV1, recipeId: string, now = Date.now()) {
+  const current = sanitizeAdventureProgress(progress);
+  const recipe = STORY_RECIPE_BY_ID[recipeId];
+  if (!recipe?.consumable || (current.inventory.consumables[recipeId] ?? 0) <= 0) return { progress: current, consumed: false, healing: 0 };
+  const consumables = { ...current.inventory.consumables, [recipeId]: current.inventory.consumables[recipeId] - 1 };
+  const activeEffects = recipe.consumable.kind && recipe.consumable.durationMs
+    ? [...current.activeEffects.filter((effect) => effect.kind !== recipe.consumable!.kind), { recipeId, kind: recipe.consumable.kind, multiplier: recipe.consumable.multiplier ?? 1, expiresAt: now + recipe.consumable.durationMs }]
+    : current.activeEffects;
+  return { progress: sanitizeAdventureProgress({ ...current, inventory: { ...current.inventory, consumables }, activeEffects }), consumed: true, healing: recipe.consumable.healing ?? 0 };
+}
+
+export function isAdventureResourceNodeAvailable(progress: StoryAdventureProgressV1, node: StoryResourceNodeDefinition, biomeId: StoryBiomeId, now = Date.now()) {
+  const state = progress.harvestState[node.id];
+  if (!state) return true;
+  if (node.respawn === 'visit') return state.visit !== (progress.visitCounters[biomeId] ?? 0);
+  if (node.respawn === 'timed') return (state.readyAt ?? 0) <= now;
+  return state.day !== new Date(now).toISOString().slice(0, 10);
+}
+
+export function depleteAdventureResourceNode(progress: StoryAdventureProgressV1, node: StoryResourceNodeDefinition, biomeId: StoryBiomeId, now = Date.now()) {
+  const current = sanitizeAdventureProgress(progress);
+  const state = node.respawn === 'visit'
+    ? { visit: current.visitCounters[biomeId] ?? 0 }
+    : node.respawn === 'timed'
+      ? { readyAt: now + 20 * 60_000 }
+      : { day: new Date(now).toISOString().slice(0, 10) };
+  return sanitizeAdventureProgress({ ...current, harvestState: { ...current.harvestState, [node.id]: state } });
+}
+
+export function adventureResourceYieldModifiers(progress: StoryAdventureProgressV1, node: StoryResourceNodeDefinition) {
+  const derived = getAdventureDerivedStats(progress);
+  const plant = node.kind === 'plant' || node.kind === 'berry';
+  const wood = node.kind === 'tree';
+  const ore = node.kind === 'ore' || node.kind === 'rock';
+  return {
+    multiplier: derived.gatherMultiplier * (plant && derived.plantYieldBonus > 0 && derived.plantYieldBonus < 1 ? 1 + derived.plantYieldBonus : 1) * (wood ? 1 + derived.woodYieldBonus : 1),
+    flatBonus: (plant && derived.plantYieldBonus >= 1 ? derived.plantYieldBonus : 0) + (ore ? derived.oreYieldBonus : 0),
+    toughnessReduction: wood && currentUtility(progress, 'felling-wrap') ? 1 : 0
+  };
+}
+
+function currentUtility(progress: StoryAdventureProgressV1, id: string) {
+  return progress.utilityUnlocks.includes(id);
+}
+
+export const STORY_CRAFTABLE_RECIPE_COUNT = STORY_RECIPES.length;

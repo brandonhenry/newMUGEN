@@ -3,8 +3,7 @@ import {
   ADVENTURE_HIT_SFX,
   ADVENTURE_PLAYER_HIT_SFX,
   ADVENTURE_PORTAL_SFX,
-  ADVENTURE_RESOURCE_BREAK_SFX,
-  ADVENTURE_RESOURCE_HIT_SFX,
+  ADVENTURE_RESOURCE_SFX,
   adventureAmbiencePreset,
   adventureSurfaceMaterial,
   subscribeAdventureAudio,
@@ -165,7 +164,17 @@ export function AdventureSoundscape({ audio, active, context }: {
       if (['step', 'jump', 'land', 'attack', 'water'].includes(event.kind)) playSynth(event);
       else if (event.kind === 'enemy-hit') playClip(ADVENTURE_HIT_SFX[event.attackInput], hitVolume * (event.finishing ? 1 : event.critical ? 0.92 : 0.78), event.finishing ? 0.9 : 0.96 + Math.random() * 0.08);
       else if (event.kind === 'player-hit') playClip(ADVENTURE_PLAYER_HIT_SFX, hitVolume * 0.88, event.damage >= 20 ? 0.82 : 0.94);
-      else if (event.kind === 'resource-hit') playClip(event.broken ? ADVENTURE_RESOURCE_BREAK_SFX : ADVENTURE_RESOURCE_HIT_SFX, sfxVolume * (event.broken ? 0.5 : 0.28), event.broken ? 0.86 : 1.08);
+      else if (event.kind === 'resource-hit') {
+        const profile = ADVENTURE_RESOURCE_SFX[event.material];
+        const candidates = event.broken ? profile.broken : profile.hit;
+        const path = candidates[Math.abs(event.sequence) % candidates.length];
+        const weight = event.legendary ? 1.2 : event.major ? 1.08 : 1;
+        const attackWeight = event.attackInput === 'heavy' ? 1.12 : event.attackInput === 'special' ? 1.06 : 1;
+        const rateJitter = ((Math.abs(event.sequence) % 5) - 2) * 0.018;
+        const playbackRate = profile.playbackRate + rateJitter + (event.broken ? -0.06 : 0);
+        playClip(path, hitVolume * (event.broken ? 0.72 : 0.46) * weight * attackWeight, playbackRate);
+        if (event.broken && profile.breakLayer) playClip(profile.breakLayer, hitVolume * 0.32 * weight, Math.max(0.68, playbackRate - 0.12));
+      }
       else if (event.kind === 'portal') playClip(ADVENTURE_PORTAL_SFX, sfxVolume * 0.34, 1);
     });
   }, [active, context, hitVolume, sfxVolume, underwater]);

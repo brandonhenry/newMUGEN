@@ -15,7 +15,7 @@ describe('story adventure encounter progression', () => {
 
   it('keeps deterministic rolls and challenger selection stable for a visit seed', () => {
     expect(storyEncounterRoll('visit-42', zone.id)).toBe(storyEncounterRoll('visit-42', zone.id));
-    expect(selectStoryChallenger('visit-42', zone.id, [])).toBe(selectStoryChallenger('visit-42', zone.id, []));
+    expect(selectStoryChallenger('visit-42', 'greenhollow', zone.id, [])).toBe(selectStoryChallenger('visit-42', 'greenhollow', zone.id, []));
   });
 
   it('deterministically rerolls biome regulars for each visit without changing spawn identity', () => {
@@ -29,22 +29,22 @@ describe('story adventure encounter progression', () => {
   });
 
   it('starts one challenger only after every regular in the encounter is defeated', () => {
-    const first = recordRegularDefeat({ progress: makeStoryEncounterProgress(), spawnId: spawns[0].id, zone, encounterIndex: 4, spawns, seed: 'visit-42' });
+    const first = recordRegularDefeat({ progress: makeStoryEncounterProgress(), spawnId: spawns[0].id, zone, encounterIndex: 4, spawns, seed: 'visit-42', biomeId: 'greenhollow' });
     expect(first.challengeStarted).toBe(false);
     expect(first.progress.activeChallenge).toBeNull();
 
-    const second = recordRegularDefeat({ progress: first.progress, spawnId: spawns[1].id, zone, encounterIndex: 4, spawns, seed: 'visit-42' });
+    const second = recordRegularDefeat({ progress: first.progress, spawnId: spawns[1].id, zone, encounterIndex: 4, spawns, seed: 'visit-42', biomeId: 'greenhollow' });
     expect(second.challengeStarted).toBe(true);
     expect(second.progress.activeChallenge?.zoneId).toBe(zone.id);
 
-    const duplicate = recordRegularDefeat({ progress: second.progress, spawnId: spawns[1].id, zone, encounterIndex: 4, spawns, seed: 'visit-42' });
+    const duplicate = recordRegularDefeat({ progress: second.progress, spawnId: spawns[1].id, zone, encounterIndex: 4, spawns, seed: 'visit-42', biomeId: 'greenhollow' });
     expect(duplicate.challengeStarted).toBe(false);
     expect(duplicate.progress.selectedChallengers).toHaveLength(1);
   });
 
   it('avoids challenger repeats until the seeded pool is exhausted', () => {
-    const first = selectStoryChallenger('visit-77', 'zone-a', []);
-    const second = selectStoryChallenger('visit-77', 'zone-b', [first]);
+    const first = selectStoryChallenger('visit-77', 'greenhollow', 'zone-a', []);
+    const second = selectStoryChallenger('visit-77', 'greenhollow', 'zone-b', [first]);
     expect(second).not.toBe(first);
   });
 
@@ -55,7 +55,8 @@ describe('story adventure encounter progression', () => {
       zone,
       encounterIndex: 4,
       spawns,
-      seed: 'visit-42'
+      seed: 'visit-42',
+      biomeId: 'greenhollow'
     }).progress;
     expect(storyEncounterMovementLock(started, [zone])).toEqual(zone.range);
     const reset = resetActiveChallenger(started);

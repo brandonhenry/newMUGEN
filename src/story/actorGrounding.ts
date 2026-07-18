@@ -30,10 +30,14 @@ export function storyAvatarGroundingOffsetY(bodyCenterY = STORY_GROUNDED_ACTOR_C
 }
 
 export const STORY_AVATAR_GROUNDING_OFFSET_Y = storyAvatarGroundingOffsetY();
-export const STORY_CENTRAL_AVATAR_GROUNDING_OFFSET_Y = STORY_AVATAR_GROUNDING_OFFSET_Y;
+export const STORY_CENTRAL_AVATAR_GROUNDING_OFFSET_Y = -0.5;
 
-export function storyAvatarGroundingOffsetForWorld(): number {
-  return STORY_AVATAR_GROUNDING_OFFSET_Y;
+export function storyAvatarGroundingOffsetForWorld(worldId?: string): number {
+  const usesCityFloorBaseline = worldId === 'central'
+    || worldId === 'world-route'
+    || worldId === 'kore-central'
+    || worldId === 'kore-world-route';
+  return usesCityFloorBaseline ? STORY_CENTRAL_AVATAR_GROUNDING_OFFSET_Y : STORY_AVATAR_GROUNDING_OFFSET_Y;
 }
 
 export function storyAvatarVisibleFootWorldY(bodyCenterY: number, groundingOffsetY = STORY_AVATAR_GROUNDING_OFFSET_Y): number {

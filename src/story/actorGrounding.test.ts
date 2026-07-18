@@ -9,8 +9,11 @@ describe('story actor visual grounding', () => {
     expect(storyAvatarVisibleFootWorldY(STORY_GROUNDED_ACTOR_CENTER_Y)).toBeCloseTo(0, 8);
   });
 
-  it('uses one foot baseline in safe maps, Central, and combat regions', () => {
-    expect(STORY_CENTRAL_AVATAR_GROUNDING_OFFSET_Y).toBe(STORY_AVATAR_GROUNDING_OFFSET_Y);
+  it('keeps Central and Central Route lower than biome worlds', () => {
+    expect(STORY_CENTRAL_AVATAR_GROUNDING_OFFSET_Y).toBe(-0.5);
+    expect(storyAvatarGroundingOffsetForWorld('kore-central')).toBe(STORY_CENTRAL_AVATAR_GROUNDING_OFFSET_Y);
+    expect(storyAvatarGroundingOffsetForWorld('kore-world-route')).toBe(STORY_CENTRAL_AVATAR_GROUNDING_OFFSET_Y);
+    expect(storyAvatarGroundingOffsetForWorld('kore-frostpeak:frostpeak-arrival')).toBe(STORY_AVATAR_GROUNDING_OFFSET_Y);
     expect(storyAvatarGroundingOffsetForWorld()).toBe(STORY_AVATAR_GROUNDING_OFFSET_Y);
   });
 
