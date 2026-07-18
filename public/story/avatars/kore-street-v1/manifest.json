@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "avatarStyle": "kore-street-v1",
   "defaultSet": "street-shadow",
   "frameSize": {
@@ -8,16 +8,21 @@
     "baseline": 182
   },
   "facing": "right",
-  "frameCount": 519,
+  "frameCount": 855,
   "sets": [
     {
       "id": "solar-runner",
       "label": "Solar Runner",
-      "frameCount": 38,
+      "frameCount": 62,
       "source": {
         "kind": "user-supplied-reference-sheet",
         "sha256": "e4de86eb5cbfe31e205ad9c3a1f431fd2df6fa31d2e0325627be2f42536e1fd6",
         "originalFile": "codex-clipboard-aa54433e-69e8-40bb-a38e-59bd72e8dd3c.png"
+      },
+      "attackSource": {
+        "kind": "openai-image-generation-supplemental-attack-sheet",
+        "sha256": "8177affde8fc44a4fed4350d3b92bb5cb82e77371a2073344ef8bb684dedda79",
+        "originalFile": "attacks-v2-source.png"
       },
       "animations": [
         {
@@ -504,6 +509,328 @@
               ],
               "bodyAnchorX": 160
             }
+          ],
+          "activeFrameRange": [
+            3,
+            4
+          ]
+        },
+        {
+          "id": "attack-heavy",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-heavy-00",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-heavy/00.png",
+              "durationMs": 110,
+              "contentBounds": [
+                115,
+                42,
+                203,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-01",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-heavy/01.png",
+              "durationMs": 110,
+              "contentBounds": [
+                114,
+                42,
+                207,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-02",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-heavy/02.png",
+              "durationMs": 110,
+              "contentBounds": [
+                106,
+                43,
+                214,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-03",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-heavy/03.png",
+              "durationMs": 110,
+              "contentBounds": [
+                101,
+                42,
+                231,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-04",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-heavy/04.png",
+              "durationMs": 110,
+              "contentBounds": [
+                107,
+                41,
+                241,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-05",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-heavy/05.png",
+              "durationMs": 110,
+              "contentBounds": [
+                115,
+                42,
+                204,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-06",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-heavy/06.png",
+              "durationMs": 110,
+              "contentBounds": [
+                116,
+                42,
+                202,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-07",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-heavy/07.png",
+              "durationMs": 110,
+              "contentBounds": [
+                116,
+                42,
+                202,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            5
+          ]
+        },
+        {
+          "id": "attack-kick",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-kick-00",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-kick/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                116,
+                42,
+                204,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-01",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-kick/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                116,
+                35,
+                219,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-02",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-kick/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                62,
+                36,
+                232,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-03",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-kick/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                97,
+                42,
+                318,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-04",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-kick/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                56,
+                42,
+                201,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-05",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-kick/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                120,
+                43,
+                199,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-06",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-kick/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                120,
+                45,
+                201,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-07",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-kick/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                120,
+                45,
+                201,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            2,
+            4
+          ]
+        },
+        {
+          "id": "attack-special",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-special-00",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-special/00.png",
+              "durationMs": 125,
+              "contentBounds": [
+                116,
+                43,
+                204,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-01",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-special/01.png",
+              "durationMs": 125,
+              "contentBounds": [
+                113,
+                43,
+                215,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-02",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-special/02.png",
+              "durationMs": 125,
+              "contentBounds": [
+                104,
+                40,
+                256,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-03",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-special/03.png",
+              "durationMs": 125,
+              "contentBounds": [
+                3,
+                53,
+                206,
+                181
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-04",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-special/04.png",
+              "durationMs": 125,
+              "contentBounds": [
+                82,
+                57,
+                318,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-05",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-special/05.png",
+              "durationMs": 125,
+              "contentBounds": [
+                116,
+                44,
+                209,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-06",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-special/06.png",
+              "durationMs": 125,
+              "contentBounds": [
+                116,
+                44,
+                209,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-07",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/attack-special/07.png",
+              "durationMs": 125,
+              "contentBounds": [
+                116,
+                44,
+                209,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            6
           ]
         }
       ]
@@ -511,11 +838,16 @@
     {
       "id": "street-shadow",
       "label": "Street Shadow",
-      "frameCount": 37,
+      "frameCount": 61,
       "source": {
         "kind": "user-supplied-reference-sheet",
         "sha256": "1569987d900732e9a262021befa649d3f77a7b0f1ce4503d6f80f7cbb80a4a3c",
         "originalFile": "codex-clipboard-aa6c97ef-31d3-4c9e-b9b4-bef823d8c365.png"
+      },
+      "attackSource": {
+        "kind": "openai-image-generation-supplemental-attack-sheet",
+        "sha256": "570e7ff1bfac7347c4efde46cf9db69b0c8077f4eb3cc1b76866b90b7d18ece5",
+        "originalFile": "attacks-v2-source.png"
       },
       "animations": [
         {
@@ -990,6 +1322,328 @@
               ],
               "bodyAnchorX": 160
             }
+          ],
+          "activeFrameRange": [
+            5,
+            7
+          ]
+        },
+        {
+          "id": "attack-heavy",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-heavy-00",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-heavy/00.png",
+              "durationMs": 110,
+              "contentBounds": [
+                120,
+                59,
+                194,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-01",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-heavy/01.png",
+              "durationMs": 110,
+              "contentBounds": [
+                109,
+                58,
+                195,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-02",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-heavy/02.png",
+              "durationMs": 110,
+              "contentBounds": [
+                88,
+                58,
+                211,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-03",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-heavy/03.png",
+              "durationMs": 110,
+              "contentBounds": [
+                90,
+                61,
+                220,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-04",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-heavy/04.png",
+              "durationMs": 110,
+              "contentBounds": [
+                79,
+                61,
+                216,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-05",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-heavy/05.png",
+              "durationMs": 110,
+              "contentBounds": [
+                2,
+                90,
+                183,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-06",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-heavy/06.png",
+              "durationMs": 110,
+              "contentBounds": [
+                27,
+                62,
+                194,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-07",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-heavy/07.png",
+              "durationMs": 110,
+              "contentBounds": [
+                27,
+                62,
+                194,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            5
+          ]
+        },
+        {
+          "id": "attack-kick",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-kick-00",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-kick/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                120,
+                54,
+                195,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-01",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-kick/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                122,
+                77,
+                223,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-02",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-kick/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                91,
+                93,
+                198,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-03",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-kick/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                123,
+                93,
+                285,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-04",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-kick/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                72,
+                86,
+                231,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-05",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-kick/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                66,
+                86,
+                218,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-06",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-kick/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                51,
+                95,
+                194,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-07",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-kick/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                122,
+                75,
+                193,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            2,
+            4
+          ]
+        },
+        {
+          "id": "attack-special",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-special-00",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-special/00.png",
+              "durationMs": 125,
+              "contentBounds": [
+                120,
+                58,
+                194,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-01",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-special/01.png",
+              "durationMs": 125,
+              "contentBounds": [
+                119,
+                55,
+                208,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-02",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-special/02.png",
+              "durationMs": 125,
+              "contentBounds": [
+                87,
+                0,
+                242,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-03",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-special/03.png",
+              "durationMs": 125,
+              "contentBounds": [
+                64,
+                0,
+                236,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-04",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-special/04.png",
+              "durationMs": 125,
+              "contentBounds": [
+                75,
+                0,
+                262,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-05",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-special/05.png",
+              "durationMs": 125,
+              "contentBounds": [
+                75,
+                6,
+                201,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-06",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-special/06.png",
+              "durationMs": 125,
+              "contentBounds": [
+                90,
+                35,
+                221,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-07",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/attack-special/07.png",
+              "durationMs": 125,
+              "contentBounds": [
+                122,
+                65,
+                194,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            6
           ]
         }
       ]
@@ -997,11 +1651,16 @@
     {
       "id": "crimson-ranger",
       "label": "Crimson Ranger",
-      "frameCount": 38,
+      "frameCount": 62,
       "source": {
         "kind": "user-supplied-reference-sheet",
         "sha256": "3828b16ed8ddd4ebfd5dae73c25df39d6893cc8a0d04a94fd9595bcd7f89bc70",
         "originalFile": "codex-clipboard-df0cbf64-5835-4d1f-82a7-247c91d23791.png"
+      },
+      "attackSource": {
+        "kind": "openai-image-generation-supplemental-attack-sheet",
+        "sha256": "98d3ad3c74ca4604aefc496a94897d8fa44248719c813c64916d216c13201d02",
+        "originalFile": "attacks-v2-source.png"
       },
       "animations": [
         {
@@ -1488,6 +2147,328 @@
               ],
               "bodyAnchorX": 160
             }
+          ],
+          "activeFrameRange": [
+            3,
+            6
+          ]
+        },
+        {
+          "id": "attack-heavy",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-heavy-00",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-heavy/00.png",
+              "durationMs": 110,
+              "contentBounds": [
+                119,
+                52,
+                202,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-01",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-heavy/01.png",
+              "durationMs": 110,
+              "contentBounds": [
+                94,
+                41,
+                203,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-02",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-heavy/02.png",
+              "durationMs": 110,
+              "contentBounds": [
+                120,
+                35,
+                223,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-03",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-heavy/03.png",
+              "durationMs": 110,
+              "contentBounds": [
+                119,
+                58,
+                216,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-04",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-heavy/04.png",
+              "durationMs": 110,
+              "contentBounds": [
+                121,
+                58,
+                209,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-05",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-heavy/05.png",
+              "durationMs": 110,
+              "contentBounds": [
+                63,
+                0,
+                215,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-06",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-heavy/06.png",
+              "durationMs": 110,
+              "contentBounds": [
+                112,
+                64,
+                199,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-07",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-heavy/07.png",
+              "durationMs": 110,
+              "contentBounds": [
+                120,
+                52,
+                201,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            5
+          ]
+        },
+        {
+          "id": "attack-kick",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-kick-00",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-kick/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                119,
+                52,
+                202,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-01",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-kick/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                115,
+                70,
+                203,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-02",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-kick/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                115,
+                60,
+                203,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-03",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-kick/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                116,
+                54,
+                248,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-04",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-kick/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                121,
+                53,
+                206,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-05",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-kick/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                124,
+                56,
+                197,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-06",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-kick/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                120,
+                72,
+                198,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-07",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-kick/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                119,
+                51,
+                202,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            2,
+            4
+          ]
+        },
+        {
+          "id": "attack-special",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-special-00",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-special/00.png",
+              "durationMs": 125,
+              "contentBounds": [
+                119,
+                52,
+                202,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-01",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-special/01.png",
+              "durationMs": 125,
+              "contentBounds": [
+                117,
+                51,
+                231,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-02",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-special/02.png",
+              "durationMs": 125,
+              "contentBounds": [
+                108,
+                47,
+                231,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-03",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-special/03.png",
+              "durationMs": 125,
+              "contentBounds": [
+                102,
+                49,
+                234,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-04",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-special/04.png",
+              "durationMs": 125,
+              "contentBounds": [
+                125,
+                54,
+                217,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-05",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-special/05.png",
+              "durationMs": 125,
+              "contentBounds": [
+                3,
+                114,
+                195,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-06",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-special/06.png",
+              "durationMs": 125,
+              "contentBounds": [
+                119,
+                52,
+                202,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-07",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/attack-special/07.png",
+              "durationMs": 125,
+              "contentBounds": [
+                119,
+                52,
+                202,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            6
           ]
         }
       ]
@@ -1495,11 +2476,16 @@
     {
       "id": "rose-blade",
       "label": "Rose Blade",
-      "frameCount": 27,
+      "frameCount": 51,
       "source": {
         "kind": "user-supplied-reference-sheet",
         "sha256": "8e70171b2f96699076d5797f698900d97c9af012ac5f148d9aa059a5686a6eb4",
         "originalFile": "codex-clipboard-81ce300d-ba20-4d59-a7b0-2eb565f8e2c4.png"
+      },
+      "attackSource": {
+        "kind": "openai-image-generation-supplemental-attack-sheet",
+        "sha256": "ae3ef79fd9241d79961cf8457769cfa693c81c02d609ca9e292c1c7741351f76",
+        "originalFile": "attacks-v2-source.png"
       },
       "animations": [
         {
@@ -1938,6 +2924,328 @@
               ],
               "bodyAnchorX": 160
             }
+          ],
+          "activeFrameRange": [
+            3,
+            5
+          ]
+        },
+        {
+          "id": "attack-heavy",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-heavy-00",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-heavy/00.png",
+              "durationMs": 110,
+              "contentBounds": [
+                95,
+                66,
+                204,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-01",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-heavy/01.png",
+              "durationMs": 110,
+              "contentBounds": [
+                112,
+                44,
+                202,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-02",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-heavy/02.png",
+              "durationMs": 110,
+              "contentBounds": [
+                108,
+                45,
+                205,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-03",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-heavy/03.png",
+              "durationMs": 110,
+              "contentBounds": [
+                81,
+                2,
+                248,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-04",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-heavy/04.png",
+              "durationMs": 110,
+              "contentBounds": [
+                37,
+                82,
+                230,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-05",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-heavy/05.png",
+              "durationMs": 110,
+              "contentBounds": [
+                103,
+                83,
+                229,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-06",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-heavy/06.png",
+              "durationMs": 110,
+              "contentBounds": [
+                108,
+                83,
+                229,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-07",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-heavy/07.png",
+              "durationMs": 110,
+              "contentBounds": [
+                123,
+                70,
+                240,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            5
+          ]
+        },
+        {
+          "id": "attack-kick",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-kick-00",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-kick/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                83,
+                73,
+                201,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-01",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-kick/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                72,
+                59,
+                258,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-02",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-kick/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                86,
+                72,
+                212,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-03",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-kick/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                62,
+                61,
+                262,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-04",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-kick/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                117,
+                55,
+                242,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-05",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-kick/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                120,
+                57,
+                209,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-06",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-kick/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                102,
+                72,
+                204,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-07",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-kick/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                123,
+                71,
+                231,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            2,
+            4
+          ]
+        },
+        {
+          "id": "attack-special",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-special-00",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-special/00.png",
+              "durationMs": 125,
+              "contentBounds": [
+                122,
+                73,
+                244,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-01",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-special/01.png",
+              "durationMs": 125,
+              "contentBounds": [
+                122,
+                73,
+                248,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-02",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-special/02.png",
+              "durationMs": 125,
+              "contentBounds": [
+                95,
+                49,
+                263,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-03",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-special/03.png",
+              "durationMs": 125,
+              "contentBounds": [
+                117,
+                44,
+                282,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-04",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-special/04.png",
+              "durationMs": 125,
+              "contentBounds": [
+                107,
+                45,
+                270,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-05",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-special/05.png",
+              "durationMs": 125,
+              "contentBounds": [
+                75,
+                39,
+                245,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-06",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-special/06.png",
+              "durationMs": 125,
+              "contentBounds": [
+                123,
+                68,
+                261,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-07",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/attack-special/07.png",
+              "durationMs": 125,
+              "contentBounds": [
+                122,
+                70,
+                232,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            6
           ]
         }
       ]
@@ -1945,11 +3253,16 @@
     {
       "id": "neon-courier",
       "label": "Neon Courier",
-      "frameCount": 38,
+      "frameCount": 62,
       "source": {
         "kind": "openai-image-generation-reference-sheet",
         "sha256": "c2c47f1f11a1f11f27e29579b292ce9f9fb398d5c212ecae5a2820a36b1a3bf6",
         "originalFile": "neon-courier-imagegen-v1.png"
+      },
+      "attackSource": {
+        "kind": "openai-image-generation-supplemental-attack-sheet",
+        "sha256": "8427e4438776573922fdf21c97fae0988c5c0514c33a6d9a92e0a4684fa8e9f1",
+        "originalFile": "attacks-v2-source.png"
       },
       "animations": [
         {
@@ -2436,6 +3749,328 @@
               ],
               "bodyAnchorX": 160
             }
+          ],
+          "activeFrameRange": [
+            3,
+            5
+          ]
+        },
+        {
+          "id": "attack-heavy",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-heavy-00",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-heavy/00.png",
+              "durationMs": 110,
+              "contentBounds": [
+                124,
+                56,
+                195,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-01",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-heavy/01.png",
+              "durationMs": 110,
+              "contentBounds": [
+                124,
+                55,
+                194,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-02",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-heavy/02.png",
+              "durationMs": 110,
+              "contentBounds": [
+                102,
+                59,
+                206,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-03",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-heavy/03.png",
+              "durationMs": 110,
+              "contentBounds": [
+                110,
+                76,
+                262,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-04",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-heavy/04.png",
+              "durationMs": 110,
+              "contentBounds": [
+                71,
+                58,
+                193,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-05",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-heavy/05.png",
+              "durationMs": 110,
+              "contentBounds": [
+                115,
+                58,
+                202,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-06",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-heavy/06.png",
+              "durationMs": 110,
+              "contentBounds": [
+                124,
+                56,
+                194,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-07",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-heavy/07.png",
+              "durationMs": 110,
+              "contentBounds": [
+                124,
+                56,
+                194,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            5
+          ]
+        },
+        {
+          "id": "attack-kick",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-kick-00",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-kick/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                124,
+                56,
+                202,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-01",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-kick/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                123,
+                56,
+                203,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-02",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-kick/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                120,
+                55,
+                227,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-03",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-kick/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                77,
+                49,
+                250,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-04",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-kick/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                48,
+                58,
+                278,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-05",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-kick/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                48,
+                60,
+                195,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-06",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-kick/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                123,
+                58,
+                201,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-07",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-kick/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                123,
+                58,
+                201,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            2,
+            4
+          ]
+        },
+        {
+          "id": "attack-special",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-special-00",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-special/00.png",
+              "durationMs": 125,
+              "contentBounds": [
+                125,
+                58,
+                194,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-01",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-special/01.png",
+              "durationMs": 125,
+              "contentBounds": [
+                124,
+                61,
+                205,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-02",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-special/02.png",
+              "durationMs": 125,
+              "contentBounds": [
+                120,
+                61,
+                227,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-03",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-special/03.png",
+              "durationMs": 125,
+              "contentBounds": [
+                116,
+                61,
+                223,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-04",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-special/04.png",
+              "durationMs": 125,
+              "contentBounds": [
+                116,
+                63,
+                256,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-05",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-special/05.png",
+              "durationMs": 125,
+              "contentBounds": [
+                2,
+                104,
+                185,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-06",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-special/06.png",
+              "durationMs": 125,
+              "contentBounds": [
+                125,
+                58,
+                194,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-07",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/attack-special/07.png",
+              "durationMs": 125,
+              "contentBounds": [
+                125,
+                58,
+                194,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            6
           ]
         }
       ]
@@ -2443,11 +4078,16 @@
     {
       "id": "ember-scout",
       "label": "Ember Scout",
-      "frameCount": 38,
+      "frameCount": 62,
       "source": {
         "kind": "openai-image-generation-reference-sheet",
         "sha256": "87c73fe4149a2059145deb31f7884ed741610ff3a2a765e27329c7f8f3bd8dfd",
         "originalFile": "ember-scout-imagegen-v1.png"
+      },
+      "attackSource": {
+        "kind": "openai-image-generation-supplemental-attack-sheet",
+        "sha256": "eed0be3ed25906d9600d2f6adf71d7dbd1a1b540798c294ea6aacf3e157a7403",
+        "originalFile": "attacks-v2-source.png"
       },
       "animations": [
         {
@@ -2934,6 +4574,328 @@
               ],
               "bodyAnchorX": 160
             }
+          ],
+          "activeFrameRange": [
+            3,
+            6
+          ]
+        },
+        {
+          "id": "attack-heavy",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-heavy-00",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-heavy/00.png",
+              "durationMs": 110,
+              "contentBounds": [
+                119,
+                58,
+                208,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-01",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-heavy/01.png",
+              "durationMs": 110,
+              "contentBounds": [
+                119,
+                65,
+                221,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-02",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-heavy/02.png",
+              "durationMs": 110,
+              "contentBounds": [
+                117,
+                64,
+                250,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-03",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-heavy/03.png",
+              "durationMs": 110,
+              "contentBounds": [
+                102,
+                64,
+                265,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-04",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-heavy/04.png",
+              "durationMs": 110,
+              "contentBounds": [
+                119,
+                61,
+                227,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-05",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-heavy/05.png",
+              "durationMs": 110,
+              "contentBounds": [
+                120,
+                65,
+                208,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-06",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-heavy/06.png",
+              "durationMs": 110,
+              "contentBounds": [
+                121,
+                69,
+                208,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-07",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-heavy/07.png",
+              "durationMs": 110,
+              "contentBounds": [
+                120,
+                63,
+                207,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            5
+          ]
+        },
+        {
+          "id": "attack-kick",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-kick-00",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-kick/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                119,
+                66,
+                209,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-01",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-kick/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                119,
+                59,
+                230,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-02",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-kick/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                119,
+                70,
+                268,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-03",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-kick/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                110,
+                54,
+                297,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-04",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-kick/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                116,
+                63,
+                242,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-05",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-kick/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                119,
+                69,
+                210,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-06",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-kick/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                120,
+                67,
+                208,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-07",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-kick/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                119,
+                65,
+                209,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            2,
+            4
+          ]
+        },
+        {
+          "id": "attack-special",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-special-00",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-special/00.png",
+              "durationMs": 125,
+              "contentBounds": [
+                119,
+                60,
+                235,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-01",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-special/01.png",
+              "durationMs": 125,
+              "contentBounds": [
+                118,
+                60,
+                228,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-02",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-special/02.png",
+              "durationMs": 125,
+              "contentBounds": [
+                118,
+                60,
+                234,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-03",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-special/03.png",
+              "durationMs": 125,
+              "contentBounds": [
+                106,
+                56,
+                268,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-04",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-special/04.png",
+              "durationMs": 125,
+              "contentBounds": [
+                119,
+                62,
+                208,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-05",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-special/05.png",
+              "durationMs": 125,
+              "contentBounds": [
+                40,
+                63,
+                209,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-06",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-special/06.png",
+              "durationMs": 125,
+              "contentBounds": [
+                57,
+                66,
+                208,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-07",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/attack-special/07.png",
+              "durationMs": 125,
+              "contentBounds": [
+                119,
+                65,
+                207,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            6
           ]
         }
       ]
@@ -2941,11 +4903,16 @@
     {
       "id": "synth-drifter",
       "label": "Synth Drifter",
-      "frameCount": 38,
+      "frameCount": 62,
       "source": {
         "kind": "openai-image-generation-reference-sheet",
         "sha256": "f1fc9061dafd071e8a287fea1235b0928993c223380196671855aa5c47969daa",
         "originalFile": "synth-drifter-imagegen-v1.png"
+      },
+      "attackSource": {
+        "kind": "openai-image-generation-supplemental-attack-sheet",
+        "sha256": "9d46dd588ca1523163b0fd9e7e27e044d31a3ebf511c147e0f5f9f6352ee1507",
+        "originalFile": "attacks-v2-source.png"
       },
       "animations": [
         {
@@ -3432,6 +5399,328 @@
               ],
               "bodyAnchorX": 160
             }
+          ],
+          "activeFrameRange": [
+            0,
+            5
+          ]
+        },
+        {
+          "id": "attack-heavy",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-heavy-00",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-heavy/00.png",
+              "durationMs": 110,
+              "contentBounds": [
+                116,
+                52,
+                197,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-01",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-heavy/01.png",
+              "durationMs": 110,
+              "contentBounds": [
+                102,
+                52,
+                209,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-02",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-heavy/02.png",
+              "durationMs": 110,
+              "contentBounds": [
+                113,
+                51,
+                238,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-03",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-heavy/03.png",
+              "durationMs": 110,
+              "contentBounds": [
+                89,
+                50,
+                243,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-04",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-heavy/04.png",
+              "durationMs": 110,
+              "contentBounds": [
+                77,
+                48,
+                220,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-05",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-heavy/05.png",
+              "durationMs": 110,
+              "contentBounds": [
+                53,
+                0,
+                250,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-06",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-heavy/06.png",
+              "durationMs": 110,
+              "contentBounds": [
+                97,
+                59,
+                209,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-07",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-heavy/07.png",
+              "durationMs": 110,
+              "contentBounds": [
+                114,
+                59,
+                198,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            5
+          ]
+        },
+        {
+          "id": "attack-kick",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-kick-00",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-kick/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                115,
+                54,
+                197,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-01",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-kick/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                112,
+                39,
+                206,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-02",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-kick/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                111,
+                37,
+                250,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-03",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-kick/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                91,
+                0,
+                226,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-04",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-kick/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                106,
+                43,
+                248,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-05",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-kick/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                115,
+                35,
+                237,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-06",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-kick/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                116,
+                51,
+                205,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-07",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-kick/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                115,
+                63,
+                197,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            2,
+            4
+          ]
+        },
+        {
+          "id": "attack-special",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-special-00",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-special/00.png",
+              "durationMs": 125,
+              "contentBounds": [
+                111,
+                52,
+                232,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-01",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-special/01.png",
+              "durationMs": 125,
+              "contentBounds": [
+                113,
+                56,
+                260,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-02",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-special/02.png",
+              "durationMs": 125,
+              "contentBounds": [
+                111,
+                56,
+                267,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-03",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-special/03.png",
+              "durationMs": 125,
+              "contentBounds": [
+                113,
+                56,
+                282,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-04",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-special/04.png",
+              "durationMs": 125,
+              "contentBounds": [
+                107,
+                58,
+                303,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-05",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-special/05.png",
+              "durationMs": 125,
+              "contentBounds": [
+                115,
+                58,
+                209,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-06",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-special/06.png",
+              "durationMs": 125,
+              "contentBounds": [
+                29,
+                64,
+                198,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-07",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/attack-special/07.png",
+              "durationMs": 125,
+              "contentBounds": [
+                116,
+                64,
+                197,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            6
           ]
         }
       ]
@@ -3439,11 +5728,16 @@
     {
       "id": "forest-warden",
       "label": "Forest Warden",
-      "frameCount": 37,
+      "frameCount": 61,
       "source": {
         "kind": "openai-image-generation-reference-sheet",
         "sha256": "74b2e78cb8d057776619dd00d9c5257c128f3dbed955ec7461b68e1c7cfba096",
         "originalFile": "forest-warden-imagegen-v1.png"
+      },
+      "attackSource": {
+        "kind": "openai-image-generation-supplemental-attack-sheet",
+        "sha256": "45ab7bf2200438d0c9140a3d6e0f18c31b4d0e8a2440e614a01692249a7b9317",
+        "originalFile": "attacks-v2-source.png"
       },
       "animations": [
         {
@@ -3918,6 +6212,328 @@
               ],
               "bodyAnchorX": 160
             }
+          ],
+          "activeFrameRange": [
+            3,
+            6
+          ]
+        },
+        {
+          "id": "attack-heavy",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-heavy-00",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-heavy/00.png",
+              "durationMs": 110,
+              "contentBounds": [
+                119,
+                63,
+                201,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-01",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-heavy/01.png",
+              "durationMs": 110,
+              "contentBounds": [
+                120,
+                65,
+                241,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-02",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-heavy/02.png",
+              "durationMs": 110,
+              "contentBounds": [
+                119,
+                65,
+                261,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-03",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-heavy/03.png",
+              "durationMs": 110,
+              "contentBounds": [
+                120,
+                68,
+                259,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-04",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-heavy/04.png",
+              "durationMs": 110,
+              "contentBounds": [
+                109,
+                68,
+                269,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-05",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-heavy/05.png",
+              "durationMs": 110,
+              "contentBounds": [
+                111,
+                72,
+                263,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-06",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-heavy/06.png",
+              "durationMs": 110,
+              "contentBounds": [
+                120,
+                72,
+                241,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-07",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-heavy/07.png",
+              "durationMs": 110,
+              "contentBounds": [
+                121,
+                67,
+                200,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            5
+          ]
+        },
+        {
+          "id": "attack-kick",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-kick-00",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-kick/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                119,
+                66,
+                200,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-01",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-kick/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                121,
+                63,
+                201,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-02",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-kick/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                120,
+                63,
+                263,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-03",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-kick/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                130,
+                92,
+                318,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-04",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-kick/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                82,
+                67,
+                265,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-05",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-kick/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                120,
+                68,
+                200,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-06",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-kick/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                121,
+                68,
+                200,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-07",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-kick/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                121,
+                68,
+                200,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            2,
+            4
+          ]
+        },
+        {
+          "id": "attack-special",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-special-00",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-special/00.png",
+              "durationMs": 125,
+              "contentBounds": [
+                120,
+                64,
+                201,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-01",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-special/01.png",
+              "durationMs": 125,
+              "contentBounds": [
+                116,
+                65,
+                241,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-02",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-special/02.png",
+              "durationMs": 125,
+              "contentBounds": [
+                119,
+                67,
+                237,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-03",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-special/03.png",
+              "durationMs": 125,
+              "contentBounds": [
+                122,
+                56,
+                202,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-04",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-special/04.png",
+              "durationMs": 125,
+              "contentBounds": [
+                96,
+                50,
+                238,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-05",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-special/05.png",
+              "durationMs": 125,
+              "contentBounds": [
+                76,
+                27,
+                258,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-06",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-special/06.png",
+              "durationMs": 125,
+              "contentBounds": [
+                121,
+                70,
+                229,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-07",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/attack-special/07.png",
+              "durationMs": 125,
+              "contentBounds": [
+                65,
+                67,
+                200,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            6
           ]
         }
       ]
@@ -3925,11 +6541,16 @@
     {
       "id": "solar-brawler",
       "label": "Solar Brawler",
-      "frameCount": 38,
+      "frameCount": 62,
       "source": {
         "kind": "openai-image-generation-reference-sheet",
         "sha256": "38b384cb59afef09e44bf8949eea3d34ab4cc15e8b80a5b54e63bf04a23974da",
         "originalFile": "solar-brawler-imagegen-v1.png"
+      },
+      "attackSource": {
+        "kind": "openai-image-generation-supplemental-attack-sheet",
+        "sha256": "6fe170c54c9c8cda69c69bd3fcdc943077b8133fb20e84d89f531cdd83d26a0f",
+        "originalFile": "attacks-v2-source.png"
       },
       "animations": [
         {
@@ -4416,6 +7037,328 @@
               ],
               "bodyAnchorX": 160
             }
+          ],
+          "activeFrameRange": [
+            2,
+            5
+          ]
+        },
+        {
+          "id": "attack-heavy",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-heavy-00",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-heavy/00.png",
+              "durationMs": 110,
+              "contentBounds": [
+                118,
+                45,
+                211,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-01",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-heavy/01.png",
+              "durationMs": 110,
+              "contentBounds": [
+                111,
+                64,
+                203,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-02",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-heavy/02.png",
+              "durationMs": 110,
+              "contentBounds": [
+                110,
+                35,
+                205,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-03",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-heavy/03.png",
+              "durationMs": 110,
+              "contentBounds": [
+                90,
+                0,
+                221,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-04",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-heavy/04.png",
+              "durationMs": 110,
+              "contentBounds": [
+                90,
+                0,
+                210,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-05",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-heavy/05.png",
+              "durationMs": 110,
+              "contentBounds": [
+                100,
+                5,
+                206,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-06",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-heavy/06.png",
+              "durationMs": 110,
+              "contentBounds": [
+                111,
+                74,
+                199,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-07",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-heavy/07.png",
+              "durationMs": 110,
+              "contentBounds": [
+                122,
+                59,
+                202,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            5
+          ]
+        },
+        {
+          "id": "attack-kick",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-kick-00",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-kick/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                120,
+                47,
+                197,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-01",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-kick/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                121,
+                45,
+                199,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-02",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-kick/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                56,
+                50,
+                256,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-03",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-kick/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                90,
+                43,
+                275,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-04",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-kick/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                113,
+                49,
+                279,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-05",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-kick/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                120,
+                52,
+                200,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-06",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-kick/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                116,
+                72,
+                199,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-07",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-kick/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                121,
+                65,
+                202,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            2,
+            4
+          ]
+        },
+        {
+          "id": "attack-special",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-special-00",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-special/00.png",
+              "durationMs": 125,
+              "contentBounds": [
+                120,
+                48,
+                198,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-01",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-special/01.png",
+              "durationMs": 125,
+              "contentBounds": [
+                97,
+                33,
+                222,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-02",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-special/02.png",
+              "durationMs": 125,
+              "contentBounds": [
+                116,
+                42,
+                220,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-03",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-special/03.png",
+              "durationMs": 125,
+              "contentBounds": [
+                61,
+                49,
+                255,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-04",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-special/04.png",
+              "durationMs": 125,
+              "contentBounds": [
+                107,
+                67,
+                318,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-05",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-special/05.png",
+              "durationMs": 125,
+              "contentBounds": [
+                121,
+                62,
+                198,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-06",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-special/06.png",
+              "durationMs": 125,
+              "contentBounds": [
+                123,
+                65,
+                200,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-07",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/attack-special/07.png",
+              "durationMs": 125,
+              "contentBounds": [
+                123,
+                65,
+                200,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            6
           ]
         }
       ]
@@ -4423,11 +7366,16 @@
     {
       "id": "void-operative",
       "label": "Void Operative",
-      "frameCount": 38,
+      "frameCount": 62,
       "source": {
         "kind": "openai-image-generation-reference-sheet",
         "sha256": "1aa6cb8b3cfef9b7b097fe2cd0d0fc9aa1f367d32438d18cfc4109205d58d358",
         "originalFile": "void-operative-imagegen-v1.png"
+      },
+      "attackSource": {
+        "kind": "openai-image-generation-supplemental-attack-sheet",
+        "sha256": "b12c3f6737bacf897cec1c595a07202df799b52142cdd18c9fb22466b8d74d32",
+        "originalFile": "attacks-v2-source.png"
       },
       "animations": [
         {
@@ -4914,6 +7862,328 @@
               ],
               "bodyAnchorX": 160
             }
+          ],
+          "activeFrameRange": [
+            1,
+            5
+          ]
+        },
+        {
+          "id": "attack-heavy",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-heavy-00",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-heavy/00.png",
+              "durationMs": 110,
+              "contentBounds": [
+                118,
+                56,
+                203,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-01",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-heavy/01.png",
+              "durationMs": 110,
+              "contentBounds": [
+                112,
+                58,
+                233,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-02",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-heavy/02.png",
+              "durationMs": 110,
+              "contentBounds": [
+                114,
+                58,
+                237,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-03",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-heavy/03.png",
+              "durationMs": 110,
+              "contentBounds": [
+                92,
+                63,
+                242,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-04",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-heavy/04.png",
+              "durationMs": 110,
+              "contentBounds": [
+                96,
+                61,
+                253,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-05",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-heavy/05.png",
+              "durationMs": 110,
+              "contentBounds": [
+                118,
+                56,
+                231,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-06",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-heavy/06.png",
+              "durationMs": 110,
+              "contentBounds": [
+                59,
+                57,
+                203,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-07",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-heavy/07.png",
+              "durationMs": 110,
+              "contentBounds": [
+                26,
+                58,
+                233,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            5
+          ]
+        },
+        {
+          "id": "attack-kick",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-kick-00",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-kick/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                117,
+                57,
+                203,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-01",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-kick/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                101,
+                60,
+                204,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-02",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-kick/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                100,
+                45,
+                271,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-03",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-kick/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                101,
+                44,
+                262,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-04",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-kick/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                96,
+                27,
+                284,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-05",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-kick/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                108,
+                43,
+                234,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-06",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-kick/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                118,
+                58,
+                236,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-07",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-kick/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                118,
+                58,
+                213,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            2,
+            4
+          ]
+        },
+        {
+          "id": "attack-special",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-special-00",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-special/00.png",
+              "durationMs": 125,
+              "contentBounds": [
+                118,
+                57,
+                203,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-01",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-special/01.png",
+              "durationMs": 125,
+              "contentBounds": [
+                116,
+                55,
+                232,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-02",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-special/02.png",
+              "durationMs": 125,
+              "contentBounds": [
+                114,
+                56,
+                246,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-03",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-special/03.png",
+              "durationMs": 125,
+              "contentBounds": [
+                113,
+                56,
+                239,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-04",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-special/04.png",
+              "durationMs": 125,
+              "contentBounds": [
+                118,
+                57,
+                222,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-05",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-special/05.png",
+              "durationMs": 125,
+              "contentBounds": [
+                14,
+                59,
+                218,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-06",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-special/06.png",
+              "durationMs": 125,
+              "contentBounds": [
+                119,
+                58,
+                223,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-07",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/attack-special/07.png",
+              "durationMs": 125,
+              "contentBounds": [
+                118,
+                58,
+                202,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            6
           ]
         }
       ]
@@ -4921,11 +8191,16 @@
     {
       "id": "circuit-mage",
       "label": "Circuit Mage",
-      "frameCount": 38,
+      "frameCount": 62,
       "source": {
         "kind": "openai-image-generation-reference-sheet",
         "sha256": "6db79cf14eefb14b6a381e08e4e28ed86039e2c423e12ea6210739f514ba2d68",
         "originalFile": "circuit-mage-imagegen-v1.png"
+      },
+      "attackSource": {
+        "kind": "openai-image-generation-supplemental-attack-sheet",
+        "sha256": "517c7cf73559fe87c728a22405f9b76e2d8018f596a4b3011a71858efd65c27f",
+        "originalFile": "attacks-v2-source.png"
       },
       "animations": [
         {
@@ -5412,6 +8687,328 @@
               ],
               "bodyAnchorX": 160
             }
+          ],
+          "activeFrameRange": [
+            1,
+            4
+          ]
+        },
+        {
+          "id": "attack-heavy",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-heavy-00",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-heavy/00.png",
+              "durationMs": 110,
+              "contentBounds": [
+                113,
+                43,
+                201,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-01",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-heavy/01.png",
+              "durationMs": 110,
+              "contentBounds": [
+                104,
+                43,
+                208,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-02",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-heavy/02.png",
+              "durationMs": 110,
+              "contentBounds": [
+                112,
+                43,
+                246,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-03",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-heavy/03.png",
+              "durationMs": 110,
+              "contentBounds": [
+                101,
+                43,
+                275,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-04",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-heavy/04.png",
+              "durationMs": 110,
+              "contentBounds": [
+                98,
+                43,
+                272,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-05",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-heavy/05.png",
+              "durationMs": 110,
+              "contentBounds": [
+                115,
+                43,
+                278,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-06",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-heavy/06.png",
+              "durationMs": 110,
+              "contentBounds": [
+                115,
+                43,
+                293,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-07",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-heavy/07.png",
+              "durationMs": 110,
+              "contentBounds": [
+                114,
+                44,
+                201,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            5
+          ]
+        },
+        {
+          "id": "attack-kick",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-kick-00",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-kick/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                113,
+                43,
+                201,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-01",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-kick/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                116,
+                45,
+                209,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-02",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-kick/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                116,
+                49,
+                256,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-03",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-kick/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                101,
+                41,
+                288,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-04",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-kick/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                102,
+                46,
+                277,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-05",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-kick/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                106,
+                43,
+                265,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-06",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-kick/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                116,
+                46,
+                252,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-07",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-kick/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                114,
+                49,
+                201,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            2,
+            4
+          ]
+        },
+        {
+          "id": "attack-special",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-special-00",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-special/00.png",
+              "durationMs": 125,
+              "contentBounds": [
+                113,
+                43,
+                201,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-01",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-special/01.png",
+              "durationMs": 125,
+              "contentBounds": [
+                111,
+                43,
+                259,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-02",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-special/02.png",
+              "durationMs": 125,
+              "contentBounds": [
+                105,
+                43,
+                260,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-03",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-special/03.png",
+              "durationMs": 125,
+              "contentBounds": [
+                106,
+                44,
+                266,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-04",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-special/04.png",
+              "durationMs": 125,
+              "contentBounds": [
+                107,
+                44,
+                299,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-05",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-special/05.png",
+              "durationMs": 125,
+              "contentBounds": [
+                106,
+                44,
+                298,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-06",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-special/06.png",
+              "durationMs": 125,
+              "contentBounds": [
+                114,
+                44,
+                277,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-07",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/attack-special/07.png",
+              "durationMs": 125,
+              "contentBounds": [
+                115,
+                48,
+                202,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            6
           ]
         }
       ]
@@ -5419,11 +9016,16 @@
     {
       "id": "street-medic",
       "label": "Street Medic",
-      "frameCount": 38,
+      "frameCount": 62,
       "source": {
         "kind": "openai-image-generation-reference-sheet",
         "sha256": "a459e3edbff928bc164577ed92187c180badc712cee42aa9067bb7789930e27a",
         "originalFile": "street-medic-imagegen-v1.png"
+      },
+      "attackSource": {
+        "kind": "openai-image-generation-supplemental-attack-sheet",
+        "sha256": "82c4cd403861280f08874a6112e5b7d048f56167d3826ca2b522fd2780cb7575",
+        "originalFile": "attacks-v2-source.png"
       },
       "animations": [
         {
@@ -5910,6 +9512,328 @@
               ],
               "bodyAnchorX": 160
             }
+          ],
+          "activeFrameRange": [
+            2,
+            6
+          ]
+        },
+        {
+          "id": "attack-heavy",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-heavy-00",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-heavy/00.png",
+              "durationMs": 110,
+              "contentBounds": [
+                118,
+                58,
+                206,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-01",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-heavy/01.png",
+              "durationMs": 110,
+              "contentBounds": [
+                119,
+                59,
+                246,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-02",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-heavy/02.png",
+              "durationMs": 110,
+              "contentBounds": [
+                109,
+                58,
+                253,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-03",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-heavy/03.png",
+              "durationMs": 110,
+              "contentBounds": [
+                104,
+                56,
+                270,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-04",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-heavy/04.png",
+              "durationMs": 110,
+              "contentBounds": [
+                102,
+                52,
+                252,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-05",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-heavy/05.png",
+              "durationMs": 110,
+              "contentBounds": [
+                115,
+                59,
+                262,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-06",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-heavy/06.png",
+              "durationMs": 110,
+              "contentBounds": [
+                117,
+                58,
+                221,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-07",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-heavy/07.png",
+              "durationMs": 110,
+              "contentBounds": [
+                43,
+                58,
+                212,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            5
+          ]
+        },
+        {
+          "id": "attack-kick",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-kick-00",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-kick/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                116,
+                57,
+                214,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-01",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-kick/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                119,
+                54,
+                259,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-02",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-kick/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                120,
+                49,
+                287,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-03",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-kick/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                119,
+                51,
+                299,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-04",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-kick/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                118,
+                53,
+                277,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-05",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-kick/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                119,
+                65,
+                226,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-06",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-kick/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                119,
+                69,
+                215,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-07",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-kick/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                116,
+                59,
+                212,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            2,
+            4
+          ]
+        },
+        {
+          "id": "attack-special",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-special-00",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-special/00.png",
+              "durationMs": 125,
+              "contentBounds": [
+                116,
+                55,
+                211,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-01",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-special/01.png",
+              "durationMs": 125,
+              "contentBounds": [
+                115,
+                57,
+                232,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-02",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-special/02.png",
+              "durationMs": 125,
+              "contentBounds": [
+                117,
+                59,
+                251,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-03",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-special/03.png",
+              "durationMs": 125,
+              "contentBounds": [
+                116,
+                63,
+                256,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-04",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-special/04.png",
+              "durationMs": 125,
+              "contentBounds": [
+                114,
+                61,
+                255,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-05",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-special/05.png",
+              "durationMs": 125,
+              "contentBounds": [
+                115,
+                52,
+                274,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-06",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-special/06.png",
+              "durationMs": 125,
+              "contentBounds": [
+                117,
+                66,
+                254,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-07",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/attack-special/07.png",
+              "durationMs": 125,
+              "contentBounds": [
+                117,
+                57,
+                214,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            6
           ]
         }
       ]
@@ -5917,11 +9841,16 @@
     {
       "id": "arena-rebel",
       "label": "Arena Rebel",
-      "frameCount": 38,
+      "frameCount": 62,
       "source": {
         "kind": "openai-image-generation-reference-sheet",
         "sha256": "4613e94356b83c66eed0461caace4e96f897a6e90d849139893705d19ea1e0d7",
         "originalFile": "arena-rebel-imagegen-v1.png"
+      },
+      "attackSource": {
+        "kind": "openai-image-generation-supplemental-attack-sheet",
+        "sha256": "d3fe40f3255aef158befa5bf34ccc6db918d2c2ce2bab6b2f892346abaf9edb5",
+        "originalFile": "attacks-v2-source.png"
       },
       "animations": [
         {
@@ -6408,6 +10337,328 @@
               ],
               "bodyAnchorX": 160
             }
+          ],
+          "activeFrameRange": [
+            3,
+            6
+          ]
+        },
+        {
+          "id": "attack-heavy",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-heavy-00",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-heavy/00.png",
+              "durationMs": 110,
+              "contentBounds": [
+                106,
+                42,
+                213,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-01",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-heavy/01.png",
+              "durationMs": 110,
+              "contentBounds": [
+                104,
+                44,
+                216,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-02",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-heavy/02.png",
+              "durationMs": 110,
+              "contentBounds": [
+                105,
+                42,
+                253,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-03",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-heavy/03.png",
+              "durationMs": 110,
+              "contentBounds": [
+                104,
+                45,
+                259,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-04",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-heavy/04.png",
+              "durationMs": 110,
+              "contentBounds": [
+                100,
+                46,
+                266,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-05",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-heavy/05.png",
+              "durationMs": 110,
+              "contentBounds": [
+                99,
+                44,
+                270,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-06",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-heavy/06.png",
+              "durationMs": 110,
+              "contentBounds": [
+                105,
+                44,
+                250,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-07",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-heavy/07.png",
+              "durationMs": 110,
+              "contentBounds": [
+                105,
+                42,
+                213,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            5
+          ]
+        },
+        {
+          "id": "attack-kick",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-kick-00",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-kick/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                105,
+                43,
+                213,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-01",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-kick/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                105,
+                47,
+                222,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-02",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-kick/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                106,
+                42,
+                262,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-03",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-kick/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                103,
+                41,
+                259,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-04",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-kick/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                99,
+                45,
+                246,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-05",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-kick/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                104,
+                50,
+                264,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-06",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-kick/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                107,
+                49,
+                243,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-07",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-kick/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                105,
+                44,
+                212,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            2,
+            4
+          ]
+        },
+        {
+          "id": "attack-special",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-special-00",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-special/00.png",
+              "durationMs": 125,
+              "contentBounds": [
+                106,
+                44,
+                213,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-01",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-special/01.png",
+              "durationMs": 125,
+              "contentBounds": [
+                106,
+                43,
+                226,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-02",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-special/02.png",
+              "durationMs": 125,
+              "contentBounds": [
+                105,
+                44,
+                226,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-03",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-special/03.png",
+              "durationMs": 125,
+              "contentBounds": [
+                106,
+                45,
+                219,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-04",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-special/04.png",
+              "durationMs": 125,
+              "contentBounds": [
+                63,
+                16,
+                260,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-05",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-special/05.png",
+              "durationMs": 125,
+              "contentBounds": [
+                103,
+                51,
+                256,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-06",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-special/06.png",
+              "durationMs": 125,
+              "contentBounds": [
+                103,
+                51,
+                257,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-07",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/attack-special/07.png",
+              "durationMs": 125,
+              "contentBounds": [
+                106,
+                43,
+                213,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            6
           ]
         }
       ]
@@ -6415,11 +10666,16 @@
     {
       "id": "tech-nomad",
       "label": "Tech Nomad",
-      "frameCount": 38,
+      "frameCount": 62,
       "source": {
         "kind": "openai-image-generation-reference-sheet",
         "sha256": "2238110d0b299ace18560b6c56e3fc50afbc571f5df034f71a25a5c2588957b8",
         "originalFile": "tech-nomad-imagegen-v1.png"
+      },
+      "attackSource": {
+        "kind": "openai-image-generation-supplemental-attack-sheet",
+        "sha256": "afe87e1c94d5b7c2c43c331402c084dceb7295249433dfcd06ad8ae673e816fd",
+        "originalFile": "attacks-v2-source.png"
       },
       "animations": [
         {
@@ -6906,6 +11162,328 @@
               ],
               "bodyAnchorX": 160
             }
+          ],
+          "activeFrameRange": [
+            0,
+            5
+          ]
+        },
+        {
+          "id": "attack-heavy",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-heavy-00",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-heavy/00.png",
+              "durationMs": 110,
+              "contentBounds": [
+                109,
+                34,
+                205,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-01",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-heavy/01.png",
+              "durationMs": 110,
+              "contentBounds": [
+                106,
+                33,
+                226,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-02",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-heavy/02.png",
+              "durationMs": 110,
+              "contentBounds": [
+                90,
+                28,
+                246,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-03",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-heavy/03.png",
+              "durationMs": 110,
+              "contentBounds": [
+                79,
+                17,
+                225,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-04",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-heavy/04.png",
+              "durationMs": 110,
+              "contentBounds": [
+                34,
+                28,
+                274,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-05",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-heavy/05.png",
+              "durationMs": 110,
+              "contentBounds": [
+                109,
+                35,
+                233,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-06",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-heavy/06.png",
+              "durationMs": 110,
+              "contentBounds": [
+                110,
+                38,
+                204,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-heavy-07",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-heavy/07.png",
+              "durationMs": 110,
+              "contentBounds": [
+                110,
+                38,
+                204,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            5
+          ]
+        },
+        {
+          "id": "attack-kick",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-kick-00",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-kick/00.png",
+              "durationMs": 82,
+              "contentBounds": [
+                111,
+                38,
+                204,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-01",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-kick/01.png",
+              "durationMs": 82,
+              "contentBounds": [
+                112,
+                36,
+                212,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-02",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-kick/02.png",
+              "durationMs": 82,
+              "contentBounds": [
+                111,
+                23,
+                244,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-03",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-kick/03.png",
+              "durationMs": 82,
+              "contentBounds": [
+                101,
+                24,
+                296,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-04",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-kick/04.png",
+              "durationMs": 82,
+              "contentBounds": [
+                111,
+                26,
+                207,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-05",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-kick/05.png",
+              "durationMs": 82,
+              "contentBounds": [
+                107,
+                32,
+                205,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-06",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-kick/06.png",
+              "durationMs": 82,
+              "contentBounds": [
+                111,
+                42,
+                203,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-kick-07",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-kick/07.png",
+              "durationMs": 82,
+              "contentBounds": [
+                112,
+                39,
+                204,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            2,
+            4
+          ]
+        },
+        {
+          "id": "attack-special",
+          "loop": false,
+          "frames": [
+            {
+              "id": "attack-special-00",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-special/00.png",
+              "durationMs": 125,
+              "contentBounds": [
+                109,
+                35,
+                204,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-01",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-special/01.png",
+              "durationMs": 125,
+              "contentBounds": [
+                111,
+                36,
+                233,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-02",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-special/02.png",
+              "durationMs": 125,
+              "contentBounds": [
+                112,
+                38,
+                249,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-03",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-special/03.png",
+              "durationMs": 125,
+              "contentBounds": [
+                110,
+                39,
+                254,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-04",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-special/04.png",
+              "durationMs": 125,
+              "contentBounds": [
+                111,
+                38,
+                225,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-05",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-special/05.png",
+              "durationMs": 125,
+              "contentBounds": [
+                2,
+                109,
+                188,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-06",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-special/06.png",
+              "durationMs": 125,
+              "contentBounds": [
+                111,
+                37,
+                205,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "attack-special-07",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/attack-special/07.png",
+              "durationMs": 125,
+              "contentBounds": [
+                111,
+                37,
+                205,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ],
+          "activeFrameRange": [
+            3,
+            6
           ]
         }
       ]

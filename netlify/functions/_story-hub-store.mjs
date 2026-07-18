@@ -96,7 +96,11 @@ export function normalizeStoryHubPresence(value, now = Date.now()) {
     avatar: cleanAvatar(value?.avatar, displayName),
     x: numberInRange(value?.x, -47.5, 47.5, -4.5),
     y: numberInRange(value?.y, 0.82, 12, 0.82),
-    pose: value?.pose === 'walk' || value?.pose === 'sprint' || value?.pose === 'jump' || value?.pose === 'attack' ? value.pose : 'idle',
+    pose: value?.pose === 'attack' ? 'attack-jab'
+      : value?.pose === 'walk' || value?.pose === 'sprint' || value?.pose === 'jump'
+        || value?.pose === 'attack-jab' || value?.pose === 'attack-heavy' || value?.pose === 'attack-kick' || value?.pose === 'attack-special'
+        ? value.pose
+        : 'idle',
     facing: value?.facing === -1 ? -1 : 1,
     worldId: STORY_WORLD_IDS.has(value?.worldId) ? value.worldId : 'central',
     updatedAt: now,

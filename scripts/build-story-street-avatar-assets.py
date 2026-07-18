@@ -128,7 +128,39 @@ SHEETS: dict[str, dict[str, Any]] = {
     },
 }
 
-TIMINGS = {"idle": 180, "walk": 92, "sprint": 72, "jump": 86, "attack": 82}
+TIMINGS = {
+    "idle": 180,
+    "walk": 92,
+    "sprint": 72,
+    "jump": 86,
+    "attack": 82,
+    "attack-heavy": 110,
+    "attack-kick": 82,
+    "attack-special": 125,
+}
+
+ATTACK_ACTIVE_FRAME_RANGES: dict[str, tuple[int, int]] = {
+    "arena-rebel": (3, 6),
+    "circuit-mage": (1, 4),
+    "crimson-ranger": (3, 6),
+    "ember-scout": (3, 6),
+    "forest-warden": (3, 6),
+    "neon-courier": (3, 5),
+    "rose-blade": (3, 5),
+    "solar-brawler": (2, 5),
+    "solar-runner": (3, 4),
+    "street-medic": (2, 6),
+    "street-shadow": (5, 7),
+    "synth-drifter": (0, 5),
+    "tech-nomad": (0, 5),
+    "void-operative": (1, 5),
+}
+
+SUPPLEMENTAL_ATTACK_RANGES = {
+    "attack-heavy": (3, 5),
+    "attack-kick": (2, 4),
+    "attack-special": (3, 6),
+}
 
 
 def load_sources() -> dict[str, Path]:
@@ -145,6 +177,20 @@ def load_sources() -> dict[str, Path]:
         if image_size != expected_size:
             raise ValueError(f"Expected {expected_size[0]}x{expected_size[1]} {set_id} sheet, got {image_size}")
         loaded[set_id] = source_path
+    return loaded
+
+
+def load_attack_sources() -> dict[str, bytes]:
+    loaded = {}
+    for set_id in SHEETS:
+        source_path = ROOT / "sets" / set_id / "attacks-v2-source.png"
+        if not source_path.exists():
+            raise FileNotFoundError(f"Missing supplemental attack sheet for {set_id}")
+        source_bytes = source_path.read_bytes()
+        with Image.open(BytesIO(source_bytes)) as image:
+            if image.size != (1536, 1024):
+                raise ValueError(f"Expected 1536x1024 supplemental {set_id} sheet, got {image.size}")
+        loaded[set_id] = source_bytes
     return loaded
 
 
@@ -249,6 +295,17 @@ def attack_body_anchor_x(image: Image.Image) -> int:
     if not upper_x:
         upper_x = sorted(x for x, _ in points)
     return upper_x[len(upper_x) // 2]
+
+
+def fit_attack_crop(image: Image.Image) -> Image.Image:
+    """Uniformly fit authored attack reach around the fixed x=160 body anchor."""
+    anchor = attack_body_anchor_x(image)
+    right_extent = max(1, image.width - anchor)
+    half_width = FRAME_SIZE[0] / 2 - 2
+    scale = min(1.0, half_width / max(1, anchor), half_width / right_extent, FRAME_SIZE[1] / image.height)
+    if scale >= 1:
+        return image
+    return image.resize((max(1, round(image.width * scale)), max(1, round(image.height * scale))), Image.Resampling.NEAREST)
 
 
 def inside_primary_span(mask: bytearray, width: int, height: int, x: int, y: int) -> bool:
@@ -370,12 +427,35 @@ def fill_small_silhouette_holes(source_crop: Image.Image, current: Image.Image, 
     return result
 
 
+def fill_single_alpha_pinholes(current: Image.Image) -> Image.Image:
+    """Close only one-pixel four-way holes introduced by generated matte removal."""
+    result = current.convert("RGBA").copy()
+    pixels = result.load()
+    repairs: list[tuple[int, int, tuple[int, int, int, int]]] = []
+    for y in range(1, result.height - 1):
+        for x in range(1, result.width - 1):
+            if pixels[x, y][3]:
+                continue
+            neighbors = (pixels[x - 1, y], pixels[x + 1, y], pixels[x, y - 1], pixels[x, y + 1])
+            if all(pixel[3] for pixel in neighbors):
+                repairs.append((x, y, neighbors[0]))
+    for x, y, color in repairs:
+        pixels[x, y] = color
+    return result
+
+
 GENERATED_ROW_BANDS = {
     "idle": (20, 205),
     "walk": (205, 405),
     "sprint": (405, 590),
     "jump": (590, 785),
     "attack": (785, 1005),
+}
+
+SUPPLEMENTAL_ATTACK_ROW_BANDS = {
+    "attack-heavy": (70, 345),
+    "attack-kick": (360, 655),
+    "attack-special": (650, 945),
 }
 
 
@@ -492,6 +572,11 @@ def opaque_pixel_count(image: Image.Image) -> int:
     return sum(1 for alpha in image.getchannel("A").get_flattened_data() if alpha)
 
 
+def largest_component_pixel_count(image: Image.Image) -> int:
+    mask = alpha_mask(image)
+    return sum(primary_alpha_component(mask, image.width, image.height))
+
+
 def extract_generated_animations(source: Image.Image, set_id: str) -> dict[str, list[Image.Image]]:
     transparent = remove_generated_gray_matte(source)
     walk_y_start, walk_y_end = GENERATED_ROW_BANDS["walk"]
@@ -546,6 +631,57 @@ def extract_generated_animations(source: Image.Image, set_id: str) -> dict[str, 
     return animations
 
 
+def extract_supplemental_attacks(source: Image.Image, set_id: str) -> dict[str, list[Image.Image]]:
+    """Extract each visual row around its body poses and fold detached effects into them."""
+    transparent = remove_generated_gray_matte(source)
+    rgba_pixels = transparent.load()
+    alpha_pixels = transparent.getchannel("A").load()
+    animations: dict[str, list[Image.Image]] = {}
+    for animation_id, (y_start, y_end) in SUPPLEMENTAL_ATTACK_ROW_BANDS.items():
+        dark_scores = []
+        for x in range(transparent.width):
+            dark_scores.append(sum(
+                1 for y in range(y_start, y_end)
+                if alpha_pixels[x, y]
+                and max(rgba_pixels[x, y][:3]) < 110
+                and max(rgba_pixels[x, y][:3]) - min(rgba_pixels[x, y][:3]) > 4
+            ))
+        smoothed = [
+            sum(dark_scores[max(0, x - 14):min(transparent.width, x + 15)])
+            for x in range(transparent.width)
+        ]
+        peak = max(smoothed)
+        centers: list[int] = []
+        for x in sorted(range(30, transparent.width - 30), key=lambda candidate: smoothed[candidate], reverse=True):
+            if smoothed[x] < peak * 0.18:
+                break
+            if all(abs(x - center) >= 120 for center in centers):
+                centers.append(x)
+            if len(centers) == 8:
+                break
+        centers.sort()
+        if len(centers) < 6:
+            raise ValueError(f"Expected at least 6 body poses in {set_id}/{animation_id}, got {len(centers)}")
+        boundaries = [0]
+        for left_center, right_center in zip(centers, centers[1:]):
+            search_left = min(right_center - 1, left_center + 36)
+            search_right = max(search_left, right_center - 36)
+            boundary = min(
+                range(search_left, search_right + 1),
+                key=lambda x: sum(1 for y in range(y_start, y_end) if alpha_pixels[x, y]),
+            )
+            boundaries.append(boundary)
+        boundaries.append(transparent.width)
+        crops = [
+            crop_opaque_region(transparent, (boundaries[index], y_start, boundaries[index + 1], y_end))
+            for index in range(len(centers))
+        ]
+        while len(crops) < 8:
+            crops.insert(len(crops) - 1, crops[-1].copy())
+        animations[animation_id] = crops
+    return animations
+
+
 def checkerboard_contact_sheet(sets: list[tuple[str, str, list[tuple[str, Path]]]], path: Path) -> None:
     columns = 8
     cell_width = FRAME_SIZE[0] + 16
@@ -569,12 +705,14 @@ def checkerboard_contact_sheet(sets: list[tuple[str, str, list[tuple[str, Path]]
 
 def build() -> None:
     sources = load_sources()
+    attack_sources = load_attack_sources()
     build_root = ROOT.with_name(f".{ROOT.name}-building")
     if build_root.exists():
         shutil.rmtree(build_root)
     build_root.mkdir(parents=True)
     manifest_sets = []
     contact_sets = []
+    attack_contact_sets = []
     total_unique_frames = 0
 
     for set_id, definition in SHEETS.items():
@@ -587,6 +725,10 @@ def build() -> None:
         frames_root = set_root / "frames"
         frames_root.mkdir(parents=True)
         source.save(set_root / "source.png", optimize=True)
+        attack_source_bytes = attack_sources[set_id]
+        (set_root / "attacks-v2-source.png").write_bytes(attack_source_bytes)
+        with Image.open(BytesIO(attack_source_bytes)) as attack_source_image:
+            supplemental_crops = extract_supplemental_attacks(attack_source_image.convert("RGB"), set_id)
         background = source.getpixel((0, 0))
         animations = []
         contact_frames: list[tuple[str, Path]] = []
@@ -629,6 +771,8 @@ def build() -> None:
                 for animation_id in original_crops
             }
 
+        source_crops.update(supplemental_crops)
+
         for animation_id, crops in source_crops.items():
             animation_root = frames_root / animation_id
             animation_root.mkdir()
@@ -638,11 +782,15 @@ def build() -> None:
                 if not content_bounds:
                     raise ValueError(f"Empty frame {set_id}/{animation_id}/{index}")
                 crop = crop.crop(content_bounds)
+                if animation_id.startswith("attack"):
+                    crop = fit_attack_crop(crop)
+                    crop = fill_single_alpha_pinholes(crop)
                 if crop.width > FRAME_SIZE[0] or crop.height > FRAME_SIZE[1]:
                     raise ValueError(f"Frame {set_id}/{animation_id}/{index} is {crop.width}x{crop.height}, exceeding {FRAME_SIZE[0]}x{FRAME_SIZE[1]}")
                 frame = Image.new("RGBA", FRAME_SIZE)
-                body_anchor_x = attack_body_anchor_x(crop) if animation_id == "attack" else crop.width // 2
-                x = FRAME_SIZE[0] // 2 - body_anchor_x if animation_id == "attack" else (FRAME_SIZE[0] - crop.width) // 2
+                is_attack = animation_id.startswith("attack")
+                body_anchor_x = attack_body_anchor_x(crop) if is_attack else crop.width // 2
+                x = FRAME_SIZE[0] // 2 - body_anchor_x if is_attack else (FRAME_SIZE[0] - crop.width) // 2
                 y = BASELINE - crop.height
                 if x < 0 or x + crop.width > FRAME_SIZE[0]:
                     raise ValueError(f"Frame {set_id}/{animation_id}/{index} clips horizontally at x={x} on the {FRAME_SIZE[0]}px canvas")
@@ -659,7 +807,12 @@ def build() -> None:
                     "bodyAnchorX": x + body_anchor_x,
                 })
             animation_paths[animation_id] = runtime_frames
-            animations.append({"id": animation_id, "loop": animation_id not in {"jump", "attack"}, "frames": runtime_frames})
+            animation = {"id": animation_id, "loop": animation_id not in {"jump", "attack", "attack-heavy", "attack-kick", "attack-special"}, "frames": runtime_frames}
+            if animation_id == "attack":
+                animation["activeFrameRange"] = list(ATTACK_ACTIVE_FRAME_RANGES[set_id])
+            elif animation_id in SUPPLEMENTAL_ATTACK_RANGES:
+                animation["activeFrameRange"] = list(SUPPLEMENTAL_ATTACK_RANGES[animation_id])
+            animations.append(animation)
 
         if definition.get("jumpAlias"):
             alias = definition["jumpAlias"]
@@ -676,15 +829,22 @@ def build() -> None:
             "label": definition["label"],
             "frameCount": unique_count,
             "source": {"kind": source_kind, "sha256": hashlib.sha256(source_bytes).hexdigest(), "originalFile": source_name},
+            "attackSource": {
+                "kind": "openai-image-generation-supplemental-attack-sheet",
+                "sha256": hashlib.sha256(attack_source_bytes).hexdigest(),
+                "originalFile": "attacks-v2-source.png",
+            },
             "animations": animations,
         })
         contact_sets.append((set_id, definition["label"], contact_frames))
-        del source_crops, source, source_bytes, frame, crop, crops
+        attack_contact_sets.append((set_id, definition["label"], [frame for frame in contact_frames if frame[0].startswith("attack")]))
+        del source_crops, supplemental_crops, source, source_bytes, attack_source_bytes, frame, crop, crops
         gc.collect()
 
     checkerboard_contact_sheet(contact_sets, build_root / "contact-sheet.png")
+    checkerboard_contact_sheet(attack_contact_sets, build_root / "attack-contact-sheet.png")
     manifest = {
-        "version": 2,
+        "version": 3,
         "avatarStyle": "kore-street-v1",
         "defaultSet": "street-shadow",
         "frameSize": {"width": FRAME_SIZE[0], "height": FRAME_SIZE[1], "baseline": BASELINE},
@@ -698,7 +858,8 @@ def build() -> None:
     (build_root / "SOURCE.md").write_text(
         "# K.O.R.E. Street Avatar Sources\n\n"
         "Four animation sheets supplied by the project owner and ten original Image API-generated K.O.R.E. presets "
-        "are imported without runtime recoloring or redraws. "
+        "are imported without runtime recoloring or redraws. Each preset also carries an identity-referenced "
+        "Image API supplemental sheet containing heavy, kick, and signature attack rows. "
         "Frames use an exterior-only transparent matte, conservative source-silhouette restoration, "
         "a shared 320×192 canvas with body-anchored attack effects, and baseline 182.\n"
     )

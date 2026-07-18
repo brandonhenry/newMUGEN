@@ -90,7 +90,12 @@ export function sanitizeStoryHubPresence(value: unknown, now = Date.now()): Stor
   const record = value as Partial<StoryHubPresence>;
   const sessionId = cleanId(record.sessionId, 120);
   if (!sessionId) return null;
-  const pose = record.pose === 'walk' || record.pose === 'sprint' || record.pose === 'jump' || record.pose === 'attack' ? record.pose : 'idle';
+  const rawPose = (value as { pose?: unknown }).pose;
+  const pose = rawPose === 'attack' ? 'attack-jab'
+    : rawPose === 'walk' || rawPose === 'sprint' || rawPose === 'jump'
+      || rawPose === 'attack-jab' || rawPose === 'attack-heavy' || rawPose === 'attack-kick' || rawPose === 'attack-special'
+      ? rawPose
+      : 'idle';
   const challenge = sanitizeStoryHubChallenge(record.challenge, now);
   const worldId = isStoryWorldId(record.worldId) ? record.worldId : 'central';
   const bounds = storyWorldBounds(worldId);

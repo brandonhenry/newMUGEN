@@ -133,7 +133,11 @@ test('Play creates a story avatar and enters K.O.R.E. Central', async ({ page })
   await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 4_000 }).toBeGreaterThan(-1.5);
   await page.keyboard.up('ArrowRight');
   await expect(hub).toHaveAttribute('data-nearby-portal', 'story-gate', { timeout: 3_000 });
-  await page.keyboard.press('Enter');
+  await page.keyboard.press('k');
+  await expect(hub).toHaveAttribute('data-world', 'central');
+  await expect(hub).toHaveAttribute('data-player-pose', 'attack-special');
+  await page.waitForTimeout(1_250);
+  await page.keyboard.press('e');
   await expect(page.getByTestId('story-door-transition')).toBeVisible();
   await expect(hub).toHaveAttribute('data-world', 'world-route', { timeout: 4_000 });
   await expect(page.getByTestId('story-door-transition')).toBeHidden({ timeout: 4_000 });
@@ -180,7 +184,7 @@ test('adventure combat levels the player and Central Route shrine respecs stats'
   await page.waitForTimeout(850);
   await page.keyboard.up('ArrowRight');
   await expect(hub).toHaveAttribute('data-nearby-portal', 'story-gate', { timeout: 3_000 });
-  await page.keyboard.press('Enter');
+  await page.keyboard.press('e');
   await expect(hub).toHaveAttribute('data-world', 'world-route', { timeout: 4_000 });
   await expect(page.getByTestId('story-door-transition')).toBeHidden({ timeout: 4_000 });
 
@@ -298,7 +302,7 @@ test('Versus World keeps players in-world and assigns quick-match stations', asy
   await page.waitForTimeout(3_650);
   await page.keyboard.up('ArrowRight');
   await expect(hub).toHaveAttribute('data-nearby-portal', 'versus-gate', { timeout: 3_000 });
-  await page.keyboard.press('Enter');
+  await page.keyboard.press('e');
   await expect(hub).toHaveAttribute('data-world', 'versus', { timeout: 4_000 });
   await expect(page.getByTestId('story-door-transition')).toBeHidden({ timeout: 4_000 });
   await page.waitForTimeout(350);
@@ -437,17 +441,26 @@ test('story hub accepts controller and touch movement, run, attack, and pause', 
   await expect.poll(async () => Number(await hub.getAttribute('data-player-x'))).toBeGreaterThan(beforeTouch + 0.8);
 
   const runButton = page.getByRole('button', { name: 'Run', exact: true });
-  const attackButton = page.getByRole('button', { name: 'Attack', exact: true });
+  const attackButtons = [
+    ['Jab attack U', 'attack-jab'],
+    ['Heavy attack I', 'attack-heavy'],
+    ['Kick attack J', 'attack-kick'],
+    ['Special attack K', 'attack-special']
+  ] as const;
   await expect(runButton).toBeVisible();
-  await expect(attackButton).toBeVisible();
+  for (const [label] of attackButtons) await expect(page.getByRole('button', { name: label })).toBeVisible();
   await runButton.dispatchEvent('pointerdown', { pointerId: 31, pointerType: 'touch', isPrimary: true, bubbles: true });
   await moveRight.dispatchEvent('pointerdown', { pointerId: 32, pointerType: 'touch', bubbles: true });
   await expect(hub).toHaveAttribute('data-player-pose', 'sprint');
   await moveRight.dispatchEvent('pointerup', { pointerId: 32, pointerType: 'touch', bubbles: true });
   await runButton.dispatchEvent('pointerup', { pointerId: 31, pointerType: 'touch', isPrimary: true, bubbles: true });
-  await attackButton.dispatchEvent('pointerdown', { pointerId: 33, pointerType: 'touch', isPrimary: true, bubbles: true });
-  await attackButton.dispatchEvent('pointerup', { pointerId: 33, pointerType: 'touch', isPrimary: true, bubbles: true });
-  await expect(hub).toHaveAttribute('data-player-pose', 'attack');
+  for (const [label, pose] of attackButtons) {
+    const attackButton = page.getByRole('button', { name: label });
+    await attackButton.dispatchEvent('pointerdown', { pointerId: 33, pointerType: 'touch', isPrimary: true, bubbles: true });
+    await attackButton.dispatchEvent('pointerup', { pointerId: 33, pointerType: 'touch', isPrimary: true, bubbles: true });
+    await expect(hub).toHaveAttribute('data-player-pose', pose);
+    await page.waitForTimeout(pose === 'attack-special' ? 1_260 : pose === 'attack-heavy' ? 1_080 : 820);
+  }
 
   const beforeController = Number(await hub.getAttribute('data-player-x'));
   await page.evaluate(() => {
@@ -470,8 +483,11 @@ test('story hub accepts controller and touch movement, run, attack, and pause', 
     testWindow.__koreMockGamepadButtons = [];
     testWindow.__koreMockGamepadAxes = [0, 0];
   });
-  await tapMockGamepadButton(page, 0);
-  await expect(hub).toHaveAttribute('data-player-pose', 'attack');
+  for (const [button, pose, waitMs] of [[0, 'attack-jab', 800], [1, 'attack-kick', 820], [2, 'attack-heavy', 1_080], [3, 'attack-special', 1_260]] as const) {
+    await tapMockGamepadButton(page, button);
+    await expect(hub).toHaveAttribute('data-player-pose', pose);
+    await page.waitForTimeout(waitMs);
+  }
 
   await tapMockGamepadButton(page, 9);
   await expect(page.getByRole('heading', { name: 'Hub Paused' })).toBeVisible();

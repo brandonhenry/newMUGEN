@@ -8,7 +8,7 @@ import type { OnlinePlayerProfile } from '../lib/online/leaderboard';
 import { addFriendEntry, isFriend, readMatchHistory } from '../lib/socialHistory';
 import type { InputFrame } from '../types';
 import { STORY_ADVENTURE_ASSET_PATHS, STORY_ENEMY_SPRITE_PATHS, storyWorldAssetPath } from './adventureAssets';
-import { STORY_ATTACK_VISUAL_SYNC_DELAY_MS, adventureAttackHits, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureAttackFrameHitbox, getAdventureEnemyStats, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, shouldRespawnAdventureEnemy, stepAdventureProjectile, type AdventureDamageFeedback } from './adventureCombat';
+import { STORY_ATTACK_VISUAL_SYNC_DELAY_MS, adventureAttackHits, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureAttackFrameHitbox, getAdventureEnemyStats, getStoryAttackDurationMs, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, resolveStoryAttackInput, shouldRespawnAdventureEnemy, stepAdventureProjectile, type AdventureDamageFeedback } from './adventureCombat';
 import { STORY_ADVENTURE_STAT_CAP, STORY_ADVENTURE_STAT_KEYS, allocateAdventureStat, awardAdventureExperience, awardMountMastery, beginAdventureVisit, canRespecAdventureStats, discoverAdventureLandmark, discoverAdventureVista, discoverAdventureWaystone, experienceToNextLevel, getAdventureDerivedStats, readAdventureProgress, respecAdventureStats, unlockAdventureMount, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_REGION_LABELS, STORY_WORLDS, isStoryAdventureRegionId, isStoryAdventureWorldId, isStoryWorldId } from './adventureWorlds';
 import { createAdventureVisitSeed, generateAdventureRunGraph, STORY_BREATH_DRAIN_PER_SECOND, STORY_BREATH_REFILL_PER_SECOND, STORY_MAX_BREATH, STORY_MOUNTS, STORY_WORLD_MOUNT, storyDepthZoneLabel, type StoryPartyInstance } from './adventureExploration';
@@ -17,13 +17,13 @@ import { STORY_BIOME_DOOR_ASSET, STORY_BIOME_DOOR_ATLAS_SIZE, STORY_BIOME_DOOR_G
 import { connectStoryHubMultiplayer, readOrCreateStoryHubGuestIdentity, readStoryHubOnlinePreference, STORY_HUB_CHALLENGE_TIMEOUT_MS, writeStoryHubOnlinePreference, type StoryHubMultiplayerSession } from './hubMultiplayer';
 import { KORE_CENTRAL_HUB } from './hubData';
 import { storyPlatformSurfacePlacement } from './platformGrounding';
-import { getStorySpriteAnimationDurationMs } from './streetAvatarCatalog';
+import { STORY_ATTACK_POSES } from './streetAvatarCatalog';
 import { StoryAvatarRig, type StoryAvatarPose } from './StoryAvatarRig';
 import { joinStoryParty, leaveStoryParty, updateStoryPartyRoom } from './storyParty';
 import { createStoryWorldProps } from './worldEnvironments';
-import type { HubDestination, StoryAdventureRunGraph, StoryAvatarSet, StoryEnemySpawnDefinition, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryMountDefinition, StoryMountId, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StoryWorldBackdropLayerDefinition, StoryWorldId, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
+import type { HubDestination, StoryAdventureRunGraph, StoryAttackInput, StoryAvatarSet, StoryEnemySpawnDefinition, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryMountDefinition, StoryMountId, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StoryWorldBackdropLayerDefinition, StoryWorldId, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
 
-type StoryHubInput = Pick<InputFrame, 'left' | 'right' | 'down' | 'up' | 'jump' | 'confirm' | 'jab' | 'kick' | 'heavy' | 'special' | 'block' | 'back' | 'pause'>;
+type StoryHubInput = Pick<InputFrame, 'left' | 'right' | 'down' | 'up' | 'jump' | 'jab' | 'kick' | 'heavy' | 'special' | 'block' | 'back' | 'pause'> & { interact: boolean };
 type SetVirtualAction = (player: 1 | 2, action: keyof InputFrame, pressed: boolean) => void;
 
 const CITY_ASSET_ROOT = '/story/hub/warped-city-2';
@@ -76,7 +76,7 @@ function isHubDestination(value: string): value is HubDestination {
   return Object.prototype.hasOwnProperty.call(DESTINATION_STOREFRONTS, value);
 }
 
-type StoryAdventureAttackEvent = { id: number; x: number; y: number; facing: -1 | 1; damage: number; critical: boolean; avatarSet: StoryAvatarSet; startedAt: number; activeUntil: number };
+type StoryAdventureAttackEvent = { id: number; x: number; y: number; facing: -1 | 1; damage: number; critical: boolean; knockbackMultiplier: number; attackInput: StoryAttackInput; avatarSet: StoryAvatarSet; startedAt: number; activeUntil: number };
 type StoryPlayerImpactEvent = { id: number; sourceX: number; knockback: number; respawn?: [number, number] };
 
 function configurePixelTexture(texture: THREE.Texture, repeatX = 1, repeatY = 1) {
@@ -676,7 +676,7 @@ function AdventureEnemy({ spawn, level, playerPosition, attackEvent, reducedMoti
       damageTimers.current = damageTimers.current.filter((timer) => timer !== damageTimer);
     }, feedback.durationMs);
     damageTimers.current.push(damageTimer);
-    x.current += currentAttack.facing * 0.46;
+    x.current += currentAttack.facing * 0.46 * currentAttack.knockbackMultiplier;
     flashUntil.current = hitAt + (reducedMotion ? 90 : 240);
     shakeStartedAt.current = hitAt;
     shakeUntil.current = hitAt + reaction.shakeDurationMs;
@@ -706,7 +706,7 @@ function AdventureEnemy({ spawn, level, playerPosition, attackEvent, reducedMoti
       return;
     }
     if (attackEvent && now <= attackEvent.activeUntil) {
-      const attackBox = getAdventureAttackFrameHitbox(attackEvent.avatarSet, now - attackEvent.startedAt);
+      const attackBox = getAdventureAttackFrameHitbox(attackEvent.avatarSet, attackEvent.attackInput, now - attackEvent.startedAt);
       if (attackBox) {
         const attackX = playerPosition.current.x;
         const attackY = playerPosition.current.y;
@@ -890,7 +890,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
   mount: StoryMountDefinition | null;
   mountMasteryRank: number;
   impactEvent: StoryPlayerImpactEvent | null;
-  onAttack: (x: number, y: number, facing: -1 | 1, durationSeconds: number) => void;
+  onAttack: (x: number, y: number, facing: -1 | 1, attackInput: StoryAttackInput, durationSeconds: number) => void;
   onQuickMatch: () => void;
   onNearbyPortal: (portal: StoryPortalDefinition | null) => void;
   onActivatePortal: (portal: StoryPortalDefinition) => void;
@@ -911,19 +911,15 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
   const jumpsUsed = useRef(0);
   const jumpBufferedUntil = useRef(0);
   const dropThroughUntil = useRef(0);
-  const previousButtons = useRef({ jump: false, interact: false, attack: false, back: false, pause: false });
+  const previousButtons = useRef({ jump: false, interact: false, jab: false, heavy: false, kick: false, special: false, back: false, pause: false });
   const previousWaterState = useRef(false);
   const attackUntil = useRef(0);
+  const attackPose = useRef<StoryAvatarPose>('attack-jab');
   const actionInputArmed = useRef(false);
   const releasedInputFrames = useRef(0);
   const nearbyId = useRef<string | null>(null);
   const lastSampleAt = useRef(0);
   const flashUntil = useRef(0);
-  const attackDurationSeconds = useMemo(
-    () => (getStorySpriteAnimationDurationMs(avatar.avatarSet, 'attack') + 100) / 1000,
-    [avatar.avatarSet],
-  );
-
   useEffect(() => onReady?.(), [onReady]);
   useEffect(() => {
     if (!impactEvent) return;
@@ -949,15 +945,22 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
   useFrame((state, frameDelta) => {
     const now = state.clock.elapsedTime;
     const delta = Math.min(frameDelta, 1 / 30);
-    const input = disabled ? { left: false, right: false, down: false, up: false, jump: false, confirm: false, jab: false, kick: false, heavy: false, special: false, block: false, back: false, pause: false } : readInput();
+    const input = disabled ? { left: false, right: false, down: false, up: false, jump: false, interact: false, jab: false, kick: false, heavy: false, special: false, block: false, back: false, pause: false } : readInput();
     const jumpPressed = Boolean(input.jump || input.up);
-    const interactPressed = Boolean(input.confirm || input.special);
-    const attackPressed = Boolean(input.jab || input.kick || input.heavy);
+    const interactPressed = Boolean(input.interact);
+    const attackButtons = { jab: Boolean(input.jab), heavy: Boolean(input.heavy), kick: Boolean(input.kick), special: Boolean(input.special) };
+    const attackPressed = Object.values(attackButtons).some(Boolean);
     const backPressed = Boolean(input.back);
     const pausePressed = Boolean(input.pause);
     const jumpEdge = actionInputArmed.current && jumpPressed && !previousButtons.current.jump;
     const interactEdge = actionInputArmed.current && interactPressed && !previousButtons.current.interact;
-    const attackEdge = actionInputArmed.current && attackPressed && !previousButtons.current.attack;
+    const attackEdges: Record<StoryAttackInput, boolean> = {
+      special: actionInputArmed.current && attackButtons.special && !previousButtons.current.special,
+      heavy: actionInputArmed.current && attackButtons.heavy && !previousButtons.current.heavy,
+      kick: actionInputArmed.current && attackButtons.kick && !previousButtons.current.kick,
+      jab: actionInputArmed.current && attackButtons.jab && !previousButtons.current.jab
+    };
+    const selectedAttack = resolveStoryAttackInput(attackEdges);
     const backEdge = actionInputArmed.current && backPressed && !previousButtons.current.back;
     const pauseEdge = actionInputArmed.current && pausePressed && !previousButtons.current.pause;
 
@@ -972,9 +975,11 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
 
     if (backEdge) onExit();
     if (pauseEdge) onPause();
-    if (attackEdge && attackUntil.current <= now) {
+    if (selectedAttack && attackUntil.current <= now) {
+      const attackDurationSeconds = getStoryAttackDurationMs(avatar.avatarSet, selectedAttack) / 1000;
       attackUntil.current = now + attackDurationSeconds;
-      onAttack(position.current.x, position.current.y, facing.current, attackDurationSeconds);
+      attackPose.current = STORY_ATTACK_POSES[selectedAttack];
+      onAttack(position.current.x, position.current.y, facing.current, selectedAttack, attackDurationSeconds);
     }
     const waterVolume = hub.exploration?.waterVolumes.find((volume) => position.current.x >= volume.bounds[0] && position.current.x <= volume.bounds[1] && position.current.y >= volume.bounds[2] && position.current.y <= volume.bounds[3]);
     const airPocket = waterVolume?.airPockets.find((pocket) => Math.hypot(position.current.x - pocket[0], position.current.y - pocket[1]) <= 1.8);
@@ -1075,7 +1080,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
     bodyRef.current?.setNextKinematicTranslation({ x: nextX, y: nextY, z: 0 });
     if (avatarGroup.current) avatarGroup.current.visible = avatarVisible && (performance.now() >= flashUntil.current || Math.floor(performance.now() / 70) % 2 === 0);
 
-    const nextPose: StoryAvatarPose = attackUntil.current > now ? 'attack' : swimming || groundedUntil.current < now ? 'jump' : sprinting || mounted ? 'sprint' : horizontal !== 0 ? 'walk' : 'idle';
+    const nextPose: StoryAvatarPose = attackUntil.current > now ? attackPose.current : swimming || groundedUntil.current < now ? 'jump' : sprinting || mounted ? 'sprint' : horizontal !== 0 ? 'walk' : 'idle';
     if (visualState.pose !== nextPose || visualState.facing !== facing.current) setVisualState({ pose: nextPose, facing: facing.current });
 
     const nearby = hub.portals
@@ -1091,7 +1096,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
       lastSampleAt.current = now;
       onStateSample({ x: nextX, y: nextY, pose: nextPose, facing: facing.current });
     }
-    previousButtons.current = { jump: jumpPressed, interact: interactPressed, attack: attackPressed, back: backPressed, pause: pausePressed };
+    previousButtons.current = { jump: jumpPressed, interact: interactPressed, ...attackButtons, back: backPressed, pause: pausePressed };
   });
 
   return <RigidBody ref={bodyRef} type="kinematicPosition" position={[hub.spawn[0], hub.spawn[1], 0]} colliders={false} enabledRotations={[false, false, false]}>
@@ -1121,7 +1126,7 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
   mount: StoryMountDefinition | null;
   attackEvent: StoryAdventureAttackEvent | null;
   impactEvent: StoryPlayerImpactEvent | null;
-  onAttack: (x: number, y: number, facing: -1 | 1, durationSeconds: number) => void;
+  onAttack: (x: number, y: number, facing: -1 | 1, attackInput: StoryAttackInput, durationSeconds: number) => void;
   onPlayerDamage: (damage: number, sourceX: number) => void;
   onEnemyDefeated: (xp: number) => void;
   onSelectPlayer: (presence: StoryHubPresence) => void;
@@ -1486,8 +1491,30 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const masteryDistanceRef = useRef(0);
   const lastVisitedWorldRef = useRef<string>('');
   const currentDepthZoneRef = useRef<string | null>(null);
+  const storyInteractRef = useRef(false);
   const playerStateRef = useRef<StoryHubPlayerState>({ x: activeHub.spawn[0], y: activeHub.spawn[1], pose: 'idle', facing: 1, worldId: activeWorldId });
-  const readInput = useCallback(() => readInputs()[0], [readInputs]);
+  const readInput = useCallback(() => {
+    const input = readInputs()[0];
+    return { ...input, interact: storyInteractRef.current || input.charge };
+  }, [readInputs]);
+  useEffect(() => {
+    const setInteract = (event: KeyboardEvent, pressed: boolean) => {
+      if (event.code !== 'KeyE') return;
+      const target = event.target as HTMLElement | null;
+      if (target?.closest('input, textarea, select, [contenteditable="true"]')) return;
+      event.preventDefault();
+      storyInteractRef.current = pressed;
+    };
+    const onKeyDown = (event: KeyboardEvent) => setInteract(event, true);
+    const onKeyUp = (event: KeyboardEvent) => setInteract(event, false);
+    window.addEventListener('keydown', onKeyDown, true);
+    window.addEventListener('keyup', onKeyUp, true);
+    return () => {
+      window.removeEventListener('keydown', onKeyDown, true);
+      window.removeEventListener('keyup', onKeyUp, true);
+      storyInteractRef.current = false;
+    };
+  }, []);
   const handleHubReady = useCallback(() => setHubReady(true), []);
   const handlePlayerState = useCallback((state: StoryHubPlayerState) => {
     const worldState = { ...state, worldId: activeWorldId };
@@ -1672,11 +1699,11 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     playerHealthRef.current = maxHealth;
     setPlayerHealth(maxHealth);
   }, [activeWorldId, nearbyPortal?.kind, updateAdventureProgress]);
-  const handleAdventureAttack = useCallback((x: number, y: number, facing: -1 | 1, durationSeconds: number) => {
+  const handleAdventureAttack = useCallback((x: number, y: number, facing: -1 | 1, attackInput: StoryAttackInput, durationSeconds: number) => {
     if (!isStoryAdventureRegionId(activeWorldId)) return;
-    const resolved = resolveAdventurePlayerAttack(adventureProgressRef.current);
+    const resolved = resolveAdventurePlayerAttack(adventureProgressRef.current, attackInput);
     const startedAt = performance.now() + STORY_ATTACK_VISUAL_SYNC_DELAY_MS;
-    setAttackEvent({ id: ++attackSequenceRef.current, x, y, facing, avatarSet: profile.avatar.avatarSet, startedAt, activeUntil: startedAt + Math.max(100, durationSeconds * 1_000), ...resolved });
+    setAttackEvent({ id: ++attackSequenceRef.current, x, y, facing, attackInput, avatarSet: profile.avatar.avatarSet, startedAt, activeUntil: startedAt + Math.max(100, durationSeconds * 1_000), ...resolved });
   }, [activeWorldId, profile.avatar.avatarSet]);
   const handlePlayerDamage = useCallback((baseDamage: number, sourceX: number) => {
     if (!isStoryAdventureRegionId(activeWorldId) || performance.now() < playerInvulnerableUntilRef.current) return;
@@ -2209,10 +2236,13 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       <div className="story-hub-controls-grid">
         <div><strong>Move</strong><kbd>← →</kbd><span>Left stick / D-pad</span></div>
         <div><strong>Run</strong><kbd>Shift</kbd><span>L1 / R1</span></div>
-        <div><strong>Double Jump</strong><kbd>Space ×2</kbd><span>South button ×2</span></div>
+        <div><strong>Double Jump</strong><kbd>Space ×2</kbd><span>R2 ×2</span></div>
         <div><strong>Drop Through</strong><kbd>Hold ↓</kbd><span>Down on D-pad / stick</span></div>
-        <div><strong>Attack</strong><kbd>U / J / I</kbd><span>Face buttons</span></div>
-        <div><strong>Interact</strong><kbd>K / Enter</kbd><span>Special button</span></div>
+        <div><strong>Jab</strong><kbd>U</kbd><span>South face button</span></div>
+        <div><strong>Heavy</strong><kbd>I</kbd><span>West face button</span></div>
+        <div><strong>Kick</strong><kbd>J</kbd><span>East face button</span></div>
+        <div><strong>Special</strong><kbd>K</kbd><span>North face button</span></div>
+        <div><strong>Interact</strong><kbd>E</kbd><span>L2 / dedicated touch control</span></div>
         {activeHub.adventure && <div><strong>World Map</strong><kbd>M</kbd><span>Route network</span></div>}
         {activeHub.adventure && <div><strong>Stats</strong><kbd>P</kbd><span>Allocate level points</span></div>}
         {activeMount && <div><strong>Mount</strong><kbd>G</kbd><span>R3 · {mountUnlocked ? activeMount.label : 'Unlock at sanctuary'}</span></div>}
@@ -2240,7 +2270,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     </button>}
 
     <div className="story-hub-control-hint story-enter-3" aria-hidden="true">
-      <span>Move</span><b>← →</b><span>Run</span><b>Shift</b><span>Double Jump</span><b>Space ×2</b><span>Drop</span><b>Hold ↓</b><span>Attack</span><b>U / J</b>{activeHub.adventure && <><span>Map</span><b>M</b><span>Stats</span><b>P</b>{activeMount && <><span>Mount</span><b>G / R3</b></>}</>}{quickMatchAvailable && <><span>Match</span><b>F / Y</b></>}<span>Interact</span><b>K / Enter</b><span>Pause</span><b>Esc</b>
+      <span>Move</span><b>← →</b><span>Run</span><b>Shift</b><span>Attacks</span><b>U</b><b>I</b><b>J</b><b>K</b>{activeHub.adventure && <><span>Map</span><b>M</b><span>Stats</span><b>P</b>{activeMount && <><span>Mount</span><b>G / R3</b></>}</>}{quickMatchAvailable && <><span>Match</span><b>F / Y</b></>}<span>Interact</span><b>E / L2</b><span>Pause</span><b>Esc</b>
     </div>
 
     {doorTravel && <div className="story-door-transition" aria-label={`Traveling to ${STORY_WORLDS[doorTravel.target].name}`} data-testid="story-door-transition">
@@ -2258,8 +2288,13 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       <div className="story-touch-actions">
         <TouchButton label="Jump or double jump" action="jump" setVirtualAction={setVirtualAction}><ArrowUp /></TouchButton>
         <TouchButton label="Run" action="block" className="is-run" setVirtualAction={setVirtualAction}><Gauge /></TouchButton>
-        <TouchButton label="Attack" action="jab" className="is-attack" setVirtualAction={setVirtualAction}><Swords /></TouchButton>
-        <TouchButton label="Interact" action="confirm" className="is-interact" setVirtualAction={setVirtualAction}><DoorOpen /></TouchButton>
+        <div className="story-touch-attack-cluster" aria-label="Attacks">
+          <TouchButton label="Jab attack U" action="jab" className="is-attack is-jab" setVirtualAction={setVirtualAction}><span>U</span></TouchButton>
+          <TouchButton label="Heavy attack I" action="heavy" className="is-attack is-heavy" setVirtualAction={setVirtualAction}><span>I</span></TouchButton>
+          <TouchButton label="Kick attack J" action="kick" className="is-attack is-kick" setVirtualAction={setVirtualAction}><span>J</span></TouchButton>
+          <TouchButton label="Special attack K" action="special" className="is-attack is-special" setVirtualAction={setVirtualAction}><span>K</span></TouchButton>
+        </div>
+        <TouchButton label="Interact" action="charge" className="is-interact" setVirtualAction={setVirtualAction}><DoorOpen /></TouchButton>
         {activeMount && <button type="button" className={`story-touch-mount ${mounted ? 'is-mounted' : ''}`} disabled={!mountUnlocked || underwater} aria-label={`${mounted ? 'Dismount' : 'Mount'} ${activeMount.label}`} onClick={toggleMount}><Gauge /></button>}
         <TouchButton label="Pause hub" action="pause" setVirtualAction={setVirtualAction}><Pause /></TouchButton>
       </div>

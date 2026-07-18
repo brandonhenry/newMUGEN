@@ -38,7 +38,7 @@ describe('story hub multiplayer', () => {
       avatar: { ...makeDefaultStoryAvatar(), hairStyle: 'missing' },
       x: 999,
       y: -50,
-      pose: 'attack',
+      pose: 'attack-jab',
       facing: -1,
       worldId: 'versus',
       updatedAt: 100
@@ -49,7 +49,7 @@ describe('story hub multiplayer', () => {
       displayName: 'NOVA',
       x: storyWorldBounds('versus').maxX - 0.5,
       y: 0.82,
-      pose: 'attack',
+      pose: 'attack-jab',
       facing: -1,
       worldId: 'versus',
       avatar: { hairStyle: 'short' }
@@ -61,6 +61,10 @@ describe('story hub multiplayer', () => {
       sessionId: 'runner',
       pose: 'sprint'
     })?.pose).toBe('sprint');
+    expect(sanitizeStoryHubPresence({ ...presence, sessionId: 'legacy', pose: 'attack' } as unknown)?.pose).toBe('attack-jab');
+    for (const pose of ['attack-jab', 'attack-heavy', 'attack-kick', 'attack-special'] as const) {
+      expect(sanitizeStoryHubPresence({ ...presence, sessionId: pose, pose })?.pose).toBe(pose);
+    }
     expect(sanitizeStoryHubPresence({ sessionId: 'bad-world', worldId: 'secret-zone' })?.worldId).toBe('central');
   });
 

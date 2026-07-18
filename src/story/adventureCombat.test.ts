@@ -4,14 +4,17 @@ import {
   STORY_ENEMY_RESPAWN_MS,
   STORY_DAMAGE_POP_MS,
   STORY_DAMAGE_POP_REDUCED_MS,
+  STORY_ATTACK_PROFILES,
   adventureAttackHits,
   canDamageAdventurePlayer,
   createAdventureDamageFeedback,
   createAdventureHitReaction,
   getAdventureAttackFrameHitbox,
   getAdventureEnemyStats,
+  getStoryAttackDurationMs,
   resolveAdventurePlayerAttack,
   resolveAdventurePlayerDamage,
+  resolveStoryAttackInput,
   shouldRespawnAdventureEnemy,
   stepAdventureProjectile
 } from './adventureCombat';
@@ -36,6 +39,35 @@ describe('story adventure combat math', () => {
     expect(resolveAdventurePlayerDamage(20, guarded)).toMatchObject({ damage: 15, knockback: 0.575 });
     expect(canDamageAdventurePlayer(1_000, 999)).toBe(true);
     expect(canDamageAdventurePlayer(1_000, 1_001)).toBe(false);
+  });
+
+  it('applies all four move multipliers, authored cooldowns, and simultaneous-input priority', () => {
+    const attacker = sanitizeAdventureProgress({ level: 1, stats: {} });
+    const jab = resolveAdventurePlayerAttack(attacker, 'jab', 0.99);
+    const heavy = resolveAdventurePlayerAttack(attacker, 'heavy', 0.99);
+    const kick = resolveAdventurePlayerAttack(attacker, 'kick', 0.99);
+    const special = resolveAdventurePlayerAttack(attacker, 'special', 0.99);
+    expect(heavy.damage).toBe(Math.round(jab.damage * STORY_ATTACK_PROFILES.heavy.damageMultiplier));
+    expect(kick.damage).toBe(Math.round(jab.damage * STORY_ATTACK_PROFILES.kick.damageMultiplier));
+    expect(special.damage).toBe(Math.round(jab.damage * STORY_ATTACK_PROFILES.special.damageMultiplier));
+    expect([jab.knockbackMultiplier, heavy.knockbackMultiplier, kick.knockbackMultiplier, special.knockbackMultiplier]).toEqual([1, 1.35, 1.15, 1.6]);
+    expect(getStoryAttackDurationMs('arena-rebel', 'heavy')).toBe(1_040);
+    expect(getStoryAttackDurationMs('arena-rebel', 'kick')).toBe(776);
+    expect(getStoryAttackDurationMs('arena-rebel', 'special')).toBe(1_220);
+    expect(resolveStoryAttackInput({ jab: true, kick: true, heavy: true, special: true })).toBe('special');
+    expect(resolveStoryAttackInput({ jab: true, kick: true, heavy: true })).toBe('heavy');
+    expect(resolveStoryAttackInput({ jab: true, kick: true })).toBe('kick');
+    expect(resolveStoryAttackInput({ jab: true })).toBe('jab');
+  });
+
+  it('uses manifest active ranges for each added move', () => {
+    expect(getAdventureAttackFrameHitbox('arena-rebel', 'heavy', 329)).toBeNull();
+    expect(getAdventureAttackFrameHitbox('arena-rebel', 'heavy', 330)).not.toBeNull();
+    expect(getAdventureAttackFrameHitbox('arena-rebel', 'heavy', 660)).toBeNull();
+    expect(getAdventureAttackFrameHitbox('arena-rebel', 'kick', 163)).toBeNull();
+    expect(getAdventureAttackFrameHitbox('arena-rebel', 'kick', 164)).not.toBeNull();
+    expect(getAdventureAttackFrameHitbox('arena-rebel', 'special', 374)).toBeNull();
+    expect(getAdventureAttackFrameHitbox('arena-rebel', 'special', 375)).not.toBeNull();
   });
 
   it('registers visible attack-box overlap for every enemy archetype', () => {

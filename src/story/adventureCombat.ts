@@ -1,7 +1,7 @@
 import { getAdventureDerivedStats, sanitizeAdventureProgress, type StoryAdventureProgressV1 } from './adventureProgress';
 import { STORY_AVATAR_GROUNDING_OFFSET_Y, STORY_AVATAR_MESH_CENTER_Y, storyAvatarPlaneHeight } from './actorGrounding';
-import { getStorySpriteAnimation, STORY_SPRITE_MANIFEST } from './streetAvatarCatalog';
-import type { StoryAvatarSet, StoryEnemyArchetype } from './types';
+import { getStorySpriteAnimation, STORY_SPRITE_MANIFEST, storyAttackAnimationId } from './streetAvatarCatalog';
+import type { StoryAttackInput, StoryAvatarSet, StoryEnemyArchetype } from './types';
 
 export const STORY_ATTACK_REACH = 2.45;
 export const STORY_ATTACK_REAR_OVERLAP = 0.45;
@@ -12,6 +12,23 @@ export const STORY_PLAYER_INVULNERABILITY_MS = 650;
 export const STORY_ENEMY_RESPAWN_MS = 10_000;
 export const STORY_DAMAGE_POP_MS = 760;
 export const STORY_DAMAGE_POP_REDUCED_MS = 260;
+
+export type StoryAttackProfile = {
+  damageMultiplier: number;
+  knockbackMultiplier: number;
+  recoveryMs: number;
+};
+
+export const STORY_ATTACK_PROFILES: Record<StoryAttackInput, StoryAttackProfile> = {
+  jab: { damageMultiplier: 1, knockbackMultiplier: 1, recoveryMs: 100 },
+  heavy: { damageMultiplier: 1.45, knockbackMultiplier: 1.35, recoveryMs: 160 },
+  kick: { damageMultiplier: 1.15, knockbackMultiplier: 1.15, recoveryMs: 120 },
+  special: { damageMultiplier: 1.75, knockbackMultiplier: 1.6, recoveryMs: 220 }
+};
+
+export function resolveStoryAttackInput(input: Partial<Record<StoryAttackInput, boolean>>): StoryAttackInput | null {
+  return (['special', 'heavy', 'kick', 'jab'] as const).find((attackInput) => input[attackInput]) ?? null;
+}
 
 export type AdventureDamageFeedback = {
   damage: number;
@@ -86,14 +103,27 @@ export function getAdventureEnemyStats(archetype: StoryEnemyArchetype, level: nu
   };
 }
 
-export function resolveAdventurePlayerAttack(progress: StoryAdventureProgressV1, roll = Math.random()) {
+export function resolveAdventurePlayerAttack(
+  progress: StoryAdventureProgressV1,
+  inputOrRoll: StoryAttackInput | number = 'jab',
+  roll = Math.random()
+) {
+  const attackInput = typeof inputOrRoll === 'number' ? 'jab' : inputOrRoll;
+  const criticalRoll = typeof inputOrRoll === 'number' ? inputOrRoll : roll;
+  const profile = STORY_ATTACK_PROFILES[attackInput];
   const current = sanitizeAdventureProgress(progress);
   const derived = getAdventureDerivedStats(current);
-  const critical = Math.max(0, Math.min(0.999999, roll)) < derived.criticalChance;
+  const critical = Math.max(0, Math.min(0.999999, criticalRoll)) < derived.criticalChance;
   return {
-    damage: Math.max(1, Math.round(derived.attackDamage * (critical ? derived.criticalMultiplier : 1))),
-    critical
+    damage: Math.max(1, Math.round(derived.attackDamage * profile.damageMultiplier * (critical ? derived.criticalMultiplier : 1))),
+    critical,
+    knockbackMultiplier: profile.knockbackMultiplier
   };
+}
+
+export function getStoryAttackDurationMs(avatarSet: StoryAvatarSet, attackInput: StoryAttackInput): number {
+  const animation = getStorySpriteAnimation(avatarSet, storyAttackAnimationId(attackInput));
+  return animation.frames.reduce((total, frame) => total + frame.durationMs, 0) + STORY_ATTACK_PROFILES[attackInput].recoveryMs;
 }
 
 export function resolveAdventurePlayerDamage(baseDamage: number, progress: StoryAdventureProgressV1) {
@@ -113,23 +143,6 @@ export type AdventureAttackBox = {
   topOffset: number;
 };
 
-const STORY_ATTACK_ACTIVE_FRAMES: Record<StoryAvatarSet, readonly [first: number, last: number]> = {
-  'arena-rebel': [3, 6],
-  'circuit-mage': [1, 4],
-  'crimson-ranger': [3, 6],
-  'ember-scout': [3, 6],
-  'forest-warden': [3, 6],
-  'neon-courier': [3, 5],
-  'rose-blade': [3, 5],
-  'solar-brawler': [2, 5],
-  'solar-runner': [3, 4],
-  'street-medic': [2, 6],
-  'street-shadow': [5, 7],
-  'synth-drifter': [0, 5],
-  'tech-nomad': [0, 5],
-  'void-operative': [1, 5]
-};
-
 const ATTACK_TARGET_HALF_SIZE: Record<AdventureAttackTargetKind, { width: number; height: number }> = {
   ground: { width: 0.85, height: 0.85 },
   flying: { width: 0.78, height: 0.78 },
@@ -137,9 +150,17 @@ const ATTACK_TARGET_HALF_SIZE: Record<AdventureAttackTargetKind, { width: number
   projectile: { width: 0.2, height: 0.2 }
 };
 
-export function getAdventureAttackFrameHitbox(avatarSet: StoryAvatarSet, elapsedMs: number): AdventureAttackBox | null {
+export function getAdventureAttackFrameHitbox(avatarSet: StoryAvatarSet, elapsedMs: number): AdventureAttackBox | null;
+export function getAdventureAttackFrameHitbox(avatarSet: StoryAvatarSet, attackInput: StoryAttackInput, elapsedMs: number): AdventureAttackBox | null;
+export function getAdventureAttackFrameHitbox(
+  avatarSet: StoryAvatarSet,
+  inputOrElapsed: StoryAttackInput | number,
+  maybeElapsed?: number
+): AdventureAttackBox | null {
+  const attackInput = typeof inputOrElapsed === 'number' ? 'jab' : inputOrElapsed;
+  const elapsedMs = typeof inputOrElapsed === 'number' ? inputOrElapsed : maybeElapsed ?? -1;
   if (!Number.isFinite(elapsedMs) || elapsedMs < 0) return null;
-  const animation = getStorySpriteAnimation(avatarSet, 'attack');
+  const animation = getStorySpriteAnimation(avatarSet, storyAttackAnimationId(attackInput));
   let frameStartMs = 0;
   let frameIndex = -1;
   for (let index = 0; index < animation.frames.length; index += 1) {
@@ -150,7 +171,8 @@ export function getAdventureAttackFrameHitbox(avatarSet: StoryAvatarSet, elapsed
     }
     frameStartMs = frameEndMs;
   }
-  const activeFrames = STORY_ATTACK_ACTIVE_FRAMES[avatarSet];
+  const activeFrames = animation.activeFrameRange;
+  if (!activeFrames) return null;
   if (frameIndex < activeFrames[0] || frameIndex > activeFrames[1]) return null;
   const frame = animation.frames[frameIndex];
   const pixelsToWorld = storyAvatarPlaneHeight() / STORY_SPRITE_MANIFEST.frameSize.height;

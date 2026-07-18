@@ -62,17 +62,18 @@ describe('online Netlify function handlers', () => {
       status: 'pending', createdAt: Date.now(), updatedAt: Date.now(), expiresAt: Date.now() + 30_000
     };
     const first = await post(heartbeat, { sessionId: 'session-one', playerId: 'player-one', displayName: 'Nova', avatar, x: -4, y: 0.82, pose: 'idle', facing: 1, challenge });
-    const second = await post(heartbeat, { sessionId: 'session-two', playerId: 'player-two', displayName: 'Rival', avatar: { ...avatar, hairStyle: 'bob' }, x: 8, y: 0.82, pose: 'walk', facing: -1 });
+    const second = await post(heartbeat, { sessionId: 'session-two', playerId: 'player-two', displayName: 'Rival', avatar: { ...avatar, hairStyle: 'bob' }, x: 8, y: 0.82, pose: 'attack-special', facing: -1 });
     expect(first.players).toHaveLength(1);
     expect(second.players).toHaveLength(2);
     expect(second.players).toEqual(expect.arrayContaining([
       expect.objectContaining({ sessionId: 'session-one', displayName: 'NOVA', avatar: expect.objectContaining({ avatarSet: 'crimson-ranger' }), challenge: expect.objectContaining({ id: challenge.id, status: 'pending', targetSessionId: 'session-two' }) }),
-      expect.objectContaining({ sessionId: 'session-two', displayName: 'RIVAL', pose: 'walk', facing: -1 })
+      expect.objectContaining({ sessionId: 'session-two', displayName: 'RIVAL', pose: 'attack-special', facing: -1 })
     ]));
 
     expect(await post(leave, { sessionId: 'session-two' })).toEqual({ ok: true });
-    const afterLeave = await post(heartbeat, { sessionId: 'session-one', playerId: 'player-one', displayName: 'Nova', avatar, x: -3, y: 0.82, pose: 'walk', facing: 1 });
+    const afterLeave = await post(heartbeat, { sessionId: 'session-one', playerId: 'player-one', displayName: 'Nova', avatar, x: -3, y: 0.82, pose: 'attack', facing: 1 });
     expect(afterLeave.players.map((player: { sessionId: string }) => player.sessionId)).toEqual(['session-one']);
+    expect(afterLeave.players[0].pose).toBe('attack-jab');
   });
 
   it('keeps ranked/casual matchmaking separate and removes rooms on leave', async () => {

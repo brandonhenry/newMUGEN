@@ -1286,8 +1286,24 @@ body {
 
 .story-touch-controls .story-touch-actions {
   display: grid;
-  grid-template-columns: repeat(3, 56px);
+  grid-template-columns: repeat(5, 56px);
+  grid-auto-rows: 56px;
   gap: 8px;
+}
+
+.story-touch-controls .story-touch-attack-cluster {
+  display: grid;
+  grid-column: span 2;
+  grid-row: span 2;
+  grid-template-columns: repeat(2, 56px);
+  grid-template-rows: repeat(2, 56px);
+  gap: 8px;
+}
+
+.story-touch-attack-cluster button {
+  font-size: 15px;
+  font-weight: 1000;
+  letter-spacing: 0.04em;
 }
 
 .story-touch-controls button.is-interact {
@@ -1307,6 +1323,10 @@ body {
     0 0 0 1px rgba(255, 255, 255, 0.2) inset,
     0 12px 26px rgba(165, 47, 100, 0.3);
 }
+
+.story-touch-controls button.is-heavy { background: #81388f; }
+.story-touch-controls button.is-kick { background: #b84654; }
+.story-touch-controls button.is-special { background: #5b46b8; }
 
 .story-touch-controls button.story-touch-mount { color: #07101a; background: #8ee8ff; }
 .story-touch-controls button.story-touch-mount.is-mounted { color: #fff; background: #9b72ff; box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.42) inset, 0 0 24px rgba(155, 114, 255, 0.34); }
@@ -2429,7 +2449,14 @@ body {
   }
 
   .story-touch-controls .story-touch-actions {
-    grid-template-columns: repeat(3, 44px);
+    grid-template-columns: repeat(5, 44px);
+    grid-auto-rows: 44px;
+    gap: 5px;
+  }
+
+  .story-touch-controls .story-touch-attack-cluster {
+    grid-template-columns: repeat(2, 44px);
+    grid-template-rows: repeat(2, 44px);
     gap: 5px;
   }
 

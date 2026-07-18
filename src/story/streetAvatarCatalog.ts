@@ -1,5 +1,23 @@
 import manifestJson from './storyStreetAvatarManifest.json';
-import type { StoryAvatarSet, StorySpriteAnimation, StorySpriteManifest, StorySpriteSetDefinition } from './types';
+import type { StoryAttackAnimationId, StoryAttackInput, StoryAvatarSet, StoryHubAvatarPose, StorySpriteAnimation, StorySpriteManifest, StorySpriteSetDefinition } from './types';
+
+export const STORY_ATTACK_ANIMATION_IDS: Record<StoryAttackInput, StoryAttackAnimationId> = {
+  jab: 'attack',
+  heavy: 'attack-heavy',
+  kick: 'attack-kick',
+  special: 'attack-special'
+};
+
+export const STORY_ATTACK_POSES: Record<StoryAttackInput, Extract<StoryHubAvatarPose, `attack-${string}`>> = {
+  jab: 'attack-jab',
+  heavy: 'attack-heavy',
+  kick: 'attack-kick',
+  special: 'attack-special'
+};
+
+export function storyAttackAnimationId(input: StoryAttackInput): StoryAttackAnimationId {
+  return STORY_ATTACK_ANIMATION_IDS[input];
+}
 
 export const STORY_SPRITE_MANIFEST = manifestJson as unknown as StorySpriteManifest;
 export const STORY_SPRITE_SETS = STORY_SPRITE_MANIFEST.sets;
@@ -23,10 +41,10 @@ export function validateStorySpriteManifest(value: unknown): string[] {
   const errors: string[] = [];
   if (!value || typeof value !== 'object') return ['manifest must be an object'];
   const manifest = value as Partial<StorySpriteManifest>;
-  if (manifest.version !== 2) errors.push('manifest version must be 2');
+  if (manifest.version !== 3) errors.push('manifest version must be 3');
   if (manifest.avatarStyle !== 'kore-street-v1') errors.push('avatar style must be kore-street-v1');
   if (manifest.defaultSet !== 'street-shadow') errors.push('default set must be street-shadow');
-  if (manifest.frameCount !== 519) errors.push('the authored set union must contain 519 unique frames');
+  if (manifest.frameCount !== 855) errors.push('the authored set union must contain 855 unique frames');
   if (manifest.facing !== 'right') errors.push('canonical frames must face right');
   if (manifest.frameSize?.width !== 320 || manifest.frameSize?.height !== 192 || manifest.frameSize?.baseline !== 182) {
     errors.push('all frames must share the 320x192 canvas and baseline 182');
@@ -44,6 +62,7 @@ export function validateStorySpriteManifest(value: unknown): string[] {
     setIds.add(set.id);
     if (!expectedSets.has(set.id)) errors.push(`unknown avatar set: ${set.id}`);
     if (!set.source?.sha256 || !set.source?.originalFile) errors.push(`${set.id} is missing source provenance`);
+    if (!set.attackSource?.sha256 || set.attackSource?.originalFile !== 'attacks-v2-source.png') errors.push(`${set.id} is missing supplemental attack provenance`);
     const animationIds = new Set<string>();
     const uniquePaths = new Set<string>();
     for (const animation of set.animations ?? []) {
@@ -55,12 +74,16 @@ export function validateStorySpriteManifest(value: unknown): string[] {
         if (!frame.path.startsWith(`/story/avatars/kore-street-v1/sets/${set.id}/frames/`)) errors.push(`${set.id}/${frame.id} has an invalid path`);
         if (frame.durationMs <= 0) errors.push(`${set.id}/${frame.id} has an invalid duration`);
         if (!Number.isFinite(frame.bodyAnchorX) || frame.bodyAnchorX < 0 || frame.bodyAnchorX > 320) errors.push(`${set.id}/${frame.id} has an invalid body anchor`);
-        if (animation.id === 'attack' && frame.bodyAnchorX !== 160) errors.push(`${set.id}/${frame.id} must keep its attack body anchored at x=160`);
+        if (animation.id.startsWith('attack') && frame.bodyAnchorX !== 160) errors.push(`${set.id}/${frame.id} must keep its attack body anchored at x=160`);
         const [left, top, right, bottom] = frame.contentBounds;
         if (left < 0 || top < 0 || right > 320 || bottom > 192 || left >= right || top >= bottom) errors.push(`${set.id}/${frame.id} has invalid bounds`);
       }
+      if (animation.id.startsWith('attack')) {
+        const range = animation.activeFrameRange;
+        if (!range || range[0] < 0 || range[0] > range[1] || range[1] >= animation.frames.length) errors.push(`${set.id}/${animation.id} has an invalid active frame range`);
+      }
     }
-    for (const required of ['idle', 'walk', 'sprint', 'jump', 'attack']) {
+    for (const required of ['idle', 'walk', 'sprint', 'jump', 'attack', 'attack-heavy', 'attack-kick', 'attack-special']) {
       if (!animationIds.has(required)) errors.push(`${set.id} is missing ${required} animation`);
     }
     if (uniquePaths.size !== set.frameCount) errors.push(`${set.id} frame count does not match its unique assets`);

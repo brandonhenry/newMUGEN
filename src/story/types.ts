@@ -17,6 +17,9 @@ export type StoryAvatarSet =
   | 'solar-brawler' | 'void-operative' | 'circuit-mage' | 'street-medic'
   | 'arena-rebel' | 'tech-nomad';
 
+export type StoryAttackInput = 'jab' | 'heavy' | 'kick' | 'special';
+export type StoryAttackAnimationId = 'attack' | 'attack-heavy' | 'attack-kick' | 'attack-special';
+
 export type StorySpriteFrame = {
   id: string;
   path: string;
@@ -28,23 +31,27 @@ export type StorySpriteFrame = {
 export type StorySpriteAnimation = {
   id: string;
   loop: boolean;
+  activeFrameRange?: [number, number];
   frames: StorySpriteFrame[];
+};
+
+export type StorySpriteSourceProvenance = {
+  kind: string;
+  sha256: string;
+  originalFile: string;
 };
 
 export type StorySpriteSetDefinition = {
   id: StoryAvatarSet;
   label: string;
   frameCount: number;
-  source: {
-    kind: string;
-    sha256: string;
-    originalFile: string;
-  };
+  source: StorySpriteSourceProvenance;
+  attackSource: StorySpriteSourceProvenance;
   animations: StorySpriteAnimation[];
 };
 
 export type StorySpriteManifest = {
-  version: 2;
+  version: 3;
   avatarStyle: 'kore-street-v1';
   defaultSet: StoryAvatarSet;
   frameSize: { width: number; height: number; baseline: number };
@@ -109,7 +116,7 @@ export type StoryProfileV4 = {
   reviewedAt: number | null;
 };
 
-export type StoryHubAvatarPose = 'idle' | 'walk' | 'sprint' | 'jump' | 'attack';
+export type StoryHubAvatarPose = 'idle' | 'walk' | 'sprint' | 'jump' | 'attack-jab' | 'attack-heavy' | 'attack-kick' | 'attack-special';
 
 export type StoryHubPlayerState = {
   x: number;

@@ -6,10 +6,12 @@ import { STORY_AVATAR_MESH_CENTER_Y, storyAvatarPlaneHeight } from './actorGroun
 import { getStorySpriteAnimation, STORY_SPRITE_MANIFEST } from './streetAvatarCatalog';
 import type { StoryAvatarDefinition, StoryHubAvatarPose, StorySpriteAnimation } from './types';
 
-export type StoryAvatarPose = StoryHubAvatarPose | 'sprint' | 'attack';
+export type StoryAvatarPose = StoryHubAvatarPose;
 
 function animationForPose(pose: StoryAvatarPose) {
-  return pose === 'walk' || pose === 'jump' || pose === 'sprint' || pose === 'attack' ? pose : 'idle';
+  if (pose === 'attack-jab') return 'attack';
+  if (pose === 'attack-heavy' || pose === 'attack-kick' || pose === 'attack-special') return pose;
+  return pose === 'walk' || pose === 'jump' || pose === 'sprint' ? pose : 'idle';
 }
 
 function frameIndexAt(animation: StorySpriteAnimation, elapsedMs: number, reducedMotion: boolean) {

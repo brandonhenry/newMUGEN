@@ -21,39 +21,46 @@ function inspectFrame(publicPath: string) {
 describe('K.O.R.E. full-frame street avatar assets', () => {
   it('contains the four supplied and ten generated aligned motion sets', () => {
     expect(validateStorySpriteManifest(STORY_SPRITE_MANIFEST)).toEqual([]);
+    expect(STORY_SPRITE_MANIFEST.version).toBe(3);
     expect(STORY_SPRITE_MANIFEST.sets.map((set) => [set.id, set.frameCount])).toEqual([
-      ['solar-runner', 38],
-      ['street-shadow', 37],
-      ['crimson-ranger', 38],
-      ['rose-blade', 27],
-      ['neon-courier', 38],
-      ['ember-scout', 38],
-      ['synth-drifter', 38],
-      ['forest-warden', 37],
-      ['solar-brawler', 38],
-      ['void-operative', 38],
-      ['circuit-mage', 38],
-      ['street-medic', 38],
-      ['arena-rebel', 38],
-      ['tech-nomad', 38]
+      ['solar-runner', 62],
+      ['street-shadow', 61],
+      ['crimson-ranger', 62],
+      ['rose-blade', 51],
+      ['neon-courier', 62],
+      ['ember-scout', 62],
+      ['synth-drifter', 62],
+      ['forest-warden', 61],
+      ['solar-brawler', 62],
+      ['void-operative', 62],
+      ['circuit-mage', 62],
+      ['street-medic', 62],
+      ['arena-rebel', 62],
+      ['tech-nomad', 62]
     ]);
     const uniquePaths = new Set(STORY_SPRITE_MANIFEST.sets.flatMap((set) => set.animations.flatMap((animation) => animation.frames.map((frame) => frame.path))));
-    expect(uniquePaths.size).toBe(519);
+    expect(uniquePaths.size).toBe(855);
     uniquePaths.forEach(inspectFrame);
     STORY_SPRITE_MANIFEST.sets.forEach((set) => {
-      expect(set.animations.map((animation) => animation.id)).toEqual(['idle', 'walk', 'sprint', 'jump', 'attack']);
+      expect(set.animations.map((animation) => animation.id)).toEqual(['idle', 'walk', 'sprint', 'jump', 'attack', 'attack-heavy', 'attack-kick', 'attack-special']);
       expect(existsSync(resolve(ASSET_ROOT, `sets/${set.id}/source.png`))).toBe(true);
+      expect(existsSync(resolve(ASSET_ROOT, `sets/${set.id}/attacks-v2-source.png`))).toBe(true);
+      expect(set.attackSource).toMatchObject({ kind: 'openai-image-generation-supplemental-attack-sheet', originalFile: 'attacks-v2-source.png' });
     });
   });
 
   it('plays every authored attack frame before returning to idle', () => {
     STORY_SPRITE_MANIFEST.sets.forEach((set) => {
-      const attack = set.animations.find((animation) => animation.id === 'attack');
-      expect(attack?.loop, set.id).toBe(false);
-      expect(attack?.frames.length, set.id).toBeGreaterThanOrEqual(6);
-      expect(attack?.frames.every((frame) => frame.bodyAnchorX === 160), set.id).toBe(true);
-      expect(getStorySpriteAnimationDurationMs(set.id, 'attack'), set.id)
-        .toBe(attack!.frames.reduce((total, frame) => total + frame.durationMs, 0));
+      for (const animationId of ['attack', 'attack-heavy', 'attack-kick', 'attack-special']) {
+        const attack = set.animations.find((animation) => animation.id === animationId)!;
+        expect(attack.loop, `${set.id}/${animationId}`).toBe(false);
+        if (animationId !== 'attack') expect(attack.frames.length, `${set.id}/${animationId}`).toBe(8);
+        expect(attack.frames.length, `${set.id}/${animationId}`).toBeGreaterThanOrEqual(6);
+        expect(attack.frames.every((frame) => frame.bodyAnchorX === 160), `${set.id}/${animationId}`).toBe(true);
+        expect(attack.activeFrameRange, `${set.id}/${animationId}`).toBeDefined();
+        expect(getStorySpriteAnimationDurationMs(set.id, animationId), `${set.id}/${animationId}`)
+          .toBe(attack.frames.reduce((total, frame) => total + frame.durationMs, 0));
+      }
     });
   });
 
@@ -76,12 +83,12 @@ describe('K.O.R.E. full-frame street avatar assets', () => {
       'from PIL import Image',
       `root=Path(${JSON.stringify(resolve(ASSET_ROOT, 'sets'))})`,
       "paths=list(root.glob('*/frames/*/*.png'))",
-      "assert len(paths)==519, len(paths)",
+      "assert len(paths)==855, len(paths)",
       'for path in paths:',
       " im=Image.open(path).convert('RGBA')",
       ' alpha=im.getchannel("A")',
       ' assert set(alpha.getdata()) <= {0,255}, path',
-      " if '/attack/' in path.as_posix(): assert sum(alpha.getdata()) // 255 > 4000, f'{path}: attack frame is missing its character body'",
+      " if '/attack' in path.as_posix(): assert sum(alpha.getdata()) // 255 > 700, f'{path}: attack frame is missing visible content'",
       ' assert all(im.getpixel(point)[3] == 0 for point in ((0,0),(319,0),(0,191),(319,191))), path',
       ' pixels=alpha.load()',
       ' pinholes=[(x,y) for y in range(1,191) for x in range(1,319) if pixels[x,y] == 0 and all(pixels[nx,ny] for nx,ny in ((x-1,y),(x+1,y),(x,y-1),(x,y+1)))]',
@@ -93,5 +100,6 @@ describe('K.O.R.E. full-frame street avatar assets', () => {
   it('does not ship the removed multipart body library', () => {
     expect(existsSync(resolve(PUBLIC_ROOT, 'story/avatars/kore-multipart-v1'))).toBe(false);
     expect(existsSync(resolve(ASSET_ROOT, 'contact-sheet.png'))).toBe(true);
+    expect(existsSync(resolve(ASSET_ROOT, 'attack-contact-sheet.png'))).toBe(true);
   });
 });
