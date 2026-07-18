@@ -2,6 +2,7 @@ import type { StoryPortalDestination, StoryWorldThemeId } from './types';
 
 export const STORY_BIOME_DOOR_ASSET = '/story/exploration/doors/biome-doors.png';
 export const STORY_BIOME_DOOR_ATLAS_SIZE = [1536, 1024] as const;
+export const STORY_BIOME_DOOR_GROUND_SINK_Y = 0.32;
 
 export type StoryBiomeDoorFrame = {
   biome: Exclude<StoryPortalDestination, 'central' | 'story' | 'friends' | 'online' | 'arcade' | 'versus' | 'training' | 'tournament' | 'characters' | 'avatarStudio' | 'options' | 'exit' | 'world-route'>;

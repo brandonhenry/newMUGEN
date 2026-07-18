@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { STORY_BIOME_DOOR_ATLAS_SIZE, storyBiomeDoorFrame } from './biomeDoors';
+import { STORY_BIOME_DOOR_ATLAS_SIZE, STORY_BIOME_DOOR_GROUND_SINK_Y, storyBiomeDoorFrame } from './biomeDoors';
 
 describe('biome door atlas', () => {
   it('assigns a distinct frame to every adventure biome', () => {
@@ -15,5 +15,6 @@ describe('biome door atlas', () => {
     expect(storyBiomeDoorFrame('central', 'route')).toBeNull();
     expect(storyBiomeDoorFrame('arcade', 'arcade')).toBeNull();
     expect(STORY_BIOME_DOOR_ATLAS_SIZE).toEqual([1536, 1024]);
+    expect(STORY_BIOME_DOOR_GROUND_SINK_Y).toBeGreaterThan(0);
   });
 });

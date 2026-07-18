@@ -13,7 +13,7 @@ import { STORY_ADVENTURE_STAT_CAP, STORY_ADVENTURE_STAT_KEYS, allocateAdventureS
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_REGION_LABELS, STORY_WORLDS, isStoryAdventureRegionId, isStoryAdventureWorldId, isStoryWorldId } from './adventureWorlds';
 import { createAdventureVisitSeed, generateAdventureRunGraph, STORY_BREATH_DRAIN_PER_SECOND, STORY_BREATH_REFILL_PER_SECOND, STORY_MAX_BREATH, STORY_MOUNTS, STORY_WORLD_MOUNT, storyDepthZoneLabel, type StoryPartyInstance } from './adventureExploration';
 import { STORY_GROUNDED_ACTOR_CENTER_Y, storyAvatarGroundingOffsetForWorld, storyGroundAnchoredPlaneCenterY, storyScaledGroundAnchorOffsetY } from './actorGrounding';
-import { STORY_BIOME_DOOR_ASSET, STORY_BIOME_DOOR_ATLAS_SIZE, storyBiomeDoorFrame, type StoryBiomeDoorFrame } from './biomeDoors';
+import { STORY_BIOME_DOOR_ASSET, STORY_BIOME_DOOR_ATLAS_SIZE, STORY_BIOME_DOOR_GROUND_SINK_Y, storyBiomeDoorFrame, type StoryBiomeDoorFrame } from './biomeDoors';
 import { connectStoryHubMultiplayer, readOrCreateStoryHubGuestIdentity, readStoryHubOnlinePreference, STORY_HUB_CHALLENGE_TIMEOUT_MS, writeStoryHubOnlinePreference, type StoryHubMultiplayerSession } from './hubMultiplayer';
 import { KORE_CENTRAL_HUB } from './hubData';
 import { storyPlatformSurfacePlacement } from './platformGrounding';
@@ -448,7 +448,7 @@ function BiomeDoor({ door, emphasized }: { door: StoryBiomeDoorFrame; emphasized
   const texture = useTexture(STORY_BIOME_DOOR_ASSET);
   const doorHeight = 5.8;
   const geometry = useMemo(() => atlasGeometry(door.frame, [...STORY_BIOME_DOOR_ATLAS_SIZE], [4.4, doorHeight]), [door.frame]);
-  const groundAlignedCenterY = 1.2 - (door.visibleBottomInset / door.frame[3]) * doorHeight;
+  const groundAlignedCenterY = 1.2 - (door.visibleBottomInset / door.frame[3]) * doorHeight - STORY_BIOME_DOOR_GROUND_SINK_Y;
   useMemo(() => configurePixelTexture(texture), [texture]);
   useEffect(() => () => geometry.dispose(), [geometry]);
   return <mesh position={[0, groundAlignedCenterY, -0.18]} geometry={geometry}>
