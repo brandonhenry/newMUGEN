@@ -75,6 +75,10 @@ export function validateStorySpriteManifest(value: unknown): string[] {
       if (projectile.frames.length !== 6) errors.push(`${set.id} must have six projectile frames`);
       if (projectile.releaseDelayMs < 0 || projectile.speed <= 0 || projectile.lifetimeMs <= 0) errors.push(`${set.id} has invalid projectile timing`);
       if (projectile.worldSize.some((value) => value <= 0) || projectile.hitboxSize.some((value) => value <= 0)) errors.push(`${set.id} has invalid projectile dimensions`);
+      if (projectile.launchPoint.length !== 2
+        || !projectile.launchPoint.every(Number.isFinite)
+        || projectile.launchPoint[0] < 160 || projectile.launchPoint[0] > 320
+        || projectile.launchPoint[1] < 0 || projectile.launchPoint[1] > 192) errors.push(`${set.id} has an invalid projectile launch point`);
       for (const frame of projectile.frames) {
         if (!frame.path.startsWith(`/story/avatars/kore-street-v1/sets/${set.id}/projectiles/special/`)) errors.push(`${set.id}/${frame.id} has an invalid projectile path`);
         if (frame.durationMs <= 0) errors.push(`${set.id}/${frame.id} has an invalid projectile duration`);

@@ -550,12 +550,24 @@ def occupied_column_spans(image: Image.Image, y_start: int, y_end: int) -> list[
     return [(left, right + 1) for left, right in spans if right - left > 20]
 
 
-def crop_opaque_region(image: Image.Image, bounds: tuple[int, int, int, int]) -> Image.Image:
+def crop_opaque_region(
+    image: Image.Image,
+    bounds: tuple[int, int, int, int],
+    source: Image.Image | None = None,
+) -> Image.Image:
     region = image.crop(bounds)
+    source_region = source.crop(bounds) if source is not None else None
     content_bounds = region.getbbox()
     if not content_bounds:
         raise ValueError(f"No sprite content inside generated cell {bounds}")
     region = region.crop(content_bounds)
+    if source_region is not None:
+        source_region = source_region.crop(content_bounds)
+        # The neutral-matte flood fill can expose tiny holes when a light gray
+        # authored pixel is reachable through a one-pixel outline gap. Restore
+        # only enclosed source-colored holes; exterior matte and real negative
+        # space remain transparent.
+        region = fill_small_silhouette_holes(source_region, region)
 
     # Generated attack effects occasionally extend into the following grid cell.
     # Remove only disconnected components that enter through that cell's left
@@ -609,7 +621,13 @@ def largest_component_pixel_count(image: Image.Image) -> int:
 
 
 def keep_primary_body_components(image: Image.Image) -> Image.Image:
-    """Remove detached projectile cells while retaining the connected avatar body."""
+    """Remove detached projectile cells without erasing avatar silhouette fragments.
+
+    Pixel-art hands, hair tips, straps, and weapon outlines are sometimes split
+    from the main body by a one-pixel gap. They are still part of the character.
+    Large, mostly luminous components are treated as projectile art; small
+    components touching or immediately neighboring the body bounds are retained.
+    """
     result = image.convert("RGBA").copy()
     alpha_pixels = result.getchannel("A").load()
     visited = bytearray(result.width * result.height)
@@ -636,15 +654,19 @@ def keep_primary_body_components(image: Image.Image) -> Image.Image:
     if not components:
         return result
     rgba_pixels = result.load()
-    def body_score(component: list[tuple[int, int]]) -> tuple[int, int]:
-        dark_pixels = sum(
+
+    def dark_pixel_count(component: list[tuple[int, int]]) -> int:
+        return sum(
             1 for x, y in component
             if max(rgba_pixels[x, y][:3]) < 110
             and max(rgba_pixels[x, y][:3]) - min(rgba_pixels[x, y][:3]) > 4
         )
-        return dark_pixels, len(component)
+
+    def body_score(component: list[tuple[int, int]]) -> tuple[int, int]:
+        return dark_pixel_count(component), len(component)
 
     body = max(components, key=body_score)
+    body_dark_pixels = dark_pixel_count(body)
     body_left = min(x for x, _ in body)
     body_top = min(y for _, y in body)
     body_right = max(x for x, _ in body) + 1
@@ -653,9 +675,25 @@ def keep_primary_body_components(image: Image.Image) -> Image.Image:
     for component in components:
         if component is body:
             continue
-        center_x = sum(x for x, _ in component) / len(component)
-        center_y = sum(y for _, y in component) / len(component)
-        if body_left - 2 <= center_x <= body_right + 2 and body_top - 2 <= center_y <= body_bottom + 2:
+        component_left = min(x for x, _ in component)
+        component_top = min(y for _, y in component)
+        component_right = max(x for x, _ in component) + 1
+        component_bottom = max(y for _, y in component) + 1
+        horizontal_gap = max(body_left - component_right, component_left - body_right, 0)
+        vertical_gap = max(body_top - component_bottom, component_top - body_bottom, 0)
+        component_dark_pixels = dark_pixel_count(component)
+        large_luminous_effect = (
+            len(component) >= max(256, round(len(body) * 0.06))
+            and component_dark_pixels <= max(16, round(body_dark_pixels * 0.12))
+        )
+        near_body_fragment = horizontal_gap <= 4 and vertical_gap <= 4 and len(component) <= 512
+        outlined_near_body_fragment = (
+            horizontal_gap <= 16
+            and vertical_gap <= 16
+            and component_dark_pixels >= 4
+            and component_dark_pixels >= len(component) * 0.04
+        )
+        if not large_luminous_effect and (near_body_fragment or outlined_near_body_fragment):
             continue
         for x, y in component:
             pixels[x, y] = (0, 0, 0, 0)
@@ -689,7 +727,7 @@ def extract_generated_animations(source: Image.Image, set_id: str) -> dict[str, 
             spans = occupied_column_spans(transparent, y_start, y_end)
             if not 5 <= len(spans) <= 7:
                 raise ValueError(f"Expected 5-7 detected idle cells for {set_id}, got {len(spans)}")
-            crops = [crop_opaque_region(transparent, (left, y_start, right, y_end)) for left, right in spans]
+            crops = [crop_opaque_region(transparent, (left, y_start, right, y_end), source) for left, right in spans]
             if len(crops) == 5:
                 crops.append(crops[3].copy())
             elif len(crops) == 7:
@@ -697,7 +735,7 @@ def extract_generated_animations(source: Image.Image, set_id: str) -> dict[str, 
             animations[animation_id] = crops
             continue
         crops = [
-            crop_opaque_region(transparent, (boundaries[index], y_start, boundaries[index + 1], y_end))
+            crop_opaque_region(transparent, (boundaries[index], y_start, boundaries[index + 1], y_end), source)
             for index in range(8)
         ]
         if animation_id == "attack":
@@ -711,6 +749,7 @@ def extract_generated_animations(source: Image.Image, set_id: str) -> dict[str, 
                 crops[-2] = crop_opaque_region(
                     transparent,
                     (boundaries[-3], y_start, boundaries[-1], y_end),
+                    source,
                 )
                 crops.pop()
         animations[animation_id] = crops
@@ -759,7 +798,7 @@ def extract_supplemental_attacks(source: Image.Image, set_id: str) -> dict[str, 
             boundaries.append(boundary)
         boundaries.append(transparent.width)
         crops = [
-            crop_opaque_region(transparent, (boundaries[index], y_start, boundaries[index + 1], y_end))
+            crop_opaque_region(transparent, (boundaries[index], y_start, boundaries[index + 1], y_end), source)
             for index in range(len(centers))
         ]
         while len(crops) < 8:
@@ -821,6 +860,28 @@ def checkerboard_contact_sheet(sets: list[tuple[str, str, list[tuple[str, Path]]
         with Image.open(frame_path) as frame:
             sheet.alpha_composite(frame.convert("RGBA"), (cell_x + 8, cell_y + 4))
         draw.text((cell_x + 8, cell_y + 200), f"{label} · {frame_id}", fill="#edf3ff")
+    sheet.save(path, optimize=True)
+
+
+def silhouette_contact_sheet(sets: list[tuple[str, str, list[tuple[str, Path]]]], path: Path) -> None:
+    """Render every frame as a high-contrast alpha silhouette for missing-pixel QA."""
+    columns = 8
+    cell_width = FRAME_SIZE[0] + 16
+    cell_height = 221
+    frames = [(set_id, label, frame_id, frame_path) for set_id, label, set_frames in sets for frame_id, frame_path in set_frames]
+    rows = (len(frames) + columns - 1) // columns
+    sheet = Image.new("RGBA", (columns * cell_width, rows * cell_height), "#07090d")
+    draw = ImageDraw.Draw(sheet)
+    for index, (set_id, label, frame_id, frame_path) in enumerate(frames):
+        cell_x = index % columns * cell_width
+        cell_y = index // columns * cell_height
+        with Image.open(frame_path) as frame:
+            alpha = frame.convert("RGBA").getchannel("A")
+        silhouette = Image.new("RGBA", FRAME_SIZE, "#f7fbff")
+        silhouette.putalpha(alpha)
+        sheet.alpha_composite(silhouette, (cell_x + 8, cell_y + 4))
+        draw.rectangle((cell_x + 7, cell_y + 3, cell_x + 8 + FRAME_SIZE[0], cell_y + 4 + FRAME_SIZE[1]), outline="#273142")
+        draw.text((cell_x + 8, cell_y + 200), f"{label} · {frame_id}", fill="#aebcd0")
     sheet.save(path, optimize=True)
 
 
@@ -1040,6 +1101,7 @@ def build() -> None:
         gc.collect()
 
     checkerboard_contact_sheet(contact_sets, build_root / "contact-sheet.png")
+    silhouette_contact_sheet(contact_sets, build_root / "silhouette-contact-sheet.png")
     checkerboard_contact_sheet(attack_contact_sets, build_root / "attack-contact-sheet.png")
     checkerboard_contact_sheet(special_body_contact_sets, build_root / "special-body-contact-sheet.png")
     checkerboard_contact_sheet(projectile_contact_sets, build_root / "projectile-contact-sheet.png")

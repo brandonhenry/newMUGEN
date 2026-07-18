@@ -90,6 +90,16 @@ describe('K.O.R.E. full-frame street avatar assets', () => {
       expect(path).toContain('/projectiles/special/');
       expect(avatarPaths.has(path)).toBe(false);
     });
+    expect(Object.fromEntries(projectileSetIds.map((setId) => [setId, getStorySpriteProjectile(setId)!.launchPoint]))).toEqual({
+      'solar-runner': [185, 108],
+      'crimson-ranger': [203, 109],
+      'neon-courier': [218, 121],
+      'synth-drifter': [194, 126],
+      'solar-brawler': [198, 119],
+      'void-operative': [194, 123],
+      'circuit-mage': [238, 121],
+      'tech-nomad': [198, 123]
+    });
     projectileSetIds.forEach((setId) => {
       const set = STORY_SPRITE_MANIFEST.sets.find((candidate) => candidate.id === setId)!;
       const projectile = getStorySpriteProjectile(setId)!;
@@ -153,11 +163,38 @@ describe('K.O.R.E. full-frame street avatar assets', () => {
     expect(validation.status, validation.stderr).toBe(0);
   });
 
+  it('retains small source-authored silhouette components beside ranged attack bodies', () => {
+    const minimumOpaquePixels = {
+      'solar-brawler/01': 11925,
+      'circuit-mage/02': 11855,
+      'circuit-mage/03': 11932,
+      'circuit-mage/06': 8605,
+      'tech-nomad/01': 10107,
+      'tech-nomad/02': 10905,
+      'void-operative/06': 7965,
+      'solar-runner/03': 16387
+    };
+    const validation = spawnSync('python3', ['-c', [
+      'from pathlib import Path',
+      'from PIL import Image',
+      `root=Path(${JSON.stringify(resolve(ASSET_ROOT, 'sets'))})`,
+      `minimums=${JSON.stringify(minimumOpaquePixels)}`,
+      'for key,minimum in minimums.items():',
+      " set_id,frame=key.split('/')",
+      " path=root/set_id/'frames/attack-special'/f'{frame}.png'",
+      " opaque=sum(1 for value in Image.open(path).convert('RGBA').getchannel('A').getdata() if value)",
+      ' assert opaque>=minimum, f"{path}: silhouette pixels regressed ({opaque} < {minimum})"'
+    ].join('\n')], { encoding: 'utf8' });
+    expect(validation.status, validation.stderr).toBe(0);
+  });
+
   it('does not ship the removed multipart body library', () => {
     expect(existsSync(resolve(PUBLIC_ROOT, 'story/avatars/kore-multipart-v1'))).toBe(false);
     expect(existsSync(resolve(ASSET_ROOT, 'contact-sheet.png'))).toBe(true);
     expect(existsSync(resolve(ASSET_ROOT, 'attack-contact-sheet.png'))).toBe(true);
     expect(existsSync(resolve(ASSET_ROOT, 'special-body-contact-sheet.png'))).toBe(true);
     expect(existsSync(resolve(ASSET_ROOT, 'projectile-contact-sheet.png'))).toBe(true);
+    expect(existsSync(resolve(ASSET_ROOT, 'projectile-origin-contact-sheet.png'))).toBe(true);
+    expect(existsSync(resolve(ASSET_ROOT, 'silhouette-contact-sheet.png'))).toBe(true);
   });
 });

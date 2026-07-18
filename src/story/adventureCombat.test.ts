@@ -12,6 +12,7 @@ import {
   getAdventureAttackFrameHitbox,
   getAdventureEnemyStats,
   getStoryAttackDurationMs,
+  getStoryProjectileSpawnPosition,
   resolveAdventurePlayerAttack,
   resolveAdventurePlayerDamage,
   resolveStoryAttackInput,
@@ -19,6 +20,7 @@ import {
   stepAdventureProjectile,
   storyPlayerProjectileHits
 } from './adventureCombat';
+import { STORY_AVATAR_GROUNDING_OFFSET_Y } from './actorGrounding';
 import { getStorySpriteProjectile } from './streetAvatarCatalog';
 
 describe('story adventure combat math', () => {
@@ -111,6 +113,22 @@ describe('story adventure combat math', () => {
     expect(storyPlayerProjectileHits({ projectileX: 3, projectileY: 1.6, hitboxSize: projectile.hitboxSize, targetX: 5.5, targetY: 1.6, targetKind: 'ground' })).toBe(false);
     expect(storyPlayerProjectileHits({ projectileX: 3, projectileY: 1.6, hitboxSize: projectile.hitboxSize, targetX: 3.4, targetY: 1.6, targetKind: 'projectile' })).toBe(true);
     expect(getStorySpriteProjectile('street-shadow')).toBeUndefined();
+  });
+
+  it('aligns projectile trailing edges to each authored hand or weapon launch point', () => {
+    const arrow = getStorySpriteProjectile('crimson-ranger')!;
+    expect(arrow.launchPoint).toEqual([203, 109]);
+    const right = getStoryProjectileSpawnPosition({ playerX: 0, playerY: 0.82, facing: 1, rigOffsetX: 0, rigOffsetY: STORY_AVATAR_GROUNDING_OFFSET_Y, projectile: arrow });
+    const left = getStoryProjectileSpawnPosition({ playerX: 0, playerY: 0.82, facing: -1, rigOffsetX: 0, rigOffsetY: STORY_AVATAR_GROUNDING_OFFSET_Y, projectile: arrow });
+    const [frameLeft, frameTop, , frameBottom] = arrow.frames[0].contentBounds;
+    const localTrailX = (frameLeft / arrow.frameSize.width - 0.5) * arrow.worldSize[0];
+    const localCenterY = (0.5 - (frameTop + frameBottom) / 2 / arrow.frameSize.height) * arrow.worldSize[1];
+    expect(right.x + localTrailX).toBeCloseTo(right.launchX, 6);
+    expect(left.x - localTrailX).toBeCloseTo(left.launchX, 6);
+    expect(right.y + localCenterY).toBeCloseTo(right.launchY, 6);
+    expect(right.launchY).toBeGreaterThan(1.2);
+    expect(right.launchY).toBeLessThan(1.45);
+    expect(left.launchY).toBeCloseTo(right.launchY, 6);
   });
 
   it('creates staggered normal, critical, finishing, and reduced-motion damage feedback', () => {

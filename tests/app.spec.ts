@@ -137,6 +137,7 @@ test('Play creates a story avatar and enters K.O.R.E. Central', async ({ page })
   await expect(hub).toHaveAttribute('data-world', 'central');
   await expect(hub).toHaveAttribute('data-player-pose', 'attack-special');
   await expect(hub).toHaveAttribute('data-player-projectile-asset', '/story/avatars/kore-street-v1/sets/crimson-ranger/projectiles/special/00.png');
+  await expect(hub).toHaveAttribute('data-player-projectile-launch', '203,109');
   await page.waitForTimeout(1_250);
   await page.keyboard.press('e');
   await expect(page.getByTestId('story-door-transition')).toBeVisible();
@@ -429,6 +430,12 @@ test('story hub accepts controller and touch movement, run, attack, and pause', 
   await expect.poll(async () => Number(await hub.getAttribute('data-player-y')), { timeout: 1_500 }).toBeGreaterThan(groundY + 2.2);
   await expect(hub).toHaveAttribute('data-player-pose', 'jump');
   await expect.poll(async () => Number(await hub.getAttribute('data-player-y')), { timeout: 2_500 }).toBeLessThan(groundY + 0.2);
+
+  for (const [key, pose, waitMs] of [['u', 'attack-jab', 800], ['i', 'attack-heavy', 1_080], ['j', 'attack-kick', 820], ['k', 'attack-special', 1_260]] as const) {
+    await page.keyboard.press(key);
+    await expect(hub).toHaveAttribute('data-player-pose', pose);
+    await page.waitForTimeout(waitMs);
+  }
 
   const beforeTouch = Number(await hub.getAttribute('data-player-x'));
   const moveRight = page.getByRole('button', { name: 'Move right' });

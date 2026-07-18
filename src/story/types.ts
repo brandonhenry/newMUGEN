@@ -56,7 +56,7 @@ export type StorySpriteProjectileDefinition = {
   releaseDelayMs: number;
   speed: number;
   lifetimeMs: number;
-  spawnOffset: [number, number];
+  launchPoint: [number, number];
   worldSize: [number, number];
   hitboxSize: [number, number];
 };

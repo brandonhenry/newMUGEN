@@ -1,7 +1,7 @@
 import { getAdventureDerivedStats, sanitizeAdventureProgress, type StoryAdventureProgressV1 } from './adventureProgress';
 import { STORY_AVATAR_GROUNDING_OFFSET_Y, STORY_AVATAR_MESH_CENTER_Y, storyAvatarPlaneHeight } from './actorGrounding';
 import { getStorySpriteAnimation, STORY_SPRITE_MANIFEST, storyAttackAnimationId } from './streetAvatarCatalog';
-import type { StoryAttackInput, StoryAvatarSet, StoryEnemyArchetype } from './types';
+import type { StoryAttackInput, StoryAvatarSet, StoryEnemyArchetype, StorySpriteProjectileDefinition } from './types';
 
 export const STORY_ATTACK_REACH = 2.45;
 export const STORY_ATTACK_REAR_OVERLAP = 0.45;
@@ -235,6 +235,31 @@ export function storyPlayerProjectileHits(input: {
       topOffset: Math.max(0, height / 2)
     }
   });
+}
+
+export function getStoryProjectileSpawnPosition(input: {
+  playerX: number;
+  playerY: number;
+  facing: -1 | 1;
+  rigOffsetX: number;
+  rigOffsetY: number;
+  projectile: StorySpriteProjectileDefinition;
+}) {
+  const planeHeight = storyAvatarPlaneHeight();
+  const pixelsToWorld = planeHeight / STORY_SPRITE_MANIFEST.frameSize.height;
+  const launchX = input.playerX + input.rigOffsetX
+    + input.facing * (input.projectile.launchPoint[0] - STORY_SPRITE_MANIFEST.frameSize.width / 2) * pixelsToWorld;
+  const launchY = input.playerY + input.rigOffsetY + STORY_AVATAR_MESH_CENTER_Y + planeHeight / 2
+    - input.projectile.launchPoint[1] * pixelsToWorld;
+  const [left, top, , bottom] = input.projectile.frames[0].contentBounds;
+  const contentLeftFromPlaneCenter = (left / input.projectile.frameSize.width - 0.5) * input.projectile.worldSize[0];
+  const contentCenterFromPlaneCenter = (0.5 - (top + bottom) / 2 / input.projectile.frameSize.height) * input.projectile.worldSize[1];
+  return {
+    x: launchX - input.facing * contentLeftFromPlaneCenter,
+    y: launchY - contentCenterFromPlaneCenter,
+    launchX,
+    launchY
+  };
 }
 
 export function canDamageAdventurePlayer(nowMs: number, invulnerableUntilMs: number) {
