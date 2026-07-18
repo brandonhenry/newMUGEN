@@ -193,16 +193,15 @@ test('adventure combat levels the player and Central Route shrine respecs stats'
   await page.getByTestId('story-adventure-map').getByRole('button', { name: /Deep Waystone/ }).click();
   await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 3_000 }).toBeGreaterThan(-1);
   await page.keyboard.down('Shift');
-  await page.keyboard.down('ArrowRight');
-  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 9_000 }).toBeGreaterThan(50);
-  await page.keyboard.up('ArrowRight');
+  await page.keyboard.down('ArrowLeft');
+  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 9_000 }).toBeLessThan(-38);
+  await page.keyboard.up('ArrowLeft');
   await page.keyboard.up('Shift');
   let damageFeedbackSeen = false;
-  for (let hit = 0; hit < 16; hit += 1) {
-    const face = hit % 2 === 0 ? 'ArrowLeft' : 'ArrowRight';
-    await page.keyboard.down(face);
+  for (let hit = 0; hit < 10; hit += 1) {
+    await page.keyboard.down('ArrowLeft');
     await page.waitForTimeout(70);
-    await page.keyboard.up(face);
+    await page.keyboard.up('ArrowLeft');
     await page.keyboard.press('u');
     await page.waitForTimeout(360);
     const damageFeedback = page.locator('[data-testid^="story-enemy-damage-"]:visible');

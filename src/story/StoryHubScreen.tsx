@@ -706,16 +706,17 @@ function AdventureEnemy({ spawn, level, playerPosition, attackEvent, reducedMoti
     }
     if (damageLayer.current) damageLayer.current.position.set(x.current, y.current, 0.9);
     if (enemyBody.current) {
+      const groundedVisualOffset = storyScaledGroundAnchorOffsetY(spawn.scale ?? 1);
       if (!reducedMotion && now < shakeUntil.current) {
         const duration = Math.max(1, shakeUntil.current - shakeStartedAt.current);
         const progress = THREE.MathUtils.clamp((now - shakeStartedAt.current) / duration, 0, 1);
         const envelope = 1 - progress;
         const wave = Math.sin(progress * Math.PI * 7);
         enemyBody.current.position.x = wave * shakeStrength.current * envelope * shakeDirection.current;
-        enemyBody.current.position.y = Math.abs(wave) * shakeStrength.current * 0.18 * envelope;
+        enemyBody.current.position.y = groundedVisualOffset + Math.abs(wave) * shakeStrength.current * 0.18 * envelope;
         enemyBody.current.rotation.z = wave * 0.065 * envelope;
       } else {
-        enemyBody.current.position.set(0, 0, 0);
+        enemyBody.current.position.set(0, groundedVisualOffset, 0);
         enemyBody.current.rotation.z = 0;
       }
     }
@@ -1710,6 +1711,8 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
 
   const beginWorldTravel = useCallback((target: StoryWorldId) => {
     if (doorTravel || target === activeWorldId) return;
+    setImpactEvent(null);
+    setAttackEvent(null);
     setNearbyPortal(null);
     setSelectedPlayer(null);
     setMapOpen(false);
