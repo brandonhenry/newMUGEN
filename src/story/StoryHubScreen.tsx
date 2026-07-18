@@ -446,11 +446,13 @@ function ModeDoor({ emphasized }: { emphasized: boolean }) {
 
 function BiomeDoor({ door, emphasized }: { door: StoryBiomeDoorFrame; emphasized: boolean }) {
   const texture = useTexture(STORY_BIOME_DOOR_ASSET);
-  const geometry = useMemo(() => atlasGeometry(door.frame, [...STORY_BIOME_DOOR_ATLAS_SIZE], [3.45, 4.6]), [door.frame]);
+  const doorHeight = 5.8;
+  const geometry = useMemo(() => atlasGeometry(door.frame, [...STORY_BIOME_DOOR_ATLAS_SIZE], [4.4, doorHeight]), [door.frame]);
+  const groundAlignedCenterY = 1.2 - (door.visibleBottomInset / door.frame[3]) * doorHeight;
   useMemo(() => configurePixelTexture(texture), [texture]);
   useEffect(() => () => geometry.dispose(), [geometry]);
-  return <mesh position={[0, 0.6, -0.18]} scale={emphasized ? 1.04 : 1} geometry={geometry}>
-    <meshBasicMaterial map={texture} transparent alphaTest={0.02} toneMapped={false} />
+  return <mesh position={[0, groundAlignedCenterY, -0.18]} geometry={geometry}>
+    <meshBasicMaterial map={texture} color={emphasized ? '#ffffff' : '#eef4ff'} transparent alphaTest={0.02} toneMapped={false} />
   </mesh>;
 }
 
@@ -497,7 +499,7 @@ function PortalVisual({ portal, theme, nearby, assigned, reducedMotion }: { port
       <mesh position={[0, 0.04, 0.02]} renderOrder={22}><planeGeometry args={[0.72, 0.48]} /><meshBasicMaterial color={portal.accent} transparent opacity={0.42} depthWrite={false} /></mesh>
     </> : <Storefront destination={hubDestination} size={storefrontSize} emphasized={nearby} />}
     {assigned && <mesh position={[0, -1.08, 0.05]} renderOrder={23}><ringGeometry args={[0.72, 0.9, 24]} /><meshBasicMaterial color="#ffe071" transparent opacity={0.9} depthWrite={false} /></mesh>}
-    <Html center position={[0, portal.size[1] / 2 + 0.52, 0.7]} zIndexRange={[8, 0]} className="story-destination-sign-shell">
+    <Html center position={[0, biomeDoor ? 3.15 : portal.size[1] / 2 + 0.52, 0.7]} zIndexRange={[8, 0]} className="story-destination-sign-shell">
       <div data-testid={`story-destination-${portal.id}`} className={`story-destination-sign ${nearby ? 'is-nearby' : ''} ${assigned ? 'is-assigned' : ''} ${portal.locked ? 'is-locked' : ''}`} style={{ '--story-destination-accent': portal.accent } as CSSProperties}>
         <span aria-hidden="true">{portal.locked ? <LockKeyhole size={16} /> : <DestinationIcon size={16} />}</span>
         <strong>{assigned ? `Go Here · ${portal.label}` : portal.label}</strong>

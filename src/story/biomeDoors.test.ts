@@ -7,6 +7,7 @@ describe('biome door atlas', () => {
     const frames = biomes.map((biome) => storyBiomeDoorFrame(biome)?.frame.join(','));
     expect(frames.every(Boolean)).toBe(true);
     expect(new Set(frames).size).toBe(biomes.length);
+    expect(biomes.every((biome) => (storyBiomeDoorFrame(biome)?.visibleBottomInset ?? -1) >= 0)).toBe(true);
   });
 
   it('uses the current biome for return and depth doors without replacing route or mode doors', () => {
