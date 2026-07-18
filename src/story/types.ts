@@ -395,6 +395,12 @@ export type StoryEnemySpawnDefinition = {
   encounterIndex?: number;
   scale?: number;
   leash?: [number, number];
+  affixes?: StoryEnemyAffix[];
+  healthScale?: number;
+  damageScale?: number;
+  speedScale?: number;
+  attackCooldownScale?: number;
+  boss?: boolean;
 };
 
 export type StoryWorldDistrictDefinition = {
@@ -496,6 +502,120 @@ export type StoryAdventureRunGraph = {
   validationFailures: string[];
   zones: StoryGeneratedDepthZone[];
   links: StoryGeneratedDepthLink[];
+};
+
+export type StoryRoomConnector = 'west' | 'east' | 'up' | 'down';
+export type StoryRoomTemplateKind = 'entrance' | 'exit' | 'straight' | 'rise' | 'drop' | 'junction' | 'vertical' | 'branch' | 'secret' | 'event' | 'arena' | 'boss';
+export type StoryFloorEventKind = 'cursed-relic' | 'stranded-explorer' | 'depth-trader';
+export type StoryEnemyAffix = 'armored' | 'brutal' | 'frenzied' | 'regenerating';
+export type StoryRunBoonId = 'fury' | 'vitality' | 'fleetstep' | 'bulwark' | 'focus' | 'prospector';
+
+export type StoryRoomMutation = {
+  platformHeightJitter: number;
+  platformWidthScale: number;
+  hazardOffset: number;
+  propOffset: number;
+};
+
+export type StoryRoomTemplateDefinition = {
+  id: string;
+  kind: StoryRoomTemplateKind;
+  connectors: StoryRoomConnector[];
+  platformSockets: Array<[number, number, number]>;
+  enemySockets: Array<[number, number]>;
+  hazardSockets: Array<[number, number]>;
+  rewardSockets: Array<[number, number]>;
+  propSockets: Array<[number, number]>;
+  protectedCorridor: [number, number, number, number];
+  mutationBounds: { platformHeight: number; platformWidth: [number, number]; hazardOffset: number; propOffset: number };
+};
+
+export type StoryGeneratedRoom = {
+  id: string;
+  column: number;
+  row: number;
+  bounds: [number, number, number, number];
+  templateId: string;
+  templateKind: StoryRoomTemplateKind;
+  connectors: StoryRoomConnector[];
+  critical: boolean;
+  optional: boolean;
+  hidden: boolean;
+  mutation: StoryRoomMutation;
+  protectedCorridor: [number, number, number, number];
+  platformSockets: Array<[number, number, number]>;
+  enemyLanes: Array<[number, number]>;
+  hazardSockets: Array<[number, number]>;
+  rewardAlcoves: Array<[number, number]>;
+  propSockets: Array<[number, number]>;
+};
+
+export type StoryFloorEvent = {
+  id: string;
+  kind: StoryFloorEventKind;
+  roomId: string;
+  position: [number, number];
+  rewardCoins: number;
+  traderCosts?: { heal: number; consumable: number; reroll: number };
+};
+
+export type StoryFloorPressureState = {
+  elapsedSeconds: number;
+  parTimeSeconds: number;
+  rank: number;
+  hunterCount: number;
+};
+
+export type StoryGeneratedFloor = {
+  version: 3;
+  worldId: Exclude<StoryAdventureWorldId, 'world-route'>;
+  seed: string;
+  floorNumber: number;
+  chapter: number;
+  chapterFloor: 1 | 2 | 3 | 4;
+  boss: boolean;
+  usedFallback: boolean;
+  validationFailures: string[];
+  grid: { columns: 4; rows: 3 };
+  bounds: { minX: number; maxX: number; floorY: number };
+  spawn: [number, number];
+  exit: [number, number];
+  entranceRoomId: string;
+  exitRoomId: string;
+  criticalRoomIds: string[];
+  rooms: StoryGeneratedRoom[];
+  platforms: StoryPlatformDefinition[];
+  hazards: StoryHazardDefinition[];
+  traversal: StoryTraversalPieceDefinition[];
+  encounters: StoryEncounterZoneDefinition[];
+  enemySpawns: StoryEnemySpawnDefinition[];
+  event: StoryFloorEvent | null;
+  parTimeSeconds: number;
+  bossEnemyId?: StoryEnemyId;
+};
+
+export type StoryRunRewardLedger = {
+  xp: number;
+  defeats: number;
+  routeCoins: number;
+  materials: Record<string, number>;
+  consumables: Record<string, number>;
+  challengerIds: StoryEnemyId[];
+  cacheIds: string[];
+};
+
+export type StoryEndlessRunState = {
+  version: 3;
+  worldId: Exclude<StoryAdventureWorldId, 'world-route'>;
+  seed: string;
+  floorNumber: number;
+  startedAt: number;
+  floorStartedAt: number;
+  boons: Partial<Record<StoryRunBoonId, number>>;
+  rerollTokens: number;
+  ledger: StoryRunRewardLedger;
+  resolvedEventIds: string[];
+  bankEventIds: string[];
 };
 
 export type StoryMountDefinition = {

@@ -12,10 +12,11 @@ import { STORY_ADVENTURE_ASSET_PATHS, storyWorldAssetPath } from './adventureAss
 import { emitAdventureAudioEvent } from './adventureAudio';
 import { STORY_HAZARD_SPRITES, storyHazardDealsContactDamage } from './adventureHazards';
 import { STORY_ATTACK_VISUAL_SYNC_DELAY_MS, advanceStoryAttackInputBuffer, adventureAttackHits, canAdventureEnemyDamagePlayer, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureAttackFrameHitbox, getAdventureEnemyStats, getStoryAttackDurationMs, getStoryProjectileSpawnPosition, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, resolveStoryAttackInput, stepAdventureProjectile, storyPlayerProjectileHits, type AdventureDamageFeedback, type StoryBufferedAttackInput } from './adventureCombat';
-import { makeStoryEncounterProgress, recordChallengerDefeat, recordRegularDefeat, rerollStoryRegularSpawns, resetActiveChallenger, storyEncounterMovementLock, type StoryEncounterProgress } from './adventureEncounters';
-import { STORY_ADVENTURE_COMBAT_STAT_KEYS, STORY_ADVENTURE_PARTY_SIZE_CAP, STORY_ADVENTURE_STAT_CAP, acknowledgeAdventurePartyFeatureReveal, addAdventureMaterial, adventureResourceYieldModifiers, allocateAdventureStat, applyAdventureEnemyDefeat, awardMountMastery, beginAdventureVisit, canRespecAdventureStats, claimAdventureCache, collectAdventureRelic, consumeAdventureItem, craftAdventureRecipe, depleteAdventureResourceNode, discoverAdventureLandmark, discoverAdventureSurfaceMap, discoverAdventureVista, discoverAdventureWaystone, equipAdventureArmor, experienceToNextLevel, getAdventureDerivedStats, getAdventurePartySizeProgress, isAdventureResourceNodeAvailable, pinAdventureDaily, readAdventureProgress, respecAdventureStats, restoreAdventureShortcut, unlockAdventureMasteryRecipe, unlockAdventureMount, unlockAdventureSpecialistRecipes, upgradeAdventureWaystone, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
+import { makeStoryEncounterProgress, recordChallengerDefeat, recordFixedChallengerDefeat, recordRegularDefeat, rerollStoryRegularSpawns, resetActiveChallenger, storyEncounterMovementLock, type StoryEncounterProgress } from './adventureEncounters';
+import { STORY_ADVENTURE_COMBAT_STAT_KEYS, STORY_ADVENTURE_PARTY_SIZE_CAP, STORY_ADVENTURE_STAT_CAP, acknowledgeAdventurePartyFeatureReveal, addAdventureMaterial, adventureResourceYieldModifiers, allocateAdventureStat, applyAdventureEnemyDefeat, awardMountMastery, bankAdventureRunLedger, beginAdventureEndlessRun, beginAdventureVisit, canRespecAdventureStats, claimAdventureCache, collectAdventureRelic, consumeAdventureItem, craftAdventureRecipe, depleteAdventureResourceNode, discoverAdventureLandmark, discoverAdventureSurfaceMap, discoverAdventureVista, discoverAdventureWaystone, equipAdventureArmor, experienceToNextLevel, getAdventureDerivedStats, getAdventurePartySizeProgress, isAdventureResourceNodeAvailable, pinAdventureDaily, readAdventureProgress, recordAdventureBestDepth, respecAdventureStats, restoreAdventureShortcut, unlockAdventureEndlessBiome, unlockAdventureMasteryRecipe, unlockAdventureMount, unlockAdventureSpecialistRecipes, upgradeAdventureWaystone, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_REGION_LABELS, STORY_WORLDS, isStoryAdventureRegionId, isStoryAdventureWorldId, isStoryWorldId } from './adventureWorlds';
-import { createAdventureVisitSeed, generateAdventureRunGraph, STORY_BREATH_DRAIN_PER_SECOND, STORY_BREATH_REFILL_PER_SECOND, STORY_MAX_BREATH, STORY_MOUNTS, STORY_WORLD_MOUNT, storyDepthZoneLabel, storyPartyEnemyHealthScale, type StoryPartyAiActor, type StoryPartyInstance, type StoryPartyInvite } from './adventureExploration';
+import { STORY_BREATH_DRAIN_PER_SECOND, STORY_BREATH_REFILL_PER_SECOND, STORY_MAX_BREATH, STORY_MOUNTS, STORY_WORLD_MOUNT, storyPartyEnemyHealthScale, type StoryPartyAiActor, type StoryPartyInstance, type StoryPartyInvite } from './adventureExploration';
+import { createAdventureRunSeed, emptyStoryRunLedger, generateAdventureFloor, storyBoonChoices, storyEndlessHash, storyEndlessPressure, storyEndlessRewardScale } from './adventureEndless';
 import { getStoryEnemyAnimation, getStoryEnemyDefinition, storyEnemyPlaneSize, STORY_CHALLENGER_IDS, STORY_ENEMY_RUNTIME_SCALE, type StoryEnemyAttackDefinition } from './enemyCatalog';
 import { STORY_GROUNDED_ACTOR_CENTER_Y, storyAvatarGroundingOffsetForWorld, storyGroundAnchoredPlaneCenterY, storyScaledGroundAnchorOffsetY } from './actorGrounding';
 import { STORY_CENTRAL_DOOR_SCALE, STORY_MODE_DOOR_DISPLAY_SIZE, storyCentralModeDoorCenterY, storyPortalDoorFrame, type StoryBiomeDoorFrame } from './biomeDoors';
@@ -25,18 +26,18 @@ import { KORE_CENTRAL_HUB } from './hubData';
 import { storyPlatformSurfacePlacement } from './platformGrounding';
 import { getStorySpriteProjectile, STORY_ATTACK_POSES } from './streetAvatarCatalog';
 import { StoryAvatarRig, type StoryAvatarPose } from './StoryAvatarRig';
-import { acceptStoryPartyInvite, createStoryParty, heartbeatStoryParty, inviteToStoryParty, leaveStoryParty, listStoryPartyInvites, transferStoryPartyLeadership, updateStoryPartyRoom, type StoryPartyRegistration } from './storyParty';
+import { acceptStoryPartyInvite, advanceStoryPartyEndlessFloor, bankStoryPartyEndlessChapter, createStoryParty, endStoryPartyEndlessRun, heartbeatStoryParty, inviteToStoryParty, leaveStoryParty, listStoryPartyInvites, resolveStoryPartyEndlessEvent, selectStoryPartyEndlessBoon, startStoryPartyEndlessRun, transferStoryPartyLeadership, updateStoryPartyRoom, type StoryPartyRegistration } from './storyParty';
 import { unseenStoryPartyRewards, type StoryPartyAuthoritativeSnapshot, type StoryPartyRewardEvent } from './storyPartyProtocol';
 import { createStoryPartyTransport, type StoryPartyTransport } from './storyPartyTransport';
 import { createStoryWorldProps } from './worldEnvironments';
 import { createAdventureSurfaceHub, firstStoryAdventureSurfaceMap, getStoryAdventureSurfaceMap } from './adventureSurfaceMaps';
-import { STORY_NPC_SPRITES, STORY_NPC_VISIBLE_WORLD_HEIGHT, storyNpcFootContactSinkY, storyNpcPlaneSize } from './adventureNpcs';
+import { STORY_NPC_SPRITES, STORY_NPC_VISIBLE_WORLD_HEIGHT, storyNpcFootContactSinkY, storyNpcPlaneSize, storyNpcWatchFacing } from './adventureNpcs';
 import { adventureUtcDate, getStoryDailyActivities } from './adventureObjectives';
 import { STORY_ARMOR_SET_BONUSES, STORY_BIOME_IDS, STORY_RECIPE_BY_ID, STORY_RECIPES, STORY_RESOURCES, canCraftRecipe, storyRecipeStationLabel, type StoryBiomeId, type StoryCraftingContext } from './adventureCrafting';
-import { adventureAttackCanHitResource, adventureResourceHitStrength, createDepthResourceNodes, resourceYield } from './adventureResources';
+import { adventureAttackCanHitResource, adventureResourceHitStrength, createEndlessFloorResourceNodes, resourceYield } from './adventureResources';
 import { AdventureStatPointNotification, type AdventureStatPointNotice } from './AdventureStatPointNotification';
 import { getEquippedStoryAvatarSlots, normalizeStoryAvatarRoster, setActiveStoryAvatar } from './profile';
-import type { AdventureMusicContext, AdventureMusicTrackDefinition, HubDestination, StoryAdventureRunGraph, StoryAttackInput, StoryAvatarSet, StoryEnemyDefeatEvent, StoryEnemyId, StoryEnemySpawnDefinition, StoryEnemyTier, StoryHazardDefinition, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryMountDefinition, StoryMountId, StoryNpcDefinition, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StoryResourceNodeDefinition, StorySpriteProjectileDefinition, StoryWorldBackdropLayerDefinition, StoryWorldId, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
+import type { AdventureMusicContext, AdventureMusicTrackDefinition, HubDestination, StoryAttackInput, StoryAvatarSet, StoryEndlessRunState, StoryEnemyDefeatEvent, StoryEnemyId, StoryEnemySpawnDefinition, StoryEnemyTier, StoryGeneratedFloor, StoryHazardDefinition, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryMountDefinition, StoryMountId, StoryNpcDefinition, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StoryResourceNodeDefinition, StoryRunBoonId, StorySpriteProjectileDefinition, StoryWorldBackdropLayerDefinition, StoryWorldId, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
 
 type StoryHubInput = Pick<InputFrame, 'left' | 'right' | 'down' | 'up' | 'jump' | 'jab' | 'kick' | 'heavy' | 'special' | 'block' | 'back' | 'pause'> & { interact: boolean };
 type SetVirtualAction = (player: 1 | 2, action: keyof InputFrame, pressed: boolean) => void;
@@ -49,6 +50,14 @@ const ARCADE_ASSET_ROOT = '/story/hub/arcade-machines';
 const MODE_DOOR_BASELINE_OFFSET_Y = 0.28;
 const NPC_INTERACTION_REFUSAL_UNTIL = new globalThis.Map<string, number>();
 const DOOR_TRAVEL_FRAME_SEQUENCE = [0, 1, 2, 3, 4, 5, 5, 4, 3, 2, 1, 0, 0, 1, 2, 3, 4, 5, 5, 4, 3, 2, 1, 0] as const;
+const STORY_BOON_LABELS: Record<StoryRunBoonId, { label: string; description: string }> = {
+  fury: { label: 'Fury', description: '+12% party attack per stack' },
+  vitality: { label: 'Vitality', description: '+15% maximum health and heal the added capacity' },
+  fleetstep: { label: 'Fleetstep', description: '+6% movement and jump, capped at +50%' },
+  bulwark: { label: 'Bulwark', description: '−7% incoming damage, capped at −55%' },
+  focus: { label: 'Focus', description: '+5 percentage points critical chance, capped at 50%' },
+  prospector: { label: 'Prospector', description: '+20% material yield per stack' }
+};
 
 const DESTINATION_ICONS: Record<StoryPortalDestination, LucideIcon> = {
   central: Map,
@@ -574,7 +583,9 @@ function AdventureNpcVisual({ npc, attackEvent, playerPosition, maxHealth, reduc
   const counterFrames = sprite?.actions.counter.frames ?? idleFrames;
   const paths = [...idleFrames, ...protectFrames, ...counterFrames];
   const textures = useTexture(paths.length > 0 ? paths : ['/story/npcs/characters/mina-quill/idle/01.png']);
+  const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.MeshBasicMaterial>(null);
+  const facing = useRef<-1 | 1>(1);
   const lastAttackId = useRef(0);
   const cooldownUntil = useRef(0);
   const provokedUntil = useRef(0);
@@ -626,6 +637,9 @@ function AdventureNpcVisual({ npc, attackEvent, playerPosition, maxHealth, reduc
     }, repeatedThreat ? (reducedMotion ? Math.min(160, npc.defense.guardMs) : npc.defense.guardMs) : npc.defense.warningMs);
   }, [attackEvent, maxHealth, npc, onPlayerDamage, playerPosition, reducedMotion]);
   useFrame(() => {
+    const nextFacing = storyNpcWatchFacing(npc.position, playerPosition.current, facing.current);
+    if (nextFacing !== facing.current) facing.current = nextFacing;
+    if (meshRef.current) meshRef.current.scale.x = facing.current;
     const frames = phase === 'protect' ? protectFrames : phase === 'counter' ? counterFrames : idleFrames;
     if (!materialRef.current || frames.length === 0) return;
     const duration = phase === 'idle' ? 180 : phase === 'protect' ? 115 : 90;
@@ -635,7 +649,7 @@ function AdventureNpcVisual({ npc, attackEvent, playerPosition, maxHealth, reduc
     if (textureIndex >= 0) materialRef.current.map = textures[textureIndex];
   });
   return <group position={[npc.position[0], npc.position[1], -0.05]}>
-    <mesh position={[0, storyGroundAnchoredPlaneCenterY(planeSize, footAnchorFromBottom) - surfaceInsetY - footContactSinkY, 0]}><planeGeometry args={[planeSize, planeSize]} /><meshBasicMaterial ref={materialRef} map={textures[0]} transparent alphaTest={0.02} depthWrite={false} toneMapped={false} /></mesh>
+    <mesh ref={meshRef} position={[0, storyGroundAnchoredPlaneCenterY(planeSize, footAnchorFromBottom) - surfaceInsetY - footContactSinkY, 0]}><planeGeometry args={[planeSize, planeSize]} /><meshBasicMaterial ref={materialRef} map={textures[0]} transparent alphaTest={0.02} depthWrite={false} toneMapped={false} /></mesh>
     {phase !== 'idle' && <Html center position={[0, STORY_NPC_VISIBLE_WORLD_HEIGHT - STORY_GROUNDED_ACTOR_CENTER_Y + 0.42, 0.6]} className="story-destination-sign-shell"><div className="story-destination-sign is-nearby"><strong>{phase === 'protect' ? npc.warningBark : `${npc.displayName} counters!`}</strong></div></Html>}
   </group>;
 }
@@ -1137,14 +1151,17 @@ function AdventureEnemy({ spawn, level, activePartyMembers, paused, playerPositi
   const projectiles = useRef<AdventureProjectileRuntime[]>(Array.from({ length: 3 }, () => ({ active: false, x: 0, y: 0, velocityX: 0, velocityY: 0, expiresAt: 0, damage: 0, radius: 0.2, color: spawn.accent })));
   const stats = useMemo(() => {
     const base = getAdventureEnemyStats(archetype, level);
+    const armored = spawn.affixes?.includes('armored') ? 1.35 : 1;
+    const brutal = spawn.affixes?.includes('brutal') ? 1.25 : 1;
+    const frenzied = spawn.affixes?.includes('frenzied') ? 1.15 : 1;
     return {
       ...base,
-      maxHealth: Math.round(base.maxHealth * definition.healthMultiplier * storyPartyEnemyHealthScale(activePartyMembers)),
-      damage: Math.round(base.damage * definition.damageMultiplier),
-      speed: base.speed * definition.speedMultiplier,
+      maxHealth: Math.round(base.maxHealth * definition.healthMultiplier * storyPartyEnemyHealthScale(activePartyMembers) * (spawn.healthScale ?? 1) * armored),
+      damage: Math.round(base.damage * definition.damageMultiplier * (spawn.damageScale ?? 1) * brutal),
+      speed: base.speed * definition.speedMultiplier * Math.min(1.25, (spawn.speedScale ?? 1) * frenzied),
       xp: Math.round(base.xp * definition.xpMultiplier)
     };
-  }, [activePartyMembers, archetype, definition, level]);
+  }, [activePartyMembers, archetype, definition, level, spawn.affixes, spawn.damageScale, spawn.healthScale, spawn.speedScale]);
   const x = useRef(spawn.position[0]);
   const y = useRef(spawn.position[1]);
   const facing = useRef<-1 | 1>(-1);
@@ -1158,6 +1175,7 @@ function AdventureEnemy({ spawn, level, activePartyMembers, paused, playerPositi
   const shakeDirection = useRef<-1 | 1>(1);
   const staggerUntil = useRef(0);
   const lastAttackAt = useRef(0);
+  const lastRegenerationAt = useRef(0);
   const attackCursor = useRef(0);
   const activeEnemyAttack = useRef<{ definition: StoryEnemyAttackDefinition; startedAt: number; hit: boolean } | null>(null);
   const animationId = useRef('idle');
@@ -1267,6 +1285,11 @@ function AdventureEnemy({ spawn, level, activePartyMembers, paused, playerPositi
       retireOffense();
       group.current.visible = !defeatReported.current;
       return;
+    }
+    if (spawn.affixes?.includes('regenerating') && health.current > 0 && health.current < stats.maxHealth && now - lastRegenerationAt.current >= 2_000) {
+      lastRegenerationAt.current = now;
+      health.current = Math.min(stats.maxHealth, health.current + Math.max(1, Math.round(stats.maxHealth * 0.01)));
+      setVisual((current) => ({ ...current, health: health.current }));
     }
     const launchedProjectile = playerProjectile.current;
     if (launchedProjectile?.active) {
@@ -1379,7 +1402,8 @@ function AdventureEnemy({ spawn, level, activePartyMembers, paused, playerPositi
       }
     } else {
       const nextAttack = definition.attacks[attackCursor.current % definition.attacks.length];
-      const canAttack = now - lastAttackAt.current >= nextAttack.cooldownMs
+      const scaledCooldown = nextAttack.cooldownMs * Math.max(0.65, (spawn.attackCooldownScale ?? 1) * (spawn.affixes?.includes('frenzied') ? 0.8 : 1));
+      const canAttack = now - lastAttackAt.current >= scaledCooldown
         && Math.abs(playerY - y.current) < (nextAttack.projectile ? 4 : 1.2)
         && distance <= nextAttack.range * (nextAttack.projectile ? 1 : STORY_ENEMY_RUNTIME_SCALE);
       if (canAttack && now >= staggerUntil.current && now >= animationLockedUntil.current) {
@@ -1390,7 +1414,7 @@ function AdventureEnemy({ spawn, level, activePartyMembers, paused, playerPositi
         if (distance < 3.7) move = -direction;
         else if (distance > 6.5 && distance < 10) move = direction;
       } else if (definition.behavior === 'duelist') {
-        if (distance < 1.2 && now - lastAttackAt.current < nextAttack.cooldownMs * 0.55) move = -direction;
+        if (distance < 1.2 && now - lastAttackAt.current < scaledCooldown * 0.55) move = -direction;
         else if (distance < 8) move = direction;
       } else if (definition.behavior === 'ambusher') {
         move = distance < 5.2 ? direction : 0;
@@ -1657,7 +1681,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
       velocityY.current = -2.2;
       jumpBufferedUntil.current = 0;
     } else if (jumpEdge && groundedUntil.current < now && jumpsUsed.current < 2) {
-      velocityY.current = 11.4 * (mounted && mount ? mount.jumpMultiplier * (1 + mountMasteryRank * 0.008) : 1);
+      velocityY.current = 11.4 * derivedStats.jumpMultiplier * (mounted && mount ? mount.jumpMultiplier * (1 + mountMasteryRank * 0.008) : 1);
       jumpsUsed.current = 2;
       groundedPlatform.current = null;
       groundedUntil.current = 0;
@@ -1668,7 +1692,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
 
     const sprinting = horizontal !== 0 && input.block;
     if (!swimming && jumpBufferedUntil.current >= now && groundedUntil.current >= now) {
-      velocityY.current = 7.8 * (mounted && mount ? mount.jumpMultiplier * (1 + mountMasteryRank * 0.008) : 1);
+      velocityY.current = 7.8 * derivedStats.jumpMultiplier * (mounted && mount ? mount.jumpMultiplier * (1 + mountMasteryRank * 0.008) : 1);
       jumpsUsed.current = 1;
       groundedPlatform.current = null;
       groundedUntil.current = 0;
@@ -1877,7 +1901,9 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
       xp
     });
     if (tier === 'challenger') {
-      commitEncounterProgress(recordChallengerDefeat(encounterProgressRef.current));
+      commitEncounterProgress(spawn.boss && spawn.encounterZoneId
+        ? recordFixedChallengerDefeat(encounterProgressRef.current, spawn.encounterZoneId)
+        : recordChallengerDefeat(encounterProgressRef.current));
       return;
     }
     const zone = hub.exploration?.encounters.find((candidate) => candidate.id === spawn.encounterZoneId);
@@ -2038,13 +2064,12 @@ const STORY_ATLAS_HOTSPOTS: Record<typeof STORY_ADVENTURE_REGION_IDS[number], { 
   skyglass: { x: 19, y: 19, hazard: 'Unstable bridges and open sky', feature: 'Floating towers · cloud caves' }
 };
 
-function AdventureRouteMap({ activeWorldId, activeSurfaceMapId, progress, runGraph, discoveredRunZones, currentDepthZoneId, onFastTravel, onPinDaily, onClose }: {
+function AdventureRouteMap({ activeWorldId, activeSurfaceMapId, progress, endlessRun, generatedFloor, onFastTravel, onPinDaily, onClose }: {
   activeWorldId: StoryWorldId;
   activeSurfaceMapId: string | null;
   progress: StoryAdventureProgressV1;
-  runGraph: StoryAdventureRunGraph | null;
-  discoveredRunZones: string[];
-  currentDepthZoneId: string | null;
+  endlessRun: StoryEndlessRunState | null;
+  generatedFloor: StoryGeneratedFloor | null;
   onFastTravel: (waystoneId: string, position: [number, number]) => void;
   onPinDaily: (worldId: typeof STORY_ADVENTURE_REGION_IDS[number], activityId: string) => void;
   onClose: () => void;
@@ -2094,10 +2119,12 @@ function AdventureRouteMap({ activeWorldId, activeSurfaceMapId, progress, runGra
           <div className="story-run-map" aria-label={`${selectedRegion} surface route`}><strong>Surface route</strong><div>{surfaceMaps.map((map) => <span key={map.id} className={`${progress.discoveredSurfaceMaps.includes(map.id) ? 'is-discovered' : ''} ${activeWorldId === selectedRegion && map.id === activeSurfaceMapId ? 'is-current' : ''}`} title={map.name}>{map.order + 1}</span>)}</div><small>{surfaceMaps.map((map) => map.name).join(' → ')}</small></div>
           <div className="story-atlas-dailies"><strong>UTC daily routes</strong>{dailyActivities.map((activity) => { const pinned = progress.pinnedDaily?.date === activity.date && progress.pinnedDaily.activityId === activity.id; return <button key={activity.id} type="button" className={pinned ? 'is-pinned' : ''} onClick={() => onPinDaily(selectedRegion, activity.id)}><Clock3 size={14} /><span><b>{activity.label}</b><small>{activity.description} · {activity.rewardCoins} coins</small></span>{pinned ? 'Pinned' : 'Pin'}</button>; })}</div>
           {selectedRegion === activeWorldId && knownWaystones.length > 0 && <div className="story-atlas-waystones"><strong>Discovered waystones</strong>{knownWaystones.map((waystone) => <button key={waystone.id} type="button" onClick={() => onFastTravel(waystone.id, waystone.position)}><Zap size={14} /> {waystone.label}</button>)}</div>}
-          {runGraph && selectedRegion === activeWorldId && <div className="story-run-map" aria-label="Current shifting-depth run map">
-            <strong>Current depth route</strong>
-            <div>{runGraph.zones.map((zone) => <span key={zone.id} className={`${discoveredRunZones.includes(zone.id) ? 'is-discovered' : ''} ${currentDepthZoneId === zone.id ? 'is-current' : ''} ${zone.hidden ? 'is-hidden' : ''}`} style={{ '--story-zone-depth': zone.depth } as CSSProperties} title={discoveredRunZones.includes(zone.id) ? storyDepthZoneLabel(zone.kind) : 'Unexplored room'}>{discoveredRunZones.includes(zone.id) ? zone.index + 1 : '?'}</span>)}</div>
-            <small>Room fog resets when you leave the biome.</small>
+          {endlessRun && generatedFloor && selectedRegion === activeWorldId && <div className="story-run-map" aria-label="Current endless descent floor map">
+            <strong>Depth {generatedFloor.floorNumber} · Chapter {generatedFloor.chapter}</strong>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gridTemplateRows: 'repeat(3, 1fr)', gap: 4 }}>
+              {generatedFloor.rooms.map((room) => <span key={room.id} className={`${room.critical ? 'is-discovered' : ''} ${room.hidden ? 'is-hidden' : ''}`} style={{ gridColumn: room.column + 1, gridRow: 3 - room.row, '--story-zone-depth': room.row } as CSSProperties} title={room.hidden ? 'Hidden optional room' : room.critical ? 'Guaranteed critical route' : 'Optional room'}>{room.critical ? '◆' : room.hidden ? '?' : '◇'}</span>)}
+            </div>
+            <small>Floor {generatedFloor.chapterFloor}/4 · Best {progress.bestDepthByBiome[selectedRegion] ?? 0} · {Object.values(endlessRun.boons).reduce((sum, count) => sum + (count ?? 0), 0)} boons</small>
           </div>}
         </aside>
       </div>
@@ -2254,79 +2281,82 @@ function devPreviewHub(hub: StoryHubDefinition): StoryHubDefinition {
   return { ...hub, spawn: [THREE.MathUtils.clamp(previewX, hub.bounds.minX + 1, hub.bounds.maxX - 1), hub.spawn[1]] };
 }
 
-function createDepthHub(surface: StoryHubDefinition, graph: StoryAdventureRunGraph | null, zoneId: string | null): StoryHubDefinition {
-  const zone = graph?.zones.find((candidate) => candidate.id === zoneId);
-  if (!zone || !graph || !isStoryAdventureRegionId(surface.id.replace(/^kore-/, ''))) return surface;
-  const width = zone.camera.maxX - zone.camera.minX;
-  const links = graph.links.filter((link) => link.from === zone.id || link.to === zone.id);
-  const sourceEnemies = surface.enemySpawns?.slice(0, zone.kind === 'sanctuary' ? 0 : zone.hidden ? 4 : 3) ?? [];
-  const generatedEnemies = sourceEnemies.map((enemy, index): StoryEnemySpawnDefinition => ({
-    ...enemy,
-    id: `${zone.id}-enemy-${index + 1}`,
-    position: [zone.camera.minX + width * (0.38 + index * 0.18), getStoryEnemyDefinition(enemy.enemyId).archetype === 'flying' ? 3.4 : STORY_GROUNDED_ACTOR_CENTER_Y],
-    patrolRadius: 2.4,
-    encounterZoneId: `${zone.id}-encounter`,
-    encounterIndex: zone.hidden ? 4 : Math.min(4, Math.max(0, zone.depth)),
-    leash: [zone.camera.minX + 4, zone.camera.maxX - 4]
+function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGeneratedFloor | null, exitLocked: boolean, pressureRank: number, pressureHunterAnchor: number | null): StoryHubDefinition {
+  if (!floor) return surface;
+  const pressure = storyEndlessPressure(floor.parTimeSeconds + Math.max(0, pressureRank - 1) * 30, floor.parTimeSeconds);
+  const hazards = floor.hazards.map((hazard) => ({
+    ...hazard,
+    damage: hazard.damage * pressure.hazardScale,
+    knockback: hazard.knockback * pressure.hazardScale,
+    telegraphMs: Math.round(hazard.telegraphMs * pressure.telegraphScale)
   }));
-  const returnPortal: StoryPortalDefinition = {
-    id: 'depth-return-surface', label: 'Return to Surface', subtitle: 'Leave the shifting depths', destination: graph.worldId,
-    position: [zone.camera.minX + 2.4, 1.7], size: [2.8, 3.4], accent: '#ffe071', kind: 'adventure-gate'
-  };
-  const linkPortals = links.map((link, index): StoryPortalDefinition => {
-    const targetId = link.from === zone.id ? link.to : link.from;
-    const target = graph.zones.find((candidate) => candidate.id === targetId)!;
-    return {
-      id: `depth-link:${targetId}`,
-      label: storyDepthZoneLabel(target.kind),
-      subtitle: `${link.traversal.replace('-', ' ')} route · depth ${target.depth}`,
-      destination: graph.worldId,
-      position: [zone.camera.maxX - 2.5 - index * 3.8, 1.7],
-      size: [2.8, 3.4],
-      accent: target.hidden ? '#ff83d1' : target.underwater ? '#2ee6ff' : '#b8a8ff',
-      kind: 'adventure-gate'
-    };
-  });
-  const waterVolumes = zone.underwater ? [{ id: `${zone.id}-water`, bounds: [zone.camera.minX, zone.camera.maxX, zone.camera.minY, zone.camera.maxY] as [number, number, number, number], current: [0.18, 0] as [number, number], airPockets: zone.airPockets }] : [];
-  const environment = createStoryDepthEnvironment(surface.environment, zone);
-  const depthCache = zone.hidden ? { id: `${graph.worldId}-depth-cache-${adventureUtcDate()}`, kind: 'chest' as const, label: 'Daily Depth Cache', subtitle: 'One claim per biome per UTC day', position: [zone.camera.maxX - 7, 1.05] as [number, number], rewardCoins: 75, oneTime: true } : null;
-  const depthCachePortal: StoryPortalDefinition | null = depthCache ? { id: `chest:${depthCache.id}`, label: depthCache.label, subtitle: depthCache.subtitle, destination: graph.worldId, position: depthCache.position, size: [1.8, 2.2], accent: '#ffe071', kind: 'chest' } : null;
-  const sanctuaryPortal: StoryPortalDefinition | null = zone.kind === 'sanctuary' ? { id: `mount-sanctuary:${STORY_WORLD_MOUNT[graph.worldId]}`, label: 'Mount Sanctuary', subtitle: 'Form the biome traversal bond', destination: graph.worldId, position: [0, 1.45], size: [2.4, 2.8], accent: surface.environment?.accent ?? '#ffe071', kind: 'shrine' } : null;
+  const sourceHunter = floor.enemySpawns.find((enemy) => !enemy.boss) ?? floor.enemySpawns[0];
+  const hunters: StoryEnemySpawnDefinition[] = sourceHunter && pressureHunterAnchor !== null ? Array.from({ length: pressure.hunterCount }, (_, index) => ({
+    ...sourceHunter,
+    id: `${floor.worldId}-floor-${floor.floorNumber}-pressure-hunter-${index + 1}`,
+    position: [(pressureHunterAnchor ?? floor.bounds.maxX - 12) + (pressureHunterAnchor !== null && pressureHunterAnchor < 0 ? index * 12 : -index * 12), getStoryEnemyDefinition(sourceHunter.enemyId).archetype === 'flying' ? 3.6 : STORY_GROUNDED_ACTOR_CENTER_Y],
+    encounterZoneId: `${floor.worldId}-floor-${floor.floorNumber}-pressure`,
+    leash: [floor.bounds.minX + 10, floor.bounds.maxX - 5],
+    affixes: Array.from(new Set([...(sourceHunter.affixes ?? []), index % 2 ? 'frenzied' as const : 'brutal' as const]))
+  })) : [];
+  const event = floor.event;
+  const eventInteractable = event ? {
+    id: event.id,
+    kind: event.kind === 'cursed-relic' ? 'relic' as const : event.kind === 'depth-trader' ? 'objective' as const : 'objective' as const,
+    label: event.kind === 'cursed-relic' ? 'Cursed Relic' : event.kind === 'stranded-explorer' ? 'Stranded Explorer' : 'Depth Trader',
+    subtitle: event.kind === 'cursed-relic' ? 'Awaken danger for a doubled cache' : event.kind === 'stranded-explorer' ? 'Guide this explorer to the exit' : 'Spend provisional coins before they are banked',
+    position: event.position,
+    rewardCoins: event.rewardCoins
+  } : null;
+  const eventPortal: StoryPortalDefinition | null = eventInteractable ? {
+    id: `endless-event:${eventInteractable.id}`, label: eventInteractable.label, subtitle: eventInteractable.subtitle, destination: floor.worldId,
+    position: eventInteractable.position, size: [2, 2.4], accent: event?.kind === 'cursed-relic' ? '#ff83d1' : event?.kind === 'depth-trader' ? '#ffe071' : '#52e1a1',
+    kind: event?.kind === 'cursed-relic' ? 'relic' : event?.kind === 'depth-trader' ? 'crafting' : 'npc'
+  } : null;
+  const waterVolumes = hazards.filter((hazard) => hazard.kind === 'drowning').map((hazard) => ({
+    id: `${hazard.id}-water`, bounds: [hazard.bounds[0], hazard.bounds[1], -4, 1.4] as [number, number, number, number], current: [0.2, 0] as [number, number],
+    airPockets: [[hazard.bounds[0] + 1.5, 1.2], [hazard.bounds[1] - 1.5, 1.2]] as Array<[number, number]>
+  }));
+  const propSockets = floor.rooms.flatMap((room) => room.propSockets.map(([x, y]) => ({ room, x: (room.bounds[0] + room.bounds[1]) / 2 + x + room.mutation.propOffset, y })));
+  const generatedProps = createStoryWorldProps(surface.theme ?? 'route', floor.bounds.minX, floor.bounds.maxX).slice(0, propSockets.length).map((prop, index) => ({
+    ...prop,
+    id: `${floor.seed}-socket-prop-${index + 1}`,
+    position: [propSockets[index].x, prop.position[1], prop.position[2]] as [number, number, number]
+  }));
   return {
     ...surface,
-    id: `${surface.id}:${zone.id}`,
-    name: `${surface.name} · ${storyDepthZoneLabel(zone.kind)}`,
-    subtitle: zone.hidden ? 'A hidden branch far below the stable route' : `Generated depth ${zone.depth} · ${zone.traversal.replace('-', ' ')}`,
-    spawn: [zone.camera.minX + 5.5, STORY_GROUNDED_ACTOR_CENTER_Y],
-    checkpoint: [zone.camera.minX + 5.5, STORY_GROUNDED_ACTOR_CENTER_Y],
-    bounds: { minX: zone.camera.minX, maxX: zone.camera.maxX, floorY: zone.underwater ? zone.camera.minY + 1.5 : 0 },
-    platforms: [
-      { id: 'ground', position: [0, zone.underwater ? zone.camera.minY + 1 : -0.5], size: [width + 2, 1] },
-      ...Array.from({ length: 6 }, (_, index) => ({ id: `${zone.id}-platform-${index + 1}`, position: [zone.camera.minX + 8 + index * (width - 16) / 5, 3 + index % 3 * 2.4] as [number, number], size: [5 + index % 2 * 3, 0.42] as [number, number], oneWay: true }))
+    id: `${surface.id}:endless:${floor.floorNumber}`,
+    name: `${surface.name} · Depth ${floor.floorNumber}`,
+    subtitle: floor.boss ? `Chapter ${floor.chapter} challenger` : `Generated floor ${floor.floorNumber} · ${floor.criticalRoomIds.length} critical rooms`,
+    spawn: floor.spawn,
+    checkpoint: floor.spawn,
+    bounds: floor.bounds,
+    platforms: floor.platforms,
+    portals: [
+      { id: 'endless-abandon', label: 'Abandon Descent', subtitle: 'Lose this chapter\'s unbanked haul', destination: floor.worldId, position: [floor.bounds.minX + 2.4, 1.7], size: [2.8, 3.4], accent: '#ff5d69', kind: 'adventure-gate' },
+      { id: `endless-next:${floor.floorNumber + 1}`, label: floor.boss ? 'Claim Chapter Reward' : `Descend to Floor ${floor.floorNumber + 1}`, subtitle: exitLocked ? 'Clear required encounters first' : floor.boss ? 'Bank rewards and choose a boon' : 'Continue deeper', destination: floor.worldId, position: floor.exit, size: [2.8, 3.4], accent: '#b8a8ff', kind: 'adventure-gate', locked: exitLocked },
+      ...(eventPortal ? [eventPortal] : [])
     ],
-    portals: [returnPortal, ...linkPortals, ...(sanctuaryPortal ? [sanctuaryPortal] : []), ...(depthCachePortal ? [depthCachePortal] : [])],
-    environment,
-    props: [
-      ...createStoryWorldProps(surface.theme ?? 'route', zone.camera.minX, zone.camera.maxX),
-      ...(zone.underwater ? [
-        { id: `${zone.id}-bubbles`, asset: 'exploration:underwater/bubbles.png' as const, frame: [0, 0, 92, 40] as [number, number, number, number], atlasSize: [92, 40] as [number, number], position: [zone.camera.minX + width * 0.28, 4, -2] as [number, number, number], size: [4.6, 2] as [number, number], opacity: 0.78 },
-        { id: `${zone.id}-fish`, asset: 'exploration:underwater/fish.png' as const, frame: [0, 0, 128, 32] as [number, number, number, number], atlasSize: [128, 32] as [number, number], position: [zone.camera.minX + width * 0.55, 2.5, -1.8] as [number, number, number], size: [6.4, 1.6] as [number, number], opacity: 0.9 },
-        { id: `${zone.id}-fish-big`, asset: 'exploration:underwater/fish-big.png' as const, frame: [0, 0, 216, 49] as [number, number, number, number], atlasSize: [216, 49] as [number, number], position: [zone.camera.minX + width * 0.74, 6.2, -2.1] as [number, number, number], size: [8.4, 1.9] as [number, number], mirrored: true, opacity: 0.84 }
-      ] : [])
-    ],
-    landmarks: [{ id: `${zone.id}-landmark`, label: storyDepthZoneLabel(zone.kind), subtitle: zone.hidden ? 'Secrets persist beyond the mapped route' : `Depth ${zone.depth}`, position: [0, 7, -1.2], size: [12, 8], color: surface.environment?.accent ?? '#2ee6ff', kind: zone.hidden ? 'secret' : zone.kind === 'sanctuary' ? 'lore' : 'district' }],
-    enemySpawns: generatedEnemies,
-    interactables: depthCache ? [depthCache] : [],
-    resourceNodes: createDepthResourceNodes(graph.worldId, zone),
+    environment: createStoryDepthEnvironment(surface.environment, { kind: floor.boss ? 'crypt' : 'cave', underwater: false }),
+    props: generatedProps,
+    landmarks: floor.rooms.filter((room) => room.optional || room.templateKind === 'boss').map((room) => ({
+      id: `${room.id}-landmark`, label: room.templateKind === 'boss' ? 'Challenger Arena' : room.hidden ? 'Hidden Branch' : 'Optional Route',
+      subtitle: room.hidden ? 'A risky route lies beyond the critical path' : 'Read the room before committing',
+      position: [(room.bounds[0] + room.bounds[1]) / 2, 7 + room.row * 0.4, -1.2] as [number, number, number], size: [12, 8] as [number, number],
+      color: surface.environment?.accent ?? '#2ee6ff', kind: room.hidden ? 'secret' as const : room.templateKind === 'boss' ? 'lore' as const : 'district' as const
+    })),
+    enemySpawns: [...floor.enemySpawns, ...hunters],
+    hazards,
+    traversal: floor.traversal,
+    interactables: eventInteractable ? [eventInteractable] : [],
+    resourceNodes: createEndlessFloorResourceNodes(floor.worldId, floor),
+    musicPhase: floor.boss ? 'elite' : pressure.rank > 0 ? 'tension' : floor.chapterFloor === 3 ? 'mystery' : 'explore',
     exploration: surface.exploration ? {
       ...surface.exploration,
-      safeApproach: [zone.camera.minX, zone.camera.minX + 9],
-      districts: [{ id: `${zone.id}-district`, label: storyDepthZoneLabel(zone.kind), range: [zone.camera.minX, zone.camera.maxX] }],
-      encounters: [{ id: `${zone.id}-encounter`, range: [zone.camera.minX + 10, zone.camera.maxX - 4], maxActive: Math.min(5, generatedEnemies.length) }],
-      entrances: [],
-      waterVolumes,
-      waystones: [],
-      camera: { minY: zone.camera.minY, maxY: zone.camera.maxY }
+      safeApproach: [floor.bounds.minX, floor.bounds.minX + 9],
+      districts: floor.rooms.map((room) => ({ id: room.id, label: room.critical ? 'Critical Route' : room.hidden ? 'Hidden Branch' : 'Optional Route', range: [room.bounds[0], room.bounds[1]] })),
+      encounters: [...floor.encounters, ...(hunters.length > 0 ? [{ id: `${floor.worldId}-floor-${floor.floorNumber}-pressure`, range: [floor.bounds.minX + 10, floor.bounds.maxX - 5] as [number, number], maxActive: Math.min(5, hunters.length), elite: true }] : [])],
+      entrances: [], waterVolumes, waystones: [], camera: { minY: -8, maxY: 20 }
     } : undefined
   };
 }
@@ -2349,13 +2379,19 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const [activeWorldId, setActiveWorldId] = useState<StoryWorldId>(readDevPreviewWorldId);
   const [activeSurfaceMapId, setActiveSurfaceMapId] = useState<string | null>(null);
   const [surfaceEntry, setSurfaceEntry] = useState<'west' | 'east'>('west');
-  const [runGraph, setRunGraph] = useState<StoryAdventureRunGraph | null>(null);
+  const [endlessRun, setEndlessRun] = useState<StoryEndlessRunState | null>(null);
+  const [adventureProgress, setAdventureProgress] = useState(readAdventureProgress);
+  const [floorElapsedSeconds, setFloorElapsedSeconds] = useState(0);
+  const [pressureHunterAnchor, setPressureHunterAnchor] = useState<number | null>(null);
+  const [boonChoices, setBoonChoices] = useState<StoryRunBoonId[] | null>(null);
+  const [boonReroll, setBoonReroll] = useState(0);
+  const [abandonConfirmOpen, setAbandonConfirmOpen] = useState(false);
+  const [activeTraderEventId, setActiveTraderEventId] = useState<string | null>(null);
+  const [pendingEventChoiceId, setPendingEventChoiceId] = useState<string | null>(null);
   const [partyInstance, setPartyInstance] = useState<StoryPartyInstance | null>(null);
   const [partyInvites, setPartyInvites] = useState<StoryPartyInvite[]>([]);
   const [partyPeerId, setPartyPeerId] = useState('');
   const [partyAuthorityLost, setPartyAuthorityLost] = useState(false);
-  const [currentDepthZoneId, setCurrentDepthZoneId] = useState<string | null>(null);
-  const [discoveredRunZones, setDiscoveredRunZones] = useState<string[]>([]);
   const [encounterProgressByHub, setEncounterProgressByHub] = useState<Record<string, StoryEncounterProgress>>({});
   const [visitChallengers, setVisitChallengers] = useState<StoryEnemyId[]>([]);
   const biomeHub = useMemo(() => devPreviewHub(STORY_WORLDS[activeWorldId]), [activeWorldId]);
@@ -2364,9 +2400,23 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     const map = getStoryAdventureSurfaceMap(activeWorldId, activeSurfaceMapId);
     const surface = createAdventureSurfaceHub(biomeHub, map);
     if (surfaceEntry === 'east') surface.spawn = [surface.bounds.maxX - 7, surface.spawn[1]];
-    return surface;
-  }, [activeSurfaceMapId, activeWorldId, biomeHub, surfaceEntry]);
-  const activeHub = useMemo(() => createDepthHub(baseHub, runGraph, currentDepthZoneId), [baseHub, currentDepthZoneId, runGraph]);
+    const shortcutPortal: StoryPortalDefinition[] = map.role === 'arrival' && adventureProgress.restoredShortcuts.includes(`${activeWorldId}-shortcut`) ? [{
+      id: `shortcut-to-mastery:${activeWorldId}`, label: 'Restored Mastery Shortcut', subtitle: 'Return directly to the Endless Descent entrance', destination: activeWorldId,
+      position: [34, 1.7], size: [2.6, 3.2], accent: surface.environment?.accent ?? '#b8a8ff', kind: 'adventure-gate', surfaceMapTarget: `${activeWorldId}-mastery`, surfaceEntry: 'east'
+    }] : [];
+    return {
+      ...surface,
+      portals: [...surface.portals.map((portal) => portal.id.startsWith('endless-entry:')
+        ? { ...portal, locked: !adventureProgress.endlessUnlockedBiomes.includes(activeWorldId) }
+        : portal), ...shortcutPortal]
+    };
+  }, [activeSurfaceMapId, activeWorldId, adventureProgress.endlessUnlockedBiomes, adventureProgress.restoredShortcuts, biomeHub, surfaceEntry]);
+  const generatedFloor = useMemo(() => endlessRun ? generateAdventureFloor(endlessRun.worldId, endlessRun.seed, endlessRun.floorNumber) : null, [endlessRun]);
+  const endlessHubId = generatedFloor ? `${baseHub.id}:endless:${generatedFloor.floorNumber}` : '';
+  const endlessEncounterProgress = endlessHubId ? encounterProgressByHub[endlessHubId] ?? makeStoryEncounterProgress() : makeStoryEncounterProgress();
+  const endlessExitLocked = Boolean(generatedFloor?.encounters.some((encounter) => !endlessEncounterProgress.resolvedZoneIds.includes(encounter.id)));
+  const floorPressure = generatedFloor ? storyEndlessPressure(floorElapsedSeconds, generatedFloor.parTimeSeconds) : null;
+  const activeHub = useMemo(() => createEndlessFloorHub(baseHub, generatedFloor, endlessExitLocked, floorPressure?.rank ?? 0, pressureHunterAnchor), [baseHub, endlessExitLocked, floorPressure?.rank, generatedFloor, pressureHunterAnchor]);
   const [nearbyPortal, setNearbyPortal] = useState<StoryPortalDefinition | null>(null);
   const [pauseOpen, setPauseOpen] = useState(false);
   const [controlsOpen, setControlsOpen] = useState(false);
@@ -2374,8 +2424,22 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const [statsOpen, setStatsOpen] = useState(false);
   const [packOpen, setPackOpen] = useState(false);
   const [craftingContext, setCraftingContext] = useState<StoryCraftingContext>({ kind: 'field' });
-  const [adventureProgress, setAdventureProgress] = useState(readAdventureProgress);
-  const derivedAdventureStats = useMemo(() => getAdventureDerivedStats(adventureProgress), [adventureProgress]);
+  const derivedAdventureStats = useMemo(() => {
+    const base = getAdventureDerivedStats(adventureProgress);
+    if (!endlessRun) return base;
+    const vitality = endlessRun.boons.vitality ?? 0;
+    const fleetstep = endlessRun.boons.fleetstep ?? 0;
+    return {
+      ...base,
+      maxHealth: Math.round(base.maxHealth * (1 + vitality * 0.15)),
+      attackDamage: base.attackDamage * (1 + (endlessRun.boons.fury ?? 0) * 0.12),
+      walkSpeed: base.walkSpeed * Math.min(1.5, 1 + fleetstep * 0.06),
+      sprintSpeed: base.sprintSpeed * Math.min(1.5, 1 + fleetstep * 0.06),
+      jumpMultiplier: Math.min(1.5, 1 + fleetstep * 0.06),
+      damageTakenMultiplier: base.damageTakenMultiplier * Math.max(0.45, 1 - (endlessRun.boons.bulwark ?? 0) * 0.07),
+      criticalChance: Math.min(0.5, base.criticalChance + (endlessRun.boons.focus ?? 0) * 0.05)
+    };
+  }, [adventureProgress, endlessRun]);
   const [playerHealth, setPlayerHealth] = useState(() => getAdventureDerivedStats(readAdventureProgress()).maxHealth);
   const [memberHealth, setMemberHealth] = useState<Record<string, number>>(() => {
     const maxHealth = getAdventureDerivedStats(readAdventureProgress()).maxHealth;
@@ -2519,7 +2583,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   useEffect(() => { adventureProgressRef.current = adventureProgress; }, [adventureProgress]);
   useEffect(() => { activeHubBoundsRef.current = activeHub.bounds; }, [activeHub.bounds]);
   useEffect(() => { partyInstanceRef.current = partyInstance; }, [partyInstance]);
-  useEffect(() => { currentDepthZoneRef.current = currentDepthZoneId; }, [currentDepthZoneId]);
+  useEffect(() => { currentDepthZoneRef.current = endlessRun ? `endless:${endlessRun.floorNumber}` : null; }, [endlessRun]);
   useEffect(() => { memberHealthRef.current = memberHealth; }, [memberHealth]);
   useEffect(() => {
     playerHealthRef.current = Math.min(playerHealthRef.current, derivedAdventureStats.maxHealth);
@@ -2682,34 +2746,33 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   }, [activeHub.id, musicThreatPresent]);
   useEffect(() => {
     if (!onMusicContext || !isStoryAdventureWorldId(activeWorldId)) return undefined;
-    const basePhase = currentDepthZoneId ? (activeHub.musicPhase ?? 'mystery') : (activeHub.musicPhase ?? (activeWorldId === 'world-route' ? 'social' : 'explore'));
+    const basePhase = endlessRun ? (activeHub.musicPhase ?? 'mystery') : (activeHub.musicPhase ?? (activeWorldId === 'world-route' ? 'social' : 'explore'));
     const phase = musicCombatActive ? (musicEncounter?.elite || musicEncounterProgress.activeChallenge ? 'elite' : 'tension') : basePhase;
     onMusicContext({
       worldId: activeWorldId,
       mapId: activeHub.surfaceMapId,
       phase,
       encounterIntensity: musicCombatActive ? (phase === 'elite' ? 1 : 0.55) : 0,
-      depth: Boolean(currentDepthZoneId),
+      depth: Boolean(endlessRun),
       dailyActivity: adventureProgress.pinnedDaily?.date === adventureUtcDate() && adventureProgress.pinnedDaily.worldId === activeWorldId ? getStoryDailyActivities(adventureProgress.pinnedDaily.worldId).find((activity) => activity.id === adventureProgress.pinnedDaily?.activityId)?.kind : undefined
     });
     return () => onMusicContext(null);
-  }, [activeHub.musicPhase, activeHub.surfaceMapId, activeWorldId, adventureProgress.pinnedDaily, currentDepthZoneId, musicCombatActive, musicEncounter?.elite, musicEncounterProgress.activeChallenge, onMusicContext]);
+  }, [activeHub.musicPhase, activeHub.surfaceMapId, activeWorldId, adventureProgress.pinnedDaily, endlessRun, musicCombatActive, musicEncounter?.elite, musicEncounterProgress.activeChallenge, onMusicContext]);
   const activeMountId: StoryMountId | null = isStoryAdventureRegionId(activeWorldId) ? STORY_WORLD_MOUNT[activeWorldId] : null;
   const activeMount = activeMountId ? STORY_MOUNTS[activeMountId] : null;
   const mountUnlocked = Boolean(activeMountId && adventureProgress.mounts[activeMountId]?.unlocked);
   const toggleMount = useCallback(() => {
-    if (!activeMountId || !mountUnlocked || underwater || currentDepthZoneId) return;
+    if (!activeMountId || !mountUnlocked || underwater) return;
     setMounted((current) => !current);
-  }, [activeMountId, currentDepthZoneId, mountUnlocked, underwater]);
+  }, [activeMountId, mountUnlocked, underwater]);
 
   useEffect(() => {
     if (!isStoryAdventureRegionId(activeWorldId)) {
       lastVisitedWorldRef.current = '';
       setEncounterProgressByHub({});
       setVisitChallengers([]);
-      setRunGraph(null);
-      setCurrentDepthZoneId(null);
-      setDiscoveredRunZones([]);
+      setEndlessRun(null);
+      setFloorElapsedSeconds(0);
       setMounted(false);
       setUnderwater(false);
       setBreath(STORY_MAX_BREATH);
@@ -2717,15 +2780,11 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     }
     if (lastVisitedWorldRef.current === activeWorldId) return;
     lastVisitedWorldRef.current = activeWorldId;
-    const next = updateAdventureProgress(beginAdventureVisit(adventureProgressRef.current, activeWorldId));
-    const visit = next.visitCounters[activeWorldId] ?? 1;
-    const seed = createAdventureVisitSeed(activeWorldId, String(visit), localSessionId || 'solo');
-    const graph = generateAdventureRunGraph(activeWorldId, seed, STORY_WORLDS[activeWorldId].exploration!);
+    updateAdventureProgress(beginAdventureVisit(adventureProgressRef.current, activeWorldId));
     setEncounterProgressByHub({});
     setVisitChallengers([]);
-    setRunGraph(graph);
-    setCurrentDepthZoneId(null);
-    setDiscoveredRunZones([graph.entryZoneId]);
+    setEndlessRun(null);
+    setFloorElapsedSeconds(0);
     setBreath(STORY_MAX_BREATH);
   }, [activeWorldId, localSessionId, updateAdventureProgress]);
 
@@ -2768,16 +2827,19 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
         const next = await heartbeatStoryParty(partyInstance.id, localSessionId, activeWorldId, partyRegistration);
         if (!next || cancelled) return;
         setPartyInstance(next);
-        const graph = generateAdventureRunGraph(activeWorldId, next.seed, STORY_WORLDS[activeWorldId].exploration!);
-        setRunGraph(graph);
         if (next.leaderSessionId !== localSessionId) {
           if (next.roomId.startsWith('surface')) {
-            setCurrentDepthZoneId(null);
+            setEndlessRun(null);
             const surfaceMapId = next.roomId.split(':')[1];
             if (surfaceMapId && STORY_WORLDS[activeWorldId].surfaceMaps?.some((map) => map.id === surfaceMapId)) setActiveSurfaceMapId(surfaceMapId);
-          } else setCurrentDepthZoneId(graph.zones.some((zone) => zone.id === next.roomId) ? next.roomId : null);
+          } else if (next.roomId.startsWith('endless:')) {
+            const floorNumber = Math.max(1, Number(next.roomId.split(':')[1]) || 1);
+            setEndlessRun((current) => current?.seed === next.seed && current.floorNumber === floorNumber ? current : {
+              version: 3, worldId: activeWorldId, seed: next.seed, floorNumber, startedAt: Date.now(), floorStartedAt: Date.now(),
+              boons: current?.boons ?? {}, rerollTokens: current?.rerollTokens ?? 0, ledger: current?.ledger ?? emptyStoryRunLedger(), resolvedEventIds: current?.resolvedEventIds ?? [], bankEventIds: current?.bankEventIds ?? []
+            });
+          }
         }
-        setDiscoveredRunZones((current) => Array.from(new Set([graph.entryZoneId, ...current.filter((id) => graph.zones.some((zone) => zone.id === id))])));
       } catch {
         // Keep the last authoritative party snapshot through transient reconnects.
       }
@@ -2789,10 +2851,10 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
 
   useEffect(() => {
     if (!partyInstance || partyInstance.leaderSessionId !== localSessionId) return;
-    const roomId = currentDepthZoneId ?? `surface:${activeSurfaceMapId ?? (isStoryAdventureRegionId(activeWorldId) ? firstStoryAdventureSurfaceMap(activeWorldId).id : 'arrival')}`;
+    const roomId = endlessRun ? `endless:${endlessRun.floorNumber}` : `surface:${activeSurfaceMapId ?? (isStoryAdventureRegionId(activeWorldId) ? firstStoryAdventureSurfaceMap(activeWorldId).id : 'arrival')}`;
     if (partyInstance.roomId === roomId) return;
     void updateStoryPartyRoom(partyInstance, localSessionId, roomId).then((next) => { if (next) setPartyInstance(next); }).catch(() => undefined);
-  }, [activeSurfaceMapId, activeWorldId, currentDepthZoneId, localSessionId, partyInstance]);
+  }, [activeSurfaceMapId, activeWorldId, endlessRun, localSessionId, partyInstance]);
 
   useEffect(() => {
     if (!partyInstance || !localSessionId) {
@@ -2821,6 +2883,22 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       },
       onSnapshot: (snapshot: StoryPartyAuthoritativeSnapshot) => {
         setPartyAuthorityLost(snapshot.rewardsPaused);
+        if (partyInstanceRef.current?.leaderSessionId !== localSessionId && snapshot.runSeed && snapshot.floorNumber > 0) {
+          setFloorElapsedSeconds(snapshot.pressureClockSeconds);
+          setEndlessRun((current) => ({
+            version: 3,
+            worldId: partyInstanceRef.current!.worldId,
+            seed: snapshot.runSeed!,
+            floorNumber: snapshot.floorNumber,
+            startedAt: current?.startedAt ?? Date.now(),
+            floorStartedAt: current?.floorNumber === snapshot.floorNumber ? current.floorStartedAt : Date.now(),
+            boons: snapshot.boonStacks,
+            rerollTokens: current?.rerollTokens ?? 0,
+            ledger: current?.ledger ?? emptyStoryRunLedger(),
+            resolvedEventIds: current?.resolvedEventIds ?? [],
+            bankEventIds: snapshot.ledgerBankEventId ? Array.from(new Set([...(current?.bankEventIds ?? []), snapshot.ledgerBankEventId])) : current?.bankEventIds ?? []
+          }));
+        }
         unseenStoryPartyRewards(snapshot, localSessionId, sharedRewardIdsRef.current).forEach((reward) => sharedRewardHandlerRef.current({ eventId: reward.id, spawnId: reward.spawnId, enemyId: reward.enemyId, tier: reward.tier, xp: reward.xp }));
       },
       onAuthorityLoss: () => setPartyAuthorityLost(true)
@@ -2864,6 +2942,13 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
         sequence: ++partySnapshotSequenceRef.current,
         serverTime: Date.now(),
         roomId: currentDepthZoneRef.current ?? 'surface',
+        runSeed: endlessRun?.seed ?? null,
+        floorNumber: endlessRun?.floorNumber ?? 0,
+        pressureClockSeconds: endlessRun ? floorElapsedSeconds : 0,
+        eventState: generatedFloor?.event ? { ...generatedFloor.event, resolved: endlessRun?.resolvedEventIds.includes(generatedFloor.event.id) ?? false } : null,
+        boonStacks: endlessRun?.boons ?? {},
+        ledgerBankEventId: endlessRun?.bankEventIds[endlessRun.bankEventIds.length - 1] ?? null,
+        endReason: null,
         actors: [
           { id: localSessionId, ownerSessionId: localSessionId, avatarId: profile.activeAvatarId, human: true, x: playerStateRef.current.x, y: playerStateRef.current.y, facing: playerStateRef.current.facing, health: playerHealthRef.current, maxHealth: derivedAdventureStats.maxHealth, ko: playerHealthRef.current <= 0, pose: playerStateRef.current.pose },
           ...partyInstance.aiActors.map((actor, index) => ({ id: actor.id, ownerSessionId: actor.ownerSessionId, avatarId: actor.avatarId, human: false, x: playerStateRef.current.x - 1.4 * (index + 1), y: playerStateRef.current.y, facing: playerStateRef.current.facing, health: actor.health, maxHealth: actor.maxHealth, ko: actor.state === 'ko', pose: 'idle' }))
@@ -2876,7 +2961,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       });
     }, 50);
     return () => window.clearInterval(timer);
-  }, [activeHub.id, derivedAdventureStats.maxHealth, encounterProgressByHub, localSessionId, partyAuthorityLost, partyInstance, profile.activeAvatarId]);
+  }, [activeHub.id, derivedAdventureStats.maxHealth, encounterProgressByHub, endlessRun, floorElapsedSeconds, generatedFloor?.event, localSessionId, partyAuthorityLost, partyInstance, profile.activeAvatarId]);
 
   useEffect(() => {
     if (!partyInstance || partyInstance.leaderSessionId !== localSessionId || partyInstance.aiActors.length === 0 || partyAuthorityLost) return undefined;
@@ -2893,7 +2978,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   }, [controlsOpen, localSessionId, mapOpen, packOpen, partyAuthorityLost, partyInstance, partyUnlockOpen, pauseOpen, statsOpen]);
 
   useEffect(() => {
-    if (!isStoryAdventureRegionId(activeWorldId) || currentDepthZoneId) return;
+    if (!isStoryAdventureRegionId(activeWorldId) || endlessRun) return;
     for (const waystone of baseHub.exploration?.waystones ?? []) {
       if (Math.abs(playerX - waystone.position[0]) <= 2.4 && !adventureProgressRef.current.discoveries.waystones.includes(waystone.id)) {
         updateAdventureProgress(discoverAdventureWaystone(adventureProgressRef.current, waystone.id));
@@ -2911,7 +2996,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     if (sanctuary && Math.abs(playerX - sanctuary.position[0]) <= 2.8 && !adventureProgressRef.current.mounts[sanctuary.mountId]?.unlocked) {
       updateAdventureProgress(unlockAdventureMount(adventureProgressRef.current, sanctuary.mountId));
     }
-  }, [activeWorldId, baseHub.exploration, currentDepthZoneId, playerX, updateAdventureProgress]);
+  }, [activeWorldId, baseHub.exploration, endlessRun, playerX, updateAdventureProgress]);
 
   useEffect(() => {
     if (!mounted || !activeMountId) {
@@ -2992,7 +3077,10 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   }, [activeWorldId, nearbyPortal?.kind, onProfileChange, profile, updateAdventureProgress]);
   const handleAdventureAttack = useCallback((x: number, y: number, facing: -1 | 1, attackInput: StoryAttackInput, durationSeconds: number) => {
     emitAdventureAudioEvent({ kind: 'attack', attackInput });
-    const resolved = resolveAdventurePlayerAttack(adventureProgressRef.current, attackInput);
+    const resolved = resolveAdventurePlayerAttack(adventureProgressRef.current, attackInput, Math.random(), {
+      attackMultiplier: 1 + (endlessRun?.boons.fury ?? 0) * 0.12,
+      criticalBonus: (endlessRun?.boons.focus ?? 0) * 0.05
+    });
     const startedAt = performance.now() + STORY_ATTACK_VISUAL_SYNC_DELAY_MS;
     const projectile = attackInput === 'special' ? getStorySpriteProjectile(profile.avatar.avatarSet) : undefined;
     const projectileEnd = projectile ? projectile.releaseDelayMs + projectile.lifetimeMs : 0;
@@ -3008,7 +3096,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       projectile,
       ...resolved
     });
-  }, [profile.avatar.avatarSet]);
+  }, [endlessRun, profile.avatar.avatarSet]);
   const openAdventurePack = useCallback((context: StoryCraftingContext = { kind: 'field' }) => {
     setCraftingContext(context);
     setMapOpen(false);
@@ -3019,7 +3107,15 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const handleResourceHarvest = useCallback((node: StoryResourceNodeDefinition) => {
     if (!isStoryAdventureRegionId(activeWorldId) || !isAdventureResourceNodeAvailable(adventureProgressRef.current, node, activeWorldId)) return;
     const modifiers = adventureResourceYieldModifiers(adventureProgressRef.current, node);
-    const quantity = resourceYield(node, String(attackEvent?.id ?? Date.now()), modifiers.multiplier) + modifiers.flatBonus;
+    const quantity = resourceYield(node, String(attackEvent?.id ?? Date.now()), modifiers.multiplier * (1 + (endlessRun?.boons.prospector ?? 0) * 0.2)) + modifiers.flatBonus;
+    if (endlessRun) {
+      setEndlessRun((current) => current ? { ...current, ledger: { ...current.ledger, materials: { ...current.ledger.materials, [node.resourceId]: (current.ledger.materials[node.resourceId] ?? 0) + quantity } } } : current);
+      const resource = STORY_RESOURCES.find((candidate) => candidate.id === node.resourceId)!;
+      const notice = { id: Date.now(), label: resource.label, quantity, learned: [] as string[] };
+      setHarvestNotice(notice);
+      window.setTimeout(() => setHarvestNotice((current) => current?.id === notice.id ? null : current), reducedMotion ? 900 : 2_800);
+      return;
+    }
     let next = depleteAdventureResourceNode(adventureProgressRef.current, node, activeWorldId);
     const result = addAdventureMaterial(next, node.resourceId, quantity);
     next = result.progress;
@@ -3030,7 +3126,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     setHarvestNotice(notice);
     window.setTimeout(() => setHarvestNotice((current) => current?.id === notice.id ? null : current), reducedMotion ? 900 : 2_800);
     analyticsRef.current?.('adventure_resource_harvested', { world_id: activeWorldId, resource_id: node.resourceId, rarity: node.rarity, quantity, recipe_unlocks: result.learned.length });
-  }, [activeWorldId, attackEvent?.id, reducedMotion, updateAdventureProgress]);
+  }, [activeWorldId, attackEvent?.id, endlessRun, reducedMotion, updateAdventureProgress]);
   const craftRecipe = useCallback((recipeId: string) => {
     const result = craftAdventureRecipe(adventureProgressRef.current, recipeId, craftingContext);
     if (!result.crafted) return;
@@ -3063,11 +3159,33 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     }
     analyticsRef.current?.('adventure_consumable_used', { recipe_id: recipeId, healing: result.healing });
   }, [profile.activeAvatarId, updateAdventureProgress]);
+  const finishEndlessRun = useCallback((reason: 'wipe' | 'abandon') => {
+    if (!endlessRun || !isStoryAdventureRegionId(activeWorldId)) return;
+    const maxHealth = getAdventureDerivedStats(adventureProgressRef.current).maxHealth;
+    const restored = Object.fromEntries(profile.avatars.map((slot) => [slot.id, maxHealth]));
+    memberHealthRef.current = restored;
+    setMemberHealth(restored);
+    playerHealthRef.current = maxHealth;
+    setPlayerHealth(maxHealth);
+    setEndlessRun(null);
+    setBoonChoices(null);
+    setActiveTraderEventId(null);
+    setPendingEventChoiceId(null);
+    setAbandonConfirmOpen(false);
+    setFloorElapsedSeconds(0);
+    setEncounterProgressByHub({});
+    setActiveSurfaceMapId(`${activeWorldId}-mastery`);
+    setSurfaceEntry('west');
+    setHubReady(false);
+    if (partyInstance?.leaderSessionId === localSessionId) void endStoryPartyEndlessRun(partyInstance, localSessionId, reason).then((next) => { if (next) setPartyInstance(next); }).catch(() => undefined);
+    analyticsRef.current?.('adventure_endless_run_ended', { world_id: activeWorldId, reason, depth: endlessRun.floorNumber });
+  }, [activeWorldId, endlessRun, localSessionId, partyInstance, profile.avatars]);
   const handlePlayerDamage = useCallback((baseDamage: number, sourceX: number) => {
     if (!isStoryAdventureRegionId(activeWorldId) || performance.now() < playerInvulnerableUntilRef.current) return;
     playerInvulnerableUntilRef.current = performance.now() + 650;
     if (mounted) setMounted(false);
-    const resolved = resolveAdventurePlayerDamage(baseDamage, adventureProgressRef.current);
+    const boonGuard = endlessRun ? Math.max(0.45, 1 - (endlessRun.boons.bulwark ?? 0) * 0.07) : 1;
+    const resolved = resolveAdventurePlayerDamage(baseDamage * boonGuard, adventureProgressRef.current);
     emitAdventureAudioEvent({ kind: 'player-hit', damage: resolved.damage });
     const nextHealth = Math.max(0, playerHealthRef.current - resolved.damage);
     if (nextHealth <= 0) {
@@ -3080,6 +3198,18 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       if (nextMember) {
         switchPartyMember(nextMember.id, true);
         setImpactEvent({ id: ++impactSequenceRef.current, sourceX, knockback: resolved.knockback, respawn: [playerX, playerY] });
+        return;
+      }
+      if (endlessRun) {
+        const anotherPartyActorActive = Boolean(partyInstance && (
+          partyInstance.members.some((member) => member.sessionId !== localSessionId && member.state === 'active' && member.health > 0)
+          || partyInstance.aiActors.some((actor) => actor.state === 'active' && actor.health > 0)
+        ));
+        if (!anotherPartyActorActive) {
+          finishEndlessRun('wipe');
+          return;
+        }
+        setImpactEvent({ id: ++impactSequenceRef.current, sourceX, knockback: resolved.knockback, respawn: activeHub.checkpoint ?? activeHub.spawn });
         return;
       }
       const checkpoint = activeHub.checkpoint ?? activeHub.spawn;
@@ -3097,9 +3227,15 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     setMemberHealth(health);
     setPlayerHealth(nextHealth);
     setImpactEvent({ id: ++impactSequenceRef.current, sourceX, knockback: resolved.knockback });
-  }, [activeHub.checkpoint, activeHub.spawn, activeWorldId, mounted, playerX, playerY, profile, switchPartyMember]);
+  }, [activeHub.checkpoint, activeHub.spawn, activeWorldId, endlessRun, finishEndlessRun, localSessionId, mounted, partyInstance, playerX, playerY, profile, switchPartyMember]);
   const handleEnemyDefeated = useCallback((event: StoryEnemyDefeatEvent) => {
     if (partyAuthorityLost || (partyInstance && partyInstance.leaderSessionId !== localSessionId && !sharedRewardIdsRef.current.has(event.eventId))) return;
+    if (endlessRun) {
+      if (rewardEventIdsRef.current.has(event.eventId)) return;
+      rewardEventIdsRef.current.add(event.eventId);
+      setEndlessRun((current) => current ? { ...current, ledger: { ...current.ledger, xp: current.ledger.xp + event.xp, defeats: (current.ledger.defeats ?? 0) + 1, challengerIds: event.tier === 'challenger' ? Array.from(new Set([...current.ledger.challengerIds, event.enemyId])) : current.ledger.challengerIds } } : current);
+      return;
+    }
     const result = applyAdventureEnemyDefeat(adventureProgressRef.current, event, rewardEventIdsRef.current);
     if (result.duplicate) return;
     if (rewardEventIdsRef.current.size > 256) rewardEventIdsRef.current.delete(rewardEventIdsRef.current.values().next().value!);
@@ -3131,7 +3267,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
         levels_gained: result.levelsGained
       });
     }
-  }, [localSessionId, partyAuthorityLost, partyInstance, profile.avatars, updateAdventureProgress]);
+  }, [endlessRun, localSessionId, partyAuthorityLost, partyInstance, profile.avatars, updateAdventureProgress]);
   sharedRewardHandlerRef.current = handleEnemyDefeated;
   const acknowledgePartyUnlock = useCallback((openStats: boolean) => {
     updateAdventureProgress(acknowledgeAdventurePartyFeatureReveal(adventureProgressRef.current));
@@ -3174,7 +3310,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const activatePortal = useCallback((portal: StoryPortalDefinition) => {
     if (portal.kind === 'adventure-gate' || portal.kind === 'mode-door' || portal.kind === 'shrine') emitAdventureAudioEvent({ kind: 'portal' });
     if (portal.surfaceMapTarget && isStoryAdventureRegionId(activeWorldId)) {
-      setCurrentDepthZoneId(null);
+      setEndlessRun(null);
       setSurfaceEntry(portal.surfaceEntry === 'east' ? 'east' : 'west');
       setActiveSurfaceMapId(portal.surfaceMapTarget);
       setNearbyPortal(null);
@@ -3182,6 +3318,64 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       setUnderwater(false);
       setBreath(STORY_MAX_BREATH);
       setHubReady(false);
+      return;
+    }
+    if (portal.id.startsWith('endless-entry:') && isStoryAdventureRegionId(activeWorldId)) {
+      if (partyInstance && partyInstance.leaderSessionId !== localSessionId) { setChallengeNotice({ id: portal.id, text: 'Only the party leader can start an Endless Descent.' }); return; }
+      if (!adventureProgressRef.current.endlessUnlockedBiomes.includes(activeWorldId)) {
+        setChallengeNotice({ id: portal.id, text: 'Clear both mastery encounters before entering the Endless Descent.' });
+        return;
+      }
+      const started = beginAdventureEndlessRun(adventureProgressRef.current, activeWorldId);
+      if (!started.started) return;
+      updateAdventureProgress(started.progress);
+      const seed = createAdventureRunSeed(activeWorldId, started.runSerial, (partyInstance?.id ?? localSessionId) || 'solo');
+      setEndlessRun({ version: 3, worldId: activeWorldId, seed, floorNumber: 1, startedAt: Date.now(), floorStartedAt: Date.now(), boons: {}, rerollTokens: 0, ledger: emptyStoryRunLedger(), resolvedEventIds: [], bankEventIds: [] });
+      if (partyInstance?.leaderSessionId === localSessionId) void startStoryPartyEndlessRun(partyInstance, localSessionId, seed).then((next) => { if (next) setPartyInstance(next); }).catch(() => undefined);
+      setEncounterProgressByHub({});
+      setVisitChallengers([]);
+      setFloorElapsedSeconds(0);
+      setMounted(false);
+      setHubReady(false);
+      return;
+    }
+    if (portal.id === 'endless-abandon') {
+      setAbandonConfirmOpen(true);
+      return;
+    }
+    if (portal.id.startsWith('endless-event:') && endlessRun && generatedFloor?.event) {
+      if (partyInstance && partyInstance.leaderSessionId !== localSessionId) return;
+      const event = generatedFloor.event;
+      if (endlessRun.resolvedEventIds.includes(event.id)) return;
+      if (event.kind === 'depth-trader') { setActiveTraderEventId(event.id); return; }
+      setPendingEventChoiceId(event.id);
+      return;
+    }
+    if (portal.id.startsWith('endless-next:') && endlessRun && generatedFloor) {
+      if (partyInstance && partyInstance.leaderSessionId !== localSessionId) return;
+      if (portal.locked) { setChallengeNotice({ id: portal.id, text: 'Required encounters still block the descent.' }); return; }
+      let nextRun = { ...endlessRun, ledger: { ...endlessRun.ledger, routeCoins: endlessRun.ledger.routeCoins + Math.round(15 * storyEndlessRewardScale(generatedFloor.floorNumber)) } };
+      if (generatedFloor.event?.kind === 'stranded-explorer' && nextRun.resolvedEventIds.includes(generatedFloor.event.id)) {
+        nextRun = { ...nextRun, ledger: { ...nextRun.ledger, routeCoins: nextRun.ledger.routeCoins + generatedFloor.event.rewardCoins } };
+      }
+      updateAdventureProgress(recordAdventureBestDepth(adventureProgressRef.current, endlessRun.worldId, generatedFloor.floorNumber));
+      analyticsRef.current?.('adventure_endless_floor_completed', { world_id: endlessRun.worldId, floor: generatedFloor.floorNumber, chapter: generatedFloor.chapter, boss: generatedFloor.boss, fallback: generatedFloor.usedFallback });
+      if (generatedFloor.boss) {
+        const bankEventId = `${endlessRun.seed}:chapter-bank:${generatedFloor.chapter}`;
+        const banked = bankAdventureRunLedger(adventureProgressRef.current, endlessRun.worldId, nextRun.ledger, bankEventId);
+        updateAdventureProgress(banked.progress);
+        analyticsRef.current?.('adventure_endless_chapter_banked', { world_id: endlessRun.worldId, chapter: generatedFloor.chapter, floor: generatedFloor.floorNumber, daily_bonus: banked.dailyBonus });
+        nextRun = { ...nextRun, ledger: emptyStoryRunLedger(), bankEventIds: [...nextRun.bankEventIds, bankEventId] };
+        setEndlessRun(nextRun);
+        if (partyInstance?.leaderSessionId === localSessionId) void bankStoryPartyEndlessChapter(partyInstance, localSessionId, bankEventId).then((next) => { if (next) setPartyInstance(next); }).catch(() => undefined);
+        setBoonReroll(0);
+        setBoonChoices(storyBoonChoices(nextRun.seed, generatedFloor.floorNumber, nextRun.boons));
+      } else {
+        setEndlessRun({ ...nextRun, floorNumber: nextRun.floorNumber + 1, floorStartedAt: Date.now() });
+        if (partyInstance?.leaderSessionId === localSessionId) void advanceStoryPartyEndlessFloor(partyInstance, localSessionId, nextRun.floorNumber + 1).then((next) => { if (next) setPartyInstance(next); }).catch(() => undefined);
+        setFloorElapsedSeconds(0);
+        setHubReady(false);
+      }
       return;
     }
     if (portal.id.startsWith('npc:')) {
@@ -3231,27 +3425,6 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       }
       return;
     }
-    if (portal.id === 'depth-return-surface') {
-      setCurrentDepthZoneId(null);
-      setUnderwater(false);
-      setBreath(STORY_MAX_BREATH);
-      return;
-    }
-    if (portal.id.startsWith('depth-link:')) {
-      const target = portal.id.slice('depth-link:'.length);
-      if (runGraph?.zones.some((zone) => zone.id === target)) {
-        setCurrentDepthZoneId(target);
-        setDiscoveredRunZones((current) => Array.from(new Set([...current, target])));
-        setMounted(false);
-      }
-      return;
-    }
-    if (portal.id.startsWith('depth-entry:') && runGraph) {
-      setCurrentDepthZoneId(runGraph.entryZoneId);
-      setDiscoveredRunZones((current) => Array.from(new Set([...current, runGraph.entryZoneId])));
-      setMounted(false);
-      return;
-    }
     if (portal.id.startsWith('waystone:')) {
       const waystoneId = portal.id.slice('waystone:'.length);
       const current = adventureProgressRef.current;
@@ -3289,13 +3462,14 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       return;
     }
     if (isHubDestination(portal.destination)) onDestination(portal.destination);
-  }, [activeHub.interactables, activeHub.npcs, activeWorldId, beginWorldTravel, onDestination, openAdventurePack, quickMatch.portalId, quickMatch.status, runGraph, updateAdventureProgress]);
+  }, [activeHub.interactables, activeHub.npcs, activeWorldId, beginWorldTravel, endlessRun, generatedFloor, localSessionId, onDestination, openAdventurePack, partyInstance?.seed, quickMatch.portalId, quickMatch.status, updateAdventureProgress]);
 
   const exitCurrentWorld = useCallback(() => {
+    if (endlessRun) { setAbandonConfirmOpen(true); return; }
     if (activeWorldId === 'central') onExit();
     else if (isStoryAdventureRegionId(activeWorldId)) beginWorldTravel('world-route');
     else beginWorldTravel('central');
-  }, [activeWorldId, beginWorldTravel, onExit]);
+  }, [activeWorldId, beginWorldTravel, endlessRun, onExit]);
 
   const quickMatchPortals = useMemo(() => activeHub.portals.filter((portal) => portal.quickMatch), [activeHub]);
   const quickMatchAvailable = quickMatchPortals.length > 0;
@@ -3519,14 +3693,26 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       setPartyInstance(joined);
       setPartyInvites((current) => current.filter((candidate) => candidate.id !== invite.id));
       if (activeWorldId !== joined.worldId) setActiveWorldId(joined.worldId);
-      const graph = generateAdventureRunGraph(joined.worldId, joined.seed, STORY_WORLDS[joined.worldId].exploration!);
-      setRunGraph(graph);
       if (joined.roomId.startsWith('surface')) {
-        setCurrentDepthZoneId(null);
+        setEndlessRun(null);
         const surfaceMapId = joined.roomId.split(':')[1];
         if (surfaceMapId && STORY_WORLDS[joined.worldId].surfaceMaps?.some((map) => map.id === surfaceMapId)) setActiveSurfaceMapId(surfaceMapId);
-      } else setCurrentDepthZoneId(graph.zones.some((zone) => zone.id === joined.roomId) ? joined.roomId : null);
-      setDiscoveredRunZones([graph.entryZoneId, ...(joined.roomId.startsWith('surface') ? [] : [joined.roomId])]);
+      } else if (joined.roomId.startsWith('endless:')) {
+        const floorNumber = Math.max(1, Number(joined.roomId.split(':')[1]) || 1);
+        setEndlessRun({
+          version: 3,
+          worldId: joined.worldId,
+          seed: joined.seed,
+          floorNumber,
+          startedAt: Date.now(),
+          floorStartedAt: Date.now(),
+          boons: {},
+          ledger: emptyStoryRunLedger(),
+          rerollTokens: 0,
+          resolvedEventIds: [],
+          bankEventIds: []
+        });
+      }
     } catch {
       setPartyInvites((current) => current.filter((candidate) => candidate.id !== invite.id));
       setChallengeNotice({ id: invite.id, text: 'That party invitation expired or the party is full.' });
@@ -3646,6 +3832,130 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     };
   }, [closePause, controlsOpen, mapOpen, openPause, packOpen, pauseOpen, selectedPlayer, statsOpen]);
 
+  useEffect(() => {
+    setFloorElapsedSeconds(0);
+    setPressureHunterAnchor(null);
+  }, [generatedFloor?.seed]);
+
+  useEffect(() => {
+    if (!generatedFloor) return;
+    if (generatedFloor.usedFallback) analyticsRef.current?.('adventure_endless_generation_fallback', { world_id: generatedFloor.worldId, floor: generatedFloor.floorNumber, failures: generatedFloor.validationFailures.join(',') });
+    if (generatedFloor.event) analyticsRef.current?.('adventure_endless_event_choice', { world_id: generatedFloor.worldId, floor: generatedFloor.floorNumber, event: generatedFloor.event.kind });
+  }, [generatedFloor?.floorNumber, generatedFloor?.seed]);
+
+  useEffect(() => {
+    if (!generatedFloor || (partyInstance && partyInstance.leaderSessionId !== localSessionId) || pauseOpen || controlsOpen || mapOpen || statsOpen || packOpen || boonChoices || abandonConfirmOpen || activeTraderEventId || pendingEventChoiceId || doorTravel) return undefined;
+    const timer = window.setInterval(() => setFloorElapsedSeconds((elapsed) => elapsed + 1), 1_000);
+    return () => window.clearInterval(timer);
+  }, [abandonConfirmOpen, activeTraderEventId, boonChoices, controlsOpen, doorTravel, generatedFloor, localSessionId, mapOpen, packOpen, partyInstance, pauseOpen, pendingEventChoiceId, statsOpen]);
+
+  useEffect(() => {
+    if (!generatedFloor || !floorPressure || floorPressure.rank <= 0) return;
+    if (floorPressure.rank <= 2) setPressureHunterAnchor(playerStateRef.current.x >= 0 ? generatedFloor.bounds.minX + 12 : generatedFloor.bounds.maxX - 12);
+    const suffix = floorPressure.rank === 1 ? 'Instability rising—an affixed hunter has entered the floor.' : `Instability rank ${floorPressure.rank}. Hazards are intensifying.`;
+    setChallengeNotice({ id: `${generatedFloor.seed}:pressure:${floorPressure.rank}`, text: suffix });
+    analyticsRef.current?.('adventure_instability_rank', { world_id: generatedFloor.worldId, floor: generatedFloor.floorNumber, rank: floorPressure.rank });
+  }, [floorPressure?.rank, generatedFloor]);
+
+  const selectEndlessBoon = useCallback((boon: StoryRunBoonId) => {
+    if (!endlessRun || !generatedFloor || !boonChoices?.includes(boon)) return;
+    if (partyInstance && partyInstance.leaderSessionId !== localSessionId) return;
+    const previousStack = endlessRun.boons[boon] ?? 0;
+    const boons = { ...endlessRun.boons, [boon]: previousStack + 1 };
+    if (boon === 'vitality') {
+      const baseHealth = getAdventureDerivedStats(adventureProgressRef.current).maxHealth;
+      const added = Math.max(1, Math.round(baseHealth * 0.15));
+      const nextMaximum = Math.round(baseHealth * (1 + (previousStack + 1) * 0.15));
+      const health = Object.fromEntries(Object.entries(memberHealthRef.current).map(([id, value]) => [id, Math.min(nextMaximum, value + added)]));
+      memberHealthRef.current = health;
+      setMemberHealth(health);
+      playerHealthRef.current = health[profile.activeAvatarId] ?? Math.min(nextMaximum, playerHealthRef.current + added);
+      setPlayerHealth(playerHealthRef.current);
+    }
+    setEndlessRun({ ...endlessRun, boons, floorNumber: endlessRun.floorNumber + 1, floorStartedAt: Date.now() });
+    if (partyInstance?.leaderSessionId === localSessionId) {
+      void (async () => {
+        const selected = await selectStoryPartyEndlessBoon(partyInstance, localSessionId, boons as Record<string, number>, endlessRun.rerollTokens);
+        if (!selected) return;
+        const advanced = await advanceStoryPartyEndlessFloor(selected, localSessionId, endlessRun.floorNumber + 1);
+        if (advanced) setPartyInstance(advanced);
+      })().catch(() => undefined);
+    }
+    setBoonChoices(null);
+    setBoonReroll(0);
+    setFloorElapsedSeconds(0);
+    setEncounterProgressByHub({});
+    setVisitChallengers([]);
+    setHubReady(false);
+    analyticsRef.current?.('adventure_boon_selected', { world_id: endlessRun.worldId, floor: generatedFloor.floorNumber, boon, stack: previousStack + 1 });
+  }, [boonChoices, endlessRun, generatedFloor, localSessionId, partyInstance, profile.activeAvatarId]);
+
+  useEffect(() => {
+    if (!boonChoices?.length || (partyInstance && partyInstance.leaderSessionId !== localSessionId)) return undefined;
+    const timer = window.setTimeout(() => selectEndlessBoon(boonChoices[0]), 30_000);
+    return () => window.clearTimeout(timer);
+  }, [boonChoices, localSessionId, partyInstance, selectEndlessBoon]);
+
+  const rerollEndlessBoons = useCallback(() => {
+    if (!endlessRun || !generatedFloor || endlessRun.rerollTokens <= 0 || (partyInstance && partyInstance.leaderSessionId !== localSessionId)) return;
+    const reroll = boonReroll + 1;
+    setBoonReroll(reroll);
+    setEndlessRun({ ...endlessRun, rerollTokens: endlessRun.rerollTokens - 1 });
+    setBoonChoices(storyBoonChoices(endlessRun.seed, generatedFloor.floorNumber, endlessRun.boons, reroll));
+  }, [boonReroll, endlessRun, generatedFloor, localSessionId, partyInstance]);
+
+  const buyFromDepthTrader = useCallback((purchase: 'heal' | 'consumable' | 'reroll') => {
+    if (!endlessRun || !generatedFloor || !activeTraderEventId) return;
+    if (partyInstance && partyInstance.leaderSessionId !== localSessionId) return;
+    const cost = generatedFloor.event?.traderCosts?.[purchase] ?? Math.ceil(({ heal: 25, consumable: 40, reroll: 60 } as const)[purchase] * storyEndlessRewardScale(generatedFloor.floorNumber));
+    if (endlessRun.ledger.routeCoins < cost) return;
+    let ledger = { ...endlessRun.ledger, routeCoins: endlessRun.ledger.routeCoins - cost };
+    let rerollTokens = endlessRun.rerollTokens;
+    if (purchase === 'heal') {
+      const maximum = derivedAdventureStats.maxHealth;
+      const amount = Math.max(1, Math.ceil(maximum * 0.25));
+      const health = Object.fromEntries(Object.entries(memberHealthRef.current).map(([id, value]) => [id, Math.min(maximum, value + amount)]));
+      memberHealthRef.current = health;
+      setMemberHealth(health);
+      playerHealthRef.current = health[profile.activeAvatarId] ?? playerHealthRef.current;
+      setPlayerHealth(playerHealthRef.current);
+    } else if (purchase === 'reroll') rerollTokens += 1;
+    else {
+      const consumables = STORY_RECIPES.filter((candidate) => candidate.kind === 'consumable');
+      const recipe = consumables[storyEndlessHash(`${endlessRun.seed}:trader-consumable:${generatedFloor.floorNumber}`) % Math.max(1, consumables.length)];
+      if (recipe) ledger = { ...ledger, consumables: { ...ledger.consumables, [recipe.id]: (ledger.consumables[recipe.id] ?? 0) + 1 } };
+    }
+    setEndlessRun({ ...endlessRun, ledger, rerollTokens, resolvedEventIds: Array.from(new Set([...endlessRun.resolvedEventIds, activeTraderEventId])) });
+    if (partyInstance?.leaderSessionId === localSessionId) void resolveStoryPartyEndlessEvent(partyInstance, localSessionId, activeTraderEventId, { id: activeTraderEventId, kind: 'depth-trader', status: 'succeeded' }).then((next) => { if (next) setPartyInstance(next); }).catch(() => undefined);
+    analyticsRef.current?.('adventure_endless_event_result', { world_id: endlessRun.worldId, floor: generatedFloor.floorNumber, event: 'depth-trader', result: purchase, cost });
+  }, [activeTraderEventId, derivedAdventureStats.maxHealth, endlessRun, generatedFloor, localSessionId, partyInstance, profile.activeAvatarId]);
+
+  const leaveDepthTrader = useCallback(() => {
+    if (!activeTraderEventId || !endlessRun || !generatedFloor) { setActiveTraderEventId(null); return; }
+    if (!endlessRun.resolvedEventIds.includes(activeTraderEventId)) {
+      setEndlessRun({ ...endlessRun, resolvedEventIds: [...endlessRun.resolvedEventIds, activeTraderEventId] });
+      analyticsRef.current?.('adventure_endless_event_result', { world_id: endlessRun.worldId, floor: generatedFloor.floorNumber, event: 'depth-trader', result: 'refused' });
+      if (partyInstance?.leaderSessionId === localSessionId) void resolveStoryPartyEndlessEvent(partyInstance, localSessionId, activeTraderEventId, { id: activeTraderEventId, kind: 'depth-trader', status: 'refused' }).then((next) => { if (next) setPartyInstance(next); }).catch(() => undefined);
+    }
+    setActiveTraderEventId(null);
+  }, [activeTraderEventId, endlessRun, generatedFloor, localSessionId, partyInstance]);
+
+  const resolveEndlessEventChoice = useCallback((accepted: boolean) => {
+    if (!endlessRun || !generatedFloor?.event || generatedFloor.event.id !== pendingEventChoiceId) return;
+    const event = generatedFloor.event;
+    setPendingEventChoiceId(null);
+    setEndlessRun((current) => current ? {
+      ...current,
+      resolvedEventIds: Array.from(new Set([...current.resolvedEventIds, event.id])),
+      rerollTokens: current.rerollTokens + (accepted && event.kind === 'stranded-explorer' ? 1 : 0),
+      ledger: accepted && event.kind === 'cursed-relic' ? { ...current.ledger, routeCoins: current.ledger.routeCoins + event.rewardCoins * 2, cacheIds: [...current.ledger.cacheIds, event.id] } : current.ledger
+    } : current);
+    if (accepted && event.kind === 'cursed-relic') setFloorElapsedSeconds((elapsed) => Math.max(elapsed, generatedFloor.parTimeSeconds));
+    if (accepted) setChallengeNotice({ id: event.id, text: event.kind === 'cursed-relic' ? 'The relic awakens the floor. Reach the exit to keep its cache.' : 'The explorer will follow your route to the exit.' });
+    analyticsRef.current?.('adventure_endless_event_result', { world_id: endlessRun.worldId, floor: generatedFloor.floorNumber, event: event.kind, result: accepted ? 'accepted' : 'refused' });
+    if (partyInstance?.leaderSessionId === localSessionId) void resolveStoryPartyEndlessEvent(partyInstance, localSessionId, event.id, { id: event.id, kind: event.kind, status: accepted ? 'active' : 'refused' }).then((next) => { if (next) setPartyInstance(next); }).catch(() => undefined);
+  }, [endlessRun, generatedFloor, localSessionId, partyInstance, pendingEventChoiceId]);
+
   const visibleRemotePlayers = remotePlayers.filter((presence) => (presence.worldId ?? 'central') === activeWorldId);
   const playerCount = onlineEnabled ? visibleRemotePlayers.length + 1 : 1;
   const statusLabel = connectionStatus === 'online' ? 'Live' : connectionStatus === 'local' ? 'Local Link' : connectionStatus === 'reconnecting' ? 'Reconnecting' : connectionStatus === 'connecting' ? 'Connecting' : 'Offline';
@@ -3654,7 +3964,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
 
   const assignedPortal = quickMatch.status === 'assigned' ? activeHub.portals.find((portal) => portal.id === quickMatch.portalId) : null;
   const doorFrame = doorTravel ? DOOR_TRAVEL_FRAME_SEQUENCE[doorTravel.step] ?? 0 : 0;
-  const encounterSeed = partyInstance?.seed ?? runGraph?.seed ?? `${activeWorldId}:central`;
+  const encounterSeed = partyInstance?.seed ?? generatedFloor?.seed ?? `${activeWorldId}:central`;
   const activeEncounterProgress = useMemo(
     () => ({ ...(encounterProgressByHub[activeHub.id] ?? makeStoryEncounterProgress()), selectedChallengers: visitChallengers }),
     [activeHub.id, encounterProgressByHub, visitChallengers]
@@ -3687,25 +3997,41 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     }
     setVisitChallengers(next.selectedChallengers);
     setEncounterProgressByHub((current) => ({ ...current, [activeHub.id]: next }));
-  }, [activeHub.id, derivedAdventureStats.maxHealth, encounterProgressByHub]);
+    if (!endlessRun && isStoryAdventureRegionId(activeWorldId) && activeSurfaceMapId === `${activeWorldId}-mastery`) {
+      const required = activeHub.exploration?.encounters ?? [];
+      if (required.length > 0 && required.every((encounter) => next.resolvedZoneIds.includes(encounter.id))) {
+        const before = adventureProgressRef.current;
+        const unlocked = unlockAdventureEndlessBiome(before, activeWorldId);
+        if (!before.endlessUnlockedBiomes.includes(activeWorldId)) {
+          updateAdventureProgress(unlocked);
+          setChallengeNotice({ id: `endless-unlocked:${activeWorldId}`, text: 'Endless Descent unlocked. The mastery gate is now active.' });
+          analyticsRef.current?.('adventure_endless_unlocked', { world_id: activeWorldId });
+        }
+      }
+    }
+  }, [activeHub, activeSurfaceMapId, activeWorldId, derivedAdventureStats.maxHealth, encounterProgressByHub, endlessRun, updateAdventureProgress]);
   const handleChallengerStarted = useCallback(() => setMounted(false), []);
   const fastTravelToWaystone = useCallback((waystoneId: string, position: [number, number]) => {
     if (!adventureProgressRef.current.discoveries.waystones.includes(waystoneId) || !isStoryAdventureRegionId(activeWorldId)) return;
-    setCurrentDepthZoneId(null);
+    if (endlessRun) return;
     setMounted(false);
     setUnderwater(false);
     setBreath(STORY_MAX_BREATH);
     setMapOpen(false);
     setImpactEvent({ id: ++impactSequenceRef.current, sourceX: position[0], knockback: 0, respawn: position });
-  }, [activeWorldId]);
+  }, [activeWorldId, endlessRun]);
   const pinDailyActivity = useCallback((worldId: typeof STORY_ADVENTURE_REGION_IDS[number], activityId: string) => {
     updateAdventureProgress(pinAdventureDaily(adventureProgressRef.current, adventureUtcDate(), worldId, activityId));
   }, [updateAdventureProgress]);
   const effectiveAttackEvent = partyAttackEvent && (!attackEvent || partyAttackEvent.id > attackEvent.id) ? partyAttackEvent : attackEvent;
+  const traderScale = generatedFloor ? storyEndlessRewardScale(generatedFloor.floorNumber) : 1;
+  const traderCosts = generatedFloor?.event?.traderCosts ?? { heal: Math.ceil(25 * traderScale), consumable: Math.ceil(40 * traderScale), reroll: Math.ceil(60 * traderScale) };
+  const traderConsumables = STORY_RECIPES.filter((candidate) => candidate.kind === 'consumable');
+  const traderConsumable = endlessRun && generatedFloor ? traderConsumables[storyEndlessHash(`${endlessRun.seed}:trader-consumable:${generatedFloor.floorNumber}`) % Math.max(1, traderConsumables.length)] : null;
 
   return <div className="story-hub-screen" data-testid="story-hub-screen" data-world={activeWorldId} data-hub-ready={hubReady ? 'true' : 'false'} data-controls-open={controlsOpen ? 'true' : 'false'} data-map-open={mapOpen ? 'true' : 'false'} data-stats-open={statsOpen ? 'true' : 'false'} data-quick-match={quickMatchAvailable ? 'true' : 'false'} data-player-x={playerX.toFixed(2)} data-player-y={playerY.toFixed(2)} data-player-pose={playerPose} data-player-projectile-asset={effectiveAttackEvent?.projectile?.frames[0]?.path ?? ''} data-player-projectile-launch={effectiveAttackEvent?.projectile?.launchPoint.join(',') ?? ''} data-player-health={playerHealth} data-player-level={adventureProgress.level} data-party-id={partyInstance?.id ?? ''} data-nearby-portal={nearbyPortal?.id ?? ''} data-online={onlineEnabled ? 'true' : 'false'} data-connection-status={connectionStatus} data-player-count={playerCount}>
     <div className="story-hub-canvas-shell">
-      <HubCanvas key={activeHub.id} hub={activeHub} profile={profile} reducedMotion={reducedMotion} readInput={readInput} disabled={pauseOpen || controlsOpen || mapOpen || statsOpen || packOpen || partyUnlockOpen || Boolean(selectedPlayer) || Boolean(incomingChallenge) || Boolean(doorTravel)} avatarVisible={!doorTravel || doorTravel.step < 4 || doorTravel.step >= 18} quickMatchAvailable={quickMatchAvailable} assignedPortalId={quickMatch.portalId} nearbyPortal={nearbyPortal} remotePlayers={visibleRemotePlayers} selectedPlayerSessionId={selectedPlayer?.sessionId} progress={adventureProgress} activePartyMembers={partyInstance ? partyInstance.members.length + partyInstance.aiActors.length : 1} partyAiActors={partyInstance?.aiActors ?? []} mounted={mounted} mount={activeMount} attackEvent={effectiveAttackEvent} impactEvent={impactEvent} encounterSeed={encounterSeed} initialEncounterProgress={activeEncounterProgress} onEncounterProgressChange={handleEncounterProgressChange} onChallengerStarted={handleChallengerStarted} onAttack={handleAdventureAttack} onPlayerDamage={handlePlayerDamage} onEnemyDefeated={handleEnemyDefeated} onResourceHarvest={handleResourceHarvest} onQuickMatch={startQuickMatch} onSelectPlayer={selectRemotePlayer} onNearbyPortal={setNearbyPortal} onActivatePortal={activatePortal} onWaterState={handleWaterState} onExit={exitCurrentWorld} onPause={openPause} onStateSample={handlePlayerState} onReady={handleHubReady} />
+      <HubCanvas key={activeHub.id} hub={activeHub} profile={profile} reducedMotion={reducedMotion} readInput={readInput} disabled={pauseOpen || controlsOpen || mapOpen || statsOpen || packOpen || partyUnlockOpen || Boolean(selectedPlayer) || Boolean(incomingChallenge) || Boolean(doorTravel) || Boolean(boonChoices) || abandonConfirmOpen || Boolean(activeTraderEventId) || Boolean(pendingEventChoiceId)} avatarVisible={!doorTravel || doorTravel.step < 4 || doorTravel.step >= 18} quickMatchAvailable={quickMatchAvailable} assignedPortalId={quickMatch.portalId} nearbyPortal={nearbyPortal} remotePlayers={visibleRemotePlayers} selectedPlayerSessionId={selectedPlayer?.sessionId} progress={adventureProgress} activePartyMembers={partyInstance ? partyInstance.members.length + partyInstance.aiActors.length : 1} partyAiActors={partyInstance?.aiActors ?? []} mounted={mounted} mount={activeMount} attackEvent={effectiveAttackEvent} impactEvent={impactEvent} encounterSeed={encounterSeed} initialEncounterProgress={activeEncounterProgress} onEncounterProgressChange={handleEncounterProgressChange} onChallengerStarted={handleChallengerStarted} onAttack={handleAdventureAttack} onPlayerDamage={handlePlayerDamage} onEnemyDefeated={handleEnemyDefeated} onResourceHarvest={handleResourceHarvest} onQuickMatch={startQuickMatch} onSelectPlayer={selectRemotePlayer} onNearbyPortal={setNearbyPortal} onActivatePortal={activatePortal} onWaterState={handleWaterState} onExit={exitCurrentWorld} onPause={openPause} onStateSample={handlePlayerState} onReady={handleHubReady} />
     </div>
 
     <header className="story-hub-header story-enter-1">
@@ -3736,6 +4062,10 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     </header>
 
     {activeHub.adventure && <AdventureHud progress={adventureProgress} profile={profile} onlineParty={partyInstance} localSessionId={localSessionId} health={playerHealth} healthByAvatar={memberHealth} maxHealth={derivedAdventureStats.maxHealth} breath={breath} underwater={underwater} mount={activeMount} mounted={mounted} mountUnlocked={mountUnlocked} onMemberSelect={switchPartyMember} onMount={toggleMount} onMap={() => { setStatsOpen(false); setPackOpen(false); setMapOpen(true); }} onStats={() => { setMapOpen(false); setPackOpen(false); setStatsOpen(true); }} onPack={() => openAdventurePack()} />}
+    {endlessRun && generatedFloor && floorPressure && <aside className="story-harvest-toast" style={{ top: '8.2rem', bottom: 'auto' }} role="status" data-testid="story-endless-status">
+      <Clock3 size={18} />
+      <span><strong>Floor {generatedFloor.floorNumber} · Chapter {generatedFloor.chapter}</strong><small>{Math.floor(floorElapsedSeconds / 60)}:{String(floorElapsedSeconds % 60).padStart(2, '0')} / {Math.floor(generatedFloor.parTimeSeconds / 60)}:{String(generatedFloor.parTimeSeconds % 60).padStart(2, '0')} · Instability {floorPressure.rank} · {endlessRun.ledger.routeCoins} provisional coins</small></span>
+    </aside>}
     {statPointNotice && !statsOpen && <AdventureStatPointNotification key={statPointNotice.id} notice={statPointNotice} reducedMotion={reducedMotion} onUpgrade={() => { setStatPointNotice(null); setMapOpen(false); setStatsOpen(true); }} onDismiss={() => setStatPointNotice(null)} />}
     {partyUnlockOpen && <PartySizeUnlockReveal progress={adventureProgress} reducedMotion={reducedMotion} onOpenStats={() => acknowledgePartyUnlock(true)} onContinue={() => acknowledgePartyUnlock(false)} />}
 
@@ -3936,7 +4266,53 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       </section>
     </div>}
 
-    {mapOpen && <AdventureRouteMap activeWorldId={activeWorldId} activeSurfaceMapId={activeSurfaceMapId} progress={adventureProgress} runGraph={runGraph} discoveredRunZones={discoveredRunZones} currentDepthZoneId={currentDepthZoneId} onFastTravel={fastTravelToWaystone} onPinDaily={pinDailyActivity} onClose={() => setMapOpen(false)} />}
+    {pendingEventChoiceId && generatedFloor?.event && <div className="story-gate-overlay story-hub-pause-overlay" role="presentation">
+      <section className="story-gate-dialog story-hub-pause-dialog" role="dialog" aria-modal="true" aria-labelledby="story-endless-event-title">
+        <div className="story-gate-lock">{generatedFloor.event.kind === 'cursed-relic' ? <Sparkles size={30} /> : <ContactRound size={30} />}</div>
+        <span>Optional authored situation</span>
+        <h2 id="story-endless-event-title">{generatedFloor.event.kind === 'cursed-relic' ? 'Claim the Cursed Relic?' : 'Escort the Stranded Explorer?'}</h2>
+        <p>{generatedFloor.event.kind === 'cursed-relic' ? 'Claiming it immediately raises instability and summons an affixed elite. Reach the exit to retain a doubled cache.' : `Guide the explorer to the exit for ${generatedFloor.event.rewardCoins} provisional coins and one boon-reroll token. Failure does not end the run.`}</p>
+        <button type="button" className="story-primary-button" autoFocus onClick={() => resolveEndlessEventChoice(true)}><CheckCircle2 size={18} /> Accept the risk</button>
+        <button type="button" className="story-pause-edit" onClick={() => resolveEndlessEventChoice(false)}><XCircle size={18} /> Refuse and continue</button>
+      </section>
+    </div>}
+
+    {boonChoices && endlessRun && <div className="story-gate-overlay story-hub-pause-overlay" role="presentation">
+      <section className="story-gate-dialog story-hub-pause-dialog" role="dialog" aria-modal="true" aria-labelledby="story-endless-boon-title">
+        <div className="story-gate-lock"><Sparkles size={30} /></div>
+        <span>Chapter banked</span>
+        <h2 id="story-endless-boon-title">Choose a party boon</h2>
+        <p>{partyInstance && partyInstance.leaderSessionId !== localSessionId ? 'Waiting for the party leader to choose.' : 'The selection applies to the entire party. The first option is chosen automatically after 30 seconds.'}</p>
+        {boonChoices.map((boon) => <button key={boon} type="button" className="story-pause-edit" disabled={Boolean(partyInstance && partyInstance.leaderSessionId !== localSessionId)} onClick={() => selectEndlessBoon(boon)}><Sparkles size={18} /><span><strong>{STORY_BOON_LABELS[boon].label}</strong><small>{STORY_BOON_LABELS[boon].description} · Current stacks {endlessRun.boons[boon] ?? 0}</small></span></button>)}
+        <button type="button" className="story-pause-edit" disabled={endlessRun.rerollTokens <= 0 || Boolean(partyInstance && partyInstance.leaderSessionId !== localSessionId)} onClick={rerollEndlessBoons}><RotateCcw size={18} /> Reroll all three ({endlessRun.rerollTokens})</button>
+      </section>
+    </div>}
+
+    {abandonConfirmOpen && endlessRun && <div className="story-gate-overlay story-hub-pause-overlay" role="presentation">
+      <section className="story-gate-dialog story-hub-pause-dialog" role="dialog" aria-modal="true" aria-labelledby="story-endless-abandon-title">
+        <div className="story-gate-lock"><LogOut size={30} /></div>
+        <span>Unbanked chapter</span>
+        <h2 id="story-endless-abandon-title">Abandon this descent?</h2>
+        <p>The current chapter's {endlessRun.ledger.xp} XP, {endlessRun.ledger.routeCoins} coins, materials, caches, and challenger credit will be lost. Best depth and previously banked chapters remain.</p>
+        <button type="button" className="story-pause-exit" onClick={() => finishEndlessRun('abandon')}><LogOut size={18} /> Abandon run</button>
+        <button type="button" className="story-primary-button" autoFocus onClick={() => setAbandonConfirmOpen(false)}><Play size={18} /> Continue descent</button>
+      </section>
+    </div>}
+
+    {activeTraderEventId && endlessRun && generatedFloor?.event?.kind === 'depth-trader' && <div className="story-gate-overlay story-hub-pause-overlay" role="presentation">
+      <section className="story-gate-dialog story-hub-pause-dialog" role="dialog" aria-modal="true" aria-labelledby="story-depth-trader-title">
+        <div className="story-gate-lock"><Handshake size={30} /></div>
+        <span>{endlessRun.ledger.routeCoins} provisional coins</span>
+        <h2 id="story-depth-trader-title">Depth Trader</h2>
+        <p>Purchases are seeded for this floor and remain provisional until the chapter boss is cleared.</p>
+        <button type="button" className="story-pause-edit" disabled={endlessRun.ledger.routeCoins < traderCosts.heal} onClick={() => buyFromDepthTrader('heal')}><Heart size={18} /> Heal the party 25% · {traderCosts.heal}</button>
+        <button type="button" className="story-pause-edit" disabled={endlessRun.ledger.routeCoins < traderCosts.consumable} onClick={() => buyFromDepthTrader('consumable')}><Beaker size={18} /> {traderConsumable?.label ?? 'Crafted consumable'} · {traderCosts.consumable}</button>
+        <button type="button" className="story-pause-edit" disabled={endlessRun.ledger.routeCoins < traderCosts.reroll} onClick={() => buyFromDepthTrader('reroll')}><RotateCcw size={18} /> Boon reroll token · {traderCosts.reroll}</button>
+        <button type="button" className="story-primary-button" onClick={leaveDepthTrader}>Leave safely</button>
+      </section>
+    </div>}
+
+    {mapOpen && <AdventureRouteMap activeWorldId={activeWorldId} activeSurfaceMapId={activeSurfaceMapId} progress={adventureProgress} endlessRun={endlessRun} generatedFloor={generatedFloor} onFastTravel={fastTravelToWaystone} onPinDaily={pinDailyActivity} onClose={() => setMapOpen(false)} />}
     {statsOpen && <AdventureStatsPanel progress={adventureProgress} canRespec={canRespecAdventureStats(activeWorldId, nearbyPortal?.kind)} onAllocate={allocateStat} onManageParty={() => onDestination('avatarStudio')} onRespec={respecStats} onClose={() => setStatsOpen(false)} />}
     {packOpen && <AdventurePackPanel progress={adventureProgress} context={craftingContext} onCraft={craftRecipe} onEquip={equipArmor} onUse={useConsumable} onClose={() => setPackOpen(false)} />}
     {harvestNotice && <aside className="story-harvest-toast" role="status" data-testid="story-harvest-toast"><Gem size={18} /><span><strong>+{harvestNotice.quantity} {harvestNotice.label}</strong>{harvestNotice.learned.length > 0 && <small>{harvestNotice.learned.length} new {harvestNotice.learned.length === 1 ? 'recipe' : 'recipes'} discovered</small>}</span></aside>}

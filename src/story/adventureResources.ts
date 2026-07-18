@@ -1,5 +1,5 @@
 import { STORY_BIOME_RESOURCE_IDS, STORY_RESOURCE_BY_ID, type StoryBiomeId } from './adventureCrafting';
-import type { StoryAdventureMapRole, StoryAttackInput, StoryGeneratedDepthZone, StoryHazardDefinition, StoryNpcDefinition, StoryPortalDefinition, StoryResourceNodeDefinition } from './types';
+import type { StoryAdventureMapRole, StoryAttackInput, StoryGeneratedDepthZone, StoryGeneratedFloor, StoryHazardDefinition, StoryNpcDefinition, StoryPortalDefinition, StoryResourceNodeDefinition } from './types';
 
 function hash(value: string) {
   let result = 2166136261;
@@ -106,6 +106,23 @@ export function createDepthResourceNodes(biomeId: StoryBiomeId, zone: StoryGener
     const resourceId = legendary ? local[3] : index % 4 === 0 ? 'fieldstone' : local[Math.min(2, (index + zone.depth) % 3)];
     const x = zone.camera.minX + 7 + (width - 14) * ((index + 0.5) / count) + (unit(`${zone.id}:${index}`) - 0.5) * 1.5;
     return makeNode(`${zone.id}-resource-${index + 1}`, resourceId, x, major, local[2]);
+  });
+}
+
+export function createEndlessFloorResourceNodes(biomeId: StoryBiomeId, floor: StoryGeneratedFloor) {
+  const local = STORY_BIOME_RESOURCE_IDS[biomeId];
+  const rewardRooms = floor.rooms.filter((room) => room.optional && room.column > 0 || room.critical && room.column > 0 && room.column < 3);
+  const count = Math.min(12, 5 + rewardRooms.length + floor.chapterFloor);
+  return Array.from({ length: count }, (_, index) => {
+    const room = rewardRooms[index % Math.max(1, rewardRooms.length)] ?? floor.rooms[0];
+    const legendary = floor.boss && index === count - 1;
+    const major = room.optional || index >= count - 3;
+    const resourceId = legendary ? local[3] : index % 5 === 0 ? 'fieldstone' : local[Math.min(2, (index + floor.floorNumber) % 3)];
+    const roomCenter = (room.bounds[0] + room.bounds[1]) / 2;
+    const alcove = room.rewardAlcoves[index % Math.max(1, room.rewardAlcoves.length)] ?? [0, 1.05];
+    const baseX = roomCenter + alcove[0];
+    const x = Math.max(floor.bounds.minX + 8, Math.min(floor.bounds.maxX - 8, baseX + (unit(`${floor.seed}:${floor.floorNumber}:${index}`) - 0.5) * 2));
+    return makeNode(`${room.id}-resource-${index + 1}`, resourceId, x, major, local[2]);
   });
 }
 

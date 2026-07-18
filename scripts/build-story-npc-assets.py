@@ -142,7 +142,12 @@ def upper_character_runs(sheet: Image.Image, row: int) -> list[tuple[int, int]]:
 def walk_centers(sheet: Image.Image) -> list[float]:
     runs = alpha_runs(sheet, 2, character_band=True)
     if len(runs) < 8:
-        raise RuntimeError(f"Walk row has only {len(runs)} character groups")
+        if not runs:
+            raise RuntimeError(f"Walk row has only {len(runs)} character groups")
+        # Large carried props can bridge two adjacent poses into one alpha run.
+        # Generated sheets use eight evenly spaced walk cells, with a small
+        # rightward inset that keeps the first pose's forward prop intact.
+        return [sheet.width * (index + 0.65) / 8 for index in range(8)]
     if len(runs) > 8:
         runs = sorted(sorted(runs, key=lambda run: run[1] - run[0], reverse=True)[:8])
     return [(left + right) / 2 for left, right in runs]
@@ -175,6 +180,11 @@ def action_centers(sheet: Image.Image, row: int, count: int, walking: list[float
         # A generated counter may intentionally provide 6–8 frames. Preserve
         # every detected complete body and let the build loop hold the final
         # coherent pose for any requested padding frames.
+        return [(left + right) / 2 for left, right in runs]
+    if source_kind == "imagegen" and len(runs) >= 2:
+        # A generated band may contain fewer distinct poses than the runtime
+        # contract. The build loop deliberately holds the last reviewed pose;
+        # never extrapolate crops beyond the 1536px source canvas.
         return [(left + right) / 2 for left, right in runs]
     if len(runs) >= 2:
         centers = [(left + right) / 2 for left, right in runs]

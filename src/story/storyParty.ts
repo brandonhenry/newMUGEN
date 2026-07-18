@@ -2,7 +2,7 @@ import { sanitizeStoryPartyInstance, sanitizeStoryPartyInvite, type StoryPartyIn
 import type { StoryAdventureWorldId, StoryAvatarSet } from './types';
 
 const ENDPOINT = '/.netlify/functions/story-adventure-party';
-const ACTIVE_PARTY_KEY = 'kore.story.party.active.v2';
+const ACTIVE_PARTY_KEY = 'kore.story.party.active.v3';
 
 export type StoryPartyRegistration = {
   peerId: string;
@@ -16,7 +16,7 @@ export type StoryPartyRegistration = {
   state?: 'active' | 'ko';
 };
 
-type PartyAction = 'create' | 'invite' | 'invite-join' | 'invitations' | 'heartbeat' | 'room' | 'transfer' | 'leave';
+type PartyAction = 'create' | 'invite' | 'invite-join' | 'invitations' | 'heartbeat' | 'room' | 'transfer' | 'leave' | 'run-start' | 'floor-advance' | 'event' | 'boon' | 'bank' | 'run-end';
 
 async function requestParty(action: PartyAction, payload: Record<string, unknown>) {
   const response = await fetch(ENDPOINT, {
@@ -72,6 +72,18 @@ export async function updateStoryPartyRoom(party: StoryPartyInstance, sessionId:
   const result = await requestParty('room', { sessionId, worldId: party.worldId, partyId: party.id, roomId });
   return rememberParty(result.party);
 }
+
+async function updateStoryPartyRun(party: StoryPartyInstance, sessionId: string, action: Extract<PartyAction, 'run-start' | 'floor-advance' | 'event' | 'boon' | 'bank' | 'run-end'>, payload: Record<string, unknown>) {
+  const result = await requestParty(action, { sessionId, worldId: party.worldId, partyId: party.id, ...payload });
+  return rememberParty(result.party);
+}
+
+export const startStoryPartyEndlessRun = (party: StoryPartyInstance, sessionId: string, seed: string) => updateStoryPartyRun(party, sessionId, 'run-start', { seed });
+export const advanceStoryPartyEndlessFloor = (party: StoryPartyInstance, sessionId: string, floorNumber: number, pressureClockSeconds = 0) => updateStoryPartyRun(party, sessionId, 'floor-advance', { floorNumber, pressureClockSeconds });
+export const resolveStoryPartyEndlessEvent = (party: StoryPartyInstance, sessionId: string, resolutionId: string, eventState: unknown) => updateStoryPartyRun(party, sessionId, 'event', { resolutionId, eventState });
+export const selectStoryPartyEndlessBoon = (party: StoryPartyInstance, sessionId: string, boonStacks: Record<string, number>, rerollTokens: number) => updateStoryPartyRun(party, sessionId, 'boon', { boonStacks, rerollTokens });
+export const bankStoryPartyEndlessChapter = (party: StoryPartyInstance, sessionId: string, bankEventId: string) => updateStoryPartyRun(party, sessionId, 'bank', { bankEventId });
+export const endStoryPartyEndlessRun = (party: StoryPartyInstance, sessionId: string, endReason: 'wipe' | 'abandon' | 'all-left') => updateStoryPartyRun(party, sessionId, 'run-end', { endReason });
 
 export async function transferStoryPartyLeadership(party: StoryPartyInstance, sessionId: string, targetSessionId: string) {
   const result = await requestParty('transfer', { sessionId, worldId: party.worldId, partyId: party.id, targetSessionId });

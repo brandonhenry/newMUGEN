@@ -100,6 +100,15 @@ export function recordChallengerDefeat(progress: StoryEncounterProgress): StoryE
   };
 }
 
+export function recordFixedChallengerDefeat(progress: StoryEncounterProgress, zoneId: string): StoryEncounterProgress {
+  return {
+    ...progress,
+    defeatedRegularIds: progress.defeatedRegularIds,
+    resolvedZoneIds: Array.from(new Set([...progress.resolvedZoneIds, zoneId])),
+    activeChallenge: progress.activeChallenge?.zoneId === zoneId ? null : progress.activeChallenge
+  };
+}
+
 export function resetActiveChallenger(progress: StoryEncounterProgress): StoryEncounterProgress {
   return progress.activeChallenge
     ? { ...progress, activeChallenge: { ...progress.activeChallenge, reset: progress.activeChallenge.reset + 1 } }

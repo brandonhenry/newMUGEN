@@ -1,6 +1,6 @@
-import type { StoryAttackInput, StoryEnemyId } from './types';
+import type { StoryAttackInput, StoryEnemyId, StoryRunBoonId } from './types';
 
-export const STORY_PARTY_PROTOCOL_VERSION = 2 as const;
+export const STORY_PARTY_PROTOCOL_VERSION = 3 as const;
 
 export type StoryPartyCombatIntent = {
   version: typeof STORY_PARTY_PROTOCOL_VERSION;
@@ -32,6 +32,13 @@ export type StoryPartyAuthoritativeSnapshot = {
   sequence: number;
   serverTime: number;
   roomId: string;
+  runSeed: string | null;
+  floorNumber: number;
+  pressureClockSeconds: number;
+  eventState: unknown;
+  boonStacks: Partial<Record<StoryRunBoonId, number>>;
+  ledgerBankEventId: string | null;
+  endReason: string | null;
   actors: StoryPartyActorSnapshot[];
   enemies: StoryPartyEnemySnapshot[];
   projectiles: StoryPartyProjectileSnapshot[];
@@ -97,6 +104,13 @@ export function sanitizeStoryPartySnapshot(value: unknown, options: { partyId: s
     sequence,
     serverTime: Math.max(0, Math.round(finite(record.serverTime, Date.now()))),
     roomId: cleanId(record.roomId) || 'surface',
+    runSeed: cleanId(record.runSeed, 220) || null,
+    floorNumber: Math.max(0, Math.min(Number.MAX_SAFE_INTEGER, Math.floor(finite(record.floorNumber)))),
+    pressureClockSeconds: Math.max(0, finite(record.pressureClockSeconds)),
+    eventState: record.eventState ?? null,
+    boonStacks: record.boonStacks && typeof record.boonStacks === 'object' ? record.boonStacks : {},
+    ledgerBankEventId: cleanId(record.ledgerBankEventId, 160) || null,
+    endReason: cleanId(record.endReason, 40) || null,
     actors: Array.isArray(record.actors) ? record.actors.flatMap((actor) => sanitizeActor(actor) ?? []).slice(0, 5) : [],
     enemies: Array.isArray(record.enemies) ? record.enemies.flatMap((enemy) => {
       if (!enemy || typeof enemy !== 'object') return [];

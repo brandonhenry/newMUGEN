@@ -5,7 +5,7 @@ export const STORY_PARTY_RECONNECT_TTL_MS = 30 * 60 * 1000;
 export const STORY_PARTY_ACTIVE_TTL_MS = 12_000;
 export const STORY_PARTY_INVITE_TTL_MS = 30_000;
 export const STORY_PARTY_MAX_MEMBERS = 5;
-export const STORY_DEPTH_GENERATION_VERSION = 2;
+export const STORY_DEPTH_GENERATION_VERSION = 3;
 const WORLD_IDS = new Set(['greenhollow', 'thornwood', 'ironroot', 'bonevault', 'emberdeep', 'frostpeak', 'sunscar', 'skyglass']);
 
 function clean(value, length = 120) {
@@ -73,7 +73,7 @@ export function refreshStoryPartyActors(party) {
 }
 
 export function normalizeStoryParty(value, now = Date.now()) {
-  if (!value || value.version !== 2) return null;
+  if (!value || value.version !== 3) return null;
   const id = clean(value.id);
   const worldId = clean(value.worldId);
   if (!id || !WORLD_IDS.has(worldId)) return null;
@@ -85,10 +85,10 @@ export function normalizeStoryParty(value, now = Date.now()) {
   const leaderSessionId = members.some((entry) => entry.sessionId === requestedLeader) ? requestedLeader : active[0]?.sessionId || members[0]?.sessionId || '';
   const updatedAt = Math.max(0, Math.round(Number(value.updatedAt) || now));
   const party = {
-    version: 2,
+    version: 3,
     id,
     worldId,
-    seed: clean(value.seed, 220) || `kore-depth-v${STORY_DEPTH_GENERATION_VERSION}:${worldId}:${id}`,
+    seed: clean(value.seed, 220) || `kore-endless-v${STORY_DEPTH_GENERATION_VERSION}:${worldId}:${id}`,
     generationVersion: STORY_DEPTH_GENERATION_VERSION,
     leaderSessionId,
     leaderCapacity: clampCapacity(members.find((entry) => entry.sessionId === leaderSessionId)?.capacity),
@@ -96,6 +96,7 @@ export function normalizeStoryParty(value, now = Date.now()) {
     aiActors: Array.isArray(value.aiActors) ? value.aiActors : [],
     invites: Array.isArray(value.invites) ? value.invites.map((entry) => invite(entry, now)).filter(Boolean) : [],
     roomId: clean(value.roomId, 160) || 'surface',
+    endless: value.endless && typeof value.endless === 'object' ? value.endless : null,
     protocolSequence: Math.max(0, Math.round(Number(value.protocolSequence) || 0)),
     updatedAt,
     expiresAt: Math.max(updatedAt + STORY_PARTY_RECONNECT_TTL_MS, Math.round(Number(value.expiresAt) || 0))

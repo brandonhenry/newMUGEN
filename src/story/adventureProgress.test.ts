@@ -10,6 +10,8 @@ import {
   awardRouteCoins,
   awardMountMastery,
   awardAdventureExperience,
+  bankAdventureRunLedger,
+  beginAdventureEndlessRun,
   beginAdventureVisit,
   claimAdventureCache,
   claimAdventureDaily,
@@ -26,9 +28,11 @@ import {
   restoreAdventureShortcut,
   respecAdventureStats,
   sanitizeAdventureProgress,
+  unlockAdventureEndlessBiome,
   unlockAdventureMount,
   writeAdventureProgress
 } from './adventureProgress';
+import { emptyStoryRunLedger } from './adventureEndless';
 
 describe('story adventure progression', () => {
   beforeEach(() => window.localStorage.clear());
@@ -47,14 +51,14 @@ describe('story adventure progression', () => {
     expect(sanitized.unspentPoints).toBe(0);
     expect(sanitized.xp).toBeLessThan(experienceToNextLevel(3));
     expect(sanitized.lifetimeDefeats).toBe(0);
-    expect(sanitized.version).toBe(4);
+    expect(sanitized.version).toBe(5);
     expect(sanitized.stats.partySize).toBe(1);
     expect(sanitized.discoveries.biomes).toEqual([]);
   });
 
   it('migrates V1 fields and persists discovery and mount mastery', () => {
     const migrated = sanitizeAdventureProgress({ version: 1, level: 8, xp: 12, stats: { power: 3 }, lifetimeDefeats: 4 });
-    expect(migrated).toMatchObject({ version: 4, level: 8, xp: 12, lifetimeDefeats: 4, defeatedChallengerIds: [], partyFeatureRevealSeen: false });
+    expect(migrated).toMatchObject({ version: 5, level: 8, xp: 12, lifetimeDefeats: 4, defeatedChallengerIds: [], partyFeatureRevealSeen: false });
     const visiting = beginAdventureVisit(migrated, 'greenhollow');
     expect(visiting.discoveries.biomes).toContain('greenhollow');
     expect(visiting.visitCounters.greenhollow).toBe(1);
@@ -66,6 +70,25 @@ describe('story adventure progression', () => {
     const ranked = awardMountMastery(unlocked, 'verdant-stag', 20_000);
     expect(ranked.mounts['verdant-stag']?.masteryRank).toBe(10);
     expect(ranked.mounts['verdant-stag']?.variants).toEqual([4, 7, 10]);
+  });
+
+  it('migrates v4 endless unlocks and banks chapter rewards idempotently', () => {
+    const migrated = sanitizeAdventureProgress({ version: 4, discoveredSurfaceMaps: ['greenhollow-mastery'], routeCoins: 10 });
+    expect(migrated.version).toBe(5);
+    expect(migrated.endlessUnlockedBiomes).toContain('greenhollow');
+    const unlocked = unlockAdventureEndlessBiome(migrated, 'thornwood');
+    const firstRun = beginAdventureEndlessRun(unlocked, 'thornwood');
+    const secondRun = beginAdventureEndlessRun(firstRun.progress, 'thornwood');
+    expect([firstRun.runSerial, secondRun.runSerial]).toEqual([1, 2]);
+    const ledger = { ...emptyStoryRunLedger(), xp: 25, routeCoins: 40, materials: { fieldstone: 3 }, cacheIds: ['chapter-cache'] };
+    const firstBank = bankAdventureRunLedger(secondRun.progress, 'thornwood', ledger, 'bank:thornwood:1', Date.UTC(2026, 6, 18));
+    const repeated = bankAdventureRunLedger(firstBank.progress, 'thornwood', ledger, 'bank:thornwood:1', Date.UTC(2026, 6, 18));
+    expect(firstBank.banked).toBe(true);
+    expect(firstBank.dailyBonus).toBe(true);
+    expect(repeated.banked).toBe(false);
+    expect(repeated.progress.routeCoins).toBe(firstBank.progress.routeCoins);
+    expect(firstBank.progress.inventory.materials.fieldstone).toBe(3);
+    expect(firstBank.progress.endlessBossesDefeated).toBe(1);
   });
 
   it('caps coins and makes caches, relics, dailies, and restoration one-time', () => {

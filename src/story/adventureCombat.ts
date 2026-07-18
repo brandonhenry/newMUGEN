@@ -137,16 +137,17 @@ export function getAdventureEnemyStats(archetype: StoryEnemyArchetype, level: nu
 export function resolveAdventurePlayerAttack(
   progress: StoryAdventureProgressV1,
   inputOrRoll: StoryAttackInput | number = 'jab',
-  roll = Math.random()
+  roll = Math.random(),
+  modifiers: { attackMultiplier?: number; criticalBonus?: number } = {}
 ) {
   const attackInput = typeof inputOrRoll === 'number' ? 'jab' : inputOrRoll;
   const criticalRoll = typeof inputOrRoll === 'number' ? inputOrRoll : roll;
   const profile = STORY_ATTACK_PROFILES[attackInput];
   const current = sanitizeAdventureProgress(progress);
   const derived = getAdventureDerivedStats(current);
-  const critical = Math.max(0, Math.min(0.999999, criticalRoll)) < derived.criticalChance;
+  const critical = Math.max(0, Math.min(0.999999, criticalRoll)) < Math.min(0.5, derived.criticalChance + (modifiers.criticalBonus ?? 0));
   return {
-    damage: Math.max(1, Math.round(derived.attackDamage * profile.damageMultiplier * (critical ? derived.criticalMultiplier : 1))),
+    damage: Math.max(1, Math.round(derived.attackDamage * (modifiers.attackMultiplier ?? 1) * profile.damageMultiplier * (critical ? derived.criticalMultiplier : 1))),
     critical,
     knockbackMultiplier: profile.knockbackMultiplier
   };

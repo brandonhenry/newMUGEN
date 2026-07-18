@@ -184,8 +184,10 @@ function createMap(biome: BiomeId, role: StoryAdventureMapRole): StoryAdventureM
   if (role === 'arrival') portals.push({ id: `${biome}-return-route`, label: 'Central Route', subtitle: 'Return to the crossroads', destination: 'world-route' as const, position: [-53, 1.7] as [number, number], size: [2.6, 3.2] as [number, number], accent: '#ffe071', kind: 'adventure-gate' as const });
   if (order > 0) portals.push(transitionPortal(biome, ROLE_ORDER[order - 1], 'west', BIOMES[biome].maps[ROLE_ORDER[order - 1]].name));
   if (order < ROLE_ORDER.length - 1) portals.push(transitionPortal(biome, ROLE_ORDER[order + 1], 'east', BIOMES[biome].maps[ROLE_ORDER[order + 1]].name));
-  if (role === 'field-b') portals.push({ id: `depth-entry:${biome}-depth`, label: 'Shifting Depths', subtitle: 'Enter the authored underground route', destination: biome, position: [4, 1.45] as [number, number], size: [2.3, 2.8] as [number, number], accent: '#b8a8ff', kind: 'adventure-gate' as const });
-  if (role === 'mastery') portals.push({ id: `mount-sanctuary:${STORY_WORLD_MOUNT[biome]}`, label: `${STORY_WORLD_MOUNT[biome].replace(/-/g, ' ')} Sanctuary`, subtitle: 'Complete the route and earn its traversal bond', destination: biome, position: [-24, 1.45], size: [2.4, 2.8], accent: spec.accent, kind: 'shrine' });
+  if (role === 'mastery') {
+    portals.push({ id: `mount-sanctuary:${STORY_WORLD_MOUNT[biome]}`, label: `${STORY_WORLD_MOUNT[biome].replace(/-/g, ' ')} Sanctuary`, subtitle: 'Complete the route and earn its traversal bond', destination: biome, position: [-24, 1.45], size: [2.4, 2.8], accent: spec.accent, kind: 'shrine' });
+    portals.push({ id: `endless-entry:${biome}`, label: 'Endless Descent', subtitle: 'Clear both mastery encounters to begin an endless run', destination: biome, position: [24, 1.7], size: [2.8, 3.4], accent: '#b8a8ff', kind: 'adventure-gate' });
+  }
   const mapInteractables = interactables(biome, role);
   const npcs = storyNpcsForMap(id);
   for (const entry of mapInteractables) portals.push({ id: `${entry.kind}:${entry.id}`, label: entry.label, subtitle: entry.subtitle, destination: biome, position: entry.position, size: [1.8, 2.2], accent: entry.kind === 'relic' ? '#ffe071' : spec.accent, kind: entry.kind === 'waystone' ? 'checkpoint' : entry.kind === 'restoration' ? 'restoration' : entry.kind as 'chest' | 'relic' });
@@ -247,7 +249,7 @@ export function createAdventureSurfaceHub(base: StoryHubDefinition, map: StoryAd
       safeApproach: map.role === 'arrival' ? [-56, 56] : [-56, -44],
       districts: [{ id: map.id, label: map.name, range: [-56, 56], safe: map.role === 'arrival' }],
       encounters: map.encounters,
-      entrances: map.role === 'field-b' ? exploration.entrances.slice(0, 1) : [],
+      entrances: map.role === 'mastery' ? exploration.entrances.slice(0, 1) : [],
       waystones: map.role === 'arrival' ? [{ id: `${map.biomeId}-waystone-arrival`, label: 'Arrival Waystone', position: [-34, STORY_GROUNDED_ACTOR_CENTER_Y] }] : [],
       waterVolumes: map.hazards.some((hazard) => hazard.kind === 'drowning') ? [{ id: `${map.id}-water`, bounds: [-22, 22, -4, 1.4], current: [0.2, 0], airPockets: [[-16, 1.2], [16, 1.2]] }] : []
     } : undefined

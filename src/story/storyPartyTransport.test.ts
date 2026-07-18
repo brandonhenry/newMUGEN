@@ -44,7 +44,7 @@ import { createStoryPartyTransport } from './storyPartyTransport';
 
 function party(): StoryPartyInstance {
   const member = (sessionId: string, peerId: string, joinedAt: number) => ({ sessionId, peerId, displayName: sessionId, avatarId: 'avatar-1', avatarSet: 'solar-runner' as const, equippedAvatars: [{ avatarId: 'avatar-1', avatarSet: 'solar-runner' as const }], capacity: 2, joinedAt, lastSeenAt: Date.now(), state: 'active' as const, health: 100, maxHealth: 100 });
-  return { version: 2, id: 'party-a', worldId: 'greenhollow', seed: 'seed', generationVersion: 2, leaderSessionId: 'leader', leaderCapacity: 2, members: [member('leader', 'peer-1', 1), member('guest', 'peer-2', 2)], aiActors: [], roomId: 'surface', protocolSequence: 1, updatedAt: Date.now() };
+  return { version: 3, id: 'party-a', worldId: 'greenhollow', seed: 'seed', generationVersion: 3, leaderSessionId: 'leader', leaderCapacity: 2, members: [member('leader', 'peer-1', 1), member('guest', 'peer-2', 2)], aiActors: [], roomId: 'surface', endless: null, protocolSequence: 1, updatedAt: Date.now() };
 }
 
 describe('PeerJS Story party star transport', () => {
@@ -59,7 +59,7 @@ describe('PeerJS Story party star transport', () => {
     await new Promise((resolve) => setTimeout(resolve, 0));
     guest.sendIntent({ sequence: 1, clientTime: Date.now(), moveX: 1, moveY: 0, predictedX: 4, predictedY: 1, jump: false, block: false, attack: 'jab' });
     expect(intents).toHaveLength(1);
-    leader.broadcastSnapshot({ authorityEpoch: 1, sequence: 1, serverTime: Date.now(), roomId: 'surface', actors: [], enemies: [], projectiles: [], encounterState: null, rewardsPaused: false, rewardEvents: [{ id: 'reward-1', spawnId: 'spawn-1', enemyId: 'silver-duelist', tier: 'challenger', xp: 100, recipients: ['leader', 'guest'] }] });
+    leader.broadcastSnapshot({ authorityEpoch: 1, sequence: 1, serverTime: Date.now(), roomId: 'surface', runSeed: null, floorNumber: 0, pressureClockSeconds: 0, eventState: null, boonStacks: {}, ledgerBankEventId: null, endReason: null, actors: [], enemies: [], projectiles: [], encounterState: null, rewardsPaused: false, rewardEvents: [{ id: 'reward-1', spawnId: 'spawn-1', enemyId: 'silver-duelist', tier: 'challenger', xp: 100, recipients: ['leader', 'guest'] }] });
     expect(snapshots).toHaveLength(1);
     expect((snapshots[0] as { rewardEvents: unknown[] }).rewardEvents).toHaveLength(1);
     guest.close();

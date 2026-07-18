@@ -30,21 +30,22 @@ beforeEach(() => {
 describe('online Netlify function handlers', () => {
   it('shares adventure seeds, room state, and deterministic party leadership without touching hub presence', async () => {
     const { handler: party } = await import('../netlify/functions/story-adventure-party.mjs');
-    const first = await post(party, { action: 'join', sessionId: 'session-one', worldId: 'thornwood' });
-    const second = await post(party, { action: 'join', sessionId: 'session-two', worldId: 'thornwood' });
+    const first = await post(party, { action: 'create', sessionId: 'session-one', worldId: 'thornwood', capacity: 2 });
+    const invitation = await post(party, { action: 'invite', partyId: first.party.id, sessionId: 'session-one', worldId: 'thornwood', targetSessionId: 'session-two', inviterDisplayName: 'ONE' });
+    const second = await post(party, { action: 'invite-join', inviteId: invitation.invites[0].id, partyId: first.party.id, sessionId: 'session-two', worldId: 'thornwood', capacity: 2 });
     expect(second.party).toMatchObject({
-      version: 1,
+      version: 3,
       id: first.party.id,
       seed: first.party.seed,
-      generationVersion: 1,
+      generationVersion: 3,
       leaderSessionId: 'session-one'
     });
     expect(second.party.members.map((member: { sessionId: string }) => member.sessionId)).toEqual(['session-one', 'session-two']);
 
-    const inRoom = await post(party, { action: 'room', partyId: first.party.id, sessionId: 'session-two', worldId: 'thornwood', roomId: 'thornwood-depth-3' });
-    expect(inRoom.party.roomId).toBe('thornwood-depth-3');
+    const inRoom = await post(party, { action: 'room', partyId: first.party.id, sessionId: 'session-one', worldId: 'thornwood', roomId: 'endless:3' });
+    expect(inRoom.party.roomId).toBe('endless:3');
     await post(party, { action: 'leave', partyId: first.party.id, sessionId: 'session-one', worldId: 'thornwood' });
-    const transferred = await post(party, { action: 'room', partyId: first.party.id, sessionId: 'session-two', worldId: 'thornwood', roomId: 'thornwood-depth-4' });
+    const transferred = await post(party, { action: 'room', partyId: first.party.id, sessionId: 'session-two', worldId: 'thornwood', roomId: 'endless:4' });
     expect(transferred.party.leaderSessionId).toBe('session-two');
     expect(stores.has('kore-story-hub-presence')).toBe(false);
   });

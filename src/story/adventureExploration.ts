@@ -9,10 +9,14 @@ import type {
   StoryGeneratedDepthZone,
   StoryMountDefinition,
   StoryMountId,
+  StoryFloorEventKind,
+  StoryRunBoonId,
+  StoryRunRewardLedger,
   StoryTraversalKind
 } from './types';
 
 export const STORY_DEPTH_GENERATION_VERSION = 2 as const;
+export const STORY_PARTY_GENERATION_VERSION = 3 as const;
 export const STORY_DEPTH_ZONE_MIN = 6;
 export const STORY_DEPTH_ZONE_MAX = 10;
 export const STORY_PARTY_MAX_MEMBERS = 5;
@@ -248,17 +252,29 @@ export type StoryPartyMember = {
   maxHealth: number;
 };
 export type StoryPartyAiActor = { id: string; ownerSessionId: string; avatarId: string; avatarSet: StoryAvatarSet; slot: number; health: number; maxHealth: number; state: 'active' | 'ko' };
+export type StoryPartyEndlessState = {
+  seed: string;
+  floorNumber: number;
+  pressureClockSeconds: number;
+  eventState: { id: string; kind: StoryFloorEventKind; status: 'available' | 'active' | 'succeeded' | 'failed' | 'refused' } | null;
+  boonStacks: Partial<Record<StoryRunBoonId, number>>;
+  rerollTokens: number;
+  ledger: StoryRunRewardLedger;
+  bankEventIds: string[];
+  endReason: 'wipe' | 'abandon' | 'all-left' | null;
+};
 export type StoryPartyInstance = {
-  version: 2;
+  version: 3;
   id: string;
   worldId: Exclude<StoryAdventureWorldId, 'world-route'>;
   seed: string;
-  generationVersion: typeof STORY_DEPTH_GENERATION_VERSION;
+  generationVersion: typeof STORY_PARTY_GENERATION_VERSION;
   leaderSessionId: string;
   leaderCapacity: number;
   members: StoryPartyMember[];
   aiActors: StoryPartyAiActor[];
   roomId: string;
+  endless: StoryPartyEndlessState | null;
   protocolSequence: number;
   updatedAt: number;
 };
@@ -282,7 +298,7 @@ export function electStoryPartyLeader<T extends { sessionId: string; joinedAt: n
 export function sanitizeStoryPartyInstance(value: unknown, now = Date.now()): StoryPartyInstance | null {
   if (!value || typeof value !== 'object') return null;
   const record = value as Partial<StoryPartyInstance>;
-  if (record.version !== 2 || record.generationVersion !== STORY_DEPTH_GENERATION_VERSION || typeof record.id !== 'string' || typeof record.seed !== 'string' || typeof record.worldId !== 'string') return null;
+  if (record.version !== 3 || record.generationVersion !== STORY_PARTY_GENERATION_VERSION || typeof record.id !== 'string' || typeof record.seed !== 'string' || typeof record.worldId !== 'string') return null;
   const allowedWorlds = Object.values(STORY_MOUNTS).map((mount) => mount.worldId);
   if (!allowedWorlds.includes(record.worldId as StoryPartyInstance['worldId'])) return null;
   const clean = (value: unknown, fallback = '') => typeof value === 'string' ? value.replace(/[^a-zA-Z0-9:_ -]/g, '').slice(0, 120) : fallback;
@@ -317,17 +333,30 @@ export function sanitizeStoryPartyInstance(value: unknown, now = Date.now()): St
     const requestedHealth = Number(actor.health);
     return [{ id: clean(actor.id), ownerSessionId: clean(actor.ownerSessionId), avatarId: clean(actor.avatarId), avatarSet: actor.avatarSet as StoryAvatarSet, slot: Math.max(1, Math.min(4, Math.round(Number(actor.slot) || 1))), health: Math.max(0, Math.min(maxHealth, Number.isFinite(requestedHealth) ? Math.round(requestedHealth) : maxHealth)), maxHealth, state: actor.state === 'ko' ? 'ko' as const : 'active' as const }];
   }).slice(0, Math.max(0, leaderCapacity - members.length)) : [];
+  const endlessRecord = record.endless && typeof record.endless === 'object' ? record.endless as StoryPartyEndlessState : null;
+  const endless: StoryPartyEndlessState | null = endlessRecord && typeof endlessRecord.seed === 'string' ? {
+    seed: clean(endlessRecord.seed),
+    floorNumber: Math.max(1, Math.min(Number.MAX_SAFE_INTEGER, Math.floor(Number(endlessRecord.floorNumber) || 1))),
+    pressureClockSeconds: Math.max(0, Number(endlessRecord.pressureClockSeconds) || 0),
+    eventState: endlessRecord.eventState && typeof endlessRecord.eventState.id === 'string' ? endlessRecord.eventState : null,
+    boonStacks: endlessRecord.boonStacks && typeof endlessRecord.boonStacks === 'object' ? endlessRecord.boonStacks : {},
+    rerollTokens: Math.max(0, Math.floor(Number(endlessRecord.rerollTokens) || 0)),
+    ledger: endlessRecord.ledger && typeof endlessRecord.ledger === 'object' ? endlessRecord.ledger : { xp: 0, defeats: 0, routeCoins: 0, materials: {}, consumables: {}, challengerIds: [], cacheIds: [] },
+    bankEventIds: Array.isArray(endlessRecord.bankEventIds) ? endlessRecord.bankEventIds.map((id) => clean(id)).filter(Boolean).slice(-64) : [],
+    endReason: ['wipe', 'abandon', 'all-left'].includes(String(endlessRecord.endReason)) ? endlessRecord.endReason : null
+  } : null;
   return {
-    version: 2,
+    version: 3,
     id: record.id,
     worldId: record.worldId as StoryPartyInstance['worldId'],
     seed: record.seed,
-    generationVersion: STORY_DEPTH_GENERATION_VERSION,
+    generationVersion: STORY_PARTY_GENERATION_VERSION,
     leaderSessionId,
     leaderCapacity,
     members,
     aiActors,
     roomId: typeof record.roomId === 'string' && record.roomId ? record.roomId.replace(/[^a-zA-Z0-9:_-]/g, '').slice(0, 160) : 'surface',
+    endless,
     protocolSequence: Math.max(0, Math.round(Number(record.protocolSequence) || 0)),
     updatedAt: Number.isFinite(record.updatedAt) ? Number(record.updatedAt) : now
   };

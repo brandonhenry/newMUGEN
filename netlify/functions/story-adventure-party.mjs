@@ -1,6 +1,6 @@
 import { cleanStoryPartyId, getStoryPartyStore, listStoryParties, normalizeStoryParty, partyJson, refreshStoryPartyActors, STORY_PARTY_INVITE_TTL_MS, STORY_PARTY_RECONNECT_TTL_MS, storyPartyKey } from './_story-party-store.mjs';
 
-const ACTIONS = new Set(['create', 'invite', 'invite-join', 'invitations', 'heartbeat', 'room', 'transfer', 'leave']);
+const ACTIONS = new Set(['create', 'invite', 'invite-join', 'invitations', 'heartbeat', 'room', 'transfer', 'leave', 'run-start', 'floor-advance', 'event', 'boon', 'bank', 'run-end']);
 const makeId = (prefix = 'party') => `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
 
 function registration(body, sessionId, now, joinedAt = now) {
@@ -53,7 +53,7 @@ export async function handler(event) {
       const existing = parties.find((entry) => entry.worldId === worldId && entry.members.some((member) => member.sessionId === sessionId));
       if (existing) return partyJson(200, { party: existing, serverTime: now });
       const id = makeId();
-      party = normalizeStoryParty({ version: 2, id, worldId, seed: `kore-depth-v2:${worldId}:${id}`, generationVersion: 2, leaderSessionId: sessionId, members: [registration(body, sessionId, now)], aiActors: [], invites: [], roomId: 'surface', protocolSequence: 0, updatedAt: now }, now);
+      party = normalizeStoryParty({ version: 3, id, worldId, seed: `kore-endless-v3:${worldId}:${id}`, generationVersion: 3, leaderSessionId: sessionId, members: [registration(body, sessionId, now)], aiActors: [], invites: [], roomId: 'surface', endless: null, protocolSequence: 0, updatedAt: now }, now);
       if (!party) return partyJson(400, { error: 'invalid_world' });
       await save(store, party, now);
       return partyJson(200, { party, serverTime: now });
@@ -96,7 +96,39 @@ export async function handler(event) {
       return partyJson(200, { party: party.members.length ? party : null, serverTime: now });
     }
 
-    if (action === 'transfer') {
+    if (['run-start', 'floor-advance', 'event', 'boon', 'bank', 'run-end'].includes(action)) {
+      if (party.leaderSessionId !== sessionId) return partyJson(403, { error: 'leader_required' });
+      if (action === 'run-start') {
+        const seed = cleanStoryPartyId(body.seed, 220);
+        if (!seed) return partyJson(400, { error: 'seed_required' });
+        party.seed = seed;
+        party.roomId = 'endless:1';
+        party.endless = { seed, floorNumber: 1, pressureClockSeconds: 0, eventState: null, boonStacks: {}, rerollTokens: 0, ledger: { xp: 0, defeats: 0, routeCoins: 0, materials: {}, consumables: {}, challengerIds: [], cacheIds: [] }, bankEventIds: [], endReason: null };
+      } else if (!party.endless) return partyJson(409, { error: 'run_not_active' });
+      else if (action === 'floor-advance') {
+        party.endless.floorNumber = Math.max(party.endless.floorNumber, Math.min(Number.MAX_SAFE_INTEGER, Math.floor(Number(body.floorNumber) || party.endless.floorNumber)));
+        party.endless.pressureClockSeconds = Math.max(0, Number(body.pressureClockSeconds) || 0);
+        party.endless.eventState = null;
+        party.roomId = `endless:${party.endless.floorNumber}`;
+      } else if (action === 'event') {
+        const resolutionId = cleanStoryPartyId(body.resolutionId, 160);
+        party.endless.eventResolutionIds = Array.isArray(party.endless.eventResolutionIds) ? party.endless.eventResolutionIds : [];
+        if (resolutionId && !party.endless.eventResolutionIds.includes(resolutionId)) {
+          party.endless.eventResolutionIds.push(resolutionId);
+          party.endless.eventState = body.eventState && typeof body.eventState === 'object' ? body.eventState : null;
+        }
+      } else if (action === 'boon') {
+        party.endless.boonStacks = body.boonStacks && typeof body.boonStacks === 'object' ? body.boonStacks : party.endless.boonStacks;
+        party.endless.rerollTokens = Math.max(0, Math.floor(Number(body.rerollTokens) || 0));
+      } else if (action === 'bank') {
+        const bankEventId = cleanStoryPartyId(body.bankEventId, 160);
+        party.endless.bankEventIds = Array.isArray(party.endless.bankEventIds) ? party.endless.bankEventIds : [];
+        if (bankEventId && !party.endless.bankEventIds.includes(bankEventId)) party.endless.bankEventIds.push(bankEventId);
+      } else if (action === 'run-end') {
+        party.endless.endReason = ['wipe', 'abandon', 'all-left'].includes(body.endReason) ? body.endReason : 'abandon';
+        party.roomId = `surface:${worldId}-mastery`;
+      }
+    } else if (action === 'transfer') {
       if (party.leaderSessionId !== sessionId) return partyJson(403, { error: 'leader_required' });
       const targetSessionId = cleanStoryPartyId(body.targetSessionId);
       if (!party.members.some((entry) => entry.sessionId === targetSessionId)) return partyJson(404, { error: 'member_not_found' });

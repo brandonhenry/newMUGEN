@@ -124,6 +124,20 @@ export const STORY_NPC_SPRITES: Record<string, StoryNpcSpriteManifest> = Object.
 export const STORY_NPC_VISIBLE_WORLD_HEIGHT = 3.05;
 export const STORY_NPC_FOOT_CONTACT_SINK_Y = 0.055;
 export const STORY_NPC_ENTRANCE_SIDE_CLEARANCE = 1.25;
+export const STORY_NPC_WATCH_RADIUS_X = 4.5;
+export const STORY_NPC_WATCH_RADIUS_Y = 2.4;
+
+export function storyNpcWatchFacing(
+  npcPosition: readonly [number, number],
+  playerPosition: Readonly<{ x: number; y: number }>,
+  currentFacing: -1 | 1
+): -1 | 1 {
+  const deltaX = playerPosition.x - npcPosition[0];
+  const deltaY = playerPosition.y - npcPosition[1];
+  if (Math.abs(deltaX) > STORY_NPC_WATCH_RADIUS_X || Math.abs(deltaY) > STORY_NPC_WATCH_RADIUS_Y) return currentFacing;
+  if (Math.abs(deltaX) < 0.08) return currentFacing;
+  return deltaX > 0 ? 1 : -1;
+}
 
 export function storyNpcPlaneSize(sprite: StoryNpcSpriteManifest | undefined): number {
   if (!sprite) return STORY_NPC_VISIBLE_WORLD_HEIGHT;

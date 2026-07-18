@@ -118,6 +118,15 @@ export type AnalyticsEventMap = {
   adventure_item_crafted: BaseEventProperties & { recipe_id: string; crafting_context: string };
   adventure_armor_equipped: BaseEventProperties & { recipe_id: string; equipped: boolean };
   adventure_consumable_used: BaseEventProperties & { recipe_id: string; healing: number };
+  adventure_endless_unlocked: BaseEventProperties & { world_id: string };
+  adventure_endless_run_ended: BaseEventProperties & { world_id: string; reason: string; depth: number };
+  adventure_instability_rank: BaseEventProperties & { world_id: string; floor: number; rank: number };
+  adventure_boon_selected: BaseEventProperties & { world_id: string; floor: number; boon: string; stack: number };
+  adventure_endless_event_result: BaseEventProperties & { world_id: string; floor: number; event: string; result: string; cost?: number };
+  adventure_endless_event_choice: BaseEventProperties & { world_id: string; floor: number; event: string };
+  adventure_endless_generation_fallback: BaseEventProperties & { world_id: string; floor: number; failures: string };
+  adventure_endless_floor_completed: BaseEventProperties & { world_id: string; floor: number; chapter: number; boss: boolean; fallback: boolean };
+  adventure_endless_chapter_banked: BaseEventProperties & { world_id: string; chapter: number; floor: number; daily_bonus: boolean };
   tournament_list_loaded: BaseEventProperties;
   tournament_mode_selected: BaseEventProperties;
   tournament_entry_started: BaseEventProperties;
