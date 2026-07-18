@@ -2,184 +2,268 @@ import posthog from 'posthog-js';
 import type { Properties } from 'posthog-js';
 
 export const DEFAULT_POSTHOG_HOST = 'https://us.i.posthog.com';
-export const DEFAULT_POSTHOG_APP_HOST = 'https://us.posthog.com';
-export const ADMIN_ANALYTICS_CONFIG_STORAGE_KEY = 'kore:admin-posthog-config:v1';
 
-export type AnalyticsEventName =
-  | 'game_load_started'
-  | 'game_loaded'
-  | 'screen_viewed'
-  | 'menu_item_selected'
-  | 'menu_lag_prompt'
-  | 'navigation_clicked'
-  | 'game_start_clicked'
-  | 'match_mode_changed'
-  | 'cpu_difficulty_changed'
-  | 'character_target_changed'
-  | 'roster_page_changed'
-  | 'random_character_toggled'
-  | 'character_selected'
-  | 'character_picked'
-  | 'stage_browsed'
-  | 'random_stage_toggled'
-  | 'stage_selected'
-  | 'match_started'
-  | 'round_started'
-  | 'round_ended'
-  | 'match_completed'
-  | 'combo_route_completed'
-  | 'positive_milestone_reached'
-  | 'rematch_clicked'
-  | 'fullscreen_clicked'
-  | 'pause_toggled'
-  | 'pause_menu_action_clicked'
-  | 'move_list_opened'
-  | 'move_list_tab_changed'
-  | 'training_panel_opened'
-  | 'training_mode_changed'
-  | 'training_trial_selected'
-  | 'training_trial_previewed'
-  | 'training_trial_retried'
-  | 'training_trial_started'
-  | 'training_trial_completed'
-  | 'minigame_started'
-  | 'minigame_paused'
-  | 'minigame_completed'
-  | 'minigame_result_continued'
-  | 'leaderboard_loaded'
-  | 'online_profile_saved'
-  | 'online_search_started'
-  | 'online_status_changed'
-  | 'online_connected'
-  | 'online_disconnected'
-  | 'online_rematch_requested'
-  | 'online_rematch_started'
-  | 'leaderboard_result_submitted'
-  | 'ranked_report_submitted'
-  | 'ranked_result_received'
-  | 'ranked_promotion_accepted'
-  | 'private_rooms_loaded'
-  | 'private_room_create_clicked'
-  | 'private_room_join_clicked'
-  | 'private_room_join_validation_failed'
-  | 'tournament_list_loaded'
-  | 'tournament_mode_selected'
-  | 'tournament_entry_started'
-  | 'tournament_entry_succeeded'
-  | 'tournament_check_in_completed'
-  | 'tournament_entry_failed'
-  | 'tournament_payment_opened'
-  | 'tournament_lobby_refreshed'
-  | 'tournament_match_started'
-  | 'tournament_match_reported'
-  | 'tournament_prize_claimed'
-  | 'tournament_completed'
-  | 'setting_changed'
-  | 'settings_reset_clicked'
-  | 'memory_card_action'
-  | 'viewer_action'
-  | 'stage_editor_action'
-  | 'external_link_clicked'
-  | 'mobile_controls_used'
-  | 'error_occurred';
+export type AnalyticsPropertyValue = string | number | boolean | null | undefined;
+export type AnalyticsProperties = Record<string, AnalyticsPropertyValue>;
 
-export type AnalyticsProperties = Record<string, string | number | boolean | null | undefined>;
+type BaseEventProperties = AnalyticsProperties;
+type MatchProperties = BaseEventProperties & {
+  match_id: string;
+  mode: string;
+};
+
+/**
+ * Canonical analytics schema. High-value lifecycle events declare their required
+ * fields while lower-value UI events remain extensible during the v2 migration.
+ */
+export type AnalyticsEventMap = {
+  game_load_started: BaseEventProperties;
+  game_loaded: BaseEventProperties & { load_duration_ms: number; roster_count: number; stage_count: number; warning_count: number };
+  screen_viewed: BaseEventProperties & { screen: string };
+  menu_item_selected: BaseEventProperties;
+  menu_lag_prompt: BaseEventProperties;
+  navigation_clicked: BaseEventProperties;
+  game_start_clicked: BaseEventProperties;
+  match_mode_changed: BaseEventProperties;
+  cpu_difficulty_changed: BaseEventProperties;
+  character_target_changed: BaseEventProperties;
+  roster_page_changed: BaseEventProperties;
+  random_character_toggled: BaseEventProperties;
+  character_selected: BaseEventProperties;
+  character_picked: BaseEventProperties & { character_id: string; slot: number; actor_type: string; random_pick: boolean };
+  stage_browsed: BaseEventProperties;
+  random_stage_toggled: BaseEventProperties;
+  stage_selected: BaseEventProperties;
+  asset_warmup_started: BaseEventProperties & { warmup_id: string; destination: string };
+  asset_warmup_completed: BaseEventProperties & { warmup_id: string; destination: string; duration_ms: number };
+  asset_warmup_failed: BaseEventProperties & { warmup_id: string; destination: string; duration_ms: number; error_code: string };
+  match_started: MatchProperties;
+  round_started: MatchProperties & { round: number };
+  round_ended: MatchProperties & { round: number; duration_seconds: number };
+  match_completed: MatchProperties & {
+    match_duration_seconds: number;
+    completion_reason: string;
+    winner_character_id: string;
+    loser_character_id: string;
+  };
+  match_abandoned: MatchProperties & { elapsed_seconds: number; abandonment_reason: string; phase: string };
+  performance_summary: BaseEventProperties & {
+    activity_type: string;
+    duration_seconds: number;
+    average_fps: number;
+    p95_frame_ms: number;
+    long_frame_count: number;
+  };
+  combo_route_completed: MatchProperties & {
+    route_key: string;
+    combo_hits: number;
+    combo_damage: number;
+    included_launcher: boolean;
+    included_tornado: boolean;
+    included_ki_burst: boolean;
+  };
+  positive_milestone_reached: BaseEventProperties & { milestone_type: string };
+  rematch_clicked: BaseEventProperties;
+  fullscreen_clicked: BaseEventProperties;
+  pause_toggled: BaseEventProperties;
+  pause_menu_action_clicked: BaseEventProperties;
+  move_list_opened: BaseEventProperties;
+  move_list_tab_changed: BaseEventProperties;
+  training_panel_opened: BaseEventProperties;
+  training_mode_changed: BaseEventProperties;
+  training_trial_selected: BaseEventProperties & { trial_id: string; trial_category: string; trial_difficulty: number };
+  training_trial_previewed: BaseEventProperties;
+  training_trial_retried: BaseEventProperties;
+  training_trial_started: BaseEventProperties & { trial_id: string; trial_category: string; trial_difficulty: number; attempt_number: number };
+  training_trial_completed: BaseEventProperties & { trial_id: string; trial_category: string; trial_difficulty: number; attempt_number: number; completion_duration_seconds: number; first_time_completion: boolean };
+  minigame_started: BaseEventProperties & { game_id: string };
+  minigame_paused: BaseEventProperties & { game_id: string };
+  minigame_completed: BaseEventProperties & { game_id: string; score: number; completion_reason: string; elapsed_seconds: number; objectives_completed: number; new_high_score: boolean };
+  minigame_result_continued: BaseEventProperties & { game_id: string };
+  arcade_run_started: BaseEventProperties & { run_id: string; starting_lives: number };
+  arcade_run_ended: BaseEventProperties & { run_id: string; duration_seconds: number; level: number; score: number; wins: number; lives_remaining: number; end_reason: string };
+  leaderboard_loaded: BaseEventProperties;
+  online_profile_saved: BaseEventProperties;
+  online_search_started: BaseEventProperties & { matchmaking_attempt_id: string; queue: string };
+  online_status_changed: BaseEventProperties;
+  online_connected: BaseEventProperties & { matchmaking_attempt_id: string; connection_result: string; search_duration_seconds: number };
+  online_disconnected: BaseEventProperties & { matchmaking_attempt_id: string; disconnect_reason: string; recoverable: boolean };
+  online_rematch_requested: BaseEventProperties;
+  online_rematch_started: BaseEventProperties;
+  leaderboard_result_submitted: BaseEventProperties;
+  ranked_report_submitted: BaseEventProperties;
+  ranked_result_received: BaseEventProperties;
+  ranked_promotion_accepted: BaseEventProperties;
+  private_rooms_loaded: BaseEventProperties;
+  private_room_create_clicked: BaseEventProperties;
+  private_room_created: BaseEventProperties & { status: string };
+  private_room_join_clicked: BaseEventProperties;
+  private_room_joined: BaseEventProperties & { status: string };
+  private_room_join_validation_failed: BaseEventProperties;
+  custom_room_created: BaseEventProperties & { status: string };
+  custom_room_joined: BaseEventProperties & { status: string };
+  friend_invite_sent: BaseEventProperties & { status: string };
+  friend_invite_accepted: BaseEventProperties & { status: string };
+  story_challenge_completed: BaseEventProperties & { status: string };
+  story_profile_saved: BaseEventProperties & { created: boolean; avatar_set: string };
+  adventure_visit_started: BaseEventProperties & { visit_id: string; world_id: string; level: number };
+  adventure_visit_ended: BaseEventProperties & { visit_id: string; world_id: string; level: number; duration_seconds: number; exit_reason: string };
+  adventure_region_entered: BaseEventProperties & { visit_id: string; world_id: string; level: number };
+  adventure_encounter_started: BaseEventProperties & { visit_id: string; encounter_id: string; world_id: string; level: number };
+  adventure_encounter_completed: BaseEventProperties & { visit_id: string; encounter_id: string; world_id: string; level: number; duration_seconds: number; result: string };
+  adventure_reward_collected: BaseEventProperties & { visit_id: string; world_id: string; reward_type: string; level: number };
+  adventure_progression_reached: BaseEventProperties & { visit_id: string; world_id: string; milestone_type: string; level: number };
+  tournament_list_loaded: BaseEventProperties;
+  tournament_mode_selected: BaseEventProperties;
+  tournament_entry_started: BaseEventProperties;
+  tournament_entry_succeeded: BaseEventProperties;
+  tournament_check_in_completed: BaseEventProperties;
+  tournament_entry_failed: BaseEventProperties;
+  tournament_payment_opened: BaseEventProperties;
+  tournament_lobby_refreshed: BaseEventProperties;
+  tournament_match_started: BaseEventProperties;
+  tournament_match_reported: BaseEventProperties;
+  tournament_prize_claimed: BaseEventProperties;
+  tournament_completed: BaseEventProperties;
+  tournament_entry_confirmed: BaseEventProperties & { event_id: string; tournament_id: string };
+  tournament_payment_confirmed: BaseEventProperties & { event_id: string; tournament_id: string };
+  tournament_result_confirmed: BaseEventProperties & { event_id: string; tournament_id: string };
+  tournament_prize_paid: BaseEventProperties & { event_id: string; tournament_id: string };
+  tournament_operation_failed: BaseEventProperties & { event_id: string; tournament_id: string; operation: string; error_code: string };
+  setting_changed: BaseEventProperties;
+  settings_reset_clicked: BaseEventProperties;
+  memory_card_action: BaseEventProperties;
+  viewer_action: BaseEventProperties;
+  stage_editor_action: BaseEventProperties;
+  external_link_clicked: BaseEventProperties;
+  mobile_controls_used: BaseEventProperties;
+  error_occurred: BaseEventProperties & { error_code: string; severity: 'error' | 'fatal'; source: string; recoverable: boolean };
+};
+
+export type AnalyticsEventName = keyof AnalyticsEventMap;
+export type AnalyticsCapture<InjectedKey extends PropertyKey = never> = <Name extends AnalyticsEventName>(
+  name: Name,
+  properties: Omit<AnalyticsEventMap[Name], Extract<InjectedKey, keyof AnalyticsEventMap[Name]>>
+) => void;
+
+export type AnalyticsContext = {
+  app_version: string;
+  environment: 'production' | 'development' | 'test';
+  runtime: 'web' | 'electron';
+  screen?: string;
+  mode?: string;
+};
+
+export type AnalyticsIdentityProperties = {
+  has_online_profile: boolean;
+  has_story_profile: boolean;
+  first_seen_app_version: string;
+  last_seen_app_version: string;
+  first_seen_runtime: AnalyticsContext['runtime'];
+  last_seen_runtime: AnalyticsContext['runtime'];
+  account_created_period?: string;
+};
 
 type AnalyticsEnvironment = {
   key?: string;
   host?: string;
+  enabled?: boolean;
 };
 
 let analyticsInitialized = false;
+let analyticsContext: Partial<AnalyticsContext> = {};
 
-export type AdminAnalyticsConfig = {
-  projectToken: string;
-  captureHost: string;
-  endpointToken: string;
-  endpointPaths: Record<string, string>;
-};
+export const ANALYTICS_SCHEMA_VERSION = 2;
+export const ANALYTICS_PRIVATE_SELECTOR = [
+  '[data-analytics-private="true"]',
+  '.friend-chat-log',
+  '.friend-chat-compose',
+  '.private-room-password',
+  '.story-player-panel',
+  '.story-remote-player-tag-shell',
+  '.story-hub-remote-names',
+  '.story-hub-player-card',
+  '[class*="player-name"]',
+  '[class*="profile-name"]',
+  'input[type="email"]',
+  'input[type="password"]',
+  'input[autocomplete="email"]'
+].join(', ');
 
-export function defaultAdminAnalyticsConfig(): AdminAnalyticsConfig {
-  return {
-    projectToken: '',
-    captureHost: DEFAULT_POSTHOG_HOST,
-    endpointToken: '',
-    endpointPaths: {}
-  };
-}
-
-function readStoredAdminAnalyticsConfig(): AdminAnalyticsConfig | null {
-  if (typeof window === 'undefined') return null;
-  try {
-    const raw = window.localStorage.getItem(ADMIN_ANALYTICS_CONFIG_STORAGE_KEY);
-    if (!raw) return null;
-    return sanitizeAdminAnalyticsConfig(JSON.parse(raw) as Partial<AdminAnalyticsConfig>);
-  } catch {
-    return null;
-  }
-}
-
-export function sanitizeAdminAnalyticsConfig(config: Partial<AdminAnalyticsConfig> = {}): AdminAnalyticsConfig {
-  const fallback = defaultAdminAnalyticsConfig();
-  const captureHost = typeof config.captureHost === 'string' && config.captureHost.trim() ? config.captureHost.trim() : fallback.captureHost;
-  const rawEndpointPaths = config.endpointPaths && typeof config.endpointPaths === 'object' ? config.endpointPaths : {};
-  const endpointPaths = Object.fromEntries(
-    Object.entries(rawEndpointPaths)
-      .filter((entry): entry is [string, string] => typeof entry[1] === 'string')
-      .map(([key, value]) => [key, value.trim()])
-      .filter(([, value]) => value.length > 0)
-  );
-  return {
-    projectToken: typeof config.projectToken === 'string' ? config.projectToken.trim() : '',
-    captureHost,
-    endpointToken: typeof config.endpointToken === 'string' ? config.endpointToken.trim() : '',
-    endpointPaths
-  };
-}
-
-export function readAdminAnalyticsConfig(): AdminAnalyticsConfig {
-  return readStoredAdminAnalyticsConfig() ?? defaultAdminAnalyticsConfig();
-}
-
-export function writeAdminAnalyticsConfig(config: Partial<AdminAnalyticsConfig>) {
-  const sanitized = sanitizeAdminAnalyticsConfig(config);
-  if (typeof window !== 'undefined') {
-    window.localStorage.setItem(ADMIN_ANALYTICS_CONFIG_STORAGE_KEY, JSON.stringify(sanitized));
-  }
-  return sanitized;
-}
-
-export function clearAdminAnalyticsConfig() {
-  if (typeof window !== 'undefined') {
-    window.localStorage.removeItem(ADMIN_ANALYTICS_CONFIG_STORAGE_KEY);
-  }
-  return defaultAdminAnalyticsConfig();
-}
+const PRIVATE_PROPERTY_KEY = /(^|_)(email|display_name|friend_id|player_id|password|bolt11|invoice|chat|status_text)(_|$)/i;
+const EMAIL_VALUE = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi;
+const SECRET_VALUE = /\b(?:lnbc|lntb|phc_|phx_|Bearer\s+)[A-Za-z0-9._~+\/-]+/gi;
 
 function readAnalyticsEnvironment(): AnalyticsEnvironment {
-  const adminConfig = readStoredAdminAnalyticsConfig();
   return {
-    key: import.meta.env.VITE_POSTHOG_KEY || adminConfig?.projectToken,
-    host: import.meta.env.VITE_POSTHOG_HOST || adminConfig?.captureHost
+    key: import.meta.env.VITE_POSTHOG_KEY,
+    host: import.meta.env.VITE_POSTHOG_HOST,
+    enabled: import.meta.env.PROD || import.meta.env.VITE_POSTHOG_ENABLE_DEV === 'true'
   };
 }
 
-function cleanProperties(properties: AnalyticsProperties = {}): Properties {
+export function getAnalyticsRuntime(): AnalyticsContext['runtime'] {
+  if (typeof navigator === 'undefined') return 'web';
+  return /Electron/i.test(navigator.userAgent) ? 'electron' : 'web';
+}
+
+export function getAnalyticsEnvironment(): AnalyticsContext['environment'] {
+  if (import.meta.env.PROD) return 'production';
+  return import.meta.env.MODE === 'test' ? 'test' : 'development';
+}
+
+function sanitizeAnalyticsString(value: string) {
+  return value.replace(EMAIL_VALUE, '[redacted-email]').replace(SECRET_VALUE, '[redacted-secret]').slice(0, 500);
+}
+
+export function cleanAnalyticsProperties(properties: AnalyticsProperties = {}): Properties {
   return Object.fromEntries(
-    Object.entries(properties).filter((entry): entry is [string, string | number | boolean | null] => entry[1] !== undefined)
+    Object.entries(properties)
+      .filter((entry): entry is [string, string | number | boolean | null] => entry[1] !== undefined && !PRIVATE_PROPERTY_KEY.test(entry[0]))
+      .map(([key, value]) => [key, typeof value === 'string' ? sanitizeAnalyticsString(value) : value])
   );
 }
 
 export function initializeAnalytics(environment: AnalyticsEnvironment = readAnalyticsEnvironment()) {
   const key = environment.key?.trim();
-  if (!key) return null;
+  const enabled = environment.enabled ?? (import.meta.env.PROD || import.meta.env.VITE_POSTHOG_ENABLE_DEV === 'true');
+  if (!key || !enabled) return null;
   if (!analyticsInitialized) {
     posthog.init(key, {
       api_host: environment.host?.trim() || DEFAULT_POSTHOG_HOST,
       capture_pageview: true,
-      autocapture: false
+      autocapture: false,
+      capture_performance: true,
+      enable_recording_console_log: false,
+      mask_all_text: false,
+      mask_all_element_attributes: false,
+      mask_personal_data_properties: true,
+      custom_personal_data_properties: ['email', 'displayName', 'display_name', 'playerId', 'player_id', 'password', 'bolt11'],
+      session_recording: {
+        sampleRate: 0.1,
+        strictMinimumDuration: true,
+        maskAllInputs: true,
+        maskTextSelector: ANALYTICS_PRIVATE_SELECTOR,
+        blockSelector: ANALYTICS_PRIVATE_SELECTOR,
+        recordHeaders: false,
+        recordBody: false,
+        recordCrossOriginIframes: false,
+        captureCanvas: {
+          canvasFps: 2,
+          canvasQuality: '0.2'
+        },
+        canvasCapture: {
+          resolutionScale: 0.6
+        }
+      }
     });
     analyticsInitialized = true;
+    posthog.register(cleanAnalyticsProperties({
+      analytics_schema_version: ANALYTICS_SCHEMA_VERSION,
+      environment: getAnalyticsEnvironment(),
+      runtime: getAnalyticsRuntime(),
+      ...analyticsContext
+    }));
   }
   return posthog;
 }
@@ -195,10 +279,59 @@ export function getPostHogDeviceId() {
   return typeof candidate === 'string' ? candidate.trim() : '';
 }
 
-export function captureAnalyticsEvent(name: AnalyticsEventName, properties?: AnalyticsProperties) {
+export function setAnalyticsContext(context: Partial<AnalyticsContext>) {
+  analyticsContext = { ...analyticsContext, ...context };
   if (!analyticsInitialized) initializeAnalytics();
   if (!analyticsInitialized) return;
-  posthog.capture(name, cleanProperties(properties));
+  posthog.register(cleanAnalyticsProperties({
+    analytics_schema_version: ANALYTICS_SCHEMA_VERSION,
+    environment: getAnalyticsEnvironment(),
+    runtime: getAnalyticsRuntime(),
+    ...analyticsContext
+  }));
+}
+
+export function identifyAnalyticsPlayer(playerId: string, properties: AnalyticsIdentityProperties) {
+  if (!analyticsInitialized) initializeAnalytics();
+  if (!analyticsInitialized) return;
+  const distinctId = playerId.trim();
+  if (!distinctId) return;
+  const clean = cleanAnalyticsProperties(properties);
+  posthog.identify(distinctId, cleanAnalyticsProperties({
+    has_online_profile: properties.has_online_profile,
+    has_story_profile: properties.has_story_profile,
+    last_seen_app_version: properties.last_seen_app_version,
+    last_seen_runtime: properties.last_seen_runtime,
+    account_created_period: properties.account_created_period
+  }), cleanAnalyticsProperties({
+    first_seen_app_version: properties.first_seen_app_version,
+    first_seen_runtime: properties.first_seen_runtime
+  }));
+  posthog.register(clean);
+}
+
+export function resetAnalyticsIdentity() {
+  if (!analyticsInitialized) return;
+  posthog.reset();
+}
+
+export function createAnalyticsId(prefix = 'event') {
+  const id = typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+    ? crypto.randomUUID()
+    : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+  return `${prefix}-${id}`;
+}
+
+export function captureAnalyticsEvent<Name extends AnalyticsEventName>(name: Name, properties: AnalyticsEventMap[Name]) {
+  if (!analyticsInitialized) initializeAnalytics();
+  if (!analyticsInitialized) return;
+  posthog.capture(name, cleanAnalyticsProperties({
+    analytics_schema_version: ANALYTICS_SCHEMA_VERSION,
+    environment: getAnalyticsEnvironment(),
+    runtime: getAnalyticsRuntime(),
+    ...analyticsContext,
+    ...properties
+  }));
 }
 
 export function normalizeAnalyticsError(error: unknown) {
@@ -223,14 +356,28 @@ export function normalizeAnalyticsError(error: unknown) {
 
 export function captureAnalyticsError(error: unknown, context: AnalyticsProperties = {}) {
   const normalized = normalizeAnalyticsError(error);
+  const source = typeof context.source === 'string' && context.source ? context.source : 'unknown';
+  const severity = context.severity === 'fatal' ? 'fatal' : 'error';
+  const recoverable = context.recoverable === true;
+  const errorCode = typeof context.error_code === 'string' && context.error_code
+    ? context.error_code
+    : `${normalized.error_name}:${source}`.toLowerCase().replace(/[^a-z0-9:_-]+/g, '_').slice(0, 120);
   captureAnalyticsEvent('error_occurred', {
     ...context,
+    error_code: errorCode,
+    severity,
+    source,
+    recoverable,
     error_name: normalized.error_name,
     error_message: normalized.error_message
   });
   if (!analyticsInitialized) return;
-  posthog.captureException(error, cleanProperties({
+  posthog.captureException(error, cleanAnalyticsProperties({
     ...context,
+    error_code: errorCode,
+    severity,
+    source,
+    recoverable,
     error_name: normalized.error_name,
     error_message: normalized.error_message
   }));

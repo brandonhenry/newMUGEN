@@ -89,18 +89,28 @@ describe('fight analytics lifecycle', () => {
         { hp: 0, roundsWon: 1, character: { id: 'p2' } }
       ] as MatchSnapshot['fighters']
     });
-    recordFightAnalyticsSnapshot(state, completed, common, capture, 7000);
+    recordFightAnalyticsSnapshot(state, completed, common, capture, 7000, { localSlot: 1 });
     recordFightAnalyticsSnapshot(state, completed, common, capture, 7500);
 
     expect(captured.filter((event) => event.name === 'match_completed')).toHaveLength(1);
     expect(captured.find((event) => event.name === 'match_completed')?.properties).toMatchObject({
       winner_slot: 1,
+      completion_reason: 'normal',
+      winner_character_id: 'p1',
+      loser_character_id: 'p2',
+      local_result: 'win',
       rounds_played: 3,
       hit_count: 1,
       block_count: 1,
       total_damage_p1: 12,
       total_damage_p2: 3,
       max_combo_hits: 2
+    });
+    expect(captured.filter((event) => event.name === 'performance_summary')).toHaveLength(1);
+    expect(captured.find((event) => event.name === 'performance_summary')?.properties).toMatchObject({
+      activity_type: 'match',
+      duration_seconds: 7,
+      sample_count: 0
     });
   });
 });

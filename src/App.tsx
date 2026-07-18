@@ -155,7 +155,19 @@ import {
 } from './types';
 import { getCharacterGlobalScale, normalizeCharacterModelScale } from './lib/characterScale';
 import { getAttackCompanionRenderSignature } from './lib/attackCompanion';
-import { captureAnalyticsError, captureAnalyticsEvent, getPostHogDeviceId, type AnalyticsEventName, type AnalyticsProperties } from './lib/analytics';
+import {
+  captureAnalyticsError,
+  captureAnalyticsEvent,
+  createAnalyticsId,
+  getAnalyticsRuntime,
+  getPostHogDeviceId,
+  identifyAnalyticsPlayer,
+  setAnalyticsContext,
+  type AnalyticsCapture,
+  type AnalyticsEventMap,
+  type AnalyticsEventName,
+  type AnalyticsProperties
+} from './lib/analytics';
 import { createFightAnalyticsState, recordFightAnalyticsSnapshot, resetFightAnalyticsState, type FightAnalyticsActorType } from './lib/fightAnalytics';
 import {
   FRIENDS_STORAGE_KEY,
@@ -338,9 +350,12 @@ const StoryAvatarCreatorScreen = lazy(() => import('./story/StoryAvatarCreatorSc
 const StoryHubScreen = lazy(() => import('./story/StoryHubScreen'));
 
 type FightPauseMenuView = 'menu' | 'movelist' | 'trainingTrials' | 'trainingSettings';
-type AnalyticsCapture = (name: AnalyticsEventName, properties?: AnalyticsProperties) => void;
+type AppAnalyticsCapture = AnalyticsCapture<'app_version' | 'mode'>;
+type FightScreenAnalyticsCapture = AnalyticsCapture<'app_version' | 'mode' | 'match_id' | 'matchmaking_attempt_id'>;
 type AssetWarmupMatchOptions = NonNullable<Parameters<typeof createMatch>[5]>;
 type AssetWarmupIntent = {
+  analyticsWarmupId: string;
+  analyticsStartedAt: number;
   stage: StageDefinition;
   previousScreen: Screen;
   destination: 'fight' | 'versus';
@@ -3243,6 +3258,8 @@ export default function App() {
   const [arcadeTransition, setArcadeTransition] = useState<ArcadeTransitionIntent | null>(null);
   const [lastMiniGameResult, setLastMiniGameResult] = useState<MiniGameResult | null>(null);
   const [arcadeRun, setArcadeRun] = useState<ArcadeRunState>(() => createArcadeRunState());
+  const arcadeRunAnalyticsIdRef = useRef(createAnalyticsId('arcade-run'));
+  const completedArcadeRunAnalyticsRef = useRef<Set<string>>(new Set());
   const [arcadeRunBestScore, setArcadeRunBestScore] = useState(0);
   const [musicStarted, setMusicStarted] = useState(true);
   const [fightPaused, setFightPaused] = useState(false);
@@ -3276,7 +3293,7 @@ export default function App() {
     () => roster.filter((character) => isCharacterPlayable(character) && isCharacterUnlocked(character, effectiveUnlockedCharacterIds)),
     [effectiveUnlockedCharacterIds, roster]
   );
-  const captureAppAnalytics = useCallback((name: AnalyticsEventName, properties: AnalyticsProperties = {}) => {
+  const captureAppAnalytics: AppAnalyticsCapture = useCallback((name: AnalyticsEventName, properties: AnalyticsProperties) => {
     captureAnalyticsEvent(name, {
       app_version: KORE_APP_VERSION,
       mode,
@@ -3286,8 +3303,25 @@ export default function App() {
       cpu_difficulty: getEffectiveCpuDifficulty(mode, cpuDifficulty),
       screen,
       ...properties
-    });
+    } as AnalyticsEventMap[typeof name]);
   }, [cpuDifficulty, mode, p1Id, p2Id, screen, stageId]);
+
+  useEffect(() => {
+    setAnalyticsContext({ app_version: KORE_APP_VERSION, screen, mode });
+  }, [mode, screen]);
+
+  useEffect(() => {
+    if (!onlineProfile) return;
+    identifyAnalyticsPlayer(onlineProfile.playerId, {
+      has_online_profile: true,
+      has_story_profile: Boolean(storyProfile),
+      first_seen_app_version: KORE_APP_VERSION,
+      last_seen_app_version: KORE_APP_VERSION,
+      first_seen_runtime: getAnalyticsRuntime(),
+      last_seen_runtime: getAnalyticsRuntime(),
+      account_created_period: storyProfile ? new Date(storyProfile.createdAt).toISOString().slice(0, 7) : undefined
+    });
+  }, [onlineProfile?.playerId, storyProfile?.createdAt]);
   const capturePositiveMilestone = useCallback((milestoneType: string, properties: AnalyticsProperties = {}) => {
     captureAppAnalytics('positive_milestone_reached', {
       milestone_type: milestoneType,
@@ -4440,6 +4474,8 @@ export default function App() {
       } : null);
       setPendingUnlockCharacterId(targetScreen === 'unlockReveal' ? secondCharacter.id : '');
       setAssetWarmupIntent(targetScreen === 'assetWarmup' ? {
+        analyticsWarmupId: 'audit-warmup',
+        analyticsStartedAt: performance.now(),
         stage: auditStage,
         previousScreen: 'stage',
         destination: 'fight',
@@ -4700,6 +4736,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    const loadStartedAt = performance.now();
     captureAnalyticsEvent('game_load_started', { app_version: KORE_APP_VERSION });
     debugHypotheses();
     let mounted = true;
@@ -4732,6 +4769,7 @@ export default function App() {
       setStageId(firstPlayableStage?.id ?? stages[0].id);
       captureAnalyticsEvent('game_loaded', {
         app_version: KORE_APP_VERSION,
+        load_duration_ms: Math.max(0, Math.round(performance.now() - loadStartedAt)),
         roster_count: result.characters.length,
         stage_count: loadedStages.stages.length,
         warning_count: Object.values(result.warnings).flat().length + Object.values(loadedStages.warnings).flat().length
@@ -5259,8 +5297,11 @@ export default function App() {
     warmupFighters: { p1?: CharacterDefinition; p2?: CharacterDefinition } = {},
     modeOverride?: MatchMode
   ) => {
+    const warmupId = createAnalyticsId('warmup');
     assetReadyContinuationRef.current = continuation;
     setAssetWarmupIntent({
+      analyticsWarmupId: warmupId,
+      analyticsStartedAt: performance.now(),
       stage,
       previousScreen,
       destination,
@@ -5271,22 +5312,41 @@ export default function App() {
     });
     setStageId(stage.id);
     setScreen('assetWarmup');
+    captureAppAnalytics('asset_warmup_started', {
+      warmup_id: warmupId,
+      destination
+    });
     void preloadStageModel(stage);
-  }, [mode, p1, p2, screen]);
+  }, [captureAppAnalytics, mode, p1, p2, screen]);
 
   const completeAssetWarmup = useCallback(() => {
+    if (assetWarmupIntent) {
+      captureAppAnalytics('asset_warmup_completed', {
+        warmup_id: assetWarmupIntent.analyticsWarmupId,
+        destination: assetWarmupIntent.destination,
+        duration_ms: Math.max(0, Math.round(performance.now() - assetWarmupIntent.analyticsStartedAt))
+      });
+    }
     const continuation = assetReadyContinuationRef.current;
     assetReadyContinuationRef.current = null;
     setAssetWarmupIntent(null);
     if (continuation) continuation();
-  }, []);
+  }, [assetWarmupIntent, captureAppAnalytics]);
 
   const cancelAssetWarmup = useCallback(() => {
     const previousScreen = assetWarmupIntent?.previousScreen ?? 'stage';
+    if (assetWarmupIntent) {
+      captureAppAnalytics('asset_warmup_failed', {
+        warmup_id: assetWarmupIntent.analyticsWarmupId,
+        destination: assetWarmupIntent.destination,
+        duration_ms: Math.max(0, Math.round(performance.now() - assetWarmupIntent.analyticsStartedAt)),
+        error_code: 'user_cancelled'
+      });
+    }
     assetReadyContinuationRef.current = null;
     setAssetWarmupIntent(null);
     setScreen(previousScreen);
-  }, [assetWarmupIntent?.previousScreen]);
+  }, [assetWarmupIntent, captureAppAnalytics]);
 
   const startFriendInvite = useCallback((friend: FriendEntry) => {
     if (!onlineProfile) return;
@@ -5295,6 +5355,8 @@ export default function App() {
       storeCustomRoomSession(session);
       setCustomRoomSession(session);
       await sendFriendInvite(onlineProfile, friend.playerId, session.room.roomName, 'CUSTOM', session.room.roomId, 'custom');
+      captureAppAnalytics('custom_room_created', { status: 'success' });
+      captureAppAnalytics('friend_invite_sent', { status: 'success', room_kind: 'custom' });
       setMode('custom');
       setScreen('customRooms');
     }).catch((error) => console.warn('Failed to create Custom friend room', error));
@@ -5305,6 +5367,7 @@ export default function App() {
     void respondToFriendInvite(onlineProfile, invite.inviteId, 'accepted').catch((error) => {
       console.warn('Failed to accept friend invite', error);
     });
+    captureAppAnalytics('friend_invite_accepted', { status: 'success', room_kind: invite.roomKind });
     dismissFriendNotification(`invite:${invite.inviteId}`);
     if (invite.roomKind === 'custom') {
       const friendIds = readFriends(onlineProfile).map((friend) => friend.playerId);
@@ -5497,12 +5560,20 @@ export default function App() {
 	  useEffect(() => {
 	    setArcadeRunBestScore(readLocalArcadeRunHighScore(onlineProfile, p1Id));
 	  }, [onlineProfile, p1Id]);
-	  const resetArcadeRun = useCallback(() => {
-	    setArcadeRun(createArcadeRunState());
+	  const resetArcadeRun = useCallback((trackStart = true) => {
+	    const next = createArcadeRunState();
+	    arcadeRunAnalyticsIdRef.current = createAnalyticsId('arcade-run');
+	    setArcadeRun(next);
 	    setLastMiniGameResult(null);
 	    setActiveArcadeMiniGame(null);
 	    setArcadeTransition(null);
-	  }, []);
+	    if (trackStart) {
+	      captureAppAnalytics('arcade_run_started', {
+	        run_id: arcadeRunAnalyticsIdRef.current,
+	        starting_lives: next.livesRemaining
+	      });
+	    }
+	  }, [captureAppAnalytics]);
 	  const returnToNavigationHome = useCallback(() => {
 	    setScreen(navigationHome);
 	  }, [navigationHome]);
@@ -5523,6 +5594,10 @@ export default function App() {
 	    captureAppAnalytics('positive_milestone_reached', {
 	      milestone_type: storyProfile ? 'story_avatar_updated' : 'story_avatar_created',
 	      source: 'avatar_creator'
+	    });
+	    captureAppAnalytics('story_profile_saved', {
+	      created: !storyProfile,
+	      avatar_set: avatar.avatarSet
 	    });
 	    setScreen('storyHub');
 	  }, [captureAppAnalytics, storyProfile]);
@@ -5607,7 +5682,20 @@ export default function App() {
 	    });
 	    setScreen('training');
 	  }, [captureAppAnalytics, onlineProfile, resetRandomSelections, saveOnlineProfile]);
-	  const finishArcadeRun = useCallback((run: ArcadeRunState) => {
+	  const finishArcadeRun = useCallback((run: ArcadeRunState, endReason = run.status === 'game-over' ? 'lives_exhausted' : 'player_exit') => {
+	    const runId = arcadeRunAnalyticsIdRef.current;
+	    if (!completedArcadeRunAnalyticsRef.current.has(runId)) {
+	      completedArcadeRunAnalyticsRef.current.add(runId);
+	      captureAppAnalytics('arcade_run_ended', {
+	        run_id: runId,
+	        duration_seconds: Math.max(0, Math.round((Date.now() - run.startedAt) / 1000)),
+	        level: run.level,
+	        score: Math.round(run.score),
+	        wins: run.wins,
+	        lives_remaining: run.livesRemaining,
+	        end_reason: endReason
+	      });
+	    }
 	    const previousBest = readLocalArcadeRunHighScore(onlineProfile, p1Id);
 	    const best = Math.max(previousBest, run.score);
 	    setArcadeRunBestScore(best);
@@ -5628,7 +5716,7 @@ export default function App() {
 	      .catch((error) => {
 	        console.error('Failed to submit arcade run score', error);
 	      });
-	  }, [capturePositiveMilestone, onlineProfile, p1Id]);
+	  }, [captureAppAnalytics, capturePositiveMilestone, onlineProfile, p1Id]);
 	  const makeArcadeMiniGameLaunch = useCallback((level = arcadeRun.level): ArcadeMiniGameLaunch | null => {
 	    if (!shouldStartArcadeMiniGame()) return null;
 	    const miniGameStage = pickRandomStage(playableStageRoster) ?? selectedStage;
@@ -5784,6 +5872,7 @@ export default function App() {
               reducedMotion={settings.display.reducedMotion}
               readInputs={readInputsForStep}
               setVirtualAction={setVirtualAction}
+              onAnalytics={captureAppAnalytics}
               onMusicContext={setAdventureMusicContext}
               activeMusicTrack={adventureMusicTrack}
               onCredits={() => {
@@ -6555,8 +6644,8 @@ export default function App() {
               setScreen('select');
             }}
             onGiveUp={() => {
-              finishArcadeRun(arcadeRun);
-              resetArcadeRun();
+              finishArcadeRun(arcadeRun, 'give_up');
+              resetArcadeRun(false);
               returnToNavigationHome();
             }}
           />
@@ -6679,6 +6768,7 @@ export default function App() {
             privateRoomIntent={privateRoomIntent}
             pendingPrivateInviteFriend={pendingPrivateInviteFriend}
             onFriendInviteSent={(invite, friend) => {
+              captureAppAnalytics('friend_invite_sent', { status: 'success', room_kind: 'private' });
               pushFriendNotification({
                 id: `invite-sent:${invite.inviteId}`,
                 kind: 'invite',
@@ -24688,6 +24778,7 @@ function FightScreen({
   const dismissedTrainingTrialOutcomeRef = useRef<string | null>(null);
   const pendingTrainingTrialMenuRef = useRef(false);
   const trainingTrialAttemptCountsRef = useRef<Record<string, number>>({});
+  const trainingTrialStartedAtRef = useRef<Record<string, number>>({});
   const isTrainingOnline = mode === 'trainingOnline';
   const isRanked = mode === 'ranked';
   const isCustom = mode === 'custom';
@@ -24821,7 +24912,12 @@ function FightScreen({
   onArcadeAdvanceRef.current = onArcadeAdvance;
   onTournamentMatchCompleteRef.current = onTournamentMatchComplete;
   const fightAnalyticsStateRef = useRef(createFightAnalyticsState());
+  const analyticsMatchIdRef = useRef(createAnalyticsId('match'));
+  const matchmakingAttemptIdRef = useRef(createAnalyticsId('matchmaking'));
+  const matchmakingStartedAtRef = useRef(performance.now());
   const matchStartedTrackedRef = useRef(false);
+  const onlineConnectedTrackedRef = useRef(false);
+  const onlineDisconnectedTrackedRef = useRef(false);
   const mobileControlsTrackedRef = useRef(false);
   const onlineStatusAnalyticsRef = useRef('');
   const pauseAnalyticsRef = useRef(paused);
@@ -24839,17 +24935,21 @@ function FightScreen({
   const [onlineAssetGate, setOnlineAssetGate] = useState<OnlineAssetGate | null>(null);
   const [showLateAssetFallback, setShowLateAssetFallback] = useState(false);
 
-  const captureFightAnalytics = useCallback((name: AnalyticsEventName, properties: AnalyticsProperties = {}) => {
+  const captureFightAnalytics: FightScreenAnalyticsCapture = useCallback((name: AnalyticsEventName, properties: AnalyticsProperties) => {
     captureAnalyticsEvent(name, {
       app_version: KORE_APP_VERSION,
+      match_id: analyticsMatchIdRef.current,
+      matchmaking_attempt_id: isOnline ? matchmakingAttemptIdRef.current : undefined,
       mode,
       stage_id: stage.id,
       p1_character_id: p1.id,
       p2_character_id: p2.id,
       cpu_difficulty: cpuDifficulty,
       ...properties
-    });
-  }, [cpuDifficulty, mode, p1.id, p2.id, stage.id]);
+    } as AnalyticsEventMap[typeof name]);
+  }, [cpuDifficulty, isOnline, mode, p1.id, p2.id, stage.id]);
+  const captureFightAnalyticsRef = useRef(captureFightAnalytics);
+  captureFightAnalyticsRef.current = captureFightAnalytics;
   const captureFightPositiveMilestone = useCallback((milestoneType: string, properties: AnalyticsProperties = {}) => {
     captureFightAnalytics('positive_milestone_reached', {
       milestone_type: milestoneType,
@@ -24859,6 +24959,7 @@ function FightScreen({
 
   const resetTrackedMatchAnalytics = useCallback((freshMatch?: MatchSnapshot) => {
     resetFightAnalyticsState(fightAnalyticsStateRef.current);
+    analyticsMatchIdRef.current = createAnalyticsId('match');
     if (freshMatch) {
       fightAnalyticsStateRef.current.previousRoundsWon = [
         freshMatch.fighters[0].roundsWon,
@@ -24867,6 +24968,15 @@ function FightScreen({
     }
     matchStartedTrackedRef.current = false;
   }, []);
+
+  useEffect(() => () => {
+    if (!matchStartedTrackedRef.current || fightAnalyticsStateRef.current.matchCompleted || mode === 'cpu') return;
+    captureFightAnalyticsRef.current('match_abandoned', {
+      elapsed_seconds: Number(((performance.now() - fightAnalyticsStateRef.current.matchStartedAt) / 1000).toFixed(2)),
+      abandonment_reason: onlineStateRef.current === 'error' ? 'connection_error' : onlineStateRef.current === 'disconnected' ? 'disconnect' : 'screen_exit',
+      phase: matchRef.current.phase
+    });
+  }, [mode]);
 
   const resetTrainingButtonHistory = useCallback(() => {
     trainingButtonHistoryRef.current = [];
@@ -25243,24 +25353,33 @@ function FightScreen({
   useEffect(() => {
     if (!isOnline) return;
     onlineStatusTextRef.current = onlineStatusText;
-    const statusKey = `${onlineState}:${onlineRole ?? 'none'}:${onlineStatusText}`;
+    const statusKey = `${onlineState}:${onlineRole ?? 'none'}`;
     if (onlineStatusAnalyticsRef.current === statusKey) return;
     onlineStatusAnalyticsRef.current = statusKey;
     captureFightAnalytics('online_status_changed', {
       online_state: onlineState,
       online_role: onlineRole,
-      status_text: onlineStatusText
+      status_code: onlineState
     });
-    if (onlineState === 'connected') {
-      captureFightAnalytics('online_connected', { online_role: onlineRole });
+    if (onlineState === 'connected' && !onlineConnectedTrackedRef.current) {
+      onlineConnectedTrackedRef.current = true;
+      captureFightAnalytics('online_connected', {
+        online_role: onlineRole,
+        connection_result: onlineBotOpponentRef.current ? 'bot' : 'peer',
+        search_duration_seconds: Number(((performance.now() - matchmakingStartedAtRef.current) / 1000).toFixed(2))
+      });
+      if (isPrivate) captureFightAnalytics(onlineRole === 'host' ? 'private_room_created' : 'private_room_joined', { status: 'success' });
+      if (isCustom) captureFightAnalytics(onlineRole === 'host' ? 'custom_room_created' : 'custom_room_joined', { status: 'success' });
     }
-    if (onlineState === 'disconnected' || onlineState === 'error') {
+    if ((onlineState === 'disconnected' || onlineState === 'error') && !onlineDisconnectedTrackedRef.current) {
+      onlineDisconnectedTrackedRef.current = true;
       captureFightAnalytics('online_disconnected', {
         online_state: onlineState,
-        status_text: onlineStatusText
+        disconnect_reason: onlineState === 'error' ? 'connection_error' : onlineClosingRef.current ? 'local_exit' : 'peer_disconnect',
+        recoverable: onlineState !== 'error'
       });
     }
-  }, [captureFightAnalytics, isOnline, onlineRole, onlineState, onlineStatusText]);
+  }, [captureFightAnalytics, isCustom, isOnline, isPrivate, onlineRole, onlineState, onlineStatusText]);
 
   useEffect(() => {
     if (mode !== 'training' || !activeTrainingTrial || !trainingTrialProgress?.completed || !trainingTrialProgress.succeeded || previewPlayback) return;
@@ -25272,7 +25391,10 @@ function FightScreen({
       trial_id: activeTrainingTrial.id,
       training_submode: activeTrainingTrial.mode,
       trial_category: activeTrainingTrial.category,
-      trial_difficulty: activeTrainingTrial.difficulty
+      trial_difficulty: activeTrainingTrial.difficulty,
+      attempt_number: Math.max(1, trainingTrialAttemptCountsRef.current[activeTrainingTrial.id] ?? 1),
+      completion_duration_seconds: Number(((performance.now() - (trainingTrialStartedAtRef.current[activeTrainingTrial.id] ?? performance.now())) / 1000).toFixed(2)),
+      first_time_completion: firstTimeCompletion
     });
     captureFightPositiveMilestone('training_trial_completed', {
       trial_id: activeTrainingTrial.id,
@@ -25376,6 +25498,7 @@ function FightScreen({
   useEffect(() => {
     const matchIsTrackable = !isOnline || onlineState === 'connected';
     if (!matchIsTrackable) return;
+    const networkStats = onlineRollbackRef.current?.getNetworkStats();
     if (!matchStartedTrackedRef.current) {
       fightAnalyticsStateRef.current.matchStartedAt = performance.now();
       fightAnalyticsStateRef.current.roundStartedAt = performance.now();
@@ -25387,20 +25510,28 @@ function FightScreen({
       match,
       {
         app_version: KORE_APP_VERSION,
+        match_id: analyticsMatchIdRef.current,
         mode,
         stage_id: match.stage.id,
         p1_character_id: match.fighters[0].baseCharacter.id,
         p2_character_id: match.fighters[1].baseCharacter.id,
-        cpu_difficulty: match.cpuDifficulty
+        cpu_difficulty: match.cpuDifficulty,
+        peer_type: isOnline ? (onlineBotOpponentRef.current ? 'bot' : 'peer') : 'offline',
+        rollback_count: networkStats?.rollbackCount ?? 0,
+        max_rollback_depth: networkStats?.maxRollbackDepth ?? 0,
+        desync_count: networkStats?.desyncCount ?? 0,
+        dropped_late_inputs: networkStats?.droppedLateInputs ?? 0,
+        ping_estimate_ms: networkStats?.pingEstimateMs ?? null
       },
-      captureFightAnalytics,
+      ((name, properties) => captureFightAnalytics(name, properties as never)),
       undefined,
       {
         actorTypesBySlot: getFightActorTypes(mode, onlineRoleRef.current, cpuSlots),
-        captureComboRoutesForActorTypes: ['human']
+        captureComboRoutesForActorTypes: ['human'],
+        localSlot: localResultSlot
       }
     );
-  }, [captureFightAnalytics, cpuSlots, isOnline, match, mode, onlineState]);
+  }, [captureFightAnalytics, cpuSlots, isOnline, localResultSlot, match, mode, onlineState]);
 
   useEffect(() => {
     onlineRoleRef.current = onlineRole;
@@ -26810,6 +26941,10 @@ function FightScreen({
     setOnlineStatusText(isPrivate ? (privateRoomIntent?.kind === 'guest' ? 'JOINING PRIVATE ROOM' : 'CREATING PRIVATE ROOM') : isRanked ? rankedPlacementStatus(rankedProfileRef.current) : isTrainingOnline ? 'LOOKING FOR SPARRING PARTNER' : 'LOOKING FOR MATCH');
     setPrivateRoomPassword('');
     setPrivateRoomName('');
+    matchmakingAttemptIdRef.current = createAnalyticsId('matchmaking');
+    matchmakingStartedAtRef.current = performance.now();
+    onlineConnectedTrackedRef.current = false;
+    onlineDisconnectedTrackedRef.current = false;
     captureFightAnalytics('online_search_started', {
       online_mode: mode,
       queue: isRanked ? 'ranked' : isPrivate ? 'private' : isTrainingOnline ? 'training' : 'casual',
@@ -27513,6 +27648,16 @@ function FightScreen({
       ? trainingTrialAttemptCountsRef.current[trial.id] ?? 0
       : (trainingTrialAttemptCountsRef.current[trial.id] ?? 0) + 1;
     if (!preview) trainingTrialAttemptCountsRef.current[trial.id] = attempts;
+    if (!preview) {
+      trainingTrialStartedAtRef.current[trial.id] = performance.now();
+      captureFightAnalytics('training_trial_started', {
+        trial_id: trial.id,
+        training_submode: trial.mode,
+        trial_category: trial.category,
+        trial_difficulty: trial.difficulty,
+        attempt_number: attempts
+      });
+    }
     const progress = makeTrainingTrialProgress(trial, preview, attempts);
     activeTrainingTrialRef.current = trial;
     trainingTrialProgressRef.current = progress;
@@ -27520,7 +27665,7 @@ function FightScreen({
     const playback = preview ? { trialId: trial.id, frame: 0 } : null;
     previewPlaybackRef.current = playback;
     setPreviewPlayback(playback);
-  }, [activeTrainingTrial, installFreshMatch, makeTrialMatch, prepareTrainingTrialMatch]);
+  }, [activeTrainingTrial, captureFightAnalytics, installFreshMatch, makeTrialMatch, prepareTrainingTrialMatch]);
 
   useEffect(() => {
     if (mode !== 'training' || !activeTrainingTrial || !trainingTrialProgress?.completed || previewPlayback) return;
@@ -27587,18 +27732,9 @@ function FightScreen({
   }, [captureFightAnalytics, installFreshMatch, makeTrialMatch, prepareTrainingTrialMatch]);
 
   const trainActiveTrainingTrial = useCallback(() => {
-    const trial = activeTrainingTrialRef.current ?? activeTrainingTrial ?? null;
-    if (trial) {
-      captureFightAnalytics('training_trial_started', {
-        trial_id: trial.id,
-        training_submode: trial.mode,
-        trial_category: trial.category,
-        trial_difficulty: trial.difficulty
-      });
-    }
     restartTrainingTrial(activeTrainingTrialRef.current ?? activeTrainingTrial ?? undefined, false);
     setPaused(false);
-  }, [activeTrainingTrial, captureFightAnalytics, restartTrainingTrial]);
+  }, [activeTrainingTrial, restartTrainingTrial]);
 
   const previewActiveTrainingTrial = useCallback(() => {
     const trial = activeTrainingTrialRef.current ?? activeTrainingTrial ?? null;
@@ -29106,6 +29242,7 @@ function BreakTargetMiniGameScreen({
   const pausedRef = useRef(paused);
   const pauseLatchRef = useRef(false);
   const completedRef = useRef(false);
+  const miniGameStartedAtRef = useRef(performance.now());
   const mobileControlsTrackedRef = useRef(false);
 
   useEffect(() => {
@@ -29185,6 +29322,9 @@ function BreakTargetMiniGameScreen({
             score: Math.round(result.score),
             high_score: highScore,
             new_high_score: result.score > previousHighScore,
+            completion_reason: result.completedReason,
+            elapsed_seconds: Number(((performance.now() - miniGameStartedAtRef.current) / 1000).toFixed(2)),
+            objectives_completed: result.targetsDestroyed,
             targets_destroyed: result.targetsDestroyed,
             target_count: result.totalTargets,
             time_remaining: Number(result.timeRemaining.toFixed(2))
@@ -29357,6 +29497,7 @@ function EnemyRushMiniGameScreen({
   const pausedRef = useRef(paused);
   const pauseLatchRef = useRef(false);
   const completedRef = useRef(false);
+  const miniGameStartedAtRef = useRef(performance.now());
   const mobileControlsTrackedRef = useRef(false);
   const attackAliasKeysRef = useRef(createEnemyRushAttackAliasState());
 
@@ -29476,6 +29617,9 @@ function EnemyRushMiniGameScreen({
             score: Math.round(result.score),
             high_score: highScore,
             new_high_score: result.score > previousHighScore,
+            completion_reason: result.completedReason,
+            elapsed_seconds: Number(((performance.now() - miniGameStartedAtRef.current) / 1000).toFixed(2)),
+            objectives_completed: result.enemiesDefeated ?? 0,
             enemies_defeated: result.enemiesDefeated,
             enemy_count: result.totalEnemies,
             completed_reason: result.completedReason
@@ -29627,6 +29771,7 @@ function TagMiniGameScreen({
   const pausedRef = useRef(false);
   const pauseLatchRef = useRef(false);
   const completedRef = useRef(false);
+  const miniGameStartedAtRef = useRef(performance.now());
   const mobileControlsTrackedRef = useRef(false);
 
   useEffect(() => {
@@ -29721,6 +29866,9 @@ function TagMiniGameScreen({
             score: result.score,
             high_score: highScore,
             new_high_score: result.score > previousHighScore,
+            completion_reason: result.completedReason,
+            elapsed_seconds: Number(((performance.now() - miniGameStartedAtRef.current) / 1000).toFixed(2)),
+            objectives_completed: result.cleared ? 1 : 0,
             tag_role: result.tagRole,
             completed_reason: result.completedReason,
             survival_time: result.survivalTime,

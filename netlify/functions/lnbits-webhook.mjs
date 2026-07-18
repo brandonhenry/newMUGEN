@@ -4,15 +4,18 @@ import {
   getPaidTournamentStores,
   json
 } from './_paid-tournament-store.mjs';
+import { captureServerAnalytics, captureTournamentOperationFailure } from './_posthog-analytics.mjs';
 
 export async function handler(event) {
   if (event.httpMethod !== 'POST') return json(405, { error: 'method_not_allowed' });
+  let analyticsBody = {};
   try {
     const token = event.queryStringParameters?.token || '';
     if (!process.env.LNBITS_WEBHOOK_SECRET || token !== process.env.LNBITS_WEBHOOK_SECRET) {
       return json(401, { error: 'invalid_webhook_token' });
     }
     const body = parseWebhookBody(event);
+    analyticsBody = body;
     const checkingId = cleanCheckingId(
       findWebhookIdentifier(body) ||
       event.queryStringParameters?.checking_id ||
@@ -22,6 +25,18 @@ export async function handler(event) {
     );
     if (!checkingId) return json(400, { error: 'missing_checking_id' });
     const result = await confirmPaidEntryByCheckingId(getPaidTournamentStores(event), checkingId, Date.now());
+    if (result.paid && result.entry && result.bracket) {
+      await captureServerAnalytics('tournament_payment_confirmed', {
+        eventId: `tournament-payment:${result.bracket.id}:${result.entry.id}`,
+        distinctId: result.entry.playerId,
+        properties: {
+          tournament_id: result.bracket.id,
+          entry_id: result.entry.id,
+          payment_state: result.entry.paymentState,
+          confirmed: true
+        }
+      });
+    }
     return json(200, {
       ok: true,
       paid: result.paid,
@@ -29,6 +44,7 @@ export async function handler(event) {
       tournamentStatus: result.bracket?.status
     });
   } catch (error) {
+    await captureTournamentOperationFailure('payment_confirmation', analyticsBody, error);
     return errorJson(error);
   }
 }

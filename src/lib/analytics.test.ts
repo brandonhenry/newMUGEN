@@ -3,12 +3,14 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 const posthogMock = vi.hoisted(() => ({
   init: vi.fn(),
   capture: vi.fn(),
-  captureException: vi.fn()
+  captureException: vi.fn(),
+  register: vi.fn(),
+  identify: vi.fn(),
+  reset: vi.fn(),
+  get_distinct_id: vi.fn(() => 'anonymous-device')
 }));
 
-vi.mock('posthog-js', () => ({
-  default: posthogMock
-}));
+vi.mock('posthog-js', () => ({ default: posthogMock }));
 
 async function loadAnalytics() {
   vi.resetModules();
@@ -18,164 +20,102 @@ async function loadAnalytics() {
 afterEach(() => {
   vi.unstubAllEnvs();
   vi.clearAllMocks();
-  window.localStorage.clear();
 });
 
-describe('analytics', () => {
-  it('does nothing when PostHog key is missing', async () => {
+describe('analytics v2', () => {
+  it('suppresses production-project capture in test and development by default', async () => {
+    vi.stubEnv('VITE_POSTHOG_KEY', 'ph_test_key');
     const analytics = await loadAnalytics();
-
-    analytics.captureAnalyticsEvent('game_loaded', { app_version: 'test' });
-
+    analytics.captureAnalyticsEvent('screen_viewed', { screen: 'title' });
     expect(posthogMock.init).not.toHaveBeenCalled();
     expect(posthogMock.capture).not.toHaveBeenCalled();
   });
 
-  it('initializes PostHog and captures clean event properties', async () => {
-    vi.stubEnv('VITE_POSTHOG_KEY', 'ph_test_key');
-    vi.stubEnv('VITE_POSTHOG_HOST', 'https://example.posthog.test');
+  it('allows an explicit non-production opt-in and configures private replay capture', async () => {
     const analytics = await loadAnalytics();
-
-    analytics.captureAnalyticsEvent('game_loaded', {
-      app_version: 'test',
-      omitted: undefined,
-      loaded: true
-    });
-
-    expect(posthogMock.init).toHaveBeenCalledWith('ph_test_key', {
+    analytics.initializeAnalytics({ key: 'ph_test_key', host: 'https://example.posthog.test', enabled: true });
+    expect(posthogMock.init).toHaveBeenCalledWith('ph_test_key', expect.objectContaining({
       api_host: 'https://example.posthog.test',
-      capture_pageview: true,
-      autocapture: false
-    });
-    expect(posthogMock.capture).toHaveBeenCalledWith('game_loaded', {
-      app_version: 'test',
-      loaded: true
-    });
+      autocapture: false,
+      enable_recording_console_log: false,
+      session_recording: expect.objectContaining({
+        sampleRate: 0.1,
+        strictMinimumDuration: true,
+        maskAllInputs: true,
+        blockSelector: analytics.ANALYTICS_PRIVATE_SELECTOR,
+        recordBody: false,
+        captureCanvas: { canvasFps: 2, canvasQuality: '0.2' }
+      })
+    }));
   });
 
-  it('captures expanded explicit app events without undefined properties', async () => {
-    vi.stubEnv('VITE_POSTHOG_KEY', 'ph_test_key');
+  it('adds common v2 context and strips undefined and private properties', async () => {
     const analytics = await loadAnalytics();
-
+    analytics.initializeAnalytics({ key: 'ph_test_key', enabled: true });
+    analytics.setAnalyticsContext({ app_version: '2.4.0', screen: 'fight', mode: 'online' });
     analytics.captureAnalyticsEvent('screen_viewed', {
-      app_version: 'test',
       screen: 'fight',
-      previous_screen: 'versus',
-      time_on_previous_screen_seconds: 2.4,
+      email: 'player@example.com',
+      display_name: 'SECRET NAME',
+      detail: 'contact player@example.com',
       omitted: undefined
     });
-
-    expect(posthogMock.capture).toHaveBeenCalledWith('screen_viewed', {
-      app_version: 'test',
+    expect(posthogMock.capture).toHaveBeenCalledWith('screen_viewed', expect.objectContaining({
+      analytics_schema_version: 2,
+      app_version: '2.4.0',
       screen: 'fight',
-      previous_screen: 'versus',
-      time_on_previous_screen_seconds: 2.4
-    });
+      mode: 'online',
+      detail: 'contact [redacted-email]'
+    }));
+    const properties = posthogMock.capture.mock.calls[posthogMock.capture.mock.calls.length - 1]?.[1];
+    expect(properties).not.toHaveProperty('email');
+    expect(properties).not.toHaveProperty('display_name');
+    expect(properties).not.toHaveProperty('omitted');
   });
 
-  it('captures gameplay popularity events', async () => {
-    vi.stubEnv('VITE_POSTHOG_KEY', 'ph_test_key');
+  it('identifies only with the saved pseudonymous player id and allowlisted person properties', async () => {
     const analytics = await loadAnalytics();
+    analytics.initializeAnalytics({ key: 'ph_test_key', enabled: true });
+    analytics.identifyAnalyticsPlayer('player-123', {
+      has_online_profile: true,
+      has_story_profile: false,
+      first_seen_app_version: '2.4.0',
+      last_seen_app_version: '2.4.0',
+      first_seen_runtime: 'web',
+      last_seen_runtime: 'web',
+      account_created_period: '2026-07'
+    });
+    expect(posthogMock.identify).toHaveBeenCalledWith('player-123', expect.objectContaining({
+      has_online_profile: true,
+      has_story_profile: false,
+      last_seen_app_version: '2.4.0'
+    }), expect.objectContaining({ first_seen_app_version: '2.4.0', first_seen_runtime: 'web' }));
+  });
 
-    analytics.captureAnalyticsEvent('character_picked', {
-      character_id: 'naruto',
-      slot: 1,
-      actor_type: 'human',
-      random_pick: false
+  it('captures the corrected typed match and combo contracts', async () => {
+    const analytics = await loadAnalytics();
+    analytics.initializeAnalytics({ key: 'ph_test_key', enabled: true });
+    analytics.captureAnalyticsEvent('match_completed', {
+      match_id: 'match-1', mode: 'ai', match_duration_seconds: 63.2, completion_reason: 'normal',
+      winner_character_id: 'naruto', loser_character_id: 'sasuke', local_result: 'win'
     });
     analytics.captureAnalyticsEvent('combo_route_completed', {
-      character_id: 'naruto',
-      route_key: 'jab:1>kick:2',
-      combo_hits: 2,
-      omitted: undefined
+      match_id: 'match-1', mode: 'ai', route_key: 'jab>kick', combo_hits: 2, combo_damage: 45,
+      included_launcher: false, included_tornado: false, included_ki_burst: true
     });
-    analytics.captureAnalyticsEvent('positive_milestone_reached', {
-      milestone_type: 'training_trial_completed',
-      trial_id: 'combo:naruto-route',
-      first_time_completion: true,
-      omitted: undefined
-    });
-
-    expect(posthogMock.capture).toHaveBeenCalledWith('character_picked', {
-      character_id: 'naruto',
-      slot: 1,
-      actor_type: 'human',
-      random_pick: false
-    });
-    expect(posthogMock.capture).toHaveBeenCalledWith('combo_route_completed', {
-      character_id: 'naruto',
-      route_key: 'jab:1>kick:2',
-      combo_hits: 2
-    });
-    expect(posthogMock.capture).toHaveBeenCalledWith('positive_milestone_reached', {
-      milestone_type: 'training_trial_completed',
-      trial_id: 'combo:naruto-route',
-      first_time_completion: true
-    });
+    expect(posthogMock.capture).toHaveBeenCalledWith('match_completed', expect.objectContaining({ match_duration_seconds: 63.2 }));
+    expect(posthogMock.capture).toHaveBeenCalledWith('combo_route_completed', expect.objectContaining({ combo_hits: 2, combo_damage: 45, included_ki_burst: true }));
   });
 
-  it('captures normalized errors', async () => {
-    vi.stubEnv('VITE_POSTHOG_KEY', 'ph_test_key');
+  it('emits bounded error fields and a PostHog exception', async () => {
     const analytics = await loadAnalytics();
-    const error = new Error('Roster failed');
-
-    analytics.captureAnalyticsError(error, { screen: 'boot' });
-
-    expect(posthogMock.capture).toHaveBeenCalledWith('error_occurred', {
-      screen: 'boot',
-      error_name: 'Error',
-      error_message: 'Roster failed'
-    });
-    expect(posthogMock.captureException).toHaveBeenCalledWith(error, {
-      screen: 'boot',
-      error_name: 'Error',
-      error_message: 'Roster failed'
-    });
-  });
-
-  it('stores, sanitizes, and clears local admin PostHog config', async () => {
-    const analytics = await loadAnalytics();
-
-    const saved = analytics.writeAdminAnalyticsConfig({
-      projectToken: ' ph_project ',
-      captureHost: '',
-      endpointToken: ' endpoint_secret ',
-      endpointPaths: {
-        summary: ' /api/projects/492693/endpoints/kore_admin_summary ',
-        trends: ''
-      }
-    });
-
-    expect(saved).toEqual({
-      projectToken: 'ph_project',
-      captureHost: analytics.DEFAULT_POSTHOG_HOST,
-      endpointToken: 'endpoint_secret',
-      endpointPaths: {
-        summary: '/api/projects/492693/endpoints/kore_admin_summary'
-      }
-    });
-    expect(analytics.readAdminAnalyticsConfig()).toEqual(saved);
-    expect(analytics.clearAdminAnalyticsConfig()).toEqual({
-      projectToken: '',
-      captureHost: analytics.DEFAULT_POSTHOG_HOST,
-      endpointToken: '',
-      endpointPaths: {}
-    });
-  });
-
-  it('initializes from saved admin project token when env key is missing', async () => {
-    const analytics = await loadAnalytics();
-    analytics.writeAdminAnalyticsConfig({
-      projectToken: 'ph_saved',
-      captureHost: 'https://capture.example.test'
-    });
-
-    analytics.captureAnalyticsEvent('game_loaded', { app_version: 'test' });
-
-    expect(posthogMock.init).toHaveBeenCalledWith('ph_saved', {
-      api_host: 'https://capture.example.test',
-      capture_pageview: true,
-      autocapture: false
-    });
+    analytics.initializeAnalytics({ key: 'ph_test_key', enabled: true });
+    const error = new Error('Roster failed for player@example.com');
+    analytics.captureAnalyticsError(error, { source: 'app_load', error_code: 'roster_load_failed', severity: 'fatal', recoverable: false });
+    expect(posthogMock.capture).toHaveBeenCalledWith('error_occurred', expect.objectContaining({
+      error_code: 'roster_load_failed', severity: 'fatal', source: 'app_load', recoverable: false,
+      error_message: 'Roster failed for [redacted-email]'
+    }));
+    expect(posthogMock.captureException).toHaveBeenCalledWith(error, expect.objectContaining({ error_code: 'roster_load_failed' }));
   });
 });

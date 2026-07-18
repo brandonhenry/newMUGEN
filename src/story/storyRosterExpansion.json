@@ -1,0 +1,186 @@
+{
+  "version": 1,
+  "npcFrameCounts": { "idle": 6, "dialogue": 6, "walk": 8, "protect": 4, "counter": 6 },
+  "enemySheetRows": [
+    ["idle", "walk", "run", "traverse", "attack-1"],
+    ["attack-2", "special", "block", "hurt", "dead"]
+  ],
+  "biomes": {
+    "greenhollow": {
+      "chromaKey": "#ff00ff",
+      "palette": "leaf green, wheat gold, warm cream, weathered brown",
+      "npcs": [
+        ["liora-mill", "Liora Mill", "arrival", "specialist", "human", "windmill machinist with a brass vane tool and rolled sleeves", "The west sail catches first; that is when the mill wakes.", "Mind the turning teeth."],
+        ["cedric-thatch", "Cedric Thatch", "field-a", "guide", "human", "rooftop pathfinder in a patched green coat carrying a chimney brush", "Red tiles hold. Mossy tiles slide.", "One more step and the roof answers."],
+        ["nessa-loom", "Nessa Loom", "field-a", "specialist", "human", "market weaver with a compact hand loom and ribbon spools", "A strong awning begins with one patient knot.", "These shears cut more than thread."],
+        ["pip-bramble", "Pip Bramble", "field-a", "resident", "folk", "small moss-hare folk courier with a clover satchel", "I know every warm chimney and every loose shingle.", "Fast feet still know how to kick."],
+        ["mara-valve", "Mara Valve", "field-b", "guide", "human", "waterworks ranger with blue waders and a valve-key staff", "Follow the clean current, not the loud one.", "The channel can push harder than you."],
+        ["tobin-reed", "Tobin Reed", "field-b", "resident", "folk", "broad otter-folk lock keeper wearing a reed vest", "The river behaves when you ask with both hands.", "Back away from my gate."],
+        ["elowen-gate", "Elowen Gate", "mastery", "guide", "human", "forest-gate scout in layered bark leather with a lantern", "Old timber marks the road beneath the brambles.", "The gate has defenders."],
+        ["finn-wicker", "Finn Wicker", "mastery", "specialist", "human", "basketwright engineer carrying a reinforced wicker shield", "A woven brace bends before it breaks.", "This weave stops blades too."],
+        ["boro-acorn", "Boro Acorn", "mastery", "resident", "folk", "stout badger-folk orchard keeper with an acorn mallet", "The oldest roots remember every harvest.", "You will not bruise this grove."]
+      ],
+      "enemies": [
+        ["haywire-mite", "Haywire Mite", "regular", "ground", "ambusher", "animated straw-and-copper vermin with sickle mandibles", "#d8a943", [0.82,1.35,0.52,0.42,0.9,0.92,1.18,0.95]],
+        ["sluice-sprite", "Sluice Sprite", "regular", "ranged", "caster", "mischievous water sprite inside a cracked wooden valve wheel", "#54c7d9", [0.86,1.7,0.5,0.55,0.94,0.9,1.04,1.08]],
+        ["bellwing-moth", "Bellwing Moth", "regular", "flying", "flying", "large cream moth with brass bell markings and leaf antennae", "#f0d77a", [0.78,1.45,0.52,0.46,0.88,0.96,1.22,1.05]],
+        ["harvest-warden", "Harvest Warden", "challenger", "ground", "bruiser", "towering village guardian in grain armor wielding a millstone hammer", "#e0a53b", [1.12,3.65,0.64,1.0,4.85,1.57,0.92,6.2]],
+        ["millstorm-sage", "Millstorm Sage", "challenger", "ranged", "caster", "wind mage in layered sailcloth directing razor gusts with a vane staff", "#9ee7d1", [1.1,3.35,0.6,0.98,4.4,1.49,1.03,6.0]]
+      ]
+    },
+    "thornwood": {
+      "chromaKey": "#ff00ff",
+      "palette": "deep pine, moss green, mushroom amber, pale root ivory",
+      "npcs": [
+        ["asha-lantern", "Asha Lantern", "arrival", "specialist", "human", "forest camp lamplighter with a spore-glass lantern and pruning hook", "Blue spores mean shelter; amber spores mean run.", "My lantern burns the biting kind."],
+        ["rowan-root", "Rowan Root", "field-a", "guide", "human", "giantroot climber wearing rope coils and bark guards", "The root's pale side always faces the safe crossing.", "I can tie down more than rope."],
+        ["veya-spore", "Veya Spore", "field-a", "specialist", "human", "mycologist with mask, sample satchel, and glowing mushroom wand", "Every cap tells you what the air is hiding.", "Do not make me open the red pouch."],
+        ["kip-mossfoot", "Kip Mossfoot", "field-a", "resident", "folk", "small frog-folk gatherer with moss boots and a berry basket", "Soft steps find the sweetest berries.", "These legs cross whole ponds."],
+        ["sable-fern", "Sable Fern", "field-b", "guide", "human", "canopy ranger with a fern cloak and recurved branch bow", "Watch the leaves below you; they reveal the wind.", "The canopy already has you marked."],
+        ["odo-glowcap", "Odo Glowcap", "field-b", "resident", "folk", "round mushroom-folk lantern tender with a glowing cap", "I keep a little dawn under my hat.", "The bright spores sting."],
+        ["lark-hollow", "Lark Hollow", "mastery", "guide", "human", "heartwood pilgrim with a root compass and long green scarf", "The oldest path is the one the thorns refuse to cross.", "Heartwood closes around threats."],
+        ["thalia-thorn", "Thalia Thorn", "mastery", "specialist", "human", "thorn surgeon with resin vials and precise hooked blades", "A careful cut can save the whole grove.", "I know exactly where to cut."],
+        ["brin-barkkin", "Brin Barkkin", "mastery", "resident", "folk", "young bark-skinned tree-folk custodian with branch antlers", "The hollow sings when rain is near.", "These roots hold fast."]
+      ],
+      "enemies": [
+        ["briar-maw", "Briar Maw", "regular", "ground", "chaser", "low thorn beast with a snapping flower jaw", "#70bd58", [0.9,1.55,0.58,0.5,1.12,1.04,1.08,1.08]],
+        ["sporecap-stalker", "Sporecap Stalker", "regular", "ranged", "ambusher", "walking dark mushroom that fires luminous spores", "#c681e8", [0.88,1.9,0.54,0.62,1.02,0.98,0.88,1.12]],
+        ["lantern-bat", "Lantern Bat", "regular", "flying", "flying", "root-winged bat with a hanging bioluminescent fruit", "#ffd166", [0.8,1.4,0.5,0.44,0.86,1.02,1.24,1.0]],
+        ["rootbound-huntress", "Rootbound Huntress", "challenger", "ground", "duelist", "masked forest huntress wielding paired living-thorn blades", "#58d68d", [1.08,3.3,0.58,0.96,4.35,1.48,1.24,6.0]],
+        ["heartwood-oracle", "Heartwood Oracle", "challenger", "ranged", "caster", "ancient root seer with a floating seed halo and branch staff", "#b4f08d", [1.12,3.55,0.62,1.0,4.65,1.53,0.94,6.15]]
+      ]
+    },
+    "ironroot": {
+      "chromaKey": "#00ff00",
+      "palette": "iron gray, lamp amber, copper, sunstone gold",
+      "npcs": [
+        ["tessa-lamp", "Tessa Lamp", "arrival", "specialist", "human", "mine safety engineer with a tall lamp helm and inspection hammer", "A steady flame means the brace is steady too.", "I found the weak point already."],
+        ["garrick-rail", "Garrick Rail", "field-a", "guide", "human", "rail switchman in a heavy coat carrying a signal paddle", "Two bright rails lead home; the dark rail leads down.", "The signal says stop."],
+        ["nia-rivet", "Nia Rivet", "field-a", "specialist", "human", "compact mechanic with rivet gun, goggles, and copper apron", "Loose metal talks before it fails.", "This riveter has a louder setting."],
+        ["peb-oreling", "Peb Oreling", "field-a", "resident", "folk", "small crystal oreling pushing a tiny mine cart", "Shiny stones hum when the big carts pass.", "I am heavier than I look."],
+        ["kellan-shaft", "Kellan Shaft", "field-b", "guide", "human", "flooded-shaft diver with rope harness and hooded lamp", "Bubbles mark the ceiling pockets below.", "The line around my waist can pull you too."],
+        ["ruk-copperhide", "Ruk Copperhide", "field-b", "resident", "folk", "stocky mole-folk pump operator with copper claws", "Water never wins if the pumps keep time.", "These claws were made for stone."],
+        ["ada-sunstone", "Ada Sunstone", "mastery", "guide", "human", "vault surveyor with a golden crystal compass and long coat", "The warmest wall hides the final chamber.", "Sunstone flashes before it strikes."],
+        ["varo-hoist", "Varo Hoist", "mastery", "specialist", "human", "lift master wearing chain gauntlets and a counterweight pack", "Balance the load and the shaft does the rest.", "I can move heavier loads than you."],
+        ["gim-gearling", "Gim Gearling", "mastery", "resident", "folk", "round brass construct folk with a lantern heart", "My oldest gear still keeps perfect time.", "Emergency spring engaged."]
+      ],
+      "enemies": [
+        ["rail-jaw", "Rail Jaw", "regular", "ground", "chaser", "iron hound assembled from broken rail plates and wheel teeth", "#d6903d", [0.94,1.65,0.6,0.52,1.16,1.08,1.1,1.1]],
+        ["ore-spitter", "Ore Spitter", "regular", "ranged", "caster", "crystalline cave crawler that launches glowing ore shards", "#ffd166", [0.9,1.7,0.56,0.54,1.05,1.0,0.92,1.15]],
+        ["spark-drone", "Spark Drone", "regular", "flying", "flying", "copper mining drone with propeller fins and sparking drill", "#72d8ff", [0.82,1.35,0.5,0.42,0.9,1.04,1.25,1.08]],
+        ["iron-foreman", "Iron Foreman", "challenger", "ground", "bruiser", "massive armored foreman wielding a chain-driven pile hammer", "#e0a04b", [1.14,3.8,0.66,1.0,5.0,1.6,0.9,6.25]],
+        ["sunstone-artificer", "Sunstone Artificer", "challenger", "ranged", "caster", "crystal engineer commanding orbiting golden drill prisms", "#ffe071", [1.1,3.4,0.6,0.98,4.45,1.52,1.02,6.1]]
+      ]
+    },
+    "bonevault": {
+      "chromaKey": "#00ff00",
+      "palette": "bone ivory, violet flame, charcoal, tarnished silver",
+      "npcs": [
+        ["selene-wick", "Selene Wick", "arrival", "specialist", "human", "crypt lamplighter with violet candles and a silver snuffer", "A steady violet flame means the names are resting.", "I can wake every wick at once."],
+        ["corvus-arch", "Corvus Arch", "field-a", "guide", "human", "ossuary guide with raven mantle and chalk-marked staff", "Follow the arches with unbroken names.", "I will add one more warning mark."],
+        ["lyra-reliquary", "Lyra Reliquary", "field-a", "specialist", "human", "relic conservator carrying padded cases and silver tongs", "Even a cracked keepsake can carry a whole life.", "Nothing leaves this case by force."],
+        ["nib-bonekin", "Nib Bonekin", "field-a", "resident", "folk", "tiny friendly bonekin porter with an oversized key ring", "I know which doors only pretend to be locked.", "The big key is not decorative."],
+        ["ezra-bell", "Ezra Bell", "field-b", "guide", "human", "bell-nave listener in layered black robes with tuning forks", "Count the echoes, not the chimes.", "One sharp note can stop a charge."],
+        ["oss-whisper", "Oss Whisper", "field-b", "resident", "folk", "softly glowing wraith-folk caretaker carrying folded offerings", "The quiet ones still appreciate fresh flowers.", "I can make the whole nave quiet."],
+        ["ione-tomb", "Ione Tomb", "mastery", "guide", "human", "tomb cartographer with inked maps and a crescent lantern", "The unmarked chamber is mapped by what surrounds it.", "You are standing on a closing path."],
+        ["dorian-sigil", "Dorian Sigil", "mastery", "specialist", "human", "ward scribe with floating violet seals and a brush spear", "A complete circle keeps both sides honest.", "The next seal is a binding one."],
+        ["vell-wraithkin", "Vell Wraithkin", "mastery", "resident", "folk", "hooded ghost-folk archivist with a tiny spectral bell", "Old names shine when spoken kindly.", "My bell calls every guardian."]
+      ],
+      "enemies": [
+        ["crypt-hound", "Crypt Hound", "regular", "ground", "chaser", "skeletal hound wrapped in torn funerary cloth", "#cfc5ff", [0.9,1.45,0.58,0.46,1.02,1.06,1.16,1.05]],
+        ["marrow-caster", "Marrow Caster", "regular", "ranged", "caster", "floating bone idol firing violet marrow bolts", "#a879ff", [0.86,1.75,0.52,0.58,0.96,1.02,0.92,1.12]],
+        ["dirge-moth", "Dirge Moth", "regular", "flying", "flying", "pale funeral moth with bell-shaped wings and spectral dust", "#ddd5ff", [0.8,1.5,0.52,0.48,0.88,0.98,1.2,1.06]],
+        ["ossuary-knight", "Ossuary Knight", "challenger", "ground", "duelist", "tall bone-armored knight with a segmented coffin blade", "#e7dcff", [1.1,3.55,0.62,1.0,4.6,1.55,1.08,6.1]],
+        ["violet-bellkeeper", "Violet Bellkeeper", "challenger", "ranged", "caster", "spectral bell priest commanding rings of violet sound", "#b675ff", [1.12,3.5,0.62,1.0,4.55,1.5,0.95,6.05]]
+      ]
+    },
+    "emberdeep": {
+      "chromaKey": "#00ff00",
+      "palette": "basalt black, ember orange, furnace red, brass",
+      "npcs": [
+        ["tala-vent", "Tala Vent", "arrival", "specialist", "human", "caldera vent reader with brass gauges and heatproof wraps", "The fourth breath is always the hottest.", "Pressure finds the fastest exit."],
+        ["rian-basalt", "Rian Basalt", "field-a", "guide", "human", "lavafall scout wearing obsidian plates and carrying a hook staff", "Cross while the falls draw inward.", "Basalt hooks hold more than bridges."],
+        ["naya-bellows", "Naya Bellows", "field-a", "specialist", "human", "forge tender with portable bellows and ember goggles", "A patient fire makes stronger metal.", "I can feed this flame quickly."],
+        ["ruk-emberling", "Ruk Emberling", "field-a", "resident", "folk", "small coal-black salamander folk with a glowing tail lantern", "Warm stones make the best seats.", "My tail is not a handle."],
+        ["varek-lava", "Varek Lava", "field-b", "guide", "human", "relic-forge pathfinder with chain sandals and a heat shield", "The dark crust is safe until it starts to sing.", "This shield turns heat into force."],
+        ["pyra-scorchkin", "Pyra Scorchkin", "field-b", "resident", "folk", "bright fire-gecko folk machinist with brass tool belt", "Tiny sparks tell me where the old gears are hiding.", "Small sparks become large problems."],
+        ["kora-caldera", "Kora Caldera", "mastery", "guide", "human", "rim watcher with a long ash cloak and seismograph staff", "The crown opens when the red haze thins.", "The mountain heard that."],
+        ["dain-anvil", "Dain Anvil", "mastery", "specialist", "human", "master smith in heavy gloves carrying a compact rune anvil", "Good steel remembers every careful strike.", "This hammer teaches quickly."],
+        ["sol-ashling", "Sol Ashling", "mastery", "resident", "folk", "gentle ash spirit folk with a ceramic mask and ember core", "Ash is only fire learning to rest.", "Resting fire can wake."]
+      ],
+      "enemies": [
+        ["slag-beetle", "Slag Beetle", "regular", "ground", "bruiser", "low armored lava beetle with molten seams", "#ff7a31", [0.92,1.45,0.62,0.46,1.25,1.12,0.86,1.18]],
+        ["vent-imp", "Vent Imp", "regular", "ranged", "ambusher", "small basalt imp launching compressed steam bursts", "#ffb347", [0.84,1.55,0.5,0.52,0.92,1.06,1.12,1.05]],
+        ["coalwing", "Coalwing", "regular", "flying", "flying", "charred drake-bat with ember cracks and smoke-free wings", "#ff5d45", [0.82,1.55,0.54,0.48,0.94,1.08,1.2,1.1]],
+        ["caldera-titan", "Caldera Titan", "challenger", "ground", "bruiser", "colossal basalt warrior with a magma core and pillar fists", "#ff6238", [1.16,3.95,0.68,1.0,5.0,1.6,0.9,6.25]],
+        ["forge-seer", "Forge Seer", "challenger", "ranged", "caster", "masked fire oracle controlling floating molten metal rings", "#ffb02e", [1.1,3.4,0.6,0.98,4.45,1.54,1.0,6.1]]
+      ]
+    },
+    "frostpeak": {
+      "chromaKey": "#00ff00",
+      "palette": "ice blue, snow white, navy wool, hearth amber",
+      "npcs": [
+        ["inga-stove", "Inga Stove", "arrival", "specialist", "human", "shelter stove keeper with a copper kettle pack and thick mitts", "A warm cup buys enough courage for one more climb.", "No fighting beside my stove."],
+        ["leif-flag", "Leif Flag", "field-a", "guide", "human", "ice-cave route marker wearing blue flags and climbing spikes", "The darkest ice is the strongest.", "These spikes grip more than ice."],
+        ["anya-ice", "Anya Ice", "field-a", "specialist", "human", "glacier reader with crystal lens, pick, and fur-lined coat", "Old bubbles show which wall will sing first.", "I know where the fracture travels."],
+        ["puck-snowkin", "Puck Snowkin", "field-a", "resident", "folk", "small snow-hare folk carrying a steaming lunch tin", "There is always a shortcut under fresh powder.", "Snow hides a very solid kick."],
+        ["freya-ridge", "Freya Ridge", "field-b", "guide", "human", "windspine scout with sail scarf and weighted boots", "Lean into the gust before it reaches you.", "My footing is better than yours."],
+        ["moki-frostling", "Moki Frostling", "field-b", "resident", "folk", "round frost-ram folk flag tender with tiny curled horns", "Blue flags mean tea is close.", "These horns break hard ice."],
+        ["eira-watch", "Eira Watch", "mastery", "guide", "human", "tower sentinel in white-blue armor carrying a signal lantern", "The watch shadow points home even in a storm.", "The tower light has found you."],
+        ["toren-rope", "Toren Rope", "mastery", "specialist", "human", "rescue rigger with rope spool, pulley gauntlet, and snow visor", "A good knot holds after your hands go numb.", "This line can stop a falling yak."],
+        ["nym-cloudling", "Nym Cloudling", "mastery", "resident", "folk", "small cloud folk wrapped in a knitted scarf with floating boots", "The quiet clouds carry the deepest snow.", "A little thunder clears a path."]
+      ],
+      "enemies": [
+        ["ice-tusk", "Ice Tusk", "regular", "ground", "bruiser", "compact frost boar with crystalline tusks and snow armor", "#8ee8ff", [0.94,1.55,0.62,0.48,1.22,1.1,0.92,1.15]],
+        ["shard-caller", "Shard Caller", "regular", "ranged", "caster", "hooded ice totem that summons flying crystal knives", "#a8dfff", [0.88,1.8,0.54,0.6,1.0,1.02,0.9,1.12]],
+        ["gale-owl", "Gale Owl", "regular", "flying", "flying", "large white owl with wind-rune wing tips", "#d9f7ff", [0.82,1.55,0.54,0.48,0.9,1.0,1.25,1.08]],
+        ["windspine-reaver", "Windspine Reaver", "challenger", "ground", "duelist", "fur-armored ridge warrior wielding paired ice climbing blades", "#9ddfff", [1.1,3.45,0.6,0.98,4.5,1.52,1.22,6.05]],
+        ["aurora-herald", "Aurora Herald", "challenger", "ranged", "caster", "floating winter herald casting ribbons of aurora light", "#8ff0e8", [1.12,3.55,0.62,1.0,4.55,1.5,0.98,6.1]]
+      ]
+    },
+    "sunscar": {
+      "chromaKey": "#00ff00",
+      "palette": "sand gold, terracotta, oasis teal, sun-bleached linen",
+      "npcs": [
+        ["zara-canvas", "Zara Canvas", "arrival", "specialist", "human", "caravan tentwright with folded shade cloth and brass pegs", "Good shade starts before the sun reaches you.", "These pegs hold in a sandstorm."],
+        ["malik-shade", "Malik Shade", "field-a", "guide", "human", "dune pathfinder in layered linen carrying a shadow compass", "Walk where the stone keeps a thin blue edge.", "You chose the exposed line."],
+        ["dalia-compass", "Dalia Compass", "field-a", "specialist", "human", "sand navigator with mirrored goggles and gyroscopic compass", "The needle follows buried stone, not north.", "My compass has a striking arm."],
+        ["tiko-fennec", "Tiko Fennec", "field-a", "resident", "folk", "small fennec folk courier with giant ears and water gourds", "I hear the dunes move before they do.", "I also hear bad ideas."],
+        ["rafi-ripple", "Rafi Ripple", "field-b", "guide", "human", "oasis diver with glasswater mask and hooked pole", "The lowest ripple shows the temple stair.", "Do not muddy this water."],
+        ["kesh-scarabkin", "Kesh Scarabkin", "field-b", "resident", "folk", "polished scarab folk groundskeeper carrying a tiny rake", "Every clean line keeps the oasis calm.", "This shell turns blades."],
+        ["samira-arch", "Samira Arch", "mastery", "guide", "human", "sunken-temple scout with map veil and crescent spear", "The surviving arch points toward the buried nave.", "The temple still has a guard."],
+        ["idris-lens", "Idris Lens", "mastery", "specialist", "human", "solar lens keeper with articulated mirror staff", "One clear beam can reveal a whole inscription.", "One focused beam can end an argument."],
+        ["nuri-sandling", "Nuri Sandling", "mastery", "resident", "folk", "gentle sand spirit folk with pottery armor and a glowing core", "The road is still here; it only learned to flow.", "Sand remembers pressure."]
+      ],
+      "enemies": [
+        ["dune-claw", "Dune Claw", "regular", "ground", "ambusher", "sand-burrowing scorpion beast with glass pincers", "#f3b64e", [0.9,1.4,0.62,0.44,1.06,1.08,1.14,1.08]],
+        ["mirage-cobra", "Mirage Cobra", "regular", "ranged", "caster", "upright desert cobra projecting heat mirage bolts", "#5ed8c7", [0.88,1.9,0.52,0.66,1.0,1.02,1.02,1.12]],
+        ["glasswing-vulture", "Glasswing Vulture", "regular", "flying", "flying", "lean vulture with translucent-looking but opaque crystal wings", "#ffd166", [0.82,1.6,0.56,0.5,0.92,1.04,1.22,1.08]],
+        ["buried-colossus", "Buried Colossus", "challenger", "ground", "bruiser", "ancient sandstone giant with a glowing road core and slab fists", "#e6a347", [1.16,3.95,0.68,1.0,5.0,1.58,0.9,6.25]],
+        ["glasswater-seer", "Glasswater Seer", "challenger", "ranged", "caster", "oasis oracle wielding floating water mirrors and a glass spear", "#52e1c2", [1.1,3.45,0.6,0.98,4.45,1.5,1.02,6.1]]
+      ]
+    },
+    "skyglass": {
+      "chromaKey": "#00ff00",
+      "palette": "prismatic blue, violet, silver, cloud white",
+      "npcs": [
+        ["mira-mooring", "Mira Mooring", "arrival", "specialist", "human", "cloud-dock rigger with silver anchor tool and billowing jacket", "A quiet updraft needs the lightest tether.", "This anchor catches quickly."],
+        ["cael-prism", "Cael Prism", "field-a", "guide", "human", "crystal-bridge scout with refraction visor and balance pole", "Step when your reflection becomes one.", "The bridge favors steady hands."],
+        ["tali-chime", "Tali Chime", "field-a", "specialist", "human", "resonance engineer with paired tuning rings and silver coat", "Matched tones make broken stone remember its place.", "The next tone is a shockwave."],
+        ["zeph-cloudkin", "Zeph Cloudkin", "field-a", "resident", "folk", "small wing-eared cloud folk messenger with prism satchel", "I can cross before the bridge decides to move.", "A gust is faster than a warning."],
+        ["rhea-orbit", "Rhea Orbit", "field-b", "guide", "human", "tower pathfinder with gyroscopic belt and star map cape", "Count the floors by shadow, not by height.", "My orbit has no open side."],
+        ["glint-shardling", "Glint Shardling", "field-b", "resident", "folk", "friendly crystal shard folk with floating hands and tool pouch", "Every crack has a note if you tap gently.", "I can choose a sharper note."],
+        ["orla-sanctum", "Orla Sanctum", "mastery", "guide", "human", "high-sanctum warden in white-violet robes with a key spear", "The calmest platform leads to the crown.", "The sanctum locks from both sides."],
+        ["dex-gyro", "Dex Gyro", "mastery", "specialist", "human", "ancient mechanism technician with orbiting tool discs", "Old machines prefer simple questions.", "These tools have defensive answers."],
+        ["aero-wispkin", "Aero Wispkin", "mastery", "resident", "folk", "tiny opaque wind-spirit folk with ribbon limbs and prism core", "The sky has floors if you know where to listen.", "The sky can drop you too."]
+      ],
+      "enemies": [
+        ["prism-sentinel", "Prism Sentinel", "regular", "ground", "chaser", "four-legged crystal guardian with rotating mirror face", "#86d7ff", [0.9,1.55,0.58,0.5,1.12,1.04,1.06,1.12]],
+        ["chime-orb", "Chime Orb", "regular", "ranged", "caster", "floating silver sphere firing resonant prism rings", "#d39cff", [0.84,1.35,0.5,0.48,0.92,1.0,1.08,1.05]],
+        ["rift-ray", "Rift Ray", "regular", "flying", "flying", "manta-like sky creature with opaque prismatic fins", "#7ce7ff", [0.84,1.55,0.6,0.46,0.96,1.02,1.2,1.1]],
+        ["orbit-blade", "Orbit Blade", "challenger", "ground", "duelist", "silver-violet warrior commanding two orbiting crystal swords", "#b894ff", [1.1,3.45,0.6,0.98,4.45,1.52,1.24,6.1]],
+        ["sanctum-architect", "Sanctum Architect", "challenger", "ranged", "caster", "ancient floating construct building temporary prism geometry", "#8ee8ff", [1.14,3.7,0.64,1.0,4.75,1.55,0.94,6.2]]
+      ]
+    }
+  }
+}

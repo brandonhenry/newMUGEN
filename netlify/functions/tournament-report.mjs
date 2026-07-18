@@ -21,18 +21,21 @@ import {
   isOfficialTournamentId,
   reportOfficialGame
 } from './_official-tournament-store.mjs';
+import { captureServerAnalytics, captureTournamentOperationFailure } from './_posthog-analytics.mjs';
 
 export async function handler(event) {
   if (event.httpMethod !== 'POST') return json(405, { error: 'method_not_allowed' });
+  let analyticsBody = {};
   try {
     const body = JSON.parse(event.body || '{}');
+    analyticsBody = body;
     const tournamentId = cleanId(body.tournamentId);
     const matchId = cleanId(body.matchId);
     const reporterPlayerId = cleanId(body.reporterPlayerId);
     const winnerEntryId = cleanId(body.winnerEntryId);
     if (!tournamentId || !matchId || !reporterPlayerId || !winnerEntryId) return json(400, { error: 'missing_fields' });
     if (isOfficialTournamentId(tournamentId)) {
-      return json(200, await reportOfficialGame(getOfficialTournamentStore(event), {
+      const result = await reportOfficialGame(getOfficialTournamentStore(event), {
         tournamentId,
         matchId,
         reporterPlayerId,
@@ -40,10 +43,14 @@ export async function handler(event) {
         posthogDeviceId: body.posthogDeviceId,
         roomId: body.roomId,
         gameNumber: body.gameNumber
-      }, Date.now()));
+      }, Date.now());
+      await captureAcceptedResult(tournamentId, matchId, reporterPlayerId, winnerEntryId, 'officialOnline');
+      return json(200, result);
     }
     if (tournamentId === PAID_LIGHTNING_TOURNAMENT_ID || tournamentId.startsWith(`${PAID_LIGHTNING_TOURNAMENT_ID}-`)) {
-      return json(200, await reportPaidTournamentWinner(getPaidTournamentStores(event), matchId, reporterPlayerId, winnerEntryId, body.posthogDeviceId, body.roomId, Date.now()));
+      const result = await reportPaidTournamentWinner(getPaidTournamentStores(event), matchId, reporterPlayerId, winnerEntryId, body.posthogDeviceId, body.roomId, Date.now());
+      await captureAcceptedResult(tournamentId, matchId, reporterPlayerId, winnerEntryId, 'paidOnline');
+      return json(200, result);
     }
     const store = getTournamentStore(event);
     let bracket = await readTournament(store, tournamentId);
@@ -81,6 +88,7 @@ export async function handler(event) {
     const reported = reportWinner(bracket, matchId, winnerEntryId, Date.now());
     await writeTournament(store, reported);
     const assignment = assignedMatch(reported, reporterPlayerId);
+    await captureAcceptedResult(tournamentId, matchId, reporterPlayerId, winnerEntryId, 'freeOnline');
     return json(200, {
       bracket: reported,
       entry: assignment.entry,
@@ -89,6 +97,15 @@ export async function handler(event) {
       statusText: statusText(reported, assignment.match)
     });
   } catch (error) {
+    await captureTournamentOperationFailure('result', analyticsBody, error);
     return errorJson(error);
   }
+}
+
+function captureAcceptedResult(tournamentId, matchId, reporterPlayerId, winnerEntryId, kind) {
+  return captureServerAnalytics('tournament_result_confirmed', {
+    eventId: `tournament-result:${tournamentId}:${matchId}:${winnerEntryId}`,
+    distinctId: reporterPlayerId,
+    properties: { tournament_id: tournamentId, match_id: matchId, kind, confirmed: true }
+  });
 }

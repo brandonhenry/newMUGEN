@@ -21,11 +21,14 @@ import {
   getOfficialTournamentStore,
   isOfficialTournamentId
 } from './_official-tournament-store.mjs';
+import { captureServerAnalytics, captureTournamentOperationFailure } from './_posthog-analytics.mjs';
 
 export async function handler(event) {
   if (event.httpMethod !== 'POST') return json(405, { error: 'method_not_allowed' });
+  let analyticsBody = {};
   try {
     const body = JSON.parse(event.body || '{}');
+    analyticsBody = body;
     const kind = body.kind === 'officialOnline' ? 'officialOnline' : body.kind === 'paidOnline' ? 'paidOnline' : body.kind === 'freeOnline' ? 'freeOnline' : '';
     const playerId = cleanId(body.playerId);
     const characterId = cleanId(body.characterId);
@@ -50,11 +53,21 @@ export async function handler(event) {
         entryId: result.entry.id,
         kind: 'officialOnline'
       }, Date.now()).catch((error) => console.warn('Official tournament confirmation email failed', error));
+      await captureServerAnalytics('tournament_entry_confirmed', {
+        eventId: `tournament-entry:${result.bracket.id}:${result.entry.id}`,
+        distinctId: playerId,
+        properties: { tournament_id: result.bracket.id, entry_id: result.entry.id, kind: 'officialOnline', reused: Boolean(result.reused) }
+      });
       return json(200, result);
     }
 
     if (kind === 'paidOnline' || body.tournamentId === PAID_LIGHTNING_TOURNAMENT_ID) {
       const result = await enterPaidTournament(getPaidTournamentStores(event), { playerId, displayName, characterId, posthogDeviceId: body.posthogDeviceId }, Date.now());
+      await captureServerAnalytics('tournament_entry_confirmed', {
+        eventId: `tournament-entry:${result.bracket.id}:${result.entry.id}`,
+        distinctId: playerId,
+        properties: { tournament_id: result.bracket.id, entry_id: result.entry.id, kind: 'paidOnline', reused: Boolean(result.reused) }
+      });
       return json(200, {
         bracket: result.bracket,
         entry: result.entry,
@@ -74,8 +87,14 @@ export async function handler(event) {
         console.warn('Tournament ready email notification failed', error);
       });
     }
+    await captureServerAnalytics('tournament_entry_confirmed', {
+      eventId: `tournament-entry:${result.bracket.id}:${result.entry.id}`,
+      distinctId: playerId,
+      properties: { tournament_id: result.bracket.id, entry_id: result.entry.id, kind: 'freeOnline' }
+    });
     return json(200, result);
   } catch (error) {
+    await captureTournamentOperationFailure('entry', analyticsBody, error);
     return errorJson(error);
   }
 }

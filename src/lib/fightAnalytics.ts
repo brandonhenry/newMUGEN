@@ -3,12 +3,13 @@ import type { AnalyticsEventName, AnalyticsProperties } from './analytics';
 
 export type FightAnalyticsActorType = 'human' | 'cpu' | 'dummy' | 'remote_human';
 
-type FightAnalyticsLifecycleEvent = Extract<AnalyticsEventName, 'round_started' | 'round_ended' | 'match_completed' | 'combo_route_completed'>;
+type FightAnalyticsLifecycleEvent = Extract<AnalyticsEventName, 'round_started' | 'round_ended' | 'match_completed' | 'combo_route_completed' | 'performance_summary'>;
 type FightAnalyticsCapture = (name: FightAnalyticsLifecycleEvent, properties: AnalyticsProperties) => void;
 
 export type FightAnalyticsOptions = {
   actorTypesBySlot?: Partial<Record<1 | 2, FightAnalyticsActorType>>;
   captureComboRoutesForActorTypes?: FightAnalyticsActorType[];
+  localSlot?: 1 | 2;
 };
 
 type ActiveComboRouteAnalytics = {
@@ -49,6 +50,8 @@ export type FightAnalyticsState = {
   activeComboRoutes: [ActiveComboRouteAnalytics | null, ActiveComboRouteAnalytics | null];
   emittedComboRouteKeys: Set<string>;
   matchCompleted: boolean;
+  lastSnapshotAt: number;
+  frameDurationsMs: number[];
   counters: FightAnalyticsCounters;
 };
 
@@ -76,6 +79,8 @@ export function createFightAnalyticsState(now = performance.now()): FightAnalyti
     activeComboRoutes: [null, null],
     emittedComboRouteKeys: new Set(),
     matchCompleted: false,
+    lastSnapshotAt: now,
+    frameDurationsMs: [],
     counters: createEmptyFightAnalyticsCounters()
   };
 }
@@ -92,6 +97,8 @@ export function resetFightAnalyticsState(state: FightAnalyticsState, now = perfo
   state.activeComboRoutes = [null, null];
   state.emittedComboRouteKeys.clear();
   state.matchCompleted = false;
+  state.lastSnapshotAt = now;
+  state.frameDurationsMs = [];
   state.counters = createEmptyFightAnalyticsCounters();
 }
 
@@ -103,6 +110,11 @@ export function recordFightAnalyticsSnapshot(
   now = performance.now(),
   options: FightAnalyticsOptions = {}
 ) {
+  const frameDuration = now - state.lastSnapshotAt;
+  state.lastSnapshotAt = now;
+  if (frameDuration > 0 && frameDuration < 1_000 && state.frameDurationsMs.length < 18_000) {
+    state.frameDurationsMs.push(frameDuration);
+  }
   addCombatEventsToCounters(state, match.combatEvents);
   addImpactEventsToCounters(state, match.impactEvents);
   recordComboRouteAnalytics(state, match, commonProperties, capture, options);
@@ -139,17 +151,37 @@ export function recordFightAnalyticsSnapshot(
   if (match.phase === 'matchOver' && match.winnerSlot && !state.matchCompleted) {
     flushActiveComboRoutes(state, commonProperties, capture, options);
     state.matchCompleted = true;
+    const loserSlot = match.winnerSlot === 1 ? 2 : 1;
+    const durationSeconds = Number(((now - state.matchStartedAt) / 1000).toFixed(2));
     capture('match_completed', {
       ...commonProperties,
       winner_slot: match.winnerSlot,
       rounds_played: match.round,
-      match_duration_seconds: Number(((now - state.matchStartedAt) / 1000).toFixed(2)),
+      match_duration_seconds: durationSeconds,
+      completion_reason: 'normal',
+      winner_character_id: getFighterCharacterId(match.fighters[match.winnerSlot - 1]),
+      loser_character_id: getFighterCharacterId(match.fighters[loserSlot - 1]),
+      local_result: options.localSlot ? (options.localSlot === match.winnerSlot ? 'win' : 'loss') : 'not_applicable',
       hit_count: state.counters.hitCount,
       block_count: state.counters.blockCount,
       clash_count: state.counters.clashCount,
       total_damage_p1: Math.round(state.counters.totalDamageP1),
       total_damage_p2: Math.round(state.counters.totalDamageP2),
       max_combo_hits: state.counters.maxComboHits
+    });
+    const sortedFrameDurations = [...state.frameDurationsMs].sort((a, b) => a - b);
+    const averageFrameMs = sortedFrameDurations.length > 0
+      ? sortedFrameDurations.reduce((sum, value) => sum + value, 0) / sortedFrameDurations.length
+      : 0;
+    const p95Index = Math.max(0, Math.ceil(sortedFrameDurations.length * 0.95) - 1);
+    capture('performance_summary', {
+      ...commonProperties,
+      activity_type: 'match',
+      duration_seconds: durationSeconds,
+      average_fps: averageFrameMs > 0 ? Number((1000 / averageFrameMs).toFixed(1)) : 0,
+      p95_frame_ms: Number((sortedFrameDurations[p95Index] ?? 0).toFixed(1)),
+      long_frame_count: sortedFrameDurations.filter((value) => value > 50).length,
+      sample_count: sortedFrameDurations.length
     });
   }
 

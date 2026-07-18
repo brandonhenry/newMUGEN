@@ -5,6 +5,7 @@ import { Activity, ArrowDown, ArrowLeft, ArrowRight, ArrowUp, BarChart3, BookOpe
 import { Suspense, type CSSProperties, type MutableRefObject, type ReactNode, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import type { OnlinePlayerProfile } from '../lib/online/leaderboard';
+import { createAnalyticsId, type AnalyticsCapture } from '../lib/analytics';
 import { addFriendEntry, isFriend, readMatchHistory } from '../lib/socialHistory';
 import type { InputFrame } from '../types';
 import { STORY_ADVENTURE_ASSET_PATHS, storyWorldAssetPath } from './adventureAssets';
@@ -1944,12 +1945,13 @@ function createDepthHub(surface: StoryHubDefinition, graph: StoryAdventureRunGra
   };
 }
 
-export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, readInputs, setVirtualAction, onDestination, onOnlineSpar, onMusicContext, activeMusicTrack, onCredits, onExit }: {
+export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, readInputs, setVirtualAction, onAnalytics, onDestination, onOnlineSpar, onMusicContext, activeMusicTrack, onCredits, onExit }: {
   profile: StoryProfileV4;
   onlineProfile?: OnlinePlayerProfile | null;
   reducedMotion: boolean;
   readInputs: () => [InputFrame, InputFrame];
   setVirtualAction: SetVirtualAction;
+  onAnalytics?: AnalyticsCapture<'app_version' | 'mode'>;
   onDestination: (destination: HubDestination) => void;
   onOnlineSpar: (opponent: StoryHubPresence) => void;
   onMusicContext?: (context: AdventureMusicContext | null) => void;
@@ -2025,6 +2027,10 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const lastVisitedWorldRef = useRef<string>('');
   const currentDepthZoneRef = useRef<string | null>(null);
   const storyInteractRef = useRef(false);
+  const analyticsRef = useRef(onAnalytics);
+  analyticsRef.current = onAnalytics;
+  const activeVisitRef = useRef<{ id: string; worldId: StoryWorldId; startedAt: number } | null>(null);
+  const encounterStartedAtRef = useRef<Record<string, number>>({});
   const playerStateRef = useRef<StoryHubPlayerState>({ x: activeHub.spawn[0], y: activeHub.spawn[1], pose: 'idle', facing: 1, worldId: activeWorldId });
   const readInput = useCallback(() => {
     const input = readInputs()[0];
@@ -2087,6 +2093,45 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     return saved;
   }, []);
   useEffect(() => {
+    const current = activeVisitRef.current;
+    if (current && current.worldId !== activeWorldId) {
+      analyticsRef.current?.('adventure_visit_ended', {
+        visit_id: current.id,
+        world_id: current.worldId,
+        level: adventureProgressRef.current.level,
+        duration_seconds: Number(((performance.now() - current.startedAt) / 1000).toFixed(2)),
+        exit_reason: 'region_changed'
+      });
+      activeVisitRef.current = null;
+    }
+    if (!isStoryAdventureRegionId(activeWorldId) || activeVisitRef.current) return;
+    const visit = { id: createAnalyticsId('adventure-visit'), worldId: activeWorldId, startedAt: performance.now() };
+    activeVisitRef.current = visit;
+    analyticsRef.current?.('adventure_visit_started', {
+      visit_id: visit.id,
+      world_id: activeWorldId,
+      level: adventureProgressRef.current.level
+    });
+    analyticsRef.current?.('adventure_region_entered', {
+      visit_id: visit.id,
+      world_id: activeWorldId,
+      level: adventureProgressRef.current.level,
+      surface_map_id: activeSurfaceMapId
+    });
+  }, [activeSurfaceMapId, activeWorldId]);
+  useEffect(() => () => {
+    const current = activeVisitRef.current;
+    if (!current) return;
+    analyticsRef.current?.('adventure_visit_ended', {
+      visit_id: current.id,
+      world_id: current.worldId,
+      level: adventureProgressRef.current.level,
+      duration_seconds: Number(((performance.now() - current.startedAt) / 1000).toFixed(2)),
+      exit_reason: 'screen_exit'
+    });
+    activeVisitRef.current = null;
+  }, []);
+  useEffect(() => {
     if (!isStoryAdventureRegionId(activeWorldId)) return;
     const map = getStoryAdventureSurfaceMap(activeWorldId, activeSurfaceMapId);
     if (activeSurfaceMapId !== map.id) setActiveSurfaceMapId(map.id);
@@ -2095,6 +2140,20 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const musicEncounter = activeHub.exploration?.encounters.find((encounter) => playerX >= encounter.range[0] && playerX <= encounter.range[1]);
   const musicEncounterProgress = encounterProgressByHub[activeHub.id] ?? makeStoryEncounterProgress();
   const musicThreatPresent = Boolean(musicEncounter && !musicEncounterProgress.resolvedZoneIds.includes(musicEncounter.id));
+  useEffect(() => {
+    const visit = activeVisitRef.current;
+    if (!visit || !musicEncounter || !musicThreatPresent) return;
+    const encounterKey = `${activeHub.id}:${musicEncounter.id}`;
+    if (encounterStartedAtRef.current[encounterKey]) return;
+    encounterStartedAtRef.current[encounterKey] = performance.now();
+    analyticsRef.current?.('adventure_encounter_started', {
+      visit_id: visit.id,
+      encounter_id: encounterKey,
+      world_id: visit.worldId,
+      zone_id: musicEncounter.id,
+      level: adventureProgressRef.current.level
+    });
+  }, [activeHub.id, musicEncounter?.id, musicThreatPresent]);
   useEffect(() => {
     const delay = musicThreatPresent ? 2_000 : 4_000;
     const timer = window.setTimeout(() => setMusicCombatActive(musicThreatPresent), delay);
@@ -2319,6 +2378,14 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
         available: next.unspentPoints,
         level: next.level
       });
+      const visit = activeVisitRef.current;
+      if (visit) analyticsRef.current?.('adventure_progression_reached', {
+        visit_id: visit.id,
+        world_id: visit.worldId,
+        milestone_type: 'level_up',
+        level: next.level,
+        levels_gained: result.levelsGained
+      });
     }
   }, [updateAdventureProgress]);
   const toggleOnline = useCallback(() => {
@@ -2374,13 +2441,21 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     if (portal.id.startsWith('chest:')) {
       const id = portal.id.slice('chest:'.length);
       const chest = activeHub.interactables?.find((entry) => entry.id === id && entry.kind === 'chest');
-      if (chest) updateAdventureProgress(claimAdventureCache(adventureProgressRef.current, chest.id, chest.rewardCoins ?? 0).progress);
+      if (chest) {
+        updateAdventureProgress(claimAdventureCache(adventureProgressRef.current, chest.id, chest.rewardCoins ?? 0).progress);
+        const visit = activeVisitRef.current;
+        if (visit) analyticsRef.current?.('adventure_reward_collected', { visit_id: visit.id, world_id: visit.worldId, reward_type: 'cache', level: adventureProgressRef.current.level });
+      }
       return;
     }
     if (portal.id.startsWith('relic:')) {
       const id = portal.id.slice('relic:'.length);
       const relic = activeHub.interactables?.find((entry) => entry.id === id && entry.kind === 'relic');
-      if (relic?.relicId) updateAdventureProgress(collectAdventureRelic(adventureProgressRef.current, relic.relicId));
+      if (relic?.relicId) {
+        updateAdventureProgress(collectAdventureRelic(adventureProgressRef.current, relic.relicId));
+        const visit = activeVisitRef.current;
+        if (visit) analyticsRef.current?.('adventure_reward_collected', { visit_id: visit.id, world_id: visit.worldId, reward_type: 'relic', level: adventureProgressRef.current.level });
+      }
       return;
     }
     if (portal.id === 'restoration:route-board') { setMapOpen(true); return; }
@@ -2615,6 +2690,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     const opponent = remotePlayers.find((presence) => presence.sessionId === opponentSessionId);
     if (!opponent) return;
     launchedChallengeIdsRef.current.add(accepted.id);
+    analyticsRef.current?.('story_challenge_completed', { status: 'accepted' });
     onOnlineSpar(opponent);
   }, [challenges, localSessionId, onOnlineSpar, remotePlayers]);
 
@@ -2625,6 +2701,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       && !noticedChallengeIdsRef.current.has(`${challenge.id}:${challenge.status}`));
     if (!terminal || !localSessionId) return;
     noticedChallengeIdsRef.current.add(`${terminal.id}:${terminal.status}`);
+    analyticsRef.current?.('story_challenge_completed', { status: terminal.status });
     const opponentName = terminal.challengerSessionId === localSessionId ? terminal.targetDisplayName : terminal.challengerDisplayName;
     const text = terminal.status === 'declined'
       ? `${opponentName} declined the spar.`
@@ -2754,9 +2831,27 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     [activeHub.id, encounterProgressByHub, visitChallengers]
   );
   const handleEncounterProgressChange = useCallback((next: StoryEncounterProgress) => {
+    const previous = encounterProgressByHub[activeHub.id] ?? makeStoryEncounterProgress();
+    const visit = activeVisitRef.current;
+    if (visit) {
+      next.resolvedZoneIds.filter((zoneId) => !previous.resolvedZoneIds.includes(zoneId)).forEach((zoneId) => {
+        const encounterKey = `${activeHub.id}:${zoneId}`;
+        const startedAt = encounterStartedAtRef.current[encounterKey] ?? performance.now();
+        analyticsRef.current?.('adventure_encounter_completed', {
+          visit_id: visit.id,
+          encounter_id: encounterKey,
+          world_id: visit.worldId,
+          zone_id: zoneId,
+          level: adventureProgressRef.current.level,
+          duration_seconds: Number(((performance.now() - startedAt) / 1000).toFixed(2)),
+          result: 'victory'
+        });
+        delete encounterStartedAtRef.current[encounterKey];
+      });
+    }
     setVisitChallengers(next.selectedChallengers);
     setEncounterProgressByHub((current) => ({ ...current, [activeHub.id]: next }));
-  }, [activeHub.id]);
+  }, [activeHub.id, encounterProgressByHub]);
   const handleChallengerStarted = useCallback(() => setMounted(false), []);
   const fastTravelToWaystone = useCallback((waystoneId: string, position: [number, number]) => {
     if (!adventureProgressRef.current.discoveries.waystones.includes(waystoneId) || !isStoryAdventureRegionId(activeWorldId)) return;
@@ -2792,11 +2887,11 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
             <WifiOff className="is-offline-icon" size={16} />
           </span>
           <span><small>{statusLabel}</small><strong><UsersRound size={15} /> {playerCount} {playerCount === 1 ? 'Player' : 'Players'}</strong></span>
-          <div className="story-hub-remote-names" aria-label={`Players in ${activeHub.name}`}>
+          <div className="story-hub-remote-names" data-analytics-private="true" aria-label={`Players in ${activeHub.name}`}>
             {visibleRemotePlayers.slice(0, 3).map((presence) => <i key={presence.sessionId} data-testid={`story-hub-remote-${presence.sessionId}`}>{presence.displayName}</i>)}
           </div>
         </div>
-        <div className="story-hub-player-card">
+        <div className="story-hub-player-card" data-analytics-private="true">
           <span>Story Avatar</span>
           <strong>{profile.avatar.name}</strong>
         </div>
