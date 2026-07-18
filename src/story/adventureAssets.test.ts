@@ -54,4 +54,14 @@ describe('story adventure asset manifest', () => {
       expect(createHash('sha256').update(contents).digest('hex'), file).toBe(expected);
     }
   });
+
+  it('ships no legacy Play enemy sheets while retaining the Platino environmental sprite', () => {
+    const removed = [
+      'dawnlike/Slime0.png', 'dawnlike/Slime1.png', 'dawnlike/Undead0.png', 'dawnlike/Undead1.png',
+      'dawnlike/Demon0.png', 'dawnlike/Demon1.png', 'dawnlike/Elemental0.png', 'dawnlike/Elemental1.png',
+      'pixel-crawler/skeleton-idle.png', 'pixel-crawler/skeleton-mage-idle.png', 'pixel-crawler/orc-idle.png', 'pixel-crawler/orc-shaman-idle.png'
+    ];
+    expect(removed.every((file) => !existsSync(resolve(assetRoot, file)))).toBe(true);
+    expect(existsSync(resolve(assetRoot, 'dawnlike/Reptile0.png'))).toBe(true);
+  });
 });

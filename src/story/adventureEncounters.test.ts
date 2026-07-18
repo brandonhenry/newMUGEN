@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { makeStoryEncounterProgress, recordChallengerDefeat, recordRegularDefeat, resetActiveChallenger, selectStoryChallenger, storyChallengerChance, storyEncounterMovementLock, storyEncounterRoll } from './adventureEncounters';
+import { makeStoryEncounterProgress, recordChallengerDefeat, recordRegularDefeat, rerollStoryRegularSpawns, resetActiveChallenger, selectStoryChallenger, storyChallengerChance, storyEncounterMovementLock, storyEncounterRoll } from './adventureEncounters';
 import type { StoryEnemySpawnDefinition, StoryEncounterZoneDefinition } from './types';
 
 const zone: StoryEncounterZoneDefinition = { id: 'zone-5', range: [20, 36], maxActive: 2 };
@@ -16,6 +16,16 @@ describe('story adventure encounter progression', () => {
   it('keeps deterministic rolls and challenger selection stable for a visit seed', () => {
     expect(storyEncounterRoll('visit-42', zone.id)).toBe(storyEncounterRoll('visit-42', zone.id));
     expect(selectStoryChallenger('visit-42', zone.id, [])).toBe(selectStoryChallenger('visit-42', zone.id, []));
+  });
+
+  it('deterministically rerolls biome regulars for each visit without changing spawn identity', () => {
+    const first = rerollStoryRegularSpawns('visit-42', spawns);
+    const repeated = rerollStoryRegularSpawns('visit-42', spawns);
+    const nextVisit = rerollStoryRegularSpawns('visit-43', spawns);
+    expect(repeated).toEqual(first);
+    expect(first.map((spawn) => spawn.id)).toEqual(spawns.map((spawn) => spawn.id));
+    expect(first.every((spawn) => ['tide-slime', 'graveblade'].includes(spawn.enemyId))).toBe(true);
+    expect([first, nextVisit].some((result) => result.map((spawn) => spawn.enemyId).join(',') !== spawns.map((spawn) => spawn.enemyId).join(','))).toBe(true);
   });
 
   it('starts one challenger only after every regular in the encounter is defeated', () => {

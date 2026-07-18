@@ -42,6 +42,15 @@ export function encounterRegulars(zoneId: string, spawns: StoryEnemySpawnDefinit
   return spawns.filter((spawn) => spawn.encounterZoneId === zoneId);
 }
 
+export function rerollStoryRegularSpawns(seed: string, spawns: StoryEnemySpawnDefinition[]): StoryEnemySpawnDefinition[] {
+  const pool = Array.from(new Set(spawns.map((spawn) => spawn.enemyId)));
+  if (pool.length < 2) return spawns;
+  return spawns.map((spawn, index) => ({
+    ...spawn,
+    enemyId: pool[hashString(`${seed}:${spawn.encounterZoneId ?? 'open'}:${spawn.id}:${index}`) % pool.length]
+  }));
+}
+
 export function recordRegularDefeat(input: {
   progress: StoryEncounterProgress;
   spawnId: string;

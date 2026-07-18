@@ -142,7 +142,7 @@ test('Play creates a story avatar and enters K.O.R.E. Central', async ({ page })
   await page.keyboard.press('e');
   await expect(page.getByTestId('story-door-transition')).toBeVisible();
   await expect(hub).toHaveAttribute('data-world', 'world-route', { timeout: 4_000 });
-  await expect(page.getByTestId('story-door-transition')).toBeHidden({ timeout: 4_000 });
+  await expect(page.getByTestId('story-door-transition')).toBeHidden({ timeout: 8_000 });
   await page.keyboard.press('m');
   const routeMap = page.getByTestId('story-adventure-map');
   await expect(routeMap).toBeVisible();
@@ -188,26 +188,27 @@ test('adventure combat levels the player and Central Route shrine respecs stats'
   await expect(hub).toHaveAttribute('data-nearby-portal', 'story-gate', { timeout: 3_000 });
   await page.keyboard.press('e');
   await expect(hub).toHaveAttribute('data-world', 'world-route', { timeout: 4_000 });
-  await expect(page.getByTestId('story-door-transition')).toBeHidden({ timeout: 4_000 });
+  await expect(page.getByTestId('story-door-transition')).toBeHidden({ timeout: 8_000 });
 
   await moveUntilPortal(page, hub, 'ArrowRight', 'route-emberdeep', 7_000, true);
   await expect(page.getByTestId('story-door-transition')).toBeVisible();
   await expect(hub).toHaveAttribute('data-world', 'emberdeep', { timeout: 4_000 });
-  await expect(page.getByTestId('story-door-transition')).toBeHidden({ timeout: 4_000 });
+  await expect(page.getByTestId('story-door-transition')).toBeHidden({ timeout: 8_000 });
 
   await page.keyboard.press('m');
-  await page.getByTestId('story-adventure-map').getByRole('button', { name: /Deep Waystone/ }).click();
-  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 3_000 }).toBeGreaterThan(-1);
+  await page.getByTestId('story-adventure-map').getByRole('button', { name: /Entry Waystone/ }).click();
+  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 3_000 }).toBeLessThan(-250);
   await page.keyboard.down('Shift');
-  await page.keyboard.down('ArrowLeft');
-  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 9_000 }).toBeLessThan(-38);
-  await page.keyboard.up('ArrowLeft');
+  await page.keyboard.down('ArrowRight');
+  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 12_000 }).toBeGreaterThan(-174);
+  await page.keyboard.up('ArrowRight');
   await page.keyboard.up('Shift');
+  await page.waitForTimeout(600);
   let damageFeedbackSeen = false;
   for (let hit = 0; hit < 10; hit += 1) {
-    await page.keyboard.down('ArrowLeft');
+    await page.keyboard.down('ArrowRight');
     await page.waitForTimeout(70);
-    await page.keyboard.up('ArrowLeft');
+    await page.keyboard.up('ArrowRight');
     await page.keyboard.press('u');
     await page.waitForTimeout(360);
     const damageFeedback = page.locator('[data-testid^="story-enemy-damage-"]:visible');

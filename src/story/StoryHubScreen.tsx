@@ -9,13 +9,14 @@ import { addFriendEntry, isFriend, readMatchHistory } from '../lib/socialHistory
 import type { InputFrame } from '../types';
 import { STORY_ADVENTURE_ASSET_PATHS, storyWorldAssetPath } from './adventureAssets';
 import { STORY_ATTACK_VISUAL_SYNC_DELAY_MS, adventureAttackHits, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureAttackFrameHitbox, getAdventureEnemyStats, getStoryAttackDurationMs, getStoryProjectileSpawnPosition, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, resolveStoryAttackInput, stepAdventureProjectile, storyPlayerProjectileHits, type AdventureDamageFeedback } from './adventureCombat';
-import { makeStoryEncounterProgress, recordChallengerDefeat, recordRegularDefeat, resetActiveChallenger, storyEncounterMovementLock, type StoryEncounterProgress } from './adventureEncounters';
+import { makeStoryEncounterProgress, recordChallengerDefeat, recordRegularDefeat, rerollStoryRegularSpawns, resetActiveChallenger, storyEncounterMovementLock, type StoryEncounterProgress } from './adventureEncounters';
 import { STORY_ADVENTURE_STAT_CAP, STORY_ADVENTURE_STAT_KEYS, allocateAdventureStat, awardAdventureExperience, awardMountMastery, beginAdventureVisit, canRespecAdventureStats, discoverAdventureLandmark, discoverAdventureVista, discoverAdventureWaystone, experienceToNextLevel, getAdventureDerivedStats, readAdventureProgress, respecAdventureStats, unlockAdventureMount, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_REGION_LABELS, STORY_WORLDS, isStoryAdventureRegionId, isStoryAdventureWorldId, isStoryWorldId } from './adventureWorlds';
 import { createAdventureVisitSeed, generateAdventureRunGraph, STORY_BREATH_DRAIN_PER_SECOND, STORY_BREATH_REFILL_PER_SECOND, STORY_MAX_BREATH, STORY_MOUNTS, STORY_WORLD_MOUNT, storyDepthZoneLabel, type StoryPartyInstance } from './adventureExploration';
 import { getStoryEnemyAnimation, getStoryEnemyDefinition, STORY_CHALLENGER_IDS, STORY_ENEMY_RUNTIME_SCALE, type StoryEnemyAttackDefinition } from './enemyCatalog';
 import { STORY_GROUNDED_ACTOR_CENTER_Y, storyAvatarGroundingOffsetForWorld, storyGroundAnchoredPlaneCenterY, storyScaledGroundAnchorOffsetY } from './actorGrounding';
 import { STORY_BIOME_DOOR_ASSET, STORY_BIOME_DOOR_ATLAS_SIZE, STORY_BIOME_DOOR_GROUND_SINK_Y, storyBiomeDoorFrame, type StoryBiomeDoorFrame } from './biomeDoors';
+import { createStoryDepthEnvironment } from './depthEnvironment';
 import { connectStoryHubMultiplayer, readOrCreateStoryHubGuestIdentity, readStoryHubOnlinePreference, STORY_HUB_CHALLENGE_TIMEOUT_MS, writeStoryHubOnlinePreference, type StoryHubMultiplayerSession } from './hubMultiplayer';
 import { KORE_CENTRAL_HUB } from './hubData';
 import { storyPlatformSurfacePlacement } from './platformGrounding';
@@ -1377,7 +1378,7 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
   const [challengerNoticeVisible, setChallengerNoticeVisible] = useState(Boolean(initialEncounterProgress.activeChallenge));
   const derivedStats = useMemo(() => getAdventureDerivedStats(progress), [progress]);
   const mountMasteryRank = mount ? progress.mounts[mount.id]?.masteryRank ?? 0 : 0;
-  const enemySpawns = hub.enemySpawns ?? [];
+  const enemySpawns = useMemo(() => rerollStoryRegularSpawns(encounterSeed, hub.enemySpawns ?? []), [encounterSeed, hub.enemySpawns]);
   const activeRegularSpawns = useMemo(() => enemySpawns.filter((spawn) => !encounterProgress.defeatedRegularIds.includes(spawn.id)), [encounterProgress.defeatedRegularIds, enemySpawns]);
   const activeChallenge = encounterProgress.activeChallenge;
   const movementLock = storyEncounterMovementLock(encounterProgress, hub.exploration?.encounters ?? []);
@@ -1685,23 +1686,7 @@ function createDepthHub(surface: StoryHubDefinition, graph: StoryAdventureRunGra
     };
   });
   const waterVolumes = zone.underwater ? [{ id: `${zone.id}-water`, bounds: [zone.camera.minX, zone.camera.maxX, zone.camera.minY, zone.camera.maxY] as [number, number, number, number], current: [0.18, 0] as [number, number], airPockets: zone.airPockets }] : [];
-  const environment = zone.underwater && surface.environment ? {
-    ...surface.environment,
-    background: '#052644', haze: '#0a5573', light: '#8ee8ff', ground: '#174d62', accent: '#65f4ff', particle: 'motes' as const,
-    layers: [
-      { id: 'underwater-back', asset: 'exploration:underwater/background.png' as const, depth: -16, y: 6, height: 24, opacity: 1, parallax: 0.04, color: '#ffffff', repeatEvery: 27 },
-      { id: 'underwater-mid', asset: 'exploration:underwater/midground.png' as const, depth: -8, y: 5, height: 22, opacity: 0.84, parallax: 0.25, color: '#ffffff', repeatEvery: 41 },
-      ...surface.environment.layers.slice(-1)
-    ],
-    surface: { asset: 'exploration:underwater/tiles.png' as const, frame: [0, 0, 32, 32] as [number, number, number, number], atlasSize: [480, 656] as [number, number] }
-  } : surface.environment && ['cave', 'mine', 'grotto'].includes(zone.kind) ? {
-    ...surface.environment,
-    background: '#080d18', haze: '#1d2738',
-    layers: [
-      ...surface.environment.layers.slice(0, 2),
-      { id: 'grafxkid-cave-detail', asset: 'exploration:caves/grafxkid-cave-assets.png' as const, depth: -5, y: 5.5, height: 14, opacity: 0.72, parallax: 0.42, color: '#ffffff', repeatEvery: 18 }
-    ]
-  } : surface.environment;
+  const environment = createStoryDepthEnvironment(surface.environment, zone);
   return {
     ...surface,
     id: `${surface.id}:${zone.id}`,
@@ -1755,6 +1740,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const [currentDepthZoneId, setCurrentDepthZoneId] = useState<string | null>(null);
   const [discoveredRunZones, setDiscoveredRunZones] = useState<string[]>([]);
   const [encounterProgressByHub, setEncounterProgressByHub] = useState<Record<string, StoryEncounterProgress>>({});
+  const [visitChallengers, setVisitChallengers] = useState<StoryEnemyId[]>([]);
   const baseHub = useMemo(() => devPreviewHub(STORY_WORLDS[activeWorldId]), [activeWorldId]);
   const activeHub = useMemo(() => createDepthHub(baseHub, runGraph, currentDepthZoneId), [baseHub, currentDepthZoneId, runGraph]);
   const [nearbyPortal, setNearbyPortal] = useState<StoryPortalDefinition | null>(null);
@@ -1864,6 +1850,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     if (!isStoryAdventureRegionId(activeWorldId)) {
       lastVisitedWorldRef.current = '';
       setEncounterProgressByHub({});
+      setVisitChallengers([]);
       setRunGraph(null);
       setCurrentDepthZoneId(null);
       setDiscoveredRunZones([]);
@@ -1879,6 +1866,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     const seed = createAdventureVisitSeed(activeWorldId, String(visit), localSessionId || 'solo');
     const graph = generateAdventureRunGraph(activeWorldId, seed, STORY_WORLDS[activeWorldId].exploration!);
     setEncounterProgressByHub({});
+    setVisitChallengers([]);
     setRunGraph(graph);
     setCurrentDepthZoneId(null);
     setDiscoveredRunZones([graph.entryZoneId]);
@@ -2429,10 +2417,11 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const doorFrame = doorTravel ? DOOR_TRAVEL_FRAME_SEQUENCE[doorTravel.step] ?? 0 : 0;
   const encounterSeed = partyInstance?.seed ?? runGraph?.seed ?? `${activeWorldId}:central`;
   const activeEncounterProgress = useMemo(
-    () => encounterProgressByHub[activeHub.id] ?? makeStoryEncounterProgress(),
-    [activeHub.id, encounterProgressByHub]
+    () => ({ ...(encounterProgressByHub[activeHub.id] ?? makeStoryEncounterProgress()), selectedChallengers: visitChallengers }),
+    [activeHub.id, encounterProgressByHub, visitChallengers]
   );
   const handleEncounterProgressChange = useCallback((next: StoryEncounterProgress) => {
+    setVisitChallengers(next.selectedChallengers);
     setEncounterProgressByHub((current) => ({ ...current, [activeHub.id]: next }));
   }, [activeHub.id]);
   const handleChallengerStarted = useCallback(() => setMounted(false), []);
