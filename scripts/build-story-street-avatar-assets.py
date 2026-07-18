@@ -614,7 +614,7 @@ def crop_opaque_region(
         # authored pixel is reachable through a one-pixel outline gap. Restore
         # only enclosed source-colored holes; exterior matte and real negative
         # space remain transparent.
-        region = fill_small_silhouette_holes(source_region, region)
+        region = fill_dense_interior_gaps(source_region, fill_small_silhouette_holes(source_region, region))
 
     # Generated attack effects occasionally extend into the following grid cell.
     # Remove only disconnected components that enter through that cell's left
