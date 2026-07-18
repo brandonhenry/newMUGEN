@@ -98,6 +98,9 @@ export function validateStorySpriteManifest(value: unknown): string[] {
         if (frame.durationMs <= 0) errors.push(`${set.id}/${frame.id} has an invalid duration`);
         if (!Number.isFinite(frame.bodyAnchorX) || frame.bodyAnchorX < 0 || frame.bodyAnchorX > 320) errors.push(`${set.id}/${frame.id} has an invalid body anchor`);
         if (animation.id.startsWith('attack') && frame.bodyAnchorX !== 160) errors.push(`${set.id}/${frame.id} must keep its attack body anchored at x=160`);
+        if (animation.id.startsWith('attack') && (!Number.isFinite(frame.visualScale) || (frame.visualScale ?? 0) < 1 || (frame.visualScale ?? 0) > 2.5)) {
+          errors.push(`${set.id}/${frame.id} has an invalid attack visual scale`);
+        }
         const [left, top, right, bottom] = frame.contentBounds;
         if (left < 0 || top < 0 || right > 320 || bottom > 192 || left >= right || top >= bottom) errors.push(`${set.id}/${frame.id} has invalid bounds`);
       }

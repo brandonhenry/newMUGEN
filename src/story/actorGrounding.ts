@@ -11,6 +11,14 @@ export function storyAvatarPlaneHeight(): number {
   return STORY_AVATAR_REFERENCE_WORLD_HEIGHT * STORY_SPRITE_MANIFEST.frameSize.height / STORY_AVATAR_REFERENCE_HEIGHT;
 }
 
+export function storyAvatarMeshCenterYForVisualScale(visualScale = 1): number {
+  const scale = Math.max(0.01, visualScale);
+  const frameHeight = STORY_SPRITE_MANIFEST.frameSize.height;
+  const planeHeight = storyAvatarPlaneHeight();
+  const baselineFromBottom = (frameHeight - STORY_SPRITE_MANIFEST.frameSize.baseline) / frameHeight * planeHeight;
+  return STORY_AVATAR_MESH_CENTER_Y + (scale - 1) * (planeHeight / 2 - baselineFromBottom);
+}
+
 export function storyAvatarVisibleFootFromRigOrigin(): number {
   const frameHeight = STORY_SPRITE_MANIFEST.frameSize.height;
   const planeHeight = storyAvatarPlaneHeight();

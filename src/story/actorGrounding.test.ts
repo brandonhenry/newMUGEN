@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { STORY_AVATAR_GROUNDING_OFFSET_Y, STORY_CENTRAL_AVATAR_GROUNDING_OFFSET_Y, STORY_GROUNDED_ACTOR_CENTER_Y, storyAvatarGroundingOffsetForWorld, storyAvatarGroundingOffsetY, storyAvatarVisibleFootWorldY, storyGroundAnchoredPlaneCenterY, storyScaledGroundAnchorOffsetY } from './actorGrounding';
+import { STORY_AVATAR_GROUNDING_OFFSET_Y, STORY_AVATAR_MESH_CENTER_Y, STORY_CENTRAL_AVATAR_GROUNDING_OFFSET_Y, STORY_GROUNDED_ACTOR_CENTER_Y, storyAvatarGroundingOffsetForWorld, storyAvatarGroundingOffsetY, storyAvatarMeshCenterYForVisualScale, storyAvatarPlaneHeight, storyAvatarVisibleFootWorldY, storyGroundAnchoredPlaneCenterY, storyScaledGroundAnchorOffsetY } from './actorGrounding';
 import { STORY_WORLDS } from './adventureWorlds';
 import { getStoryEnemyDefinition } from './enemyCatalog';
 
@@ -20,6 +20,18 @@ describe('story actor visual grounding', () => {
     const bodyCenterY = platformTop + STORY_GROUNDED_ACTOR_CENTER_Y;
     expect(storyAvatarVisibleFootWorldY(bodyCenterY)).toBeCloseTo(platformTop, 8);
     expect(storyAvatarGroundingOffsetY(bodyCenterY, platformTop)).toBeCloseTo(STORY_AVATAR_GROUNDING_OFFSET_Y, 8);
+  });
+
+  it('keeps a uniformly enlarged attack frame on the same authored foot baseline', () => {
+    const planeHeight = storyAvatarPlaneHeight();
+    const baselineFromBottom = (192 - 182) / 192 * planeHeight;
+    const normalBaseline = STORY_AVATAR_MESH_CENTER_Y - planeHeight / 2 + baselineFromBottom;
+    for (const visualScale of [1, 1.08, 1.22, 2.03]) {
+      const scaledBaseline = storyAvatarMeshCenterYForVisualScale(visualScale)
+        - visualScale * planeHeight / 2
+        + visualScale * baselineFromBottom;
+      expect(scaledBaseline).toBeCloseTo(normalBaseline, 8);
+    }
   });
 
   it('keeps every grounded story enemy on the same authored center line as the player', () => {

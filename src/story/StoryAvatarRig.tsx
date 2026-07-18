@@ -2,7 +2,7 @@ import { useTexture } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
-import { STORY_AVATAR_MESH_CENTER_Y, storyAvatarPlaneHeight } from './actorGrounding';
+import { storyAvatarMeshCenterYForVisualScale, storyAvatarPlaneHeight } from './actorGrounding';
 import { getStorySpriteAnimation, STORY_SPRITE_MANIFEST } from './streetAvatarCatalog';
 import type { StoryAvatarDefinition, StoryHubAvatarPose, StorySpriteAnimation } from './types';
 
@@ -36,6 +36,7 @@ export function StoryAvatarRig({ avatar, pose = 'idle', facing = 1, reducedMotio
   const paths = useMemo(() => animation.frames.map((frame) => frame.path), [animation]);
   const textures = useTexture(paths) as unknown as THREE.Texture[];
   const materialRef = useRef<THREE.MeshBasicMaterial>(null);
+  const meshRef = useRef<THREE.Mesh>(null);
   const poseStartedAtRef = useRef(0);
   const lastPoseRef = useRef(pose);
   const planeHeight = storyAvatarPlaneHeight();
@@ -59,15 +60,26 @@ export function StoryAvatarRig({ avatar, pose = 'idle', facing = 1, reducedMotio
     const elapsedMs = (state.clock.elapsedTime - poseStartedAtRef.current) * 1000;
     const frameIndex = frameIndexAt(animation, elapsedMs, reducedMotion);
     const texture = textures[frameIndex] ?? textures[0];
+    const visualScale = animation.frames[frameIndex]?.visualScale ?? 1;
     const material = materialRef.current;
     if (texture && material && material.map !== texture) {
       material.map = texture;
       material.needsUpdate = true;
     }
+    const mesh = meshRef.current;
+    if (mesh) {
+      mesh.scale.set(visualScale, visualScale, 1);
+      mesh.position.y = storyAvatarMeshCenterYForVisualScale(visualScale);
+    }
   });
 
   return <group scale={[facing, 1, 1]}>
-    <mesh position={[0, STORY_AVATAR_MESH_CENTER_Y, 0.85]} renderOrder={20}>
+    <mesh
+      ref={meshRef}
+      position={[0, storyAvatarMeshCenterYForVisualScale(animation.frames[0]?.visualScale ?? 1), 0.85]}
+      scale={[animation.frames[0]?.visualScale ?? 1, animation.frames[0]?.visualScale ?? 1, 1]}
+      renderOrder={20}
+    >
       <planeGeometry args={[planeWidth, planeHeight]} />
       <meshBasicMaterial ref={materialRef} map={textures[0]} transparent alphaTest={0.5} depthTest={false} depthWrite={false} toneMapped={false} />
     </mesh>

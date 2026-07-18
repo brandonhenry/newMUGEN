@@ -164,6 +164,29 @@ SUPPLEMENTAL_ATTACK_RANGES = {
     "attack-special": (3, 6),
 }
 
+# The supplemental attack sheets were authored separately from the movement
+# sheets. These uniform row corrections were selected against black idle-vs-
+# attack height proofs using the head/hair mass as the ruler. They intentionally
+# do not flatten crouches, lunges, airborne poses, or other pose-driven height
+# changes. Per-frame canvas-fit compensation is applied in addition below.
+ATTACK_BODY_SCALES: dict[str, dict[str, float]] = {
+    "solar-runner": {"attack-kick": 1.08, "attack-special": 1.05},
+    "street-shadow": {"attack-heavy": 1.15, "attack-kick": 1.15, "attack-special": 1.15},
+    "crimson-ranger": {"attack-heavy": 1.10, "attack-kick": 1.10, "attack-special": 1.10},
+    "rose-blade": {"attack": 1.08, "attack-heavy": 1.22, "attack-kick": 1.22, "attack-special": 1.22},
+    "neon-courier": {"attack": 1.05},
+    "ember-scout": {"attack-heavy": 1.05, "attack-kick": 1.05, "attack-special": 1.05},
+    "solar-brawler": {"attack": 1.15, "attack-heavy": 1.05, "attack-kick": 1.04, "attack-special": 1.04},
+    "circuit-mage": {"attack": 1.05},
+}
+
+# These generated frames contain a clearly separated impact on the rear side
+# of an otherwise right-facing body. Move only that detached effect cluster to
+# the forward side; the character pixels and their orientation stay untouched.
+FORWARD_EFFECT_RELOCATIONS = {
+    ("street-shadow", "attack-heavy", 5),
+}
+
 PROJECTILES: dict[str, dict[str, Any]] = {
     # launchPoint is the visible hand, bow, gauntlet, or focus point in the
     # 320x192 attack-special release frame (frame 3), not a generic body offset.
@@ -328,12 +351,58 @@ def attack_body_anchor_x(image: Image.Image) -> int:
     return upper_x[len(upper_x) // 2]
 
 
-def fit_attack_crop(image: Image.Image) -> Image.Image:
-    """Uniformly fit authored attack reach around the fixed x=160 body anchor."""
+def relocate_separated_rear_effect(image: Image.Image) -> Image.Image:
+    """Move a detached rear effect in front of a right-facing body without flipping either."""
+    image = image.convert("RGBA")
+    body_anchor = attack_body_anchor_x(image)
+    alpha = image.getchannel("A")
+    opaque_by_column = [
+        any(alpha.getpixel((x, y)) for y in range(image.height))
+        for x in range(image.width)
+    ]
+    transparent_runs: list[tuple[int, int]] = []
+    run_start: int | None = None
+    for x, opaque in enumerate(opaque_by_column + [True]):
+        if not opaque and run_start is None:
+            run_start = x
+        elif opaque and run_start is not None:
+            if x - run_start >= 8 and x <= body_anchor - 16:
+                transparent_runs.append((run_start, x))
+            run_start = None
+    if not transparent_runs:
+        raise ValueError("Reviewed rear-effect frame no longer has a separable effect cluster")
+
+    split_x = transparent_runs[-1][1]
+    rear = image.crop((0, 0, split_x, image.height))
+    body = image.crop((split_x, 0, image.width, image.height))
+    effect_bounds = rear.getbbox()
+    body_bounds = body.getbbox()
+    if not effect_bounds or not body_bounds:
+        raise ValueError("Reviewed rear-effect frame is missing its effect or body")
+
+    effect = rear.crop(effect_bounds)
+    body_anchor -= split_x
+    effect_x = max(body_anchor + 8, body_bounds[2] - 8)
+    result = Image.new("RGBA", (max(body.width, effect_x + effect.width), image.height))
+    result.alpha_composite(effect, (effect_x, effect_bounds[1]))
+    result.alpha_composite(body, (0, 0))
+    bounds = result.getbbox()
+    if not bounds:
+        raise ValueError("Reviewed rear-effect relocation produced an empty frame")
+    return result.crop(bounds)
+
+
+def attack_crop_fit_scale(image: Image.Image) -> float:
+    """Return the uniform scale needed to fit attack reach around the fixed body anchor."""
     anchor = attack_body_anchor_x(image)
     right_extent = max(1, image.width - anchor)
     half_width = FRAME_SIZE[0] / 2 - 2
-    scale = min(1.0, half_width / max(1, anchor), half_width / right_extent, FRAME_SIZE[1] / image.height)
+    return min(1.0, half_width / max(1, anchor), half_width / right_extent, FRAME_SIZE[1] / image.height)
+
+
+def fit_attack_crop(image: Image.Image) -> Image.Image:
+    """Uniformly fit authored attack reach around the fixed x=160 body anchor."""
+    scale = attack_crop_fit_scale(image)
     if scale >= 1:
         return image
     return image.resize((max(1, round(image.width * scale)), max(1, round(image.height * scale))), Image.Resampling.NEAREST)
@@ -995,7 +1064,11 @@ def build() -> None:
                 if not content_bounds:
                     raise ValueError(f"Empty frame {set_id}/{animation_id}/{index}")
                 crop = crop.crop(content_bounds)
+                if (set_id, animation_id, index) in FORWARD_EFFECT_RELOCATIONS:
+                    crop = relocate_separated_rear_effect(crop)
+                attack_fit_scale = 1.0
                 if animation_id.startswith("attack"):
+                    attack_fit_scale = attack_crop_fit_scale(crop)
                     crop = fit_attack_crop(crop)
                     crop = fill_single_alpha_pinholes(crop)
                 if crop.width > FRAME_SIZE[0] or crop.height > FRAME_SIZE[1]:
@@ -1012,13 +1085,17 @@ def build() -> None:
                 frame_path = animation_root / f"{index:02d}.png"
                 frame.save(frame_path, optimize=True)
                 contact_frames.append((frame_id, frame_path))
-                runtime_frames.append({
+                runtime_frame = {
                     "id": frame_id,
                     "path": f"/story/avatars/kore-street-v1/sets/{set_id}/frames/{animation_id}/{index:02d}.png",
                     "durationMs": TIMINGS[animation_id],
                     "contentBounds": list(frame.getbbox() or (0, 0, 0, 0)),
                     "bodyAnchorX": x + body_anchor_x,
-                })
+                }
+                if is_attack:
+                    body_scale = ATTACK_BODY_SCALES.get(set_id, {}).get(animation_id, 1.0)
+                    runtime_frame["visualScale"] = round(body_scale / attack_fit_scale, 4)
+                runtime_frames.append(runtime_frame)
             animation_paths[animation_id] = runtime_frames
             animation = {"id": animation_id, "loop": animation_id not in {"jump", "attack", "attack-heavy", "attack-kick", "attack-special"}, "frames": runtime_frames}
             if animation_id == "attack":

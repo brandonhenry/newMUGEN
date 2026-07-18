@@ -8,7 +8,7 @@ import type { OnlinePlayerProfile } from '../lib/online/leaderboard';
 import { addFriendEntry, isFriend, readMatchHistory } from '../lib/socialHistory';
 import type { InputFrame } from '../types';
 import { STORY_ADVENTURE_ASSET_PATHS, storyWorldAssetPath } from './adventureAssets';
-import { STORY_ATTACK_VISUAL_SYNC_DELAY_MS, adventureAttackHits, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureAttackFrameHitbox, getAdventureEnemyStats, getStoryAttackDurationMs, getStoryProjectileSpawnPosition, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, resolveStoryAttackInput, stepAdventureProjectile, storyPlayerProjectileHits, type AdventureDamageFeedback } from './adventureCombat';
+import { STORY_ATTACK_VISUAL_SYNC_DELAY_MS, advanceStoryAttackInputBuffer, adventureAttackHits, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureAttackFrameHitbox, getAdventureEnemyStats, getStoryAttackDurationMs, getStoryProjectileSpawnPosition, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, resolveStoryAttackInput, stepAdventureProjectile, storyPlayerProjectileHits, type AdventureDamageFeedback, type StoryBufferedAttackInput } from './adventureCombat';
 import { makeStoryEncounterProgress, recordChallengerDefeat, recordRegularDefeat, rerollStoryRegularSpawns, resetActiveChallenger, storyEncounterMovementLock, type StoryEncounterProgress } from './adventureEncounters';
 import { STORY_ADVENTURE_STAT_CAP, STORY_ADVENTURE_STAT_KEYS, allocateAdventureStat, awardAdventureExperience, awardMountMastery, beginAdventureVisit, canRespecAdventureStats, discoverAdventureLandmark, discoverAdventureVista, discoverAdventureWaystone, experienceToNextLevel, getAdventureDerivedStats, readAdventureProgress, respecAdventureStats, unlockAdventureMount, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_REGION_LABELS, STORY_WORLDS, isStoryAdventureRegionId, isStoryAdventureWorldId, isStoryWorldId } from './adventureWorlds';
@@ -1135,6 +1135,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
   const previousWaterState = useRef(false);
   const attackUntil = useRef(0);
   const attackPose = useRef<StoryAvatarPose>('attack-jab');
+  const bufferedAttack = useRef<StoryBufferedAttackInput>(null);
   const actionInputArmed = useRef(false);
   const releasedInputFrames = useRef(0);
   const nearbyId = useRef<string | null>(null);
@@ -1160,12 +1161,14 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
     if (!disabled) return;
     actionInputArmed.current = false;
     releasedInputFrames.current = 0;
+    bufferedAttack.current = null;
   }, [disabled]);
 
   useFrame((state, frameDelta) => {
     const now = state.clock.elapsedTime;
     const delta = Math.min(frameDelta, 1 / 30);
     const input = disabled ? { left: false, right: false, down: false, up: false, jump: false, interact: false, jab: false, kick: false, heavy: false, special: false, block: false, back: false, pause: false } : readInput();
+    const horizontal = (input.right ? 1 : 0) - (input.left ? 1 : 0);
     const jumpPressed = Boolean(input.jump || input.up);
     const interactPressed = Boolean(input.interact);
     const attackButtons = { jab: Boolean(input.jab), heavy: Boolean(input.heavy), kick: Boolean(input.kick), special: Boolean(input.special) };
@@ -1195,11 +1198,19 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
 
     if (backEdge) onExit();
     if (pauseEdge) onPause();
-    if (selectedAttack && attackUntil.current <= now) {
-      const attackDurationSeconds = getStoryAttackDurationMs(avatar.avatarSet, selectedAttack) / 1000;
+    if (horizontal !== 0) facing.current = horizontal > 0 ? 1 : -1;
+    const bufferedAttackResult = advanceStoryAttackInputBuffer({
+      buffered: bufferedAttack.current,
+      pressed: selectedAttack,
+      now,
+      attackReady: attackUntil.current <= now
+    });
+    bufferedAttack.current = bufferedAttackResult.buffered;
+    if (bufferedAttackResult.attackInput) {
+      const attackDurationSeconds = getStoryAttackDurationMs(avatar.avatarSet, bufferedAttackResult.attackInput) / 1000;
       attackUntil.current = now + attackDurationSeconds;
-      attackPose.current = STORY_ATTACK_POSES[selectedAttack];
-      onAttack(position.current.x, position.current.y, facing.current, selectedAttack, attackDurationSeconds);
+      attackPose.current = STORY_ATTACK_POSES[bufferedAttackResult.attackInput];
+      onAttack(position.current.x, position.current.y, facing.current, bufferedAttackResult.attackInput, attackDurationSeconds);
     }
     const waterVolume = hub.exploration?.waterVolumes.find((volume) => position.current.x >= volume.bounds[0] && position.current.x <= volume.bounds[1] && position.current.y >= volume.bounds[2] && position.current.y <= volume.bounds[3]);
     const airPocket = waterVolume?.airPockets.find((pocket) => Math.hypot(position.current.x - pocket[0], position.current.y - pocket[1]) <= 1.8);
@@ -1234,9 +1245,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
       jumpBufferedUntil.current = now + 0.12;
     }
 
-    const horizontal = (input.right ? 1 : 0) - (input.left ? 1 : 0);
     const sprinting = horizontal !== 0 && input.block;
-    if (horizontal !== 0) facing.current = horizontal > 0 ? 1 : -1;
     if (!swimming && jumpBufferedUntil.current >= now && groundedUntil.current >= now) {
       velocityY.current = 7.8 * (mounted && mount ? mount.jumpMultiplier * (1 + mountMasteryRank * 0.008) : 1);
       jumpsUsed.current = 1;

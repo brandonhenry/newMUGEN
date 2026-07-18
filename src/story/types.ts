@@ -26,6 +26,8 @@ export type StorySpriteFrame = {
   durationMs: number;
   contentBounds: [number, number, number, number];
   bodyAnchorX: number;
+  /** Uniform world-space correction used to keep the authored head/body scale stable across frames. */
+  visualScale?: number;
 };
 
 export type StorySpriteAnimation = {

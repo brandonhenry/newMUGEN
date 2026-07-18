@@ -57,6 +57,14 @@ describe('K.O.R.E. full-frame street avatar assets', () => {
         if (animationId !== 'attack') expect(attack.frames.length, `${set.id}/${animationId}`).toBe(8);
         expect(attack.frames.length, `${set.id}/${animationId}`).toBeGreaterThanOrEqual(6);
         expect(attack.frames.every((frame) => frame.bodyAnchorX === 160), `${set.id}/${animationId}`).toBe(true);
+        expect(attack.frames.every((frame) => Number.isFinite(frame.visualScale) && frame.visualScale! >= 1), `${set.id}/${animationId}`).toBe(true);
+        const [activeStart, activeEnd] = attack.activeFrameRange!;
+        for (const frame of attack.frames.slice(activeStart, activeEnd + 1)) {
+          const rearExtent = frame.bodyAnchorX - frame.contentBounds[0];
+          const forwardExtent = frame.contentBounds[2] - frame.bodyAnchorX;
+          expect(rearExtent, `${set.id}/${frame.id} puts its primary active effect behind the right-facing body`)
+            .toBeLessThanOrEqual(Math.max(48, forwardExtent * 4));
+        }
         expect(attack.activeFrameRange, `${set.id}/${animationId}`).toBeDefined();
         expect(getStorySpriteAnimationDurationMs(set.id, animationId), `${set.id}/${animationId}`)
           .toBe(attack.frames.reduce((total, frame) => total + frame.durationMs, 0));

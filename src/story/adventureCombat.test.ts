@@ -3,7 +3,9 @@ import { sanitizeAdventureProgress } from './adventureProgress';
 import {
   STORY_DAMAGE_POP_MS,
   STORY_DAMAGE_POP_REDUCED_MS,
+  STORY_ATTACK_INPUT_BUFFER_SECONDS,
   STORY_ATTACK_PROFILES,
+  advanceStoryAttackInputBuffer,
   adventureAttackHits,
   canDamageAdventurePlayer,
   createAdventureDamageFeedback,
@@ -18,8 +20,8 @@ import {
   stepAdventureProjectile,
   storyPlayerProjectileHits
 } from './adventureCombat';
-import { STORY_AVATAR_GROUNDING_OFFSET_Y } from './actorGrounding';
-import { getStorySpriteProjectile } from './streetAvatarCatalog';
+import { STORY_AVATAR_GROUNDING_OFFSET_Y, storyAvatarPlaneHeight } from './actorGrounding';
+import { getStorySpriteAnimation, getStorySpriteProjectile, STORY_SPRITE_MANIFEST } from './streetAvatarCatalog';
 
 describe('story adventure combat math', () => {
   it('scales distinct enemy archetypes to the player level', () => {
@@ -62,6 +64,30 @@ describe('story adventure combat math', () => {
     expect(resolveStoryAttackInput({ jab: true })).toBe('jab');
   });
 
+  it('buffers repeated and alternate attack presses through the current Adventure attack', () => {
+    const immediate = advanceStoryAttackInputBuffer({ buffered: null, pressed: 'jab', now: 1, attackReady: true });
+    expect(immediate).toEqual({ buffered: null, attackInput: 'jab' });
+
+    const queued = advanceStoryAttackInputBuffer({ buffered: null, pressed: 'jab', now: 1.5, attackReady: false });
+    expect(queued.attackInput).toBeNull();
+    expect(queued.buffered).toEqual({ attackInput: 'jab', expiresAt: 1.5 + STORY_ATTACK_INPUT_BUFFER_SECONDS });
+
+    const replaced = advanceStoryAttackInputBuffer({ buffered: queued.buffered, pressed: 'heavy', now: 1.62, attackReady: false });
+    expect(replaced.buffered?.attackInput).toBe('heavy');
+    const consumed = advanceStoryAttackInputBuffer({ buffered: replaced.buffered, pressed: null, now: 1.8, attackReady: true });
+    expect(consumed).toEqual({ buffered: null, attackInput: 'heavy' });
+  });
+
+  it('drops stale buffered attacks instead of firing them late', () => {
+    const queued = advanceStoryAttackInputBuffer({ buffered: null, pressed: 'special', now: 2, attackReady: false });
+    expect(advanceStoryAttackInputBuffer({
+      buffered: queued.buffered,
+      pressed: null,
+      now: 2 + STORY_ATTACK_INPUT_BUFFER_SECONDS + 0.01,
+      attackReady: true
+    })).toEqual({ buffered: null, attackInput: null });
+  });
+
   it('uses manifest active ranges for each added move', () => {
     expect(getAdventureAttackFrameHitbox('arena-rebel', 'heavy', 329)).toBeNull();
     expect(getAdventureAttackFrameHitbox('arena-rebel', 'heavy', 330)).not.toBeNull();
@@ -94,6 +120,22 @@ describe('story adventure combat math', () => {
     expect(adventureAttackHits({ playerX: 0, playerY: 0.82, facing: 1, enemyX: 2.4, enemyY: 0.82, targetKind: 'ground', attackBox: earlyContact! })).toBe(false);
     expect(adventureAttackHits({ playerX: 0, playerY: 0.82, facing: 1, enemyX: 2.4, enemyY: 0.82, targetKind: 'ground', attackBox: extendedContact! })).toBe(true);
     expect(getAdventureAttackFrameHitbox('arena-rebel', 574)).toBeNull();
+  });
+
+  it('keeps enlarged Adventure attack visuals and authored hitboxes in sync', () => {
+    const animation = getStorySpriteAnimation('street-shadow', 'attack-heavy');
+    const frameIndex = 5;
+    const frame = animation.frames[frameIndex];
+    const elapsedMs = animation.frames
+      .slice(0, frameIndex)
+      .reduce((total, candidate) => total + candidate.durationMs, 0);
+    const hitbox = getAdventureAttackFrameHitbox('street-shadow', 'heavy', elapsedMs);
+    const pixelsToWorld = storyAvatarPlaneHeight() / STORY_SPRITE_MANIFEST.frameSize.height;
+    expect(frame.visualScale).toBeGreaterThan(1.5);
+    expect(hitbox?.forwardReach).toBeCloseTo(
+      (frame.contentBounds[2] - frame.bodyAnchorX) * pixelsToWorld * frame.visualScale!,
+      8
+    );
   });
 
   it('steps projectiles safely', () => {

@@ -1,5 +1,10 @@
 import { getAdventureDerivedStats, sanitizeAdventureProgress, type StoryAdventureProgressV1 } from './adventureProgress';
-import { STORY_AVATAR_GROUNDING_OFFSET_Y, STORY_AVATAR_MESH_CENTER_Y, storyAvatarPlaneHeight } from './actorGrounding';
+import {
+  STORY_AVATAR_GROUNDING_OFFSET_Y,
+  STORY_AVATAR_MESH_CENTER_Y,
+  storyAvatarMeshCenterYForVisualScale,
+  storyAvatarPlaneHeight
+} from './actorGrounding';
 import { getStorySpriteAnimation, STORY_SPRITE_MANIFEST, storyAttackAnimationId } from './streetAvatarCatalog';
 import type { StoryAttackInput, StoryAvatarSet, StoryEnemyArchetype, StorySpriteProjectileDefinition } from './types';
 
@@ -8,6 +13,7 @@ export const STORY_ATTACK_REAR_OVERLAP = 0.45;
 export const STORY_ATTACK_BOTTOM_OFFSET = -0.45;
 export const STORY_ATTACK_TOP_OFFSET = 2.2;
 export const STORY_ATTACK_VISUAL_SYNC_DELAY_MS = 24;
+export const STORY_ATTACK_INPUT_BUFFER_SECONDS = 0.3;
 export const STORY_PLAYER_INVULNERABILITY_MS = 650;
 export const STORY_DAMAGE_POP_MS = 760;
 export const STORY_DAMAGE_POP_REDUCED_MS = 260;
@@ -27,6 +33,32 @@ export const STORY_ATTACK_PROFILES: Record<StoryAttackInput, StoryAttackProfile>
 
 export function resolveStoryAttackInput(input: Partial<Record<StoryAttackInput, boolean>>): StoryAttackInput | null {
   return (['special', 'heavy', 'kick', 'jab'] as const).find((attackInput) => input[attackInput]) ?? null;
+}
+
+export type StoryBufferedAttackInput = {
+  attackInput: StoryAttackInput;
+  expiresAt: number;
+} | null;
+
+export function advanceStoryAttackInputBuffer(input: {
+  buffered: StoryBufferedAttackInput;
+  pressed: StoryAttackInput | null;
+  now: number;
+  attackReady: boolean;
+}): { buffered: StoryBufferedAttackInput; attackInput: StoryAttackInput | null } {
+  const buffered = input.buffered && input.buffered.expiresAt >= input.now ? input.buffered : null;
+  if (input.pressed) {
+    if (input.attackReady) return { buffered: null, attackInput: input.pressed };
+    return {
+      buffered: {
+        attackInput: input.pressed,
+        expiresAt: input.now + STORY_ATTACK_INPUT_BUFFER_SECONDS
+      },
+      attackInput: null
+    };
+  }
+  if (input.attackReady && buffered) return { buffered: null, attackInput: buffered.attackInput };
+  return { buffered, attackInput: null };
 }
 
 export type AdventureDamageFeedback = {
@@ -174,9 +206,12 @@ export function getAdventureAttackFrameHitbox(
   if (!activeFrames) return null;
   if (frameIndex < activeFrames[0] || frameIndex > activeFrames[1]) return null;
   const frame = animation.frames[frameIndex];
-  const pixelsToWorld = storyAvatarPlaneHeight() / STORY_SPRITE_MANIFEST.frameSize.height;
+  const visualScale = frame.visualScale ?? 1;
+  const pixelsToWorld = storyAvatarPlaneHeight() / STORY_SPRITE_MANIFEST.frameSize.height * visualScale;
   const [left, top, right, bottom] = frame.contentBounds;
-  const planeTop = STORY_AVATAR_GROUNDING_OFFSET_Y + STORY_AVATAR_MESH_CENTER_Y + storyAvatarPlaneHeight() / 2;
+  const planeTop = STORY_AVATAR_GROUNDING_OFFSET_Y
+    + storyAvatarMeshCenterYForVisualScale(visualScale)
+    + storyAvatarPlaneHeight() * visualScale / 2;
   return {
     forwardReach: Math.max(0, (right - frame.bodyAnchorX) * pixelsToWorld),
     rearReach: Math.max(0, (frame.bodyAnchorX - left) * pixelsToWorld),
