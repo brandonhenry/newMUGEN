@@ -3,6 +3,7 @@ import type { StoryPlatformDefinition, StoryWorldEnvironmentDefinition } from '.
 export type StoryPlatformSurfacePlacement = {
   height: number;
   centerY: number;
+  surfaceInsetY: number;
 };
 
 export function storyPlatformSurfacePlacement(
@@ -17,5 +18,5 @@ export function storyPlatformSurfacePlacement(
   const sourceHeight = surface?.frame[3] ?? 0;
   const insetPixels = Math.min(sourceHeight, Math.max(0, surface?.walkSurfaceInsetPixels ?? 0));
   const visualInset = sourceHeight > 0 ? height * insetPixels / sourceHeight : 0;
-  return { height, centerY: colliderTop - height / 2 - visualInset };
+  return { height, centerY: colliderTop - height / 2 - visualInset, surfaceInsetY: visualInset };
 }

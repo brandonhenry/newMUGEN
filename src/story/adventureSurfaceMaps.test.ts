@@ -2,7 +2,9 @@ import { describe, expect, it } from 'vitest';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_WORLDS } from './adventureWorlds';
 import { STORY_ADVENTURE_SURFACE_MAPS } from './adventureSurfaceMaps';
 import { STORY_NPCS, STORY_NPC_SPRITES, STORY_NPC_VISIBLE_WORLD_HEIGHT, storyNpcPlaneSize } from './adventureNpcs';
+import { storyAvatarGroundingOffsetForWorld, storyAvatarVisibleFootWorldY, storyGroundAnchoredPlaneCenterY } from './actorGrounding';
 import { adventureRunIsReachable, generateAdventureRunGraph } from './adventureExploration';
+import { storyPlatformSurfacePlacement } from './platformGrounding';
 
 describe('authored Adventure surface campaign', () => {
   it('ships four intentionally paced maps and six one-time discoveries per biome', () => {
@@ -41,6 +43,30 @@ describe('authored Adventure surface campaign', () => {
       const visiblePixels = sprite.referenceContentBounds[3] - sprite.referenceContentBounds[1];
       const renderedVisibleHeight = storyNpcPlaneSize(sprite) * visiblePixels / sprite.frameSize.height;
       expect(renderedVisibleHeight, npc.id).toBeCloseTo(STORY_NPC_VISIBLE_WORLD_HEIGHT, 4);
+    }
+  });
+
+  it('places player and NPC visible feet on each authored tile surface', () => {
+    for (const maps of Object.values(STORY_ADVENTURE_SURFACE_MAPS)) {
+      for (const map of maps) {
+        const world = STORY_ADVENTURE_WORLDS[map.biomeId];
+        const ground = map.platforms.find((platform) => platform.id.endsWith('-ground'))!;
+        const placement = storyPlatformSurfacePlacement(ground, world.environment?.surface);
+        const tileTopY = ground.position[1] + placement.centerY + placement.height / 2;
+        const playerFootY = storyAvatarVisibleFootWorldY(map.spawn[1], storyAvatarGroundingOffsetForWorld()) - placement.surfaceInsetY;
+        expect(playerFootY, `${map.id}/player`).toBeCloseTo(tileTopY, 8);
+        for (const npc of map.npcs) {
+          const sprite = STORY_NPC_SPRITES[npc.spriteId];
+          const planeSize = storyNpcPlaneSize(sprite);
+          const footAnchorFromBottom = (sprite.frameSize.height - sprite.frameSize.baseline) / sprite.frameSize.height;
+          const npcFootY = npc.position[1]
+            + storyGroundAnchoredPlaneCenterY(planeSize, footAnchorFromBottom)
+            - placement.surfaceInsetY
+            - planeSize / 2
+            + planeSize * footAnchorFromBottom;
+          expect(npcFootY, `${map.id}/${npc.id}`).toBeCloseTo(tileTopY, 8);
+        }
+      }
     }
   });
 

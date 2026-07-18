@@ -536,13 +536,14 @@ function PortalVisual({ portal, theme, nearby, assigned, reducedMotion }: { port
   </group>;
 }
 
-function AdventureNpcVisual({ npc, attackEvent, playerPosition, maxHealth, reducedMotion, onPlayerDamage }: {
+function AdventureNpcVisual({ npc, attackEvent, playerPosition, maxHealth, reducedMotion, onPlayerDamage, surfaceInsetY = 0 }: {
   npc: StoryNpcDefinition;
   attackEvent: StoryAdventureAttackEvent | null;
   playerPosition: MutableRefObject<THREE.Vector3>;
   maxHealth: number;
   reducedMotion: boolean;
   onPlayerDamage: (damage: number, sourceX: number) => void;
+  surfaceInsetY?: number;
 }) {
   const sprite = STORY_NPC_SPRITES[npc.spriteId];
   const idleFrames = sprite?.actions.idle.frames ?? [];
@@ -610,7 +611,7 @@ function AdventureNpcVisual({ npc, attackEvent, playerPosition, maxHealth, reduc
     if (textureIndex >= 0) materialRef.current.map = textures[textureIndex];
   });
   return <group position={[npc.position[0], npc.position[1], -0.05]}>
-    <mesh position={[0, storyGroundAnchoredPlaneCenterY(planeSize, footAnchorFromBottom), 0]}><planeGeometry args={[planeSize, planeSize]} /><meshBasicMaterial ref={materialRef} map={textures[0]} transparent alphaTest={0.02} depthWrite={false} toneMapped={false} /></mesh>
+    <mesh position={[0, storyGroundAnchoredPlaneCenterY(planeSize, footAnchorFromBottom) - surfaceInsetY, 0]}><planeGeometry args={[planeSize, planeSize]} /><meshBasicMaterial ref={materialRef} map={textures[0]} transparent alphaTest={0.02} depthWrite={false} toneMapped={false} /></mesh>
     {phase !== 'idle' && <Html center position={[0, STORY_NPC_VISIBLE_WORLD_HEIGHT - STORY_GROUNDED_ACTOR_CENTER_Y + 0.42, 0.6]} className="story-destination-sign-shell"><div className="story-destination-sign is-nearby"><strong>{phase === 'protect' ? npc.warningBark : `${npc.displayName} counters!`}</strong></div></Html>}
   </group>;
 }
@@ -660,10 +661,11 @@ function HubCamera({ playerPosition, bounds, verticalBounds }: { playerPosition:
   return null;
 }
 
-function RemoteStoryPlayer({ presence, reducedMotion, groundingOffsetY, lane, selected, onSelect }: {
+function RemoteStoryPlayer({ presence, reducedMotion, groundingOffsetY, surfaceInsetY, lane, selected, onSelect }: {
   presence: StoryHubPresence;
   reducedMotion: boolean;
   groundingOffsetY: number;
+  surfaceInsetY: number;
   lane: number;
   selected: boolean;
   onSelect: (presence: StoryHubPresence) => void;
@@ -679,7 +681,7 @@ function RemoteStoryPlayer({ presence, reducedMotion, groundingOffsetY, lane, se
     event.stopPropagation();
     onSelect(presence);
   }}>
-    <group position={[0, groundingOffsetY, 0]}>
+    <group position={[0, groundingOffsetY - surfaceInsetY, 0]}>
       <StoryAvatarRig avatar={presence.avatar} pose={presence.pose} facing={presence.facing} reducedMotion={reducedMotion} />
     </group>
     <mesh position={[0, 1.42, 0.1]} renderOrder={50}>
@@ -1249,6 +1251,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
   onReady?: () => void;
 }) {
   const bodyRef = useRef<RapierRigidBody>(null);
+  const groundedVisualGroup = useRef<THREE.Group>(null);
   const avatarGroup = useRef<THREE.Group>(null);
   const position = useRef({ x: hub.spawn[0], y: hub.spawn[1] });
   const velocityY = useRef(0);
@@ -1270,6 +1273,10 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
   const nearbyId = useRef<string | null>(null);
   const lastSampleAt = useRef(0);
   const flashUntil = useRef(0);
+  const platformSurfaceInsets = useMemo(() => new globalThis.Map(
+    hub.platforms.map((platform) => [platform.id, storyPlatformSurfacePlacement(platform, hub.environment?.surface).surfaceInsetY])
+  ), [hub.environment?.surface, hub.platforms]);
+  const initialSurfaceInsetY = platformSurfaceInsets.get('ground') ?? 0;
   useEffect(() => onReady?.(), [onReady]);
   useEffect(() => {
     if (!impactEvent) return;
@@ -1447,6 +1454,12 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
     position.current = { x: nextX, y: nextY };
     playerPosition.current.set(nextX, nextY, 0);
     bodyRef.current?.setNextKinematicTranslation({ x: nextX, y: nextY, z: 0 });
+    if (groundedVisualGroup.current) {
+      const surfaceInsetY = !swimming && groundedUntil.current >= now
+        ? platformSurfaceInsets.get(groundedPlatform.current ?? '') ?? 0
+        : 0;
+      groundedVisualGroup.current.position.y = -surfaceInsetY;
+    }
     if (avatarGroup.current) avatarGroup.current.visible = avatarVisible && (performance.now() >= flashUntil.current || Math.floor(performance.now() / 70) % 2 === 0);
 
     const nextPose: StoryAvatarPose = attackUntil.current > now ? attackPose.current : swimming || groundedUntil.current < now ? 'jump' : sprinting || mounted ? 'sprint' : horizontal !== 0 ? 'walk' : 'idle';
@@ -1472,9 +1485,11 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
 
   return <RigidBody ref={bodyRef} type="kinematicPosition" position={[hub.spawn[0], hub.spawn[1], 0]} colliders={false} enabledRotations={[false, false, false]}>
     <CuboidCollider args={[0.36, 0.8, 0.3]} />
-    {mounted && mount && <StoryMountVisual mount={mount} facing={visualState.facing} />}
-    <group ref={avatarGroup} position={[mount && mounted ? mount.riderOffset[0] : 0, groundingOffsetY + (mount && mounted ? mount.riderOffset[1] : 0), 0]} visible={avatarVisible}>
-      <StoryAvatarRig avatar={avatar} pose={visualState.pose} facing={visualState.facing} reducedMotion={reducedMotion} restartToken={visualState.attackSequence} />
+    <group ref={groundedVisualGroup} position={[0, -initialSurfaceInsetY, 0]}>
+      {mounted && mount && <StoryMountVisual mount={mount} facing={visualState.facing} />}
+      <group ref={avatarGroup} position={[mount && mounted ? mount.riderOffset[0] : 0, groundingOffsetY + (mount && mounted ? mount.riderOffset[1] : 0), 0]} visible={avatarVisible}>
+        <StoryAvatarRig avatar={avatar} pose={visualState.pose} facing={visualState.facing} reducedMotion={reducedMotion} restartToken={visualState.attackSequence} />
+      </group>
     </group>
   </RigidBody>;
 }
@@ -1546,7 +1561,11 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
       leash: zone.range
     };
   }, [activeChallenge, hub.exploration?.encounters, hub.id]);
-  const groundingOffsetY = storyAvatarGroundingOffsetForWorld(Boolean([...activeRegularSpawns, ...(activeChallengerSpawn ? [activeChallengerSpawn] : [])].some((enemy) => getStoryEnemyDefinition(enemy.enemyId).archetype !== 'flying')));
+  const groundingOffsetY = storyAvatarGroundingOffsetForWorld();
+  const groundSurfaceInsetY = useMemo(() => {
+    const ground = hub.platforms.find((platform) => platform.id === 'ground');
+    return ground ? storyPlatformSurfacePlacement(ground, hub.environment?.surface).surfaceInsetY : 0;
+  }, [hub.environment?.surface, hub.platforms]);
 
   const commitEncounterProgress = useCallback((next: StoryEncounterProgress) => {
     encounterProgressRef.current = next;
@@ -1607,9 +1626,9 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
         <AdventureTraversalVisuals hub={hub} />
         <AdventureHazards hub={hub} playerPosition={playerPosition} onPlayerDamage={onPlayerDamage} />
         {hub.portals.map((portal) => <PortalVisual key={portal.id} portal={portal} theme={hub.theme} nearby={nearbyPortal?.id === portal.id} assigned={assignedPortalId === portal.id} reducedMotion={reducedMotion} />)}
-        {(hub.npcs ?? []).map((npc) => <AdventureNpcVisual key={npc.id} npc={npc} attackEvent={attackEvent} playerPosition={playerPosition} maxHealth={derivedStats.maxHealth} reducedMotion={reducedMotion} onPlayerDamage={onPlayerDamage} />)}
-        {remotePlayers.map((presence, index) => <RemoteStoryPlayer key={presence.sessionId} presence={presence} reducedMotion={reducedMotion} groundingOffsetY={groundingOffsetY} lane={index % 5} selected={selectedPlayerSessionId === presence.sessionId} onSelect={onSelectPlayer} />)}
-        {attackEvent?.projectile && <StoryPlayerProjectile key={attackEvent.id} attackEvent={attackEvent as StoryAdventureAttackEvent & { projectile: StorySpriteProjectileDefinition }} playerPosition={playerPosition} avatarRigOffset={[mounted && mount ? mount.riderOffset[0] : 0, groundingOffsetY + (mounted && mount ? mount.riderOffset[1] : 0)]} runtime={playerProjectile} />}
+        {(hub.npcs ?? []).map((npc) => <AdventureNpcVisual key={npc.id} npc={npc} attackEvent={attackEvent} playerPosition={playerPosition} maxHealth={derivedStats.maxHealth} reducedMotion={reducedMotion} onPlayerDamage={onPlayerDamage} surfaceInsetY={groundSurfaceInsetY} />)}
+        {remotePlayers.map((presence, index) => <RemoteStoryPlayer key={presence.sessionId} presence={presence} reducedMotion={reducedMotion} groundingOffsetY={groundingOffsetY} surfaceInsetY={groundSurfaceInsetY} lane={index % 5} selected={selectedPlayerSessionId === presence.sessionId} onSelect={onSelectPlayer} />)}
+        {attackEvent?.projectile && <StoryPlayerProjectile key={attackEvent.id} attackEvent={attackEvent as StoryAdventureAttackEvent & { projectile: StorySpriteProjectileDefinition }} playerPosition={playerPosition} avatarRigOffset={[mounted && mount ? mount.riderOffset[0] : 0, groundingOffsetY - groundSurfaceInsetY + (mounted && mount ? mount.riderOffset[1] : 0)]} runtime={playerProjectile} />}
         {activeRegularSpawns.length > 0 && <AdventureEnemies spawns={activeRegularSpawns} level={progress.level} playerPosition={playerPosition} playerProjectile={playerProjectile} attackEvent={attackEvent} reducedMotion={reducedMotion} onPlayerDamage={onPlayerDamage} onDefeated={handleEnemyDefeated} />}
         {activeChallengerSpawn && <AdventureEnemy key={activeChallengerSpawn.id} spawn={activeChallengerSpawn} level={progress.level} playerPosition={playerPosition} playerProjectile={playerProjectile} attackEvent={attackEvent} reducedMotion={reducedMotion} onPlayerDamage={onPlayerDamage} onDefeated={handleEnemyDefeated} />}
         <StoryPlayerController hub={hub} avatar={profile.avatar} avatarVisible={avatarVisible} groundingOffsetY={groundingOffsetY} playerPosition={playerPosition} movementLock={movementLock} readInput={readInput} disabled={disabled} reducedMotion={reducedMotion} quickMatchAvailable={quickMatchAvailable} derivedStats={derivedStats} mounted={mounted} mount={mount} mountMasteryRank={mountMasteryRank} impactEvent={impactEvent} onAttack={onAttack} onQuickMatch={onQuickMatch} onNearbyPortal={onNearbyPortal} onActivatePortal={onActivatePortal} onWaterState={onWaterState} onExit={onExit} onPause={onPause} onStateSample={onStateSample} onReady={onReady} />

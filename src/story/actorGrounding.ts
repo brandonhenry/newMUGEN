@@ -2,7 +2,6 @@ import { STORY_SPRITE_MANIFEST } from './streetAvatarCatalog';
 
 export const STORY_GROUNDED_ACTOR_CENTER_Y = 0.82;
 export const STORY_AVATAR_MESH_CENTER_Y = 0.63;
-export const STORY_CENTRAL_AVATAR_GROUNDING_OFFSET_Y = -0.5;
 
 const STORY_AVATAR_REFERENCE_HEIGHT = 176;
 const STORY_AVATAR_REFERENCE_WORLD_HEIGHT = 3.2;
@@ -31,9 +30,10 @@ export function storyAvatarGroundingOffsetY(bodyCenterY = STORY_GROUNDED_ACTOR_C
 }
 
 export const STORY_AVATAR_GROUNDING_OFFSET_Y = storyAvatarGroundingOffsetY();
+export const STORY_CENTRAL_AVATAR_GROUNDING_OFFSET_Y = STORY_AVATAR_GROUNDING_OFFSET_Y;
 
-export function storyAvatarGroundingOffsetForWorld(hasGroundEnemies: boolean): number {
-  return hasGroundEnemies ? STORY_AVATAR_GROUNDING_OFFSET_Y : STORY_CENTRAL_AVATAR_GROUNDING_OFFSET_Y;
+export function storyAvatarGroundingOffsetForWorld(): number {
+  return STORY_AVATAR_GROUNDING_OFFSET_Y;
 }
 
 export function storyAvatarVisibleFootWorldY(bodyCenterY: number, groundingOffsetY = STORY_AVATAR_GROUNDING_OFFSET_Y): number {

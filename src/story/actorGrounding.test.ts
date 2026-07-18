@@ -9,10 +9,9 @@ describe('story actor visual grounding', () => {
     expect(storyAvatarVisibleFootWorldY(STORY_GROUNDED_ACTOR_CENTER_Y)).toBeCloseTo(0, 8);
   });
 
-  it('preserves K.O.R.E. Central grounding outside enemy combat regions', () => {
-    expect(storyAvatarGroundingOffsetForWorld(false)).toBe(STORY_CENTRAL_AVATAR_GROUNDING_OFFSET_Y);
-    expect(STORY_CENTRAL_AVATAR_GROUNDING_OFFSET_Y).toBe(-0.5);
-    expect(storyAvatarGroundingOffsetForWorld(true)).toBe(STORY_AVATAR_GROUNDING_OFFSET_Y);
+  it('uses one foot baseline in safe maps, Central, and combat regions', () => {
+    expect(STORY_CENTRAL_AVATAR_GROUNDING_OFFSET_Y).toBe(STORY_AVATAR_GROUNDING_OFFSET_Y);
+    expect(storyAvatarGroundingOffsetForWorld()).toBe(STORY_AVATAR_GROUNDING_OFFSET_Y);
   });
 
   it('derives the offset for elevated platforms instead of changing the actor baseline', () => {

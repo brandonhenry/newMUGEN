@@ -11,6 +11,7 @@ describe('story world visual grounding', () => {
         const inset = surface?.walkSurfaceInsetPixels ?? 0;
         const expectedTop = platform.size[1] / 2 - placement.height * inset / (surface?.frame[3] ?? 1);
         expect(placement.centerY + placement.height / 2, `${world.id}/${platform.id}`).toBeCloseTo(expectedTop, 8);
+        expect(placement.surfaceInsetY, `${world.id}/${platform.id} inset`).toBeCloseTo(platform.size[1] / 2 - expectedTop, 8);
       }
     }
   });
@@ -28,8 +29,10 @@ describe('story world visual grounding', () => {
     const oneWay = storyPlatformSurfacePlacement({ id: 'ledge', position: [0, 3], size: [8, 0.45], oneWay: true });
     expect(ground.height).toBe(0.82);
     expect(ground.centerY).toBeCloseTo(0.09, 8);
+    expect(ground.surfaceInsetY).toBe(0);
     expect(oneWay.height).toBe(0.52);
     expect(oneWay.centerY).toBeCloseTo(-0.035, 8);
+    expect(oneWay.surfaceInsetY).toBe(0);
   });
 
   it('converts one source pixel into the correct ground and ledge optical inset', () => {
