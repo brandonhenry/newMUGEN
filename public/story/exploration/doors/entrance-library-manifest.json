@@ -1,0 +1,77 @@
+{
+  "version": 2,
+  "purpose": "Semantic Adventure entrance library: ordinary surface doors, Central Route biome gates, Shifting Depth entrances, and mount sanctuaries.",
+  "atlasSize": [1536, 1024],
+  "biomeOrder": ["greenhollow", "thornwood", "ironroot", "bonevault", "emberdeep", "frostpeak", "sunscar", "skyglass"],
+  "selectionRules": {
+    "surface-map:*": "normal-biome-doors.png; three deterministic functional variants per biome",
+    "Central Route and biome returns": "biome-doors.png; one monumental identity gate per biome",
+    "depth-entry:*, depth-link:*, depth-return-surface": "depth-entrances.png; one dangerous subterranean threshold per biome",
+    "mount-sanctuary:*": "sanctuary-entrances.png; one peaceful ceremonial threshold per biome"
+  },
+  "packAudit": [
+    {
+      "pack": "DawnLike 1.81",
+      "license": "CC-BY-4.0",
+      "finding": "Contains many 16x16 top-down door and wall frames, but not a complete matching set of side-view full-height biome entrances."
+    },
+    {
+      "pack": "Pixel Crawler Free Pack 2.11",
+      "license": "Pack Terms",
+      "finding": "Contains useful wooden, stone, barred, and metal door parts, but not a coherent three-door family for all eight biomes."
+    },
+    {
+      "pack": "Reviewed CC0 world packs",
+      "license": "CC0-1.0",
+      "finding": "Standalone doors exist for Warped Caves/Emberdeep and Fort of Illusion/Tournament Gold; the remaining biome packs do not ship equivalent standalone doors."
+    }
+  ],
+  "assets": [
+    {
+      "file": "biome-doors.png",
+      "tier": "biome-gate",
+      "frames": 8,
+      "grid": [4, 2],
+      "frameSize": [384, 512],
+      "sha256": "5a160ac2766a51f8377fe254b5a42dae469063d53be8830befb9f955ec18a2fa",
+      "license": "project-owned-generated"
+    },
+    {
+      "file": "normal-biome-doors.png",
+      "tier": "normal",
+      "frames": 24,
+      "grid": [6, 4],
+      "frameSize": [256, 256],
+      "visibleBottomInset": 20,
+      "sha256": "947cc5955d41e61352c810c44de080781eabe1d6041479369a19fe9236beaf77",
+      "license": "project-owned-generated"
+    },
+    {
+      "file": "depth-entrances.png",
+      "tier": "depth",
+      "frames": 8,
+      "grid": [4, 2],
+      "frameSize": [384, 512],
+      "visibleBottomInset": 28,
+      "sha256": "9112f4872bbcacfb45a3c18c8067985a21127c7cae48b9b30fa2abc8ffed1707",
+      "license": "project-owned-generated"
+    },
+    {
+      "file": "sanctuary-entrances.png",
+      "tier": "sanctuary",
+      "frames": 8,
+      "grid": [4, 2],
+      "frameSize": [384, 512],
+      "visibleBottomInset": 22,
+      "sha256": "fbe5a2e6b74fb7f1425b813b2ec6de3d1d1e43af569e8c177cd4cabb4d31f6a6",
+      "license": "project-owned-generated"
+    }
+  ],
+  "generation": {
+    "tool": "OpenAI image generation tool",
+    "model": "built-in image generation model; exact model version not exposed",
+    "mode": "generate from the existing project-owned biome gate atlas as a style reference; flat #ff00ff chroma-key background; soft-matte removal; nearest-neighbor frame normalization",
+    "styleReference": "biome-doors.png",
+    "promptRecord": "GENERATION.md"
+  }
+}
