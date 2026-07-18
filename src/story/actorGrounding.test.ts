@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { STORY_AVATAR_GROUNDING_OFFSET_Y, STORY_CENTRAL_AVATAR_GROUNDING_OFFSET_Y, STORY_GROUNDED_ACTOR_CENTER_Y, storyAvatarGroundingOffsetForWorld, storyAvatarGroundingOffsetY, storyAvatarVisibleFootWorldY } from './actorGrounding';
+import { STORY_AVATAR_GROUNDING_OFFSET_Y, STORY_CENTRAL_AVATAR_GROUNDING_OFFSET_Y, STORY_GROUNDED_ACTOR_CENTER_Y, storyAvatarGroundingOffsetForWorld, storyAvatarGroundingOffsetY, storyAvatarVisibleFootWorldY, storyGroundAnchoredPlaneCenterY, storyScaledGroundAnchorOffsetY } from './actorGrounding';
 import { STORY_WORLDS } from './adventureWorlds';
 
 describe('story actor visual grounding', () => {
@@ -27,6 +27,15 @@ describe('story actor visual grounding', () => {
         if (enemy.archetype === 'flying') continue;
         expect(enemy.position[1], `${world.id}/${enemy.id}`).toBe(STORY_GROUNDED_ACTOR_CENTER_Y);
       }
+    }
+  });
+
+  it('keeps normal, elite, and mount sprite feet on the collision-derived contact line', () => {
+    for (const [height, scale] of [[1.45, 1], [1.7, 1], [1.85, 1], [1.7, 2.35]] as const) {
+      const planeCenter = storyGroundAnchoredPlaneCenterY(height);
+      const scaledRoot = storyScaledGroundAnchorOffsetY(scale);
+      const visibleBottom = STORY_GROUNDED_ACTOR_CENTER_Y + scaledRoot + scale * (planeCenter - height / 2);
+      expect(visibleBottom).toBeCloseTo(0, 8);
     }
   });
 });

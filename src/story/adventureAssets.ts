@@ -44,12 +44,14 @@ export function worldPackAsset(relativePath: string): StoryWorldAssetId {
 export function isStoryWorldAssetId(value: unknown): value is StoryWorldAssetId {
   return typeof value === 'string' && (
     Object.prototype.hasOwnProperty.call(STORY_WORLD_ASSET_PATHS, value) ||
-    /^world:[a-z0-9][a-z0-9-]*(?:\/[a-z0-9][a-z0-9.-]*)+\.png$/.test(value)
+    /^world:[a-z0-9][a-z0-9-]*(?:\/[a-z0-9][a-z0-9.-]*)+\.png$/.test(value) ||
+    /^exploration:[a-z0-9][a-z0-9-]*(?:\/[A-Za-z0-9][A-Za-z0-9._-]*)+\.png$/.test(value)
   );
 }
 
 export function storyWorldAssetPath(asset: StoryWorldAssetId): string {
   if (asset.startsWith('world:')) return `/story/worlds/${asset.slice('world:'.length)}`;
+  if (asset.startsWith('exploration:')) return `/story/exploration/${asset.slice('exploration:'.length)}`;
   const path = STORY_WORLD_ASSET_PATHS[asset];
   if (!path) throw new Error(`Unknown story world asset: ${asset}`);
   return path;

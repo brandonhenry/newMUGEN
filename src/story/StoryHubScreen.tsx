@@ -9,15 +9,18 @@ import { addFriendEntry, isFriend, readMatchHistory } from '../lib/socialHistory
 import type { InputFrame } from '../types';
 import { STORY_ADVENTURE_ASSET_PATHS, STORY_ENEMY_SPRITE_PATHS, storyWorldAssetPath } from './adventureAssets';
 import { STORY_ATTACK_VISUAL_SYNC_DELAY_MS, adventureAttackHits, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureAttackFrameHitbox, getAdventureEnemyStats, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, shouldRespawnAdventureEnemy, stepAdventureProjectile, type AdventureDamageFeedback } from './adventureCombat';
-import { STORY_ADVENTURE_STAT_CAP, STORY_ADVENTURE_STAT_KEYS, allocateAdventureStat, awardAdventureExperience, canRespecAdventureStats, experienceToNextLevel, getAdventureDerivedStats, readAdventureProgress, respecAdventureStats, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
+import { STORY_ADVENTURE_STAT_CAP, STORY_ADVENTURE_STAT_KEYS, allocateAdventureStat, awardAdventureExperience, awardMountMastery, beginAdventureVisit, canRespecAdventureStats, discoverAdventureLandmark, discoverAdventureVista, discoverAdventureWaystone, experienceToNextLevel, getAdventureDerivedStats, readAdventureProgress, respecAdventureStats, unlockAdventureMount, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_REGION_LABELS, STORY_WORLDS, isStoryAdventureRegionId, isStoryAdventureWorldId, isStoryWorldId } from './adventureWorlds';
-import { STORY_GROUNDED_ACTOR_CENTER_Y, storyAvatarGroundingOffsetForWorld } from './actorGrounding';
+import { createAdventureVisitSeed, generateAdventureRunGraph, STORY_BREATH_DRAIN_PER_SECOND, STORY_BREATH_REFILL_PER_SECOND, STORY_MAX_BREATH, STORY_MOUNTS, STORY_WORLD_MOUNT, storyDepthZoneLabel, type StoryPartyInstance } from './adventureExploration';
+import { STORY_GROUNDED_ACTOR_CENTER_Y, storyAvatarGroundingOffsetForWorld, storyGroundAnchoredPlaneCenterY, storyScaledGroundAnchorOffsetY } from './actorGrounding';
 import { connectStoryHubMultiplayer, readOrCreateStoryHubGuestIdentity, readStoryHubOnlinePreference, STORY_HUB_CHALLENGE_TIMEOUT_MS, writeStoryHubOnlinePreference, type StoryHubMultiplayerSession } from './hubMultiplayer';
 import { KORE_CENTRAL_HUB } from './hubData';
 import { storyPlatformSurfacePlacement } from './platformGrounding';
 import { getStorySpriteAnimationDurationMs } from './streetAvatarCatalog';
 import { StoryAvatarRig, type StoryAvatarPose } from './StoryAvatarRig';
-import type { HubDestination, StoryAvatarSet, StoryEnemySpawnDefinition, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StoryWorldBackdropLayerDefinition, StoryWorldId, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
+import { joinStoryParty, leaveStoryParty, updateStoryPartyRoom } from './storyParty';
+import { createStoryWorldProps } from './worldEnvironments';
+import type { HubDestination, StoryAdventureRunGraph, StoryAvatarSet, StoryEnemySpawnDefinition, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryMountDefinition, StoryMountId, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StoryWorldBackdropLayerDefinition, StoryWorldId, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
 
 type StoryHubInput = Pick<InputFrame, 'left' | 'right' | 'down' | 'up' | 'jump' | 'confirm' | 'jab' | 'kick' | 'heavy' | 'special' | 'block' | 'back' | 'pause'>;
 type SetVirtualAction = (player: 1 | 2, action: keyof InputFrame, pressed: boolean) => void;
@@ -289,6 +292,19 @@ function AuthoredWorld({ hub, reducedMotion }: { hub: StoryHubDefinition; reduce
     {environment.layers.map((layer) => <WorldBackdropLayer key={layer.id} layer={layer} hub={hub} />)}
     {hub.landmarks?.map((entry) => <WorldLandmark key={entry.id} landmark={entry} />)}
     {hub.props?.map((prop) => <AtlasSprite key={prop.id} prop={prop} />)}
+    {hub.exploration?.waterVolumes.map((volume) => {
+      const [minX, maxX, minY, maxY] = volume.bounds;
+      return <group key={volume.id}>
+        <mesh position={[(minX + maxX) / 2, (minY + maxY) / 2, 0.62]} renderOrder={28}>
+          <planeGeometry args={[maxX - minX, maxY - minY]} />
+          <meshBasicMaterial color="#159dc6" transparent opacity={0.28} depthWrite={false} toneMapped={false} />
+        </mesh>
+        <mesh position={[(minX + maxX) / 2, maxY, 0.64]} renderOrder={29}>
+          <planeGeometry args={[maxX - minX, 0.12]} />
+          <meshBasicMaterial color="#8ee8ff" transparent opacity={0.72} depthWrite={false} toneMapped={false} />
+        </mesh>
+      </group>;
+    })}
     <WorldParticles hub={hub} reducedMotion={reducedMotion} />
   </>;
 }
@@ -479,7 +495,7 @@ function PortalVisual({ portal, nearby, assigned, reducedMotion }: { portal: Sto
   </group>;
 }
 
-function HubCamera({ playerPosition, bounds }: { playerPosition: MutableRefObject<THREE.Vector3>; bounds: StoryHubDefinition['bounds'] }) {
+function HubCamera({ playerPosition, bounds, verticalBounds }: { playerPosition: MutableRefObject<THREE.Vector3>; bounds: StoryHubDefinition['bounds']; verticalBounds?: { minY: number; maxY: number } }) {
   const { camera, size } = useThree();
   const desired = useMemo(() => new THREE.Vector3(), []);
   useFrame((_, delta) => {
@@ -487,7 +503,9 @@ function HubCamera({ playerPosition, bounds }: { playerPosition: MutableRefObjec
     const halfWidth = Math.max(5, size.width / Math.max(1, orthographic.zoom) / 2);
     desired.set(
       THREE.MathUtils.clamp(playerPosition.current.x, bounds.minX + halfWidth, bounds.maxX - halfWidth),
-      THREE.MathUtils.clamp(4.6 + Math.max(0, playerPosition.current.y - 1) * 0.22, 4.6, 5.6),
+      verticalBounds
+        ? THREE.MathUtils.clamp(playerPosition.current.y + 3.7, verticalBounds.minY + 3.7, verticalBounds.maxY - 2.5)
+        : THREE.MathUtils.clamp(4.6 + Math.max(0, playerPosition.current.y - 1) * 0.22, 4.6, 5.6),
       18
     );
     const blend = 1 - Math.pow(0.0005, delta);
@@ -569,8 +587,9 @@ function EnemySprite({ sprite, facing, flashUntil }: { sprite: StoryEnemySpawnDe
     if (material.current) material.current.color.set(performance.now() < flashUntil.current ? '#ff6f91' : '#ffffff');
   });
   useEffect(() => () => texture.dispose(), [texture]);
-  return <mesh scale={[facing, 1, 1]}>
-    <planeGeometry args={crawler ? [1.7, 1.7] : [1.45, 1.45]} />
+  const size = crawler ? 1.7 : 1.45;
+  return <mesh position={[0, storyGroundAnchoredPlaneCenterY(size), 0]} scale={[facing, 1, 1]}>
+    <planeGeometry args={[size, size]} />
     <meshBasicMaterial ref={material} map={texture} transparent alphaTest={0.02} depthWrite={false} toneMapped={false} />
   </mesh>;
 }
@@ -592,7 +611,10 @@ function AdventureEnemy({ spawn, level, playerPosition, attackEvent, reducedMoti
   const damageLayer = useRef<THREE.Group>(null);
   const projectileMeshes = useRef<Array<THREE.Mesh | null>>([]);
   const projectiles = useRef<AdventureProjectileRuntime[]>(Array.from({ length: 3 }, () => ({ active: false, x: 0, y: 0, velocityX: 0, velocityY: 0, expiresAt: 0 })));
-  const stats = useMemo(() => getAdventureEnemyStats(spawn.archetype, level), [level, spawn.archetype]);
+  const stats = useMemo(() => {
+    const base = getAdventureEnemyStats(spawn.archetype, level);
+    return spawn.elite ? { ...base, maxHealth: Math.round(base.maxHealth * 5.5), damage: Math.round(base.damage * 1.6), speed: base.speed * 0.78, xp: base.xp * 8, attackCooldownMs: Math.round(base.attackCooldownMs * 1.18) } : base;
+  }, [level, spawn.archetype, spawn.elite]);
   const x = useRef(spawn.position[0]);
   const y = useRef(spawn.position[1]);
   const facing = useRef<-1 | 1>(-1);
@@ -662,6 +684,13 @@ function AdventureEnemy({ spawn, level, playerPosition, attackEvent, reducedMoti
     const now = performance.now();
     const delta = Math.min(frameDelta, 1 / 30);
     if (!group.current) return;
+    const activationMin = (spawn.leash?.[0] ?? spawn.position[0] - 13) - 3;
+    const activationMax = (spawn.leash?.[1] ?? spawn.position[0] + 13) + 3;
+    if (playerPosition.current.x < activationMin || playerPosition.current.x > activationMax) {
+      group.current.visible = false;
+      projectiles.current.forEach((projectile) => { projectile.active = false; });
+      return;
+    }
     if (attackEvent && now <= attackEvent.activeUntil) {
       const attackBox = getAdventureAttackFrameHitbox(attackEvent.avatarSet, now - attackEvent.startedAt);
       if (attackBox) {
@@ -730,7 +759,7 @@ function AdventureEnemy({ spawn, level, playerPosition, attackEvent, reducedMoti
       move = Math.sin(state.clock.elapsedTime * 0.72 + spawn.position[0]) >= 0 ? 1 : -1;
     }
     if (now >= staggerUntil.current) x.current += move * stats.speed * delta;
-    x.current = THREE.MathUtils.clamp(x.current, spawn.position[0] - spawn.patrolRadius * 2.5, spawn.position[0] + spawn.patrolRadius * 2.5);
+    x.current = THREE.MathUtils.clamp(x.current, spawn.leash?.[0] ?? spawn.position[0] - spawn.patrolRadius * 2.5, spawn.leash?.[1] ?? spawn.position[0] + spawn.patrolRadius * 2.5);
     if (move !== 0 && facing.current !== (move > 0 ? 1 : -1)) {
       facing.current = move > 0 ? 1 : -1;
       setVisual((current) => ({ ...current, facing: facing.current }));
@@ -765,18 +794,18 @@ function AdventureEnemy({ spawn, level, playerPosition, attackEvent, reducedMoti
 
   return <>
     <group ref={group} position={[spawn.position[0], spawn.position[1], 0.42]} name={`story-enemy-${spawn.id}`}>
-      <group ref={enemyBody}>
+      <group ref={enemyBody} position={[0, storyScaledGroundAnchorOffsetY(spawn.scale ?? 1), 0]} scale={[spawn.scale ?? 1, spawn.scale ?? 1, 1]}>
         <EnemySprite sprite={spawn.sprite} facing={visual.facing} flashUntil={flashUntil} />
       </group>
-      <Html center position={[0, 1.18, 0.3]} zIndexRange={[7, 0]} className="story-enemy-bar-shell">
-        <div className={`story-enemy-bar ${visual.critical ? 'is-critical' : ''}`} data-testid={`story-enemy-health-${spawn.id}`}>
+      <Html center position={[0, 1.18 * (spawn.scale ?? 1), 0.3]} zIndexRange={[7, 0]} className="story-enemy-bar-shell">
+        <div className={`story-enemy-bar ${visual.critical ? 'is-critical' : ''} ${spawn.elite ? 'is-elite' : ''}`} data-testid={`story-enemy-health-${spawn.id}`}>
           <span><i style={{ width: `${Math.max(0, visual.health / stats.maxHealth) * 100}%` }} /></span>
           <small>{spawn.name} · Lv {level}</small>
         </div>
       </Html>
     </group>
     <group ref={damageLayer} position={[spawn.position[0], spawn.position[1], 0.9]}>
-      {damagePops.map((pop) => <Html key={pop.id} center position={[0, 1.02, 0.7]} zIndexRange={[10, 0]} className="story-enemy-damage-shell">
+      {damagePops.map((pop) => <Html key={pop.id} center position={[0, 1.02 * (spawn.scale ?? 1), 0.7]} zIndexRange={[10, 0]} className="story-enemy-damage-shell">
         <output
           className={`story-enemy-damage palette-${(pop.id - 1) % 5} ${pop.critical ? 'is-critical' : ''} ${pop.finishing ? 'is-finishing' : ''} ${reducedMotion ? 'is-reduced-motion' : ''}`}
           data-testid={`story-enemy-damage-${spawn.id}-${pop.id}`}
@@ -800,7 +829,38 @@ function AdventureEnemies(props: Omit<Parameters<typeof AdventureEnemy>[0], 'spa
   return <>{spawns.map((spawn) => <AdventureEnemy key={spawn.id} spawn={spawn} {...enemyProps} />)}</>;
 }
 
-function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, playerPosition, readInput, disabled, reducedMotion, quickMatchAvailable, derivedStats, impactEvent, onAttack, onQuickMatch, onNearbyPortal, onActivatePortal, onExit, onPause, onStateSample, onReady }: {
+const MOUNT_ART: Record<StoryMountId, { path: string; frames: number; size: [number, number] }> = {
+  'verdant-stag': { path: '/story/exploration/wildlife/Deer_Run.png', frames: 6, size: [2.55, 1.85] },
+  'bramble-lynx': { path: '/story/exploration/wildlife/Wolf_Run.png', frames: 6, size: [2.65, 1.72] },
+  'ironhorn-beetle': { path: '/story/exploration/wildlife/Bear_Run.png', frames: 5, size: [2.7, 1.55] },
+  'pale-warg': { path: '/story/exploration/mounts/wolf-run.png', frames: 5, size: [2.7, 2.15] },
+  'cinder-drake': { path: '/story/exploration/mounts/horse-run.png', frames: 5, size: [2.95, 2.35] },
+  'frost-ram': { path: '/story/exploration/wildlife/Deer_Run.png', frames: 6, size: [2.6, 1.9] },
+  'dune-strider': { path: '/story/exploration/mounts/horse-run.png', frames: 5, size: [3, 2.4] },
+  glasswing: { path: '/story/exploration/wildlife/Deer_Run.png', frames: 6, size: [2.75, 2] }
+};
+
+function StoryMountVisual({ mount, facing }: { mount: StoryMountDefinition; facing: -1 | 1 }) {
+  const art = MOUNT_ART[mount.id];
+  const source = useTexture(art.path);
+  const texture = useMemo(() => {
+    const clone = source.clone();
+    configurePixelTexture(clone);
+    clone.wrapS = THREE.RepeatWrapping;
+    clone.wrapT = THREE.ClampToEdgeWrapping;
+    clone.repeat.set(1 / art.frames, 1);
+    clone.offset.set(0, 0);
+    return clone;
+  }, [art.frames, source]);
+  useFrame((state) => { texture.offset.x = (Math.floor(state.clock.elapsedTime * 8) % art.frames) / art.frames; });
+  useEffect(() => () => texture.dispose(), [texture]);
+  return <group position={[0, 0, -0.06]} scale={[facing, 1, 1]}>
+    <mesh position={[0, -0.73, -0.02]} rotation={[-Math.PI / 2, 0, 0]}><ringGeometry args={[0.65, 0.92, 24]} /><meshBasicMaterial color={mount.accent} transparent opacity={0.4} depthWrite={false} /></mesh>
+    <mesh position={[0, storyGroundAnchoredPlaneCenterY(art.size[1], mount.footAnchor[1]), 0]}><planeGeometry args={art.size} /><meshBasicMaterial map={texture} transparent alphaTest={0.02} depthWrite={false} toneMapped={false} /></mesh>
+  </group>;
+}
+
+function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, playerPosition, readInput, disabled, reducedMotion, quickMatchAvailable, derivedStats, mounted, mount, mountMasteryRank, impactEvent, onAttack, onQuickMatch, onNearbyPortal, onActivatePortal, onWaterState, onExit, onPause, onStateSample, onReady }: {
   hub: StoryHubDefinition;
   avatar: StoryProfileV4['avatar'];
   avatarVisible: boolean;
@@ -811,11 +871,15 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
   reducedMotion: boolean;
   quickMatchAvailable: boolean;
   derivedStats: ReturnType<typeof getAdventureDerivedStats>;
+  mounted: boolean;
+  mount: StoryMountDefinition | null;
+  mountMasteryRank: number;
   impactEvent: StoryPlayerImpactEvent | null;
   onAttack: (x: number, y: number, facing: -1 | 1, durationSeconds: number) => void;
   onQuickMatch: () => void;
   onNearbyPortal: (portal: StoryPortalDefinition | null) => void;
   onActivatePortal: (portal: StoryPortalDefinition) => void;
+  onWaterState: (underwater: boolean, airPocket?: [number, number]) => void;
   onExit: () => void;
   onPause: () => void;
   onStateSample: (state: StoryHubPlayerState) => void;
@@ -833,6 +897,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
   const jumpBufferedUntil = useRef(0);
   const dropThroughUntil = useRef(0);
   const previousButtons = useRef({ jump: false, interact: false, attack: false, back: false, pause: false });
+  const previousWaterState = useRef(false);
   const attackUntil = useRef(0);
   const actionInputArmed = useRef(false);
   const releasedInputFrames = useRef(0);
@@ -896,11 +961,23 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
       attackUntil.current = now + attackDurationSeconds;
       onAttack(position.current.x, position.current.y, facing.current, attackDurationSeconds);
     }
+    const waterVolume = hub.exploration?.waterVolumes.find((volume) => position.current.x >= volume.bounds[0] && position.current.x <= volume.bounds[1] && position.current.y >= volume.bounds[2] && position.current.y <= volume.bounds[3]);
+    const airPocket = waterVolume?.airPockets.find((pocket) => Math.hypot(position.current.x - pocket[0], position.current.y - pocket[1]) <= 1.8);
+    const swimming = Boolean(waterVolume && !airPocket);
+    if (swimming !== previousWaterState.current || airPocket) {
+      previousWaterState.current = swimming;
+      onWaterState(swimming, airPocket);
+    }
     const standingPlatform = groundedPlatform.current
       ? hub.platforms.find((platform) => platform.id === groundedPlatform.current)
       : undefined;
     const droppingThrough = Boolean(input.down && standingPlatform?.oneWay && groundedUntil.current >= now);
-    if (droppingThrough) {
+    if (swimming) {
+      groundedPlatform.current = null;
+      groundedUntil.current = 0;
+      jumpsUsed.current = 0;
+      jumpBufferedUntil.current = 0;
+    } else if (droppingThrough) {
       dropThroughUntil.current = now + 0.28;
       groundedPlatform.current = null;
       groundedUntil.current = 0;
@@ -908,7 +985,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
       velocityY.current = -2.2;
       jumpBufferedUntil.current = 0;
     } else if (jumpEdge && groundedUntil.current < now && jumpsUsed.current < 2) {
-      velocityY.current = 11.4;
+      velocityY.current = 11.4 * (mounted && mount ? mount.jumpMultiplier * (1 + mountMasteryRank * 0.008) : 1);
       jumpsUsed.current = 2;
       groundedPlatform.current = null;
       groundedUntil.current = 0;
@@ -920,20 +997,31 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
     const horizontal = (input.right ? 1 : 0) - (input.left ? 1 : 0);
     const sprinting = horizontal !== 0 && input.block;
     if (horizontal !== 0) facing.current = horizontal > 0 ? 1 : -1;
-    if (jumpBufferedUntil.current >= now && groundedUntil.current >= now) {
-      velocityY.current = 7.8;
+    if (!swimming && jumpBufferedUntil.current >= now && groundedUntil.current >= now) {
+      velocityY.current = 7.8 * (mounted && mount ? mount.jumpMultiplier * (1 + mountMasteryRank * 0.008) : 1);
       jumpsUsed.current = 1;
       groundedPlatform.current = null;
       groundedUntil.current = 0;
       jumpBufferedUntil.current = 0;
     }
-    velocityY.current += -22 * delta;
-    const moveSpeed = sprinting ? derivedStats.sprintSpeed : derivedStats.walkSpeed;
+    if (swimming && waterVolume) {
+      const vertical = (input.up || input.jump ? 1 : 0) - (input.down ? 1 : 0);
+      velocityY.current = vertical * 4.1 + waterVolume.current[1];
+    } else {
+      velocityY.current += -22 * delta;
+    }
+    const baseMoveSpeed = sprinting ? derivedStats.sprintSpeed : derivedStats.walkSpeed;
+    const mountSpeed = mounted && mount ? mount.speedMultiplier * (1 + mountMasteryRank * 0.012) : 1;
+    const moveSpeed = baseMoveSpeed * mountSpeed * (swimming ? 0.64 : 1);
     let nextX = THREE.MathUtils.clamp(position.current.x + horizontal * moveSpeed * delta, hub.bounds.minX + 0.5, hub.bounds.maxX - 0.5);
     let nextY = position.current.y + velocityY.current * delta;
+    if (swimming && waterVolume) {
+      nextX = THREE.MathUtils.clamp(nextX + waterVolume.current[0] * delta, waterVolume.bounds[0] + 0.4, waterVolume.bounds[1] - 0.4);
+      nextY = THREE.MathUtils.clamp(nextY, waterVolume.bounds[2] + 0.5, waterVolume.bounds[3] - 0.25);
+    }
     let landing: StoryPlatformDefinition | null = null;
     let landingX = nextX;
-    if (velocityY.current <= 0) {
+    if (!swimming && velocityY.current <= 0) {
       for (const platform of hub.platforms) {
         if (platform.oneWay && now < dropThroughUntil.current) continue;
         const top = platform.position[1] + platform.size[1] / 2;
@@ -960,7 +1048,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
       groundedPlatform.current = landing.id;
       jumpsUsed.current = 0;
     }
-    if (nextY < hub.bounds.floorY + STORY_GROUNDED_ACTOR_CENTER_Y) {
+    if (!swimming && nextY < hub.bounds.floorY + STORY_GROUNDED_ACTOR_CENTER_Y) {
       nextY = hub.bounds.floorY + STORY_GROUNDED_ACTOR_CENTER_Y;
       velocityY.current = 0;
       groundedUntil.current = now + 0.1;
@@ -972,7 +1060,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
     bodyRef.current?.setNextKinematicTranslation({ x: nextX, y: nextY, z: 0 });
     if (avatarGroup.current) avatarGroup.current.visible = avatarVisible && (performance.now() >= flashUntil.current || Math.floor(performance.now() / 70) % 2 === 0);
 
-    const nextPose: StoryAvatarPose = attackUntil.current > now ? 'attack' : groundedUntil.current < now ? 'jump' : sprinting ? 'sprint' : horizontal !== 0 ? 'walk' : 'idle';
+    const nextPose: StoryAvatarPose = attackUntil.current > now ? 'attack' : swimming || groundedUntil.current < now ? 'jump' : sprinting || mounted ? 'sprint' : horizontal !== 0 ? 'walk' : 'idle';
     if (visualState.pose !== nextPose || visualState.facing !== facing.current) setVisualState({ pose: nextPose, facing: facing.current });
 
     const nearby = hub.portals
@@ -993,13 +1081,14 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
 
   return <RigidBody ref={bodyRef} type="kinematicPosition" position={[hub.spawn[0], hub.spawn[1], 0]} colliders={false} enabledRotations={[false, false, false]}>
     <CuboidCollider args={[0.36, 0.8, 0.3]} />
-    <group ref={avatarGroup} position={[0, groundingOffsetY, 0]} visible={avatarVisible}>
+    {mounted && mount && <StoryMountVisual mount={mount} facing={visualState.facing} />}
+    <group ref={avatarGroup} position={[mount && mounted ? mount.riderOffset[0] : 0, groundingOffsetY + (mount && mounted ? mount.riderOffset[1] : 0), 0]} visible={avatarVisible}>
       <StoryAvatarRig avatar={avatar} pose={visualState.pose} facing={visualState.facing} reducedMotion={reducedMotion} />
     </group>
   </RigidBody>;
 }
 
-function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVisible, quickMatchAvailable, assignedPortalId, nearbyPortal, remotePlayers, selectedPlayerSessionId, progress, attackEvent, impactEvent, onAttack, onPlayerDamage, onEnemyDefeated, onQuickMatch, onSelectPlayer, onNearbyPortal, onActivatePortal, onExit, onPause, onStateSample, onReady }: {
+function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVisible, quickMatchAvailable, assignedPortalId, nearbyPortal, remotePlayers, selectedPlayerSessionId, progress, mounted, mount, attackEvent, impactEvent, onAttack, onPlayerDamage, onEnemyDefeated, onQuickMatch, onSelectPlayer, onNearbyPortal, onActivatePortal, onWaterState, onExit, onPause, onStateSample, onReady }: {
   hub: StoryHubDefinition;
   profile: StoryProfileV4;
   reducedMotion: boolean;
@@ -1013,6 +1102,8 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
   remotePlayers: StoryHubPresence[];
   selectedPlayerSessionId?: string;
   progress: StoryAdventureProgressV1;
+  mounted: boolean;
+  mount: StoryMountDefinition | null;
   attackEvent: StoryAdventureAttackEvent | null;
   impactEvent: StoryPlayerImpactEvent | null;
   onAttack: (x: number, y: number, facing: -1 | 1, durationSeconds: number) => void;
@@ -1021,6 +1112,7 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
   onSelectPlayer: (presence: StoryHubPresence) => void;
   onNearbyPortal: (portal: StoryPortalDefinition | null) => void;
   onActivatePortal: (portal: StoryPortalDefinition) => void;
+  onWaterState: (underwater: boolean, airPocket?: [number, number]) => void;
   onExit: () => void;
   onPause: () => void;
   onStateSample: (state: StoryHubPlayerState) => void;
@@ -1028,10 +1120,11 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
 }) {
   const playerPosition = useRef(new THREE.Vector3(hub.spawn[0], hub.spawn[1], 0));
   const derivedStats = useMemo(() => getAdventureDerivedStats(progress), [progress]);
+  const mountMasteryRank = mount ? progress.mounts[mount.id]?.masteryRank ?? 0 : 0;
   const groundingOffsetY = storyAvatarGroundingOffsetForWorld(Boolean(hub.enemySpawns?.some((enemy) => enemy.archetype !== 'flying')));
   return <Canvas shadows dpr={[0.65, 1.25]} gl={{ antialias: true, powerPreference: 'high-performance' }} data-testid="story-hub-canvas">
     <OrthographicCamera makeDefault position={[hub.spawn[0], 4.6, 18]} zoom={58} near={0.1} far={100} />
-    <HubCamera playerPosition={playerPosition} bounds={hub.bounds} />
+    <HubCamera playerPosition={playerPosition} bounds={hub.bounds} verticalBounds={hub.id === 'kore-central' ? undefined : hub.exploration?.camera} />
     <Suspense fallback={null}>
       <HubWorld hub={hub} reducedMotion={reducedMotion} />
       <Physics gravity={[0, -22, 0]} timeStep="vary">
@@ -1042,7 +1135,7 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
         {hub.portals.map((portal) => <PortalVisual key={portal.id} portal={portal} nearby={nearbyPortal?.id === portal.id} assigned={assignedPortalId === portal.id} reducedMotion={reducedMotion} />)}
         {remotePlayers.map((presence, index) => <RemoteStoryPlayer key={presence.sessionId} presence={presence} reducedMotion={reducedMotion} groundingOffsetY={groundingOffsetY} lane={index % 5} selected={selectedPlayerSessionId === presence.sessionId} onSelect={onSelectPlayer} />)}
         {hub.enemySpawns && hub.enemySpawns.length > 0 && <AdventureEnemies spawns={hub.enemySpawns} level={progress.level} playerPosition={playerPosition} attackEvent={attackEvent} reducedMotion={reducedMotion} onPlayerDamage={onPlayerDamage} onDefeated={onEnemyDefeated} />}
-        <StoryPlayerController hub={hub} avatar={profile.avatar} avatarVisible={avatarVisible} groundingOffsetY={groundingOffsetY} playerPosition={playerPosition} readInput={readInput} disabled={disabled} reducedMotion={reducedMotion} quickMatchAvailable={quickMatchAvailable} derivedStats={derivedStats} impactEvent={impactEvent} onAttack={onAttack} onQuickMatch={onQuickMatch} onNearbyPortal={onNearbyPortal} onActivatePortal={onActivatePortal} onExit={onExit} onPause={onPause} onStateSample={onStateSample} onReady={onReady} />
+        <StoryPlayerController hub={hub} avatar={profile.avatar} avatarVisible={avatarVisible} groundingOffsetY={groundingOffsetY} playerPosition={playerPosition} readInput={readInput} disabled={disabled} reducedMotion={reducedMotion} quickMatchAvailable={quickMatchAvailable} derivedStats={derivedStats} mounted={mounted} mount={mount} mountMasteryRank={mountMasteryRank} impactEvent={impactEvent} onAttack={onAttack} onQuickMatch={onQuickMatch} onNearbyPortal={onNearbyPortal} onActivatePortal={onActivatePortal} onWaterState={onWaterState} onExit={onExit} onPause={onPause} onStateSample={onStateSample} onReady={onReady} />
       </Physics>
     </Suspense>
   </Canvas>;
@@ -1070,10 +1163,16 @@ const ADVENTURE_STAT_META: Record<StoryAdventureStatKey, { label: string; descri
   insight: { label: 'Insight', description: '+2% earned XP', Icon: Brain }
 };
 
-function AdventureHud({ progress, health, maxHealth, onMap, onStats }: {
+function AdventureHud({ progress, health, maxHealth, breath, underwater, mount, mounted, mountUnlocked, onMount, onMap, onStats }: {
   progress: StoryAdventureProgressV1;
   health: number;
   maxHealth: number;
+  breath: number;
+  underwater: boolean;
+  mount: StoryMountDefinition | null;
+  mounted: boolean;
+  mountUnlocked: boolean;
+  onMount: () => void;
   onMap: () => void;
   onStats: () => void;
 }) {
@@ -1085,36 +1184,85 @@ function AdventureHud({ progress, health, maxHealth, onMap, onStats }: {
       <div className="story-adventure-bars">
         <div><span><Heart size={12} /> HP</span><strong>{Math.round(health)} / {maxHealth}</strong><i><b style={{ width: `${Math.max(0, Math.min(100, health / maxHealth * 100))}%` }} /></i></div>
         <div><span><Sparkles size={12} /> XP</span><strong>{progress.level >= 100 ? 'MAX' : `${progress.xp} / ${requiredXp}`}</strong><i className="is-xp"><b style={{ width: `${xpPercent}%` }} /></i></div>
+        {(underwater || breath < STORY_MAX_BREATH) && <div className="is-breath"><span><Activity size={12} /> AIR</span><strong>{Math.ceil(breath)}%</strong><i><b style={{ width: `${breath}%` }} /></i></div>}
       </div>
     </div>
     <div className="story-adventure-hud-actions">
+      {mount && <button type="button" className={mounted ? 'is-mounted' : ''} disabled={!mountUnlocked || underwater} onClick={onMount} aria-label={`${mounted ? 'Dismount' : 'Mount'} ${mount.label}`}><Gauge size={18} /><kbd>G</kbd></button>}
       <button type="button" onClick={onMap} aria-label="Open route map"><Map size={18} /><kbd>M</kbd></button>
       <button type="button" onClick={onStats} aria-label="Open adventure stats"><BarChart3 size={18} /><kbd>P</kbd>{progress.unspentPoints > 0 && <em>{progress.unspentPoints}</em>}</button>
     </div>
   </aside>;
 }
 
-function AdventureRouteMap({ activeWorldId, onClose }: { activeWorldId: StoryWorldId; onClose: () => void }) {
+const STORY_ATLAS_HOTSPOTS: Record<typeof STORY_ADVENTURE_REGION_IDS[number], { x: number; y: number; hazard: string; feature: string }> = {
+  greenhollow: { x: 51, y: 16, hazard: 'Wild roads and flooded waterworks', feature: 'Village roofs · aquifer caves' },
+  thornwood: { x: 78, y: 17, hazard: 'Thorns, canopy drops, deep roots', feature: 'Root tunnels · flooded grotto' },
+  ironroot: { x: 83, y: 43, hazard: 'Collapsing shafts and ore guardians', feature: 'Mine rails · crystal caverns' },
+  bonevault: { x: 78, y: 77, hazard: 'Sealed tombs and drowned cisterns', feature: 'Ossuary · hidden bell shaft' },
+  emberdeep: { x: 50, y: 85, hazard: 'Lavafalls, vents, obsidian gaps', feature: 'Relic forge · magma caverns' },
+  frostpeak: { x: 23, y: 77, hazard: 'Wind cliffs and limited under-ice air', feature: 'Frozen lake · mountain ruins' },
+  sunscar: { x: 16, y: 48, hazard: 'Shifting dunes and buried drops', feature: 'Oasis aquifer · sunken temple' },
+  skyglass: { x: 19, y: 19, hazard: 'Unstable bridges and open sky', feature: 'Floating towers · cloud caves' }
+};
+
+function AdventureRouteMap({ activeWorldId, progress, runGraph, discoveredRunZones, currentDepthZoneId, onFastTravel, onClose }: {
+  activeWorldId: StoryWorldId;
+  progress: StoryAdventureProgressV1;
+  runGraph: StoryAdventureRunGraph | null;
+  discoveredRunZones: string[];
+  currentDepthZoneId: string | null;
+  onFastTravel: (waystoneId: string, position: [number, number]) => void;
+  onClose: () => void;
+}) {
+  const initialRegion = isStoryAdventureRegionId(activeWorldId) ? activeWorldId : 'greenhollow';
+  const [selectedRegion, setSelectedRegion] = useState<typeof STORY_ADVENTURE_REGION_IDS[number]>(initialRegion);
+  const selectedWorld = STORY_WORLDS[selectedRegion];
+  const selectedMount = STORY_MOUNTS[STORY_WORLD_MOUNT[selectedRegion]];
+  const discovered = progress.discoveries.biomes.includes(selectedRegion);
+  const knownWaystones = selectedWorld.exploration?.waystones.filter((waystone) => progress.discoveries.waystones.includes(waystone.id)) ?? [];
+  const explorationPercent = Math.round(((discovered ? 1 : 0) + knownWaystones.length) / (1 + (selectedWorld.exploration?.waystones.length ?? 0)) * 100);
   return <div className="story-adventure-overlay" role="presentation">
     <section className="story-adventure-map" role="dialog" aria-modal="true" aria-labelledby="story-adventure-map-title" data-testid="story-adventure-map">
       <header>
-        <div><span><Map size={17} /> World Network</span><h2 id="story-adventure-map-title">Central Route Map</h2></div>
+        <div><span><Map size={17} /> Living World Atlas</span><h2 id="story-adventure-map-title">The K.O.R.E. Realms</h2></div>
         <button type="button" aria-label="Close route map" onClick={onClose}><X size={19} /></button>
       </header>
-      <div className="story-adventure-map-network">
-        <div className={`story-map-kore ${activeWorldId === 'central' ? 'is-current' : ''}`}><strong>K.O.R.E. Central</strong><small>Main hub</small></div>
-        <div className="story-map-connector" aria-hidden="true" />
-        <div className={`story-map-route ${activeWorldId === 'world-route' ? 'is-current' : ''}`}><Map size={20} /><strong>Central Route</strong><small>All worlds connect here</small></div>
-        <div className="story-map-regions">
-          {STORY_ADVENTURE_REGION_IDS.map((id, index) => {
+      <div className="story-adventure-map-layout">
+        <span className="visually-hidden">{STORY_ADVENTURE_REGION_IDS.map((id) => STORY_ADVENTURE_REGION_LABELS[id]).join(' · ')}</span>
+        <div className="story-atlas-stage">
+          <img src="/story/map/kore-world-atlas.png" alt="Pixel-art atlas showing K.O.R.E. Central and the eight surrounding adventure biomes" />
+          <div className={`story-atlas-central ${activeWorldId === 'central' || activeWorldId === 'world-route' ? 'is-current' : ''}`}><Map size={18} /><span>K.O.R.E.</span></div>
+          {STORY_ADVENTURE_REGION_IDS.map((id) => {
+            const hotspot = STORY_ATLAS_HOTSPOTS[id];
             const Icon = DESTINATION_ICONS[id];
-            return <div key={id} className={activeWorldId === id ? 'is-current' : ''} style={{ '--story-map-accent': STORY_WORLDS[id].portals[0]?.accent ?? '#2ee6ff' } as CSSProperties}>
-              <span><Icon size={17} /></span><strong>{STORY_ADVENTURE_REGION_LABELS[id]}</strong><small>Region {String(index + 1).padStart(2, '0')}</small>
-            </div>;
+            const known = progress.discoveries.biomes.includes(id);
+            return <button
+              key={id}
+              type="button"
+              className={`${selectedRegion === id ? 'is-selected' : ''} ${activeWorldId === id ? 'is-current' : ''} ${known ? 'is-known' : 'is-unknown'}`}
+              style={{ '--story-hotspot-x': `${hotspot.x}%`, '--story-hotspot-y': `${hotspot.y}%`, '--story-map-accent': STORY_WORLDS[id].environment?.accent ?? '#2ee6ff' } as CSSProperties}
+              aria-label={`${STORY_ADVENTURE_REGION_LABELS[id]}${known ? `, ${explorationPercent}% explored` : ', undiscovered'}`}
+              onMouseEnter={() => setSelectedRegion(id)}
+              onFocus={() => setSelectedRegion(id)}
+              onClick={() => setSelectedRegion(id)}
+            ><Icon size={18} /><span>{STORY_ADVENTURE_REGION_LABELS[id].split(' ')[0]}</span></button>;
           })}
         </div>
+        <aside className="story-atlas-detail" style={{ '--story-map-accent': selectedWorld.environment?.accent ?? '#2ee6ff' } as CSSProperties}>
+          <small>{discovered ? `${explorationPercent}% charted` : 'Uncharted biome'}</small>
+          <h3>{STORY_ADVENTURE_REGION_LABELS[selectedRegion]}</h3>
+          <p>{selectedWorld.subtitle}</p>
+          <dl><div><dt>Hazards</dt><dd>{STORY_ATLAS_HOTSPOTS[selectedRegion].hazard}</dd></div><div><dt>Depths</dt><dd>{STORY_ATLAS_HOTSPOTS[selectedRegion].feature}</dd></div><div><dt>Biome mount</dt><dd>{selectedMount.label} · {selectedMount.ability}</dd></div></dl>
+          {selectedRegion === activeWorldId && knownWaystones.length > 0 && <div className="story-atlas-waystones"><strong>Discovered waystones</strong>{knownWaystones.map((waystone) => <button key={waystone.id} type="button" onClick={() => onFastTravel(waystone.id, waystone.position)}><Zap size={14} /> {waystone.label}</button>)}</div>}
+          {runGraph && selectedRegion === activeWorldId && <div className="story-run-map" aria-label="Current shifting-depth run map">
+            <strong>Current depth route</strong>
+            <div>{runGraph.zones.map((zone) => <span key={zone.id} className={`${discoveredRunZones.includes(zone.id) ? 'is-discovered' : ''} ${currentDepthZoneId === zone.id ? 'is-current' : ''} ${zone.hidden ? 'is-hidden' : ''}`} style={{ '--story-zone-depth': zone.depth } as CSSProperties} title={discoveredRunZones.includes(zone.id) ? storyDepthZoneLabel(zone.kind) : 'Unexplored room'}>{discoveredRunZones.includes(zone.id) ? zone.index + 1 : '?'}</span>)}</div>
+            <small>Room fog resets when you leave the biome.</small>
+          </div>}
+        </aside>
       </div>
-      <footer><span>The map shows routes only; travel through a gate to move.</span><small>Art: DragonDePlatino · DawnBringer · Anokolisa · Pixel Frog</small></footer>
+      <footer><span>Hover, focus, or tap a biome to inspect it. Generated rooms cannot be fast-traveled.</span><small>Atlas: original K.O.R.E. generated pixel art · Environment packs credited in manifest</small></footer>
     </section>
   </div>;
 }
@@ -1173,6 +1321,94 @@ function devPreviewHub(hub: StoryHubDefinition): StoryHubDefinition {
   return { ...hub, spawn: [THREE.MathUtils.clamp(previewX, hub.bounds.minX + 1, hub.bounds.maxX - 1), hub.spawn[1]] };
 }
 
+function createDepthHub(surface: StoryHubDefinition, graph: StoryAdventureRunGraph | null, zoneId: string | null): StoryHubDefinition {
+  const zone = graph?.zones.find((candidate) => candidate.id === zoneId);
+  if (!zone || !graph || !isStoryAdventureRegionId(surface.id.replace(/^kore-/, ''))) return surface;
+  const width = zone.camera.maxX - zone.camera.minX;
+  const links = graph.links.filter((link) => link.from === zone.id || link.to === zone.id);
+  const sourceEnemies = surface.enemySpawns?.filter((enemy) => !enemy.elite).slice(0, zone.kind === 'sanctuary' ? 0 : zone.hidden ? 4 : 3) ?? [];
+  const generatedEnemies = sourceEnemies.map((enemy, index): StoryEnemySpawnDefinition => ({
+    ...enemy,
+    id: `${zone.id}-enemy-${index + 1}`,
+    name: `${storyDepthZoneLabel(zone.kind)} ${enemy.archetype === 'flying' ? 'Wisp' : enemy.archetype === 'ranged' ? 'Keeper' : 'Stalker'}`,
+    position: [zone.camera.minX + width * (0.38 + index * 0.18), enemy.archetype === 'flying' ? 3.4 : STORY_GROUNDED_ACTOR_CENTER_Y],
+    patrolRadius: 2.4,
+    encounterZoneId: `${zone.id}-encounter`,
+    ...(zone.hidden && index === sourceEnemies.length - 1 ? { elite: true, scale: 2.25, leash: [zone.camera.minX + 4, zone.camera.maxX - 4] as [number, number] } : {})
+  }));
+  const returnPortal: StoryPortalDefinition = {
+    id: 'depth-return-surface', label: 'Return to Surface', subtitle: 'Leave the shifting depths', destination: graph.worldId,
+    position: [zone.camera.minX + 2.4, 1.7], size: [2.8, 3.4], accent: '#ffe071', kind: 'adventure-gate'
+  };
+  const linkPortals = links.map((link, index): StoryPortalDefinition => {
+    const targetId = link.from === zone.id ? link.to : link.from;
+    const target = graph.zones.find((candidate) => candidate.id === targetId)!;
+    return {
+      id: `depth-link:${targetId}`,
+      label: storyDepthZoneLabel(target.kind),
+      subtitle: `${link.traversal.replace('-', ' ')} route · depth ${target.depth}`,
+      destination: graph.worldId,
+      position: [zone.camera.maxX - 2.5 - index * 3.8, 1.7],
+      size: [2.8, 3.4],
+      accent: target.hidden ? '#ff83d1' : target.underwater ? '#2ee6ff' : '#b8a8ff',
+      kind: 'adventure-gate'
+    };
+  });
+  const waterVolumes = zone.underwater ? [{ id: `${zone.id}-water`, bounds: [zone.camera.minX, zone.camera.maxX, zone.camera.minY, zone.camera.maxY] as [number, number, number, number], current: [0.18, 0] as [number, number], airPockets: zone.airPockets }] : [];
+  const environment = zone.underwater && surface.environment ? {
+    ...surface.environment,
+    background: '#052644', haze: '#0a5573', light: '#8ee8ff', ground: '#174d62', accent: '#65f4ff', particle: 'motes' as const,
+    layers: [
+      { id: 'underwater-back', asset: 'exploration:underwater/background.png' as const, depth: -16, y: 6, height: 24, opacity: 1, parallax: 0.04, color: '#ffffff', repeatEvery: 27 },
+      { id: 'underwater-mid', asset: 'exploration:underwater/midground.png' as const, depth: -8, y: 5, height: 22, opacity: 0.84, parallax: 0.25, color: '#ffffff', repeatEvery: 41 },
+      ...surface.environment.layers.slice(-1)
+    ],
+    surface: { asset: 'exploration:underwater/tiles.png' as const, frame: [0, 0, 32, 32] as [number, number, number, number], atlasSize: [480, 656] as [number, number] }
+  } : surface.environment && ['cave', 'mine', 'grotto'].includes(zone.kind) ? {
+    ...surface.environment,
+    background: '#080d18', haze: '#1d2738',
+    layers: [
+      ...surface.environment.layers.slice(0, 2),
+      { id: 'grafxkid-cave-detail', asset: 'exploration:caves/grafxkid-cave-assets.png' as const, depth: -5, y: 5.5, height: 14, opacity: 0.72, parallax: 0.42, color: '#ffffff', repeatEvery: 18 }
+    ]
+  } : surface.environment;
+  return {
+    ...surface,
+    id: `${surface.id}:${zone.id}`,
+    name: `${surface.name} · ${storyDepthZoneLabel(zone.kind)}`,
+    subtitle: zone.hidden ? 'A hidden branch far below the stable route' : `Generated depth ${zone.depth} · ${zone.traversal.replace('-', ' ')}`,
+    spawn: [zone.camera.minX + 5.5, STORY_GROUNDED_ACTOR_CENTER_Y],
+    checkpoint: [zone.camera.minX + 5.5, STORY_GROUNDED_ACTOR_CENTER_Y],
+    bounds: { minX: zone.camera.minX, maxX: zone.camera.maxX, floorY: zone.underwater ? zone.camera.minY + 1.5 : 0 },
+    platforms: [
+      { id: 'ground', position: [0, zone.underwater ? zone.camera.minY + 1 : -0.5], size: [width + 2, 1] },
+      ...Array.from({ length: 6 }, (_, index) => ({ id: `${zone.id}-platform-${index + 1}`, position: [zone.camera.minX + 8 + index * (width - 16) / 5, 3 + index % 3 * 2.4] as [number, number], size: [5 + index % 2 * 3, 0.42] as [number, number], oneWay: true }))
+    ],
+    portals: [returnPortal, ...linkPortals],
+    environment,
+    props: [
+      ...createStoryWorldProps(surface.theme ?? 'route', zone.camera.minX, zone.camera.maxX),
+      ...(zone.underwater ? [
+        { id: `${zone.id}-bubbles`, asset: 'exploration:underwater/bubbles.png' as const, frame: [0, 0, 92, 40] as [number, number, number, number], atlasSize: [92, 40] as [number, number], position: [zone.camera.minX + width * 0.28, 4, -2] as [number, number, number], size: [4.6, 2] as [number, number], opacity: 0.78 },
+        { id: `${zone.id}-fish`, asset: 'exploration:underwater/fish.png' as const, frame: [0, 0, 128, 32] as [number, number, number, number], atlasSize: [128, 32] as [number, number], position: [zone.camera.minX + width * 0.55, 2.5, -1.8] as [number, number, number], size: [6.4, 1.6] as [number, number], opacity: 0.9 },
+        { id: `${zone.id}-fish-big`, asset: 'exploration:underwater/fish-big.png' as const, frame: [0, 0, 216, 49] as [number, number, number, number], atlasSize: [216, 49] as [number, number], position: [zone.camera.minX + width * 0.74, 6.2, -2.1] as [number, number, number], size: [8.4, 1.9] as [number, number], mirrored: true, opacity: 0.84 }
+      ] : [])
+    ],
+    landmarks: [{ id: `${zone.id}-landmark`, label: storyDepthZoneLabel(zone.kind), subtitle: zone.hidden ? 'Secrets persist beyond the mapped route' : `Depth ${zone.depth}`, position: [0, 7, -1.2], size: [12, 8], color: surface.environment?.accent ?? '#2ee6ff', kind: zone.hidden ? 'secret' : zone.kind === 'sanctuary' ? 'lore' : 'district' }],
+    enemySpawns: generatedEnemies,
+    exploration: surface.exploration ? {
+      ...surface.exploration,
+      safeApproach: [zone.camera.minX, zone.camera.minX + 9],
+      districts: [{ id: `${zone.id}-district`, label: storyDepthZoneLabel(zone.kind), range: [zone.camera.minX, zone.camera.maxX] }],
+      encounters: [{ id: `${zone.id}-encounter`, range: [zone.camera.minX + 10, zone.camera.maxX - 4], maxActive: Math.min(5, generatedEnemies.length) }],
+      entrances: [],
+      waterVolumes,
+      waystones: [],
+      camera: { minY: zone.camera.minY, maxY: zone.camera.maxY }
+    } : undefined
+  };
+}
+
 export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, readInputs, setVirtualAction, onDestination, onOnlineSpar, onExit }: {
   profile: StoryProfileV4;
   onlineProfile?: OnlinePlayerProfile | null;
@@ -1184,7 +1420,12 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   onExit: () => void;
 }) {
   const [activeWorldId, setActiveWorldId] = useState<StoryWorldId>(readDevPreviewWorldId);
-  const activeHub = useMemo(() => devPreviewHub(STORY_WORLDS[activeWorldId]), [activeWorldId]);
+  const [runGraph, setRunGraph] = useState<StoryAdventureRunGraph | null>(null);
+  const [partyInstance, setPartyInstance] = useState<StoryPartyInstance | null>(null);
+  const [currentDepthZoneId, setCurrentDepthZoneId] = useState<string | null>(null);
+  const [discoveredRunZones, setDiscoveredRunZones] = useState<string[]>([]);
+  const baseHub = useMemo(() => devPreviewHub(STORY_WORLDS[activeWorldId]), [activeWorldId]);
+  const activeHub = useMemo(() => createDepthHub(baseHub, runGraph, currentDepthZoneId), [baseHub, currentDepthZoneId, runGraph]);
   const [nearbyPortal, setNearbyPortal] = useState<StoryPortalDefinition | null>(null);
   const [pauseOpen, setPauseOpen] = useState(false);
   const [controlsOpen, setControlsOpen] = useState(false);
@@ -1193,6 +1434,9 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const [adventureProgress, setAdventureProgress] = useState(readAdventureProgress);
   const derivedAdventureStats = useMemo(() => getAdventureDerivedStats(adventureProgress), [adventureProgress]);
   const [playerHealth, setPlayerHealth] = useState(() => getAdventureDerivedStats(readAdventureProgress()).maxHealth);
+  const [breath, setBreath] = useState(STORY_MAX_BREATH);
+  const [underwater, setUnderwater] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [attackEvent, setAttackEvent] = useState<StoryAdventureAttackEvent | null>(null);
   const [impactEvent, setImpactEvent] = useState<StoryPlayerImpactEvent | null>(null);
   const [playerX, setPlayerX] = useState(activeHub.spawn[0]);
@@ -1222,6 +1466,11 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const playerInvulnerableUntilRef = useRef(0);
   const attackSequenceRef = useRef(0);
   const impactSequenceRef = useRef(0);
+  const lastAirPocketRef = useRef<[number, number] | null>(null);
+  const lastMasteryXRef = useRef(activeHub.spawn[0]);
+  const masteryDistanceRef = useRef(0);
+  const lastVisitedWorldRef = useRef<string>('');
+  const currentDepthZoneRef = useRef<string | null>(null);
   const playerStateRef = useRef<StoryHubPlayerState>({ x: activeHub.spawn[0], y: activeHub.spawn[1], pose: 'idle', facing: 1, worldId: activeWorldId });
   const readInput = useCallback(() => readInputs()[0], [readInputs]);
   const handleHubReady = useCallback(() => setHubReady(true), []);
@@ -1233,7 +1482,13 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     setPlayerPose(state.pose);
     multiplayerSessionRef.current?.update(worldState);
   }, [activeWorldId]);
+  const handleWaterState = useCallback((nextUnderwater: boolean, airPocket?: [number, number]) => {
+    setUnderwater(nextUnderwater);
+    if (nextUnderwater) setMounted(false);
+    if (airPocket) lastAirPocketRef.current = airPocket;
+  }, []);
   useEffect(() => { adventureProgressRef.current = adventureProgress; }, [adventureProgress]);
+  useEffect(() => { currentDepthZoneRef.current = currentDepthZoneId; }, [currentDepthZoneId]);
   useEffect(() => {
     playerHealthRef.current = Math.min(playerHealthRef.current, derivedAdventureStats.maxHealth);
     setPlayerHealth(playerHealthRef.current);
@@ -1244,6 +1499,148 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     setAdventureProgress(saved);
     return saved;
   }, []);
+  const activeMountId: StoryMountId | null = isStoryAdventureRegionId(activeWorldId) ? STORY_WORLD_MOUNT[activeWorldId] : null;
+  const activeMount = activeMountId ? STORY_MOUNTS[activeMountId] : null;
+  const mountUnlocked = Boolean(activeMountId && adventureProgress.mounts[activeMountId]?.unlocked);
+  const toggleMount = useCallback(() => {
+    if (!activeMountId || !mountUnlocked || underwater || currentDepthZoneId) return;
+    setMounted((current) => !current);
+  }, [activeMountId, currentDepthZoneId, mountUnlocked, underwater]);
+
+  useEffect(() => {
+    if (!isStoryAdventureRegionId(activeWorldId)) {
+      lastVisitedWorldRef.current = '';
+      setRunGraph(null);
+      setCurrentDepthZoneId(null);
+      setDiscoveredRunZones([]);
+      setMounted(false);
+      setUnderwater(false);
+      setBreath(STORY_MAX_BREATH);
+      return;
+    }
+    if (lastVisitedWorldRef.current === activeWorldId) return;
+    lastVisitedWorldRef.current = activeWorldId;
+    const next = updateAdventureProgress(beginAdventureVisit(adventureProgressRef.current, activeWorldId));
+    const visit = next.visitCounters[activeWorldId] ?? 1;
+    const seed = createAdventureVisitSeed(activeWorldId, String(visit), localSessionId || 'solo');
+    const graph = generateAdventureRunGraph(activeWorldId, seed, STORY_WORLDS[activeWorldId].exploration!);
+    setRunGraph(graph);
+    setCurrentDepthZoneId(null);
+    setDiscoveredRunZones([graph.entryZoneId]);
+    setBreath(STORY_MAX_BREATH);
+  }, [activeWorldId, localSessionId, updateAdventureProgress]);
+
+  useEffect(() => {
+    if (!onlineEnabled || !localSessionId || !isStoryAdventureRegionId(activeWorldId)) {
+      setPartyInstance(null);
+      return undefined;
+    }
+    let cancelled = false;
+    let joined: StoryPartyInstance | null = null;
+    let timer = 0;
+    const connectParty = async () => {
+      try {
+        joined = await joinStoryParty(localSessionId, activeWorldId, joined?.id);
+        if (!joined || cancelled) return;
+        setPartyInstance(joined);
+        const graph = generateAdventureRunGraph(activeWorldId, joined.seed, STORY_WORLDS[activeWorldId].exploration!);
+        setRunGraph(graph);
+        setCurrentDepthZoneId((current) => current && graph.zones.some((zone) => zone.id === current) ? current : null);
+        setDiscoveredRunZones((current) => Array.from(new Set([graph.entryZoneId, ...current.filter((id) => graph.zones.some((zone) => zone.id === id))])));
+      } catch {
+        // Network party state is additive; the deterministic solo run remains playable offline.
+      }
+    };
+    void connectParty();
+    timer = window.setInterval(async () => {
+      if (!joined || cancelled) return;
+      try {
+        joined = await updateStoryPartyRoom(joined, localSessionId, currentDepthZoneRef.current ?? 'surface');
+        if (joined && !cancelled) setPartyInstance(joined);
+      } catch {
+        // Keep the last shared seed through transient reconnects.
+      }
+    }, 5_000);
+    return () => {
+      cancelled = true;
+      window.clearInterval(timer);
+      if (joined) leaveStoryParty(joined, localSessionId);
+    };
+  }, [activeWorldId, localSessionId, onlineEnabled]);
+
+  useEffect(() => {
+    if (!isStoryAdventureRegionId(activeWorldId) || currentDepthZoneId) return;
+    for (const waystone of baseHub.exploration?.waystones ?? []) {
+      if (Math.abs(playerX - waystone.position[0]) <= 2.4 && !adventureProgressRef.current.discoveries.waystones.includes(waystone.id)) {
+        updateAdventureProgress(discoverAdventureWaystone(adventureProgressRef.current, waystone.id));
+      }
+    }
+    for (const landmark of baseHub.landmarks ?? []) {
+      if (Math.abs(playerX - landmark.position[0]) > Math.max(4, landmark.size[0] / 2)) continue;
+      const known = adventureProgressRef.current.discoveries.landmarks[activeWorldId] ?? [];
+      if (!known.includes(landmark.id)) updateAdventureProgress(discoverAdventureLandmark(adventureProgressRef.current, activeWorldId, landmark.id));
+      if (landmark.kind === 'vista' && !adventureProgressRef.current.discoveries.vistas.includes(landmark.id)) {
+        updateAdventureProgress(discoverAdventureVista(adventureProgressRef.current, landmark.id));
+      }
+    }
+    const sanctuary = baseHub.exploration?.mountSanctuary;
+    if (sanctuary && Math.abs(playerX - sanctuary.position[0]) <= 2.8 && !adventureProgressRef.current.mounts[sanctuary.mountId]?.unlocked) {
+      updateAdventureProgress(unlockAdventureMount(adventureProgressRef.current, sanctuary.mountId));
+    }
+  }, [activeWorldId, baseHub.exploration, currentDepthZoneId, playerX, updateAdventureProgress]);
+
+  useEffect(() => {
+    if (!mounted || !activeMountId) {
+      lastMasteryXRef.current = playerX;
+      return;
+    }
+    const distance = Math.abs(playerX - lastMasteryXRef.current);
+    lastMasteryXRef.current = playerX;
+    if (distance > 4) return;
+    masteryDistanceRef.current += distance;
+    if (masteryDistanceRef.current >= 40) {
+      const awards = Math.floor(masteryDistanceRef.current / 40) * 40;
+      masteryDistanceRef.current %= 40;
+      updateAdventureProgress(awardMountMastery(adventureProgressRef.current, activeMountId, awards));
+    }
+  }, [activeMountId, mounted, playerX, updateAdventureProgress]);
+
+  useEffect(() => {
+    if (!mounted) return;
+    const elite = activeHub.enemySpawns?.find((enemy) => enemy.elite && Math.abs(playerX - enemy.position[0]) < 9);
+    if (elite) setMounted(false);
+  }, [activeHub.enemySpawns, mounted, playerX]);
+
+  useEffect(() => {
+    if (!activeHub.adventure) return undefined;
+    const timer = window.setInterval(() => {
+      if (underwater) {
+        setBreath((current) => Math.max(0, current - STORY_BREATH_DRAIN_PER_SECOND * 0.25));
+      } else {
+        setBreath((current) => Math.min(STORY_MAX_BREATH, current + STORY_BREATH_REFILL_PER_SECOND * 0.25));
+      }
+    }, 250);
+    return () => window.clearInterval(timer);
+  }, [activeHub.adventure, underwater]);
+
+  useEffect(() => {
+    if (breath > 0 || !underwater || !isStoryAdventureRegionId(activeWorldId)) return undefined;
+    const timer = window.setInterval(() => {
+      const nextHealth = Math.max(0, playerHealthRef.current - 14);
+      if (nextHealth > 0) {
+        playerHealthRef.current = nextHealth;
+        setPlayerHealth(nextHealth);
+        return;
+      }
+      const maxHealth = getAdventureDerivedStats(adventureProgressRef.current).maxHealth;
+      const rescue = lastAirPocketRef.current ?? activeHub.checkpoint ?? activeHub.spawn;
+      playerHealthRef.current = maxHealth;
+      setPlayerHealth(maxHealth);
+      setBreath(STORY_MAX_BREATH);
+      setImpactEvent({ id: ++impactSequenceRef.current, sourceX: rescue[0], knockback: 0, respawn: rescue });
+    }, 650);
+    return () => window.clearInterval(timer);
+  }, [activeHub.checkpoint, activeHub.spawn, activeWorldId, breath, underwater]);
   const allocateStat = useCallback((stat: StoryAdventureStatKey) => {
     const beforeMaxHealth = getAdventureDerivedStats(adventureProgressRef.current).maxHealth;
     const next = updateAdventureProgress(allocateAdventureStat(adventureProgressRef.current, stat));
@@ -1269,6 +1666,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const handlePlayerDamage = useCallback((baseDamage: number, sourceX: number) => {
     if (!isStoryAdventureRegionId(activeWorldId) || performance.now() < playerInvulnerableUntilRef.current) return;
     playerInvulnerableUntilRef.current = performance.now() + 650;
+    if (mounted) setMounted(false);
     const resolved = resolveAdventurePlayerDamage(baseDamage, adventureProgressRef.current);
     const nextHealth = Math.max(0, playerHealthRef.current - resolved.damage);
     if (nextHealth <= 0) {
@@ -1282,7 +1680,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     playerHealthRef.current = nextHealth;
     setPlayerHealth(nextHealth);
     setImpactEvent({ id: ++impactSequenceRef.current, sourceX, knockback: resolved.knockback });
-  }, [activeHub.checkpoint, activeHub.spawn, activeWorldId]);
+  }, [activeHub.checkpoint, activeHub.spawn, activeWorldId, mounted]);
   const handleEnemyDefeated = useCallback((baseXp: number) => {
     const result = awardAdventureExperience(adventureProgressRef.current, baseXp);
     const next = updateAdventureProgress(result.progress);
@@ -1320,6 +1718,36 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   }, [activeWorldId, doorTravel]);
 
   const activatePortal = useCallback((portal: StoryPortalDefinition) => {
+    if (portal.id === 'depth-return-surface') {
+      setCurrentDepthZoneId(null);
+      setUnderwater(false);
+      setBreath(STORY_MAX_BREATH);
+      return;
+    }
+    if (portal.id.startsWith('depth-link:')) {
+      const target = portal.id.slice('depth-link:'.length);
+      if (runGraph?.zones.some((zone) => zone.id === target)) {
+        setCurrentDepthZoneId(target);
+        setDiscoveredRunZones((current) => Array.from(new Set([...current, target])));
+        setMounted(false);
+      }
+      return;
+    }
+    if (portal.id.startsWith('depth-entry:') && runGraph) {
+      setCurrentDepthZoneId(runGraph.entryZoneId);
+      setDiscoveredRunZones((current) => Array.from(new Set([...current, runGraph.entryZoneId])));
+      setMounted(false);
+      return;
+    }
+    if (portal.id.startsWith('waystone:')) {
+      updateAdventureProgress(discoverAdventureWaystone(adventureProgressRef.current, portal.id.slice('waystone:'.length)));
+      return;
+    }
+    if (portal.id.startsWith('mount-sanctuary:') && isStoryAdventureRegionId(activeWorldId)) {
+      const mountId = STORY_WORLD_MOUNT[activeWorldId];
+      updateAdventureProgress(unlockAdventureMount(adventureProgressRef.current, mountId));
+      return;
+    }
     if (portal.kind === 'shrine') {
       const maxHealth = getAdventureDerivedStats(adventureProgressRef.current).maxHealth;
       playerHealthRef.current = maxHealth;
@@ -1346,7 +1774,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       return;
     }
     if (isHubDestination(portal.destination)) onDestination(portal.destination);
-  }, [activeWorldId, beginWorldTravel, onDestination, quickMatch.portalId, quickMatch.status]);
+  }, [activeWorldId, beginWorldTravel, onDestination, quickMatch.portalId, quickMatch.status, runGraph, updateAdventureProgress]);
 
   const exitCurrentWorld = useCallback(() => {
     if (activeWorldId === 'central') onExit();
@@ -1567,10 +1995,29 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
         setMapOpen(false);
         setStatsOpen((current) => !current);
       }
+      if (event.key.toLowerCase() === 'g') {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        toggleMount();
+      }
     };
     window.addEventListener('keydown', onKeyDown, true);
     return () => window.removeEventListener('keydown', onKeyDown, true);
-  }, [activeHub.adventure]);
+  }, [activeHub.adventure, toggleMount]);
+
+  useEffect(() => {
+    if (!activeHub.adventure) return undefined;
+    let frame = 0;
+    let r3Held = false;
+    const poll = () => {
+      const pressed = Boolean(navigator.getGamepads?.()[0]?.buttons[11]?.pressed);
+      if (pressed && !r3Held && !pauseOpen && !mapOpen && !statsOpen) toggleMount();
+      r3Held = pressed;
+      frame = window.requestAnimationFrame(poll);
+    };
+    frame = window.requestAnimationFrame(poll);
+    return () => window.cancelAnimationFrame(frame);
+  }, [activeHub.adventure, mapOpen, pauseOpen, statsOpen, toggleMount]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -1617,10 +2064,19 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
 
   const assignedPortal = quickMatch.status === 'assigned' ? activeHub.portals.find((portal) => portal.id === quickMatch.portalId) : null;
   const doorFrame = doorTravel ? DOOR_TRAVEL_FRAME_SEQUENCE[doorTravel.step] ?? 0 : 0;
+  const fastTravelToWaystone = useCallback((waystoneId: string, position: [number, number]) => {
+    if (!adventureProgressRef.current.discoveries.waystones.includes(waystoneId) || !isStoryAdventureRegionId(activeWorldId)) return;
+    setCurrentDepthZoneId(null);
+    setMounted(false);
+    setUnderwater(false);
+    setBreath(STORY_MAX_BREATH);
+    setMapOpen(false);
+    setImpactEvent({ id: ++impactSequenceRef.current, sourceX: position[0], knockback: 0, respawn: position });
+  }, [activeWorldId]);
 
-  return <div className="story-hub-screen" data-testid="story-hub-screen" data-world={activeWorldId} data-hub-ready={hubReady ? 'true' : 'false'} data-controls-open={controlsOpen ? 'true' : 'false'} data-map-open={mapOpen ? 'true' : 'false'} data-stats-open={statsOpen ? 'true' : 'false'} data-quick-match={quickMatchAvailable ? 'true' : 'false'} data-player-x={playerX.toFixed(2)} data-player-y={playerY.toFixed(2)} data-player-pose={playerPose} data-player-health={playerHealth} data-player-level={adventureProgress.level} data-nearby-portal={nearbyPortal?.id ?? ''} data-online={onlineEnabled ? 'true' : 'false'} data-connection-status={connectionStatus} data-player-count={playerCount}>
+  return <div className="story-hub-screen" data-testid="story-hub-screen" data-world={activeWorldId} data-hub-ready={hubReady ? 'true' : 'false'} data-controls-open={controlsOpen ? 'true' : 'false'} data-map-open={mapOpen ? 'true' : 'false'} data-stats-open={statsOpen ? 'true' : 'false'} data-quick-match={quickMatchAvailable ? 'true' : 'false'} data-player-x={playerX.toFixed(2)} data-player-y={playerY.toFixed(2)} data-player-pose={playerPose} data-player-health={playerHealth} data-player-level={adventureProgress.level} data-party-id={partyInstance?.id ?? ''} data-nearby-portal={nearbyPortal?.id ?? ''} data-online={onlineEnabled ? 'true' : 'false'} data-connection-status={connectionStatus} data-player-count={playerCount}>
     <div className="story-hub-canvas-shell">
-      <HubCanvas key={activeHub.id} hub={activeHub} profile={profile} reducedMotion={reducedMotion} readInput={readInput} disabled={pauseOpen || controlsOpen || mapOpen || statsOpen || Boolean(selectedPlayer) || Boolean(incomingChallenge) || Boolean(doorTravel)} avatarVisible={!doorTravel || doorTravel.step < 4 || doorTravel.step >= 18} quickMatchAvailable={quickMatchAvailable} assignedPortalId={quickMatch.portalId} nearbyPortal={nearbyPortal} remotePlayers={visibleRemotePlayers} selectedPlayerSessionId={selectedPlayer?.sessionId} progress={adventureProgress} attackEvent={attackEvent} impactEvent={impactEvent} onAttack={handleAdventureAttack} onPlayerDamage={handlePlayerDamage} onEnemyDefeated={handleEnemyDefeated} onQuickMatch={startQuickMatch} onSelectPlayer={selectRemotePlayer} onNearbyPortal={setNearbyPortal} onActivatePortal={activatePortal} onExit={exitCurrentWorld} onPause={openPause} onStateSample={handlePlayerState} onReady={handleHubReady} />
+      <HubCanvas key={activeHub.id} hub={activeHub} profile={profile} reducedMotion={reducedMotion} readInput={readInput} disabled={pauseOpen || controlsOpen || mapOpen || statsOpen || Boolean(selectedPlayer) || Boolean(incomingChallenge) || Boolean(doorTravel)} avatarVisible={!doorTravel || doorTravel.step < 4 || doorTravel.step >= 18} quickMatchAvailable={quickMatchAvailable} assignedPortalId={quickMatch.portalId} nearbyPortal={nearbyPortal} remotePlayers={visibleRemotePlayers} selectedPlayerSessionId={selectedPlayer?.sessionId} progress={adventureProgress} mounted={mounted} mount={activeMount} attackEvent={attackEvent} impactEvent={impactEvent} onAttack={handleAdventureAttack} onPlayerDamage={handlePlayerDamage} onEnemyDefeated={handleEnemyDefeated} onQuickMatch={startQuickMatch} onSelectPlayer={selectRemotePlayer} onNearbyPortal={setNearbyPortal} onActivatePortal={activatePortal} onWaterState={handleWaterState} onExit={exitCurrentWorld} onPause={openPause} onStateSample={handlePlayerState} onReady={handleHubReady} />
     </div>
 
     <header className="story-hub-header story-enter-1">
@@ -1650,7 +2106,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       </div>
     </header>
 
-    {activeHub.adventure && <AdventureHud progress={adventureProgress} health={playerHealth} maxHealth={derivedAdventureStats.maxHealth} onMap={() => { setStatsOpen(false); setMapOpen(true); }} onStats={() => { setMapOpen(false); setStatsOpen(true); }} />}
+    {activeHub.adventure && <AdventureHud progress={adventureProgress} health={playerHealth} maxHealth={derivedAdventureStats.maxHealth} breath={breath} underwater={underwater} mount={activeMount} mounted={mounted} mountUnlocked={mountUnlocked} onMount={toggleMount} onMap={() => { setStatsOpen(false); setMapOpen(true); }} onStats={() => { setMapOpen(false); setStatsOpen(true); }} />}
 
     {selectedPlayer && <section className="story-player-panel" role="dialog" aria-modal="false" aria-labelledby="story-player-panel-title" data-testid="story-player-panel">
       <header>
@@ -1742,6 +2198,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
         <div><strong>Interact</strong><kbd>K / Enter</kbd><span>Special button</span></div>
         {activeHub.adventure && <div><strong>World Map</strong><kbd>M</kbd><span>Route network</span></div>}
         {activeHub.adventure && <div><strong>Stats</strong><kbd>P</kbd><span>Allocate level points</span></div>}
+        {activeMount && <div><strong>Mount</strong><kbd>G</kbd><span>R3 · {mountUnlocked ? activeMount.label : 'Unlock at sanctuary'}</span></div>}
         {quickMatchAvailable && <div><strong>Find Match</strong><kbd>F / Y</kbd><span>Queue from anywhere</span></div>}
         <div><strong>Pause</strong><kbd>Esc</kbd><span>Start / Menu</span></div>
       </div>
@@ -1766,7 +2223,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     </button>}
 
     <div className="story-hub-control-hint story-enter-3" aria-hidden="true">
-      <span>Move</span><b>← →</b><span>Run</span><b>Shift</b><span>Double Jump</span><b>Space ×2</b><span>Drop</span><b>Hold ↓</b><span>Attack</span><b>U / J</b>{activeHub.adventure && <><span>Map</span><b>M</b><span>Stats</span><b>P</b></>}{quickMatchAvailable && <><span>Match</span><b>F / Y</b></>}<span>Interact</span><b>K / Enter</b><span>Pause</span><b>Esc</b>
+      <span>Move</span><b>← →</b><span>Run</span><b>Shift</b><span>Double Jump</span><b>Space ×2</b><span>Drop</span><b>Hold ↓</b><span>Attack</span><b>U / J</b>{activeHub.adventure && <><span>Map</span><b>M</b><span>Stats</span><b>P</b>{activeMount && <><span>Mount</span><b>G / R3</b></>}</>}{quickMatchAvailable && <><span>Match</span><b>F / Y</b></>}<span>Interact</span><b>K / Enter</b><span>Pause</span><b>Esc</b>
     </div>
 
     {doorTravel && <div className="story-door-transition" aria-label={`Traveling to ${STORY_WORLDS[doorTravel.target].name}`} data-testid="story-door-transition">
@@ -1786,6 +2243,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
         <TouchButton label="Run" action="block" className="is-run" setVirtualAction={setVirtualAction}><Gauge /></TouchButton>
         <TouchButton label="Attack" action="jab" className="is-attack" setVirtualAction={setVirtualAction}><Swords /></TouchButton>
         <TouchButton label="Interact" action="confirm" className="is-interact" setVirtualAction={setVirtualAction}><DoorOpen /></TouchButton>
+        {activeMount && <button type="button" className={`story-touch-mount ${mounted ? 'is-mounted' : ''}`} disabled={!mountUnlocked || underwater} aria-label={`${mounted ? 'Dismount' : 'Mount'} ${activeMount.label}`} onClick={toggleMount}><Gauge /></button>}
         <TouchButton label="Pause hub" action="pause" setVirtualAction={setVirtualAction}><Pause /></TouchButton>
       </div>
     </div>
@@ -1808,7 +2266,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       </section>
     </div>}
 
-    {mapOpen && <AdventureRouteMap activeWorldId={activeWorldId} onClose={() => setMapOpen(false)} />}
+    {mapOpen && <AdventureRouteMap activeWorldId={activeWorldId} progress={adventureProgress} runGraph={runGraph} discoveredRunZones={discoveredRunZones} currentDepthZoneId={currentDepthZoneId} onFastTravel={fastTravelToWaystone} onClose={() => setMapOpen(false)} />}
     {statsOpen && <AdventureStatsPanel progress={adventureProgress} canRespec={canRespecAdventureStats(activeWorldId, nearbyPortal?.kind)} onAllocate={allocateStat} onRespec={respecStats} onClose={() => setStatsOpen(false)} />}
   </div>;
 }

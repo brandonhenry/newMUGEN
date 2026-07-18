@@ -31,3 +31,11 @@ export function storyAvatarGroundingOffsetForWorld(hasGroundEnemies: boolean): n
 export function storyAvatarVisibleFootWorldY(bodyCenterY: number, groundingOffsetY = STORY_AVATAR_GROUNDING_OFFSET_Y): number {
   return bodyCenterY + groundingOffsetY + storyAvatarVisibleFootFromRigOrigin();
 }
+
+export function storyGroundAnchoredPlaneCenterY(planeHeight: number, footAnchorFromBottom = 0): number {
+  return planeHeight / 2 - STORY_GROUNDED_ACTOR_CENTER_Y - planeHeight * footAnchorFromBottom;
+}
+
+export function storyScaledGroundAnchorOffsetY(scale: number): number {
+  return (Math.max(0.01, scale) - 1) * STORY_GROUNDED_ACTOR_CENTER_Y;
+}

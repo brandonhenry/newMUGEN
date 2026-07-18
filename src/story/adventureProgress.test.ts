@@ -2,14 +2,19 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import {
   STORY_ADVENTURE_PROGRESS_KEY,
   allocateAdventureStat,
+  awardMountMastery,
   awardAdventureExperience,
+  beginAdventureVisit,
   canRespecAdventureStats,
+  discoverAdventureLandmark,
+  discoverAdventureVista,
   experienceToNextLevel,
   getAdventureDerivedStats,
   makeDefaultAdventureProgress,
   readAdventureProgress,
   respecAdventureStats,
   sanitizeAdventureProgress,
+  unlockAdventureMount,
   writeAdventureProgress
 } from './adventureProgress';
 
@@ -30,6 +35,24 @@ describe('story adventure progression', () => {
     expect(sanitized.unspentPoints).toBe(0);
     expect(sanitized.xp).toBeLessThan(experienceToNextLevel(3));
     expect(sanitized.lifetimeDefeats).toBe(0);
+    expect(sanitized.version).toBe(2);
+    expect(sanitized.discoveries.biomes).toEqual([]);
+  });
+
+  it('migrates V1 fields and persists discovery and mount mastery', () => {
+    const migrated = sanitizeAdventureProgress({ version: 1, level: 8, xp: 12, stats: { power: 3 }, lifetimeDefeats: 4 });
+    expect(migrated).toMatchObject({ version: 2, level: 8, xp: 12, lifetimeDefeats: 4 });
+    const visiting = beginAdventureVisit(migrated, 'greenhollow');
+    expect(visiting.discoveries.biomes).toContain('greenhollow');
+    expect(visiting.visitCounters.greenhollow).toBe(1);
+    const learned = discoverAdventureVista(discoverAdventureLandmark(visiting, 'greenhollow', 'green-square'), 'green-roofs');
+    expect(learned.discoveries.landmarks.greenhollow).toEqual(['green-square']);
+    expect(learned.discoveries.vistas).toEqual(['green-roofs']);
+    const unlocked = unlockAdventureMount(visiting, 'verdant-stag');
+    expect(unlocked.mounts['verdant-stag']?.unlocked).toBe(true);
+    const ranked = awardMountMastery(unlocked, 'verdant-stag', 20_000);
+    expect(ranked.mounts['verdant-stag']?.masteryRank).toBe(10);
+    expect(ranked.mounts['verdant-stag']?.variants).toEqual([4, 7, 10]);
   });
 
   it('levels to 100, awards one point per level, and applies insight XP', () => {

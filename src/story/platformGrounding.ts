@@ -7,7 +7,10 @@ export type StoryPlatformSurfacePlacement = {
 
 export function storyPlatformSurfacePlacement(
   platform: StoryPlatformDefinition,
-  surface?: StoryWorldEnvironmentDefinition['surface']
+  surface?: Omit<NonNullable<StoryWorldEnvironmentDefinition['surface']>, 'frame' | 'atlasSize'> & {
+    readonly frame: readonly [number, number, number, number];
+    readonly atlasSize: readonly [number, number];
+  }
 ): StoryPlatformSurfacePlacement {
   const height = platform.oneWay ? 0.52 : 0.82;
   const colliderTop = platform.size[1] / 2;

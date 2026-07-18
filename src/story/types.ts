@@ -196,6 +196,9 @@ export type StoryWorldThemeId =
   | 'desert'
   | 'ruins';
 export type StoryEnemyArchetype = 'ground' | 'flying' | 'ranged';
+export type StoryMountId = 'verdant-stag' | 'bramble-lynx' | 'ironhorn-beetle' | 'pale-warg' | 'cinder-drake' | 'frost-ram' | 'dune-strider' | 'glasswing';
+export type StoryTraversalKind = 'walk' | 'climb' | 'ladder' | 'lift' | 'break-wall' | 'swim' | 'glide' | 'updraft' | 'drop';
+export type StoryDepthZoneKind = 'cave' | 'underwater' | 'tower' | 'ruin' | 'mine' | 'crypt' | 'grotto' | 'sanctuary';
 export type StoryAdventureAssetId =
   | 'dawn-tree'
   | 'dawn-wall'
@@ -218,7 +221,8 @@ export type StoryWorldAssetId = StoryAdventureAssetId
   | 'city-light'
   | 'city-banner-wide'
   | 'city-banner-tall'
-  | `world:${string}`;
+  | `world:${string}`
+  | `exploration:${string}`;
 
 export type StoryWorldBackdropMotif =
   | 'city'
@@ -297,6 +301,107 @@ export type StoryEnemySpawnDefinition = {
   patrolRadius: number;
   sprite: 'skeleton' | 'skeleton-mage' | 'orc' | 'orc-shaman' | 'slime' | 'demon' | 'elemental' | 'reptile';
   accent: string;
+  encounterZoneId?: string;
+  scale?: number;
+  elite?: boolean;
+  leash?: [number, number];
+};
+
+export type StoryWorldDistrictDefinition = {
+  id: string;
+  label: string;
+  range: [number, number];
+  safe?: boolean;
+};
+
+export type StoryEncounterZoneDefinition = {
+  id: string;
+  range: [number, number];
+  maxActive: number;
+  safe?: boolean;
+};
+
+export type StoryWaterVolumeDefinition = {
+  id: string;
+  bounds: [number, number, number, number];
+  current: [number, number];
+  airPockets: Array<[number, number]>;
+};
+
+export type StoryWaystoneDefinition = {
+  id: string;
+  label: string;
+  position: [number, number];
+};
+
+export type StoryMountSanctuaryDefinition = {
+  id: string;
+  mountId: StoryMountId;
+  position: [number, number];
+  challenge: StoryTraversalKind;
+};
+
+export type StoryDepthTemplateDefinition = {
+  id: string;
+  kind: StoryDepthZoneKind;
+  weight: number;
+  traversal: StoryTraversalKind[];
+  underwater?: boolean;
+};
+
+export type StoryAdventureExplorationDefinition = {
+  safeApproach: [number, number];
+  districts: StoryWorldDistrictDefinition[];
+  encounters: StoryEncounterZoneDefinition[];
+  entrances: Array<{ id: string; label: string; position: [number, number]; kinds: StoryDepthZoneKind[] }>;
+  waterVolumes: StoryWaterVolumeDefinition[];
+  waystones: StoryWaystoneDefinition[];
+  mountSanctuary: StoryMountSanctuaryDefinition;
+  depthTemplates: StoryDepthTemplateDefinition[];
+  camera: { minY: number; maxY: number };
+};
+
+export type StoryGeneratedDepthZone = {
+  id: string;
+  index: number;
+  kind: StoryDepthZoneKind;
+  depth: number;
+  critical: boolean;
+  hidden: boolean;
+  underwater: boolean;
+  traversal: StoryTraversalKind;
+  camera: { minX: number; maxX: number; minY: number; maxY: number };
+  airPockets: Array<[number, number]>;
+};
+
+export type StoryGeneratedDepthLink = {
+  id: string;
+  from: string;
+  to: string;
+  traversal: StoryTraversalKind;
+};
+
+export type StoryAdventureRunGraph = {
+  version: 1;
+  worldId: Exclude<StoryAdventureWorldId, 'world-route'>;
+  seed: string;
+  entryZoneId: string;
+  sanctuaryZoneId: string;
+  zones: StoryGeneratedDepthZone[];
+  links: StoryGeneratedDepthLink[];
+};
+
+export type StoryMountDefinition = {
+  id: StoryMountId;
+  worldId: Exclude<StoryAdventureWorldId, 'world-route'>;
+  label: string;
+  ability: string;
+  traversal: StoryTraversalKind[];
+  speedMultiplier: number;
+  jumpMultiplier: number;
+  footAnchor: [number, number];
+  riderOffset: [number, number];
+  accent: string;
 };
 
 export type StoryPortalDefinition = {
@@ -334,5 +439,6 @@ export type StoryHubDefinition = {
   checkpoint?: [number, number];
   props?: StoryWorldPropDefinition[];
   enemySpawns?: StoryEnemySpawnDefinition[];
+  exploration?: StoryAdventureExplorationDefinition;
   adventure?: boolean;
 };

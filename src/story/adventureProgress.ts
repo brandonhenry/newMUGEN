@@ -1,5 +1,9 @@
-export const STORY_ADVENTURE_PROGRESS_VERSION = 1 as const;
-export const STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v1';
+import { STORY_MOUNTS } from './adventureExploration';
+import type { StoryAdventureWorldId, StoryMountId } from './types';
+
+export const STORY_ADVENTURE_PROGRESS_VERSION = 2 as const;
+export const STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v2';
+export const LEGACY_STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v1';
 export const STORY_ADVENTURE_MAX_LEVEL = 100;
 export const STORY_ADVENTURE_STAT_CAP = 25;
 
@@ -7,14 +11,42 @@ export const STORY_ADVENTURE_STAT_KEYS = ['power', 'vitality', 'agility', 'guard
 export type StoryAdventureStatKey = typeof STORY_ADVENTURE_STAT_KEYS[number];
 export type StoryAdventureStats = Record<StoryAdventureStatKey, number>;
 
-export type StoryAdventureProgressV1 = {
-  version: typeof STORY_ADVENTURE_PROGRESS_VERSION;
+export type LegacyStoryAdventureProgressV1 = {
+  version: 1;
   level: number;
   xp: number;
   unspentPoints: number;
   stats: StoryAdventureStats;
   lifetimeDefeats: number;
 };
+
+export type StoryMountProgress = {
+  unlocked: boolean;
+  masteryRank: number;
+  masteryXp: number;
+  variants: number[];
+};
+
+export type StoryAdventureProgressV2 = {
+  version: typeof STORY_ADVENTURE_PROGRESS_VERSION;
+  level: number;
+  xp: number;
+  unspentPoints: number;
+  stats: StoryAdventureStats;
+  lifetimeDefeats: number;
+  discoveries: {
+    biomes: Exclude<StoryAdventureWorldId, 'world-route'>[];
+    landmarks: Partial<Record<Exclude<StoryAdventureWorldId, 'world-route'>, string[]>>;
+    waystones: string[];
+    vistas: string[];
+    sanctuaries: string[];
+  };
+  mounts: Partial<Record<StoryMountId, StoryMountProgress>>;
+  visitCounters: Partial<Record<Exclude<StoryAdventureWorldId, 'world-route'>, number>>;
+};
+
+/** @deprecated Kept as a source-compatible alias while callers migrate to V2. */
+export type StoryAdventureProgressV1 = StoryAdventureProgressV2;
 
 export type StoryAdventureDerivedStats = {
   maxHealth: number;
@@ -58,13 +90,16 @@ export function makeDefaultAdventureProgress(): StoryAdventureProgressV1 {
     xp: 0,
     unspentPoints: 0,
     stats: { ...EMPTY_STATS },
-    lifetimeDefeats: 0
+    lifetimeDefeats: 0,
+    discoveries: { biomes: [], landmarks: {}, waystones: [], vistas: [], sanctuaries: [] },
+    mounts: {},
+    visitCounters: {}
   };
 }
 
 export function sanitizeAdventureProgress(value: unknown): StoryAdventureProgressV1 {
   if (!value || typeof value !== 'object') return makeDefaultAdventureProgress();
-  const record = value as Partial<StoryAdventureProgressV1>;
+  const record = value as Partial<StoryAdventureProgressV2> & Partial<LegacyStoryAdventureProgressV1>;
   const level = clamp(finiteInteger(record.level, 1), 1, STORY_ADVENTURE_MAX_LEVEL);
   const rawStats = record.stats && typeof record.stats === 'object' ? record.stats as Partial<StoryAdventureStats> : {};
   const stats = STORY_ADVENTURE_STAT_KEYS.reduce((result, key) => {
@@ -80,20 +115,54 @@ export function sanitizeAdventureProgress(value: unknown): StoryAdventureProgres
   }
 
   const required = experienceToNextLevel(level);
+  const validBiomes = Object.values(STORY_MOUNTS).map((mount) => mount.worldId);
+  const rawDiscoveries = record.discoveries && typeof record.discoveries === 'object' ? record.discoveries as StoryAdventureProgressV2['discoveries'] : makeDefaultAdventureProgress().discoveries;
+  const uniqueStrings = (input: unknown, limit = 256) => Array.from(new Set(Array.isArray(input) ? input.filter((entry): entry is string => typeof entry === 'string' && entry.length > 0).slice(0, limit) : []));
+  const biomes = uniqueStrings(rawDiscoveries.biomes).filter((id): id is Exclude<StoryAdventureWorldId, 'world-route'> => validBiomes.includes(id as Exclude<StoryAdventureWorldId, 'world-route'>));
+  const landmarks = Object.fromEntries(validBiomes.flatMap((id) => {
+    const items = uniqueStrings(rawDiscoveries.landmarks?.[id]);
+    return items.length > 0 ? [[id, items]] : [];
+  })) as StoryAdventureProgressV2['discoveries']['landmarks'];
+  const rawMounts = record.mounts && typeof record.mounts === 'object' ? record.mounts : {};
+  const mounts = Object.fromEntries(Object.keys(STORY_MOUNTS).flatMap((id) => {
+    const mountId = id as StoryMountId;
+    const candidate = rawMounts[mountId];
+    if (!candidate || typeof candidate !== 'object') return [];
+    const masteryRank = clamp(finiteInteger(candidate.masteryRank, 1), 1, 10);
+    const variants = Array.from(new Set(Array.isArray(candidate.variants) ? candidate.variants.map(Number).filter((variant) => [4, 7, 10].includes(variant)) : []));
+    return [[mountId, { unlocked: Boolean(candidate.unlocked), masteryRank, masteryXp: Math.max(0, finiteInteger(candidate.masteryXp)), variants }]];
+  })) as StoryAdventureProgressV2['mounts'];
+  const visitCounters = Object.fromEntries(validBiomes.flatMap((id) => {
+    const count = finiteInteger(record.visitCounters?.[id]);
+    return count > 0 ? [[id, count]] : [];
+  })) as StoryAdventureProgressV2['visitCounters'];
   return {
     version: STORY_ADVENTURE_PROGRESS_VERSION,
     level,
     xp: required > 0 ? clamp(finiteInteger(record.xp), 0, required - 1) : 0,
     unspentPoints: pointsRemaining,
     stats,
-    lifetimeDefeats: Math.max(0, finiteInteger(record.lifetimeDefeats))
+    lifetimeDefeats: Math.max(0, finiteInteger(record.lifetimeDefeats)),
+    discoveries: {
+      biomes,
+      landmarks,
+      waystones: uniqueStrings(rawDiscoveries.waystones),
+      vistas: uniqueStrings(rawDiscoveries.vistas),
+      sanctuaries: uniqueStrings(rawDiscoveries.sanctuaries)
+    },
+    mounts,
+    visitCounters
   };
 }
 
 export function readAdventureProgress(): StoryAdventureProgressV1 {
   if (typeof window === 'undefined') return makeDefaultAdventureProgress();
   try {
-    return sanitizeAdventureProgress(JSON.parse(window.localStorage.getItem(STORY_ADVENTURE_PROGRESS_KEY) ?? 'null'));
+    const current = window.localStorage.getItem(STORY_ADVENTURE_PROGRESS_KEY);
+    const legacy = window.localStorage.getItem(LEGACY_STORY_ADVENTURE_PROGRESS_KEY);
+    const sanitized = sanitizeAdventureProgress(JSON.parse(current ?? legacy ?? 'null'));
+    if (!current && legacy) window.localStorage.setItem(STORY_ADVENTURE_PROGRESS_KEY, JSON.stringify(sanitized));
+    return sanitized;
   } catch {
     return makeDefaultAdventureProgress();
   }
@@ -163,4 +232,61 @@ export function getAdventureDerivedStats(progress: StoryAdventureProgressV1): St
     criticalMultiplier: 1.5,
     xpMultiplier: 1 + stats.insight * 0.02
   };
+}
+
+export function discoverAdventureBiome(progress: StoryAdventureProgressV1, worldId: Exclude<StoryAdventureWorldId, 'world-route'>) {
+  const current = sanitizeAdventureProgress(progress);
+  return sanitizeAdventureProgress({ ...current, discoveries: { ...current.discoveries, biomes: [...current.discoveries.biomes, worldId] } });
+}
+
+export function discoverAdventureWaystone(progress: StoryAdventureProgressV1, waystoneId: string) {
+  const current = sanitizeAdventureProgress(progress);
+  return sanitizeAdventureProgress({ ...current, discoveries: { ...current.discoveries, waystones: [...current.discoveries.waystones, waystoneId] } });
+}
+
+export function discoverAdventureLandmark(progress: StoryAdventureProgressV1, worldId: Exclude<StoryAdventureWorldId, 'world-route'>, landmarkId: string) {
+  const current = sanitizeAdventureProgress(progress);
+  const known = current.discoveries.landmarks[worldId] ?? [];
+  return sanitizeAdventureProgress({
+    ...current,
+    discoveries: { ...current.discoveries, landmarks: { ...current.discoveries.landmarks, [worldId]: [...known, landmarkId] } }
+  });
+}
+
+export function discoverAdventureVista(progress: StoryAdventureProgressV1, vistaId: string) {
+  const current = sanitizeAdventureProgress(progress);
+  return sanitizeAdventureProgress({ ...current, discoveries: { ...current.discoveries, vistas: [...current.discoveries.vistas, vistaId] } });
+}
+
+export function beginAdventureVisit(progress: StoryAdventureProgressV1, worldId: Exclude<StoryAdventureWorldId, 'world-route'>) {
+  const current = discoverAdventureBiome(progress, worldId);
+  const visit = (current.visitCounters[worldId] ?? 0) + 1;
+  return sanitizeAdventureProgress({ ...current, visitCounters: { ...current.visitCounters, [worldId]: visit } });
+}
+
+export function unlockAdventureMount(progress: StoryAdventureProgressV1, mountId: StoryMountId) {
+  const current = sanitizeAdventureProgress(progress);
+  const existing = current.mounts[mountId];
+  const sanctuaryId = `${STORY_MOUNTS[mountId].worldId}-mount-sanctuary`;
+  return sanitizeAdventureProgress({
+    ...current,
+    discoveries: { ...current.discoveries, sanctuaries: [...current.discoveries.sanctuaries, sanctuaryId] },
+    mounts: { ...current.mounts, [mountId]: { unlocked: true, masteryRank: existing?.masteryRank ?? 1, masteryXp: existing?.masteryXp ?? 0, variants: existing?.variants ?? [] } }
+  });
+}
+
+export function awardMountMastery(progress: StoryAdventureProgressV1, mountId: StoryMountId, amount: number) {
+  const current = sanitizeAdventureProgress(progress);
+  const existing = current.mounts[mountId];
+  if (!existing?.unlocked) return current;
+  let rank = existing.masteryRank;
+  let xp = existing.masteryXp + Math.max(0, Math.round(amount));
+  while (rank < 10) {
+    const required = rank * 250;
+    if (xp < required) break;
+    xp -= required;
+    rank += 1;
+  }
+  const variants = [4, 7, 10].filter((milestone) => rank >= milestone);
+  return sanitizeAdventureProgress({ ...current, mounts: { ...current.mounts, [mountId]: { unlocked: true, masteryRank: rank, masteryXp: xp, variants } } });
 }

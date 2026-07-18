@@ -9,6 +9,7 @@
     "dev": "vite --host 0.0.0.0",
     "build:story-avatar-assets": "python3 scripts/build-story-street-avatar-assets.py",
     "verify:world-assets": "python3 scripts/import-kore-world-biome-assets.py",
+    "import:exploration-assets": "python3 scripts/import-kore-world-biome-assets.py --refresh-exploration",
     "build": "node scripts/ensure-public-installers.mjs && node scripts/validate-stage-assets.mjs && node scripts/validate-voxel-packs.mjs --public && tsc -b && vite build && node scripts/validate-voxel-packs.mjs --dist",
     "preview": "vite preview --host 0.0.0.0",
     "typecheck": "tsc -b",

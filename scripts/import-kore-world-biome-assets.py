@@ -30,6 +30,8 @@ ADVENTURE_INTEGRITY = ADVENTURE_ROOT / "asset-integrity.json"
 WORLD_ROOT = ROOT / "public/story/worlds"
 WORLD_MANIFEST = WORLD_ROOT / "asset-manifest.json"
 WORLD_INTEGRITY = WORLD_ROOT / "asset-integrity.json"
+EXPLORATION_ROOT = ROOT / "public/story/exploration"
+EXPLORATION_MANIFEST = EXPLORATION_ROOT / "asset-manifest.json"
 
 
 @dataclass(frozen=True)
@@ -278,15 +280,95 @@ def verify_integrity(root: Path, manifest_path: Path, label: str) -> None:
     print(f"Verified {len(integrity['files'])} reviewed {label} assets")
 
 
+def download_bytes(url: str) -> bytes:
+    request = urllib.request.Request(url, headers={"User-Agent": "KORE-asset-importer/1.0"})
+    with urllib.request.urlopen(request, timeout=90) as response:
+        return response.read()
+
+
+def verify_exploration_assets() -> None:
+    """Verify the mount, wildlife, cave, and underwater intake manifest.
+
+    These packs deliberately use their original PNG bytes. That keeps the
+    selected source file and shipped checksum identical and makes a refresh
+    reproducible without retaining source archives in public/.
+    """
+    manifest = json.loads(EXPLORATION_MANIFEST.read_text())
+    if manifest.get("version") != 1 or not manifest.get("packs"):
+        raise ValueError("Exploration asset manifest is missing or unsupported")
+    seen_files: set[str] = set()
+    for pack in manifest["packs"]:
+        if not all(pack.get(field) for field in ("id", "author", "source", "license", "archiveUrls", "archiveSha256", "runtimeReferences", "assets")):
+            raise ValueError(f"Incomplete exploration pack provenance: {pack.get('id', '<unknown>')}")
+        if not str(pack["source"]).startswith("https://") or pack["license"] not in ("CC0-1.0", "CC-BY-3.0", "CC-BY-4.0"):
+            raise ValueError(f"Unapproved exploration pack source or license: {pack['id']}")
+        if len(pack["archiveUrls"]) != len(pack["archiveSha256"]):
+            raise ValueError(f"Archive URL/checksum count differs for {pack['id']}")
+        for checksum in pack["archiveSha256"]:
+            if not re.fullmatch(r"[a-f0-9]{64}", checksum):
+                raise ValueError(f"Invalid archive checksum for {pack['id']}")
+        for asset in pack["assets"]:
+            relative = asset["file"]
+            if relative in seen_files:
+                raise ValueError(f"Duplicate exploration output: {relative}")
+            seen_files.add(relative)
+            path = EXPLORATION_ROOT / relative
+            if not path.is_file():
+                raise FileNotFoundError(f"Missing exploration asset: {relative}")
+            with Image.open(path) as image:
+                if image.size != (asset["width"], asset["height"]):
+                    raise ValueError(f"Dimension changed for {relative}: {image.size}")
+            actual = sha256_path(path)
+            if actual != asset["sha256"]:
+                raise ValueError(f"Checksum changed for {relative}: {actual}")
+    archives = list(EXPLORATION_ROOT.rglob("*.zip"))
+    if archives:
+        raise ValueError(f"Source archives must not ship in public/: {archives[0]}")
+    print(f"Verified {len(seen_files)} reviewed exploration assets from {len(manifest['packs'])} packs")
+
+
+def import_exploration_assets() -> None:
+    manifest = json.loads(EXPLORATION_MANIFEST.read_text())
+    with tempfile.TemporaryDirectory(prefix="kore-exploration-assets-"):
+        for pack in manifest["packs"]:
+            urls = pack["archiveUrls"]
+            checksums = pack["archiveSha256"]
+            if len(urls) == 1 and urls[0].lower().endswith(".zip"):
+                archive = download_bytes(urls[0])
+                if sha256_bytes(archive) != checksums[0]:
+                    raise ValueError(f"Archive checksum mismatch for {pack['id']}")
+                with zipfile.ZipFile(io.BytesIO(archive)) as source:
+                    for asset in pack["assets"]:
+                        data = source.read(asset["sourceFile"])
+                        destination = EXPLORATION_ROOT / asset["file"]
+                        destination.parent.mkdir(parents=True, exist_ok=True)
+                        destination.write_bytes(data)
+            else:
+                if len(urls) != len(pack["assets"]):
+                    raise ValueError(f"Direct-file pack must map one URL per selected file: {pack['id']}")
+                for url, expected, asset in zip(urls, checksums, pack["assets"], strict=True):
+                    data = download_bytes(url)
+                    if sha256_bytes(data) != expected:
+                        raise ValueError(f"Direct-file checksum mismatch for {pack['id']} / {asset['sourceFile']}")
+                    destination = EXPLORATION_ROOT / asset["file"]
+                    destination.parent.mkdir(parents=True, exist_ok=True)
+                    destination.write_bytes(data)
+    verify_exploration_assets()
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--refresh", action="store_true", help="Download and re-import every reviewed CC0 pack")
+    parser.add_argument("--refresh-exploration", action="store_true", help="Download only the checksum-pinned exploration packs")
     parser.add_argument("--archive-dir", type=Path, help="Use checksum-pinned archives from this directory")
     args = parser.parse_args()
     if args.refresh or not WORLD_MANIFEST.is_file() or not WORLD_INTEGRITY.is_file():
         import_world_packs(args.archive_dir)
+    if args.refresh or args.refresh_exploration:
+        import_exploration_assets()
     verify_integrity(ADVENTURE_ROOT, ADVENTURE_INTEGRITY, "adventure")
     verify_integrity(WORLD_ROOT, WORLD_INTEGRITY, "world")
+    verify_exploration_assets()
 
 
 if __name__ == "__main__":

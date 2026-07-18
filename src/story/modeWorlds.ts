@@ -99,7 +99,7 @@ const versusStations: StationInput[] = [-43, -22, 0, 22, 43].map((x, index) => (
 export const STORY_MODE_WORLDS: Record<StoryModeWorldId, StoryHubDefinition> = {
   central: KORE_CENTRAL_HUB,
   arcade: world({
-    id: 'arcade', name: 'K.O.R.E. Arcade', subtitle: 'A neon entertainment district built for solo legends', theme: 'arcade', width: 112, stations: arcadeStations,
+    id: 'arcade', name: 'K.O.R.E. Arcade', subtitle: 'A neon entertainment district built for solo legends', theme: 'arcade', width: 148, stations: arcadeStations,
     landmarks: [
       landmark('arcade-marquee', 'Grand Marquee', 'The district never powers down', -46, 5.2, 10, 7, '#ff9d35'),
       landmark('arcade-prize', 'Prize Counter', 'Relics from impossible clears', -18, 3.4, 11, 4.5, '#ff5d69'),
@@ -109,7 +109,7 @@ export const STORY_MODE_WORLDS: Record<StoryModeWorldId, StoryHubDefinition> = {
     ]
   }),
   versus: world({
-    id: 'versus', name: 'K.O.R.E. Versus Hall', subtitle: 'A red-and-blue competition campus for instant rivalries', theme: 'versus', width: 108, stations: versusStations,
+    id: 'versus', name: 'K.O.R.E. Versus Hall', subtitle: 'A red-and-blue competition campus for instant rivalries', theme: 'versus', width: 140, stations: versusStations,
     landmarks: [
       landmark('versus-local', 'Local Wing', 'Two fighters, one screen', -43, 4.8, 12, 6, '#ffe071'),
       landmark('versus-red', 'Crimson Side', 'Challenge stations and warmup bays', -19, 4.1, 13, 5, '#ff5d69'),
@@ -119,7 +119,7 @@ export const STORY_MODE_WORLDS: Record<StoryModeWorldId, StoryHubDefinition> = {
     ]
   }),
   online: world({
-    id: 'online', name: 'K.O.R.E. Online Exchange', subtitle: 'A live network concourse linking fighters everywhere', theme: 'online', width: 116,
+    id: 'online', name: 'K.O.R.E. Online Exchange', subtitle: 'A live network concourse linking fighters everywhere', theme: 'online', width: 152,
     stations: [
       { id: 'online-casual', label: 'Casual Queue', subtitle: 'Quick online fight', destination: 'online', x: -44, accent: '#2ee6ff', kind: 'terminal', stationNumber: 1, quickMatch: true },
       { id: 'online-ranked', label: 'Ranked Queue', subtitle: 'Climb the network', destination: 'online', x: -14, accent: '#ffe071', kind: 'terminal', stationNumber: 2, quickMatch: true },
@@ -135,7 +135,7 @@ export const STORY_MODE_WORLDS: Record<StoryModeWorldId, StoryHubDefinition> = {
     ]
   }),
   training: world({
-    id: 'training', name: 'K.O.R.E. Training Lab', subtitle: 'A holographic research campus for sharpening every route', theme: 'training', width: 104,
+    id: 'training', name: 'K.O.R.E. Training Lab', subtitle: 'A holographic research campus for sharpening every route', theme: 'training', width: 132,
     stations: [-38, -12, 14, 38].map((x, index) => ({ id: `training-sim-${index + 1}`, label: `Simulator ${String(index + 1).padStart(2, '0')}`, subtitle: ['Fundamentals', 'Combo routes', 'Defense lab', 'Free training'][index], destination: 'training' as const, x, accent: '#52e1a1', kind: 'terminal' as const, stationNumber: index + 1 })),
     landmarks: [
       landmark('training-fundamentals', 'Fundamentals Bay', 'Movement calibration begins here', -40, 4.5, 12, 5, '#52e1a1'),
@@ -146,7 +146,7 @@ export const STORY_MODE_WORLDS: Record<StoryModeWorldId, StoryHubDefinition> = {
     ]
   }),
   tournament: world({
-    id: 'tournament', name: 'K.O.R.E. Tournament Floor', subtitle: 'A ceremonial arena concourse where brackets become history', theme: 'tournament', width: 120,
+    id: 'tournament', name: 'K.O.R.E. Tournament Floor', subtitle: 'A ceremonial arena concourse where brackets become history', theme: 'tournament', width: 160,
     stations: [-44, -15, 15, 44].map((x, index) => ({ id: `tournament-desk-${index + 1}`, label: `Bracket Desk ${String(index + 1).padStart(2, '0')}`, subtitle: index ? 'Open bracket' : 'Local tournament', destination: 'tournament' as const, x, accent: '#ffe071', kind: 'terminal' as const, stationNumber: index + 1 })),
     landmarks: [
       landmark('tournament-registration', 'Registration Hall', 'Every champion starts with a name', -48, 4.8, 14, 6, '#ffe071'),

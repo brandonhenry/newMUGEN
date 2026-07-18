@@ -155,9 +155,9 @@ export function createStoryWorldEnvironment(theme: StoryWorldThemeId): StoryWorl
 export function createStoryWorldProps(theme: StoryWorldThemeId, minX: number, maxX: number): StoryWorldPropDefinition[] {
   const templates = PROPS[theme];
   const width = maxX - minX;
-  const count = Math.min(15, Math.max(9, Math.ceil(width / 12)));
+  const count = Math.min(48, Math.max(9, Math.ceil(width / 14)));
   const positions = Array.from({ length: count }, (_, index) => {
-    const ratio = count === 1 ? 0.5 : 0.05 + (index / (count - 1)) * 0.9;
+    const ratio = count === 1 ? 0.5 : 0.02 + (index / (count - 1)) * 0.96;
     const stagger = ((index * 7 + theme.length) % 5 - 2) * Math.min(0.45, width / 420);
     return minX + width * ratio + stagger;
   });

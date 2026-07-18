@@ -28,6 +28,27 @@ beforeEach(() => {
 });
 
 describe('online Netlify function handlers', () => {
+  it('shares adventure seeds, room state, and deterministic party leadership without touching hub presence', async () => {
+    const { handler: party } = await import('../netlify/functions/story-adventure-party.mjs');
+    const first = await post(party, { action: 'join', sessionId: 'session-one', worldId: 'thornwood' });
+    const second = await post(party, { action: 'join', sessionId: 'session-two', worldId: 'thornwood' });
+    expect(second.party).toMatchObject({
+      version: 1,
+      id: first.party.id,
+      seed: first.party.seed,
+      generationVersion: 1,
+      leaderSessionId: 'session-one'
+    });
+    expect(second.party.members.map((member: { sessionId: string }) => member.sessionId)).toEqual(['session-one', 'session-two']);
+
+    const inRoom = await post(party, { action: 'room', partyId: first.party.id, sessionId: 'session-two', worldId: 'thornwood', roomId: 'thornwood-depth-3' });
+    expect(inRoom.party.roomId).toBe('thornwood-depth-3');
+    await post(party, { action: 'leave', partyId: first.party.id, sessionId: 'session-one', worldId: 'thornwood' });
+    const transferred = await post(party, { action: 'room', partyId: first.party.id, sessionId: 'session-two', worldId: 'thornwood', roomId: 'thornwood-depth-4' });
+    expect(transferred.party.leaderSessionId).toBe('session-two');
+    expect(stores.has('kore-story-hub-presence')).toBe(false);
+  });
+
   it('publishes shared story hub occupants and removes them on leave', async () => {
     const { handler: heartbeat } = await import('../netlify/functions/story-hub-presence.mjs');
     const { handler: leave } = await import('../netlify/functions/story-hub-leave.mjs');

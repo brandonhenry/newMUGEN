@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "direction": "palette-harmonized side-view pixel art for traversal, wildlife, caves, and water",
+  "packs": [
+    {
+      "id": "pixel-horse",
+      "author": "alizard",
+      "source": "https://opengameart.org/content/pixel-horse",
+      "archiveUrls": [
+        "https://opengameart.org/sites/default/files/horse_run_cycle_0.png",
+        "https://opengameart.org/sites/default/files/horse_idle_cycle.png"
+      ],
+      "archiveSha256": [
+        "1426182594f141ac5985c4d2bd068dcc626622c404bafb73a5eccfe65b411d37",
+        "9b1201a8fb2b419522cfdeb31c7d61dd4749d546c7c3c95f40fac8aabb8f9cb7"
+      ],
+      "license": "CC0-1.0",
+      "runtimeReferences": ["cinder-drake", "dune-strider"],
+      "assets": [
+        { "file": "mounts/horse-run.png", "sourceFile": "horse_run_cycle_0.png", "width": 410, "height": 66, "sha256": "1426182594f141ac5985c4d2bd068dcc626622c404bafb73a5eccfe65b411d37" },
+        { "file": "mounts/horse-idle.png", "sourceFile": "horse_idle_cycle.png", "width": 574, "height": 66, "sha256": "9b1201a8fb2b419522cfdeb31c7d61dd4749d546c7c3c95f40fac8aabb8f9cb7" }
+      ]
+    },
+    {
+      "id": "pixel-wolf",
+      "author": "alizard",
+      "source": "https://opengameart.org/content/pixel-wolf",
+      "archiveUrls": [
+        "https://opengameart.org/sites/default/files/wolf_run.png",
+        "https://opengameart.org/sites/default/files/wolf_jump.png"
+      ],
+      "archiveSha256": [
+        "21482877247fa214159d55d43f0dd82a2ce96229c65e1342788554ba8e540a63",
+        "8a13908baec52b5016629141e157808fe9dc194e2d7e1284bbe4dae6720327ff"
+      ],
+      "license": "CC0-1.0",
+      "runtimeReferences": ["pale-warg"],
+      "assets": [
+        { "file": "mounts/wolf-run.png", "sourceFile": "wolf_run.png", "width": 330, "height": 66, "sha256": "21482877247fa214159d55d43f0dd82a2ce96229c65e1342788554ba8e540a63" },
+        { "file": "mounts/wolf-jump.png", "sourceFile": "wolf_jump.png", "width": 264, "height": 66, "sha256": "8a13908baec52b5016629141e157808fe9dc194e2d7e1284bbe4dae6720327ff" }
+      ]
+    },
+    {
+      "id": "animated-wild-animals",
+      "author": "ScratchIO",
+      "source": "https://opengameart.org/content/animated-wild-animals",
+      "archiveUrls": ["https://opengameart.org/sites/default/files/All.zip"],
+      "archiveSha256": ["15d0f3a23ab9f6886a93607e99d5321d342f23f03350ba40bf71085ec5a8b048"],
+      "license": "CC0-1.0",
+      "runtimeReferences": ["verdant-stag", "bramble-lynx", "ironhorn-beetle", "frost-ram", "glasswing"],
+      "assets": [
+        { "file": "wildlife/Deer_Run.png", "sourceFile": "Wild Animals/Deer/Deer_Run.png", "width": 432, "height": 52, "sha256": "070cacaa0b7755f86cb0bb8def6933ffd96bffa1e00047da9fbca0afd5688429" },
+        { "file": "wildlife/Deer_Idle.png", "sourceFile": "Wild Animals/Deer/Deer_Idle.png", "width": 720, "height": 52, "sha256": "c7e2c112bfdfddfc6aba0794af56386755a67e38d16ebf6f8344808cfde9a3ba" },
+        { "file": "wildlife/Wolf_Run.png", "sourceFile": "Wild Animals/Wolf/Wolf_Run.png", "width": 384, "height": 40, "sha256": "03f2d20f43f79b0a0c31971843aef568ec456d96efb9c2f25da31fa25a5dbe9f" },
+        { "file": "wildlife/Bear_Run.png", "sourceFile": "Wild Animals/Bear/Bear_Run.png", "width": 320, "height": 33, "sha256": "367bdc87117717f900b85b79985bf1f61dd969e41ec99d65c274778cfdaf9415" }
+      ]
+    },
+    {
+      "id": "underwater-diving-pack",
+      "author": "Ansimuz",
+      "source": "https://opengameart.org/content/underwater-diving-pack",
+      "archiveUrls": ["https://opengameart.org/sites/default/files/underwater-diving-files.zip"],
+      "archiveSha256": ["c260acdff6c72ae4f181b962265db65009a3132d59782cfaee6e4e83b6e7f897"],
+      "license": "CC0-1.0",
+      "runtimeReferences": ["underwater-background", "underwater-surface", "aquatic-wildlife"],
+      "assets": [
+        { "file": "underwater/background.png", "sourceFile": "underwater-diving-files/PNG/environment/background.png", "width": 288, "height": 256, "sha256": "cff6c72694646a3707da22a6a56acbccc22cb2427c051f5b89875f29592da192" },
+        { "file": "underwater/midground.png", "sourceFile": "underwater-diving-files/PNG/environment/midground.png", "width": 960, "height": 512, "sha256": "e356947c4d349a44438dec230fb8dafada79702561b23685fa58bca1510bfc5f" },
+        { "file": "underwater/tiles.png", "sourceFile": "underwater-diving-files/PNG/environment/tiles.png", "width": 480, "height": 656, "sha256": "6252aac480568a138616b05dfeffc27df71732b33a221eb627b802fc6c1c6b3c" },
+        { "file": "underwater/bubbles.png", "sourceFile": "underwater-diving-files/PNG/FX/bubbles.png", "width": 92, "height": 40, "sha256": "ba8f24a86c7df00cbd045f6ce0647ded7c21d757268eb9ea7f990a1c02092f6c" },
+        { "file": "underwater/fish.png", "sourceFile": "underwater-diving-files/PNG/enemies/fish.png", "width": 128, "height": 32, "sha256": "f133a275b234d719ecc6e0f07107a6c0755c2fa70c105397ee7e6cb6f842ac27" },
+        { "file": "underwater/fish-big.png", "sourceFile": "underwater-diving-files/PNG/enemies/fish-big.png", "width": 216, "height": 49, "sha256": "693db9f043cec6dd20ceb953fcea794a7cdc6569572893b6bd5596c85d06ef4c" }
+      ]
+    },
+    {
+      "id": "grafxkid-cave-tileset",
+      "author": "GrafxKid",
+      "source": "https://opengameart.org/content/cave-tileset-4",
+      "archiveUrls": ["https://opengameart.org/sites/default/files/cave_assets_1.png"],
+      "archiveSha256": ["3d848b62f114841e3b694ed068edd86da6563c6c59899a40fa8168586e163211"],
+      "license": "CC0-1.0",
+      "runtimeReferences": ["procedural-cave-detail"],
+      "assets": [
+        { "file": "caves/grafxkid-cave-assets.png", "sourceFile": "cave_assets_1.png", "width": 928, "height": 736, "sha256": "3d848b62f114841e3b694ed068edd86da6563c6c59899a40fa8168586e163211" }
+      ]
+    }
+  ]
+}

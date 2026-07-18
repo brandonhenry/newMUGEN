@@ -33,8 +33,8 @@ describe('story adventure world network', () => {
       expect(world.enemySpawns).toHaveLength(10);
       expect(world.portals.filter((portal) => portal.destination === 'world-route')).toHaveLength(2);
       expect(new Set(world.enemySpawns?.map((enemy) => enemy.archetype))).toEqual(new Set(['ground', 'flying', 'ranged']));
-      const points = [world.bounds.minX, ...(world.landmarks?.map(({ position }) => position[0]) ?? []).sort((a, b) => a - b), world.bounds.maxX];
-      expect(Math.max(...points.slice(1).map((point, index) => point - points[index])), `${id} landmark coverage`).toBeLessThanOrEqual(43);
+      expect(world.exploration?.districts).toHaveLength(8);
+      expect(world.exploration?.safeApproach[1]! - world.exploration?.safeApproach[0]!).toBeGreaterThanOrEqual(80);
     }
   });
 

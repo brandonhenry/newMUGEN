@@ -1,6 +1,6 @@
 import rawHub from './koreCentralHub.json';
 import { isStoryWorldAssetId } from './adventureAssets';
-import type { HubDestination, StoryHubDefinition, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryWorldBackdropMotif, StoryWorldEnvironmentDefinition, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
+import type { HubDestination, StoryAdventureExplorationDefinition, StoryDepthZoneKind, StoryHubDefinition, StoryMountId, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryTraversalKind, StoryWorldBackdropMotif, StoryWorldEnvironmentDefinition, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
 
 const HUB_DESTINATIONS: readonly HubDestination[] = [
   'central', 'story', 'friends', 'online', 'arcade', 'versus', 'training', 'tournament', 'characters', 'avatarStudio', 'options', 'exit'
@@ -13,6 +13,9 @@ const WORLD_DESTINATIONS: StoryPortalDestination[] = [
   ...HUB_DESTINATIONS,
   'world-route', 'greenhollow', 'thornwood', 'ironroot', 'bonevault', 'emberdeep', 'frostpeak', 'sunscar', 'skyglass'
 ];
+const MOUNT_IDS: StoryMountId[] = ['verdant-stag', 'bramble-lynx', 'ironhorn-beetle', 'pale-warg', 'cinder-drake', 'frost-ram', 'dune-strider', 'glasswing'];
+const TRAVERSAL_KINDS: StoryTraversalKind[] = ['walk', 'climb', 'ladder', 'lift', 'break-wall', 'swim', 'glide', 'updraft', 'drop'];
+const DEPTH_KINDS: StoryDepthZoneKind[] = ['cave', 'underwater', 'tower', 'ruin', 'mine', 'crypt', 'grotto', 'sanctuary'];
 
 export const FALLBACK_STORY_HUB: StoryHubDefinition = {
   id: 'kore-central',
@@ -155,6 +158,33 @@ function sanitizeProps(value: unknown): StoryWorldPropDefinition[] | undefined {
   return props.length > 0 ? props : undefined;
 }
 
+function sanitizeExploration(value: unknown, bounds: StoryHubDefinition['bounds']): StoryAdventureExplorationDefinition | undefined {
+  if (!value || typeof value !== 'object') return undefined;
+  const record = value as Partial<StoryAdventureExplorationDefinition>;
+  const validRange = (range: unknown): range is [number, number] => finiteTuple(range) && range[0] >= bounds.minX && range[1] <= bounds.maxX && range[0] < range[1];
+  if (!validRange(record.safeApproach) || !record.mountSanctuary || !MOUNT_IDS.includes(record.mountSanctuary.mountId)) return undefined;
+  const districts = Array.isArray(record.districts) ? record.districts.filter((item) => item && typeof item.id === 'string' && typeof item.label === 'string' && validRange(item.range)) : [];
+  const encounters = Array.isArray(record.encounters) ? record.encounters.filter((item) => item && typeof item.id === 'string' && validRange(item.range)).map((item) => ({ ...item, maxActive: Math.max(0, Math.min(5, Math.round(Number(item.maxActive) || 0))) })) : [];
+  const entrances = Array.isArray(record.entrances) ? record.entrances.filter((item) => item && typeof item.id === 'string' && typeof item.label === 'string' && finiteTuple(item.position) && item.position[0] >= bounds.minX && item.position[0] <= bounds.maxX).map((item) => ({ ...item, kinds: Array.isArray(item.kinds) ? item.kinds.filter((kind): kind is StoryDepthZoneKind => DEPTH_KINDS.includes(kind)) : [] })) : [];
+  const waterVolumes = Array.isArray(record.waterVolumes) ? record.waterVolumes.filter((item) => item && typeof item.id === 'string' && Array.isArray(item.bounds) && item.bounds.length === 4 && item.bounds.every(Number.isFinite) && finiteTuple(item.current)).map((item) => ({ ...item, airPockets: Array.isArray(item.airPockets) ? item.airPockets.filter(finiteTuple) : [] })) : [];
+  const waystones = Array.isArray(record.waystones) ? record.waystones.filter((item) => item && typeof item.id === 'string' && typeof item.label === 'string' && finiteTuple(item.position) && item.position[0] >= bounds.minX && item.position[0] <= bounds.maxX) : [];
+  const depthTemplates = Array.isArray(record.depthTemplates) ? record.depthTemplates.filter((item) => item && typeof item.id === 'string' && DEPTH_KINDS.includes(item.kind) && Number.isFinite(item.weight) && item.weight > 0).map((item) => ({ ...item, traversal: Array.isArray(item.traversal) ? item.traversal.filter((kind): kind is StoryTraversalKind => TRAVERSAL_KINDS.includes(kind)) : ['walk' as StoryTraversalKind] })) : [];
+  if (districts.length === 0 || encounters.length === 0 || entrances.length === 0 || waystones.length === 0 || depthTemplates.length === 0) return undefined;
+  const challenge = TRAVERSAL_KINDS.includes(record.mountSanctuary.challenge) ? record.mountSanctuary.challenge : 'walk';
+  const sanctuaryPosition = finiteTuple(record.mountSanctuary.position) ? record.mountSanctuary.position : waystones[waystones.length - 1].position;
+  return {
+    safeApproach: record.safeApproach,
+    districts,
+    encounters,
+    entrances,
+    waterVolumes,
+    waystones,
+    mountSanctuary: { id: String(record.mountSanctuary.id || 'mount-sanctuary'), mountId: record.mountSanctuary.mountId, position: sanctuaryPosition, challenge },
+    depthTemplates,
+    camera: record.camera && Number.isFinite(record.camera.minY) && Number.isFinite(record.camera.maxY) && record.camera.minY < record.camera.maxY ? record.camera : { minY: -8, maxY: 20 }
+  };
+}
+
 export function sanitizeStoryHubDefinition(value: unknown): StoryHubDefinition {
   if (!value || typeof value !== 'object') return FALLBACK_STORY_HUB;
   const record = value as Partial<StoryHubDefinition>;
@@ -180,6 +210,7 @@ export function sanitizeStoryHubDefinition(value: unknown): StoryHubDefinition {
     ...(sanitizeProps(record.props) ? { props: sanitizeProps(record.props) } : {}),
     ...(finiteTuple(record.checkpoint) ? { checkpoint: record.checkpoint } : {}),
     ...(Array.isArray(record.enemySpawns) ? { enemySpawns: record.enemySpawns } : {}),
+    ...(sanitizeExploration(record.exploration, bounds) ? { exploration: sanitizeExploration(record.exploration, bounds) } : {}),
     ...(record.adventure ? { adventure: true } : {})
   };
 }

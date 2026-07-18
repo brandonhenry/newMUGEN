@@ -81,6 +81,24 @@ async function expectMainMenu(page: Page) {
   await expect(page.getByRole('button', { name: 'Arcade' })).toBeVisible({ timeout: 10000 });
 }
 
+async function moveUntilPortal(page: Page, hub: Locator, direction: 'ArrowLeft' | 'ArrowRight', portalId: string, timeout = 7_000, activate = false) {
+  await page.keyboard.down('Shift');
+  await page.keyboard.down(direction);
+  try {
+    await expect(hub).toHaveAttribute('data-nearby-portal', portalId, { timeout });
+    await page.keyboard.up(direction);
+    await page.keyboard.up('Shift');
+    if (activate) {
+      const enter = page.getByRole('button', { name: 'Enter', exact: true });
+      await expect(enter).toBeEnabled();
+      await enter.click();
+    }
+  } finally {
+    await page.keyboard.up(direction);
+    await page.keyboard.up('Shift');
+  }
+}
+
 test('Play creates a story avatar and enters K.O.R.E. Central', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await startFromSplash(page);
@@ -129,6 +147,7 @@ test('Play creates a story avatar and enters K.O.R.E. Central', async ({ page })
 });
 
 test('adventure combat levels the player and Central Route shrine respecs stats', async ({ page }) => {
+  test.setTimeout(75_000);
   await page.addInitScript(() => {
     window.localStorage.setItem('kore.story.profile.v4', JSON.stringify({
       version: 4,
@@ -140,13 +159,16 @@ test('adventure combat levels the player and Central Route shrine respecs stats'
       updatedAt: 1,
       reviewedAt: 1
     }));
-    window.localStorage.setItem('kore.story.adventure.v1', JSON.stringify({
-      version: 1,
+    window.localStorage.setItem('kore.story.adventure.v2', JSON.stringify({
+      version: 2,
       level: 1,
       xp: 99,
       unspentPoints: 0,
       stats: { power: 0, vitality: 0, agility: 0, guard: 0, critical: 0, insight: 0 },
-      lifetimeDefeats: 0
+      lifetimeDefeats: 0,
+      discoveries: { biomes: ['emberdeep'], landmarks: {}, waystones: ['emberdeep-waystone-entry', 'emberdeep-waystone-mid'], vistas: [], sanctuaries: [] },
+      mounts: {},
+      visitCounters: {}
     }));
   });
   await startFromSplash(page);
@@ -162,44 +184,46 @@ test('adventure combat levels the player and Central Route shrine respecs stats'
   await expect(hub).toHaveAttribute('data-world', 'world-route', { timeout: 4_000 });
   await expect(page.getByTestId('story-door-transition')).toBeHidden({ timeout: 4_000 });
 
-  await page.keyboard.down('ArrowRight');
-  await page.waitForTimeout(950);
-  await page.keyboard.up('ArrowRight');
-  await expect(hub).toHaveAttribute('data-nearby-portal', 'route-emberdeep', { timeout: 3_000 });
-  await page.getByRole('button', { name: 'Enter', exact: true }).click();
+  await moveUntilPortal(page, hub, 'ArrowRight', 'route-emberdeep', 7_000, true);
   await expect(page.getByTestId('story-door-transition')).toBeVisible();
   await expect(hub).toHaveAttribute('data-world', 'emberdeep', { timeout: 4_000 });
   await expect(page.getByTestId('story-door-transition')).toBeHidden({ timeout: 4_000 });
 
-  const emberSpawnX = Number(await hub.getAttribute('data-player-x'));
+  await page.keyboard.press('m');
+  await page.getByTestId('story-adventure-map').getByRole('button', { name: /Deep Waystone/ }).click();
+  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 3_000 }).toBeGreaterThan(-1);
+  await page.keyboard.down('Shift');
   await page.keyboard.down('ArrowRight');
-  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 4_000 }).toBeGreaterThan(emberSpawnX + 5.5);
+  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 9_000 }).toBeGreaterThan(50);
   await page.keyboard.up('ArrowRight');
+  await page.keyboard.up('Shift');
   let damageFeedbackSeen = false;
-  for (let hit = 0; hit < 8; hit += 1) {
+  for (let hit = 0; hit < 16; hit += 1) {
+    const face = hit % 2 === 0 ? 'ArrowLeft' : 'ArrowRight';
+    await page.keyboard.down(face);
+    await page.waitForTimeout(70);
+    await page.keyboard.up(face);
     await page.keyboard.press('u');
-    await page.waitForTimeout(80);
+    await page.waitForTimeout(360);
     const damageFeedback = page.locator('[data-testid^="story-enemy-damage-"]:visible');
     if (await damageFeedback.count() > 0) damageFeedbackSeen = true;
-    await page.waitForTimeout(850);
-    if (await page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v1') ?? 'null')?.level) === 2) break;
+    await page.waitForTimeout(550);
+    if (await page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v2') ?? 'null')?.level) === 2) break;
   }
   expect(damageFeedbackSeen).toBe(true);
-  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v1') ?? 'null')?.level), { timeout: 5_000 }).toBe(2);
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v2') ?? 'null')?.level), { timeout: 5_000 }).toBe(2);
   await expect(hub).toHaveAttribute('data-player-level', '2');
 
   await page.keyboard.press('p');
   const stats = page.getByTestId('story-adventure-stats');
   await expect(stats).toBeVisible();
   await stats.getByRole('button', { name: 'Add point to Power' }).click();
-  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v1') ?? 'null')?.stats?.power)).toBe(1);
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v2') ?? 'null')?.stats?.power)).toBe(1);
   await stats.getByRole('button', { name: 'Close adventure stats' }).click();
 
-  await page.keyboard.down('ArrowLeft');
-  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 5_000 }).toBeLessThan(emberSpawnX - 1.5);
-  await page.keyboard.up('ArrowLeft');
-  await expect(hub).toHaveAttribute('data-nearby-portal', 'emberdeep-return-west', { timeout: 3_000 });
-  await page.getByRole('button', { name: 'Enter', exact: true }).click();
+  await page.keyboard.press('m');
+  await page.getByTestId('story-adventure-map').getByRole('button', { name: /Entry Waystone/ }).click();
+  await moveUntilPortal(page, hub, 'ArrowLeft', 'emberdeep-return-west', 9_000, true);
   await expect(page.getByTestId('story-door-transition')).toBeVisible();
   await expect(hub).toHaveAttribute('data-world', 'world-route', { timeout: 4_000 });
   await expect(page.getByTestId('story-door-transition')).toBeHidden({ timeout: 4_000 });
@@ -207,7 +231,7 @@ test('adventure combat levels the player and Central Route shrine respecs stats'
   await page.getByRole('button', { name: 'Recalibrate', exact: true }).click();
   await expect(stats).toBeVisible();
   await stats.getByRole('button', { name: 'Reset all points' }).click();
-  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v1') ?? 'null')?.stats?.power)).toBe(0);
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v2') ?? 'null')?.stats?.power)).toBe(0);
 });
 
 test('saved story profiles enter Arcade World, retain jump controls, and launch a cabinet', async ({ page }) => {
@@ -247,11 +271,7 @@ test('saved story profiles enter Arcade World, retain jump controls, and launch 
   await expect(hub).toHaveAttribute('data-player-pose', 'jump');
   await expect.poll(async () => Number(await hub.getAttribute('data-player-y')), { timeout: 2_500 }).toBeLessThan(arcadeGroundY + 0.2);
 
-  await page.keyboard.down('ArrowRight');
-  await page.waitForTimeout(350);
-  await page.keyboard.up('ArrowRight');
-  await expect(hub).toHaveAttribute('data-nearby-portal', 'arcade-cabinet-1', { timeout: 3_000 });
-  await page.keyboard.press('Enter');
+  await moveUntilPortal(page, hub, 'ArrowRight', 'arcade-cabinet-1', 6_000, true);
   await expect(page.locator('.select-screen')).toBeVisible({ timeout: 8_000 });
   await page.getByRole('button', { name: 'Back', exact: true }).click();
   await expect(hub).toBeVisible({ timeout: 8_000 });
