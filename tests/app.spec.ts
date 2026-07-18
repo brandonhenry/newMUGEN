@@ -227,17 +227,17 @@ test('adventure combat levels the player and Central Route shrine respecs stats'
     const damageFeedback = page.locator('[data-testid^="story-enemy-damage-"]:visible');
     if (await damageFeedback.count() > 0) damageFeedbackSeen = true;
     await page.waitForTimeout(550);
-    if (await page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v3') ?? 'null')?.level) === 2) break;
+    if (await page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v4') ?? 'null')?.level) === 2) break;
   }
   expect(damageFeedbackSeen).toBe(true);
-  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v3') ?? 'null')?.level), { timeout: 5_000 }).toBe(2);
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v4') ?? 'null')?.level), { timeout: 5_000 }).toBe(2);
   await expect(hub).toHaveAttribute('data-player-level', '2');
 
   await page.keyboard.press('p');
   const stats = page.getByTestId('story-adventure-stats');
   await expect(stats).toBeVisible();
   await stats.getByRole('button', { name: 'Add point to Power' }).click();
-  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v3') ?? 'null')?.stats?.power)).toBe(1);
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v4') ?? 'null')?.stats?.power)).toBe(1);
   await stats.getByRole('button', { name: 'Close adventure stats' }).click();
 
   await moveUntilPortal(page, hub, 'ArrowLeft', 'surface-map:emberdeep-arrival', 5_000, true);
@@ -249,7 +249,7 @@ test('adventure combat levels the player and Central Route shrine respecs stats'
   await page.getByRole('button', { name: 'Recalibrate', exact: true }).click();
   await expect(stats).toBeVisible();
   await stats.getByRole('button', { name: 'Reset all points' }).click();
-  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v3') ?? 'null')?.stats?.power)).toBe(0);
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v4') ?? 'null')?.stats?.power)).toBe(0);
 });
 
 test('saved story profiles enter Arcade World, retain jump controls, and launch a cabinet', async ({ page }) => {

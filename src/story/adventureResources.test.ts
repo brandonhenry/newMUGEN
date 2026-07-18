@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { STORY_BIOME_RESOURCE_IDS } from './adventureCrafting';
+import { STORY_BIOME_RESOURCE_IDS, STORY_RESOURCE_BY_ID } from './adventureCrafting';
 import { STORY_ADVENTURE_SURFACE_MAPS } from './adventureSurfaceMaps';
 import { generateAdventureRunGraph } from './adventureExploration';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_WORLDS } from './adventureWorlds';
@@ -7,6 +7,7 @@ import {
   adventureAttackCanHitResource,
   adventureResourceHitStrength,
   createDepthResourceNodes,
+  groundedResourceNodeCenterY,
   resourceYield
 } from './adventureResources';
 import {
@@ -18,6 +19,29 @@ import {
 } from './adventureProgress';
 
 describe('Adventure gathering nodes', () => {
+  it('renders every enlarged node with its visible alpha foot sunk into the floor', () => {
+    const nodes = Object.values(STORY_ADVENTURE_SURFACE_MAPS).flatMap((maps) => maps.flatMap((map) => map.resourceNodes));
+    for (const node of nodes) {
+      const resource = STORY_RESOURCE_BY_ID[node.resourceId];
+      const visibleFootY = node.position[1] + node.size[1] * (0.5 - resource.footAnchorY);
+      expect(visibleFootY, node.id).toBeCloseTo(-0.035, 8);
+      expect(node.position[1], node.id).toBeCloseTo(groundedResourceNodeCenterY(node.size[1], resource.footAnchorY), 8);
+      if (node.kind === 'tree') {
+        expect(node.size[0], node.id).toBeGreaterThanOrEqual(3.25);
+        expect(node.size[1], node.id).toBeGreaterThanOrEqual(4.5);
+      } else if (node.kind === 'berry') {
+        expect(node.size[0], node.id).toBeGreaterThanOrEqual(2.25);
+        expect(node.size[1], node.id).toBeGreaterThanOrEqual(2.05);
+      } else if (node.kind === 'plant') {
+        expect(node.size[0], node.id).toBeGreaterThanOrEqual(1.9);
+        expect(node.size[1], node.id).toBeGreaterThanOrEqual(1.8);
+      } else {
+        expect(node.size[0], node.id).toBeGreaterThanOrEqual(2.4);
+        expect(node.size[1], node.id).toBeGreaterThanOrEqual(2.05);
+      }
+    }
+  });
+
   it('covers all 32 surface maps deterministically with authored counts and restrictions', () => {
     const maps = Object.values(STORY_ADVENTURE_SURFACE_MAPS).flat();
     expect(maps).toHaveLength(32);

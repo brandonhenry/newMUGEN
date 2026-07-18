@@ -23,6 +23,8 @@ from pathlib import Path
 
 from PIL import Image
 
+from story_sprite_alpha import fill_dense_interior_gaps, fill_single_pinholes, fill_small_enclosed_holes, remove_exterior_matte
+
 
 ROOT = Path(__file__).resolve().parents[1]
 ADVENTURE_ROOT = ROOT / "public/story/adventure"
@@ -32,6 +34,16 @@ WORLD_MANIFEST = WORLD_ROOT / "asset-manifest.json"
 WORLD_INTEGRITY = WORLD_ROOT / "asset-integrity.json"
 EXPLORATION_ROOT = ROOT / "public/story/exploration"
 EXPLORATION_MANIFEST = EXPLORATION_ROOT / "asset-manifest.json"
+EXPLORATION_ACTOR_FILES = {
+    "mounts/horse-idle.png",
+    "mounts/horse-run.png",
+    "mounts/wolf-jump.png",
+    "mounts/wolf-run.png",
+    "wildlife/Bear_Run.png",
+    "wildlife/Deer_Idle.png",
+    "wildlife/Deer_Run.png",
+    "wildlife/Wolf_Run.png",
+}
 
 
 @dataclass(frozen=True)
@@ -289,9 +301,8 @@ def download_bytes(url: str) -> bytes:
 def verify_exploration_assets() -> None:
     """Verify the mount, wildlife, cave, and underwater intake manifest.
 
-    These packs deliberately use their original PNG bytes. That keeps the
-    selected source file and shipped checksum identical and makes a refresh
-    reproducible without retaining source archives in public/.
+    Actor atlases are deterministic transparent derivatives of the pinned
+    source bytes; other selected assets retain their original PNG bytes.
     """
     manifest = json.loads(EXPLORATION_MANIFEST.read_text())
     if manifest.get("version") != 1 or not manifest.get("packs"):
@@ -327,6 +338,31 @@ def verify_exploration_assets() -> None:
     print(f"Verified {len(seen_files)} reviewed exploration assets from {len(manifest['packs'])} packs")
 
 
+def clean_exploration_actor_assets() -> None:
+    """Apply the Story actor transparency and missing-pixel passes to atlases."""
+    manifest = json.loads(EXPLORATION_MANIFEST.read_text())
+    cleaned_count = 0
+    for pack in manifest["packs"]:
+        for asset in pack["assets"]:
+            relative = asset["file"]
+            if relative not in EXPLORATION_ACTOR_FILES:
+                continue
+            path = EXPLORATION_ROOT / relative
+            source = Image.open(path).convert("RGBA")
+            cleaned = source
+            if relative.startswith("mounts/") and source.getpixel((0, 0))[3] > 16:
+                cleaned = remove_exterior_matte(source, source.getpixel((0, 0))[:3])
+            cleaned = fill_small_enclosed_holes(source, cleaned)
+            cleaned = fill_dense_interior_gaps(source, cleaned)
+            cleaned = fill_single_pinholes(source, cleaned)
+            cleaned.save(path, format="PNG", optimize=True)
+            asset["sha256"] = sha256_path(path)
+            asset["processing"] = "binary-alpha exterior matte cleanup plus conservative interior gap fill"
+            cleaned_count += 1
+    EXPLORATION_MANIFEST.write_text(json.dumps(manifest, indent=2) + "\n")
+    print(f"Cleaned {cleaned_count} exploration actor atlases")
+
+
 def import_exploration_assets() -> None:
     manifest = json.loads(EXPLORATION_MANIFEST.read_text())
     with tempfile.TemporaryDirectory(prefix="kore-exploration-assets-"):
@@ -353,6 +389,7 @@ def import_exploration_assets() -> None:
                     destination = EXPLORATION_ROOT / asset["file"]
                     destination.parent.mkdir(parents=True, exist_ok=True)
                     destination.write_bytes(data)
+    clean_exploration_actor_assets()
     verify_exploration_assets()
 
 
@@ -360,12 +397,15 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--refresh", action="store_true", help="Download and re-import every reviewed CC0 pack")
     parser.add_argument("--refresh-exploration", action="store_true", help="Download only the checksum-pinned exploration packs")
+    parser.add_argument("--clean-exploration-actors", action="store_true", help="Re-run alpha cleanup for mount and wildlife atlases")
     parser.add_argument("--archive-dir", type=Path, help="Use checksum-pinned archives from this directory")
     args = parser.parse_args()
     if args.refresh or not WORLD_MANIFEST.is_file() or not WORLD_INTEGRITY.is_file():
         import_world_packs(args.archive_dir)
     if args.refresh or args.refresh_exploration:
         import_exploration_assets()
+    elif args.clean_exploration_actors:
+        clean_exploration_actor_assets()
     verify_integrity(ADVENTURE_ROOT, ADVENTURE_INTEGRITY, "adventure")
     verify_integrity(WORLD_ROOT, WORLD_INTEGRITY, "world")
     verify_exploration_assets()

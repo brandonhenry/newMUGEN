@@ -37,7 +37,15 @@ describe('Adventure resource assets', () => {
     expect(manifest.references.length).toBeGreaterThanOrEqual(16);
     expect(manifest.sources).toHaveLength(13);
     expect(manifest.outputs).toHaveLength(193);
-    expect(manifest.outputs.every((entry: { sha256: string; dimensions: number[] }) => /^[a-f0-9]{64}$/.test(entry.sha256) && entry.dimensions.length === 2)).toBe(true);
+    expect(manifest.outputs.every((entry: { sha256: string; dimensions: number[]; alphaBounds: number[] | null }) => /^[a-f0-9]{64}$/.test(entry.sha256) && entry.dimensions.length === 2 && entry.alphaBounds?.length === 4)).toBe(true);
+    const outputs = new Map<string, { dimensions: number[]; alphaBounds: number[] }>(manifest.outputs.map((entry: { path: string; dimensions: number[]; alphaBounds: number[] }) => [entry.path, entry]));
+    for (const resource of STORY_RESOURCES) {
+      for (const frame of resource.nodeFrames) {
+        const entry = outputs.get(`public${frame}`)!;
+        expect(entry, frame).toBeDefined();
+        expect(entry.alphaBounds[3] / entry.dimensions[1], frame).toBeCloseTo(resource.footAnchorY, 8);
+      }
+    }
   });
 
   it('ships every referenced resource impact clip and its CC0 provenance', () => {

@@ -18,7 +18,7 @@ import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_REGION_LABELS, STORY_WORLDS
 import { createAdventureVisitSeed, generateAdventureRunGraph, STORY_BREATH_DRAIN_PER_SECOND, STORY_BREATH_REFILL_PER_SECOND, STORY_MAX_BREATH, STORY_MOUNTS, STORY_WORLD_MOUNT, storyDepthZoneLabel, storyPartyEnemyHealthScale, type StoryPartyAiActor, type StoryPartyInstance, type StoryPartyInvite } from './adventureExploration';
 import { getStoryEnemyAnimation, getStoryEnemyDefinition, storyEnemyPlaneSize, STORY_CHALLENGER_IDS, STORY_ENEMY_RUNTIME_SCALE, type StoryEnemyAttackDefinition } from './enemyCatalog';
 import { STORY_GROUNDED_ACTOR_CENTER_Y, storyAvatarGroundingOffsetForWorld, storyGroundAnchoredPlaneCenterY, storyScaledGroundAnchorOffsetY } from './actorGrounding';
-import { STORY_MODE_DOOR_DISPLAY_SIZE, storyPortalDoorFrame, type StoryBiomeDoorFrame } from './biomeDoors';
+import { STORY_CENTRAL_DOOR_SCALE, STORY_MODE_DOOR_DISPLAY_SIZE, storyCentralModeDoorCenterY, storyPortalDoorFrame, type StoryBiomeDoorFrame } from './biomeDoors';
 import { createStoryDepthEnvironment } from './depthEnvironment';
 import { connectStoryHubMultiplayer, readOrCreateStoryHubGuestIdentity, readStoryHubOnlinePreference, STORY_HUB_CHALLENGE_TIMEOUT_MS, writeStoryHubOnlinePreference, type StoryHubMultiplayerSession } from './hubMultiplayer';
 import { KORE_CENTRAL_HUB } from './hubData';
@@ -457,11 +457,12 @@ function AnimatedCabinet({ position = [0, 0, 0], mirrored = false, scale = 1, re
   </mesh>;
 }
 
-function ModeDoor({ emphasized }: { emphasized: boolean }) {
+function ModeDoor({ emphasized, displayScale = 1, centerY = MODE_DOOR_BASELINE_OFFSET_Y }: { emphasized: boolean; displayScale?: number; centerY?: number }) {
   const texture = useTexture(`${DOOR_ASSET_ROOT}/frame-0.png`);
+  const displaySize = [STORY_MODE_DOOR_DISPLAY_SIZE[0] * displayScale, STORY_MODE_DOOR_DISPLAY_SIZE[1] * displayScale] as const;
   useMemo(() => configurePixelTexture(texture), [texture]);
-  return <mesh position={[0, MODE_DOOR_BASELINE_OFFSET_Y, -0.18]} scale={emphasized ? 1.06 : 1}>
-    <planeGeometry args={[...STORY_MODE_DOOR_DISPLAY_SIZE]} />
+  return <mesh position={[0, centerY, -0.18]} scale={emphasized ? 1.06 : 1}>
+    <planeGeometry args={[...displaySize]} />
     <meshBasicMaterial map={texture} transparent alphaTest={0.02} toneMapped={false} />
   </mesh>;
 }
@@ -510,21 +511,26 @@ function AdventurePortalMarker({ kind, accent, emphasized }: { kind: StoryPortal
   </group>;
 }
 
-function Storefront({ destination, size, emphasized }: { destination: HubDestination; size: number; emphasized: boolean }) {
+function Storefront({ destination, size, emphasized, centerY = 0 }: { destination: HubDestination; size: number; emphasized: boolean; centerY?: number }) {
   const texture = useTexture(`${PORTAL_ASSET_ROOT}/${DESTINATION_STOREFRONTS[destination]}`);
   useMemo(() => configurePixelTexture(texture), [texture]);
-  return <mesh position={[0, 0, -0.25]} scale={emphasized ? 1.06 : 1}>
+  return <mesh position={[0, centerY, -0.25]} scale={emphasized ? 1.06 : 1}>
     <planeGeometry args={[size, size]} />
     <meshBasicMaterial map={texture} transparent alphaTest={0.02} toneMapped={false} />
   </mesh>;
 }
 
-function PortalVisual({ portal, theme, nearby, assigned, reducedMotion }: { portal: StoryPortalDefinition; theme?: StoryWorldThemeId; nearby: boolean; assigned: boolean; reducedMotion: boolean }) {
+function PortalVisual({ portal, theme, nearby, assigned, reducedMotion, compactDoorways = false }: { portal: StoryPortalDefinition; theme?: StoryWorldThemeId; nearby: boolean; assigned: boolean; reducedMotion: boolean; compactDoorways?: boolean }) {
   const hubDestination = isHubDestination(portal.destination) ? portal.destination : 'story';
   const biomeDoor = storyPortalDoorFrame(portal, theme);
   const modeDoor = !biomeDoor && (portal.kind === 'mode-door' || portal.kind === 'adventure-gate');
   const DestinationIcon = DESTINATION_ICONS[portal.destination];
-  const storefrontSize = portal.destination === 'story' ? 4.45 : portal.position[1] > 4 ? 3.15 : 3.55;
+  const doorwayScale = compactDoorways ? STORY_CENTRAL_DOOR_SCALE : 1;
+  const modeDoorHeight = STORY_MODE_DOOR_DISPLAY_SIZE[1] * doorwayScale;
+  const modeDoorCenterY = compactDoorways ? storyCentralModeDoorCenterY(portal.position[1]) : MODE_DOOR_BASELINE_OFFSET_Y;
+  const baseStorefrontSize = portal.destination === 'story' ? 4.45 : portal.position[1] > 4 ? 3.15 : 3.55;
+  const storefrontSize = baseStorefrontSize * doorwayScale;
+  const storefrontCenterY = (storefrontSize - baseStorefrontSize) / 2;
   return <group position={[portal.position[0], portal.position[1], 0]}>
     <mesh position={[0, -1.08, 0.04]} renderOrder={18}>
       <ringGeometry args={[0.68, portal.kind === 'mode-door' || portal.kind === 'adventure-gate' ? 0.98 : 0.86, 24]} />
@@ -534,15 +540,15 @@ function PortalVisual({ portal, theme, nearby, assigned, reducedMotion }: { port
       <ringGeometry args={[1.08, 1.17, 24]} />
       <meshBasicMaterial color={portal.accent} transparent opacity={nearby ? 0.55 : 0.2} depthWrite={false} />
     </mesh>}
-    {['npc', 'chest', 'relic', 'checkpoint', 'restoration', 'crafting'].includes(portal.kind ?? '') ? <AdventurePortalMarker kind={portal.kind} accent={portal.accent} emphasized={nearby || assigned} /> : biomeDoor ? <BiomeDoor door={biomeDoor} portalY={portal.position[1]} emphasized={nearby || assigned} /> : portal.kind === 'mode-door' || portal.kind === 'adventure-gate' ? <ModeDoor emphasized={nearby || assigned} /> : portal.kind === 'shrine' ? <RecalibrationShrine emphasized={nearby} reducedMotion={reducedMotion} /> : portal.kind === 'arcade-machine' ? <AnimatedCabinet position={[0, -0.14, 0]} scale={nearby || assigned ? 1.08 : 1} reducedMotion={reducedMotion} /> : portal.kind === 'versus-machine' ? <>
+    {['npc', 'chest', 'relic', 'checkpoint', 'restoration', 'crafting'].includes(portal.kind ?? '') ? <AdventurePortalMarker kind={portal.kind} accent={portal.accent} emphasized={nearby || assigned} /> : biomeDoor ? <BiomeDoor door={biomeDoor} portalY={portal.position[1]} emphasized={nearby || assigned} /> : portal.kind === 'mode-door' || portal.kind === 'adventure-gate' ? <ModeDoor emphasized={nearby || assigned} displayScale={doorwayScale} centerY={modeDoorCenterY} /> : portal.kind === 'shrine' ? <RecalibrationShrine emphasized={nearby} reducedMotion={reducedMotion} /> : portal.kind === 'arcade-machine' ? <AnimatedCabinet position={[0, -0.14, 0]} scale={nearby || assigned ? 1.08 : 1} reducedMotion={reducedMotion} /> : portal.kind === 'versus-machine' ? <>
       <AnimatedCabinet position={[-0.56, -0.14, -0.18]} scale={nearby || assigned ? 0.94 : 0.88} reducedMotion={reducedMotion} />
       <AnimatedCabinet position={[0.56, -0.14, -0.16]} mirrored scale={nearby || assigned ? 0.94 : 0.88} reducedMotion={reducedMotion} />
     </> : portal.kind === 'terminal' ? <>
       <AnimatedCabinet position={[0, -0.14, 0]} scale={nearby || assigned ? 1.08 : 1} reducedMotion={reducedMotion} />
       <mesh position={[0, 0.04, 0.02]} renderOrder={22}><planeGeometry args={[0.72, 0.48]} /><meshBasicMaterial color={portal.accent} transparent opacity={0.42} depthWrite={false} /></mesh>
-    </> : <Storefront destination={hubDestination} size={storefrontSize} emphasized={nearby} />}
+    </> : <Storefront destination={hubDestination} size={storefrontSize} centerY={storefrontCenterY} emphasized={nearby} />}
     {assigned && <mesh position={[0, -1.08, 0.05]} renderOrder={23}><ringGeometry args={[0.72, 0.9, 24]} /><meshBasicMaterial color="#ffe071" transparent opacity={0.9} depthWrite={false} /></mesh>}
-    {(nearby || assigned || !['npc', 'chest', 'relic', 'checkpoint', 'restoration', 'crafting'].includes(portal.kind ?? '')) && <Html center position={[0, biomeDoor ? biomeDoor.displaySize[1] / 2 + 0.25 : modeDoor ? MODE_DOOR_BASELINE_OFFSET_Y + STORY_MODE_DOOR_DISPLAY_SIZE[1] / 2 + 0.25 : portal.size[1] / 2 + 0.52, 0.7]} zIndexRange={[8, 0]} className="story-destination-sign-shell">
+    {(nearby || assigned || !['npc', 'chest', 'relic', 'checkpoint', 'restoration', 'crafting'].includes(portal.kind ?? '')) && <Html center position={[0, biomeDoor ? biomeDoor.displaySize[1] / 2 + 0.25 : modeDoor ? modeDoorCenterY + modeDoorHeight / 2 + 0.25 : compactDoorways ? storefrontCenterY + storefrontSize / 2 + 0.25 : portal.size[1] / 2 + 0.52, 0.7]} zIndexRange={[8, 0]} className="story-destination-sign-shell">
       <div data-testid={`story-destination-${portal.id}`} className={`story-destination-sign ${nearby ? 'is-nearby' : ''} ${assigned ? 'is-assigned' : ''} ${portal.locked ? 'is-locked' : ''}`} style={{ '--story-destination-accent': portal.accent } as CSSProperties}>
         <span aria-hidden="true">{portal.locked ? <LockKeyhole size={16} /> : <DestinationIcon size={16} />}</span>
         <strong>{assigned ? `Go Here · ${portal.label}` : portal.label}</strong>
@@ -1921,7 +1927,7 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
         </RigidBody>)}
         <AdventureTraversalVisuals hub={hub} />
         <AdventureHazards hub={hub} progress={progress} playerPosition={playerPosition} reducedMotion={reducedMotion} onPlayerDamage={(damage, sourceX) => { if (!disabled) onPlayerDamage(damage, sourceX); }} />
-        {hub.portals.map((portal) => <PortalVisual key={portal.id} portal={portal} theme={hub.theme} nearby={nearbyPortal?.id === portal.id} assigned={assignedPortalId === portal.id} reducedMotion={reducedMotion} />)}
+        {hub.portals.map((portal) => <PortalVisual key={portal.id} portal={portal} theme={hub.theme} nearby={nearbyPortal?.id === portal.id} assigned={assignedPortalId === portal.id} reducedMotion={reducedMotion} compactDoorways={hub.id === 'kore-central'} />)}
         {(hub.npcs ?? []).map((npc) => <AdventureNpcVisual key={npc.id} npc={npc} attackEvent={attackEvent} playerPosition={playerPosition} maxHealth={derivedStats.maxHealth} reducedMotion={reducedMotion} onPlayerDamage={(damage, sourceX) => { if (!disabled) onPlayerDamage(damage, sourceX); }} surfaceInsetY={groundSurfaceInsetY} surfacePixelWorldHeight={groundSurfacePixelWorldHeight} />)}
         {hub.biomeId && (hub.resourceNodes ?? []).map((node) => <AdventureResourceNode key={node.id} node={node} biomeId={hub.biomeId!} progress={progress} attackEvent={attackEvent} playerPosition={playerPosition} playerProjectile={playerProjectile} reducedMotion={reducedMotion} onHarvest={onResourceHarvest} />)}
         {remotePlayers.map((presence, index) => <RemoteStoryPlayer key={presence.sessionId} presence={presence} reducedMotion={reducedMotion} groundingOffsetY={groundingOffsetY} surfaceInsetY={groundSurfaceInsetY} lane={index % 5} selected={selectedPlayerSessionId === presence.sessionId} onSelect={onSelectPlayer} />)}

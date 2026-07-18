@@ -16,6 +16,7 @@ export type StoryResourceDefinition = {
   rarity: StoryResourceRarity;
   color: string;
   impactMaterial: StoryResourceImpactMaterial;
+  footAnchorY: number;
   iconPath: string;
   nodeFrames: readonly [string, string, string];
 };
@@ -55,26 +56,27 @@ export type StoryAdventureInventory = {
 
 export const STORY_BIOME_IDS: StoryBiomeId[] = ['greenhollow', 'thornwood', 'ironroot', 'bonevault', 'emberdeep', 'frostpeak', 'sunscar', 'skyglass'];
 
-const UNIVERSAL: Array<[string, string, StoryResourceKind, string]> = [
-  ['routewood', 'Routewood', 'tree', '#ba7b4d'],
-  ['wildberry', 'Wildberry', 'berry', '#e95c9a'],
-  ['medicinal-herb', 'Medicinal Herb', 'plant', '#65d684'],
-  ['fieldstone', 'Fieldstone', 'rock', '#a8acb5']
+const UNIVERSAL: Array<[string, string, StoryResourceKind, string, number]> = [
+  ['routewood', 'Routewood', 'tree', '#ba7b4d', 246],
+  ['wildberry', 'Wildberry', 'berry', '#e95c9a', 245],
+  ['medicinal-herb', 'Medicinal Herb', 'plant', '#65d684', 246],
+  ['fieldstone', 'Fieldstone', 'rock', '#a8acb5', 246]
 ];
 
-const BIOME_MATERIALS: Record<StoryBiomeId, Array<[string, string, StoryResourceKind, string]>> = {
-  greenhollow: [['greenbark', 'Greenbark', 'tree', '#79b85a'], ['brook-berry', 'Brook Berry', 'berry', '#65c5d8'], ['copperleaf', 'Copperleaf', 'plant', '#c8894d'], ['gale-seed', 'Gale Seed', 'plant', '#ecf7a1']],
-  thornwood: [['ironbark', 'Ironbark', 'tree', '#66735a'], ['thornberry', 'Thornberry', 'berry', '#bd456f'], ['glowcap', 'Glowcap', 'plant', '#79efc4'], ['heartwood-amber', 'Heartwood Amber', 'tree', '#ffc65c']],
-  ironroot: [['coal', 'Coal', 'rock', '#4b4650'], ['iron-ore', 'Iron Ore', 'ore', '#969ca7'], ['silver-ore', 'Silver Ore', 'ore', '#d8e2ec'], ['sunstone', 'Sunstone', 'ore', '#ffd45f']],
-  bonevault: [['gravebone', 'Gravebone', 'rock', '#ddd5ca'], ['grave-moss', 'Grave Moss', 'plant', '#687e62'], ['soul-salt', 'Soul Salt', 'ore', '#a8d8dc'], ['violet-core', 'Violet Core', 'ore', '#bd76ff']],
-  emberdeep: [['basalt', 'Basalt', 'rock', '#56424a'], ['obsidian', 'Obsidian', 'ore', '#332b4d'], ['fire-blossom', 'Fire Blossom', 'plant', '#ff764a'], ['emberheart', 'Emberheart', 'ore', '#ffcf55']],
-  frostpeak: [['frost-pine', 'Frost Pine', 'tree', '#8cb4bd'], ['iceberry', 'Iceberry', 'berry', '#6cd5f5'], ['glacial-crystal', 'Glacial Crystal', 'ore', '#b5efff'], ['everfrost', 'Everfrost', 'ore', '#f0ffff']],
-  sunscar: [['palmwood', 'Palmwood', 'tree', '#ba8851'], ['cactus-fruit', 'Cactus Fruit', 'berry', '#e35a73'], ['glass-sand', 'Glass Sand', 'rock', '#f3d08b'], ['sunscar-opal', 'Sunscar Opal', 'ore', '#ffef9b']],
-  skyglass: [['cloud-reed', 'Cloud Reed', 'plant', '#b8efff'], ['charged-ore', 'Charged Ore', 'ore', '#6ea8ff'], ['prism-bloom', 'Prism Bloom', 'plant', '#f08bdc'], ['skyglass-prism', 'Skyglass Prism', 'ore', '#f4d8ff']]
+const BIOME_MATERIALS: Record<StoryBiomeId, Array<[string, string, StoryResourceKind, string, number]>> = {
+  greenhollow: [['greenbark', 'Greenbark', 'tree', '#79b85a', 243], ['brook-berry', 'Brook Berry', 'berry', '#65c5d8', 241], ['copperleaf', 'Copperleaf', 'plant', '#c8894d', 243], ['gale-seed', 'Gale Seed', 'plant', '#ecf7a1', 242]],
+  thornwood: [['ironbark', 'Ironbark', 'tree', '#66735a', 246], ['thornberry', 'Thornberry', 'berry', '#bd456f', 247], ['glowcap', 'Glowcap', 'plant', '#79efc4', 244], ['heartwood-amber', 'Heartwood Amber', 'tree', '#ffc65c', 247]],
+  ironroot: [['coal', 'Coal', 'rock', '#4b4650', 248], ['iron-ore', 'Iron Ore', 'ore', '#969ca7', 248], ['silver-ore', 'Silver Ore', 'ore', '#d8e2ec', 248], ['sunstone', 'Sunstone', 'ore', '#ffd45f', 248]],
+  bonevault: [['gravebone', 'Gravebone', 'rock', '#ddd5ca', 247], ['grave-moss', 'Grave Moss', 'plant', '#687e62', 248], ['soul-salt', 'Soul Salt', 'ore', '#a8d8dc', 247], ['violet-core', 'Violet Core', 'ore', '#bd76ff', 247]],
+  emberdeep: [['basalt', 'Basalt', 'rock', '#56424a', 247], ['obsidian', 'Obsidian', 'ore', '#332b4d', 247], ['fire-blossom', 'Fire Blossom', 'plant', '#ff764a', 242], ['emberheart', 'Emberheart', 'ore', '#ffcf55', 247]],
+  frostpeak: [['frost-pine', 'Frost Pine', 'tree', '#8cb4bd', 244], ['iceberry', 'Iceberry', 'berry', '#6cd5f5', 243], ['glacial-crystal', 'Glacial Crystal', 'ore', '#b5efff', 243], ['everfrost', 'Everfrost', 'ore', '#f0ffff', 245]],
+  sunscar: [['palmwood', 'Palmwood', 'tree', '#ba8851', 244], ['cactus-fruit', 'Cactus Fruit', 'berry', '#e35a73', 246], ['glass-sand', 'Glass Sand', 'rock', '#f3d08b', 247], ['sunscar-opal', 'Sunscar Opal', 'ore', '#ffef9b', 247]],
+  skyglass: [['cloud-reed', 'Cloud Reed', 'plant', '#b8efff', 245], ['charged-ore', 'Charged Ore', 'ore', '#6ea8ff', 245], ['prism-bloom', 'Prism Bloom', 'plant', '#f08bdc', 245], ['skyglass-prism', 'Skyglass Prism', 'ore', '#f4d8ff', 243]]
 };
 
 const RARITIES: StoryResourceRarity[] = ['common', 'uncommon', 'rare', 'legendary'];
 const nodeFrames = (atlas: string, id: string) => [`/story/resources/nodes/${atlas}/${id}-intact.png`, `/story/resources/nodes/${atlas}/${id}-damaged.png`, `/story/resources/nodes/${atlas}/${id}-depleted.png`] as const;
+const normalizedFootAnchorY = (pixelBottom: number) => pixelBottom / 256;
 
 export function storyResourceImpactMaterial(id: string, kind: StoryResourceKind, biomeId?: StoryBiomeId): StoryResourceImpactMaterial {
   if (id === 'gravebone') return 'bone';
@@ -87,8 +89,8 @@ export function storyResourceImpactMaterial(id: string, kind: StoryResourceKind,
 }
 
 export const STORY_RESOURCES: StoryResourceDefinition[] = [
-  ...UNIVERSAL.map(([id, label, kind, color], index) => ({ id, label, kind, color, impactMaterial: storyResourceImpactMaterial(id, kind), rarity: index < 2 ? 'common' as const : 'uncommon' as const, iconPath: `/story/resources/icons/universal/${id}.png`, nodeFrames: nodeFrames('universal', id) })),
-  ...STORY_BIOME_IDS.flatMap((biomeId) => BIOME_MATERIALS[biomeId].map(([id, label, kind, color], index) => ({ id, label, kind, color, biomeId, impactMaterial: storyResourceImpactMaterial(id, kind, biomeId), rarity: RARITIES[index], iconPath: `/story/resources/icons/${biomeId}/${id}.png`, nodeFrames: nodeFrames(biomeId, id) })))
+  ...UNIVERSAL.map(([id, label, kind, color, pixelBottom], index) => ({ id, label, kind, color, impactMaterial: storyResourceImpactMaterial(id, kind), footAnchorY: normalizedFootAnchorY(pixelBottom), rarity: index < 2 ? 'common' as const : 'uncommon' as const, iconPath: `/story/resources/icons/universal/${id}.png`, nodeFrames: nodeFrames('universal', id) })),
+  ...STORY_BIOME_IDS.flatMap((biomeId) => BIOME_MATERIALS[biomeId].map(([id, label, kind, color, pixelBottom], index) => ({ id, label, kind, color, biomeId, impactMaterial: storyResourceImpactMaterial(id, kind, biomeId), footAnchorY: normalizedFootAnchorY(pixelBottom), rarity: RARITIES[index], iconPath: `/story/resources/icons/${biomeId}/${id}.png`, nodeFrames: nodeFrames(biomeId, id) })))
 ];
 
 export const STORY_RESOURCE_BY_ID = Object.fromEntries(STORY_RESOURCES.map((resource) => [resource.id, resource])) as Record<string, StoryResourceDefinition>;

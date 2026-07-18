@@ -20,6 +20,8 @@ from typing import Any
 
 from PIL import Image, ImageDraw
 
+from story_sprite_alpha import clean_transparent_sprite
+
 
 ROOT = Path("public/story/enemies/kore-enemies-v1")
 RUNTIME_MANIFEST = Path("src/story/storyEnemyManifest.json")
@@ -318,13 +320,14 @@ def duration_for(animation: str) -> int:
     return 88
 
 
-def verify_manifest() -> None:
+def verify_manifest(existing_manifest_only: bool = False) -> None:
     manifest_path = ROOT / "manifest.json"
     payload = json.loads(manifest_path.read_text())
     if json.loads(RUNTIME_MANIFEST.read_text()) != payload:
         raise SystemExit("Runtime enemy manifest is missing or stale")
-    if len(payload.get("enemies", [])) != 56:
-        raise SystemExit(f"Expected 56 enemies, found {len(payload.get('enemies', []))}")
+    expected = len(payload.get("enemies", [])) if existing_manifest_only else len(ENEMIES)
+    if len(payload.get("enemies", [])) != expected:
+        raise SystemExit(f"Expected {expected} enemies, found {len(payload.get('enemies', []))}")
     ids = [enemy["id"] for enemy in payload["enemies"]]
     if len(set(ids)) != len(ids):
         raise SystemExit("Enemy manifest contains duplicate IDs")
@@ -351,15 +354,18 @@ def verify_manifest() -> None:
                 bounds = image.convert("RGBA").getchannel("A").point(lambda value: 255 if value > 16 else 0).getbbox()
                 if image.mode != "RGBA" or image.size != FRAME_SIZE or not bounds or bounds[3] > BASELINE:
                     raise SystemExit(f"Enemy frame alpha/baseline mismatch: {path}")
-    print("Verified 56 enemy sprite manifests")
+                if set(image.convert("RGBA").getchannel("A").get_flattened_data()) - {0, 255}:
+                    raise SystemExit(f"Enemy alpha is not binary: {path}")
+    print(f"Verified {expected} enemy sprite manifests")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
+    parser.add_argument("--existing-manifest-only", action="store_true")
     parser.add_argument("--verify", action="store_true")
     args = parser.parse_args()
     if args.verify:
-        verify_manifest()
+        verify_manifest(existing_manifest_only=args.existing_manifest_only)
         return
     ROOT.mkdir(parents=True, exist_ok=True)
     (ROOT / "sources").mkdir(exist_ok=True)
@@ -377,7 +383,11 @@ def main() -> None:
     built_frames: dict[str, dict[str, list[Image.Image]]] = {}
     generated_loaded: dict[tuple[str, int], Image.Image] = {}
     manifest: dict[str, Any] = {"version": 1, "style": "kore-enemies-v1", "frameSize": {"width": FRAME_SIZE[0], "height": FRAME_SIZE[1], "baseline": BASELINE}, "enemies": []}
-    for enemy_id, definition in ENEMIES.items():
+    selected_enemies = ENEMIES
+    if args.existing_manifest_only and RUNTIME_MANIFEST.is_file():
+        existing_ids = {entry["id"] for entry in json.loads(RUNTIME_MANIFEST.read_text()).get("enemies", [])}
+        selected_enemies = {enemy_id: definition for enemy_id, definition in ENEMIES.items() if enemy_id in existing_ids}
+    for enemy_id, definition in selected_enemies.items():
         enemy_root = ROOT / "sets" / enemy_id
         if enemy_root.exists():
             shutil.rmtree(enemy_root)
@@ -411,6 +421,7 @@ def main() -> None:
                         cleaned = images[-1].crop(images[-1].getbbox())
                     else:
                         raise ValueError(f"{enemy_id}/{animation} frame {index + 1} sheet {sheet} row {row}: {error}") from error
+                cleaned = clean_transparent_sprite(cleaned)
                 normalized, bounds = normalize(cleaned)
                 frame_path = animation_root / f"{index + 1:02d}.png"
                 normalized.save(frame_path, optimize=True)
@@ -478,13 +489,18 @@ def main() -> None:
         manifest["enemies"].append({"id": enemy_id, "label": definition["label"], "tier": definition["tier"], "facing": "right", "sources": sources, "animations": animation_entries})
 
     thumb = 72
-    sheet = Image.new("RGBA", (thumb * 8, thumb * len(ENEMIES)), (12, 17, 27, 255))
+    sheet = Image.new("RGBA", (thumb * 8, thumb * len(selected_enemies)), (12, 17, 27, 255))
     draw = ImageDraw.Draw(sheet)
-    for row, (enemy_id, definition) in enumerate(ENEMIES.items()):
+    for row, (enemy_id, definition) in enumerate(selected_enemies.items()):
         animations = built_frames[enemy_id]
         sequence = ["idle", "walk", "run", "attack-1", "attack-2", "attack-3", "hurt", "dead"]
         for column, animation in enumerate(sequence):
-            frames = animations.get(animation) or animations.get("idle") or []
+            # New two-sheet contracts call their third attack `special`; older
+            # supplied sheets generally call the equivalent row `attack-3`.
+            frames = animations.get(animation)
+            if animation == "attack-3":
+                frames = frames or animations.get("special")
+            frames = frames or animations.get("idle") or []
             if frames:
                 preview = frames[min(len(frames) - 1, len(frames) // 2)].resize((thumb, thumb), Image.Resampling.NEAREST)
                 sheet.alpha_composite(preview, (column * thumb, row * thumb))
@@ -494,7 +510,7 @@ def main() -> None:
     manifest["contactSheet"] = {"path": "/story/enemies/kore-enemies-v1/contact-sheet.png", "sha256": hashlib.sha256(contact_sheet_path.read_bytes()).hexdigest()}
     RUNTIME_MANIFEST.write_text(json.dumps(manifest, indent=2) + "\n")
     (ROOT / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    print(f"Built {len(ENEMIES)} Play-mode enemies and {sum(len(a['frames']) for e in manifest['enemies'] for a in e['animations'])} frames")
+    print(f"Built {len(selected_enemies)} Play-mode enemies and {sum(len(a['frames']) for e in manifest['enemies'] for a in e['animations'])} frames")
 
 
 if __name__ == "__main__":

@@ -11,15 +11,21 @@ function unit(seed: string) {
   return hash(seed) / 0xffffffff;
 }
 
-function nodeSize(kind: StoryResourceNodeDefinition['kind']): [number, number] {
-  if (kind === 'tree') return [2.6, 3.6];
-  if (kind === 'berry') return [1.7, 1.55];
-  if (kind === 'plant') return [1.35, 1.25];
-  return [1.8, 1.55];
+const RESOURCE_FOOT_CONTACT_SINK_Y = 0.035;
+
+function nodeSize(kind: StoryResourceNodeDefinition['kind'], emphasized: boolean): [number, number] {
+  const size: [number, number] = kind === 'tree'
+    ? [3.25, 4.5]
+    : kind === 'berry'
+      ? [2.25, 2.05]
+      : kind === 'plant'
+        ? [1.9, 1.8]
+        : [2.4, 2.05];
+  return emphasized ? [size[0] * 1.18, size[1] * 1.18] : size;
 }
 
-function groundY(kind: StoryResourceNodeDefinition['kind']) {
-  return kind === 'tree' ? 1.8 : kind === 'berry' ? 0.78 : kind === 'plant' ? 0.62 : 0.72;
+export function groundedResourceNodeCenterY(height: number, footAnchorY: number) {
+  return height * (footAnchorY - 0.5) - RESOURCE_FOOT_CONTACT_SINK_Y;
 }
 
 function awayFromReserved(x: number, portals: StoryPortalDefinition[], npcs: StoryNpcDefinition[], hazards: StoryHazardDefinition[], minX: number, maxX: number) {
@@ -44,13 +50,14 @@ function makeNode(id: string, resourceId: string, x: number, major: boolean, sec
   const resource = STORY_RESOURCE_BY_ID[resourceId];
   const legendary = resource.rarity === 'legendary';
   const majorDeposit = major && (resource.kind === 'ore' || resource.kind === 'rock');
+  const size = nodeSize(resource.kind, majorDeposit || legendary);
   return {
     id,
     resourceId,
     kind: resource.kind,
     rarity: resource.rarity,
-    position: [x, groundY(resource.kind), majorDeposit || legendary ? 0.35 : -0.35],
-    size: nodeSize(resource.kind),
+    position: [x, groundedResourceNodeCenterY(size[1], resource.footAnchorY), majorDeposit || legendary ? 0.35 : -0.35],
+    size,
     toughness: legendary ? 8 : majorDeposit ? 6 : resource.kind === 'plant' || resource.kind === 'berry' ? 1 : 3,
     respawn: legendary ? 'daily' : majorDeposit ? 'timed' : 'visit',
     major: legendary || majorDeposit,

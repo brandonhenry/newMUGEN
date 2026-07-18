@@ -11,6 +11,15 @@ export const STORY_NORMAL_DOOR_DISPLAY_SIZE = [5.8, 5.8] as const;
 export const STORY_HERO_DOOR_DISPLAY_SIZE = [5.4, 7.1] as const;
 export const STORY_SPECIAL_DOOR_DISPLAY_SIZE = [5.3, 7] as const;
 export const STORY_MODE_DOOR_DISPLAY_SIZE = [3.75, 5.2] as const;
+export const STORY_CENTRAL_DOOR_SCALE = 0.8;
+export const STORY_CENTRAL_FLOOR_VISIBLE_TOP_Y = -0.5;
+export const STORY_MODE_DOOR_VISIBLE_BOTTOM_INSET_RATIO = 3 / 145;
+
+export function storyCentralModeDoorCenterY(portalY: number) {
+  const displayHeight = STORY_MODE_DOOR_DISPLAY_SIZE[1] * STORY_CENTRAL_DOOR_SCALE;
+  const visibleBottomInset = displayHeight * STORY_MODE_DOOR_VISIBLE_BOTTOM_INSET_RATIO;
+  return STORY_CENTRAL_FLOOR_VISIBLE_TOP_Y + displayHeight / 2 - portalY - visibleBottomInset;
+}
 
 export type StoryBiomeId = Exclude<StoryAdventureWorldId, 'world-route'>;
 export type StoryBiomeDoorTier = 'normal' | 'biome-gate' | 'depth' | 'sanctuary';

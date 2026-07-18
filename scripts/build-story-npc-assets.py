@@ -4,12 +4,15 @@
 from __future__ import annotations
 
 import argparse
+import gc
 import hashlib
 import json
 from dataclasses import dataclass
 from pathlib import Path
 
 from PIL import Image, ImageDraw
+
+from story_sprite_alpha import clean_transparent_sprite
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -196,7 +199,7 @@ def normalized_frame(sheet: Image.Image, centers: list[float], row: int, index: 
     left, right = cell_bounds(centers, index, width)
     top = round(row * height / 5)
     bottom = round((row + 1) * height / 5)
-    frame = sheet.crop((left, top, right, bottom))
+    frame = clean_transparent_sprite(sheet.crop((left, top, right, bottom)))
     box = frame.getchannel("A").point(lambda pixel: 255 if pixel > 16 else 0).getbbox()
     if not box:
         raise RuntimeError(f"Empty frame row={row} index={index}")
@@ -331,13 +334,14 @@ def build_asset(asset: NpcAsset) -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--allow-partial", action="store_true")
+    parser.add_argument("--existing-manifest-only", action="store_true")
     parser.add_argument("--verify", action="store_true")
     args = parser.parse_args()
     if args.verify:
         payload = json.loads(MANIFEST_PATH.read_text())
         if not RUNTIME_MANIFEST_PATH.is_file() or json.loads(RUNTIME_MANIFEST_PATH.read_text()) != payload:
             raise SystemExit("Runtime NPC manifest is missing or stale")
-        expected = len(ASSETS)
+        expected = len(payload.get("npcs", [])) if args.existing_manifest_only else len(ASSETS)
         if len(payload.get("npcs", [])) != expected:
             raise SystemExit(f"Expected {expected} NPC manifests, found {len(payload.get('npcs', []))}")
         for entry in payload["npcs"]:
@@ -358,6 +362,8 @@ def main() -> None:
                     alpha_box = frame.getchannel("A").point(lambda pixel: 255 if pixel > 16 else 0).getbbox()
                     if frame.size != (192, 192) or not alpha_box or not 186 <= alpha_box[3] <= 188:
                         raise SystemExit(f"NPC alpha/baseline mismatch: {public_path}")
+                    if set(frame.getchannel("A").get_flattened_data()) - {0, 255}:
+                        raise SystemExit(f"NPC alpha is not binary: {public_path}")
             bounds = entry.get("referenceContentBounds")
             if not isinstance(bounds, list) or len(bounds) != 4 or bounds[2] <= bounds[0] or bounds[3] <= bounds[1]:
                 raise SystemExit(f"NPC reference bounds missing: {entry['id']}")
@@ -369,9 +375,15 @@ def main() -> None:
         return
     entries = []
     missing = []
-    for asset in ASSETS:
+    selected_assets = ASSETS
+    if args.existing_manifest_only and RUNTIME_MANIFEST_PATH.is_file():
+        existing_ids = {entry["id"] for entry in json.loads(RUNTIME_MANIFEST_PATH.read_text()).get("npcs", [])}
+        selected_assets = tuple(asset for asset in ASSETS if asset.id in existing_ids)
+    for asset in selected_assets:
         try:
+            print(f"Building NPC {asset.id}", flush=True)
             entries.append(build_asset(asset))
+            gc.collect()
         except FileNotFoundError:
             missing.append(asset.id)
     if missing and not args.allow_partial:

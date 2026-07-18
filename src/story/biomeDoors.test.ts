@@ -2,14 +2,18 @@ import { describe, expect, it } from 'vitest';
 import {
   STORY_BIOME_DOOR_ATLAS_SIZE,
   STORY_BIOME_DOOR_GROUND_SINK_Y,
+  STORY_CENTRAL_DOOR_SCALE,
+  STORY_CENTRAL_FLOOR_VISIBLE_TOP_Y,
   STORY_DEPTH_ENTRANCE_ASSET,
   STORY_DOOR_CHARACTER_HEIGHT_REFERENCE,
   STORY_HERO_DOOR_DISPLAY_SIZE,
   STORY_MODE_DOOR_DISPLAY_SIZE,
+  STORY_MODE_DOOR_VISIBLE_BOTTOM_INSET_RATIO,
   STORY_NORMAL_BIOME_DOOR_ASSET,
   STORY_NORMAL_DOOR_DISPLAY_SIZE,
   STORY_SANCTUARY_ENTRANCE_ASSET,
   STORY_SPECIAL_DOOR_DISPLAY_SIZE,
+  storyCentralModeDoorCenterY,
   storyBiomeDoorFrame,
   storyPortalDoorFrame
 } from './biomeDoors';
@@ -68,5 +72,21 @@ describe('biome entrance library', () => {
       expect(storyPortalDoorFrame(portal(biome, `surface-map:${biome}-field-a`))?.displaySize).toEqual(STORY_NORMAL_DOOR_DISPLAY_SIZE);
       expect(storyPortalDoorFrame(portal(biome, `depth-entry:${biome}-depth`))?.displaySize).toEqual(STORY_SPECIAL_DOOR_DISPLAY_SIZE);
     }
+  });
+
+  it('shrinks only Central hub doorways while keeping them character-sized', () => {
+    const centralDoorHeight = STORY_MODE_DOOR_DISPLAY_SIZE[1] * STORY_CENTRAL_DOOR_SCALE;
+    expect(STORY_CENTRAL_DOOR_SCALE).toBeLessThan(1);
+    expect(centralDoorHeight).toBeGreaterThan(STORY_DOOR_CHARACTER_HEIGHT_REFERENCE);
+  });
+
+  it('grounds the visible bottom of Central mode doors on the floor', () => {
+    const portalY = 1.7;
+    const displayHeight = STORY_MODE_DOOR_DISPLAY_SIZE[1] * STORY_CENTRAL_DOOR_SCALE;
+    const visibleBottom = portalY
+      + storyCentralModeDoorCenterY(portalY)
+      - displayHeight / 2
+      + displayHeight * STORY_MODE_DOOR_VISIBLE_BOTTOM_INSET_RATIO;
+    expect(visibleBottom).toBeCloseTo(STORY_CENTRAL_FLOOR_VISIBLE_TOP_Y, 6);
   });
 });

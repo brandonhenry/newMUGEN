@@ -66,6 +66,17 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def output_metadata(path: Path) -> dict[str, object]:
+    image = Image.open(path).convert("RGBA")
+    alpha_bounds = image.getchannel("A").getbbox()
+    return {
+        "path": str(path.relative_to(ROOT)),
+        "dimensions": list(image.size),
+        "alphaBounds": list(alpha_bounds) if alpha_bounds else None,
+        "sha256": sha256(path),
+    }
+
+
 def bounds(index: int, count: int, length: int) -> tuple[int, int]:
     return round(index * length / count), round((index + 1) * length / count)
 
@@ -230,7 +241,7 @@ def main() -> None:
         "normalization": {"filter": "nearest-neighbor", "nodeFrame": [256, 256], "iconFrame": [256, 256], "workbench": [512, 512]},
         "references": [{"path": str(path.relative_to(ROOT)), "sha256": sha256(path)} for path in REFERENCES],
         "sources": sources,
-        "outputs": [{"path": str(path.relative_to(ROOT)), "dimensions": list(Image.open(path).size), "sha256": sha256(path)} for path in sorted(outputs)],
+        "outputs": [output_metadata(path) for path in sorted(outputs)],
     }
     (PUBLIC / "asset-manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     print(f"Built {len(outputs)} runtime assets and {len(NODE_IDS) * 2} contact sheets.")
