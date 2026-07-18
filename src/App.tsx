@@ -8427,7 +8427,7 @@ function MenuScreen({
   }, [clearMenuIdleTimer, menuChromeHidden, scheduleMenuScreensaver]);
 
   const menuItems: Array<{ label: string; action?: () => void; disabled?: boolean }> = [
-    { label: 'Play', action: onPlay },
+    { label: 'Story', action: onPlay },
     { label: 'Arcade', action: onArcade },
     { label: 'Versus', action: onVersus },
     { label: 'Training', action: onTraining },
