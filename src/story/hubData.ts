@@ -40,7 +40,14 @@ function sanitizePlatforms(value: unknown): StoryPlatformDefinition[] {
     if (typeof record.id !== 'string' || ids.has(record.id) || !finiteTuple(record.position) || !finiteTuple(record.size)) return [];
     if (record.size[0] <= 0 || record.size[1] <= 0) return [];
     ids.add(record.id);
-    return [{ id: record.id, position: record.position, size: record.size, ...(record.oneWay ? { oneWay: true } : {}) }];
+    return [{
+      id: record.id,
+      position: record.position,
+      size: record.size,
+      ...(record.oneWay ? { oneWay: true } : {}),
+      ...(['solid', 'one-way'].includes(record.collision ?? '') ? { collision: record.collision } : {}),
+      ...(['ground', 'ledge', 'wall', 'ceiling'].includes(record.terrainRole ?? '') ? { terrainRole: record.terrainRole } : {})
+    }];
   });
 }
 

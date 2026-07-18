@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { sanitizeAdventureProgress } from './adventureProgress';
 import {
+  STORY_AREA_ENTRY_INVULNERABILITY_MS,
   STORY_DAMAGE_POP_MS,
   STORY_DAMAGE_POP_REDUCED_MS,
   STORY_ATTACK_INPUT_BUFFER_SECONDS,
@@ -18,6 +19,7 @@ import {
   resolveAdventurePlayerAttack,
   resolveAdventurePlayerDamage,
   resolveStoryAttackInput,
+  storyAreaEntryInvulnerableUntil,
   stepAdventureProjectile,
   storyPlayerProjectileHits
 } from './adventureCombat';
@@ -25,6 +27,10 @@ import { STORY_AVATAR_GROUNDING_OFFSET_Y, storyAvatarPlaneHeight } from './actor
 import { getStorySpriteAnimation, getStorySpriteProjectile, STORY_SPRITE_MANIFEST } from './streetAvatarCatalog';
 
 describe('story adventure combat math', () => {
+  it('grants a full damage grace window when a new area mounts', () => {
+    expect(storyAreaEntryInvulnerableUntil(4_000)).toBe(4_000 + STORY_AREA_ENTRY_INVULNERABILITY_MS);
+  });
+
   it('scales distinct enemy archetypes to the player level', () => {
     const ground = getAdventureEnemyStats('ground', 1);
     const ranged = getAdventureEnemyStats('ranged', 100);

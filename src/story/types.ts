@@ -567,7 +567,7 @@ export type StoryFloorPressureState = {
 };
 
 export type StoryGeneratedFloor = {
-  version: 3;
+  version: 3 | 4;
   worldId: Exclude<StoryAdventureWorldId, 'world-route'>;
   seed: string;
   floorNumber: number;
@@ -576,7 +576,7 @@ export type StoryGeneratedFloor = {
   boss: boolean;
   usedFallback: boolean;
   validationFailures: string[];
-  grid: { columns: 4; rows: 3 };
+  grid: { columns: number; rows: number };
   bounds: { minX: number; maxX: number; floorY: number };
   spawn: [number, number];
   exit: [number, number];
@@ -592,6 +592,7 @@ export type StoryGeneratedFloor = {
   event: StoryFloorEvent | null;
   parTimeSeconds: number;
   bossEnemyId?: StoryEnemyId;
+  levelMeta?: StoryHubDefinition['levelMeta'];
 };
 
 export type StoryRunRewardLedger = {
@@ -605,7 +606,8 @@ export type StoryRunRewardLedger = {
 };
 
 export type StoryEndlessRunState = {
-  version: 3;
+  version: 3 | 4;
+  generationVersion?: 3 | 4;
   worldId: Exclude<StoryAdventureWorldId, 'world-route'>;
   seed: string;
   floorNumber: number;
@@ -750,6 +752,7 @@ export type StoryAdventureMapDefinition = {
   musicPhase: AdventureMusicPhase;
   heroLandmarkId: string;
   resourceNodes: StoryResourceNodeDefinition[];
+  levelMeta?: StoryHubDefinition['levelMeta'];
 };
 
 export type AdventureMusicContext = {
@@ -786,6 +789,8 @@ export type StoryPlatformDefinition = {
   position: [number, number];
   size: [number, number];
   oneWay?: boolean;
+  collision?: 'solid' | 'one-way';
+  terrainRole?: 'ground' | 'ledge' | 'wall' | 'ceiling';
 };
 
 export type StoryHubDefinition = {
@@ -813,4 +818,13 @@ export type StoryHubDefinition = {
   npcs?: StoryNpcDefinition[];
   musicPhase?: AdventureMusicPhase;
   resourceNodes?: StoryResourceNodeDefinition[];
+  levelMeta?: {
+    blueprintId: string;
+    blueprintVersion: 1;
+    generationVersion: number;
+    seed: string;
+    chunkIds: string[];
+    witnessRoute: Array<[number, number]>;
+    assetResolution: Array<{ slotId: string; assetId: string }>;
+  };
 };

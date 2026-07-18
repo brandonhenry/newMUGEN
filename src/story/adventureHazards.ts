@@ -1,4 +1,6 @@
-import type { StoryAdventureHazardKind } from './types';
+import type { StoryAdventureHazardKind, StoryHazardDefinition } from './types';
+
+export const STORY_HAZARD_ENTRY_CLEARANCE = 8;
 
 export type StoryHazardSpriteDefinition = {
   path: string;
@@ -18,4 +20,24 @@ export const STORY_HAZARD_SPRITES = {
 
 export function storyHazardDealsContactDamage(kind: StoryAdventureHazardKind) {
   return Object.prototype.hasOwnProperty.call(STORY_HAZARD_SPRITES, kind);
+}
+
+export function storyHazardHasVisibleDamageSprite(hazard: StoryHazardDefinition) {
+  if (hazard.damage <= 0) return true;
+  const sprite = STORY_HAZARD_SPRITES[hazard.kind as keyof typeof STORY_HAZARD_SPRITES];
+  return Boolean(sprite?.path.toLowerCase().endsWith('.png'));
+}
+
+export function storyHazardIsClearOfEntry(hazard: StoryHazardDefinition, entryX: number, entryHalfWidth = 0, clearance = STORY_HAZARD_ENTRY_CLEARANCE) {
+  const entryMinX = entryX - Math.max(0, entryHalfWidth);
+  const entryMaxX = entryX + Math.max(0, entryHalfWidth);
+  const [hazardMinX, hazardMaxX] = hazard.bounds;
+  if (hazardMaxX < entryMinX) return entryMinX - hazardMaxX >= clearance;
+  if (hazardMinX > entryMaxX) return hazardMinX - entryMaxX >= clearance;
+  return false;
+}
+
+export function storyHazardContactDamageReady(nowMs: number, contactStartedAtMs: number, telegraphMs: number, cooldownUntilMs = 0) {
+  const warningDuration = Math.max(0, Number.isFinite(telegraphMs) ? telegraphMs : 0);
+  return nowMs >= contactStartedAtMs + warningDuration && nowMs >= cooldownUntilMs;
 }

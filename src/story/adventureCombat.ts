@@ -15,8 +15,14 @@ export const STORY_ATTACK_TOP_OFFSET = 2.2;
 export const STORY_ATTACK_VISUAL_SYNC_DELAY_MS = 24;
 export const STORY_ATTACK_INPUT_BUFFER_SECONDS = 0.3;
 export const STORY_PLAYER_INVULNERABILITY_MS = 650;
+export const STORY_AREA_ENTRY_INVULNERABILITY_MS = 1_500;
 export const STORY_DAMAGE_POP_MS = 760;
 export const STORY_DAMAGE_POP_REDUCED_MS = 260;
+
+export function storyAreaEntryInvulnerableUntil(nowMs: number) {
+  const now = Number.isFinite(nowMs) ? nowMs : 0;
+  return now + STORY_AREA_ENTRY_INVULNERABILITY_MS;
+}
 
 export type StoryAttackProfile = {
   damageMultiplier: number;

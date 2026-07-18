@@ -10,13 +10,13 @@ import { addFriendEntry, isFriend, readMatchHistory } from '../lib/socialHistory
 import type { InputFrame } from '../types';
 import { STORY_ADVENTURE_ASSET_PATHS, storyWorldAssetPath } from './adventureAssets';
 import { emitAdventureAudioEvent } from './adventureAudio';
-import { STORY_HAZARD_SPRITES, storyHazardDealsContactDamage } from './adventureHazards';
-import { STORY_ATTACK_VISUAL_SYNC_DELAY_MS, advanceStoryAttackInputBuffer, adventureAttackHits, canAdventureEnemyDamagePlayer, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureAttackFrameHitbox, getAdventureEnemyStats, getStoryAttackDurationMs, getStoryProjectileSpawnPosition, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, resolveStoryAttackInput, stepAdventureProjectile, storyPlayerProjectileHits, type AdventureDamageFeedback, type StoryBufferedAttackInput } from './adventureCombat';
+import { STORY_HAZARD_SPRITES, storyHazardContactDamageReady, storyHazardDealsContactDamage } from './adventureHazards';
+import { STORY_ATTACK_VISUAL_SYNC_DELAY_MS, advanceStoryAttackInputBuffer, adventureAttackHits, canAdventureEnemyDamagePlayer, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureAttackFrameHitbox, getAdventureEnemyStats, getStoryAttackDurationMs, getStoryProjectileSpawnPosition, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, resolveStoryAttackInput, stepAdventureProjectile, storyAreaEntryInvulnerableUntil, storyPlayerProjectileHits, type AdventureDamageFeedback, type StoryBufferedAttackInput } from './adventureCombat';
 import { makeStoryEncounterProgress, recordChallengerDefeat, recordFixedChallengerDefeat, recordRegularDefeat, rerollStoryRegularSpawns, resetActiveChallenger, storyEncounterMovementLock, type StoryEncounterProgress } from './adventureEncounters';
 import { STORY_ADVENTURE_COMBAT_STAT_KEYS, STORY_ADVENTURE_PARTY_SIZE_CAP, STORY_ADVENTURE_STAT_CAP, acknowledgeAdventurePartyFeatureReveal, addAdventureMaterial, adventureResourceYieldModifiers, allocateAdventureStat, applyAdventureEnemyDefeat, awardMountMastery, bankAdventureRunLedger, beginAdventureEndlessRun, beginAdventureVisit, canRespecAdventureStats, claimAdventureCache, collectAdventureRelic, consumeAdventureItem, craftAdventureRecipe, depleteAdventureResourceNode, discoverAdventureLandmark, discoverAdventureSurfaceMap, discoverAdventureVista, discoverAdventureWaystone, equipAdventureArmor, experienceToNextLevel, getAdventureDerivedStats, getAdventurePartySizeProgress, isAdventureResourceNodeAvailable, pinAdventureDaily, readAdventureProgress, recordAdventureBestDepth, respecAdventureStats, restoreAdventureShortcut, unlockAdventureEndlessBiome, unlockAdventureMasteryRecipe, unlockAdventureMount, unlockAdventureSpecialistRecipes, upgradeAdventureWaystone, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_REGION_LABELS, STORY_WORLDS, isStoryAdventureRegionId, isStoryAdventureWorldId, isStoryWorldId } from './adventureWorlds';
 import { STORY_BREATH_DRAIN_PER_SECOND, STORY_BREATH_REFILL_PER_SECOND, STORY_MAX_BREATH, STORY_MOUNTS, STORY_WORLD_MOUNT, storyPartyEnemyHealthScale, type StoryPartyAiActor, type StoryPartyInstance, type StoryPartyInvite } from './adventureExploration';
-import { createAdventureRunSeed, emptyStoryRunLedger, generateAdventureFloor, storyBoonChoices, storyEndlessHash, storyEndlessPressure, storyEndlessRewardScale } from './adventureEndless';
+import { STORY_ENDLESS_GENERATION_VERSION, createAdventureRunSeed, emptyStoryRunLedger, generateAdventureFloor, storyBoonChoices, storyEndlessHash, storyEndlessPressure, storyEndlessRewardScale } from './adventureEndless';
 import { getStoryEnemyAnimation, getStoryEnemyDefinition, storyEnemyPlaneSize, STORY_CHALLENGER_IDS, STORY_ENEMY_RUNTIME_SCALE, type StoryEnemyAttackDefinition } from './enemyCatalog';
 import { STORY_GROUNDED_ACTOR_CENTER_Y, storyAvatarGroundingOffsetForWorld, storyGroundAnchoredPlaneCenterY, storyScaledGroundAnchorOffsetY } from './actorGrounding';
 import { STORY_CENTRAL_DOOR_SCALE, STORY_MODE_DOOR_DISPLAY_SIZE, storyCentralModeDoorCenterY, storyPortalDoorFrame, type StoryBiomeDoorFrame } from './biomeDoors';
@@ -24,18 +24,20 @@ import { createStoryDepthEnvironment } from './depthEnvironment';
 import { connectStoryHubMultiplayer, readOrCreateStoryHubGuestIdentity, readStoryHubOnlinePreference, STORY_HUB_CHALLENGE_TIMEOUT_MS, writeStoryHubOnlinePreference, type StoryHubMultiplayerSession } from './hubMultiplayer';
 import { KORE_CENTRAL_HUB } from './hubData';
 import { storyPlatformSurfacePlacement } from './platformGrounding';
+import { STORY_MOVEMENT_PROFILE } from './movementProfile';
 import { getStorySpriteProjectile, STORY_ATTACK_POSES } from './streetAvatarCatalog';
 import { StoryAvatarRig, type StoryAvatarPose } from './StoryAvatarRig';
 import { acceptStoryPartyInvite, advanceStoryPartyEndlessFloor, bankStoryPartyEndlessChapter, createStoryParty, endStoryPartyEndlessRun, heartbeatStoryParty, inviteToStoryParty, leaveStoryParty, listStoryPartyInvites, resolveStoryPartyEndlessEvent, selectStoryPartyEndlessBoon, startStoryPartyEndlessRun, transferStoryPartyLeadership, updateStoryPartyRoom, type StoryPartyRegistration } from './storyParty';
 import { unseenStoryPartyRewards, type StoryPartyAuthoritativeSnapshot, type StoryPartyRewardEvent } from './storyPartyProtocol';
 import { createStoryPartyTransport, type StoryPartyTransport } from './storyPartyTransport';
-import { createStoryWorldProps } from './worldEnvironments';
+import { resolveStoryLevelAsset } from './levelAssets';
 import { createAdventureSurfaceHub, firstStoryAdventureSurfaceMap, getStoryAdventureSurfaceMap } from './adventureSurfaceMaps';
 import { STORY_NPC_POPUP_ANCHOR_Y, STORY_NPC_SPRITES, storyNpcFootContactSinkY, storyNpcPlaneSize, storyNpcWatchFacing } from './adventureNpcs';
 import { adventureUtcDate, getStoryDailyActivities } from './adventureObjectives';
 import { STORY_ARMOR_SET_BONUSES, STORY_BIOME_IDS, STORY_RECIPE_BY_ID, STORY_RECIPES, STORY_RESOURCES, canCraftRecipe, storyRecipeStationLabel, type StoryBiomeId, type StoryCraftingContext } from './adventureCrafting';
 import { adventureAttackCanHitResource, adventureResourceHitStrength, createEndlessFloorResourceNodes, resourceYield } from './adventureResources';
 import { AdventureStatPointNotification, type AdventureStatPointNotice } from './AdventureStatPointNotification';
+import { LevelLabOverlay, storyLevelLabEnabled } from './LevelLabOverlay';
 import { getEquippedStoryAvatarSlots, normalizeStoryAvatarRoster, setActiveStoryAvatar } from './profile';
 import type { AdventureMusicContext, AdventureMusicTrackDefinition, HubDestination, StoryAttackInput, StoryAvatarSet, StoryEndlessRunState, StoryEnemyDefeatEvent, StoryEnemyId, StoryEnemySpawnDefinition, StoryEnemyTier, StoryGeneratedFloor, StoryHazardDefinition, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryMountDefinition, StoryMountId, StoryNpcDefinition, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StoryResourceNodeDefinition, StoryRunBoonId, StorySpriteProjectileDefinition, StoryWorldBackdropLayerDefinition, StoryWorldId, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
 
@@ -706,13 +708,21 @@ function SinkingSandHazardVisual({ hazard }: { hazard: StoryHazardDefinition }) 
 
 function AdventureHazards({ hub, progress, playerPosition, onPlayerDamage }: { hub: StoryHubDefinition; progress: StoryAdventureProgressV1; playerPosition: MutableRefObject<THREE.Vector3>; onPlayerDamage: (damage: number, sourceX: number) => void }) {
   const cooldowns = useRef<Record<string, number>>({});
+  const contactStartedAt = useRef<Record<string, number>>({});
   const stats = useMemo(() => getAdventureDerivedStats(progress), [progress]);
   useFrame(() => {
     const now = performance.now();
     for (const hazard of hub.hazards ?? []) {
       if (!storyHazardDealsContactDamage(hazard.kind) || hazard.damage <= 0) continue;
       const [minX, maxX, minY, maxY] = hazard.bounds;
-      if (playerPosition.current.x < minX || playerPosition.current.x > maxX || playerPosition.current.y < minY || playerPosition.current.y > maxY || now < (cooldowns.current[hazard.id] ?? 0)) continue;
+      const touching = playerPosition.current.x >= minX && playerPosition.current.x <= maxX && playerPosition.current.y >= minY && playerPosition.current.y <= maxY;
+      if (!touching) {
+        delete contactStartedAt.current[hazard.id];
+        continue;
+      }
+      const enteredAt = contactStartedAt.current[hazard.id] ?? now;
+      contactStartedAt.current[hazard.id] = enteredAt;
+      if (!storyHazardContactDamageReady(now, enteredAt, hazard.telegraphMs, cooldowns.current[hazard.id] ?? 0)) continue;
       cooldowns.current[hazard.id] = now + 900;
       const protection = hazard.kind === 'lava' ? stats.lavaDamageMultiplier : hazard.kind === 'icicle' ? stats.icicleDamageMultiplier : 1;
       onPlayerDamage(hazard.damage * protection, (minX + maxX) / 2);
@@ -1661,25 +1671,25 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
       jumpsUsed.current = 0;
       jumpBufferedUntil.current = 0;
     } else if (droppingThrough) {
-      dropThroughUntil.current = now + 0.28;
+      dropThroughUntil.current = now + STORY_MOVEMENT_PROFILE.dropThroughSeconds;
       groundedPlatform.current = null;
       groundedUntil.current = 0;
       position.current.y -= 0.12;
       velocityY.current = -2.2;
       jumpBufferedUntil.current = 0;
     } else if (jumpEdge && groundedUntil.current < now && jumpsUsed.current < 2) {
-      velocityY.current = 11.4 * derivedStats.jumpMultiplier * (mounted && mount ? mount.jumpMultiplier * (1 + mountMasteryRank * 0.008) : 1);
-      jumpsUsed.current = 2;
+      velocityY.current = STORY_MOVEMENT_PROFILE.jumpVelocity * derivedStats.jumpMultiplier * (mounted && mount ? mount.jumpMultiplier * (1 + mountMasteryRank * 0.008) : 1);
+      jumpsUsed.current = STORY_MOVEMENT_PROFILE.maximumJumps;
       groundedPlatform.current = null;
       groundedUntil.current = 0;
       jumpBufferedUntil.current = 0;
     } else if (jumpEdge) {
-      jumpBufferedUntil.current = now + 0.12;
+      jumpBufferedUntil.current = now + STORY_MOVEMENT_PROFILE.jumpBufferSeconds;
     }
 
     const sprinting = horizontal !== 0 && input.block;
     if (!swimming && jumpBufferedUntil.current >= now && groundedUntil.current >= now) {
-      velocityY.current = 7.8 * derivedStats.jumpMultiplier * (mounted && mount ? mount.jumpMultiplier * (1 + mountMasteryRank * 0.008) : 1);
+      velocityY.current = STORY_MOVEMENT_PROFILE.bufferedGroundJumpVelocity * derivedStats.jumpMultiplier * (mounted && mount ? mount.jumpMultiplier * (1 + mountMasteryRank * 0.008) : 1);
       jumpsUsed.current = 1;
       groundedPlatform.current = null;
       groundedUntil.current = 0;
@@ -1688,13 +1698,13 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
     const assistedClimb = traversalPiece && ['ladder', 'rope', 'lift', 'updraft'].includes(traversalPiece.kind);
     if (assistedClimb) {
       const vertical = (input.up || input.jump ? 1 : 0) - (input.down ? 1 : 0);
-      velocityY.current = traversalPiece.kind === 'updraft' ? Math.max(1.8, vertical * 5.2) : vertical * (traversalPiece.speed ?? 4.6);
+      velocityY.current = traversalPiece.kind === 'updraft' ? Math.max(1.8, vertical * STORY_MOVEMENT_PROFILE.updraftSpeed) : vertical * (traversalPiece.speed ?? STORY_MOVEMENT_PROFILE.climbSpeed);
       if (vertical !== 0) { groundedPlatform.current = null; groundedUntil.current = 0; }
     } else if (swimming && waterVolume) {
       const vertical = (input.up || input.jump ? 1 : 0) - (input.down ? 1 : 0);
-      velocityY.current = vertical * 4.1 + waterVolume.current[1];
+      velocityY.current = vertical * STORY_MOVEMENT_PROFILE.swimSpeed + waterVolume.current[1];
     } else {
-      velocityY.current += -22 * delta;
+      velocityY.current += -STORY_MOVEMENT_PROFILE.gravity * delta;
     }
     const baseMoveSpeed = sprinting ? derivedStats.sprintSpeed : derivedStats.walkSpeed;
     const mountSpeed = mounted && mount ? mount.speedMultiplier * (1 + mountMasteryRank * 0.012) : 1;
@@ -1711,6 +1721,30 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
       nextX = THREE.MathUtils.clamp(nextX + waterVolume.current[0] * delta, waterVolume.bounds[0] + 0.4, waterVolume.bounds[1] - 0.4);
       nextY = THREE.MathUtils.clamp(nextY, waterVolume.bounds[2] + 0.5, waterVolume.bounds[3] - 0.25);
     }
+    // Authored v1 terrain can contain real walls and ceilings. Resolve these
+    // with the same kinematic body dimensions used by validation and Rapier.
+    for (const platform of hub.platforms) {
+      if (platform.oneWay || platform.collision === 'one-way') continue;
+      const left = platform.position[0] - platform.size[0] / 2;
+      const right = platform.position[0] + platform.size[0] / 2;
+      const bottom = platform.position[1] - platform.size[1] / 2;
+      const top = platform.position[1] + platform.size[1] / 2;
+      if (platform.terrainRole === 'wall') {
+        const verticallyOverlaps = nextY + STORY_MOVEMENT_PROFILE.avatarHalfHeight > bottom && nextY - STORY_MOVEMENT_PROFILE.avatarHalfHeight < top;
+        if (!verticallyOverlaps) continue;
+        const movingRightAcross = horizontal > 0 && position.current.x + STORY_MOVEMENT_PROFILE.avatarHalfWidth <= left && nextX + STORY_MOVEMENT_PROFILE.avatarHalfWidth > left;
+        const movingLeftAcross = horizontal < 0 && position.current.x - STORY_MOVEMENT_PROFILE.avatarHalfWidth >= right && nextX - STORY_MOVEMENT_PROFILE.avatarHalfWidth < right;
+        if (movingRightAcross) nextX = left - STORY_MOVEMENT_PROFILE.avatarHalfWidth;
+        else if (movingLeftAcross) nextX = right + STORY_MOVEMENT_PROFILE.avatarHalfWidth;
+      } else if (platform.terrainRole === 'ceiling' && velocityY.current > 0) {
+        const horizontallyOverlaps = nextX + STORY_MOVEMENT_PROFILE.avatarHalfWidth > left && nextX - STORY_MOVEMENT_PROFILE.avatarHalfWidth < right;
+        const crossedUnderside = position.current.y + STORY_MOVEMENT_PROFILE.avatarHalfHeight <= bottom && nextY + STORY_MOVEMENT_PROFILE.avatarHalfHeight > bottom;
+        if (horizontallyOverlaps && crossedUnderside) {
+          nextY = bottom - STORY_MOVEMENT_PROFILE.avatarHalfHeight;
+          velocityY.current = 0;
+        }
+      }
+    }
     let landing: StoryPlatformDefinition | null = null;
     let landingX = nextX;
     if (!swimming && velocityY.current <= 0) {
@@ -1721,7 +1755,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
         const nextBottom = nextY - STORY_GROUNDED_ACTOR_CENTER_Y;
         const left = platform.position[0] - platform.size[0] / 2;
         const right = platform.position[0] + platform.size[0] / 2;
-        const edgeCatch = platform.oneWay ? 0.72 : 0.46;
+        const edgeCatch = platform.oneWay ? STORY_MOVEMENT_PROFILE.oneWayEdgeCatch : STORY_MOVEMENT_PROFILE.solidEdgeCatch;
         const withinX = nextX >= left - edgeCatch && nextX <= right + edgeCatch;
         const crossesForgivingTop = previousBottom >= top - 0.42 && nextBottom <= top + 0.16;
         if (withinX && crossesForgivingTop) {
@@ -1780,7 +1814,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
   });
 
   return <RigidBody ref={bodyRef} type="kinematicPosition" position={[hub.spawn[0], hub.spawn[1], 0]} colliders={false} enabledRotations={[false, false, false]}>
-    <CuboidCollider args={[0.36, 0.8, 0.3]} />
+    <CuboidCollider args={[STORY_MOVEMENT_PROFILE.avatarHalfWidth, STORY_MOVEMENT_PROFILE.avatarHalfHeight, 0.3]} />
     <group ref={groundedVisualGroup} position={[0, -initialSurfaceInsetY, 0]}>
       {mounted && mount && <StoryMountVisual mount={mount} facing={visualState.facing} />}
       <group ref={avatarGroup} position={[mount && mounted ? mount.riderOffset[0] : 0, groundingOffsetY + (mount && mounted ? mount.riderOffset[1] : 0), 0]} visible={avatarVisible}>
@@ -1933,7 +1967,7 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
     <HubCamera playerPosition={playerPosition} bounds={hub.bounds} verticalBounds={hub.id === 'kore-central' ? undefined : hub.exploration?.camera} />
     <Suspense fallback={null}>
       <HubWorld hub={hub} reducedMotion={reducedMotion} />
-      <Physics gravity={[0, -22, 0]} timeStep="vary">
+      <Physics gravity={[0, -STORY_MOVEMENT_PROFILE.gravity, 0]} timeStep="vary">
         {hub.platforms.map((platform) => <RigidBody key={platform.id} type="fixed" colliders={false} position={[platform.position[0], platform.position[1], 0]}>
           <CuboidCollider args={[platform.size[0] / 2, platform.size[1] / 2, 1]} sensor={Boolean(platform.oneWay)} />
           <PlatformVisual platform={platform} hub={hub} />
@@ -2254,8 +2288,34 @@ function PartySizeUnlockReveal({ progress, reducedMotion, onOpenStats, onContinu
 
 function readDevPreviewWorldId(): StoryWorldId {
   if (typeof window === 'undefined' || !['localhost', '127.0.0.1'].includes(window.location.hostname)) return 'central';
-  const candidate = new URLSearchParams(window.location.search).get('storyWorld');
+  const params = new URLSearchParams(window.location.search);
+  const levelId = params.get('storyLevel');
+  const levelBiome = STORY_ADVENTURE_REGION_IDS.find((id) => levelId?.startsWith(`${id}-`));
+  if (levelBiome) return levelBiome;
+  const candidate = params.get('storyWorld');
   return isStoryWorldId(candidate) ? candidate : 'central';
+}
+
+function readDevPreviewSurfaceMapId() {
+  if (typeof window === 'undefined' || !['localhost', '127.0.0.1'].includes(window.location.hostname)) return null;
+  return new URLSearchParams(window.location.search).get('storyLevel');
+}
+
+function readDevPreviewEndlessRun(): StoryEndlessRunState | null {
+  if (typeof window === 'undefined' || !['localhost', '127.0.0.1'].includes(window.location.hostname)) return null;
+  const params = new URLSearchParams(window.location.search);
+  const seed = params.get('storyEndlessSeed');
+  const worldId = readDevPreviewWorldId();
+  if (!seed || !isStoryAdventureRegionId(worldId)) return null;
+  return {
+    version: 4,
+    generationVersion: STORY_ENDLESS_GENERATION_VERSION,
+    worldId,
+    seed,
+    floorNumber: Math.max(1, Math.floor(Number(params.get('storyFloor')) || 1)),
+    startedAt: Date.now(), floorStartedAt: Date.now(), boons: {}, rerollTokens: 0,
+    ledger: emptyStoryRunLedger(), resolvedEventIds: [], bankEventIds: []
+  };
 }
 
 function devPreviewHub(hub: StoryHubDefinition): StoryHubDefinition {
@@ -2303,12 +2363,21 @@ function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGenerate
     id: `${hazard.id}-water`, bounds: [hazard.bounds[0], hazard.bounds[1], -4, 1.4] as [number, number, number, number], current: [0.2, 0] as [number, number],
     airPockets: [[hazard.bounds[0] + 1.5, 1.2], [hazard.bounds[1] - 1.5, 1.2]] as Array<[number, number]>
   }));
-  const propSockets = floor.rooms.flatMap((room) => room.propSockets.map(([x, y]) => ({ room, x: (room.bounds[0] + room.bounds[1]) / 2 + x + room.mutation.propOffset, y })));
-  const generatedProps = createStoryWorldProps(surface.theme ?? 'route', floor.bounds.minX, floor.bounds.maxX).slice(0, propSockets.length).map((prop, index) => ({
-    ...prop,
-    id: `${floor.seed}-socket-prop-${index + 1}`,
-    position: [propSockets[index].x, prop.position[1], prop.position[2]] as [number, number, number]
-  }));
+  const propSockets = floor.rooms.flatMap((room) => room.propSockets.map(([x, y]) => ({ room, x: (room.bounds[0] + room.bounds[1]) / 2 + x + room.mutation.propOffset, y: room.bounds[2] + y })));
+  const assetResolution: NonNullable<StoryHubDefinition['levelMeta']>['assetResolution'] = [];
+  const generatedProps = propSockets.flatMap((socket, index): StoryWorldPropDefinition[] => {
+    const selected = resolveStoryLevelAsset(floor.worldId, { semanticTags: [socket.room.templateKind, index % 2 ? 'clutter' : 'framing'] }, index % 2 ? 'clutter' : 'framing', storyEndlessHash(`${floor.seed}:prop:${index}`));
+    if (!selected) return [];
+    assetResolution.push({ slotId: `${socket.room.id}-prop-${index + 1}`, assetId: selected.id });
+    return [{
+      id: `${floor.seed}-socket-prop-${index + 1}`,
+      asset: selected.asset,
+      frame: [0, 0, selected.pixelSize[0], selected.pixelSize[1]], atlasSize: selected.pixelSize,
+      position: [socket.x, socket.y + selected.footprint[1] / 2 - STORY_GROUNDED_ACTOR_CENTER_Y, -2.18 - index % 3 * 0.12],
+      size: selected.footprint, mirrored: storyEndlessHash(`${floor.seed}:mirror:${index}`) % 3 === 0, opacity: 0.92
+    }];
+  });
+  const levelMeta = floor.levelMeta ? { ...floor.levelMeta, assetResolution } : undefined;
   return {
     ...surface,
     id: `${surface.id}:endless:${floor.floorNumber}`,
@@ -2336,6 +2405,7 @@ function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGenerate
     traversal: floor.traversal,
     interactables: eventInteractable ? [eventInteractable] : [],
     resourceNodes: createEndlessFloorResourceNodes(floor.worldId, floor),
+    levelMeta,
     musicPhase: floor.boss ? 'elite' : pressure.rank > 0 ? 'tension' : floor.chapterFloor === 3 ? 'mystery' : 'explore',
     exploration: surface.exploration ? {
       ...surface.exploration,
@@ -2363,9 +2433,9 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   onExit: () => void;
 }) {
   const [activeWorldId, setActiveWorldId] = useState<StoryWorldId>(readDevPreviewWorldId);
-  const [activeSurfaceMapId, setActiveSurfaceMapId] = useState<string | null>(null);
+  const [activeSurfaceMapId, setActiveSurfaceMapId] = useState<string | null>(readDevPreviewSurfaceMapId);
   const [surfaceEntry, setSurfaceEntry] = useState<'west' | 'east'>('west');
-  const [endlessRun, setEndlessRun] = useState<StoryEndlessRunState | null>(null);
+  const [endlessRun, setEndlessRun] = useState<StoryEndlessRunState | null>(readDevPreviewEndlessRun);
   const [adventureProgress, setAdventureProgress] = useState(readAdventureProgress);
   const [floorElapsedSeconds, setFloorElapsedSeconds] = useState(0);
   const [pressureHunterAnchor, setPressureHunterAnchor] = useState<number | null>(null);
@@ -2397,7 +2467,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
         : portal), ...shortcutPortal]
     };
   }, [activeSurfaceMapId, activeWorldId, adventureProgress.endlessUnlockedBiomes, adventureProgress.restoredShortcuts, biomeHub, surfaceEntry]);
-  const generatedFloor = useMemo(() => endlessRun ? generateAdventureFloor(endlessRun.worldId, endlessRun.seed, endlessRun.floorNumber) : null, [endlessRun]);
+  const generatedFloor = useMemo(() => endlessRun ? generateAdventureFloor(endlessRun.worldId, endlessRun.seed, endlessRun.floorNumber, endlessRun.generationVersion ?? 3) : null, [endlessRun]);
   const endlessHubId = generatedFloor ? `${baseHub.id}:endless:${generatedFloor.floorNumber}` : '';
   const endlessEncounterProgress = endlessHubId ? encounterProgressByHub[endlessHubId] ?? makeStoryEncounterProgress() : makeStoryEncounterProgress();
   const endlessExitLocked = Boolean(generatedFloor?.encounters.some((encounter) => !endlessEncounterProgress.resolvedZoneIds.includes(encounter.id)));
@@ -2567,6 +2637,9 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     if (airPocket) lastAirPocketRef.current = airPocket;
   }, [underwater]);
   useEffect(() => { adventureProgressRef.current = adventureProgress; }, [adventureProgress]);
+  useLayoutEffect(() => {
+    playerInvulnerableUntilRef.current = Math.max(playerInvulnerableUntilRef.current, storyAreaEntryInvulnerableUntil(performance.now()));
+  }, [activeHub.id]);
   useEffect(() => { activeHubBoundsRef.current = activeHub.bounds; }, [activeHub.bounds]);
   useEffect(() => { partyInstanceRef.current = partyInstance; }, [partyInstance]);
   useEffect(() => { currentDepthZoneRef.current = endlessRun ? `endless:${endlessRun.floorNumber}` : null; }, [endlessRun]);
@@ -2769,7 +2842,10 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     updateAdventureProgress(beginAdventureVisit(adventureProgressRef.current, activeWorldId));
     setEncounterProgressByHub({});
     setVisitChallengers([]);
-    setEndlessRun(null);
+    // A localhost Level Lab URL is an explicit, read-only generation target.
+    // Preserve it through the normal first-visit reset so a seed can be loaded
+    // directly without walking through the player-facing Endless entrance.
+    setEndlessRun(readDevPreviewEndlessRun());
     setFloorElapsedSeconds(0);
     setBreath(STORY_MAX_BREATH);
   }, [activeWorldId, localSessionId, updateAdventureProgress]);
@@ -2821,7 +2897,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
           } else if (next.roomId.startsWith('endless:')) {
             const floorNumber = Math.max(1, Number(next.roomId.split(':')[1]) || 1);
             setEndlessRun((current) => current?.seed === next.seed && current.floorNumber === floorNumber ? current : {
-              version: 3, worldId: activeWorldId, seed: next.seed, floorNumber, startedAt: Date.now(), floorStartedAt: Date.now(),
+              version: 4, generationVersion: STORY_ENDLESS_GENERATION_VERSION, worldId: activeWorldId, seed: next.seed, floorNumber, startedAt: Date.now(), floorStartedAt: Date.now(),
               boons: current?.boons ?? {}, rerollTokens: current?.rerollTokens ?? 0, ledger: current?.ledger ?? emptyStoryRunLedger(), resolvedEventIds: current?.resolvedEventIds ?? [], bankEventIds: current?.bankEventIds ?? []
             });
           }
@@ -2872,7 +2948,8 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
         if (partyInstanceRef.current?.leaderSessionId !== localSessionId && snapshot.runSeed && snapshot.floorNumber > 0) {
           setFloorElapsedSeconds(snapshot.pressureClockSeconds);
           setEndlessRun((current) => ({
-            version: 3,
+            version: 4,
+            generationVersion: STORY_ENDLESS_GENERATION_VERSION,
             worldId: partyInstanceRef.current!.worldId,
             seed: snapshot.runSeed!,
             floorNumber: snapshot.floorNumber,
@@ -3316,7 +3393,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       if (!started.started) return;
       updateAdventureProgress(started.progress);
       const seed = createAdventureRunSeed(activeWorldId, started.runSerial, (partyInstance?.id ?? localSessionId) || 'solo');
-      setEndlessRun({ version: 3, worldId: activeWorldId, seed, floorNumber: 1, startedAt: Date.now(), floorStartedAt: Date.now(), boons: {}, rerollTokens: 0, ledger: emptyStoryRunLedger(), resolvedEventIds: [], bankEventIds: [] });
+      setEndlessRun({ version: 4, generationVersion: STORY_ENDLESS_GENERATION_VERSION, worldId: activeWorldId, seed, floorNumber: 1, startedAt: Date.now(), floorStartedAt: Date.now(), boons: {}, rerollTokens: 0, ledger: emptyStoryRunLedger(), resolvedEventIds: [], bankEventIds: [] });
       if (partyInstance?.leaderSessionId === localSessionId) void startStoryPartyEndlessRun(partyInstance, localSessionId, seed).then((next) => { if (next) setPartyInstance(next); }).catch(() => undefined);
       setEncounterProgressByHub({});
       setVisitChallengers([]);
@@ -3686,7 +3763,8 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       } else if (joined.roomId.startsWith('endless:')) {
         const floorNumber = Math.max(1, Number(joined.roomId.split(':')[1]) || 1);
         setEndlessRun({
-          version: 3,
+          version: 4,
+          generationVersion: STORY_ENDLESS_GENERATION_VERSION,
           worldId: joined.worldId,
           seed: joined.seed,
           floorNumber,
@@ -4019,6 +4097,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     <div className="story-hub-canvas-shell">
       <HubCanvas key={activeHub.id} hub={activeHub} profile={profile} reducedMotion={reducedMotion} readInput={readInput} disabled={pauseOpen || controlsOpen || mapOpen || statsOpen || packOpen || partyUnlockOpen || Boolean(selectedPlayer) || Boolean(incomingChallenge) || Boolean(doorTravel) || Boolean(boonChoices) || abandonConfirmOpen || Boolean(activeTraderEventId) || Boolean(pendingEventChoiceId)} avatarVisible={!doorTravel || doorTravel.step < 4 || doorTravel.step >= 18} quickMatchAvailable={quickMatchAvailable} assignedPortalId={quickMatch.portalId} nearbyPortal={nearbyPortal} remotePlayers={visibleRemotePlayers} selectedPlayerSessionId={selectedPlayer?.sessionId} progress={adventureProgress} activePartyMembers={partyInstance ? partyInstance.members.length + partyInstance.aiActors.length : 1} partyAiActors={partyInstance?.aiActors ?? []} mounted={mounted} mount={activeMount} attackEvent={effectiveAttackEvent} impactEvent={impactEvent} encounterSeed={encounterSeed} initialEncounterProgress={activeEncounterProgress} onEncounterProgressChange={handleEncounterProgressChange} onChallengerStarted={handleChallengerStarted} onAttack={handleAdventureAttack} onPlayerDamage={handlePlayerDamage} onEnemyDefeated={handleEnemyDefeated} onResourceHarvest={handleResourceHarvest} onQuickMatch={startQuickMatch} onSelectPlayer={selectRemotePlayer} onNearbyPortal={setNearbyPortal} onActivatePortal={activatePortal} onWaterState={handleWaterState} onExit={exitCurrentWorld} onPause={openPause} onStateSample={handlePlayerState} onReady={handleHubReady} />
     </div>
+    {storyLevelLabEnabled() && <LevelLabOverlay hub={activeHub} floor={generatedFloor} />}
 
     <header className="story-hub-header story-enter-1">
       <div className="story-hub-location">

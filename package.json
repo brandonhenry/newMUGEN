@@ -40,6 +40,7 @@
     "audit:attack-scale": "node scripts/audit-attack-scale-vs-idle.mjs",
     "audit:spritesheet-projectiles": "node scripts/audit-spritesheet-projectiles.mjs",
     "generate:beginner-combos": "vite-node scripts/generate-advanced-beginner-combo-routes.ts --write",
+    "levels": "vite-node scripts/kore-levels.ts",
     "rebuild:projectile-voxels": "python3 scripts/rebuild-projectile-hd-voxels.py --apply && node scripts/generate-voxel-packs.mjs --projectiles --validate && python3 scripts/rebuild-projectile-hd-voxels.py --validate",
     "validate:projectile-voxels": "python3 scripts/rebuild-projectile-hd-voxels.py --validate",
     "test:projectile-voxels": "python3 -m unittest scripts/test_rebuild_projectile_hd_voxels.py",

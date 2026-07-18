@@ -586,6 +586,21 @@ body {
   user-select: none;
 }
 
+.story-level-lab { position: fixed; z-index: 90; left: 18px; right: 18px; bottom: 18px; max-height: 42vh; padding: 12px; border: 1px solid rgba(46, 230, 255, 0.42); border-radius: 14px; color: #ecf8ff; background: rgba(3, 10, 19, 0.94); box-shadow: 0 18px 70px rgba(0, 0, 0, 0.58); backdrop-filter: blur(14px); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.story-level-lab header, .story-level-lab-controls { display: flex; align-items: center; gap: 9px; }
+.story-level-lab header { justify-content: space-between; margin-bottom: 8px; }
+.story-level-lab header span:first-child { display: grid; gap: 2px; }
+.story-level-lab header strong { color: #2ee6ff; letter-spacing: 0.14em; }
+.story-level-lab header small, .story-level-lab-controls small { color: rgba(236, 248, 255, 0.58); }
+.story-level-lab header .is-pass { color: #52e1a1; }
+.story-level-lab header .is-fail { color: #ff6b45; }
+.story-level-lab-controls { margin-bottom: 8px; }
+.story-level-lab-controls button { border: 1px solid rgba(255, 255, 255, 0.16); border-radius: 7px; padding: 5px 8px; color: rgba(255, 255, 255, 0.68); background: rgba(255, 255, 255, 0.05); font: inherit; font-size: 10px; }
+.story-level-lab-controls button[aria-pressed='true'] { border-color: #2ee6ff; color: #fff; background: rgba(46, 230, 255, 0.16); }
+.story-level-lab-controls small { margin-left: auto; }
+.story-level-lab svg { display: block; width: 100%; max-height: 26vh; border-radius: 9px; }
+.story-level-lab p { margin: 8px 0 0; color: #ff9d80; font-size: 10px; }
+
 .story-hub-canvas-shell,
 .story-hub-canvas-shell canvas {
   position: absolute;

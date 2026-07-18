@@ -3,7 +3,8 @@ import { getStoryEnemyDefinition, STORY_REGULAR_ENEMY_IDS_BY_BIOME } from './ene
 import { storyNpcsForMap } from './adventureNpcs';
 import { STORY_WORLD_MOUNT } from './adventureExploration';
 import { storyHazardDealsContactDamage } from './adventureHazards';
-import { createStoryWorldProps } from './worldEnvironments';
+import { compileStoryLevelBlueprint } from './levelCompiler';
+import { getStorySurfaceLevelBlueprint } from './levelBlueprints';
 import { createSurfaceResourceNodes } from './adventureResources';
 import type {
   StoryAdventureMapDefinition,
@@ -83,13 +84,6 @@ const BIOMES: Record<BiomeId, BiomeSpec> = {
 };
 
 const ROLE_ORDER: StoryAdventureMapRole[] = ['arrival', 'field-a', 'field-b', 'mastery'];
-const PLATFORM_PATTERNS: Record<StoryAdventureMapRole, Array<[number, number, number]>> = {
-  arrival: [[-38, 3.2, 10], [-17, 5.1, 12], [8, 3.8, 13], [31, 6.2, 9]],
-  'field-a': [[-43, 3.8, 9], [-27, 7.1, 8], [-8, 4.6, 12], [13, 8.2, 8], [34, 5.2, 10]],
-  'field-b': [[-44, 4.2, 8], [-29, 7.4, 10], [-12, 10.2, 7], [7, 5.6, 12], [25, 8.7, 7], [41, 4.5, 9]],
-  mastery: [[-45, 5.2, 8], [-31, 9.1, 7], [-16, 6.4, 10], [1, 11.2, 8], [17, 7.3, 7], [32, 10.1, 8], [45, 5.3, 7]]
-};
-
 function landmark(id: string, label: string, subtitle: string, x: number, y: number, color: string, kind: StoryWorldLandmarkDefinition['kind'] = 'district'): StoryWorldLandmarkDefinition {
   return { id, label, subtitle, position: [x, y, -1.2], size: [15, 8], color, kind };
 }
@@ -129,7 +123,9 @@ function interactables(biome: BiomeId, role: StoryAdventureMapRole): StoryIntera
 function hazardsFor(biome: BiomeId, role: StoryAdventureMapRole): StoryHazardDefinition[] {
   if (role === 'arrival') return [];
   const spec = BIOMES[biome];
-  const positions = role === 'field-a' ? [-7, 7] : role === 'field-b' ? [-45, 0, 45] : [-45, -6, 31, 46];
+  // Keep both directional entry spawns and every doorway surrounded by a wide,
+  // readable safe corridor. These lanes also stay outside enemy patrol ranges.
+  const positions = role === 'field-a' ? [-7, 7] : role === 'field-b' ? [-8, 0, 8] : [-38, -7, 7, 38];
   return positions.map((x, index) => ({
     id: `${biome}-${role}-hazard-${index + 1}`,
     kind: spec.hazard,
@@ -179,7 +175,8 @@ function createMap(biome: BiomeId, role: StoryAdventureMapRole): StoryAdventureM
   const details = spec.maps[role];
   const order = ROLE_ORDER.indexOf(role);
   const id = mapId(biome, role);
-  const pattern = PLATFORM_PATTERNS[role].map(([x, y, width], index) => ({ id: `${id}-platform-${index + 1}`, position: [x, y + ((Object.keys(BIOMES).indexOf(biome) % 3) - 1) * 0.2] as [number, number], size: [width, 0.42] as [number, number], oneWay: true }));
+  const blueprint = getStorySurfaceLevelBlueprint(biome, role);
+  const compiled = compileStoryLevelBlueprint(blueprint, id, 1);
   const portals: StoryPortalDefinition[] = [];
   if (role === 'arrival') portals.push({ id: `${biome}-return-route`, label: 'Central Route', subtitle: 'Return to the crossroads', destination: 'world-route' as const, position: [-53, 1.7] as [number, number], size: [2.6, 3.2] as [number, number], accent: '#ffe071', kind: 'adventure-gate' as const });
   if (order > 0) portals.push(transitionPortal(biome, ROLE_ORDER[order - 1], 'west', BIOMES[biome].maps[ROLE_ORDER[order - 1]].name));
@@ -201,11 +198,12 @@ function createMap(biome: BiomeId, role: StoryAdventureMapRole): StoryAdventureM
   return {
     id, biomeId: biome, role, order, name: details.name, subtitle: details.subtitle,
     bounds: { minX: -56, maxX: 56, floorY: 0 }, spawn: [-49, STORY_GROUNDED_ACTOR_CENTER_Y], checkpoint: [-49, STORY_GROUNDED_ACTOR_CENTER_Y],
-    platforms: [{ id: `${id}-ground`, position: [0, -0.5], size: [114, 1] }, ...pattern], portals,
+    platforms: compiled.platforms, portals,
     landmarks: [landmark(`${id}-hero`, details.hero, details.subtitle, 0, role === 'mastery' ? 9 : 6.5, spec.accent, role === 'mastery' ? 'vista' : 'district'), landmark(`${id}-secret`, 'Optional Route', 'A quieter line rewards careful movement', role === 'field-a' ? 34 : -32, 8, '#ffe071', 'secret')],
-    props: createStoryWorldProps(spec.theme, -56, 56), enemySpawns: enemiesFor(biome, role), encounters,
+    props: compiled.props, enemySpawns: enemiesFor(biome, role), encounters,
     hazards, traversal: traversalFor(biome, role), interactables: mapInteractables, npcs, resourceNodes,
-    musicPhase: role === 'arrival' ? 'safe' : role === 'mastery' ? 'elite' : role === 'field-b' ? 'mystery' : 'explore', heroLandmarkId: `${id}-hero`
+    musicPhase: role === 'arrival' ? 'safe' : role === 'mastery' ? 'elite' : role === 'field-b' ? 'mystery' : 'explore', heroLandmarkId: `${id}-hero`,
+    levelMeta: compiled.meta
   };
 }
 
@@ -244,6 +242,7 @@ export function createAdventureSurfaceHub(base: StoryHubDefinition, map: StoryAd
     npcs: map.npcs,
     musicPhase: map.musicPhase,
     resourceNodes: map.resourceNodes,
+    levelMeta: map.levelMeta,
     exploration: exploration ? {
       ...exploration,
       safeApproach: map.role === 'arrival' ? [-56, 56] : [-56, -44],

@@ -1,7 +1,9 @@
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_WORLDS } from './adventureWorlds';
 import { STORY_ADVENTURE_SURFACE_MAPS } from './adventureSurfaceMaps';
-import { STORY_HAZARD_SPRITES, storyHazardDealsContactDamage } from './adventureHazards';
+import { STORY_HAZARD_ENTRY_CLEARANCE, STORY_HAZARD_SPRITES, storyHazardDealsContactDamage, storyHazardHasVisibleDamageSprite, storyHazardIsClearOfEntry } from './adventureHazards';
 import { STORY_NPCS, STORY_NPC_ENTRANCE_SIDE_CLEARANCE, STORY_NPC_SPRITES, STORY_NPC_VISIBLE_WORLD_HEIGHT, storyNpcFootContactSinkY, storyNpcPlaneSize } from './adventureNpcs';
 import { storyAvatarGroundingOffsetForWorld, storyAvatarVisibleFootWorldY, storyGroundAnchoredPlaneCenterY } from './actorGrounding';
 import { adventureRunIsReachable, generateAdventureRunGraph } from './adventureExploration';
@@ -24,7 +26,7 @@ describe('authored Adventure surface campaign', () => {
         expect(map.npcs).toHaveLength(3);
         for (const hazard of map.hazards) {
           expect(hazard.damage > 0).toBe(storyHazardDealsContactDamage(hazard.kind));
-          if (hazard.damage > 0) expect(STORY_HAZARD_SPRITES[hazard.kind as keyof typeof STORY_HAZARD_SPRITES]).toBeDefined();
+          expect(storyHazardHasVisibleDamageSprite(hazard), `${map.id}/${hazard.id}`).toBe(true);
         }
         expect(new Set(map.npcs.map((npc) => npc.role))).toEqual(new Set(['guide', 'specialist', 'resident']));
         expect(map.bounds.maxX - map.bounds.minX).toBeGreaterThanOrEqual(100);
@@ -74,6 +76,31 @@ describe('authored Adventure surface campaign', () => {
   it('renders contact-damage hazards as stationary environmental props', () => {
     for (const definition of Object.values(STORY_HAZARD_SPRITES)) {
       expect(definition.displayFrame).toBe(0);
+      expect(definition.path.endsWith('.png')).toBe(true);
+      expect(existsSync(join(process.cwd(), 'public', definition.path.replace(/^\//, ''))), definition.path).toBe(true);
+    }
+  });
+
+  it('keeps every hazard well clear of both entry spawns and visible doorways', () => {
+    const entranceKinds = new Set(['adventure-gate', 'mode-door', 'shrine']);
+    for (const maps of Object.values(STORY_ADVENTURE_SURFACE_MAPS)) {
+      for (const map of maps) {
+        const entries = [
+          { id: 'west-spawn', x: map.spawn[0], halfWidth: 0.45 },
+          { id: 'east-spawn', x: map.bounds.maxX - 7, halfWidth: 0.45 },
+          ...map.portals
+            .filter((portal) => portal.kind && entranceKinds.has(portal.kind))
+            .map((portal) => ({ id: portal.id, x: portal.position[0], halfWidth: portal.size[0] / 2 }))
+        ];
+        for (const hazard of map.hazards) {
+          for (const entry of entries) {
+            expect(storyHazardIsClearOfEntry(hazard, entry.x, entry.halfWidth), `${map.id}/${hazard.id}/${entry.id}`).toBe(true);
+            const [hazardMinX, hazardMaxX] = hazard.bounds;
+            const nearestDistance = entry.x < hazardMinX ? hazardMinX - (entry.x + entry.halfWidth) : entry.x > hazardMaxX ? entry.x - entry.halfWidth - hazardMaxX : 0;
+            expect(nearestDistance, `${map.id}/${hazard.id}/${entry.id}`).toBeGreaterThanOrEqual(STORY_HAZARD_ENTRY_CLEARANCE);
+          }
+        }
+      }
     }
   });
 
