@@ -9,7 +9,7 @@ export type StoryEncounterProgress = {
   defeatedRegularIds: string[];
   resolvedZoneIds: string[];
   selectedChallengers: StoryEnemyId[];
-  activeChallenge: { zoneId: string; enemyId: StoryEnemyId; reset: number } | null;
+  activeChallenge: { zoneId: string; enemyId: StoryEnemyId; spawnAnchorId?: string; reset: number } | null;
 };
 
 export function makeStoryEncounterProgress(): StoryEncounterProgress {
@@ -85,7 +85,7 @@ export function recordRegularDefeat(input: {
       ...input.progress,
       defeatedRegularIds,
       selectedChallengers: [...input.progress.selectedChallengers, enemyId],
-      activeChallenge: { zoneId: input.zone.id, enemyId, reset: 0 }
+      activeChallenge: { zoneId: input.zone.id, enemyId, spawnAnchorId: input.spawnId, reset: 0 }
     },
     challengeStarted: true
   };

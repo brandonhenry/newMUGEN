@@ -36,6 +36,7 @@ describe('story adventure encounter progression', () => {
     const second = recordRegularDefeat({ progress: first.progress, spawnId: spawns[1].id, zone, encounterIndex: 4, spawns, seed: 'visit-42', biomeId: 'greenhollow' });
     expect(second.challengeStarted).toBe(true);
     expect(second.progress.activeChallenge?.zoneId).toBe(zone.id);
+    expect(second.progress.activeChallenge?.spawnAnchorId).toBe(spawns[1].id);
 
     const duplicate = recordRegularDefeat({ progress: second.progress, spawnId: spawns[1].id, zone, encounterIndex: 4, spawns, seed: 'visit-42', biomeId: 'greenhollow' });
     expect(duplicate.challengeStarted).toBe(false);

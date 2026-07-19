@@ -13,6 +13,7 @@ import { emitAdventureAudioEvent } from './adventureAudio';
 import { STORY_HAZARD_SPRITES, storyHazardContactDamageReady, storyHazardDealsContactDamage } from './adventureHazards';
 import { STORY_ATTACK_VISUAL_SYNC_DELAY_MS, advanceStoryAttackInputBuffer, adventureAttackHits, canAdventureEnemyDamagePlayer, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureAttackFrameHitbox, getAdventureEnemyStats, getStoryAttackDurationMs, getStoryProjectileSpawnPosition, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, resolveStoryAttackInput, stepAdventureProjectile, storyAreaEntryInvulnerableUntil, storyPlayerProjectileHits, type AdventureDamageFeedback, type StoryBufferedAttackInput } from './adventureCombat';
 import { makeStoryEncounterProgress, recordChallengerDefeat, recordFixedChallengerDefeat, recordRegularDefeat, rerollStoryRegularSpawns, resetActiveChallenger, storyEncounterMovementLock, type StoryEncounterProgress } from './adventureEncounters';
+import { storyChallengerSpawnPosition } from './adventureEncounterPlacement';
 import { STORY_ADVENTURE_COMBAT_STAT_KEYS, STORY_ADVENTURE_PARTY_SIZE_CAP, STORY_ADVENTURE_STAT_CAP, acknowledgeAdventurePartyFeatureReveal, addAdventureMaterial, adventureResourceYieldModifiers, allocateAdventureStat, applyAdventureEnemyDefeat, awardMountMastery, bankAdventureRunLedger, beginAdventureEndlessRun, beginAdventureVisit, canRespecAdventureStats, claimAdventureCache, collectAdventureRelic, consumeAdventureItem, craftAdventureRecipe, depleteAdventureResourceNode, discoverAdventureLandmark, discoverAdventureSurfaceMap, discoverAdventureVista, discoverAdventureWaystone, equipAdventureArmor, experienceToNextLevel, getAdventureDerivedStats, getAdventurePartySizeProgress, isAdventureResourceNodeAvailable, pinAdventureDaily, readAdventureProgress, recordAdventureBestDepth, respecAdventureStats, restoreAdventureShortcut, unlockAdventureEndlessBiome, unlockAdventureMasteryRecipe, unlockAdventureMount, unlockAdventureSpecialistRecipes, upgradeAdventureWaystone, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_REGION_LABELS, STORY_WORLDS, isStoryAdventureRegionId, isStoryAdventureWorldId, isStoryWorldId } from './adventureWorlds';
 import { STORY_BREATH_DRAIN_PER_SECOND, STORY_BREATH_REFILL_PER_SECOND, STORY_MAX_BREATH, STORY_MOUNTS, STORY_WORLD_MOUNT, shouldSyncAdventureWaterState, storyPartyEnemyHealthScale, type StoryPartyAiActor, type StoryPartyInstance, type StoryPartyInvite } from './adventureExploration';
@@ -2040,23 +2041,33 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
   const enemySpawns = useMemo(() => rerollStoryRegularSpawns(encounterSeed, hub.enemySpawns ?? []), [encounterSeed, hub.enemySpawns]);
   const activeRegularSpawns = useMemo(() => enemySpawns.filter((spawn) => !encounterProgress.defeatedRegularIds.includes(spawn.id)), [encounterProgress.defeatedRegularIds, enemySpawns]);
   const activeChallenge = encounterProgress.activeChallenge;
-  const movementLock = storyEncounterMovementLock(encounterProgress, hub.exploration?.encounters ?? []);
   const activeChallengerSpawn = useMemo((): StoryEnemySpawnDefinition | null => {
     if (!activeChallenge) return null;
     const zone = hub.exploration?.encounters.find((candidate) => candidate.id === activeChallenge.zoneId);
     if (!zone) return null;
     const definition = getStoryEnemyDefinition(activeChallenge.enemyId);
+    const position = storyChallengerSpawnPosition({
+      zone,
+      regularSpawns: hub.enemySpawns ?? [],
+      spawnAnchorId: activeChallenge.spawnAnchorId,
+      challengerArchetype: definition.archetype,
+      floorY: hub.bounds.floorY
+    });
     return {
       id: `${hub.id}-${zone.id}-${activeChallenge.enemyId}-${activeChallenge.reset}`,
       enemyId: activeChallenge.enemyId,
-      position: [zone.range[1] - 2.25, definition.archetype === 'flying' ? 3.4 : STORY_GROUNDED_ACTOR_CENTER_Y],
+      position,
       patrolRadius: Math.max(2.8, (zone.range[1] - zone.range[0]) / 3),
       accent: '#ffe071',
       encounterZoneId: zone.id,
       encounterIndex: 4,
       leash: zone.range
     };
-  }, [activeChallenge, hub.exploration?.encounters, hub.id]);
+  }, [activeChallenge, hub.bounds.floorY, hub.enemySpawns, hub.exploration?.encounters, hub.id]);
+  // Never confine the player unless the matching opponent can actually render.
+  const movementLock = activeChallengerSpawn
+    ? storyEncounterMovementLock(encounterProgress, hub.exploration?.encounters ?? [])
+    : null;
   const groundingOffsetY = storyAvatarGroundingOffsetForWorld(hub.id);
   const groundSurfaceInsetY = useMemo(() => {
     const ground = storyHubGroundPlatform(hub);
@@ -2075,6 +2086,12 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
     setEncounterProgress(next);
     onEncounterProgressChange(next);
   }, [onEncounterProgressChange]);
+
+  useEffect(() => {
+    if (!activeChallenge || activeChallengerSpawn) return;
+    // Recover stale/corrupt encounter state instead of leaving an unwinnable zone.
+    commitEncounterProgress(recordChallengerDefeat(encounterProgressRef.current));
+  }, [activeChallenge, activeChallengerSpawn, commitEncounterProgress]);
 
   const handleEnemyDefeated = useCallback((spawn: StoryEnemySpawnDefinition, xp: number, tier: StoryEnemyTier) => {
     onEnemyDefeated({
