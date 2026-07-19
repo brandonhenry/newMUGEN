@@ -121,8 +121,7 @@
     "chargeKi": [
       "/characters/shadow-the-hedgehog/frames/frame-083.png",
       "/characters/shadow-the-hedgehog/frames/frame-084.png",
-      "/characters/shadow-the-hedgehog/frames/frame-085.png",
-      "/characters/shadow-the-hedgehog/frames/frame-086.png"
+      "/characters/shadow-the-hedgehog/frames/frame-085.png"
     ],
     "jableft": [
       "/characters/shadow-the-hedgehog/frames/frame-095.png",
@@ -173,14 +172,14 @@
     "getupStand": [],
     "getupRollUp": [],
     "win": [
-      "/characters/shadow-the-hedgehog/frames/frame-185.png",
-      "/characters/shadow-the-hedgehog/frames/frame-188.png",
-      "/characters/shadow-the-hedgehog/frames/frame-191.png",
-      "/characters/shadow-the-hedgehog/frames/frame-194.png",
-      "/characters/shadow-the-hedgehog/frames/frame-197.png",
-      "/characters/shadow-the-hedgehog/frames/frame-200.png",
-      "/characters/shadow-the-hedgehog/frames/frame-203.png",
-      "/characters/shadow-the-hedgehog/frames/frame-206.png"
+      "/characters/shadow-the-hedgehog/frames/frame-154.png",
+      "/characters/shadow-the-hedgehog/frames/frame-156.png",
+      "/characters/shadow-the-hedgehog/frames/frame-158.png",
+      "/characters/shadow-the-hedgehog/frames/frame-160.png",
+      "/characters/shadow-the-hedgehog/frames/frame-162.png",
+      "/characters/shadow-the-hedgehog/frames/frame-164.png",
+      "/characters/shadow-the-hedgehog/frames/frame-165.png",
+      "/characters/shadow-the-hedgehog/frames/frame-166.png"
     ],
     "lose": [
       "/characters/shadow-the-hedgehog/frames/frame-210.png",
@@ -1676,13 +1675,6 @@
         "offsetX": 0,
         "flipX": false,
         "flipY": false
-      },
-      "86": {
-        "width": 0.68,
-        "height": 0.63,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
       }
     },
     "jableft": {
@@ -2294,60 +2286,44 @@
       }
     },
     "win": {
-      "185": {
-        "width": 0.19002,
-        "height": 0.19002,
-        "voxelScaleX": 1.20485,
-        "voxelScaleY": 0.82998,
+      "154": {
+        "width": 0.69,
+        "height": 0.69,
         "offsetX": 0
       },
-      "188": {
-        "width": 0.5,
-        "height": 0.36,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
-      },
-      "191": {
-        "width": 0.19002,
-        "height": 0.19002,
-        "voxelScaleX": 1.20485,
-        "voxelScaleY": 0.82998,
+      "156": {
+        "width": 0.69,
+        "height": 0.69,
         "offsetX": 0
       },
-      "194": {
-        "width": 0.55,
-        "height": 0.26,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
-      },
-      "197": {
-        "width": 0.5,
-        "height": 0.36,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
-      },
-      "200": {
-        "width": 0.19002,
-        "height": 0.19002,
-        "voxelScaleX": 1.20485,
-        "voxelScaleY": 0.82998,
+      "158": {
+        "width": 0.69,
+        "height": 0.69,
         "offsetX": 0
       },
-      "203": {
-        "width": 0.38,
-        "height": 0.34,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
+      "160": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0
       },
-      "206": {
-        "width": 0.18736,
-        "height": 0.18736,
-        "voxelScaleX": 1.35771,
-        "voxelScaleY": 0.73653,
+      "162": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0
+      },
+      "164": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0
+      },
+      "165": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0
+      },
+      "166": {
+        "width": 0.69,
+        "height": 0.69,
         "offsetX": 0
       }
     },

@@ -86,6 +86,7 @@ class TransparencyRepairTests(unittest.TestCase):
         self.assertEqual(repair.EXACT_KEYS_BY_CHARACTER["gaara"], {(0, 0, 248), (0, 200, 120), (0, 216, 0)})
         self.assertEqual(repair.EXACT_KEYS_BY_CHARACTER["kiba-inuzuka"], {(248, 0, 0), (0, 0, 248)})
         self.assertEqual(repair.EXACT_KEYS_BY_CHARACTER["pain"], {(248, 0, 248)})
+        self.assertEqual(repair.EXACT_KEYS_BY_CHARACTER["suigetsu"], {(248, 0, 248)})
         self.assertNotIn("sai", repair.EXACT_KEYS_BY_CHARACTER)
         self.assertNotIn("sasori", repair.EXACT_KEYS_BY_CHARACTER)
         self.assertNotIn("kidomaru-curse-mark", repair.EXACT_KEYS_BY_CHARACTER)

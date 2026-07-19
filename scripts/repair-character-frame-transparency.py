@@ -38,6 +38,9 @@ EXACT_KEYS_BY_CHARACTER: dict[str, set[tuple[int, int, int]]] = {
     # magenta matte. The latter was left opaque by the original import.
     "pain": {(248, 0, 248)},
     "sakon-curse-mark": {(0, 160, 0), (0, 255, 255)},
+    # Suigetsu's imported frames retain the same exact keyed magenta behind
+    # the fighter and effects; authored purples use different palette values.
+    "suigetsu": {(248, 0, 248)},
     "temari": {(24, 144, 0), (72, 176, 56), (0, 128, 128)},
     "tsunade": {(0, 136, 0)},
 }
