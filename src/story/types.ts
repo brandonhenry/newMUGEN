@@ -579,8 +579,26 @@ export type StoryFloorPressureState = {
 
 export type StoryFloorIntent = 'combat' | 'harvest' | 'exploration' | 'boss';
 
+export type StoryFloorLootOutcome = 'empty' | 'junk' | 'coins' | 'material' | 'consumable';
+
+export type StoryGeneratedContainer = {
+  id: string;
+  roomId: string;
+  visualId: string;
+  pickupVisualId?: string;
+  position: [number, number];
+  outcome: StoryFloorLootOutcome;
+  quality: 'empty' | 'poor' | 'common' | 'useful';
+  label: string;
+  resultText: string;
+  rewardCoins?: number;
+  materialId?: string;
+  materialQuantity?: number;
+  consumableId?: string;
+};
+
 export type StoryGeneratedFloor = {
-  version: 3 | 4 | 5 | 6 | 7;
+  version: 3 | 4 | 5 | 6 | 7 | 8;
   worldId: Exclude<StoryAdventureWorldId, 'world-route'>;
   seed: string;
   floorNumber: number;
@@ -610,6 +628,7 @@ export type StoryGeneratedFloor = {
   encounters: StoryEncounterZoneDefinition[];
   enemySpawns: StoryEnemySpawnDefinition[];
   event: StoryFloorEvent | null;
+  containers: StoryGeneratedContainer[];
   parTimeSeconds: number;
   bossEnemyId?: StoryEnemyId;
   levelMeta?: StoryHubDefinition['levelMeta'];
@@ -627,7 +646,7 @@ export type StoryRunRewardLedger = {
 
 export type StoryEndlessRunState = {
   version: 3 | 4;
-  generationVersion?: 3 | 4 | 5 | 6 | 7;
+  generationVersion?: 3 | 4 | 5 | 6 | 7 | 8;
   worldId: Exclude<StoryAdventureWorldId, 'world-route'>;
   seed: string;
   floorNumber: number;

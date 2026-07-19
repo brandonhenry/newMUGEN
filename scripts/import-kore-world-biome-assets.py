@@ -160,10 +160,12 @@ BACKUP_PACKS = (
     Pack("kings-pigs", "Pixel Frog", "https://pixelfrog-assets.itch.io/kings-and-pigs", "itch://pixelfrog-assets.itch.io/kings-and-pigs/1715479", "4d61a9c48d5eb1ec5ef5585359d3800205349af813af67030a719bfd6371d373", {
         "terrain.png": "Sprites/14-TileSets/Terrain (32x32).png", "decorations.png": "Sprites/14-TileSets/Decorations (32x32).png",
         "door.png": "Sprites/11-Door/Idle.png", "cannon.png": "Sprites/10-Cannon/Idle.png", "box.png": "Sprites/08-Box/Idle.png",
+        "diamond-sheet.png": "Sprites/12-Live and Coins/Big Diamond Idle (18x14).png",
     }),
     Pack("pixel-adventure", "Pixel Frog", "https://pixelfrog-assets.itch.io/pixel-adventure-1", "itch://pixelfrog-assets.itch.io/pixel-adventure-1/2012517", "efafdfc8ed44f2b0ade27c0246e11a2474ce3a793b4f8e16dbe7403824f6e77b", {
         "terrain.png": "Free/Terrain/Terrain (16x16).png", "background-purple.png": "Free/Background/Purple.png", "background-yellow.png": "Free/Background/Yellow.png",
         "box-1.png": "Free/Items/Boxes/Box1/Idle.png", "box-2.png": "Free/Items/Boxes/Box2/Idle.png", "box-3.png": "Free/Items/Boxes/Box3/Idle.png",
+        "apple-sheet.png": "Free/Items/Fruits/Apple.png", "cherries-sheet.png": "Free/Items/Fruits/Cherries.png", "orange-sheet.png": "Free/Items/Fruits/Orange.png",
     }),
     Pack("grafx-cave", "GrafxKid", "https://grafxkid.itch.io/cave-tileset", "itch://grafxkid.itch.io/cave-tileset/2936187", "71d5b339b0b01f4a24bddc9d5c82ad78d3a250d744c954fd4cfa77032c7c09b2", {
         "background.png": "Cave Tileset/_Complete_static_BG_(288 x 208).png", "gray-terrain.png": "Cave Tileset/Gray_Tile_Terrain (16 x 16).png",
@@ -400,8 +402,8 @@ def add_backup_biome_stack(archive_dir: Path | None) -> None:
         manifest["packs"].append({"id": pack.id, "author": pack.author, "source": pack.source, "archive": pack.archive, "archiveSha256": pack.sha256, "license": pack.license, "assets": assets})
 
     for derived_id, source_id, source_names, low, high in (
-        ("pixel-thornwood", "pixel-adventure", ("terrain.png", "background-purple.png", "box-1.png", "box-2.png", "box-3.png"), (8, 18, 22), (116, 232, 148)),
-        ("pixel-sunscar", "pixel-adventure", ("terrain.png", "background-yellow.png", "box-1.png", "box-2.png", "box-3.png"), (74, 24, 18), (255, 190, 68)),
+        ("pixel-thornwood", "pixel-adventure", ("terrain.png", "background-purple.png", "box-1.png", "box-2.png", "box-3.png", "apple-sheet.png", "cherries-sheet.png", "orange-sheet.png"), (8, 18, 22), (116, 232, 148)),
+        ("pixel-sunscar", "pixel-adventure", ("terrain.png", "background-yellow.png", "box-1.png", "box-2.png", "box-3.png", "apple-sheet.png", "cherries-sheet.png", "orange-sheet.png"), (74, 24, 18), (255, 190, 68)),
         ("grafx-ember", "grafx-cave", ("background.png", "gray-terrain.png", "brown-terrain.png", "scaffolding.png"), (38, 5, 12), (255, 105, 44)),
         ("space-skyglass", "space-cave", ("tileset.png",), (24, 13, 69), (113, 244, 255)),
     ):
@@ -428,6 +430,18 @@ def add_backup_biome_stack(archive_dir: Path | None) -> None:
         ("space-skyglass", "tileset.png", "crystal-b.png", (128, 96, 144, 112)),
         ("moon-graveyard", "brush.png", "brush-a.png", (0, 0, 112, 96)),
         ("moon-graveyard", "brush.png", "brush-b.png", (112, 96, 224, 192)),
+        ("kings-pigs", "diamond-sheet.png", "diamond.png", (0, 0, 18, 14)),
+        ("pixel-adventure", "apple-sheet.png", "apple.png", (0, 0, 32, 32)),
+        ("pixel-adventure", "cherries-sheet.png", "cherries.png", (0, 0, 32, 32)),
+        ("pixel-adventure", "orange-sheet.png", "orange.png", (0, 0, 32, 32)),
+        ("pixel-thornwood", "apple-sheet.png", "apple.png", (0, 0, 32, 32)),
+        ("pixel-thornwood", "cherries-sheet.png", "cherries.png", (0, 0, 32, 32)),
+        ("pixel-thornwood", "orange-sheet.png", "orange.png", (0, 0, 32, 32)),
+        ("pixel-sunscar", "apple-sheet.png", "apple.png", (0, 0, 32, 32)),
+        ("pixel-sunscar", "cherries-sheet.png", "cherries.png", (0, 0, 32, 32)),
+        ("pixel-sunscar", "orange-sheet.png", "orange.png", (0, 0, 32, 32)),
+        ("grafx-cave", "scaffolding.png", "barrel.png", (64, 160, 96, 176)),
+        ("grafx-ember", "scaffolding.png", "barrel.png", (64, 160, 96, 176)),
         ("seasonal", "snow-terrain.png", "snow-bank.png", (48, 16, 96, 48)),
         ("seasonal", "snow-terrain.png", "snow-rock.png", (48, 48, 96, 80)),
         ("seasonal", "lava.png", "lava-vent.png", (0, 0, 16, 32)),

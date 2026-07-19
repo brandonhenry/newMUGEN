@@ -9,6 +9,7 @@ import { STORY_SURFACE_LEVEL_BLUEPRINTS } from '../src/story/levelBlueprints';
 import type { StoryLevelBlueprint, StoryLevelBlueprintV2 } from '../src/story/levelTypes';
 import { STORY_TERRAIN_KITS_BY_ID, storyTerrainGrammarCoverageErrors } from '../src/story/terrainGrammar';
 import { STORY_BIOME_VISUAL_SETS, storyBiomeVisualSetCoverageErrors } from '../src/story/biomeVisualSets';
+import { STORY_BIOME_GAMEPLAY_ASSET_CONTRACTS } from '../src/story/biomeGameplayAssets';
 
 const repoRoot = resolve(import.meta.dirname, '..');
 const outputRoot = join(repoRoot, 'tmp', 'level-director');
@@ -42,7 +43,7 @@ async function writeJson(name: string, value: unknown) {
 
 async function inventory() {
   const terrainKits = Object.values(STORY_TERRAIN_KITS_BY_ID);
-  const payload = { generatedAt: new Date().toISOString(), coverage: storyLevelAssetCoverage(), assets: STORY_LEVEL_ASSET_REGISTRY, terrainKits };
+  const payload = { generatedAt: new Date().toISOString(), coverage: storyLevelAssetCoverage(), assets: STORY_LEVEL_ASSET_REGISTRY, terrainKits, gameplayAssets: STORY_BIOME_GAMEPLAY_ASSET_CONTRACTS };
   const jsonPath = await writeJson('asset-inventory.json', payload);
   const rows = STORY_LEVEL_ASSET_REGISTRY.map((asset) => `<li><img src="../../public/story/worlds/${asset.asset.replace(/^world:/, '')}" alt=""><span><strong>${asset.id}</strong><small>${asset.biomes.join(', ')} · ${asset.roles.join(', ')} · ${asset.tags.join(', ')}</small></span></li>`).join('');
   const htmlPath = join(outputRoot, 'asset-inventory.html');
@@ -106,6 +107,11 @@ function validateAll() {
     if (STORY_TERRAIN_KITS_BY_ID[visualSet.terrainKitId]?.visualSetId !== visualSet.id) failures.push(`visual-set-kit:${visualSet.id}`);
     if (STORY_LEVEL_ASSET_REGISTRY.filter((asset) => asset.biomes.includes(visualSet.biomeId) && asset.family === visualSet.propFamily).length < 3) failures.push(`visual-set-props:${visualSet.id}`);
   }
+  for (const contract of Object.values(STORY_BIOME_GAMEPLAY_ASSET_CONTRACTS)) {
+    const visualSet = STORY_BIOME_VISUAL_SETS[contract.visualSetId];
+    if (!visualSet || contract.containers.length === 0) failures.push(`gameplay-asset-contract:${contract.visualSetId}`);
+    for (const asset of [...contract.containers, ...contract.pickups, ...contract.traversal]) if (!visualSet?.sourcePacks.includes(asset.sourcePack)) failures.push(`gameplay-asset-family:${contract.visualSetId}:${asset.id}`);
+  }
   return { valid: failures.length === 0, failures, blueprints: allBlueprints().length, surfaces: Object.keys(STORY_SURFACE_LEVEL_BLUEPRINTS).length, chunks: STORY_ENDLESS_CHUNK_BLUEPRINTS.length, assetCoverage };
 }
 
@@ -117,6 +123,7 @@ async function sample() {
   let fallbacks = 0;
   const entranceTiers = [0, 0, 0];
   const visualSets: Record<string, number> = {};
+  const containerOutcomes: Record<string, number> = {};
   for (const biome of STORY_ADVENTURE_REGION_IDS) for (let index = 0; index < count; index += 1) {
     const floorNumber = [1, 2, 3, 4, 8, 100, Number.MAX_SAFE_INTEGER][index % 7];
     const floor = generateAdventureFloor(biome, `level-director-${index}`, floorNumber);
@@ -124,6 +131,7 @@ async function sample() {
     if (floor.usedFallback) fallbacks += 1;
     if (floor.entranceTier !== undefined) entranceTiers[floor.entranceTier] += 1;
     if (floor.visualSetId) visualSets[floor.visualSetId] = (visualSets[floor.visualSetId] ?? 0) + 1;
+    for (const container of floor.containers) containerOutcomes[container.outcome] = (containerOutcomes[container.outcome] ?? 0) + 1;
     failures.push(...floor.validationFailures.map((failure) => `${biome}:${index}:${failure}`));
     if ((floor.intent === 'harvest' || floor.intent === 'exploration') && floor.enemySpawns.length > 0) failures.push(`${biome}:${index}:peaceful-floor-enemies`);
     if (!floor.platforms.some((platform) => platform.terrainRole === 'wall')) failures.push(`${biome}:${index}:missing-structural-terrain`);
@@ -131,7 +139,7 @@ async function sample() {
     if (floor.version >= 7 && STORY_BIOME_VISUAL_SETS[floor.visualSetId ?? '']?.terrainKitId !== floor.terrainKitId) failures.push(`${biome}:${index}:mixed-visual-set`);
     signatures.add(floor.rooms.filter((room) => room.critical).sort((a, b) => a.column - b.column || a.row - b.row).map((room) => `${room.column}:${room.row}:${room.templateId}`).join('|'));
   }
-  const result = { valid: failures.length === 0 && fallbacks === 0 && entranceTiers.every((value) => value > 0) && Object.keys(visualSets).length === 16, seeds: count * STORY_ADVENTURE_REGION_IDS.length, fallbacks, failures, uniqueSignatures: signatures.size, intents, entranceTiers, visualSets };
+  const result = { valid: failures.length === 0 && fallbacks === 0 && entranceTiers.every((value) => value > 0) && Object.keys(visualSets).length === 16 && ['empty', 'junk', 'coins', 'material', 'consumable'].every((outcome) => (containerOutcomes[outcome] ?? 0) > 0), seeds: count * STORY_ADVENTURE_REGION_IDS.length, fallbacks, failures, uniqueSignatures: signatures.size, intents, entranceTiers, visualSets, containerOutcomes };
   await writeJson(`sample-${count}.json`, result);
   return result;
 }

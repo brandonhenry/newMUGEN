@@ -23,6 +23,7 @@ import { STORY_GROUNDED_ACTOR_CENTER_Y, storyAvatarGroundingOffsetForWorld, stor
 import { STORY_CENTRAL_DOOR_SCALE, STORY_MODE_DOOR_DISPLAY_SIZE, storyCentralModeDoorCenterY, storyPortalDoorFrame, type StoryBiomeDoorFrame } from './biomeDoors';
 import { createStoryDepthEnvironment } from './depthEnvironment';
 import { storyBiomeVisualSet, storyPrimaryBiomeVisualSet } from './biomeVisualSets';
+import { storyGameplayVisual, storyTraversalGameplayVisual } from './biomeGameplayAssets';
 import { connectStoryHubMultiplayer, readOrCreateStoryHubGuestIdentity, readStoryHubOnlinePreference, STORY_HUB_CHALLENGE_TIMEOUT_MS, writeStoryHubOnlinePreference, type StoryHubMultiplayerSession } from './hubMultiplayer';
 import { KORE_CENTRAL_HUB } from './hubData';
 import { storyPlatformSurfacePlacement } from './platformGrounding';
@@ -2520,7 +2521,7 @@ function devPreviewHub(hub: StoryHubDefinition): StoryHubDefinition {
   return { ...hub, spawn: [THREE.MathUtils.clamp(previewX, hub.bounds.minX + 1, hub.bounds.maxX - 1), Number.isFinite(previewY) ? previewY : hub.spawn[1]] };
 }
 
-function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGeneratedFloor | null, exitLocked: boolean, pressureRank: number, pressureHunterAnchor: number | null): StoryHubDefinition {
+function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGeneratedFloor | null, exitLocked: boolean, pressureRank: number, pressureHunterAnchor: number | null, claimedContainerIds: string[] = []): StoryHubDefinition {
   if (!floor) return surface;
   const visualSet = storyBiomeVisualSet(floor.visualSetId) ?? storyPrimaryBiomeVisualSet(floor.worldId);
   const pressure = storyEndlessPressure(floor.parTimeSeconds + Math.max(0, pressureRank - 1) * 30, floor.parTimeSeconds);
@@ -2587,6 +2588,31 @@ function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGenerate
       size: selected.footprint, mirrored: storyEndlessHash(`${floor.seed}:mirror:${index}`) % 3 === 0, opacity: 0.92
     }];
   });
+  const claimedContainers = new Set(claimedContainerIds);
+  const availableContainers = floor.containers.filter((container) => !claimedContainers.has(container.id));
+  const containerProps = availableContainers.flatMap((container): StoryWorldPropDefinition[] => {
+    const visual = storyGameplayVisual(floor.visualSetId, container.visualId);
+    if (!visual) return [];
+    return [{
+      id: `${container.id}-visual`, asset: visual.asset, frame: [0, 0, visual.pixelSize[0], visual.pixelSize[1]], atlasSize: visual.pixelSize,
+      position: [container.position[0], container.position[1], -1.72], size: visual.footprint, mirrored: false, opacity: 1
+    }];
+  });
+  const traversalProps = floor.traversal.flatMap((piece): StoryWorldPropDefinition[] => {
+    const visual = storyTraversalGameplayVisual(floor.visualSetId, piece.kind);
+    if (!visual) return [];
+    return [{
+      id: `${piece.id}-${visual.id}`, asset: visual.asset, frame: [0, 0, visual.pixelSize[0], visual.pixelSize[1]], atlasSize: visual.pixelSize,
+      position: [piece.position[0], piece.position[1], -1.78], size: visual.footprint, mirrored: false, opacity: 0.98
+    }];
+  });
+  const containerInteractables = availableContainers.map((container) => ({
+    id: container.id, kind: 'chest' as const, label: container.label, subtitle: 'May hold supplies, junk, or nothing.', position: container.position
+  }));
+  const containerPortals: StoryPortalDefinition[] = containerInteractables.map((container) => ({
+    id: `endless-cache:${container.id}`, label: container.label, subtitle: container.subtitle, destination: floor.worldId,
+    position: container.position, size: [2.1, 2.2], accent: visualSet.theme === 'underworld' ? '#ff9b5f' : '#ffe071', kind: 'chest'
+  }));
   const levelMeta = floor.levelMeta ? { ...floor.levelMeta, assetResolution } : undefined;
   return {
     ...surface,
@@ -2610,10 +2636,11 @@ function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGenerate
     portals: [
       { id: 'endless-abandon', label: 'Abandon Descent', subtitle: 'Lose this chapter\'s unbanked haul', destination: floor.worldId, position: [floor.bounds.minX + 2.4, floor.spawn[1]], size: [2.8, 3.4], accent: '#ff5d69', kind: 'adventure-gate' },
       { id: `endless-next:${floor.floorNumber + 1}`, label: floor.boss ? 'Claim Chapter Reward' : `Descend to Floor ${floor.floorNumber + 1}`, subtitle: exitLocked ? 'Clear required encounters first' : floor.boss ? 'Bank rewards and choose a boon' : 'Continue deeper', destination: floor.worldId, position: floor.exit, size: [2.8, 3.4], accent: '#b8a8ff', kind: 'adventure-gate', locked: exitLocked },
-      ...(eventPortal ? [eventPortal] : [])
+      ...(eventPortal ? [eventPortal] : []),
+      ...containerPortals
     ],
     environment: createStoryDepthEnvironment(createStoryBiomeVisualSetEnvironment(visualSet.theme, visualSet.id), { kind: floor.boss ? 'crypt' : 'cave', underwater: false }),
-    props: generatedProps,
+    props: [...generatedProps, ...containerProps, ...traversalProps],
     landmarks: floor.rooms.filter((room) => room.optional || room.templateKind === 'boss').map((room) => ({
       id: `${room.id}-landmark`, label: room.templateKind === 'boss' ? 'Challenger Arena' : room.hidden ? 'Hidden Branch' : floor.intent === 'harvest' ? 'Resource Grove' : 'Optional Route',
       subtitle: room.hidden ? 'A rewarding route lies beyond the critical path' : floor.intent === 'harvest' ? 'A dense pocket of biome resources' : 'Read the room before committing',
@@ -2623,7 +2650,7 @@ function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGenerate
     enemySpawns: [...floor.enemySpawns, ...hunters],
     hazards,
     traversal: floor.traversal,
-    interactables: eventInteractable ? [eventInteractable] : [],
+    interactables: [...(eventInteractable ? [eventInteractable] : []), ...containerInteractables],
     resourceNodes: createEndlessFloorResourceNodes(floor.worldId, floor),
     levelMeta,
     musicPhase: floor.intent === 'boss' ? 'elite' : floor.intent === 'harvest' ? 'safe' : floor.intent === 'exploration' ? 'mystery' : pressure.rank > 0 ? 'tension' : floor.chapterFloor === 3 ? 'mystery' : 'explore',
@@ -2696,7 +2723,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const endlessEncounterProgress = endlessHubId ? encounterProgressByHub[endlessHubId] ?? makeStoryEncounterProgress() : makeStoryEncounterProgress();
   const endlessExitLocked = Boolean(generatedFloor?.encounters.some((encounter) => !endlessEncounterProgress.resolvedZoneIds.includes(encounter.id)));
   const floorPressure = generatedFloor ? storyEndlessPressure(floorElapsedSeconds, generatedFloor.parTimeSeconds) : null;
-  const activeHub = useMemo(() => createEndlessFloorHub(baseHub, generatedFloor, endlessExitLocked, floorPressure?.rank ?? 0, pressureHunterAnchor), [baseHub, endlessExitLocked, floorPressure?.rank, generatedFloor, pressureHunterAnchor]);
+  const activeHub = useMemo(() => createEndlessFloorHub(baseHub, generatedFloor, endlessExitLocked, floorPressure?.rank ?? 0, pressureHunterAnchor, endlessRun?.ledger.cacheIds ?? []), [baseHub, endlessExitLocked, endlessRun?.ledger.cacheIds, floorPressure?.rank, generatedFloor, pressureHunterAnchor]);
   const [nearbyPortal, setNearbyPortal] = useState<StoryPortalDefinition | null>(null);
   const [pauseOpen, setPauseOpen] = useState(false);
   const [tutorialOpen, setTutorialOpen] = useState(false);
@@ -3664,6 +3691,31 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       if (endlessRun.resolvedEventIds.includes(event.id)) return;
       if (event.kind === 'depth-trader') { setActiveTraderEventId(event.id); return; }
       setPendingEventChoiceId(event.id);
+      return;
+    }
+    if (portal.id.startsWith('endless-cache:') && endlessRun && generatedFloor) {
+      if (partyInstance && partyInstance.leaderSessionId !== localSessionId) return;
+      const container = generatedFloor.containers.find((candidate) => candidate.id === portal.id.slice('endless-cache:'.length));
+      if (!container || endlessRun.ledger.cacheIds.includes(container.id)) return;
+      setEndlessRun((current) => {
+        if (!current || current.ledger.cacheIds.includes(container.id)) return current;
+        const materials = { ...current.ledger.materials };
+        const consumables = { ...current.ledger.consumables };
+        if (container.materialId && container.materialQuantity) materials[container.materialId] = (materials[container.materialId] ?? 0) + container.materialQuantity;
+        if (container.consumableId) consumables[container.consumableId] = (consumables[container.consumableId] ?? 0) + 1;
+        return {
+          ...current,
+          ledger: {
+            ...current.ledger,
+            routeCoins: current.ledger.routeCoins + (container.rewardCoins ?? 0),
+            materials,
+            consumables,
+            cacheIds: [...current.ledger.cacheIds, container.id]
+          }
+        };
+      });
+      setChallengeNotice({ id: container.id, text: container.resultText });
+      analyticsRef.current?.('adventure_reward_collected', { world_id: endlessRun.worldId, reward_type: `endless_${container.outcome}`, floor: generatedFloor.floorNumber });
       return;
     }
     if (portal.id.startsWith('endless-next:') && endlessRun && generatedFloor) {

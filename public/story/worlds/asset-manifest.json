@@ -454,6 +454,13 @@
           "width": 16,
           "height": 32,
           "sha256": "01e42a89359c00c5003fd154b8601ef6f08cf5f7468af1088f9002110ef40bf9"
+        },
+        {
+          "file": "grafx-cave/barrel.png",
+          "sourceFile": "runtime crop (64, 160, 96, 176) of grafx-cave/scaffolding.png",
+          "width": 32,
+          "height": 16,
+          "sha256": "bc9be2bc03d2e6518a2c40bd1e7a0d07c70721d2bccd4ee2ea1f6fa2f8ee9ba5"
         }
       ]
     },
@@ -514,6 +521,13 @@
           "width": 16,
           "height": 32,
           "sha256": "aa8a9c24a0d9a9422be9ccbb727da403af53c18f72b62f32017789db13934754"
+        },
+        {
+          "file": "grafx-ember/barrel.png",
+          "sourceFile": "runtime crop (64, 160, 96, 176) of grafx-ember/scaffolding.png",
+          "width": 32,
+          "height": 16,
+          "sha256": "b9bdee9de454d6343449e804b31d8e1e1774e4a49a2c935627d13b61de8bed45"
         }
       ]
     },
@@ -559,6 +573,20 @@
           "width": 22,
           "height": 16,
           "sha256": "990ea52c3dc9c4f5e48b866dae83dc689fadf6a8da9aeef44a23ef6b5d2850ff"
+        },
+        {
+          "file": "kings-pigs/diamond-sheet.png",
+          "sourceFile": "Sprites/12-Live and Coins/Big Diamond Idle (18x14).png",
+          "width": 180,
+          "height": 14,
+          "sha256": "fe3dac34e454e9105da42031b9043fab44d742a8d3ad2a05a1099ab6fea5dec1"
+        },
+        {
+          "file": "kings-pigs/diamond.png",
+          "sourceFile": "runtime crop (0, 0, 18, 14) of kings-pigs/diamond-sheet.png",
+          "width": 18,
+          "height": 14,
+          "sha256": "89a3cee35152f897b00f582bde591a14bb70e09d18b83ab358dc9acd6a14e7f6"
         }
       ]
     },
@@ -850,6 +878,48 @@
           "width": 28,
           "height": 24,
           "sha256": "cbe49ddcedb3bab6c73c0857b9ae36a3b4142835ca7bdd941ce53eb93580e15e"
+        },
+        {
+          "file": "pixel-adventure/apple-sheet.png",
+          "sourceFile": "Free/Items/Fruits/Apple.png",
+          "width": 544,
+          "height": 32,
+          "sha256": "6eb15ba7406f1946fe8168f11f6f4ed610e259e6ca1c11fe3c85abaff4e46a00"
+        },
+        {
+          "file": "pixel-adventure/cherries-sheet.png",
+          "sourceFile": "Free/Items/Fruits/Cherries.png",
+          "width": 544,
+          "height": 32,
+          "sha256": "f6dc79219c62b0ce8b2c53c66022e26d94e13b06cc81d23ffd464d39a751a9ec"
+        },
+        {
+          "file": "pixel-adventure/orange-sheet.png",
+          "sourceFile": "Free/Items/Fruits/Orange.png",
+          "width": 544,
+          "height": 32,
+          "sha256": "70a473f0e9b7daaad720ff262f73ad9ac6f1e279aa83e68d72bdfd9b9fa2c9fe"
+        },
+        {
+          "file": "pixel-adventure/apple.png",
+          "sourceFile": "runtime crop (0, 0, 32, 32) of pixel-adventure/apple-sheet.png",
+          "width": 32,
+          "height": 32,
+          "sha256": "04af67eb4ccdcd674a2032c71230a68651e3b07c94ca1ca47a975a1bf1c057e1"
+        },
+        {
+          "file": "pixel-adventure/cherries.png",
+          "sourceFile": "runtime crop (0, 0, 32, 32) of pixel-adventure/cherries-sheet.png",
+          "width": 32,
+          "height": 32,
+          "sha256": "40e3fd448e7235aa854e809885d9e2a491bf4cbedd699a11d52bec96887d9b6d"
+        },
+        {
+          "file": "pixel-adventure/orange.png",
+          "sourceFile": "runtime crop (0, 0, 32, 32) of pixel-adventure/orange-sheet.png",
+          "width": 32,
+          "height": 32,
+          "sha256": "0f753c5aa4871b1997e4cd945094d39dfb9390b6afb324ac19ebb9758dfad27e"
         }
       ]
     },
@@ -896,6 +966,48 @@
           "width": 28,
           "height": 24,
           "sha256": "217766c5dea8c9a962442c70fe6cabadde12adc26a35753367e932ee9612a183"
+        },
+        {
+          "file": "pixel-sunscar/apple-sheet.png",
+          "sourceFile": "palette derivative of pixel-adventure/apple-sheet.png",
+          "width": 544,
+          "height": 32,
+          "sha256": "c12e9940449e89153da9b9e196672b663e2646a69440539ceddddaaa1530a01e"
+        },
+        {
+          "file": "pixel-sunscar/cherries-sheet.png",
+          "sourceFile": "palette derivative of pixel-adventure/cherries-sheet.png",
+          "width": 544,
+          "height": 32,
+          "sha256": "7c78d87fa49b2bf67a68d9c42dda912fc49d71c2b8040a5e45f50aca2c1a8ba5"
+        },
+        {
+          "file": "pixel-sunscar/orange-sheet.png",
+          "sourceFile": "palette derivative of pixel-adventure/orange-sheet.png",
+          "width": 544,
+          "height": 32,
+          "sha256": "f0b0cd6d2142c8369ef633a35d57b12a776afdf3ef24cd85135fb59e1c424363"
+        },
+        {
+          "file": "pixel-sunscar/apple.png",
+          "sourceFile": "runtime crop (0, 0, 32, 32) of pixel-sunscar/apple-sheet.png",
+          "width": 32,
+          "height": 32,
+          "sha256": "2b097e0d7df4691d8337ef8d4ac8d1827bd5ca0564eeacc5c6770e1ca5e6cf02"
+        },
+        {
+          "file": "pixel-sunscar/cherries.png",
+          "sourceFile": "runtime crop (0, 0, 32, 32) of pixel-sunscar/cherries-sheet.png",
+          "width": 32,
+          "height": 32,
+          "sha256": "0200cc20b27662c2dd8fcc2c0df5470cad8b61dad483e595bcc8b00dcde5f151"
+        },
+        {
+          "file": "pixel-sunscar/orange.png",
+          "sourceFile": "runtime crop (0, 0, 32, 32) of pixel-sunscar/orange-sheet.png",
+          "width": 32,
+          "height": 32,
+          "sha256": "077fe628c52d21bab2f8f0048ef29d49cabf4b899dfd1a2bb6a2092c01c5f479"
         }
       ]
     },
@@ -942,6 +1054,48 @@
           "width": 28,
           "height": 24,
           "sha256": "0644ca99c30e9f7b59199517372319b04b5266fc0d7a16a76429eb7381f91d08"
+        },
+        {
+          "file": "pixel-thornwood/apple-sheet.png",
+          "sourceFile": "palette derivative of pixel-adventure/apple-sheet.png",
+          "width": 544,
+          "height": 32,
+          "sha256": "505737703bce452829acf4b1ef0474f0528367e5bb167a2e1cb4a1764d34813b"
+        },
+        {
+          "file": "pixel-thornwood/cherries-sheet.png",
+          "sourceFile": "palette derivative of pixel-adventure/cherries-sheet.png",
+          "width": 544,
+          "height": 32,
+          "sha256": "e0925d4158a382f93fdbb72a351c071fe6d6daf900d6987cd04cd9ac21c0f0b5"
+        },
+        {
+          "file": "pixel-thornwood/orange-sheet.png",
+          "sourceFile": "palette derivative of pixel-adventure/orange-sheet.png",
+          "width": 544,
+          "height": 32,
+          "sha256": "6d6d5faf70259bc8322260a7f276001b7c0364d2299c8cd14184f4c3de879a5b"
+        },
+        {
+          "file": "pixel-thornwood/apple.png",
+          "sourceFile": "runtime crop (0, 0, 32, 32) of pixel-thornwood/apple-sheet.png",
+          "width": 32,
+          "height": 32,
+          "sha256": "3ada478da0ac958f84b46a2e5207f2391bce81939ebd558141241e829dcb45f5"
+        },
+        {
+          "file": "pixel-thornwood/cherries.png",
+          "sourceFile": "runtime crop (0, 0, 32, 32) of pixel-thornwood/cherries-sheet.png",
+          "width": 32,
+          "height": 32,
+          "sha256": "c14e1540c97a49a23da9cac5cd9ff3c68a4268f62f6c87a0d8922b98cd302f63"
+        },
+        {
+          "file": "pixel-thornwood/orange.png",
+          "sourceFile": "runtime crop (0, 0, 32, 32) of pixel-thornwood/orange-sheet.png",
+          "width": 32,
+          "height": 32,
+          "sha256": "5b94a3f758f3874589f888649fd713567ba9115ac9433e8edb79c71049e41e71"
         }
       ]
     },

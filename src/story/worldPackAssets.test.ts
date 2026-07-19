@@ -39,7 +39,7 @@ describe('play-mode world pack pipeline', () => {
 
   it('verifies every optimized PNG by dimensions and SHA-256', () => {
     expect(integrity.algorithm).toBe('sha256');
-    expect(Object.keys(integrity.files)).toHaveLength(218);
+    expect(Object.keys(integrity.files)).toHaveLength(240);
     for (const pack of manifest.packs) {
       for (const asset of pack.assets) {
         const path = resolve(root, asset.file);
