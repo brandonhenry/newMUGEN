@@ -96,12 +96,17 @@ function scoreAsset(candidate: StoryLevelAssetDefinition, biomeId: BiomeId, tags
   return score;
 }
 
-export function resolveStoryLevelAsset(biomeId: BiomeId, slot: Pick<StoryLevelSlot, 'semanticTags'>, role?: StoryLevelAssetRole, salt = 0) {
+export function resolveStoryLevelAsset(biomeId: BiomeId, slot: Pick<StoryLevelSlot, 'semanticTags'>, role?: StoryLevelAssetRole, salt = 0, diversify = false) {
   const ranked = STORY_LEVEL_ASSET_REGISTRY
     .map((candidate) => ({ candidate, score: scoreAsset(candidate, biomeId, slot.semanticTags, role) }))
     .filter(({ score }) => Number.isFinite(score))
     .sort((left, right) => right.score - left.score || left.candidate.id.localeCompare(right.candidate.id));
   if (ranked.length === 0) return undefined;
+  if (diversify) {
+    const compatible = role ? ranked.filter(({ candidate }) => candidate.roles.includes(role)) : ranked;
+    const pool = compatible.length > 0 ? compatible : ranked;
+    return pool[Math.abs(salt) % pool.length].candidate;
+  }
   const bestScore = ranked[0].score;
   const best = ranked.filter(({ score }) => score === bestScore);
   return best[Math.abs(salt) % best.length].candidate;

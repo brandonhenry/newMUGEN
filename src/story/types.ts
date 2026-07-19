@@ -529,6 +529,8 @@ export type StoryRoomTemplateDefinition = {
   connectors: StoryRoomConnector[];
   platformSockets: Array<[number, number, number]>;
   structureSockets: Array<[number, number, number, number]>;
+  /** Chunk-local air volumes carved from the solid terrain envelope. */
+  carveSockets: Array<[number, number, number, number]>;
   enemySockets: Array<[number, number]>;
   hazardSockets: Array<[number, number]>;
   rewardSockets: Array<[number, number]>;
@@ -552,6 +554,7 @@ export type StoryGeneratedRoom = {
   protectedCorridor: [number, number, number, number];
   platformSockets: Array<[number, number, number]>;
   structureSockets: Array<[number, number, number, number]>;
+  carveSockets: Array<[number, number, number, number]>;
   enemyLanes: Array<[number, number]>;
   hazardSockets: Array<[number, number]>;
   rewardAlcoves: Array<[number, number]>;
@@ -577,7 +580,7 @@ export type StoryFloorPressureState = {
 export type StoryFloorIntent = 'combat' | 'harvest' | 'exploration' | 'boss';
 
 export type StoryGeneratedFloor = {
-  version: 3 | 4;
+  version: 3 | 4 | 5;
   worldId: Exclude<StoryAdventureWorldId, 'world-route'>;
   seed: string;
   floorNumber: number;
@@ -588,14 +591,17 @@ export type StoryGeneratedFloor = {
   usedFallback: boolean;
   validationFailures: string[];
   grid: { columns: number; rows: number };
-  bounds: { minX: number; maxX: number; floorY: number };
+  bounds: { minX: number; maxX: number; floorY: number; minY?: number; maxY?: number };
   spawn: [number, number];
   exit: [number, number];
+  entranceTier?: 0 | 1 | 2;
+  exitTier?: 0 | 1 | 2;
   entranceRoomId: string;
   exitRoomId: string;
   criticalRoomIds: string[];
   rooms: StoryGeneratedRoom[];
   platforms: StoryPlatformDefinition[];
+  terrainTiles?: StoryTerrainTileDefinition[];
   hazards: StoryHazardDefinition[];
   traversal: StoryTraversalPieceDefinition[];
   encounters: StoryEncounterZoneDefinition[];
@@ -618,7 +624,7 @@ export type StoryRunRewardLedger = {
 
 export type StoryEndlessRunState = {
   version: 3 | 4;
-  generationVersion?: 3 | 4;
+  generationVersion?: 3 | 4 | 5;
   worldId: Exclude<StoryAdventureWorldId, 'world-route'>;
   seed: string;
   floorNumber: number;
@@ -747,10 +753,11 @@ export type StoryAdventureMapDefinition = {
   order: number;
   name: string;
   subtitle: string;
-  bounds: { minX: number; maxX: number; floorY: number };
+  bounds: { minX: number; maxX: number; floorY: number; minY?: number; maxY?: number };
   spawn: [number, number];
   checkpoint: [number, number];
   platforms: StoryPlatformDefinition[];
+  terrainTiles?: StoryTerrainTileDefinition[];
   portals: StoryPortalDefinition[];
   landmarks: StoryWorldLandmarkDefinition[];
   props: StoryWorldPropDefinition[];
@@ -804,6 +811,37 @@ export type StoryPlatformDefinition = {
   terrainRole?: 'ground' | 'ledge' | 'wall' | 'ceiling';
   /** Stable index into the biome surface's authored atlas variants. */
   surfaceVariant?: number;
+  /** Terrain-grid colliders render through terrainTiles instead of per collider. */
+  visual?: boolean;
+};
+
+export type StoryTerrainTileRole =
+  | 'fill'
+  | 'top'
+  | 'underside'
+  | 'left-wall'
+  | 'right-wall'
+  | 'outer-top-left'
+  | 'outer-top-right'
+  | 'outer-bottom-left'
+  | 'outer-bottom-right'
+  | 'inner-top-left'
+  | 'inner-top-right'
+  | 'inner-bottom-left'
+  | 'inner-bottom-right'
+  | 'connector-lip';
+
+export type StoryTerrainTileDefinition = {
+  id: string;
+  position: [number, number];
+  size: [number, number];
+  column: number;
+  row: number;
+  neighborMask: number;
+  role: StoryTerrainTileRole;
+  surfaceVariant: number;
+  rotation: 0 | 90 | 180 | 270;
+  mirrored: boolean;
 };
 
 export type StoryHubDefinition = {
@@ -811,8 +849,9 @@ export type StoryHubDefinition = {
   name: string;
   subtitle: string;
   spawn: [number, number];
-  bounds: { minX: number; maxX: number; floorY: number };
+  bounds: { minX: number; maxX: number; floorY: number; minY?: number; maxY?: number };
   platforms: StoryPlatformDefinition[];
+  terrainTiles?: StoryTerrainTileDefinition[];
   portals: StoryPortalDefinition[];
   theme?: StoryWorldThemeId;
   environment?: StoryWorldEnvironmentDefinition;
@@ -833,11 +872,15 @@ export type StoryHubDefinition = {
   resourceNodes?: StoryResourceNodeDefinition[];
   levelMeta?: {
     blueprintId: string;
-    blueprintVersion: 1;
+    blueprintVersion: 1 | 2;
     generationVersion: number;
     seed: string;
     chunkIds: string[];
     witnessRoute: Array<[number, number]>;
     assetResolution: Array<{ slotId: string; assetId: string }>;
+    topologySignature?: string;
+    entranceTier?: 0 | 1 | 2;
+    exitTier?: 0 | 1 | 2;
+    witnessInputs?: Array<{ frames: number; horizontal: -1 | 0 | 1; jump?: boolean; down?: boolean }>;
   };
 };

@@ -6,7 +6,8 @@ import { STORY_LEVEL_ASSET_REGISTRY, storyLevelAssetCoverage } from '../src/stor
 import { STORY_ENDLESS_CHUNK_BLUEPRINTS, storyChunkCoverageErrors } from '../src/story/levelChunks';
 import { compileStoryLevelBlueprint, renderStoryLevelBlueprintSvg, validateStoryLevelBlueprint } from '../src/story/levelCompiler';
 import { STORY_SURFACE_LEVEL_BLUEPRINTS } from '../src/story/levelBlueprints';
-import type { StoryLevelBlueprintV1 } from '../src/story/levelTypes';
+import type { StoryLevelBlueprint, StoryLevelBlueprintV2 } from '../src/story/levelTypes';
+import { storyTerrainGrammarCoverageErrors } from '../src/story/terrainGrammar';
 
 const repoRoot = resolve(import.meta.dirname, '..');
 const outputRoot = join(repoRoot, 'tmp', 'level-director');
@@ -26,7 +27,7 @@ function allBlueprints() {
   return [...Object.values(STORY_SURFACE_LEVEL_BLUEPRINTS), ...STORY_ENDLESS_CHUNK_BLUEPRINTS];
 }
 
-function findBlueprint(id?: string): StoryLevelBlueprintV1 {
+function findBlueprint(id?: string): StoryLevelBlueprint {
   const blueprint = id ? allBlueprints().find((candidate) => candidate.id === id) : undefined;
   if (!blueprint) throw new Error(`Unknown blueprint: ${id || '(missing id)'}`);
   return blueprint;
@@ -53,7 +54,7 @@ async function scaffold() {
   const biome = option('biome', 'greenhollow');
   const template = structuredClone(STORY_SURFACE_LEVEL_BLUEPRINTS['greenhollow-arrival']);
   template.id = id;
-  template.biomeId = biome as StoryLevelBlueprintV1['biomeId'];
+  template.biomeId = biome as StoryLevelBlueprintV2['biomeId'];
   template.brief.heroLandmark = 'TODO hero landmark';
   template.brief.primaryMechanic = 'TODO primary mechanic';
   const draftRoot = join(repoRoot, 'src', 'story', 'levels', 'drafts');
@@ -76,9 +77,18 @@ function validateAll() {
     return result.errors.map((error) => `${blueprint.id}:${error}`);
   });
   failures.push(...storyChunkCoverageErrors());
-  const surfaceSignatures = new Set(Object.values(STORY_SURFACE_LEVEL_BLUEPRINTS).map((blueprint) => blueprint.geometry.filter((piece) => piece.kind === 'one-way').map((piece) => piece.rect.join(':')).join('|')));
+  failures.push(...storyTerrainGrammarCoverageErrors());
+  const surfaceSignatures = new Set(Object.values(STORY_SURFACE_LEVEL_BLUEPRINTS).map((blueprint) => blueprint.geometry.filter((piece) => piece.kind === 'carve').map((piece) => piece.rect.join(':')).join('|')));
   if (surfaceSignatures.size !== 32) failures.push(`surface-signatures:${surfaceSignatures.size}`);
-  return { valid: failures.length === 0, failures, blueprints: allBlueprints().length, surfaces: Object.keys(STORY_SURFACE_LEVEL_BLUEPRINTS).length, chunks: STORY_ENDLESS_CHUNK_BLUEPRINTS.length };
+  const assetCoverage = STORY_ADVENTURE_REGION_IDS.map((biomeId) => {
+    const used = new Set(Object.values(STORY_SURFACE_LEVEL_BLUEPRINTS)
+      .filter((blueprint) => blueprint.biomeId === biomeId)
+      .flatMap((blueprint) => compileStoryLevelBlueprint(blueprint, blueprint.id, 1).meta.assetResolution.map((entry) => entry.assetId)));
+    const approved = STORY_LEVEL_ASSET_REGISTRY.filter((asset) => asset.biomes.includes(biomeId) && asset.roles.some((role) => ['hero', 'structural', 'framing', 'foliage', 'clutter'].includes(role))).map((asset) => asset.id);
+    return { biomeId, used: used.size, approved: approved.length, gaps: approved.filter((id) => !used.has(id)) };
+  });
+  for (const coverage of assetCoverage) if (coverage.gaps.length > 0) failures.push(`asset-coverage:${coverage.biomeId}:${coverage.gaps.join(',')}`);
+  return { valid: failures.length === 0, failures, blueprints: allBlueprints().length, surfaces: Object.keys(STORY_SURFACE_LEVEL_BLUEPRINTS).length, chunks: STORY_ENDLESS_CHUNK_BLUEPRINTS.length, assetCoverage };
 }
 
 async function sample() {
@@ -87,17 +97,19 @@ async function sample() {
   const signatures = new Set<string>();
   const intents = { combat: 0, harvest: 0, exploration: 0, boss: 0 };
   let fallbacks = 0;
+  const entranceTiers = [0, 0, 0];
   for (const biome of STORY_ADVENTURE_REGION_IDS) for (let index = 0; index < count; index += 1) {
     const floorNumber = [1, 2, 3, 4, 8, 100, Number.MAX_SAFE_INTEGER][index % 7];
-    const floor = generateAdventureFloor(biome, `level-director-${index}`, floorNumber, 4);
+    const floor = generateAdventureFloor(biome, `level-director-${index}`, floorNumber, 5);
     intents[floor.intent] += 1;
     if (floor.usedFallback) fallbacks += 1;
+    if (floor.entranceTier !== undefined) entranceTiers[floor.entranceTier] += 1;
     failures.push(...floor.validationFailures.map((failure) => `${biome}:${index}:${failure}`));
     if ((floor.intent === 'harvest' || floor.intent === 'exploration') && floor.enemySpawns.length > 0) failures.push(`${biome}:${index}:peaceful-floor-enemies`);
     if (!floor.platforms.some((platform) => platform.terrainRole === 'wall')) failures.push(`${biome}:${index}:missing-structural-terrain`);
     signatures.add(floor.rooms.filter((room) => room.critical).sort((a, b) => a.column - b.column || a.row - b.row).map((room) => `${room.column}:${room.row}:${room.templateId}`).join('|'));
   }
-  const result = { valid: failures.length === 0 && fallbacks === 0, seeds: count * STORY_ADVENTURE_REGION_IDS.length, fallbacks, failures, uniqueSignatures: signatures.size, intents };
+  const result = { valid: failures.length === 0 && fallbacks === 0 && entranceTiers.every((value) => value > 0), seeds: count * STORY_ADVENTURE_REGION_IDS.length, fallbacks, failures, uniqueSignatures: signatures.size, intents, entranceTiers };
   await writeJson(`sample-${count}.json`, result);
   return result;
 }
@@ -123,7 +135,7 @@ async function report() {
 
 async function loadDraft() {
   if (!target) throw new Error('Draft path required');
-  return JSON.parse(await readFile(resolve(repoRoot, target), 'utf8')) as StoryLevelBlueprintV1;
+  return JSON.parse(await readFile(resolve(repoRoot, target), 'utf8')) as StoryLevelBlueprint;
 }
 
 let result: unknown;

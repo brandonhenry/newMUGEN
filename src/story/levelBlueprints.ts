@@ -1,5 +1,5 @@
 import type { StoryAdventureMapRole, StoryAdventureWorldId, StoryWorldThemeId } from './types';
-import type { StoryLevelBlueprintV1, StoryLevelDesignBrief } from './levelTypes';
+import type { StoryLevelBlueprintV2, StoryLevelDesignBrief, StoryLevelGeometryV2, StoryLevelSlot } from './levelTypes';
 
 type BiomeId = Exclude<StoryAdventureWorldId, 'world-route'>;
 
@@ -81,13 +81,23 @@ function snap(value: number) {
   return Math.round(value * 4) / 4;
 }
 
-function makeSurfaceBlueprint(biomeId: BiomeId, mapRole: StoryAdventureMapRole): StoryLevelBlueprintV1 {
+function makeSurfaceBlueprint(biomeId: BiomeId, mapRole: StoryAdventureMapRole): StoryLevelBlueprintV2 {
   const id = `${biomeId}-${mapRole}`;
   const signature = SURFACE_SIGNATURES[id];
   const platformCount = signature.heights.length;
-  const step = 88 / Math.max(1, platformCount - 1);
-  const platformXs = signature.heights.map((_, index) => snap(-44 + index * step));
+  const step = 96 / Math.max(1, platformCount - 1);
+  const platformXs = signature.heights.map((_, index) => snap(-48 + index * step));
   const difficulty = (ROLES.indexOf(mapRole) + 1) as 1 | 2 | 3 | 4;
+  const biomeIndex = BIOMES.indexOf(biomeId);
+  const roleIndex = ROLES.indexOf(mapRole);
+  const tiers: Array<0 | 1 | 2> = [((biomeIndex + roleIndex) % 3) as 0 | 1 | 2];
+  for (let index = 1; index < signature.heights.length; index += 1) {
+    const delta = signature.heights[index] > signature.heights[index - 1] + 0.35 ? 1 : signature.heights[index] < signature.heights[index - 1] - 0.35 ? -1 : (index + biomeIndex) % 2 ? 1 : -1;
+    let next = tiers[index - 1] + delta;
+    if (next < 0 || next > 2) next = tiers[index - 1] - delta;
+    tiers.push(Math.max(0, Math.min(2, next)) as 0 | 1 | 2);
+  }
+  const floorY = (tier: number) => 2 + tier * 10;
   const brief: StoryLevelDesignBrief = {
     emotion: signature.emotion,
     primaryMechanic: signature.mechanic,
@@ -102,57 +112,102 @@ function makeSurfaceBlueprint(biomeId: BiomeId, mapRole: StoryAdventureMapRole):
     : mapRole === 'mastery'
       ? ['entrance', 'combat', 'choice', 'traversal', 'boss', 'reward', 'exit'] as const
       : ['entrance', 'combat', 'choice', 'traversal', 'reward', 'exit'] as const;
-  const beatWidth = 104 / beatKinds.length;
   const beats = beatKinds.map((kind, index) => ({
     id: `${id}-beat-${kind}-${index + 1}`,
     kind,
-    bounds: [-52 + index * beatWidth, -52 + (index + 1) * beatWidth, 0, 14] as [number, number, number, number],
+    bounds: (() => {
+      const routeIndex = Math.min(platformCount - 1, Math.round(index / Math.max(1, beatKinds.length - 1) * (platformCount - 1)));
+      return [platformXs[routeIndex] - 7, platformXs[routeIndex] + 7, floorY(tiers[routeIndex]), floorY(tiers[routeIndex]) + 8] as [number, number, number, number];
+    })(),
     intensity: (kind === 'boss' ? 5 : kind === 'combat' ? 3 : kind === 'traversal' ? difficulty : kind === 'respite' || kind === 'entrance' ? 0 : 1) as 0 | 1 | 2 | 3 | 4 | 5,
     required: kind !== 'reward'
   }));
   const propTags = biomeId === 'greenhollow' ? ['settlement'] : biomeId === 'thornwood' ? ['tree'] : biomeId === 'ironroot' ? ['stone'] : biomeId === 'bonevault' ? ['tomb'] : biomeId === 'emberdeep' ? ['basalt'] : biomeId === 'frostpeak' ? ['snow'] : biomeId === 'sunscar' ? ['caravan'] : ['glass'];
-  const propSlots = platformXs.flatMap((x, platformIndex) => {
-    if (Math.abs(x) < 8) return [];
+  const propSlots: StoryLevelSlot[] = platformXs.flatMap((x, platformIndex) => {
     const clusterSide = x < 0 ? 'cluster-left' : 'cluster-right';
     const offsets = platformIndex % 2 === 0 ? [-2.5, 1.75] : [0];
     return offsets.map((offset, clusterIndex) => ({
       id: `${id}-prop-${platformIndex + 1}-${clusterIndex + 1}`,
       kind: 'prop' as const,
-      position: [snap(x + offset), 0] as [number, number],
+      position: [snap(x + offset), floorY(tiers[platformIndex]) + 0.82] as [number, number],
       semanticTags: [...propTags, clusterIndex === 0 && platformIndex % 3 === 0 ? 'framing' : clusterIndex === 1 ? 'foliage' : 'clutter', clusterSide, platformIndex === 0 ? 'entrance' : 'path'],
       route: 'ambient' as const
     }));
   });
+  const semanticGameplaySlots: StoryLevelSlot[] = platformXs.flatMap((x, platformIndex) => {
+    const y = floorY(tiers[platformIndex]) + 0.82;
+    return [
+      { id: `${id}-enemy-slot-${platformIndex + 1}`, kind: 'enemy-lane' as const, position: [x - 3, y] as [number, number], semanticTags: [propTags[0], 'readable-lane', `beat-${platformIndex + 1}`], route: 'critical' as const },
+      { id: `${id}-traversal-slot-${platformIndex + 1}`, kind: 'traversal' as const, position: [x, y + 2] as [number, number], semanticTags: [propTags[0], 'vertical-link', `beat-${platformIndex + 1}`], route: 'critical' as const },
+      { id: `${id}-resource-slot-${platformIndex + 1}`, kind: 'resource' as const, position: [x + (platformIndex % 2 ? 4 : -4), y] as [number, number], semanticTags: [propTags[0], 'harvest-cluster', `beat-${platformIndex + 1}`], route: 'ambient' as const },
+      ...(platformIndex > 0 && platformIndex < platformCount - 1 ? [{ id: `${id}-hazard-slot-${platformIndex + 1}`, kind: 'hazard' as const, position: [x + 3, y] as [number, number], semanticTags: [propTags[0], 'telegraphed', `beat-${platformIndex + 1}`], route: 'critical' as const }] : [])
+    ];
+  });
+  const optionalIndex = 1 + (biomeIndex * 3 + roleIndex) % Math.max(1, platformCount - 2);
+  const optionalTier = ((tiers[optionalIndex] + (tiers[optionalIndex] === 2 ? -1 : 1)) as 0 | 1 | 2);
+  const optionalY = floorY(optionalTier);
+  const npcIndices = [0, Math.floor((platformCount - 1) / 2), platformCount - 1];
+  const npcSlots: StoryLevelSlot[] = npcIndices.map((platformIndex, index) => {
+    const x = platformXs[platformIndex] + (platformIndex === optionalIndex ? -5 : 0);
+    return { id: `${id}-npc-slot-${index + 1}`, kind: 'npc', position: [x, floorY(tiers[platformIndex]) + 0.82], semanticTags: [propTags[0], 'safe-conversation', `npc-${index + 1}`], route: 'ambient' };
+  });
+  const geometry: StoryLevelGeometryV2[] = [];
+  for (let index = 0; index < platformCount; index += 1) {
+    const baseY = floorY(tiers[index]);
+    const roomWidth = snap(Math.max(16, Math.min(22, signature.widths[index] + 8)));
+    geometry.push({ id: `${id}-room-${index + 1}`, kind: 'carve', rect: [snap(platformXs[index] - roomWidth / 2), baseY, roomWidth, 8], surfaceIntent: 'air' });
+    geometry.push({ id: `${id}-ledge-${index + 1}`, kind: 'one-way', rect: [snap(platformXs[index] - Math.min(8, signature.widths[index]) / 2), baseY + 4.25 + (index % 2) * 0.5, Math.min(8, signature.widths[index]), 0.5], surfaceIntent: 'ledge' });
+    if (index === 0) continue;
+    const priorX = platformXs[index - 1];
+    const priorY = floorY(tiers[index - 1]);
+    const midpoint = snap((priorX + platformXs[index]) / 2);
+    if (priorY === baseY) {
+      geometry.push({ id: `${id}-corridor-${index}`, kind: 'carve', rect: [priorX, baseY + 2, platformXs[index] - priorX, 4], surfaceIntent: 'air' });
+    } else {
+      geometry.push({ id: `${id}-corridor-${index}-a`, kind: 'carve', rect: [priorX, priorY + 2, midpoint - priorX + 2, 4], surfaceIntent: 'air' });
+      geometry.push({ id: `${id}-shaft-${index}`, kind: 'carve', rect: [midpoint - 2, Math.min(priorY, baseY), 4, Math.abs(baseY - priorY) + 8], surfaceIntent: 'air' });
+      geometry.push({ id: `${id}-corridor-${index}-b`, kind: 'carve', rect: [midpoint - 2, baseY + 2, platformXs[index] - midpoint + 2, 4], surfaceIntent: 'air' });
+      const lowerY = Math.min(priorY, baseY);
+      geometry.push({ id: `${id}-shaft-step-${index}-1`, kind: 'one-way', rect: [midpoint - 2, lowerY + 4, 3.5, 0.5], surfaceIntent: 'ledge' });
+      geometry.push({ id: `${id}-shaft-step-${index}-2`, kind: 'one-way', rect: [midpoint - 1.5, lowerY + 7, 3.5, 0.5], surfaceIntent: 'ledge' });
+    }
+  }
+  const optionalWidth = 14 + (biomeIndex * ROLES.length + roleIndex) * 0.25;
+  geometry.push({ id: `${id}-optional-room`, kind: 'carve', rect: [snap(platformXs[optionalIndex] - optionalWidth / 2), optionalY, optionalWidth, 7], surfaceIntent: 'air' });
+  geometry.push({ id: `${id}-optional-shaft`, kind: 'carve', rect: [platformXs[optionalIndex] - 2, Math.min(optionalY, floorY(tiers[optionalIndex])), 4, Math.abs(optionalY - floorY(tiers[optionalIndex])) + 7], surfaceIntent: 'air' });
   return {
-    version: 1,
+    version: 2,
     id,
     kind: 'surface',
     biomeId,
     mapRole,
     grid: 0.25,
-    bounds: [-56, 56, 0, 14],
+    bounds: [-60, 60, 0, 36],
+    terrain: { cellSize: 2, perimeterCells: 1 },
     brief,
     beats,
     routes: [
       { id: `${id}-critical`, beatIds: beats.filter((beat) => beat.kind !== 'reward').map((beat) => beat.id), critical: true, requiredCapabilities: ['walk'] },
       ...(beats.some((beat) => ['choice', 'reward'].includes(beat.kind)) ? [{ id: `${id}-optional`, beatIds: beats.filter((beat) => ['choice', 'reward'].includes(beat.kind)).map((beat) => beat.id), critical: false, requiredCapabilities: mapRole === 'mastery' ? ['climb' as const] : ['walk' as const] }] : [])
     ],
-    geometry: [
-      { id: `${id}-ground`, kind: 'solid', rect: [-57, -1, 114, 1], surfaceIntent: 'ground' },
-      ...signature.heights.map((height, index) => ({ id: `${id}-ledge-${index + 1}`, kind: 'one-way' as const, rect: [snap(platformXs[index] - signature.widths[index] / 2), snap(height), snap(signature.widths[index]), 0.5] as [number, number, number, number], surfaceIntent: 'ledge' as const }))
-    ],
+    geometry,
     connectors: [
-      { id: `${id}-west`, edge: 'west', point: [-53, 1], clearance: [5, 4], capabilities: ['walk'], route: 'critical' },
-      { id: `${id}-east`, edge: 'east', point: [53, 1], clearance: [5, 4], capabilities: ['walk'], route: 'critical' }
+      { id: `${id}-west`, edge: 'west', point: [-56, floorY(tiers[0]) + 1], clearance: [5, 4], capabilities: ['walk'], route: 'critical' },
+      { id: `${id}-east`, edge: 'east', point: [56, floorY(tiers[tiers.length - 1]) + 1], clearance: [5, 4], capabilities: ['walk'], route: 'critical' }
     ],
     slots: [
-      { id: `${id}-hero-slot`, kind: 'landmark', position: [0, mapRole === 'mastery' ? 9 : 6.5], beatId: beats[Math.floor(beats.length / 2)].id, semanticTags: [...propTags, 'landmark'], route: 'ambient' },
+      { id: `${id}-hero-slot`, kind: 'landmark', position: [platformXs[Math.floor(platformCount / 2)], floorY(tiers[Math.floor(platformCount / 2)]) + 4], beatId: beats[Math.floor(beats.length / 2)].id, semanticTags: [...propTags, 'landmark'], route: 'ambient' },
+      { id: `${id}-west-portal-slot`, kind: 'portal', position: [-56, floorY(tiers[0]) + 0.82], semanticTags: [propTags[0], 'entrance', 'protected'], route: 'critical' },
+      { id: `${id}-east-portal-slot`, kind: 'portal', position: [56, floorY(tiers[tiers.length - 1]) + 0.82], semanticTags: [propTags[0], 'exit', 'protected'], route: 'critical' },
+      ...npcSlots,
+      { id: `${id}-reward-slot`, kind: 'reward', position: [platformXs[optionalIndex], optionalY + 0.82], semanticTags: [propTags[0], 'optional-payoff', 'protected'], route: 'optional' },
+      ...semanticGameplaySlots,
       ...propSlots
     ],
-    visual: { paletteId: THEMES[biomeId], structuralMaterial: THEMES[biomeId], heroRole: 'hero', densityBudget: mapRole === 'arrival' ? 18 : mapRole === 'mastery' ? 28 : 24, permittedAssetTags: propTags },
+    visual: { paletteId: THEMES[biomeId], structuralMaterial: THEMES[biomeId], heroRole: 'hero', densityBudget: mapRole === 'arrival' ? 24 : mapRole === 'mastery' ? 28 : 24, permittedAssetTags: propTags },
     constraints: {
       entryClearance: 7,
-      cameraHeight: 14,
+      cameraHeight: 16,
       maximumEncounterEnemies: mapRole === 'arrival' ? 0 : mapRole === 'mastery' ? 3 : 2,
       mutation: { platformHeight: 0, platformWidth: [1, 1], hazardOffset: 0, propOffset: 0.75 },
       accessibilityProfiles: ['base']
@@ -160,7 +215,7 @@ function makeSurfaceBlueprint(biomeId: BiomeId, mapRole: StoryAdventureMapRole):
   };
 }
 
-export const STORY_SURFACE_LEVEL_BLUEPRINTS: Record<string, StoryLevelBlueprintV1> = Object.fromEntries(
+export const STORY_SURFACE_LEVEL_BLUEPRINTS: Record<string, StoryLevelBlueprintV2> = Object.fromEntries(
   BIOMES.flatMap((biomeId) => ROLES.map((role) => {
     const blueprint = makeSurfaceBlueprint(biomeId, role);
     return [blueprint.id, blueprint];
@@ -171,6 +226,6 @@ export function getStorySurfaceLevelBlueprint(biomeId: BiomeId, role: StoryAdven
   return STORY_SURFACE_LEVEL_BLUEPRINTS[`${biomeId}-${role}`];
 }
 
-export function storySurfaceRouteSignature(blueprint: StoryLevelBlueprintV1) {
-  return blueprint.geometry.filter((geometry) => geometry.kind === 'one-way').map((geometry) => `${geometry.rect[0]}:${geometry.rect[1]}:${geometry.rect[2]}`).join('|');
+export function storySurfaceRouteSignature(blueprint: StoryLevelBlueprintV2) {
+  return blueprint.geometry.filter((geometry) => geometry.kind === 'carve').map((geometry) => `${geometry.rect[0]}:${geometry.rect[1]}:${geometry.rect[2]}:${geometry.rect[3]}`).join('|');
 }

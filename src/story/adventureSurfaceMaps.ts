@@ -5,6 +5,7 @@ import { STORY_WORLD_MOUNT } from './adventureExploration';
 import { storyHazardDealsContactDamage } from './adventureHazards';
 import { compileStoryLevelBlueprint } from './levelCompiler';
 import { getStorySurfaceLevelBlueprint } from './levelBlueprints';
+import type { StoryLevelBlueprintV2 } from './levelTypes';
 import { createSurfaceResourceNodes } from './adventureResources';
 import type {
   StoryAdventureMapDefinition,
@@ -92,19 +93,36 @@ function mapId(biome: BiomeId, role: StoryAdventureMapRole) {
   return `${biome}-${role}`;
 }
 
-function transitionPortal(biome: BiomeId, targetRole: StoryAdventureMapRole, side: 'west' | 'east', label: string) {
+function transitionPortal(biome: BiomeId, targetRole: StoryAdventureMapRole, side: 'west' | 'east', label: string, position: [number, number]) {
   return {
     id: `surface-map:${mapId(biome, targetRole)}`,
     label,
     subtitle: side === 'east' ? 'Continue deeper' : 'Return toward the arrival road',
     destination: biome,
-    position: [side === 'west' ? -53 : 53, 1.7] as [number, number],
+    position,
     size: [2.6, 3.2] as [number, number],
     accent: BIOMES[biome].accent,
     kind: 'adventure-gate' as const,
     surfaceMapTarget: mapId(biome, targetRole),
     surfaceEntry: side === 'west' ? 'east' as const : 'west' as const
   };
+}
+
+function surfaceRouteRooms(blueprint: StoryLevelBlueprintV2) {
+  return blueprint.geometry
+    .filter((piece) => piece.kind === 'carve' && piece.id.includes('-room-') && !piece.id.includes('optional'))
+    .sort((left, right) => left.rect[0] - right.rect[0]);
+}
+
+function surfaceFloorAtX(blueprint: StoryLevelBlueprintV2, x: number) {
+  const rooms = surfaceRouteRooms(blueprint);
+  const room = rooms.reduce((closest, candidate) => Math.abs(candidate.rect[0] + candidate.rect[2] / 2 - x) < Math.abs(closest.rect[0] + closest.rect[2] / 2 - x) ? candidate : closest, rooms[0]);
+  return room?.rect[1] ?? 2;
+}
+
+function surfaceConnectorPosition(blueprint: StoryLevelBlueprintV2, edge: 'west' | 'east'): [number, number] {
+  const point = blueprint.connectors.find((connector) => connector.edge === edge)?.point;
+  return point ? [point[0], point[1] - 1 + STORY_GROUNDED_ACTOR_CENTER_Y] : [edge === 'west' ? -56 : 56, 2 + STORY_GROUNDED_ACTOR_CENTER_Y];
 }
 
 function interactables(biome: BiomeId, role: StoryAdventureMapRole): StoryInteractableDefinition[] {
@@ -177,31 +195,73 @@ function createMap(biome: BiomeId, role: StoryAdventureMapRole): StoryAdventureM
   const id = mapId(biome, role);
   const blueprint = getStorySurfaceLevelBlueprint(biome, role);
   const compiled = compileStoryLevelBlueprint(blueprint, id, 1);
+  const westEntry = surfaceConnectorPosition(blueprint, 'west');
+  const eastEntry = surfaceConnectorPosition(blueprint, 'east');
+  const groundedY = (x: number) => surfaceFloorAtX(blueprint, x) + STORY_GROUNDED_ACTOR_CENTER_Y;
+  const terrainFloorAtX = (x: number) => {
+    const intendedFloor = surfaceFloorAtX(blueprint, x);
+    const supportTops = compiled.platforms
+      .filter((platform) => platform.collision === 'solid' && x >= platform.position[0] - platform.size[0] / 2 && x <= platform.position[0] + platform.size[0] / 2)
+      .map((platform) => platform.position[1] + platform.size[1] / 2)
+      .filter((top) => top <= intendedFloor + 0.1);
+    return supportTops.length > 0 ? Math.max(...supportTops) : intendedFloor;
+  };
+  const routeRooms = surfaceRouteRooms(blueprint);
+  const slots = (kind: StoryLevelBlueprintV2['slots'][number]['kind']) => blueprint.slots.filter((slot) => slot.kind === kind);
+  const anchorX = (x: number) => {
+    const room = routeRooms.reduce((closest, candidate) => Math.abs(candidate.rect[0] + candidate.rect[2] / 2 - x) < Math.abs(closest.rect[0] + closest.rect[2] / 2 - x) ? candidate : closest, routeRooms[0]);
+    return room ? room.rect[0] + room.rect[2] / 2 : x;
+  };
   const portals: StoryPortalDefinition[] = [];
-  if (role === 'arrival') portals.push({ id: `${biome}-return-route`, label: 'Central Route', subtitle: 'Return to the crossroads', destination: 'world-route' as const, position: [-53, 1.7] as [number, number], size: [2.6, 3.2] as [number, number], accent: '#ffe071', kind: 'adventure-gate' as const });
-  if (order > 0) portals.push(transitionPortal(biome, ROLE_ORDER[order - 1], 'west', BIOMES[biome].maps[ROLE_ORDER[order - 1]].name));
-  if (order < ROLE_ORDER.length - 1) portals.push(transitionPortal(biome, ROLE_ORDER[order + 1], 'east', BIOMES[biome].maps[ROLE_ORDER[order + 1]].name));
+  if (role === 'arrival') portals.push({ id: `${biome}-return-route`, label: 'Central Route', subtitle: 'Return to the crossroads', destination: 'world-route' as const, position: westEntry, size: [2.6, 3.2] as [number, number], accent: '#ffe071', kind: 'adventure-gate' as const });
+  if (order > 0) portals.push(transitionPortal(biome, ROLE_ORDER[order - 1], 'west', BIOMES[biome].maps[ROLE_ORDER[order - 1]].name, westEntry));
+  if (order < ROLE_ORDER.length - 1) portals.push(transitionPortal(biome, ROLE_ORDER[order + 1], 'east', BIOMES[biome].maps[ROLE_ORDER[order + 1]].name, eastEntry));
   if (role === 'mastery') {
-    portals.push({ id: `mount-sanctuary:${STORY_WORLD_MOUNT[biome]}`, label: `${STORY_WORLD_MOUNT[biome].replace(/-/g, ' ')} Sanctuary`, subtitle: 'Complete the route and earn its traversal bond', destination: biome, position: [-24, 1.45], size: [2.4, 2.8], accent: spec.accent, kind: 'shrine' });
-    portals.push({ id: `endless-entry:${biome}`, label: 'Endless Descent', subtitle: 'Clear both mastery encounters to begin an endless run', destination: biome, position: [24, 1.7], size: [2.8, 3.4], accent: '#b8a8ff', kind: 'adventure-gate' });
+    portals.push({ id: `mount-sanctuary:${STORY_WORLD_MOUNT[biome]}`, label: `${STORY_WORLD_MOUNT[biome].replace(/-/g, ' ')} Sanctuary`, subtitle: 'Complete the route and earn its traversal bond', destination: biome, position: [-24, groundedY(-24)], size: [2.4, 2.8], accent: spec.accent, kind: 'shrine' });
+    portals.push({ id: `endless-entry:${biome}`, label: 'Endless Descent', subtitle: 'Clear both mastery encounters to begin an endless run', destination: biome, position: [24, groundedY(24)], size: [2.8, 3.4], accent: '#b8a8ff', kind: 'adventure-gate' });
   }
-  const mapInteractables = interactables(biome, role);
-  const npcs = storyNpcsForMap(id);
+  const mapInteractables = interactables(biome, role).map((entry) => ({ ...entry, position: [entry.position[0], groundedY(entry.position[0])] as [number, number] }));
+  const npcSlots = slots('npc');
+  const npcs = storyNpcsForMap(id).map((entry, index) => {
+    const position = npcSlots[index]?.position ?? [anchorX(entry.position[0]), groundedY(anchorX(entry.position[0]))];
+    return { ...entry, position, safeAnchor: position, ...(entry.patrolRange ? { patrolRange: [position[0] - 3, position[0] + 3] as [number, number] } : {}) };
+  });
   for (const entry of mapInteractables) portals.push({ id: `${entry.kind}:${entry.id}`, label: entry.label, subtitle: entry.subtitle, destination: biome, position: entry.position, size: [1.8, 2.2], accent: entry.kind === 'relic' ? '#ffe071' : spec.accent, kind: entry.kind === 'waystone' ? 'checkpoint' : entry.kind === 'restoration' ? 'restoration' : entry.kind as 'chest' | 'relic' });
   for (const entry of npcs) portals.push({ id: `npc:${entry.id}`, label: entry.displayName, subtitle: entry.bark, destination: biome, position: entry.position, size: [1.4, 2], accent: spec.accent, kind: 'npc' });
   const encounters = role === 'arrival' ? [] : [
     { id: `${biome}-${role}-encounter-1`, range: [-42, -13] as [number, number], maxActive: 2 },
     { id: `${biome}-${role}-encounter-2`, range: [13, 42] as [number, number], maxActive: 2, elite: role === 'mastery' }
   ];
-  const hazards = hazardsFor(biome, role);
-  const resourceNodes = createSurfaceResourceNodes({ biomeId: biome, mapId: id, role, bounds: { minX: -56, maxX: 56 }, portals, npcs, hazards });
+  const hazards = hazardsFor(biome, role).map((hazard) => {
+    const centerX = (hazard.bounds[0] + hazard.bounds[1]) / 2;
+    const baseY = surfaceFloorAtX(blueprint, centerX);
+    const height = hazard.bounds[3] - hazard.bounds[2];
+    return { ...hazard, bounds: [hazard.bounds[0], hazard.bounds[1], baseY, baseY + height] as [number, number, number, number] };
+  });
+  const traversalSlots = slots('traversal');
+  const traversal = traversalFor(biome, role).map((piece, index) => ({ ...piece, position: traversalSlots[index + 1]?.position ?? [piece.position[0], surfaceFloorAtX(blueprint, piece.position[0]) + 3] as [number, number] }));
+  const enemySpawns = enemiesFor(biome, role).map((enemy) => ({
+    ...enemy,
+    position: [enemy.position[0], surfaceFloorAtX(blueprint, enemy.position[0]) + (getStoryEnemyDefinition(enemy.enemyId).archetype === 'flying' ? 3.4 : STORY_GROUNDED_ACTOR_CENTER_Y)] as [number, number]
+  }));
+  const resourceSlots = slots('resource');
+  const resourceNodes = createSurfaceResourceNodes({
+    biomeId: biome, mapId: id, role, bounds: { minX: -56, maxX: 56 }, portals, npcs, hazards,
+    placementForIndex: (index, fallbackX) => {
+      const slot = resourceSlots[index % Math.max(1, resourceSlots.length)];
+      const x = (slot?.position[0] ?? fallbackX) + ((index % 3) - 1) * 1.1;
+      return { x };
+    },
+    baseYForX: terrainFloorAtX
+  });
+  const heroRoom = surfaceRouteRooms(blueprint)[Math.floor(surfaceRouteRooms(blueprint).length / 2)];
   return {
     id, biomeId: biome, role, order, name: details.name, subtitle: details.subtitle,
-    bounds: { minX: -56, maxX: 56, floorY: 0 }, spawn: [-49, STORY_GROUNDED_ACTOR_CENTER_Y], checkpoint: [-49, STORY_GROUNDED_ACTOR_CENTER_Y],
-    platforms: compiled.platforms, portals,
-    landmarks: [landmark(`${id}-hero`, details.hero, details.subtitle, 0, role === 'mastery' ? 9 : 6.5, spec.accent, role === 'mastery' ? 'vista' : 'district'), landmark(`${id}-secret`, 'Optional Route', 'A quieter line rewards careful movement', role === 'field-a' ? 34 : -32, 8, '#ffe071', 'secret')],
-    props: compiled.props, enemySpawns: enemiesFor(biome, role), encounters,
-    hazards, traversal: traversalFor(biome, role), interactables: mapInteractables, npcs, resourceNodes,
+    bounds: { minX: -60, maxX: 60, minY: 0, maxY: 36, floorY: 2 }, spawn: westEntry, checkpoint: westEntry,
+    platforms: compiled.platforms, terrainTiles: compiled.terrainTiles, portals,
+    landmarks: [landmark(`${id}-hero`, details.hero, details.subtitle, heroRoom ? heroRoom.rect[0] + heroRoom.rect[2] / 2 : 0, heroRoom ? heroRoom.rect[1] + 5 : 9, spec.accent, role === 'mastery' ? 'vista' : 'district'), landmark(`${id}-secret`, 'Optional Route', 'A quieter line rewards careful movement', role === 'field-a' ? 34 : -32, surfaceFloorAtX(blueprint, role === 'field-a' ? 34 : -32) + 6, '#ffe071', 'secret')],
+    props: compiled.props, enemySpawns, encounters,
+    hazards, traversal, interactables: mapInteractables, npcs, resourceNodes,
     musicPhase: role === 'arrival' ? 'safe' : role === 'mastery' ? 'elite' : role === 'field-b' ? 'mystery' : 'explore', heroLandmarkId: `${id}-hero`,
     levelMeta: compiled.meta
   };
@@ -230,6 +290,7 @@ export function createAdventureSurfaceHub(base: StoryHubDefinition, map: StoryAd
     checkpoint: map.checkpoint,
     bounds: map.bounds,
     platforms: map.platforms,
+    terrainTiles: map.terrainTiles,
     portals: map.portals,
     landmarks: map.landmarks,
     props: map.props,
@@ -245,12 +306,16 @@ export function createAdventureSurfaceHub(base: StoryHubDefinition, map: StoryAd
     levelMeta: map.levelMeta,
     exploration: exploration ? {
       ...exploration,
-      safeApproach: map.role === 'arrival' ? [-56, 56] : [-56, -44],
-      districts: [{ id: map.id, label: map.name, range: [-56, 56], safe: map.role === 'arrival' }],
+      safeApproach: map.role === 'arrival' ? [-58, 58] : [-58, -46],
+      districts: [{ id: map.id, label: map.name, range: [-58, 58], safe: map.role === 'arrival' }],
       encounters: map.encounters,
       entrances: map.role === 'mastery' ? exploration.entrances.slice(0, 1) : [],
       waystones: map.role === 'arrival' ? [{ id: `${map.biomeId}-waystone-arrival`, label: 'Arrival Waystone', position: [-34, STORY_GROUNDED_ACTOR_CENTER_Y] }] : [],
-      waterVolumes: map.hazards.some((hazard) => hazard.kind === 'drowning') ? [{ id: `${map.id}-water`, bounds: [-22, 22, -4, 1.4], current: [0.2, 0], airPockets: [[-16, 1.2], [16, 1.2]] }] : []
+      waterVolumes: map.hazards.filter((hazard) => hazard.kind === 'drowning').map((hazard) => ({
+        id: `${hazard.id}-water`, bounds: [hazard.bounds[0], hazard.bounds[1], hazard.bounds[2], hazard.bounds[2] + 5.4] as [number, number, number, number], current: [0.2, 0] as [number, number],
+        airPockets: [[hazard.bounds[0] + 1, hazard.bounds[2] + 5.2], [hazard.bounds[1] - 1, hazard.bounds[2] + 5.2]] as Array<[number, number]>
+      })),
+      camera: { minY: map.bounds.minY ?? 0, maxY: map.bounds.maxY ?? 36 }
     } : undefined
   };
 }

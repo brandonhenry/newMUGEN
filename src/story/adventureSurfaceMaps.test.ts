@@ -122,12 +122,18 @@ describe('authored Adventure surface campaign', () => {
     for (const maps of Object.values(STORY_ADVENTURE_SURFACE_MAPS)) {
       for (const map of maps) {
         const world = STORY_ADVENTURE_WORLDS[map.biomeId];
-        const ground = map.platforms.find((platform) => platform.id.endsWith('-ground'))!;
-        const placement = storyPlatformSurfacePlacement(ground, world.environment?.surface);
-        const tileTopY = ground.position[1] + placement.centerY + placement.height / 2;
-        const playerFootY = storyAvatarVisibleFootWorldY(map.spawn[1], storyAvatarGroundingOffsetForWorld()) - placement.surfaceInsetY;
-        expect(playerFootY, `${map.id}/player`).toBeCloseTo(tileTopY, 8);
+        const supportingPlatform = (x: number, bodyY: number) => map.platforms
+          .filter((platform) => x >= platform.position[0] - platform.size[0] / 2 && x <= platform.position[0] + platform.size[0] / 2 && platform.position[1] + platform.size[1] / 2 <= bodyY + 0.2)
+          .sort((left, right) => right.position[1] + right.size[1] / 2 - (left.position[1] + left.size[1] / 2))[0]!;
+        const playerPlatform = supportingPlatform(map.spawn[0], map.spawn[1]);
+        const playerPlacement = storyPlatformSurfacePlacement(playerPlatform, world.environment?.surface);
+        const playerTileTopY = playerPlatform.position[1] + playerPlacement.centerY + playerPlacement.height / 2;
+        const playerFootY = storyAvatarVisibleFootWorldY(map.spawn[1], storyAvatarGroundingOffsetForWorld()) - playerPlacement.surfaceInsetY;
+        expect(playerFootY, `${map.id}/player`).toBeCloseTo(playerTileTopY, 8);
         for (const npc of map.npcs) {
+          const ground = supportingPlatform(npc.position[0], npc.position[1]);
+          const placement = storyPlatformSurfacePlacement(ground, world.environment?.surface);
+          const tileTopY = ground.position[1] + placement.centerY + placement.height / 2;
           const sprite = STORY_NPC_SPRITES[npc.spriteId];
           const planeSize = storyNpcPlaneSize(sprite);
           const footAnchorFromBottom = (sprite.frameSize.height - sprite.frameSize.baseline) / sprite.frameSize.height;

@@ -1,6 +1,6 @@
 import { STORY_GROUNDED_ACTOR_CENTER_Y } from './actorGrounding';
 import type { StoryRoomConnector, StoryRoomTemplateDefinition, StoryRoomTemplateKind } from './types';
-import type { StoryLevelBlueprintV1 } from './levelTypes';
+import type { StoryLevelBlueprintV2 } from './levelTypes';
 
 const CHUNK_ROLES: StoryRoomTemplateKind[] = [
   'entrance', 'exit', 'straight', 'rise', 'drop', 'junction', 'vertical', 'branch', 'secret', 'event', 'arena', 'boss'
@@ -24,19 +24,20 @@ function defaultConnectors(kind: StoryRoomTemplateKind): StoryRoomConnector[] {
   return ['west', 'east'];
 }
 
-function makeChunkBlueprint(kind: StoryRoomTemplateKind, variant: number): StoryLevelBlueprintV1 {
+function makeChunkBlueprint(kind: StoryRoomTemplateKind, variant: number): StoryLevelBlueprintV2 {
   const id = `authored-${kind}-${variant + 1}`;
   const source = VARIANTS[variant];
   const connectors = defaultConnectors(kind);
   const boss = kind === 'boss';
   const safe = kind === 'entrance' || kind === 'exit';
   return {
-    version: 1,
+    version: 2,
     id,
     kind: 'chunk',
     chunkRole: kind,
     grid: 0.25,
-    bounds: [-12, 12, 0, boss ? 14 : 11],
+    bounds: [-12, 12, 0, 12],
+    terrain: { cellSize: 2, perimeterCells: 1 },
     brief: {
       emotion: boss ? 'confrontational' : safe ? 'readable' : kind === 'secret' ? 'tempting' : 'tense',
       primaryMechanic: `${kind} chunk with ${source.rhythm} traversal`,
@@ -55,7 +56,13 @@ function makeChunkBlueprint(kind: StoryRoomTemplateKind, variant: number): Story
       { id: `${id}-critical`, beatIds: [`${id}-read`, `${id}-challenge`, `${id}-payoff`], critical: !['branch', 'secret', 'event'].includes(kind), requiredCapabilities: kind === 'vertical' ? ['climb'] : ['walk'] }
     ],
     geometry: [
-      { id: `${id}-floor`, kind: 'solid', rect: [-12, -1, 24, 1], surfaceIntent: 'ground' },
+      { id: `${id}-cavity`, kind: 'carve', rect: [-10, 2, 20, 8], surfaceIntent: 'air' },
+      ...connectors.map((edge) => ({
+        id: `${id}-carve-${edge}`,
+        kind: 'carve' as const,
+        rect: (edge === 'west' ? [-12, 4, 4, 4] : edge === 'east' ? [8, 4, 4, 4] : edge === 'up' ? [-2, 8, 4, 4] : [-2, 0, 4, 4]) as [number, number, number, number],
+        surfaceIntent: 'air' as const
+      })),
       ...source.structures.map((rect, index) => ({ id: `${id}-structure-${index + 1}`, kind: 'solid' as const, rect, surfaceIntent: 'wall' as const })),
       ...source.ledges.map(([x, y, width], index) => ({ id: `${id}-ledge-${index + 1}`, kind: 'one-way' as const, rect: [x - width / 2, y, width, 0.5] as [number, number, number, number], surfaceIntent: 'ledge' as const }))
     ],
@@ -88,7 +95,7 @@ function makeChunkBlueprint(kind: StoryRoomTemplateKind, variant: number): Story
   };
 }
 
-export const STORY_ENDLESS_CHUNK_BLUEPRINTS: StoryLevelBlueprintV1[] = CHUNK_ROLES.flatMap((kind) =>
+export const STORY_ENDLESS_CHUNK_BLUEPRINTS: StoryLevelBlueprintV2[] = CHUNK_ROLES.flatMap((kind) =>
   VARIANTS.map((_, variant) => makeChunkBlueprint(kind, variant))
 );
 
@@ -108,6 +115,10 @@ export function storyAuthoredRoomTemplate(kind: StoryRoomTemplateKind, connector
     connectors,
     platformSockets: ledges.map((geometry) => [geometry.rect[0] + geometry.rect[2] / 2, geometry.rect[1], geometry.rect[2]]),
     structureSockets: structures.map((geometry) => [geometry.rect[0] + geometry.rect[2] / 2, geometry.rect[1] + geometry.rect[3] / 2, geometry.rect[2], geometry.rect[3]]),
+    carveSockets: [
+      [-10, 2, 20, 8],
+      ...connectors.map((edge): [number, number, number, number] => edge === 'west' ? [-12, 4, 4, 4] : edge === 'east' ? [8, 4, 4, 4] : edge === 'up' ? [-2, 8, 4, 4] : [-2, 0, 4, 4])
+    ],
     enemySockets: slots.filter((slot) => slot.kind === 'enemy-lane').map((slot) => slot.position),
     hazardSockets: slots.filter((slot) => slot.kind === 'hazard').map((slot) => slot.position),
     rewardSockets: slots.filter((slot) => slot.kind === 'reward').map((slot) => slot.position),

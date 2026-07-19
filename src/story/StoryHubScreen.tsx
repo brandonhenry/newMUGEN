@@ -25,6 +25,8 @@ import { connectStoryHubMultiplayer, readOrCreateStoryHubGuestIdentity, readStor
 import { KORE_CENTRAL_HUB } from './hubData';
 import { storyPlatformSurfacePlacement } from './platformGrounding';
 import { STORY_MOVEMENT_PROFILE } from './movementProfile';
+import { resolveStoryTerrainMotion } from './storyTerrainCollision';
+import { resolveStoryTerrainVariant } from './terrainGrammar';
 import { getStorySpriteProjectile, STORY_ATTACK_POSES } from './streetAvatarCatalog';
 import { StoryAvatarRig, type StoryAvatarPose } from './StoryAvatarRig';
 import { acceptStoryPartyInvite, advanceStoryPartyEndlessFloor, bankStoryPartyEndlessChapter, createStoryParty, endStoryPartyEndlessRun, heartbeatStoryParty, inviteToStoryParty, leaveStoryParty, listStoryPartyInvites, resolveStoryPartyEndlessEvent, selectStoryPartyEndlessBoon, startStoryPartyEndlessRun, transferStoryPartyLeadership, updateStoryPartyRoom, type StoryPartyRegistration } from './storyParty';
@@ -434,6 +436,71 @@ function PackPlatformVisual({ platform, hub }: { platform: StoryPlatformDefiniti
   </group>;
 }
 
+function TerrainFillBatch({ hub }: { hub: StoryHubDefinition }) {
+  const tiles = hub.terrainTiles ?? [];
+  const instances = useRef<THREE.InstancedMesh>(null);
+  useLayoutEffect(() => {
+    if (!instances.current) return;
+    const matrix = new THREE.Matrix4();
+    tiles.forEach((tile, index) => {
+      matrix.makeTranslation(tile.position[0], tile.position[1], 0.055);
+      instances.current!.setMatrixAt(index, matrix);
+    });
+    instances.current.instanceMatrix.needsUpdate = true;
+  }, [tiles]);
+  if (tiles.length === 0) return null;
+  return <instancedMesh ref={instances} args={[undefined, undefined, tiles.length]}>
+    <planeGeometry args={[tiles[0].size[0] + 0.02, tiles[0].size[1] + 0.02]} />
+    <meshBasicMaterial color={hub.environment?.ground ?? adventureTheme(hub.theme).ground} />
+  </instancedMesh>;
+}
+
+function TerrainEdgeBatch({ hub, role, variant }: { hub: StoryHubDefinition; role: NonNullable<StoryHubDefinition['terrainTiles']>[number]['role']; variant: number }) {
+  const tiles = (hub.terrainTiles ?? []).filter((tile) => tile.role === role && tile.surfaceVariant === variant && tile.role !== 'fill');
+  const surface = hub.environment?.surface;
+  const source = useTexture(surface ? storyWorldAssetPath(surface.asset) : STORY_ADVENTURE_ASSET_PATHS['pixel-terrain']);
+  useMemo(() => configurePixelTexture(source), [source]);
+  const variants = surface?.variants ?? [];
+  const resolvedVariant = resolveStoryTerrainVariant(hub.theme, role, variant);
+  const selected = variants[resolvedVariant % Math.max(1, variants.length)];
+  const frame = selected?.frame ?? surface?.frame ?? adventureTheme(hub.theme).tile;
+  const atlasSize = surface?.atlasSize ?? [352, 176];
+  const geometry = useMemo(() => atlasGeometry(frame, atlasSize, [2.06, 0.84]), [atlasSize, frame]);
+  const material = useMemo(() => new THREE.MeshBasicMaterial({ map: source, transparent: true, alphaTest: 0.02, toneMapped: false }), [source]);
+  const instances = useRef<THREE.InstancedMesh>(null);
+  useLayoutEffect(() => {
+    if (!instances.current) return;
+    const matrix = new THREE.Matrix4();
+    const position = new THREE.Vector3();
+    const quaternion = new THREE.Quaternion();
+    const scale = new THREE.Vector3();
+    tiles.forEach((tile, index) => {
+      const vertical = tile.role === 'left-wall' || tile.role === 'right-wall';
+      const underside = tile.role.includes('bottom') || tile.role === 'underside';
+      const left = tile.role.includes('left') || tile.role === 'left-wall';
+      position.set(
+        tile.position[0] + (vertical ? (left ? -tile.size[0] / 2 + 0.42 : tile.size[0] / 2 - 0.42) : 0),
+        tile.position[1] + (vertical ? 0 : underside ? -tile.size[1] / 2 + 0.42 : tile.size[1] / 2 - 0.42),
+        0.24
+      );
+      quaternion.setFromAxisAngle(new THREE.Vector3(0, 0, 1), tile.rotation * Math.PI / 180);
+      scale.set(tile.mirrored ? -1 : 1, 1, 1);
+      matrix.compose(position, quaternion, scale);
+      instances.current!.setMatrixAt(index, matrix);
+    });
+    instances.current.instanceMatrix.needsUpdate = true;
+  }, [tiles]);
+  useEffect(() => () => { geometry.dispose(); material.dispose(); }, [geometry, material]);
+  if (tiles.length === 0) return null;
+  return <instancedMesh ref={instances} args={[geometry, material, tiles.length]} />;
+}
+
+function TerrainTileLayer({ hub }: { hub: StoryHubDefinition }) {
+  const roles = useMemo(() => Array.from(new Set((hub.terrainTiles ?? []).map((tile) => tile.role))).filter((role) => role !== 'fill'), [hub.terrainTiles]);
+  if (!hub.terrainTiles?.length) return null;
+  return <group><TerrainFillBatch hub={hub} />{roles.flatMap((role) => [0, 1, 2].map((variant) => <TerrainEdgeBatch key={`${role}:${variant}`} hub={hub} role={role} variant={variant} />))}</group>;
+}
+
 function CityPlatformVisual({ platform, color = '#ffffff' }: { platform: StoryPlatformDefinition; color?: string }) {
   const source = useTexture(`${CITY_ASSET_ROOT}/ground-platform.png`);
   const fillSource = useTexture(`${CITY_ASSET_ROOT}/ground-fill.png`);
@@ -758,10 +825,11 @@ function HubCamera({ playerPosition, bounds, verticalBounds }: { playerPosition:
   useFrame((_, delta) => {
     const orthographic = camera as THREE.OrthographicCamera;
     const halfWidth = Math.max(5, size.width / Math.max(1, orthographic.zoom) / 2);
+    const halfHeight = Math.max(4, size.height / Math.max(1, orthographic.zoom) / 2);
     desired.set(
       THREE.MathUtils.clamp(playerPosition.current.x, bounds.minX + halfWidth, bounds.maxX - halfWidth),
       verticalBounds
-        ? THREE.MathUtils.clamp(playerPosition.current.y + 3.7, verticalBounds.minY + 3.7, verticalBounds.maxY - 2.5)
+        ? THREE.MathUtils.clamp(playerPosition.current.y + 2.2, verticalBounds.minY + halfHeight, verticalBounds.maxY - halfHeight)
         : THREE.MathUtils.clamp(4.6 + Math.max(0, playerPosition.current.y - 1) * 0.22, 4.6, 5.6),
       18
     );
@@ -1736,55 +1804,21 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
       nextX = THREE.MathUtils.clamp(nextX + waterVolume.current[0] * delta, waterVolume.bounds[0] + 0.4, waterVolume.bounds[1] - 0.4);
       nextY = THREE.MathUtils.clamp(nextY, waterVolume.bounds[2] + 0.5, waterVolume.bounds[3] - 0.25);
     }
-    // Authored v1 terrain can contain real walls and ceilings. Resolve these
-    // with the same kinematic body dimensions used by validation and Rapier.
-    for (const platform of hub.platforms) {
-      if (platform.oneWay || platform.collision === 'one-way') continue;
-      const left = platform.position[0] - platform.size[0] / 2;
-      const right = platform.position[0] + platform.size[0] / 2;
-      const bottom = platform.position[1] - platform.size[1] / 2;
-      const top = platform.position[1] + platform.size[1] / 2;
-      if (platform.terrainRole === 'wall') {
-        const verticallyOverlaps = nextY + STORY_MOVEMENT_PROFILE.avatarHalfHeight > bottom && nextY - STORY_MOVEMENT_PROFILE.avatarHalfHeight < top;
-        if (!verticallyOverlaps) continue;
-        const movingRightAcross = horizontal > 0 && position.current.x + STORY_MOVEMENT_PROFILE.avatarHalfWidth <= left && nextX + STORY_MOVEMENT_PROFILE.avatarHalfWidth > left;
-        const movingLeftAcross = horizontal < 0 && position.current.x - STORY_MOVEMENT_PROFILE.avatarHalfWidth >= right && nextX - STORY_MOVEMENT_PROFILE.avatarHalfWidth < right;
-        if (movingRightAcross) nextX = left - STORY_MOVEMENT_PROFILE.avatarHalfWidth;
-        else if (movingLeftAcross) nextX = right + STORY_MOVEMENT_PROFILE.avatarHalfWidth;
-      } else if (platform.terrainRole === 'ceiling' && velocityY.current > 0) {
-        const horizontallyOverlaps = nextX + STORY_MOVEMENT_PROFILE.avatarHalfWidth > left && nextX - STORY_MOVEMENT_PROFILE.avatarHalfWidth < right;
-        const crossedUnderside = position.current.y + STORY_MOVEMENT_PROFILE.avatarHalfHeight <= bottom && nextY + STORY_MOVEMENT_PROFILE.avatarHalfHeight > bottom;
-        if (horizontallyOverlaps && crossedUnderside) {
-          nextY = bottom - STORY_MOVEMENT_PROFILE.avatarHalfHeight;
-          velocityY.current = 0;
-        }
-      }
-    }
-    let landing: StoryPlatformDefinition | null = null;
-    let landingX = nextX;
-    if (!swimming && velocityY.current <= 0) {
-      for (const platform of hub.platforms) {
-        if (platform.oneWay && now < dropThroughUntil.current) continue;
-        const top = platform.position[1] + platform.size[1] / 2;
-        const previousBottom = position.current.y - STORY_GROUNDED_ACTOR_CENTER_Y;
-        const nextBottom = nextY - STORY_GROUNDED_ACTOR_CENTER_Y;
-        const left = platform.position[0] - platform.size[0] / 2;
-        const right = platform.position[0] + platform.size[0] / 2;
-        const edgeCatch = platform.oneWay ? STORY_MOVEMENT_PROFILE.oneWayEdgeCatch : STORY_MOVEMENT_PROFILE.solidEdgeCatch;
-        const withinX = nextX >= left - edgeCatch && nextX <= right + edgeCatch;
-        const crossesForgivingTop = previousBottom >= top - 0.42 && nextBottom <= top + 0.16;
-        if (withinX && crossesForgivingTop) {
-          if (!landing || top > landing.position[1] + landing.size[1] / 2) {
-            landing = platform;
-            landingX = THREE.MathUtils.clamp(nextX, left + 0.12, right - 0.12);
-          }
-        }
-      }
+    const terrainMotion = swimming ? null : resolveStoryTerrainMotion({
+      previous: position.current,
+      proposed: { x: nextX, y: nextY },
+      velocityY: velocityY.current,
+      platforms: hub.platforms,
+      horizontalDirection: horizontal,
+      dropThrough: now < dropThroughUntil.current
+    });
+    const landing = terrainMotion?.landing ?? null;
+    if (terrainMotion) {
+      nextX = terrainMotion.x;
+      nextY = terrainMotion.y;
+      velocityY.current = terrainMotion.velocityY;
     }
     if (landing) {
-      nextX = landingX;
-      nextY = landing.position[1] + landing.size[1] / 2 + STORY_GROUNDED_ACTOR_CENTER_Y;
-      velocityY.current = 0;
       groundedUntil.current = now + 0.1;
       groundedPlatform.current = landing.id;
       jumpsUsed.current = 0;
@@ -1983,9 +2017,10 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
     <Suspense fallback={null}>
       <HubWorld hub={hub} reducedMotion={reducedMotion} />
       <Physics gravity={[0, -STORY_MOVEMENT_PROFILE.gravity, 0]} timeStep="vary">
+        <TerrainTileLayer hub={hub} />
         {hub.platforms.map((platform) => <RigidBody key={platform.id} type="fixed" colliders={false} position={[platform.position[0], platform.position[1], 0]}>
           <CuboidCollider args={[platform.size[0] / 2, platform.size[1] / 2, 1]} sensor={Boolean(platform.oneWay)} />
-          <PlatformVisual platform={platform} hub={hub} />
+          {platform.visual !== false && <PlatformVisual platform={platform} hub={hub} />}
         </RigidBody>)}
         <AdventureHazards hub={hub} progress={progress} playerPosition={playerPosition} onPlayerDamage={(damage, sourceX) => { if (!disabled) onPlayerDamage(damage, sourceX); }} />
         {hub.portals.map((portal) => <PortalVisual key={portal.id} portal={portal} theme={hub.theme} nearby={nearbyPortal?.id === portal.id} assigned={assignedPortalId === portal.id} reducedMotion={reducedMotion} compactDoorways={hub.id === 'kore-central'} />)}
@@ -2355,7 +2390,7 @@ function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGenerate
   const hunters: StoryEnemySpawnDefinition[] = sourceHunter && pressureHunterAnchor !== null ? Array.from({ length: pressure.hunterCount }, (_, index) => ({
     ...sourceHunter,
     id: `${floor.worldId}-floor-${floor.floorNumber}-pressure-hunter-${index + 1}`,
-    position: [(pressureHunterAnchor ?? floor.bounds.maxX - 12) + (pressureHunterAnchor !== null && pressureHunterAnchor < 0 ? index * 12 : -index * 12), getStoryEnemyDefinition(sourceHunter.enemyId).archetype === 'flying' ? 3.6 : STORY_GROUNDED_ACTOR_CENTER_Y],
+    position: [(pressureHunterAnchor ?? floor.bounds.maxX - 12) + (pressureHunterAnchor !== null && pressureHunterAnchor < 0 ? index * 12 : -index * 12), sourceHunter.position[1]],
     encounterZoneId: `${floor.worldId}-floor-${floor.floorNumber}-pressure`,
     leash: [floor.bounds.minX + 10, floor.bounds.maxX - 5],
     affixes: Array.from(new Set([...(sourceHunter.affixes ?? []), index % 2 ? 'frenzied' as const : 'brutal' as const]))
@@ -2375,10 +2410,10 @@ function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGenerate
     kind: event?.kind === 'cursed-relic' ? 'relic' : event?.kind === 'depth-trader' ? 'crafting' : 'npc'
   } : null;
   const waterVolumes = hazards.filter((hazard) => hazard.kind === 'drowning').map((hazard) => ({
-    id: `${hazard.id}-water`, bounds: [hazard.bounds[0], hazard.bounds[1], -4, 1.4] as [number, number, number, number], current: [0.2, 0] as [number, number],
-    airPockets: [[hazard.bounds[0] + 1.5, 1.2], [hazard.bounds[1] - 1.5, 1.2]] as Array<[number, number]>
+    id: `${hazard.id}-water`, bounds: [hazard.bounds[0], hazard.bounds[1], hazard.bounds[2], Math.max(hazard.bounds[2] + 5.4, hazard.bounds[3])] as [number, number, number, number], current: [0.2, 0] as [number, number],
+    airPockets: [[hazard.bounds[0] + 1.5, Math.max(hazard.bounds[2] + 5.2, hazard.bounds[3] - 0.2)], [hazard.bounds[1] - 1.5, Math.max(hazard.bounds[2] + 5.2, hazard.bounds[3] - 0.2)]] as Array<[number, number]>
   }));
-  const propSockets = floor.rooms.flatMap((room) => room.propSockets.map(([x, y], slotIndex) => ({ room, slotIndex, x: (room.bounds[0] + room.bounds[1]) / 2 + x + room.mutation.propOffset, y: room.bounds[2] + y })));
+  const propSockets = floor.rooms.flatMap((room) => room.propSockets.map(([x, y], slotIndex) => ({ room, slotIndex, x: (room.bounds[0] + room.bounds[1]) / 2 + x + room.mutation.propOffset, y: room.bounds[2] + (floor.version === 5 ? 2 : 0) + y })));
   const assetResolution: NonNullable<StoryHubDefinition['levelMeta']>['assetResolution'] = [];
   const propRepetitions = new globalThis.Map<string, number>();
   let propDensity = 0;
@@ -2422,8 +2457,9 @@ function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGenerate
     checkpoint: floor.spawn,
     bounds: floor.bounds,
     platforms: floor.platforms,
+    terrainTiles: floor.terrainTiles,
     portals: [
-      { id: 'endless-abandon', label: 'Abandon Descent', subtitle: 'Lose this chapter\'s unbanked haul', destination: floor.worldId, position: [floor.bounds.minX + 2.4, 1.7], size: [2.8, 3.4], accent: '#ff5d69', kind: 'adventure-gate' },
+      { id: 'endless-abandon', label: 'Abandon Descent', subtitle: 'Lose this chapter\'s unbanked haul', destination: floor.worldId, position: [floor.bounds.minX + 2.4, floor.spawn[1]], size: [2.8, 3.4], accent: '#ff5d69', kind: 'adventure-gate' },
       { id: `endless-next:${floor.floorNumber + 1}`, label: floor.boss ? 'Claim Chapter Reward' : `Descend to Floor ${floor.floorNumber + 1}`, subtitle: exitLocked ? 'Clear required encounters first' : floor.boss ? 'Bank rewards and choose a boon' : 'Continue deeper', destination: floor.worldId, position: floor.exit, size: [2.8, 3.4], accent: '#b8a8ff', kind: 'adventure-gate', locked: exitLocked },
       ...(eventPortal ? [eventPortal] : [])
     ],
@@ -2432,7 +2468,7 @@ function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGenerate
     landmarks: floor.rooms.filter((room) => room.optional || room.templateKind === 'boss').map((room) => ({
       id: `${room.id}-landmark`, label: room.templateKind === 'boss' ? 'Challenger Arena' : room.hidden ? 'Hidden Branch' : floor.intent === 'harvest' ? 'Resource Grove' : 'Optional Route',
       subtitle: room.hidden ? 'A rewarding route lies beyond the critical path' : floor.intent === 'harvest' ? 'A dense pocket of biome resources' : 'Read the room before committing',
-      position: [(room.bounds[0] + room.bounds[1]) / 2, 7 + room.row * 0.4, -1.2] as [number, number, number], size: [12, 8] as [number, number],
+      position: [(room.bounds[0] + room.bounds[1]) / 2, room.bounds[2] + (floor.version === 5 ? 7 : 7 + room.row * 0.4), -1.2] as [number, number, number], size: [12, 8] as [number, number],
       color: surface.environment?.accent ?? '#2ee6ff', kind: room.hidden ? 'secret' as const : room.templateKind === 'boss' ? 'lore' as const : 'district' as const
     })),
     enemySpawns: [...floor.enemySpawns, ...hunters],
@@ -2447,7 +2483,7 @@ function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGenerate
       safeApproach: [floor.bounds.minX, floor.bounds.minX + 9],
       districts: floor.rooms.map((room) => ({ id: room.id, label: room.critical ? 'Critical Route' : room.hidden ? 'Hidden Branch' : 'Optional Route', range: [room.bounds[0], room.bounds[1]] })),
       encounters: [...floor.encounters, ...(hunters.length > 0 ? [{ id: `${floor.worldId}-floor-${floor.floorNumber}-pressure`, range: [floor.bounds.minX + 10, floor.bounds.maxX - 5] as [number, number], maxActive: Math.min(5, hunters.length), elite: true }] : [])],
-      entrances: [], waterVolumes, waystones: [], camera: { minY: -8, maxY: 20 }
+      entrances: [], waterVolumes, waystones: [], camera: { minY: floor.bounds.minY ?? -8, maxY: floor.bounds.maxY ?? 20 }
     } : undefined
   };
 }
@@ -2490,10 +2526,15 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     if (!isStoryAdventureRegionId(activeWorldId)) return biomeHub;
     const map = getStoryAdventureSurfaceMap(activeWorldId, activeSurfaceMapId);
     const surface = createAdventureSurfaceHub(biomeHub, map);
-    if (surfaceEntry === 'east') surface.spawn = [surface.bounds.maxX - 7, surface.spawn[1]];
+    const witness = surface.levelMeta?.witnessRoute ?? [];
+    const witnessNear = (x: number) => witness.reduce((closest, point) => Math.abs(point[0] - x) < Math.abs(closest[0] - x) ? point : closest, witness[0] ?? [x, surface.spawn[1]]);
+    if (surfaceEntry === 'east') {
+      const east = surface.portals.filter((portal) => portal.position[0] > 0).sort((left, right) => right.position[0] - left.position[0])[0];
+      surface.spawn = [surface.bounds.maxX - 4.5, east?.position[1] ?? witnessNear(surface.bounds.maxX)[1]];
+    }
     const shortcutPortal: StoryPortalDefinition[] = map.role === 'arrival' && adventureProgress.restoredShortcuts.includes(`${activeWorldId}-shortcut`) ? [{
       id: `shortcut-to-mastery:${activeWorldId}`, label: 'Restored Mastery Shortcut', subtitle: 'Return directly to the Endless Descent entrance', destination: activeWorldId,
-      position: [34, 1.7], size: [2.6, 3.2], accent: surface.environment?.accent ?? '#b8a8ff', kind: 'adventure-gate', surfaceMapTarget: `${activeWorldId}-mastery`, surfaceEntry: 'east'
+      position: [34, witnessNear(34)[1]], size: [2.6, 3.2], accent: surface.environment?.accent ?? '#b8a8ff', kind: 'adventure-gate', surfaceMapTarget: `${activeWorldId}-mastery`, surfaceEntry: 'east'
     }] : [];
     return {
       ...surface,

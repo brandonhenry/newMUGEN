@@ -24,6 +24,21 @@ describe('endless adventure generation', () => {
     }
   });
 
+  it('keeps v4 runs legacy while new v5 floors are enclosed and tiered', () => {
+    const legacy = generateAdventureFloor('greenhollow', 'legacy-run', 3, 4);
+    expect(legacy.version).toBe(4);
+    expect(legacy.terrainTiles).toBeUndefined();
+    const tiers = new Set<number>();
+    for (let floorNumber = 1; floorNumber <= 9; floorNumber += 1) {
+      const floor = generateAdventureFloor('greenhollow', 'tiered-run', floorNumber, 5);
+      tiers.add(floor.entranceTier!);
+      expect(floor.terrainTiles?.length).toBeGreaterThan(0);
+      expect(floor.bounds).toMatchObject({ minY: 0, maxY: 36 });
+      expect(floor.levelMeta?.topologySignature).toBeTruthy();
+    }
+    expect(tiers).toEqual(new Set([0, 1, 2]));
+  });
+
   it('validates 1,000 seeds per biome across early and direct high floors', () => {
     for (const biome of STORY_ADVENTURE_REGION_IDS) {
       const templateIds = new Set<string>();

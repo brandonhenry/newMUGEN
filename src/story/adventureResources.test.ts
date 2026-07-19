@@ -26,8 +26,13 @@ describe('Adventure gathering nodes', () => {
     for (const node of nodes) {
       const resource = STORY_RESOURCE_BY_ID[node.resourceId];
       const visibleFootY = node.position[1] + node.size[1] * (0.5 - resource.footAnchorY);
-      expect(visibleFootY, node.id).toBeCloseTo(-0.035, 8);
-      expect(node.position[1], node.id).toBeCloseTo(groundedResourceNodeCenterY(node.size[1], resource.footAnchorY), 8);
+      const map = Object.values(STORY_ADVENTURE_SURFACE_MAPS).flat().find((candidate) => candidate.resourceNodes.includes(node))!;
+      const supportTop = Math.max(...map.platforms
+        .filter((platform) => platform.collision === 'solid' && node.position[0] >= platform.position[0] - platform.size[0] / 2 && node.position[0] <= platform.position[0] + platform.size[0] / 2)
+        .map((platform) => platform.position[1] + platform.size[1] / 2)
+        .filter((top) => top <= visibleFootY + 0.1));
+      expect(visibleFootY, node.id).toBeCloseTo(supportTop - 0.035, 8);
+      expect(node.position[1] - supportTop, node.id).toBeCloseTo(groundedResourceNodeCenterY(node.size[1], resource.footAnchorY), 8);
       if (node.kind === 'tree') {
         expect(node.size[0], node.id).toBeGreaterThanOrEqual(3.25);
         expect(node.size[1], node.id).toBeGreaterThanOrEqual(4.5);
@@ -88,7 +93,7 @@ describe('Adventure gathering nodes', () => {
         const room = floor!.rooms.find((candidate) => node.id.startsWith(`${candidate.id}-resource-`))!;
         const resource = STORY_RESOURCE_BY_ID[node.resourceId];
         const visibleFootY = node.position[1] + node.size[1] * (0.5 - resource.footAnchorY);
-        expect(visibleFootY, node.id).toBeCloseTo(room.bounds[2] - 0.035, 8);
+        expect(visibleFootY, node.id).toBeCloseTo(room.bounds[2] + (floor!.version === 5 ? 2 : 0) - 0.035, 8);
       }
     }
   });

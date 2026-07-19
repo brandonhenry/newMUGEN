@@ -12,7 +12,7 @@ import type {
 
 export type StoryLevelBlueprintKind = 'surface' | 'chunk';
 export type StoryLevelBeatKind = 'entrance' | 'observation' | 'traversal' | 'combat' | 'choice' | 'respite' | 'reward' | 'secret' | 'boss' | 'exit';
-export type StoryLevelSlotKind = 'enemy-lane' | 'hazard' | 'traversal' | 'reward' | 'npc' | 'resource' | 'landmark' | 'prop';
+export type StoryLevelSlotKind = 'enemy-lane' | 'hazard' | 'traversal' | 'reward' | 'npc' | 'resource' | 'portal' | 'landmark' | 'prop';
 export type StoryLevelAssetRole = 'structural' | 'hero' | 'traversal' | 'hazard' | 'framing' | 'foliage' | 'clutter' | 'background';
 export type StoryLevelAssetLayer = 'background' | 'midground' | 'play-plane' | 'foreground';
 
@@ -47,6 +47,13 @@ export type StoryLevelGeometry = {
   kind: 'solid' | 'one-way';
   rect: [number, number, number, number];
   surfaceIntent: 'ground' | 'ledge' | 'wall' | 'ceiling';
+};
+
+export type StoryLevelGeometryV2 = StoryLevelGeometry | {
+  id: string;
+  kind: 'carve';
+  rect: [number, number, number, number];
+  surfaceIntent: 'air';
 };
 
 export type StoryLevelConnector = {
@@ -105,6 +112,15 @@ export type StoryLevelBlueprintV1 = {
   constraints: StoryLevelConstraints;
 };
 
+/** Solid-first enclosed level source. V1 remains readable for legacy content. */
+export type StoryLevelBlueprintV2 = Omit<StoryLevelBlueprintV1, 'version' | 'geometry'> & {
+  version: 2;
+  terrain: { cellSize: 2; perimeterCells: 1 };
+  geometry: StoryLevelGeometryV2[];
+};
+
+export type StoryLevelBlueprint = StoryLevelBlueprintV1 | StoryLevelBlueprintV2;
+
 export type StoryLevelAssetDefinition = {
   id: string;
   asset: StoryWorldAssetId;
@@ -141,10 +157,14 @@ export type StoryLevelValidationResult = {
 
 export type StoryCompiledLevelMeta = {
   blueprintId: string;
-  blueprintVersion: 1;
+  blueprintVersion: 1 | 2;
   generationVersion: number;
   seed: string;
   chunkIds: string[];
   witnessRoute: Array<[number, number]>;
   assetResolution: Array<{ slotId: string; assetId: string }>;
+  topologySignature?: string;
+  entranceTier?: 0 | 1 | 2;
+  exitTier?: 0 | 1 | 2;
+  witnessInputs?: Array<{ frames: number; horizontal: -1 | 0 | 1; jump?: boolean; down?: boolean }>;
 };

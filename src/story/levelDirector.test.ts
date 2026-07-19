@@ -4,6 +4,8 @@ import { STORY_SURFACE_LEVEL_BLUEPRINTS, storySurfaceRouteSignature } from './le
 import { STORY_ENDLESS_CHUNK_BLUEPRINTS, storyAuthoredRoomTemplate, storyChunkCoverageErrors } from './levelChunks';
 import { compileStoryLevelBlueprint, renderStoryLevelBlueprintSvg, validateStoryLevelBlueprint } from './levelCompiler';
 import { STORY_MOVEMENT_PROFILE, storyConservativeDoubleJumpRise, storyConservativeJumpRun, storyMaximumJumpRise } from './movementProfile';
+import { storyTerrainGrammarCoverageErrors } from './terrainGrammar';
+import type { StoryLevelBlueprintV1, StoryLevelGeometry } from './levelTypes';
 
 describe('KORE AI Level Director', () => {
   it('keeps all 32 surface maps structurally distinct and valid', () => {
@@ -26,11 +28,28 @@ describe('KORE AI Level Director', () => {
     expect(first.meta.seed).toBe('deterministic-seed');
   });
 
+  it('retains the V1 parser and compiler path for legacy authored runs', () => {
+    const { terrain: _terrain, ...v2Chunk } = STORY_ENDLESS_CHUNK_BLUEPRINTS[0];
+    const legacy: StoryLevelBlueprintV1 = {
+      ...v2Chunk,
+      version: 1,
+      geometry: v2Chunk.geometry.filter((geometry): geometry is StoryLevelGeometry => geometry.kind !== 'carve')
+    };
+    const validation = validateStoryLevelBlueprint(legacy);
+    const compiled = compileStoryLevelBlueprint(legacy, 'legacy-migration', 3);
+    expect(validation.errors).toEqual([]);
+    expect(compiled.meta.blueprintVersion).toBe(1);
+    expect(compiled.meta.generationVersion).toBe(3);
+    expect(compiled.terrainTiles).toEqual([]);
+  });
+
   it('provides four authored variants for every Endless chunk role', () => {
     expect(STORY_ENDLESS_CHUNK_BLUEPRINTS).toHaveLength(48);
     expect(storyChunkCoverageErrors()).toEqual([]);
     const roleCounts = new Map<string, number>();
     for (const chunk of STORY_ENDLESS_CHUNK_BLUEPRINTS) {
+      expect(chunk.version).toBe(2);
+      expect(chunk.geometry.some((geometry) => geometry.kind === 'carve'), chunk.id).toBe(true);
       roleCounts.set(chunk.chunkRole!, (roleCounts.get(chunk.chunkRole!) ?? 0) + 1);
       expect(chunk.geometry.filter((geometry) => geometry.kind === 'solid' && geometry.surfaceIntent === 'wall').length, chunk.id).toBeGreaterThanOrEqual(2);
       expect(chunk.slots.filter((slot) => slot.kind === 'prop').length, chunk.id).toBeGreaterThanOrEqual(4);
@@ -40,6 +59,7 @@ describe('KORE AI Level Director', () => {
   });
 
   it('resolves registered semantic assets for every biome', () => {
+    expect(storyTerrainGrammarCoverageErrors()).toEqual([]);
     expect(STORY_LEVEL_ASSET_REGISTRY.length).toBeGreaterThanOrEqual(38);
     for (const coverage of storyLevelAssetCoverage()) {
       expect(coverage.assets, coverage.biomeId).toBeGreaterThanOrEqual(4);

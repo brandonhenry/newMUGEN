@@ -73,6 +73,8 @@ export function createSurfaceResourceNodes(input: {
   portals: StoryPortalDefinition[];
   npcs: StoryNpcDefinition[];
   hazards: StoryHazardDefinition[];
+  placementForIndex?: (index: number, fallbackX: number) => { x: number };
+  baseYForX?: (x: number) => number;
 }) {
   const order = ['arrival', 'field-a', 'field-b', 'mastery'].indexOf(input.role);
   const count = 12 + order * 2;
@@ -89,9 +91,11 @@ export function createSurfaceResourceNodes(input: {
     const evenX = input.bounds.minX + 7 + span * ((index + 0.5) / count);
     const clusterX = 5 + (index - clusterStart) * 2.15 - (count - clusterStart) * 1.05;
     const jitter = (unit(`${input.mapId}:${index}`) - 0.5) * 2.4;
-    const candidate = major ? clusterX + jitter : evenX + jitter;
+    const fallbackX = major ? clusterX + jitter : evenX + jitter;
+    const authoredPlacement = input.placementForIndex?.(index, fallbackX);
+    const candidate = authoredPlacement?.x ?? fallbackX;
     const x = awayFromReserved(candidate, input.portals, input.npcs, input.hazards, input.bounds.minX, input.bounds.maxX);
-    nodes.push(makeNode(`${input.mapId}-resource-${index + 1}`, resourceId, x, major, local[2]));
+    nodes.push(makeNode(`${input.mapId}-resource-${index + 1}`, resourceId, x, major, local[2], input.baseYForX?.(x) ?? 0));
   }
   return nodes;
 }
@@ -130,7 +134,7 @@ export function createEndlessFloorResourceNodes(biomeId: StoryBiomeId, floor: St
     const alcove = room.rewardAlcoves[index % Math.max(1, room.rewardAlcoves.length)] ?? [0, 1.05];
     const baseX = roomCenter + alcove[0];
     const x = Math.max(floor.bounds.minX + 8, Math.min(floor.bounds.maxX - 8, baseX + (unit(`${floor.seed}:${floor.floorNumber}:${index}`) - 0.5) * 2));
-    return makeNode(`${room.id}-resource-${index + 1}`, resourceId, x, major, local[2], room.bounds[2]);
+    return makeNode(`${room.id}-resource-${index + 1}`, resourceId, x, major, local[2], room.bounds[2] + (floor.version === 5 ? 2 : 0));
   });
 }
 
