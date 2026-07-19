@@ -144,6 +144,23 @@ describe('story adventure progression', () => {
     expect(canRespecAdventureStats('emberdeep', 'shrine')).toBe(false);
   });
 
+  it('unlocks rolling at 10 effective agility and relocks after gear removal or respec', () => {
+    const nineAgility = sanitizeAdventureProgress({ level: 10, stats: { agility: 9 } });
+    expect(getAdventureDerivedStats(nineAgility)).toMatchObject({ effectiveAgility: 9, rollUnlocked: false });
+
+    const tenAgility = sanitizeAdventureProgress({ level: 11, stats: { agility: 10 } });
+    expect(getAdventureDerivedStats(tenAgility)).toMatchObject({ effectiveAgility: 10, rollUnlocked: true });
+
+    const armorUnlocked = sanitizeAdventureProgress({
+      ...nineAgility,
+      inventory: { ...nineAgility.inventory, armor: ['greenhollow-boots'] },
+      equippedArmor: { ...nineAgility.equippedArmor, boots: 'greenhollow-boots' }
+    });
+    expect(getAdventureDerivedStats(armorUnlocked)).toMatchObject({ effectiveAgility: 10, rollUnlocked: true });
+    expect(getAdventureDerivedStats(sanitizeAdventureProgress({ ...armorUnlocked, equippedArmor: { ...armorUnlocked.equippedArmor, boots: null } }))).toMatchObject({ effectiveAgility: 9, rollUnlocked: false });
+    expect(getAdventureDerivedStats(respecAdventureStats(armorUnlocked))).toMatchObject({ effectiveAgility: 1, rollUnlocked: false });
+  });
+
   it('unlocks Party Size from unique challenger and level milestones', () => {
     let progress = sanitizeAdventureProgress({ level: 2, stats: {} });
     expect(getAdventurePartySizeEligibility(progress.level, 0).maxEligibleSize).toBe(1);

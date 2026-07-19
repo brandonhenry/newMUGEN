@@ -11,7 +11,8 @@ export type StoryAvatarPose = StoryHubAvatarPose;
 function animationForPose(pose: StoryAvatarPose) {
   if (pose === 'attack-jab') return 'attack';
   if (pose === 'attack-heavy' || pose === 'attack-kick' || pose === 'attack-special') return pose;
-  return pose === 'walk' || pose === 'jump' || pose === 'sprint' ? pose : 'idle';
+  if (pose === 'crouch') return 'roll';
+  return pose === 'walk' || pose === 'jump' || pose === 'sprint' || pose === 'roll' ? pose : 'idle';
 }
 
 function frameIndexAt(animation: StorySpriteAnimation, elapsedMs: number, reducedMotion: boolean) {
@@ -75,7 +76,7 @@ export function StoryAvatarRig({ avatar, pose = 'idle', facing = 1, reducedMotio
       poseStartedAtRef.current = state.clock.elapsedTime;
     }
     const elapsedMs = (state.clock.elapsedTime - (poseStartedAtRef.current ?? state.clock.elapsedTime)) * 1000;
-    const frameIndex = frameIndexAt(animation, elapsedMs, reducedMotion);
+    const frameIndex = pose === 'crouch' ? animation.frames.length - 1 : frameIndexAt(animation, elapsedMs, reducedMotion);
     const texture = textures[frameIndex] ?? textures[0];
     const visualScale = animation.frames[frameIndex]?.visualScale ?? 1;
     const material = materialRef.current;

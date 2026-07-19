@@ -437,6 +437,23 @@ describe('useControls', () => {
     expect(input.left).toBe(true);
     expect((input as InputFrameWithMetadata).__horizontalDashDirection).toBeUndefined();
   });
+
+  it('emits directional metadata for keyboard and touch double taps', () => {
+    const keyboardInput = emptyInputFrame();
+    const keyboardState = createHorizontalTapState();
+    applyHorizontalTap(keyboardInput, keyboardState, 'right', true, 'keyboard', 100);
+    applyHorizontalTap(keyboardInput, keyboardState, 'right', false, 'keyboard', 170);
+    applyHorizontalTap(keyboardInput, keyboardState, 'right', true, 'keyboard', 300);
+    expect((keyboardInput as InputFrameWithMetadata).__horizontalDashDirection).toBe('right');
+
+    render(<Harness />);
+    setNow(400);
+    controlsApi!.setVirtualAction(1, 'left', true);
+    controlsApi!.setVirtualAction(1, 'left', false);
+    setNow(600);
+    controlsApi!.setVirtualAction(1, 'left', true);
+    expect((controlsApi!.readInputsForStep()[0] as InputFrameWithMetadata).__horizontalDashDirection).toBe('left');
+  });
 });
 
 function mockGamepads(pads: Array<Gamepad | null>) {

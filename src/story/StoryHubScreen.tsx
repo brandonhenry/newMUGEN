@@ -7,7 +7,7 @@ import * as THREE from 'three';
 import type { OnlinePlayerProfile } from '../lib/online/leaderboard';
 import { createAnalyticsId, type AnalyticsCapture } from '../lib/analytics';
 import { addFriendEntry, isFriend, readMatchHistory } from '../lib/socialHistory';
-import type { InputFrame } from '../types';
+import type { InputFrame, InputFrameWithMetadata } from '../types';
 import { STORY_ADVENTURE_ASSET_PATHS, storyWorldAssetPath } from './adventureAssets';
 import { emitAdventureAudioEvent } from './adventureAudio';
 import { STORY_HAZARD_SPRITES, storyHazardContactDamageReady, storyHazardDealsContactDamage } from './adventureHazards';
@@ -29,7 +29,7 @@ import { KORE_CENTRAL_HUB } from './hubData';
 import { storyPlatformSurfacePlacement } from './platformGrounding';
 import { resolveStorySurfaceContact, type StorySurfaceContact } from './storySurfaceContact';
 import { advanceStoryMovementAudio, type StoryMovementAudioState } from './storyMovementAudio';
-import { STORY_MOVEMENT_PROFILE } from './movementProfile';
+import { canStartStoryRoll, resolveStoryRollRequest, STORY_MOVEMENT_PROFILE, storyRollCombatWindowBlocksDamage, storyRollRecoveryFacing, type StoryPlayerDamageKind } from './movementProfile';
 import { resolveStoryTerrainMotion } from './storyTerrainCollision';
 import { resolveStoryTerrainVariant, storyTerrainFrame } from './terrainGrammar';
 import { createStoryBiomeVisualSetEnvironment } from './worldEnvironments';
@@ -52,7 +52,10 @@ import { LevelLabOverlay, storyLevelLabCameraOverride, storyLevelLabEnabled } fr
 import { getEquippedStoryAvatarSlots, normalizeStoryAvatarRoster, setActiveStoryAvatar } from './profile';
 import type { AdventureMusicContext, AdventureMusicTrackDefinition, HubDestination, StoryAttackInput, StoryAvatarSet, StoryEndlessRunState, StoryEnemyDefeatEvent, StoryEnemyId, StoryEnemySpawnDefinition, StoryEnemyTier, StoryGeneratedFloor, StoryGeneratedPickup, StoryGeneratedWildlife, StoryHazardDefinition, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryMountDefinition, StoryMountId, StoryNpcDefinition, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StoryResourceNodeDefinition, StoryRunBoonId, StorySpriteProjectileDefinition, StoryWorldBackdropLayerDefinition, StoryWorldId, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
 
-type StoryHubInput = Pick<InputFrame, 'left' | 'right' | 'down' | 'up' | 'jump' | 'jab' | 'kick' | 'heavy' | 'special' | 'block' | 'back' | 'pause'> & { interact: boolean };
+type StoryHubInput = Pick<InputFrame, 'left' | 'right' | 'down' | 'up' | 'jump' | 'jab' | 'kick' | 'heavy' | 'special' | 'block' | 'back' | 'pause'> & {
+  interact: boolean;
+  rollDirection?: 'left' | 'right';
+};
 type SetVirtualAction = (player: 1 | 2, action: keyof InputFrame, pressed: boolean) => void;
 
 const CITY_ASSET_ROOT = '/story/hub/warped-city-2';
@@ -1785,7 +1788,7 @@ function StoryMountVisual({ mount, facing }: { mount: StoryMountDefinition; faci
   </group>;
 }
 
-function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, playerPosition, movementLock, readInput, disabled, reducedMotion, quickMatchAvailable, derivedStats, mounted, mount, mountMasteryRank, impactEvent, onAttack, onQuickMatch, onNearbyPortal, onActivatePortal, onWaterState, onExit, onPause, onStateSample, onReady }: {
+function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, playerPosition, movementLock, readInput, disabled, reducedMotion, quickMatchAvailable, derivedStats, mounted, mount, mountMasteryRank, impactEvent, onAttack, onRollCombatWindowChange, onQuickMatch, onNearbyPortal, onActivatePortal, onWaterState, onExit, onPause, onStateSample, onReady }: {
   hub: StoryHubDefinition;
   avatar: StoryProfileV4['avatar'];
   avatarVisible: boolean;
@@ -1802,6 +1805,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
   mountMasteryRank: number;
   impactEvent: StoryPlayerImpactEvent | null;
   onAttack: (x: number, y: number, facing: -1 | 1, attackInput: StoryAttackInput, durationSeconds: number) => void;
+  onRollCombatWindowChange: (startMs: number, endMs: number) => void;
   onQuickMatch: () => void;
   onNearbyPortal: (portal: StoryPortalDefinition | null) => void;
   onActivatePortal: (portal: StoryPortalDefinition) => void;
@@ -1817,13 +1821,13 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
   const position = useRef({ x: hub.spawn[0], y: hub.spawn[1] });
   const velocityY = useRef(0);
   const facing = useRef<-1 | 1>(1);
-  const [visualState, setVisualState] = useState<{ pose: StoryAvatarPose; facing: -1 | 1; attackSequence: number }>({ pose: 'idle', facing: 1, attackSequence: 0 });
+  const [visualState, setVisualState] = useState<{ pose: StoryAvatarPose; facing: -1 | 1; actionSequence: number }>({ pose: 'idle', facing: 1, actionSequence: 0 });
   const groundedUntil = useRef(0);
   const groundedPlatform = useRef<string | null>('ground');
   const jumpsUsed = useRef(0);
   const jumpBufferedUntil = useRef(0);
   const dropThroughUntil = useRef(0);
-  const previousButtons = useRef({ jump: false, interact: false, jab: false, heavy: false, kick: false, special: false, back: false, pause: false });
+  const previousButtons = useRef({ left: false, right: false, down: false, jump: false, interact: false, jab: false, heavy: false, kick: false, special: false, back: false, pause: false });
   const labWitnessPlayback = useRef({ step: 0, elapsed: 0, finished: false });
   // Null forces every newly mounted area to report its initial dry/wet state.
   // Starting this at false can leave the parent stuck underwater after travel.
@@ -1831,6 +1835,12 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
   const attackUntil = useRef(0);
   const attackPose = useRef<StoryAvatarPose>('attack-jab');
   const attackSequence = useRef(0);
+  const rollUntil = useRef(0);
+  const rollCooldownUntil = useRef(0);
+  const rollDirection = useRef<-1 | 1>(1);
+  const rollStartedFacing = useRef<-1 | 1>(1);
+  const rollFromCrouch = useRef(false);
+  const directionalTapStartedFacing = useRef<{ left: -1 | 1; right: -1 | 1 }>({ left: 1, right: 1 });
   const bufferedAttack = useRef<StoryBufferedAttackInput>(null);
   const actionInputArmed = useRef(false);
   const releasedInputFrames = useRef(0);
@@ -1855,6 +1865,9 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
   useEffect(() => onReady?.(), [onReady]);
   useEffect(() => {
     if (!impactEvent) return;
+    rollUntil.current = 0;
+    rollFromCrouch.current = false;
+    onRollCombatWindowChange(0, 0);
     flashUntil.current = performance.now() + (reducedMotion ? 90 : 420);
     if (impactEvent.respawn) {
       position.current = { x: impactEvent.respawn[0], y: impactEvent.respawn[1] };
@@ -1867,13 +1880,16 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
     }
     const direction = position.current.x >= impactEvent.sourceX ? 1 : -1;
     position.current.x = THREE.MathUtils.clamp(position.current.x + direction * impactEvent.knockback, hub.bounds.minX + 0.5, hub.bounds.maxX - 0.5);
-  }, [hub.bounds.maxX, hub.bounds.minX, impactEvent, playerPosition, reducedMotion]);
+  }, [hub.bounds.maxX, hub.bounds.minX, impactEvent, onRollCombatWindowChange, playerPosition, reducedMotion]);
   useEffect(() => {
     if (!disabled) return;
     actionInputArmed.current = false;
     releasedInputFrames.current = 0;
     bufferedAttack.current = null;
-  }, [disabled]);
+    rollUntil.current = 0;
+    rollFromCrouch.current = false;
+    onRollCombatWindowChange(0, 0);
+  }, [disabled, onRollCombatWindowChange]);
 
   useFrame((state, frameDelta) => {
     const now = state.clock.elapsedTime;
@@ -1881,7 +1897,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
     const neutralInput = { left: false, right: false, down: false, up: false, jump: false, interact: false, jab: false, kick: false, heavy: false, special: false, block: false, back: false, pause: false };
     const witnessEnabled = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('storyWitness') === '1';
     const witnessStep = hub.levelMeta?.witnessInputs?.[labWitnessPlayback.current.step];
-    let input = disabled ? neutralInput : readInput();
+    let input: StoryHubInput = disabled ? neutralInput : readInput();
     if (!disabled && witnessEnabled && witnessStep && !labWitnessPlayback.current.finished) {
       const pulseJump = Boolean(witnessStep.jump && labWitnessPlayback.current.elapsed % 0.3 < 0.075);
       input = { ...neutralInput, left: witnessStep.horizontal < 0, right: witnessStep.horizontal > 0, down: Boolean(witnessStep.down), jump: pulseJump, up: pulseJump };
@@ -1917,6 +1933,12 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
     const selectedAttack = resolveStoryAttackInput(attackEdges);
     const backEdge = actionInputArmed.current && backPressed && !previousButtons.current.back;
     const pauseEdge = actionInputArmed.current && pausePressed && !previousButtons.current.pause;
+    const waterVolume = hub.exploration?.waterVolumes.find((volume) => position.current.x >= volume.bounds[0] && position.current.x <= volume.bounds[1] && position.current.y >= volume.bounds[2] && position.current.y <= volume.bounds[3]);
+    const activeHazard = hub.hazards?.find((hazard) => position.current.x >= hazard.bounds[0] && position.current.x <= hazard.bounds[1] && position.current.y >= hazard.bounds[2] && position.current.y <= hazard.bounds[3]);
+    const traversalPiece = hub.traversal?.find((piece) => Math.abs(position.current.x - piece.position[0]) <= piece.size[0] / 2 + 0.5 && Math.abs(position.current.y - piece.position[1]) <= piece.size[1] / 2 + 0.8);
+    const airPocket = waterVolume?.airPockets.find((pocket) => Math.hypot(position.current.x - pocket[0], position.current.y - pocket[1]) <= 1.8);
+    const swimming = Boolean(waterVolume && !airPocket);
+    const assistedClimb = Boolean(traversalPiece && ['ladder', 'rope', 'lift', 'updraft'].includes(traversalPiece.kind));
 
     // A confirm used to enter the hub can still be held on its first frames. Wait
     // for a clean release before accepting action edges so it cannot trigger the
@@ -1929,12 +1951,56 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
 
     if (backEdge) onExit();
     if (pauseEdge) onPause();
-    if (horizontal !== 0) facing.current = horizontal > 0 ? 1 : -1;
+    let rolling = rollUntil.current > now;
+    if (!rolling && rollFromCrouch.current) {
+      facing.current = storyRollRecoveryFacing(rollStartedFacing.current, true);
+      rollFromCrouch.current = false;
+    }
+    const doubleTapStartedFacing = input.rollDirection
+      ? directionalTapStartedFacing.current[input.rollDirection]
+      : facing.current;
+    if (!input.rollDirection) {
+      if (input.left && !previousButtons.current.left) directionalTapStartedFacing.current.left = facing.current;
+      if (input.right && !previousButtons.current.right) directionalTapStartedFacing.current.right = facing.current;
+    }
+    const rollRequest = resolveStoryRollRequest({
+      left: input.left,
+      right: input.right,
+      down: input.down,
+      previousLeft: previousButtons.current.left,
+      previousRight: previousButtons.current.right,
+      previousDown: previousButtons.current.down,
+      doubleTapDirection: input.rollDirection
+    });
+    if (rollRequest && actionInputArmed.current && canStartStoryRoll({
+      rollUnlocked: derivedStats.rollUnlocked,
+      grounded: groundedUntil.current >= now,
+      mounted,
+      swimming,
+      assistedClimb,
+      attacking: attackUntil.current > now,
+      cooldownReady: rollCooldownUntil.current <= now
+    })) {
+      rollDirection.current = rollRequest.direction;
+      rollStartedFacing.current = rollRequest.fromCrouch ? facing.current : doubleTapStartedFacing;
+      facing.current = rollStartedFacing.current;
+      rollFromCrouch.current = rollRequest.fromCrouch;
+      rollUntil.current = now + STORY_MOVEMENT_PROFILE.rollDurationSeconds;
+      rollCooldownUntil.current = now + STORY_MOVEMENT_PROFILE.rollCooldownSeconds;
+      attackSequence.current += 1;
+      const startedAtMs = performance.now();
+      onRollCombatWindowChange(
+        startedAtMs + STORY_MOVEMENT_PROFILE.rollInvulnerabilityStartSeconds * 1000,
+        startedAtMs + STORY_MOVEMENT_PROFILE.rollInvulnerabilityEndSeconds * 1000
+      );
+      rolling = true;
+    }
+    if (!rolling && !input.down && horizontal !== 0) facing.current = horizontal > 0 ? 1 : -1;
     const bufferedAttackResult = advanceStoryAttackInputBuffer({
       buffered: bufferedAttack.current,
       pressed: selectedAttack,
       now,
-      attackReady: attackUntil.current <= now
+      attackReady: attackUntil.current <= now && !rolling
     });
     bufferedAttack.current = bufferedAttackResult.buffered;
     if (bufferedAttackResult.attackInput) {
@@ -1944,11 +2010,6 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
       attackSequence.current += 1;
       onAttack(position.current.x, position.current.y, facing.current, bufferedAttackResult.attackInput, attackDurationSeconds);
     }
-    const waterVolume = hub.exploration?.waterVolumes.find((volume) => position.current.x >= volume.bounds[0] && position.current.x <= volume.bounds[1] && position.current.y >= volume.bounds[2] && position.current.y <= volume.bounds[3]);
-    const activeHazard = hub.hazards?.find((hazard) => position.current.x >= hazard.bounds[0] && position.current.x <= hazard.bounds[1] && position.current.y >= hazard.bounds[2] && position.current.y <= hazard.bounds[3]);
-    const traversalPiece = hub.traversal?.find((piece) => Math.abs(position.current.x - piece.position[0]) <= piece.size[0] / 2 + 0.5 && Math.abs(position.current.y - piece.position[1]) <= piece.size[1] / 2 + 0.8);
-    const airPocket = waterVolume?.airPockets.find((pocket) => Math.hypot(position.current.x - pocket[0], position.current.y - pocket[1]) <= 1.8);
-    const swimming = Boolean(waterVolume && !airPocket);
     if (shouldSyncAdventureWaterState(previousWaterState.current, swimming, Boolean(airPocket))) {
       previousWaterState.current = swimming;
       onWaterState(swimming, airPocket);
@@ -1956,7 +2017,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
     const standingPlatform = groundedPlatform.current
       ? hub.platforms.find((platform) => platform.id === groundedPlatform.current)
       : undefined;
-    const droppingThrough = Boolean(input.down && standingPlatform?.oneWay && groundedUntil.current >= now);
+    const droppingThrough = Boolean(!rolling && input.down && jumpEdge && standingPlatform?.oneWay && groundedUntil.current >= now);
     if (swimming) {
       groundedPlatform.current = null;
       groundedUntil.current = 0;
@@ -1969,26 +2030,25 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
       position.current.y -= 0.12;
       velocityY.current = -2.2;
       jumpBufferedUntil.current = 0;
-    } else if (jumpEdge && groundedUntil.current < now && jumpsUsed.current < 2) {
+    } else if (!rolling && jumpEdge && groundedUntil.current < now && jumpsUsed.current < 2) {
       velocityY.current = STORY_MOVEMENT_PROFILE.jumpVelocity * derivedStats.jumpMultiplier * (mounted && mount ? mount.jumpMultiplier * (1 + mountMasteryRank * 0.008) : 1);
       jumpsUsed.current = STORY_MOVEMENT_PROFILE.maximumJumps;
       groundedPlatform.current = null;
       groundedUntil.current = 0;
       jumpBufferedUntil.current = 0;
-    } else if (jumpEdge) {
+    } else if (!rolling && jumpEdge) {
       jumpBufferedUntil.current = now + STORY_MOVEMENT_PROFILE.jumpBufferSeconds;
     }
 
-    const sprinting = horizontal !== 0 && input.block;
-    if (!swimming && jumpBufferedUntil.current >= now && groundedUntil.current >= now) {
+    const sprinting = !rolling && horizontal !== 0 && input.block;
+    if (!rolling && !swimming && jumpBufferedUntil.current >= now && groundedUntil.current >= now) {
       velocityY.current = STORY_MOVEMENT_PROFILE.bufferedGroundJumpVelocity * derivedStats.jumpMultiplier * (mounted && mount ? mount.jumpMultiplier * (1 + mountMasteryRank * 0.008) : 1);
       jumpsUsed.current = 1;
       groundedPlatform.current = null;
       groundedUntil.current = 0;
       jumpBufferedUntil.current = 0;
     }
-    const assistedClimb = traversalPiece && ['ladder', 'rope', 'lift', 'updraft'].includes(traversalPiece.kind);
-    if (assistedClimb) {
+    if (!rolling && assistedClimb && traversalPiece) {
       const vertical = (input.up || input.jump ? 1 : 0) - (input.down ? 1 : 0);
       velocityY.current = traversalPiece.kind === 'updraft' ? Math.max(1.8, vertical * STORY_MOVEMENT_PROFILE.updraftSpeed) : vertical * (traversalPiece.speed ?? STORY_MOVEMENT_PROFILE.climbSpeed);
       if (vertical !== 0) { groundedPlatform.current = null; groundedUntil.current = 0; }
@@ -1998,15 +2058,17 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
     } else {
       velocityY.current += -STORY_MOVEMENT_PROFILE.gravity * delta;
     }
-    const baseMoveSpeed = sprinting ? derivedStats.sprintSpeed : derivedStats.walkSpeed;
+    const baseMoveSpeed = rolling ? STORY_MOVEMENT_PROFILE.rollSpeed : sprinting ? derivedStats.sprintSpeed : derivedStats.walkSpeed;
     const mountSpeed = mounted && mount ? mount.speedMultiplier * (1 + mountMasteryRank * 0.012) : 1;
     const traversalMoveMultiplier = traversalPiece?.kind === 'slippery-surface' ? 1.22 : traversalPiece?.kind === 'current' ? 0.78 : 1;
     const sandMoveMultiplier = activeHazard?.kind === 'sinking-sand' ? 1 - 0.45 * derivedStats.sandSlowMultiplier : 1;
-    const moveSpeed = baseMoveSpeed * mountSpeed * (swimming ? 0.64 : 1) * traversalMoveMultiplier * sandMoveMultiplier;
+    const moveSpeed = rolling ? STORY_MOVEMENT_PROFILE.rollSpeed : baseMoveSpeed * mountSpeed * (swimming ? 0.64 : 1) * traversalMoveMultiplier * sandMoveMultiplier;
+    const crouchMovementLocked = !rolling && input.down && groundedUntil.current >= now;
+    const movementDirection = rolling ? rollDirection.current : crouchMovementLocked ? 0 : horizontal;
     const horizontalBounds: [number, number] = movementLock
       ? [Math.max(hub.bounds.minX, movementLock[0]) + 0.5, Math.min(hub.bounds.maxX, movementLock[1]) - 0.5]
       : [hub.bounds.minX + 0.5, hub.bounds.maxX - 0.5];
-    let nextX = THREE.MathUtils.clamp(position.current.x + horizontal * moveSpeed * delta, horizontalBounds[0], horizontalBounds[1]);
+    let nextX = THREE.MathUtils.clamp(position.current.x + movementDirection * moveSpeed * delta, horizontalBounds[0], horizontalBounds[1]);
     let nextY = position.current.y + velocityY.current * delta;
     if (activeHazard?.kind === 'wind') nextX = THREE.MathUtils.clamp(nextX + (activeHazard.knockback ?? 4.5) * 0.55 * derivedStats.windPushMultiplier * delta, horizontalBounds[0], horizontalBounds[1]);
     if (swimming && waterVolume) {
@@ -2018,7 +2080,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
       proposed: { x: nextX, y: nextY },
       velocityY: velocityY.current,
       platforms: hub.platforms,
-      horizontalDirection: horizontal,
+      horizontalDirection: movementDirection,
       dropThrough: now < dropThroughUntil.current
     });
     const landing = terrainMotion?.landing ?? null;
@@ -2031,6 +2093,14 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
       groundedUntil.current = now + 0.1;
       groundedPlatform.current = landing.id;
       jumpsUsed.current = 0;
+    }
+    if (rolling && !landing && nextY > hub.bounds.floorY + STORY_GROUNDED_ACTOR_CENTER_Y + 0.05) {
+      rollUntil.current = now;
+      rollFromCrouch.current = false;
+      rolling = false;
+      groundedUntil.current = 0;
+      groundedPlatform.current = null;
+      onRollCombatWindowChange(0, 0);
     }
     if (!swimming && nextY < hub.bounds.floorY + STORY_GROUNDED_ACTOR_CENTER_Y) {
       nextY = hub.bounds.floorY + STORY_GROUNDED_ACTOR_CENTER_Y;
@@ -2050,7 +2120,8 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
     }
     if (avatarGroup.current) avatarGroup.current.visible = avatarVisible && (performance.now() >= flashUntil.current || Math.floor(performance.now() / 70) % 2 === 0);
 
-    const nextPose: StoryAvatarPose = attackUntil.current > now ? attackPose.current : swimming || groundedUntil.current < now ? 'jump' : sprinting || mounted ? 'sprint' : horizontal !== 0 ? 'walk' : 'idle';
+    const crouching = !rolling && !swimming && groundedUntil.current >= now && input.down;
+    const nextPose: StoryAvatarPose = rolling ? 'roll' : attackUntil.current > now ? attackPose.current : swimming || groundedUntil.current < now ? 'jump' : crouching ? 'crouch' : sprinting || mounted ? 'sprint' : horizontal !== 0 ? 'walk' : 'idle';
     const grounded = !swimming && groundedUntil.current >= now;
     const resolvedContact = resolveStorySurfaceContact({
       hub,
@@ -2062,8 +2133,8 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
     });
     if (grounded || swimming) lastGroundedContact.current = resolvedContact;
     const sampledContact = grounded || swimming ? resolvedContact : lastGroundedContact.current;
-    if (visualState.pose !== nextPose || visualState.facing !== facing.current || visualState.attackSequence !== attackSequence.current) {
-      setVisualState({ pose: nextPose, facing: facing.current, attackSequence: attackSequence.current });
+    if (visualState.pose !== nextPose || visualState.facing !== facing.current || visualState.actionSequence !== attackSequence.current) {
+      setVisualState({ pose: nextPose, facing: facing.current, actionSequence: attackSequence.current });
     }
 
     const nearby = hub.portals
@@ -2073,13 +2144,13 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
       nearbyId.current = nearby?.id ?? null;
       onNearbyPortal(nearby);
     }
-    if (interactEdge && nearby) onActivatePortal(nearby);
-    else if (interactEdge && quickMatchAvailable) onQuickMatch();
+    if (!rolling && interactEdge && nearby) onActivatePortal(nearby);
+    else if (!rolling && interactEdge && quickMatchAvailable) onQuickMatch();
     if (now - lastSampleAt.current > 0.12) {
       lastSampleAt.current = now;
       onStateSample({ x: nextX, y: nextY, pose: nextPose, facing: facing.current }, sampledContact, grounded);
     }
-    previousButtons.current = { jump: jumpPressed, interact: interactPressed, ...attackButtons, back: backPressed, pause: pausePressed };
+    previousButtons.current = { left: input.left, right: input.right, down: input.down, jump: jumpPressed, interact: interactPressed, ...attackButtons, back: backPressed, pause: pausePressed };
   });
 
   return <RigidBody ref={bodyRef} type="kinematicPosition" position={[hub.spawn[0], hub.spawn[1], 0]} colliders={false} enabledRotations={[false, false, false]}>
@@ -2087,7 +2158,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
     <group ref={groundedVisualGroup} position={[0, -initialSurfaceInsetY, 0]}>
       {mounted && mount && <StoryMountVisual mount={mount} facing={visualState.facing} />}
       <group ref={avatarGroup} position={[mount && mounted ? mount.riderOffset[0] : 0, groundingOffsetY + (mount && mounted ? mount.riderOffset[1] : 0), 0]} visible={avatarVisible}>
-        <StoryAvatarRig avatar={avatar} pose={visualState.pose} facing={visualState.facing} reducedMotion={reducedMotion} restartToken={visualState.attackSequence} />
+        <StoryAvatarRig avatar={avatar} pose={visualState.pose} facing={visualState.facing} reducedMotion={reducedMotion} restartToken={visualState.actionSequence} />
       </group>
     </group>
   </RigidBody>;
@@ -2158,7 +2229,7 @@ function StoryFloorPickupActor({ pickup, playerPosition, reducedMotion, onCollec
   </group>;
 }
 
-function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVisible, quickMatchAvailable, assignedPortalId, nearbyPortal, remotePlayers, selectedPlayerSessionId, progress, activePartyMembers, partyAiActors, mounted, mount, attackEvent, impactEvent, encounterSeed, initialEncounterProgress, hostileNpcIds, onEncounterProgressChange, onChallengerStarted, onNpcAggro, onNpcDefeated, onAttack, onPlayerDamage, onEnemyDefeated, onResourceHarvest, onPickup, onWildlifeSighting, onQuickMatch, onSelectPlayer, onNearbyPortal, onActivatePortal, onWaterState, onExit, onPause, onStateSample, onReady }: {
+function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVisible, quickMatchAvailable, assignedPortalId, nearbyPortal, remotePlayers, selectedPlayerSessionId, progress, activePartyMembers, partyAiActors, mounted, mount, attackEvent, impactEvent, encounterSeed, initialEncounterProgress, hostileNpcIds, onEncounterProgressChange, onChallengerStarted, onNpcAggro, onNpcDefeated, onAttack, onRollCombatWindowChange, onPlayerDamage, onEnemyDefeated, onResourceHarvest, onPickup, onWildlifeSighting, onQuickMatch, onSelectPlayer, onNearbyPortal, onActivatePortal, onWaterState, onExit, onPause, onStateSample, onReady }: {
   hub: StoryHubDefinition;
   profile: StoryProfileV4;
   reducedMotion: boolean;
@@ -2186,7 +2257,8 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
   onNpcAggro: (npc: StoryNpcDefinition) => void;
   onNpcDefeated: (npc: StoryNpcDefinition) => void;
   onAttack: (x: number, y: number, facing: -1 | 1, attackInput: StoryAttackInput, durationSeconds: number) => void;
-  onPlayerDamage: (damage: number, sourceX: number) => void;
+  onRollCombatWindowChange: (startMs: number, endMs: number) => void;
+  onPlayerDamage: (damage: number, sourceX: number, kind?: StoryPlayerDamageKind) => void;
   onEnemyDefeated: (event: StoryEnemyDefeatEvent) => void;
   onResourceHarvest: (node: StoryResourceNodeDefinition) => void;
   onPickup: (pickup: StoryGeneratedPickup) => void;
@@ -2322,7 +2394,7 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
           <CuboidCollider args={[platform.size[0] / 2, platform.size[1] / 2, 1]} sensor={Boolean(platform.oneWay)} />
           {platform.visual !== false && <PlatformVisual platform={platform} hub={hub} />}
         </RigidBody>)}
-        <AdventureHazards hub={hub} progress={progress} playerPosition={playerPosition} onPlayerDamage={(damage, sourceX) => { if (!disabled) onPlayerDamage(damage, sourceX); }} />
+        <AdventureHazards hub={hub} progress={progress} playerPosition={playerPosition} onPlayerDamage={(damage, sourceX) => { if (!disabled) onPlayerDamage(damage, sourceX, 'environment'); }} />
         {hub.portals.map((portal) => <PortalVisual key={portal.id} portal={portal} theme={hub.theme} nearby={nearbyPortal?.id === portal.id} assigned={assignedPortalId === portal.id} reducedMotion={reducedMotion} compactDoorways={hub.id === 'kore-central'} />)}
         {(hub.npcs ?? []).map((npc) => <AdventureNpcVisual key={npc.id} npc={npc} hostile={hostileNpcIds.includes(npc.id)} paused={disabled} movementBounds={[hub.bounds.minX + 1, hub.bounds.maxX - 1]} attackEvent={attackEvent} playerPosition={playerPosition} playerProjectile={playerProjectile} maxHealth={derivedStats.maxHealth} reducedMotion={reducedMotion} onAggro={onNpcAggro} onPlayerDamage={(damage, sourceX) => { if (!disabled) onPlayerDamage(damage, sourceX); }} onDefeated={onNpcDefeated} surfaceInsetY={groundSurfaceInsetY} surfacePixelWorldHeight={groundSurfacePixelWorldHeight} />)}
         {hub.biomeId && (hub.resourceNodes ?? []).map((node) => <AdventureResourceNode key={node.id} node={node} biomeId={hub.biomeId!} progress={progress} attackEvent={attackEvent} playerPosition={playerPosition} playerProjectile={playerProjectile} reducedMotion={reducedMotion} onHarvest={onResourceHarvest} />)}
@@ -2333,7 +2405,7 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
         {attackEvent?.projectile && <StoryPlayerProjectile key={attackEvent.id} attackEvent={attackEvent as StoryAdventureAttackEvent & { projectile: StorySpriteProjectileDefinition }} playerPosition={playerPosition} avatarRigOffset={[mounted && mount ? mount.riderOffset[0] : 0, groundingOffsetY - groundSurfaceInsetY + (mounted && mount ? mount.riderOffset[1] : 0)]} runtime={playerProjectile} />}
         {activeRegularSpawns.length > 0 && <AdventureEnemies spawns={activeRegularSpawns} level={progress.level} activePartyMembers={activePartyMembers} paused={disabled} playerPosition={playerPosition} playerProjectile={playerProjectile} attackEvent={attackEvent} reducedMotion={reducedMotion} onPlayerDamage={onPlayerDamage} onDefeated={handleEnemyDefeated} />}
         {activeChallengerSpawn && <AdventureEnemy key={activeChallengerSpawn.id} spawn={activeChallengerSpawn} level={progress.level} activePartyMembers={activePartyMembers} paused={disabled} playerPosition={playerPosition} playerProjectile={playerProjectile} attackEvent={attackEvent} reducedMotion={reducedMotion} onPlayerDamage={onPlayerDamage} onDefeated={handleEnemyDefeated} />}
-        <StoryPlayerController hub={hub} avatar={profile.avatar} avatarVisible={avatarVisible} groundingOffsetY={groundingOffsetY} playerPosition={playerPosition} movementLock={movementLock} readInput={readInput} disabled={disabled} reducedMotion={reducedMotion} quickMatchAvailable={quickMatchAvailable} derivedStats={derivedStats} mounted={mounted} mount={mount} mountMasteryRank={mountMasteryRank} impactEvent={impactEvent} onAttack={onAttack} onQuickMatch={onQuickMatch} onNearbyPortal={onNearbyPortal} onActivatePortal={onActivatePortal} onWaterState={onWaterState} onExit={onExit} onPause={onPause} onStateSample={onStateSample} onReady={onReady} />
+        <StoryPlayerController hub={hub} avatar={profile.avatar} avatarVisible={avatarVisible} groundingOffsetY={groundingOffsetY} playerPosition={playerPosition} movementLock={movementLock} readInput={readInput} disabled={disabled} reducedMotion={reducedMotion} quickMatchAvailable={quickMatchAvailable} derivedStats={derivedStats} mounted={mounted} mount={mount} mountMasteryRank={mountMasteryRank} impactEvent={impactEvent} onAttack={onAttack} onRollCombatWindowChange={onRollCombatWindowChange} onQuickMatch={onQuickMatch} onNearbyPortal={onNearbyPortal} onActivatePortal={onActivatePortal} onWaterState={onWaterState} onExit={onExit} onPause={onPause} onStateSample={onStateSample} onReady={onReady} />
       </Physics>
     </Suspense>
   </Canvas>
@@ -2532,6 +2604,7 @@ function AdventureStatsPanel({ progress, canRespec, onAllocate, onManageParty, o
   onRespec: () => void;
   onClose: () => void;
 }) {
+  const derived = getAdventureDerivedStats(progress);
   const party = getAdventurePartySizeProgress(progress);
   const partyCapped = progress.stats.partySize >= STORY_ADVENTURE_PARTY_SIZE_CAP;
   const partyAvailable = progress.unspentPoints > 0 && progress.stats.partySize < party.maxEligibleSize && !partyCapped;
@@ -2551,6 +2624,11 @@ function AdventureStatsPanel({ progress, canRespec, onAllocate, onManageParty, o
         <span><small>Level</small><strong>{progress.level}</strong></span>
         <span className={progress.unspentPoints > 0 ? 'has-points' : ''}><small>Available</small><strong>{progress.unspentPoints}</strong></span>
         <span><small>Challengers</small><strong>{progress.defeatedChallengerIds.length}</strong></span>
+      </div>
+      <div className={`story-adventure-roll-status ${derived.rollUnlocked ? 'is-unlocked' : 'is-locked'}`} data-testid="story-roll-status">
+        <span>{derived.rollUnlocked ? <CheckCircle2 size={18} /> : <LockKeyhole size={18} />}</span>
+        <div><strong>Roll · {derived.rollUnlocked ? 'Unlocked' : 'Locked'}</strong><small>Double-tap forward/back or crouch + direction · unlocks at 10 total AGI</small></div>
+        <output>{derived.effectiveAgility}<small>/10 AGI</small></output>
       </div>
       <div className="story-adventure-stat-list">
         {STORY_ADVENTURE_COMBAT_STAT_KEYS.map((stat) => {
@@ -3020,6 +3098,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const partyAuthorityEpochRef = useRef(1);
   const partySwapCooldownUntilRef = useRef(0);
   const playerInvulnerableUntilRef = useRef(0);
+  const playerRollCombatWindowRef = useRef({ startMs: 0, endMs: 0 });
   const attackSequenceRef = useRef(0);
   const impactSequenceRef = useRef(0);
   const statPointNoticeSequenceRef = useRef(0);
@@ -3037,8 +3116,12 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const activeHubBoundsRef = useRef(activeHub.bounds);
   const audioMotionRef = useRef<StoryMovementAudioState>({ worldId: activeWorldId, x: activeHub.spawn[0], y: activeHub.spawn[1], pose: 'idle', grounded: true, distance: 0, material: activeHub.environment?.surface?.surfaceMaterial ?? 'stone' });
   const readInput = useCallback(() => {
-    const input = readInputs()[0];
-    return { ...input, interact: storyInteractRef.current || input.charge };
+    const input = readInputs()[0] as InputFrameWithMetadata;
+    return {
+      ...input,
+      interact: storyInteractRef.current || input.charge,
+      rollDirection: input.__horizontalDashDirection
+    };
   }, [readInputs]);
   useEffect(() => {
     if (!statPointNotice) return undefined;
@@ -3295,9 +3378,9 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const activeMount = activeMountId ? STORY_MOUNTS[activeMountId] : null;
   const mountUnlocked = Boolean(activeMountId && adventureProgress.mounts[activeMountId]?.unlocked);
   const toggleMount = useCallback(() => {
-    if (!activeMountId || !mountUnlocked || underwater) return;
+    if (!activeMountId || !mountUnlocked || underwater || playerPose === 'roll') return;
     setMounted((current) => !current);
-  }, [activeMountId, mountUnlocked, underwater]);
+  }, [activeMountId, mountUnlocked, playerPose, underwater]);
 
   useEffect(() => {
     if (!isStoryAdventureRegionId(activeWorldId)) {
@@ -3723,9 +3806,14 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     if (partyInstance?.leaderSessionId === localSessionId) void endStoryPartyEndlessRun(partyInstance, localSessionId, reason).then((next) => { if (next) setPartyInstance(next); }).catch(() => undefined);
     analyticsRef.current?.('adventure_endless_run_ended', { world_id: activeWorldId, reason, depth: endlessRun.floorNumber });
   }, [activeWorldId, endlessRun, localSessionId, partyInstance, profile.avatars]);
-  const handlePlayerDamage = useCallback((baseDamage: number, sourceX: number) => {
-    if (!isStoryAdventureRegionId(activeWorldId) || performance.now() < playerInvulnerableUntilRef.current) return;
-    playerInvulnerableUntilRef.current = performance.now() + 650;
+  const handleRollCombatWindowChange = useCallback((startMs: number, endMs: number) => {
+    playerRollCombatWindowRef.current = { startMs, endMs };
+  }, []);
+  const handlePlayerDamage = useCallback((baseDamage: number, sourceX: number, kind: StoryPlayerDamageKind = 'combat') => {
+    const now = performance.now();
+    const rollProtected = storyRollCombatWindowBlocksDamage(kind, now, playerRollCombatWindowRef.current);
+    if (!isStoryAdventureRegionId(activeWorldId) || now < playerInvulnerableUntilRef.current || rollProtected) return;
+    playerInvulnerableUntilRef.current = now + 650;
     if (mounted) setMounted(false);
     const boonGuard = endlessRun ? Math.max(0.45, 1 - (endlessRun.boons.bulwark ?? 0) * 0.07) : 1;
     const resolved = resolveAdventurePlayerDamage(baseDamage * boonGuard, adventureProgressRef.current);
@@ -4709,9 +4797,9 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const traderConsumable = endlessRun && generatedFloor ? traderConsumables[storyEndlessHash(`${endlessRun.seed}:trader-consumable:${generatedFloor.floorNumber}`) % Math.max(1, traderConsumables.length)] : null;
   const traderGood = endlessRun && generatedFloor ? STORY_REQUIRED_MARKET_GOODS[storyEndlessHash(`${endlessRun.seed}:trader-good:${generatedFloor.floorNumber}`) % STORY_REQUIRED_MARKET_GOODS.length] : null;
 
-  return <div className="story-hub-screen" data-testid="story-hub-screen" data-world={activeWorldId} data-surface-map={activeSurfaceMapId ?? ''} data-hub-ready={hubReady ? 'true' : 'false'} data-controls-open={controlsOpen ? 'true' : 'false'} data-map-open={mapOpen ? 'true' : 'false'} data-stats-open={statsOpen ? 'true' : 'false'} data-tutorial-open={tutorialOpen ? 'true' : 'false'} data-return-home-confirm={returnHomeConfirmOpen ? 'true' : 'false'} data-quick-match={quickMatchAvailable ? 'true' : 'false'} data-player-x={playerX.toFixed(2)} data-player-y={playerY.toFixed(2)} data-player-pose={playerPose} data-player-projectile-asset={effectiveAttackEvent?.projectile?.frames[0]?.path ?? ''} data-player-projectile-launch={effectiveAttackEvent?.projectile?.launchPoint.join(',') ?? ''} data-player-health={playerHealth} data-player-level={adventureProgress.level} data-player-xp={adventureProgress.xp} data-route-coins={adventureProgress.routeCoins} data-defeated-challengers={adventureProgress.defeatedChallengerIds.join(',')} data-party-id={partyInstance?.id ?? ''} data-nearby-portal={nearbyPortal?.id ?? ''} data-hostile-npcs={hostileNpcIds.join(',')} data-defeated-npcs={defeatedNpcIds.join(',')} data-online={onlineEnabled ? 'true' : 'false'} data-connection-status={connectionStatus} data-player-count={playerCount}>
+  return <div className="story-hub-screen" data-testid="story-hub-screen" data-world={activeWorldId} data-surface-map={activeSurfaceMapId ?? ''} data-hub-ready={hubReady ? 'true' : 'false'} data-controls-open={controlsOpen ? 'true' : 'false'} data-map-open={mapOpen ? 'true' : 'false'} data-stats-open={statsOpen ? 'true' : 'false'} data-tutorial-open={tutorialOpen ? 'true' : 'false'} data-return-home-confirm={returnHomeConfirmOpen ? 'true' : 'false'} data-quick-match={quickMatchAvailable ? 'true' : 'false'} data-roll-unlocked={derivedAdventureStats.rollUnlocked ? 'true' : 'false'} data-player-x={playerX.toFixed(2)} data-player-y={playerY.toFixed(2)} data-player-pose={playerPose} data-player-projectile-asset={effectiveAttackEvent?.projectile?.frames[0]?.path ?? ''} data-player-projectile-launch={effectiveAttackEvent?.projectile?.launchPoint.join(',') ?? ''} data-player-health={playerHealth} data-player-level={adventureProgress.level} data-player-xp={adventureProgress.xp} data-route-coins={adventureProgress.routeCoins} data-defeated-challengers={adventureProgress.defeatedChallengerIds.join(',')} data-party-id={partyInstance?.id ?? ''} data-nearby-portal={nearbyPortal?.id ?? ''} data-hostile-npcs={hostileNpcIds.join(',')} data-defeated-npcs={defeatedNpcIds.join(',')} data-online={onlineEnabled ? 'true' : 'false'} data-connection-status={connectionStatus} data-player-count={playerCount}>
     <div className="story-hub-canvas-shell">
-      <HubCanvas key={activeHub.id} hub={combatHub} profile={profile} reducedMotion={reducedMotion} readInput={readInput} disabled={pauseOpen || tutorialOpen || returnHomeConfirmOpen || controlsOpen || mapOpen || statsOpen || packOpen || marketOpen || partyUnlockOpen || Boolean(selectedPlayer) || Boolean(incomingChallenge) || Boolean(doorTravel) || Boolean(boonChoices) || abandonConfirmOpen || Boolean(activeTraderEventId) || Boolean(pendingEventChoiceId)} avatarVisible={!doorTravel || doorTravel.step < 4 || doorTravel.step >= 18} quickMatchAvailable={quickMatchAvailable} assignedPortalId={quickMatch.portalId} nearbyPortal={nearbyPortal} remotePlayers={visibleRemotePlayers} selectedPlayerSessionId={selectedPlayer?.sessionId} progress={adventureProgress} activePartyMembers={partyInstance ? partyInstance.members.length + partyInstance.aiActors.length : 1} partyAiActors={partyInstance?.aiActors ?? []} mounted={mounted} mount={activeMount} attackEvent={effectiveAttackEvent} impactEvent={impactEvent} encounterSeed={encounterSeed} initialEncounterProgress={activeEncounterProgress} hostileNpcIds={hostileNpcIds} onEncounterProgressChange={handleEncounterProgressChange} onChallengerStarted={handleChallengerStarted} onNpcAggro={handleNpcAggro} onNpcDefeated={handleNpcDefeated} onAttack={handleAdventureAttack} onPlayerDamage={handlePlayerDamage} onEnemyDefeated={handleEnemyDefeated} onResourceHarvest={handleResourceHarvest} onPickup={handleFloorPickup} onWildlifeSighting={handleWildlifeSighting} onQuickMatch={startQuickMatch} onSelectPlayer={selectRemotePlayer} onNearbyPortal={setNearbyPortal} onActivatePortal={activatePortal} onWaterState={handleWaterState} onExit={exitCurrentWorld} onPause={openPause} onStateSample={handlePlayerState} onReady={handleHubReady} />
+      <HubCanvas key={activeHub.id} hub={combatHub} profile={profile} reducedMotion={reducedMotion} readInput={readInput} disabled={pauseOpen || tutorialOpen || returnHomeConfirmOpen || controlsOpen || mapOpen || statsOpen || packOpen || marketOpen || partyUnlockOpen || Boolean(selectedPlayer) || Boolean(incomingChallenge) || Boolean(doorTravel) || Boolean(boonChoices) || abandonConfirmOpen || Boolean(activeTraderEventId) || Boolean(pendingEventChoiceId)} avatarVisible={!doorTravel || doorTravel.step < 4 || doorTravel.step >= 18} quickMatchAvailable={quickMatchAvailable} assignedPortalId={quickMatch.portalId} nearbyPortal={nearbyPortal} remotePlayers={visibleRemotePlayers} selectedPlayerSessionId={selectedPlayer?.sessionId} progress={adventureProgress} activePartyMembers={partyInstance ? partyInstance.members.length + partyInstance.aiActors.length : 1} partyAiActors={partyInstance?.aiActors ?? []} mounted={mounted} mount={activeMount} attackEvent={effectiveAttackEvent} impactEvent={impactEvent} encounterSeed={encounterSeed} initialEncounterProgress={activeEncounterProgress} hostileNpcIds={hostileNpcIds} onEncounterProgressChange={handleEncounterProgressChange} onChallengerStarted={handleChallengerStarted} onNpcAggro={handleNpcAggro} onNpcDefeated={handleNpcDefeated} onAttack={handleAdventureAttack} onRollCombatWindowChange={handleRollCombatWindowChange} onPlayerDamage={handlePlayerDamage} onEnemyDefeated={handleEnemyDefeated} onResourceHarvest={handleResourceHarvest} onPickup={handleFloorPickup} onWildlifeSighting={handleWildlifeSighting} onQuickMatch={startQuickMatch} onSelectPlayer={selectRemotePlayer} onNearbyPortal={setNearbyPortal} onActivatePortal={activatePortal} onWaterState={handleWaterState} onExit={exitCurrentWorld} onPause={openPause} onStateSample={handlePlayerState} onReady={handleHubReady} />
     </div>
     {storyLevelLabEnabled() && <LevelLabOverlay hub={activeHub} floor={generatedFloor} />}
 
@@ -4861,8 +4949,11 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       <div className="story-hub-controls-grid">
         <div><strong>Move</strong><kbd>← →</kbd><span>Left stick / D-pad</span></div>
         <div><strong>Run</strong><kbd>Shift</kbd><span>L1 / R1</span></div>
+        <div><strong>Roll</strong><kbd>←← / →→</kbd><span>Double-tap forward/back · preserves facing · unlocks at 10 total AGI · {derivedAdventureStats.rollUnlocked ? 'Unlocked' : `Locked (${derivedAdventureStats.effectiveAgility}/10)`}</span></div>
+        <div><strong>Crouch Roll</strong><kbd>↓ + ← / →</kbd><span>Roll from crouch · recover crouched facing the opposite way</span></div>
+        <div><strong>Crouch</strong><kbd>Hold ↓</kbd><span>Stay low while grounded</span></div>
         <div><strong>Double Jump</strong><kbd>Space ×2</kbd><span>R2 ×2</span></div>
-        <div><strong>Drop Through</strong><kbd>Hold ↓</kbd><span>Down on D-pad / stick</span></div>
+        <div><strong>Drop Through</strong><kbd>↓ + Space</kbd><span>Down + jump on a one-way platform</span></div>
         <div><strong>Jab</strong><kbd>U</kbd><span>South face button</span></div>
         <div><strong>Heavy</strong><kbd>I</kbd><span>West face button</span></div>
         <div><strong>Kick</strong><kbd>J</kbd><span>East face button</span></div>
@@ -4896,7 +4987,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     </button>}
 
     <div className="story-hub-control-hint story-enter-3" aria-hidden="true">
-      <span>Move</span><b>← →</b><span>Run</span><b>Shift</b><span>Attacks</span><b>U</b><b>I</b><b>J</b><b>K</b>{activeHub.adventure && <><span>Pack</span><b>B</b><span>Map</span><b>M</b><span>Stats</span><b>P</b>{activeMount && <><span>Mount</span><b>G / R3</b></>}</>}{quickMatchAvailable && <><span>Match</span><b>F / Y</b></>}<span>Interact</span><b>E / L2</b><span>Pause</span><b>Esc</b>
+      <span>Move</span><b>← →</b><span>Crouch / Roll</span><b>↓ / ←← / →→</b><span>Run</span><b>Shift</b><span>Attacks</span><b>U</b><b>I</b><b>J</b><b>K</b>{activeHub.adventure && <><span>Pack</span><b>B</b><span>Map</span><b>M</b><span>Stats</span><b>P</b>{activeMount && <><span>Mount</span><b>G / R3</b></>}</>}{quickMatchAvailable && <><span>Match</span><b>F / Y</b></>}<span>Interact</span><b>E / L2</b><span>Pause</span><b>Esc</b>
     </div>
 
     {doorTravel && <div className="story-door-transition" aria-label={`Traveling to ${STORY_WORLDS[doorTravel.target].name}`} data-testid="story-door-transition">
@@ -4908,7 +4999,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     <div className="story-touch-controls" aria-label="Story hub touch controls">
       <div>
         <TouchButton label="Move left" action="left" setVirtualAction={setVirtualAction}><ArrowLeft /></TouchButton>
-        <TouchButton label="Drop through platform" action="down" setVirtualAction={setVirtualAction}><ArrowDown /></TouchButton>
+        <TouchButton label="Crouch; combine with direction to roll or jump to drop through" action="down" setVirtualAction={setVirtualAction}><ArrowDown /></TouchButton>
         <TouchButton label="Move right" action="right" setVirtualAction={setVirtualAction}><ArrowRight /></TouchButton>
       </div>
       <div className="story-touch-actions">

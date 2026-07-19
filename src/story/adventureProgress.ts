@@ -108,6 +108,8 @@ export type StoryAdventureProgressV6 = Omit<StoryAdventureProgressV5, 'version'>
 export type StoryAdventureProgressV1 = StoryAdventureProgressV6;
 
 export type StoryAdventureDerivedStats = {
+  effectiveAgility: number;
+  rollUnlocked: boolean;
   maxHealth: number;
   attackDamage: number;
   walkSpeed: number;
@@ -452,6 +454,8 @@ export function getAdventureDerivedStats(progress: StoryAdventureProgressV1, now
   const rimeguard = effects.some((candidate) => candidate.recipeId === 'rimeguard');
   const pathfinder = effects.some((candidate) => candidate.recipeId === 'pathfinder-elixir');
   return {
+    effectiveAgility: stats.agility,
+    rollUnlocked: stats.agility >= 10,
     maxHealth: 100 + levelOffset + stats.vitality * 5,
     attackDamage: 20 * (1 + levelOffset * 0.02) * (1 + stats.power * 0.02) * effect('attack'),
     walkSpeed: 5.2 * speedMultiplier,

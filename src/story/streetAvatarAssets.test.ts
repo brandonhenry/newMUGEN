@@ -1,4 +1,5 @@
 import { existsSync, readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { describe, expect, it } from 'vitest';
@@ -21,32 +22,57 @@ function inspectFrame(publicPath: string) {
 describe('K.O.R.E. full-frame street avatar assets', () => {
   it('contains the four supplied and ten generated aligned motion sets', () => {
     expect(validateStorySpriteManifest(STORY_SPRITE_MANIFEST)).toEqual([]);
-    expect(STORY_SPRITE_MANIFEST.version).toBe(3);
+    expect(STORY_SPRITE_MANIFEST.version).toBe(4);
     expect(STORY_SPRITE_MANIFEST.sets.map((set) => [set.id, set.frameCount])).toEqual([
-      ['solar-runner', 62],
-      ['street-shadow', 61],
-      ['crimson-ranger', 62],
-      ['rose-blade', 51],
-      ['neon-courier', 62],
-      ['ember-scout', 62],
-      ['synth-drifter', 62],
-      ['forest-warden', 61],
-      ['solar-brawler', 62],
-      ['void-operative', 62],
-      ['circuit-mage', 62],
-      ['street-medic', 62],
-      ['arena-rebel', 62],
-      ['tech-nomad', 62]
+      ['solar-runner', 70],
+      ['street-shadow', 69],
+      ['crimson-ranger', 70],
+      ['rose-blade', 59],
+      ['neon-courier', 70],
+      ['ember-scout', 70],
+      ['synth-drifter', 70],
+      ['forest-warden', 69],
+      ['solar-brawler', 70],
+      ['void-operative', 70],
+      ['circuit-mage', 70],
+      ['street-medic', 70],
+      ['arena-rebel', 70],
+      ['tech-nomad', 70]
     ]);
     const uniquePaths = new Set(STORY_SPRITE_MANIFEST.sets.flatMap((set) => set.animations.flatMap((animation) => animation.frames.map((frame) => frame.path))));
-    expect(uniquePaths.size).toBe(855);
+    expect(uniquePaths.size).toBe(967);
     uniquePaths.forEach(inspectFrame);
     STORY_SPRITE_MANIFEST.sets.forEach((set) => {
-      expect(set.animations.map((animation) => animation.id)).toEqual(['idle', 'walk', 'sprint', 'jump', 'attack', 'attack-heavy', 'attack-kick', 'attack-special']);
+      expect(set.animations.map((animation) => animation.id)).toEqual(['idle', 'walk', 'sprint', 'jump', 'roll', 'attack', 'attack-heavy', 'attack-kick', 'attack-special']);
       expect(existsSync(resolve(ASSET_ROOT, `sets/${set.id}/source.png`))).toBe(true);
       expect(existsSync(resolve(ASSET_ROOT, `sets/${set.id}/attacks-v2-source.png`))).toBe(true);
+      const rollSourcePath = resolve(ASSET_ROOT, `sets/${set.id}/roll-source.png`);
+      expect(existsSync(rollSourcePath)).toBe(true);
       expect(set.attackSource).toMatchObject({ kind: 'openai-image-generation-supplemental-attack-sheet', originalFile: 'attacks-v2-source.png' });
+      expect(set.rollSource).toMatchObject({ kind: 'openai-image-generation-roll-sheet', originalFile: 'roll-source.png' });
+      expect(createHash('sha256').update(readFileSync(rollSourcePath)).digest('hex')).toBe(set.rollSource.sha256);
     });
+  });
+
+  it('normalizes every roll to the reviewed eight-frame crouch curve', () => {
+    const ratios = [0.76, 0.72, 0.67, 0.65, 0.65, 0.68, 0.72, 0.76];
+    STORY_SPRITE_MANIFEST.sets.forEach((set) => {
+      const idle = set.animations.find((animation) => animation.id === 'idle')!;
+      const roll = set.animations.find((animation) => animation.id === 'roll')!;
+      const idleHeights = idle.frames.map((frame) => frame.contentBounds[3] - frame.contentBounds[1]).sort((a, b) => a - b);
+      const medianIdleHeight = idleHeights[Math.floor(idleHeights.length / 2)];
+      expect(roll.loop, set.id).toBe(false);
+      expect(roll.frames).toHaveLength(8);
+      roll.frames.forEach((frame, index) => {
+        expect(frame.durationMs, `${set.id}/${frame.id}`).toBe(70);
+        expect(frame.bodyAnchorX, `${set.id}/${frame.id}`).toBe(160);
+        expect(frame.visualScale, `${set.id}/${frame.id}`).toBeUndefined();
+        expect(frame.contentBounds[3], `${set.id}/${frame.id} baseline`).toBe(182);
+        expect(frame.contentBounds[3] - frame.contentBounds[1], `${set.id}/${frame.id} height`).toBe(Math.round(medianIdleHeight * ratios[index]));
+      });
+    });
+    expect(existsSync(resolve(ASSET_ROOT, 'roll-contact-sheet.png'))).toBe(true);
+    expect(existsSync(resolve(ASSET_ROOT, 'roll-silhouette-contact-sheet.png'))).toBe(true);
   });
 
   it('plays every authored attack frame before returning to idle', () => {
@@ -157,7 +183,7 @@ describe('K.O.R.E. full-frame street avatar assets', () => {
       'from PIL import Image',
       `root=Path(${JSON.stringify(resolve(ASSET_ROOT, 'sets'))})`,
       "paths=list(root.glob('*/frames/*/*.png'))",
-      "assert len(paths)==855, len(paths)",
+      "assert len(paths)==967, len(paths)",
       'for path in paths:',
       " im=Image.open(path).convert('RGBA')",
       ' alpha=im.getchannel("A")',

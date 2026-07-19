@@ -25,4 +25,16 @@ describe('story movement contact audio', () => {
     expect(advanceStoryMovementAudio(base, { worldId: 'frostpeak', x: 1, y: 0.82, pose: 'sprint', grounded: true, material: 'snow', mounted: true, underwater: false }).events).toEqual([]);
     expect(advanceStoryMovementAudio(base, { worldId: 'frostpeak', x: 1, y: 0.82, pose: 'jump', grounded: false, material: 'water', mounted: false, underwater: true }).events).toEqual([]);
   });
+
+  it('does not emit walk or sprint footsteps while rolling', () => {
+    const result = advanceStoryMovementAudio(state({ distance: 1 }), { worldId: 'frostpeak', x: 1, y: 0.82, pose: 'roll', grounded: true, material: 'stone', mounted: false, underwater: false });
+    expect(result.events).toEqual([]);
+    expect(result.state.distance).toBe(0);
+  });
+
+  it('does not emit footsteps while crouched', () => {
+    const result = advanceStoryMovementAudio(state({ distance: 1 }), { worldId: 'frostpeak', x: 0, y: 0.82, pose: 'crouch', grounded: true, material: 'stone', mounted: false, underwater: false });
+    expect(result.events).toEqual([]);
+    expect(result.state.distance).toBe(0);
+  });
 });

@@ -97,7 +97,7 @@ export function normalizeStoryHubPresence(value, now = Date.now()) {
     x: numberInRange(value?.x, -47.5, 47.5, -4.5),
     y: numberInRange(value?.y, 0.82, 12, 0.82),
     pose: value?.pose === 'attack' ? 'attack-jab'
-      : value?.pose === 'walk' || value?.pose === 'sprint' || value?.pose === 'jump'
+      : value?.pose === 'walk' || value?.pose === 'sprint' || value?.pose === 'jump' || value?.pose === 'crouch' || value?.pose === 'roll'
         || value?.pose === 'attack-jab' || value?.pose === 'attack-heavy' || value?.pose === 'attack-kick' || value?.pose === 'attack-special'
         ? value.pose
         : 'idle',

@@ -75,6 +75,10 @@ describe('online Netlify function handlers', () => {
     const afterLeave = await post(heartbeat, { sessionId: 'session-one', playerId: 'player-one', displayName: 'Nova', avatar, x: -3, y: 0.82, pose: 'attack', facing: 1 });
     expect(afterLeave.players.map((player: { sessionId: string }) => player.sessionId)).toEqual(['session-one']);
     expect(afterLeave.players[0].pose).toBe('attack-jab');
+    const rolling = await post(heartbeat, { sessionId: 'session-one', playerId: 'player-one', displayName: 'Nova', avatar, x: -2, y: 0.82, pose: 'roll', facing: 1 });
+    expect(rolling.players[0].pose).toBe('roll');
+    const crouching = await post(heartbeat, { sessionId: 'session-one', playerId: 'player-one', displayName: 'Nova', avatar, x: -2, y: 0.82, pose: 'crouch', facing: -1 });
+    expect(crouching.players[0]).toMatchObject({ pose: 'crouch', facing: -1 });
   });
 
   it('keeps ranked/casual matchmaking separate and removes rooms on leave', async () => {

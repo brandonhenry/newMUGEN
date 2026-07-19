@@ -70,12 +70,13 @@ export type StorySpriteSetDefinition = {
   frameCount: number;
   source: StorySpriteSourceProvenance;
   attackSource: StorySpriteSourceProvenance;
+  rollSource: StorySpriteSourceProvenance;
   projectile?: StorySpriteProjectileDefinition;
   animations: StorySpriteAnimation[];
 };
 
 export type StorySpriteManifest = {
-  version: 3;
+  version: 4;
   avatarStyle: 'kore-street-v1';
   defaultSet: StoryAvatarSet;
   frameSize: { width: number; height: number; baseline: number };
@@ -164,7 +165,7 @@ export type StoryProfile = StoryProfileV5;
 /** @deprecated Source-compatible alias while callers migrate to StoryProfile. */
 export type StoryProfileV4 = StoryProfileV5;
 
-export type StoryHubAvatarPose = 'idle' | 'walk' | 'sprint' | 'jump' | 'attack-jab' | 'attack-heavy' | 'attack-kick' | 'attack-special';
+export type StoryHubAvatarPose = 'idle' | 'walk' | 'sprint' | 'jump' | 'crouch' | 'roll' | 'attack-jab' | 'attack-heavy' | 'attack-kick' | 'attack-special';
 
 export type StoryHubPlayerState = {
   x: number;

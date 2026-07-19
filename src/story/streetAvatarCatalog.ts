@@ -45,10 +45,10 @@ export function validateStorySpriteManifest(value: unknown): string[] {
   const errors: string[] = [];
   if (!value || typeof value !== 'object') return ['manifest must be an object'];
   const manifest = value as Partial<StorySpriteManifest>;
-  if (manifest.version !== 3) errors.push('manifest version must be 3');
+  if (manifest.version !== 4) errors.push('manifest version must be 4');
   if (manifest.avatarStyle !== 'kore-street-v1') errors.push('avatar style must be kore-street-v1');
   if (manifest.defaultSet !== 'street-shadow') errors.push('default set must be street-shadow');
-  if (manifest.frameCount !== 855) errors.push('the authored set union must contain 855 unique frames');
+  if (manifest.frameCount !== 967) errors.push('the authored set union must contain 967 unique frames');
   if (manifest.facing !== 'right') errors.push('canonical frames must face right');
   if (manifest.frameSize?.width !== 320 || manifest.frameSize?.height !== 192 || manifest.frameSize?.baseline !== 182) {
     errors.push('all frames must share the 320x192 canvas and baseline 182');
@@ -67,6 +67,7 @@ export function validateStorySpriteManifest(value: unknown): string[] {
     if (!expectedSets.has(set.id)) errors.push(`unknown avatar set: ${set.id}`);
     if (!set.source?.sha256 || !set.source?.originalFile) errors.push(`${set.id} is missing source provenance`);
     if (!set.attackSource?.sha256 || set.attackSource?.originalFile !== 'attacks-v2-source.png') errors.push(`${set.id} is missing supplemental attack provenance`);
+    if (!set.rollSource?.sha256 || set.rollSource?.originalFile !== 'roll-source.png') errors.push(`${set.id} is missing roll provenance`);
     if (set.projectile) {
       const projectile = set.projectile;
       if (projectile.id !== 'special') errors.push(`${set.id} has an invalid projectile move`);
@@ -101,6 +102,8 @@ export function validateStorySpriteManifest(value: unknown): string[] {
         if (animation.id.startsWith('attack') && (!Number.isFinite(frame.visualScale) || (frame.visualScale ?? 0) < 1 || (frame.visualScale ?? 0) > 2.5)) {
           errors.push(`${set.id}/${frame.id} has an invalid attack visual scale`);
         }
+        if (animation.id === 'roll' && frame.bodyAnchorX !== 160) errors.push(`${set.id}/${frame.id} must keep its roll body anchored at x=160`);
+        if (animation.id === 'roll' && frame.visualScale !== undefined) errors.push(`${set.id}/${frame.id} must not use a runtime visual scale`);
         const [left, top, right, bottom] = frame.contentBounds;
         if (left < 0 || top < 0 || right > 320 || bottom > 192 || left >= right || top >= bottom) errors.push(`${set.id}/${frame.id} has invalid bounds`);
       }
@@ -108,8 +111,11 @@ export function validateStorySpriteManifest(value: unknown): string[] {
         const range = animation.activeFrameRange;
         if (!range || range[0] < 0 || range[0] > range[1] || range[1] >= animation.frames.length) errors.push(`${set.id}/${animation.id} has an invalid active frame range`);
       }
+      if (animation.id === 'roll' && (animation.loop || animation.frames.length !== 8 || animation.frames.some((frame) => frame.durationMs !== 70))) {
+        errors.push(`${set.id}/roll must be eight non-looping 70ms frames`);
+      }
     }
-    for (const required of ['idle', 'walk', 'sprint', 'jump', 'attack', 'attack-heavy', 'attack-kick', 'attack-special']) {
+    for (const required of ['idle', 'walk', 'sprint', 'jump', 'roll', 'attack', 'attack-heavy', 'attack-kick', 'attack-special']) {
       if (!animationIds.has(required)) errors.push(`${set.id} is missing ${required} animation`);
     }
     if (uniquePaths.size !== set.frameCount) errors.push(`${set.id} frame count does not match its unique assets`);

@@ -92,7 +92,7 @@ export function sanitizeStoryHubPresence(value: unknown, now = Date.now()): Stor
   if (!sessionId) return null;
   const rawPose = (value as { pose?: unknown }).pose;
   const pose = rawPose === 'attack' ? 'attack-jab'
-    : rawPose === 'walk' || rawPose === 'sprint' || rawPose === 'jump'
+    : rawPose === 'walk' || rawPose === 'sprint' || rawPose === 'jump' || rawPose === 'crouch' || rawPose === 'roll'
       || rawPose === 'attack-jab' || rawPose === 'attack-heavy' || rawPose === 'attack-kick' || rawPose === 'attack-special'
       ? rawPose
       : 'idle';

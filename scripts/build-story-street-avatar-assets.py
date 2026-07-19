@@ -27,6 +27,8 @@ FRAME_SIZE = (320, 192)
 BASELINE = 182
 PROJECTILE_FRAME_SIZE = (192, 96)
 PROJECTILE_FRAME_COUNT = 6
+ROLL_FRAME_COUNT = 8
+ROLL_HEIGHT_RATIOS = (0.76, 0.72, 0.67, 0.65, 0.65, 0.68, 0.72, 0.76)
 
 SHEETS: dict[str, dict[str, Any]] = {
     "solar-runner": {
@@ -135,6 +137,7 @@ TIMINGS = {
     "walk": 92,
     "sprint": 72,
     "jump": 86,
+    "roll": 70,
     "attack": 82,
     "attack-heavy": 110,
     "attack-kick": 82,
@@ -228,6 +231,20 @@ def load_attack_sources() -> dict[str, bytes]:
         with Image.open(BytesIO(source_bytes)) as image:
             if image.size != (1536, 1024):
                 raise ValueError(f"Expected 1536x1024 supplemental {set_id} sheet, got {image.size}")
+        loaded[set_id] = source_bytes
+    return loaded
+
+
+def load_roll_sources() -> dict[str, bytes]:
+    loaded = {}
+    for set_id in SHEETS:
+        source_path = ROOT / "sets" / set_id / "roll-source.png"
+        if not source_path.exists():
+            raise FileNotFoundError(f"Missing roll source sheet for {set_id}")
+        source_bytes = source_path.read_bytes()
+        with Image.open(BytesIO(source_bytes)) as image:
+            if image.size != (1536, 1024):
+                raise ValueError(f"Expected 1536x1024 roll sheet for {set_id}, got {image.size}")
         loaded[set_id] = source_bytes
     return loaded
 
@@ -579,6 +596,60 @@ def remove_generated_gray_matte(source: Image.Image) -> Image.Image:
                 red, green, blue = pixels[x, y]
                 result_pixels[x, y] = (red, green, blue, 255)
     return result
+
+
+def remove_roll_chroma(source: Image.Image, set_id: str) -> Image.Image:
+    """Remove the generated flat chroma matte and force binary alpha."""
+    source = source.convert("RGB")
+    result = Image.new("RGBA", source.size)
+    source_pixels = source.load()
+    result_pixels = result.load()
+    magenta_key = set_id == "forest-warden"
+    for y in range(source.height):
+        for x in range(source.width):
+            red, green, blue = source_pixels[x, y]
+            if magenta_key:
+                is_chroma = red >= 72 and blue >= 72 and red > green * 1.28 and blue > green * 1.28
+            else:
+                is_chroma = green >= 72 and green > red * 1.28 and green > blue * 1.28
+            result_pixels[x, y] = (red, green, blue, 0 if is_chroma else 255)
+    return result
+
+
+def extract_roll_frames(source: Image.Image, set_id: str, idle_crops: list[Image.Image]) -> list[Image.Image]:
+    """Extract the reviewed 2x4 roll sheet and normalize its crouched height curve."""
+    transparent = remove_roll_chroma(source, set_id)
+    row_bands = ((0, transparent.height // 2), (transparent.height // 2, transparent.height))
+    raw_frames: list[Image.Image] = []
+    for row_index, (y_start, y_end) in enumerate(row_bands):
+        spans = occupied_column_spans(transparent, y_start, y_end)
+        if len(spans) != 4:
+            raise ValueError(f"Expected 4 roll poses in row {row_index + 1} for {set_id}, got {len(spans)}")
+        centers = [(left + right) // 2 for left, right in spans]
+        boundaries = [0, *[(left + right) // 2 for left, right in zip(centers, centers[1:])], transparent.width]
+        raw_frames.extend(
+            crop_opaque_region(transparent, (boundaries[index], y_start, boundaries[index + 1], y_end))
+            for index in range(4)
+        )
+
+    if len(raw_frames) != ROLL_FRAME_COUNT:
+        raise ValueError(f"Expected {ROLL_FRAME_COUNT} roll poses for {set_id}, got {len(raw_frames)}")
+    idle_heights = sorted((crop.getbbox() or (0, 0, 0, 0))[3] - (crop.getbbox() or (0, 0, 0, 0))[1] for crop in idle_crops)
+    median_idle_height = idle_heights[len(idle_heights) // 2]
+    normalized: list[Image.Image] = []
+    for index, (crop, ratio) in enumerate(zip(raw_frames, ROLL_HEIGHT_RATIOS)):
+        bounds = crop.getbbox()
+        if not bounds:
+            raise ValueError(f"Empty roll pose {set_id}/{index}")
+        crop = crop.crop(bounds)
+        target_height = round(median_idle_height * ratio)
+        target_width = max(1, round(crop.width * target_height / crop.height))
+        if target_width > FRAME_SIZE[0]:
+            raise ValueError(f"Roll pose {set_id}/{index} is {target_width}px wide after height normalization")
+        crop = crop.resize((target_width, target_height), Image.Resampling.NEAREST)
+        crop.putalpha(crop.getchannel("A").point(lambda alpha: 255 if alpha else 0))
+        normalized.append(crop)
+    return normalized
 
 
 def occupied_column_spans(image: Image.Image, y_start: int, y_end: int) -> list[tuple[int, int]]:
@@ -960,6 +1031,7 @@ def projectile_origin_contact_sheet(entries: list[tuple[str, str, Path, tuple[in
 def build() -> None:
     sources = load_sources()
     attack_sources = load_attack_sources()
+    roll_sources = load_roll_sources()
     projectile_sources = load_projectile_sources()
     # Keep the transient build outside the legacy tracked `.kore-...-building`
     # snapshot so a rebuild never deletes or mutates that repository artifact.
@@ -971,6 +1043,7 @@ def build() -> None:
     contact_sets = []
     attack_contact_sets = []
     special_body_contact_sets = []
+    roll_contact_sets = []
     projectile_contact_sets = []
     projectile_origin_entries = []
     total_unique_frames = 0
@@ -989,6 +1062,8 @@ def build() -> None:
         (set_root / "attacks-v2-source.png").write_bytes(attack_source_bytes)
         with Image.open(BytesIO(attack_source_bytes)) as attack_source_image:
             supplemental_crops = extract_supplemental_attacks(attack_source_image.convert("RGB"), set_id)
+        roll_source_bytes = roll_sources[set_id]
+        (set_root / "roll-source.png").write_bytes(roll_source_bytes)
         background = source.getpixel((0, 0))
         animations = []
         contact_frames: list[tuple[str, Path]] = []
@@ -1016,6 +1091,16 @@ def build() -> None:
                 for animation_id in original_crops
             }
 
+        with Image.open(BytesIO(roll_source_bytes)) as roll_source_image:
+            roll_crops = extract_roll_frames(roll_source_image, set_id, source_crops["idle"])
+        ordered_crops: dict[str, list[Image.Image]] = {}
+        for animation_id, crops in source_crops.items():
+            if animation_id == "attack":
+                ordered_crops["roll"] = roll_crops
+            ordered_crops[animation_id] = crops
+        if "roll" not in ordered_crops:
+            ordered_crops["roll"] = roll_crops
+        source_crops = ordered_crops
         source_crops.update(supplemental_crops)
 
         for animation_id, crops in source_crops.items():
@@ -1038,8 +1123,9 @@ def build() -> None:
                     raise ValueError(f"Frame {set_id}/{animation_id}/{index} is {crop.width}x{crop.height}, exceeding {FRAME_SIZE[0]}x{FRAME_SIZE[1]}")
                 frame = Image.new("RGBA", FRAME_SIZE)
                 is_attack = animation_id.startswith("attack")
+                fixed_body_anchor = is_attack or animation_id == "roll"
                 body_anchor_x = attack_body_anchor_x(crop) if is_attack else crop.width // 2
-                x = FRAME_SIZE[0] // 2 - body_anchor_x if is_attack else (FRAME_SIZE[0] - crop.width) // 2
+                x = FRAME_SIZE[0] // 2 - body_anchor_x if fixed_body_anchor else (FRAME_SIZE[0] - crop.width) // 2
                 y = BASELINE - crop.height
                 if x < 0 or x + crop.width > FRAME_SIZE[0]:
                     raise ValueError(f"Frame {set_id}/{animation_id}/{index} clips horizontally at x={x} on the {FRAME_SIZE[0]}px canvas")
@@ -1060,7 +1146,7 @@ def build() -> None:
                     runtime_frame["visualScale"] = round(body_scale / attack_fit_scale, 4)
                 runtime_frames.append(runtime_frame)
             animation_paths[animation_id] = runtime_frames
-            animation = {"id": animation_id, "loop": animation_id not in {"jump", "attack", "attack-heavy", "attack-kick", "attack-special"}, "frames": runtime_frames}
+            animation = {"id": animation_id, "loop": animation_id not in {"jump", "roll", "attack", "attack-heavy", "attack-kick", "attack-special"}, "frames": runtime_frames}
             if animation_id == "attack":
                 animation["activeFrameRange"] = list(ATTACK_ACTIVE_FRAME_RANGES[set_id])
             elif animation_id in SUPPLEMENTAL_ATTACK_RANGES:
@@ -1070,7 +1156,7 @@ def build() -> None:
         if definition.get("jumpAlias"):
             alias = definition["jumpAlias"]
             alias_frames = [{**frame, "id": frame["id"].replace(f"{alias}-", "jump-"), "durationMs": TIMINGS["jump"]} for frame in animation_paths[alias]]
-            insert_at = next((index for index, animation in enumerate(animations) if animation["id"] == "attack"), len(animations))
+            insert_at = next((index for index, animation in enumerate(animations) if animation["id"] == "roll"), len(animations))
             animations.insert(insert_at, {"id": "jump", "loop": False, "frames": alias_frames})
 
         projectile_manifest = None
@@ -1129,6 +1215,11 @@ def build() -> None:
                 "sha256": hashlib.sha256(attack_source_bytes).hexdigest(),
                 "originalFile": "attacks-v2-source.png",
             },
+            "rollSource": {
+                "kind": "openai-image-generation-roll-sheet",
+                "sha256": hashlib.sha256(roll_source_bytes).hexdigest(),
+                "originalFile": "roll-source.png",
+            },
             "animations": animations,
         }
         if projectile_manifest:
@@ -1137,17 +1228,20 @@ def build() -> None:
         contact_sets.append((set_id, definition["label"], contact_frames))
         attack_contact_sets.append((set_id, definition["label"], [frame for frame in contact_frames if frame[0].startswith("attack")]))
         special_body_contact_sets.append((set_id, definition["label"], [frame for frame in contact_frames if frame[0].startswith("attack-special")]))
-        del source_crops, supplemental_crops, source, source_bytes, attack_source_bytes, frame, crop, crops
+        roll_contact_sets.append((set_id, definition["label"], [frame for frame in contact_frames if frame[0].startswith("roll")]))
+        del source_crops, supplemental_crops, roll_crops, source, source_bytes, attack_source_bytes, roll_source_bytes, frame, crop, crops
         gc.collect()
 
     checkerboard_contact_sheet(contact_sets, build_root / "contact-sheet.png")
     silhouette_contact_sheet(contact_sets, build_root / "silhouette-contact-sheet.png")
     checkerboard_contact_sheet(attack_contact_sets, build_root / "attack-contact-sheet.png")
     checkerboard_contact_sheet(special_body_contact_sets, build_root / "special-body-contact-sheet.png")
+    checkerboard_contact_sheet(roll_contact_sets, build_root / "roll-contact-sheet.png")
+    silhouette_contact_sheet(roll_contact_sets, build_root / "roll-silhouette-contact-sheet.png")
     checkerboard_contact_sheet(projectile_contact_sets, build_root / "projectile-contact-sheet.png")
     projectile_origin_contact_sheet(projectile_origin_entries, build_root / "projectile-origin-contact-sheet.png")
     manifest = {
-        "version": 3,
+        "version": 4,
         "avatarStyle": "kore-street-v1",
         "defaultSet": "street-shadow",
         "frameSize": {"width": FRAME_SIZE[0], "height": FRAME_SIZE[1], "baseline": BASELINE},
@@ -1163,6 +1257,8 @@ def build() -> None:
         "Four animation sheets supplied by the project owner and ten original Image API-generated K.O.R.E. presets "
         "are imported without runtime recoloring or redraws. Each preset also carries an identity-referenced "
         "Image API supplemental sheet containing heavy, kick, and signature attack rows. "
+        "Each preset also carries an identity-referenced eight-pose dodge-roll sheet normalized to a reviewed "
+        "65–76% crouched height curve with no runtime visual-scale correction. "
         "Eight signature moves also include a separate projectile-only PNG strip and six transparent runtime frames; "
         "the character body is never reused as projectile art. "
         "Frames are cut from a complete binary-alpha transparent master with neutral matte-fringe removal, "

@@ -14,6 +14,12 @@ export type StoryMovementProfile = {
   solidEdgeCatch: number;
   dropThroughSeconds: number;
   jumpBufferSeconds: number;
+  rollSpeed: number;
+  rollDurationSeconds: number;
+  rollCooldownSeconds: number;
+  rollInvulnerabilityStartSeconds: number;
+  rollInvulnerabilityEndSeconds: number;
+  rollAgilityRequirement: number;
 };
 
 /**
@@ -35,8 +41,68 @@ export const STORY_MOVEMENT_PROFILE: Readonly<StoryMovementProfile> = Object.fre
   oneWayEdgeCatch: 0.72,
   solidEdgeCatch: 0.46,
   dropThroughSeconds: 0.28,
-  jumpBufferSeconds: 0.12
+  jumpBufferSeconds: 0.12,
+  rollSpeed: 7.5,
+  rollDurationSeconds: 0.56,
+  rollCooldownSeconds: 0.9,
+  rollInvulnerabilityStartSeconds: 0.14,
+  rollInvulnerabilityEndSeconds: 0.42,
+  rollAgilityRequirement: 10
 });
+
+export type StoryRollStartContext = {
+  rollUnlocked: boolean;
+  grounded: boolean;
+  mounted: boolean;
+  swimming: boolean;
+  assistedClimb: boolean;
+  attacking: boolean;
+  cooldownReady: boolean;
+};
+
+export type StoryPlayerDamageKind = 'combat' | 'environment';
+
+export type StoryRollRequest = { direction: -1 | 1; fromCrouch: boolean };
+
+export function resolveStoryRollRequest(input: {
+  left: boolean;
+  right: boolean;
+  down: boolean;
+  previousLeft: boolean;
+  previousRight: boolean;
+  previousDown: boolean;
+  doubleTapDirection?: 'left' | 'right';
+}): StoryRollRequest | null {
+  const downEdge = input.down && !input.previousDown;
+  if (input.down) {
+    if (input.right && (!input.previousRight || downEdge)) return { direction: 1, fromCrouch: true };
+    if (input.left && (!input.previousLeft || downEdge)) return { direction: -1, fromCrouch: true };
+  }
+  if (input.doubleTapDirection === 'right') return { direction: 1, fromCrouch: false };
+  if (input.doubleTapDirection === 'left') return { direction: -1, fromCrouch: false };
+  return null;
+}
+
+export function storyRollRecoveryFacing(startFacing: -1 | 1, fromCrouch: boolean, completed = true): -1 | 1 {
+  return fromCrouch && completed ? (startFacing === 1 ? -1 : 1) : startFacing;
+}
+
+export function canStartStoryRoll(context: StoryRollStartContext) {
+  return context.rollUnlocked && context.grounded && !context.mounted && !context.swimming
+    && !context.assistedClimb && !context.attacking && context.cooldownReady;
+}
+
+export function storyRollHasCombatInvulnerability(elapsedSeconds: number, profile: StoryMovementProfile = STORY_MOVEMENT_PROFILE) {
+  return elapsedSeconds >= profile.rollInvulnerabilityStartSeconds && elapsedSeconds < profile.rollInvulnerabilityEndSeconds;
+}
+
+export function storyRollCombatWindowBlocksDamage(
+  kind: StoryPlayerDamageKind,
+  nowMs: number,
+  window: { startMs: number; endMs: number }
+) {
+  return kind === 'combat' && nowMs >= window.startMs && nowMs < window.endMs;
+}
 
 export function storyMaximumJumpRise(profile: StoryMovementProfile = STORY_MOVEMENT_PROFILE) {
   return profile.jumpVelocity * profile.jumpVelocity / (2 * profile.gravity);

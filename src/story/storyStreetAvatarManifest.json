@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "avatarStyle": "kore-street-v1",
   "defaultSet": "street-shadow",
   "frameSize": {
@@ -8,21 +8,26 @@
     "baseline": 182
   },
   "facing": "right",
-  "frameCount": 855,
+  "frameCount": 967,
   "sets": [
     {
       "id": "solar-runner",
       "label": "Solar Runner",
-      "frameCount": 62,
+      "frameCount": 70,
       "source": {
         "kind": "user-supplied-reference-sheet",
-        "sha256": "e4de86eb5cbfe31e205ad9c3a1f431fd2df6fa31d2e0325627be2f42536e1fd6",
-        "originalFile": "codex-clipboard-aa54433e-69e8-40bb-a38e-59bd72e8dd3c.png"
+        "sha256": "32b6b9767a221ba05f37a6a5ccbe1623712054478d1d93f316219a4d5ebf92df",
+        "originalFile": "source.png"
       },
       "attackSource": {
         "kind": "openai-image-generation-supplemental-attack-sheet",
         "sha256": "8177affde8fc44a4fed4350d3b92bb5cb82e77371a2073344ef8bb684dedda79",
         "originalFile": "attacks-v2-source.png"
+      },
+      "rollSource": {
+        "kind": "openai-image-generation-roll-sheet",
+        "sha256": "3ed703533c6b6f07fecb0afab08c73777f7e405e572a24ff4d0724ebe3b011d0",
+        "originalFile": "roll-source.png"
       },
       "animations": [
         {
@@ -427,6 +432,108 @@
                 117,
                 44,
                 203,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ]
+        },
+        {
+          "id": "roll",
+          "loop": false,
+          "frames": [
+            {
+              "id": "roll-00",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/roll/00.png",
+              "durationMs": 70,
+              "contentBounds": [
+                108,
+                72,
+                213,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-01",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/roll/01.png",
+              "durationMs": 70,
+              "contentBounds": [
+                88,
+                78,
+                233,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-02",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/roll/02.png",
+              "durationMs": 70,
+              "contentBounds": [
+                103,
+                85,
+                217,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-03",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/roll/03.png",
+              "durationMs": 70,
+              "contentBounds": [
+                88,
+                88,
+                233,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-04",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/roll/04.png",
+              "durationMs": 70,
+              "contentBounds": [
+                112,
+                88,
+                208,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-05",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/roll/05.png",
+              "durationMs": 70,
+              "contentBounds": [
+                82,
+                83,
+                239,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-06",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/roll/06.png",
+              "durationMs": 70,
+              "contentBounds": [
+                109,
+                78,
+                212,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-07",
+              "path": "/story/avatars/kore-street-v1/sets/solar-runner/frames/roll/07.png",
+              "durationMs": 70,
+              "contentBounds": [
+                108,
+                72,
+                213,
                 182
               ],
               "bodyAnchorX": 160
@@ -963,16 +1070,21 @@
     {
       "id": "street-shadow",
       "label": "Street Shadow",
-      "frameCount": 61,
+      "frameCount": 69,
       "source": {
         "kind": "user-supplied-reference-sheet",
-        "sha256": "1569987d900732e9a262021befa649d3f77a7b0f1ce4503d6f80f7cbb80a4a3c",
-        "originalFile": "codex-clipboard-aa6c97ef-31d3-4c9e-b9b4-bef823d8c365.png"
+        "sha256": "b4e6de00f97e96507c20e5c3d7ac2544e83b4833aebc1ef3e0aadd076e1cbdc0",
+        "originalFile": "source.png"
       },
       "attackSource": {
         "kind": "openai-image-generation-supplemental-attack-sheet",
         "sha256": "570e7ff1bfac7347c4efde46cf9db69b0c8077f4eb3cc1b76866b90b7d18ece5",
         "originalFile": "attacks-v2-source.png"
+      },
+      "rollSource": {
+        "kind": "openai-image-generation-roll-sheet",
+        "sha256": "29c954084bf6c399a67c7229a08c3f53c2bc3e29b40fc4f45faa16451b542204",
+        "originalFile": "roll-source.png"
       },
       "animations": [
         {
@@ -1341,6 +1453,108 @@
                 116,
                 44,
                 204,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ]
+        },
+        {
+          "id": "roll",
+          "loop": false,
+          "frames": [
+            {
+              "id": "roll-00",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/roll/00.png",
+              "durationMs": 70,
+              "contentBounds": [
+                103,
+                66,
+                217,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-01",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/roll/01.png",
+              "durationMs": 70,
+              "contentBounds": [
+                95,
+                73,
+                226,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-02",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/roll/02.png",
+              "durationMs": 70,
+              "contentBounds": [
+                95,
+                80,
+                226,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-03",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/roll/03.png",
+              "durationMs": 70,
+              "contentBounds": [
+                116,
+                83,
+                204,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-04",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/roll/04.png",
+              "durationMs": 70,
+              "contentBounds": [
+                110,
+                83,
+                210,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-05",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/roll/05.png",
+              "durationMs": 70,
+              "contentBounds": [
+                99,
+                79,
+                221,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-06",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/roll/06.png",
+              "durationMs": 70,
+              "contentBounds": [
+                108,
+                73,
+                212,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-07",
+              "path": "/story/avatars/kore-street-v1/sets/street-shadow/frames/roll/07.png",
+              "durationMs": 70,
+              "contentBounds": [
+                102,
+                66,
+                219,
                 182
               ],
               "bodyAnchorX": 160
@@ -1808,16 +2022,21 @@
     {
       "id": "crimson-ranger",
       "label": "Crimson Ranger",
-      "frameCount": 62,
+      "frameCount": 70,
       "source": {
         "kind": "user-supplied-reference-sheet",
-        "sha256": "3828b16ed8ddd4ebfd5dae73c25df39d6893cc8a0d04a94fd9595bcd7f89bc70",
-        "originalFile": "codex-clipboard-df0cbf64-5835-4d1f-82a7-247c91d23791.png"
+        "sha256": "cbcbf718527e5422e5bae6a1bedd4cc1d0d52343fca3a32dae326e39bebd5b44",
+        "originalFile": "source.png"
       },
       "attackSource": {
         "kind": "openai-image-generation-supplemental-attack-sheet",
         "sha256": "98d3ad3c74ca4604aefc496a94897d8fa44248719c813c64916d216c13201d02",
         "originalFile": "attacks-v2-source.png"
+      },
+      "rollSource": {
+        "kind": "openai-image-generation-roll-sheet",
+        "sha256": "a17f1d93b832639d11381b303b8d45df6d7b77cb5957058f78b1eadfde91e05e",
+        "originalFile": "roll-source.png"
       },
       "animations": [
         {
@@ -2198,6 +2417,108 @@
                 96,
                 36,
                 224,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ]
+        },
+        {
+          "id": "roll",
+          "loop": false,
+          "frames": [
+            {
+              "id": "roll-00",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/roll/00.png",
+              "durationMs": 70,
+              "contentBounds": [
+                106,
+                70,
+                214,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-01",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/roll/01.png",
+              "durationMs": 70,
+              "contentBounds": [
+                99,
+                75,
+                221,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-02",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/roll/02.png",
+              "durationMs": 70,
+              "contentBounds": [
+                103,
+                83,
+                217,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-03",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/roll/03.png",
+              "durationMs": 70,
+              "contentBounds": [
+                105,
+                86,
+                215,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-04",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/roll/04.png",
+              "durationMs": 70,
+              "contentBounds": [
+                106,
+                86,
+                215,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-05",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/roll/05.png",
+              "durationMs": 70,
+              "contentBounds": [
+                121,
+                81,
+                199,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-06",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/roll/06.png",
+              "durationMs": 70,
+              "contentBounds": [
+                97,
+                75,
+                224,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-07",
+              "path": "/story/avatars/kore-street-v1/sets/crimson-ranger/frames/roll/07.png",
+              "durationMs": 70,
+              "contentBounds": [
+                101,
+                70,
+                219,
                 182
               ],
               "bodyAnchorX": 160
@@ -2760,16 +3081,21 @@
     {
       "id": "rose-blade",
       "label": "Rose Blade",
-      "frameCount": 51,
+      "frameCount": 59,
       "source": {
         "kind": "user-supplied-reference-sheet",
-        "sha256": "8e70171b2f96699076d5797f698900d97c9af012ac5f148d9aa059a5686a6eb4",
-        "originalFile": "codex-clipboard-81ce300d-ba20-4d59-a7b0-2eb565f8e2c4.png"
+        "sha256": "df0a31ff90c717c651089668b49ec3a234beb5d58d42b9c1b0cc8a46e3017e05",
+        "originalFile": "source.png"
       },
       "attackSource": {
         "kind": "openai-image-generation-supplemental-attack-sheet",
         "sha256": "ae3ef79fd9241d79961cf8457769cfa693c81c02d609ca9e292c1c7741351f76",
         "originalFile": "attacks-v2-source.png"
+      },
+      "rollSource": {
+        "kind": "openai-image-generation-roll-sheet",
+        "sha256": "1e3270a35394006602382dcb136c71a8f56c6123ee9db85ea347facd0a6fac67",
+        "originalFile": "roll-source.png"
       },
       "animations": [
         {
@@ -3114,6 +3440,108 @@
                 114,
                 48,
                 206,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ]
+        },
+        {
+          "id": "roll",
+          "loop": false,
+          "frames": [
+            {
+              "id": "roll-00",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/roll/00.png",
+              "durationMs": 70,
+              "contentBounds": [
+                109,
+                79,
+                212,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-01",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/roll/01.png",
+              "durationMs": 70,
+              "contentBounds": [
+                101,
+                84,
+                220,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-02",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/roll/02.png",
+              "durationMs": 70,
+              "contentBounds": [
+                105,
+                91,
+                215,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-03",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/roll/03.png",
+              "durationMs": 70,
+              "contentBounds": [
+                103,
+                94,
+                218,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-04",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/roll/04.png",
+              "durationMs": 70,
+              "contentBounds": [
+                123,
+                94,
+                198,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-05",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/roll/05.png",
+              "durationMs": 70,
+              "contentBounds": [
+                114,
+                90,
+                207,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-06",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/roll/06.png",
+              "durationMs": 70,
+              "contentBounds": [
+                106,
+                84,
+                215,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-07",
+              "path": "/story/avatars/kore-street-v1/sets/rose-blade/frames/roll/07.png",
+              "durationMs": 70,
+              "contentBounds": [
+                101,
+                79,
+                220,
                 182
               ],
               "bodyAnchorX": 160
@@ -3568,7 +3996,7 @@
     {
       "id": "neon-courier",
       "label": "Neon Courier",
-      "frameCount": 62,
+      "frameCount": 70,
       "source": {
         "kind": "openai-image-generation-reference-sheet",
         "sha256": "c2c47f1f11a1f11f27e29579b292ce9f9fb398d5c212ecae5a2820a36b1a3bf6",
@@ -3578,6 +4006,11 @@
         "kind": "openai-image-generation-supplemental-attack-sheet",
         "sha256": "8427e4438776573922fdf21c97fae0988c5c0514c33a6d9a92e0a4684fa8e9f1",
         "originalFile": "attacks-v2-source.png"
+      },
+      "rollSource": {
+        "kind": "openai-image-generation-roll-sheet",
+        "sha256": "58b0c35dcf7b107e6d713fa9183721c59937f93f2a20ee4e58d1a60c6effc31b",
+        "originalFile": "roll-source.png"
       },
       "animations": [
         {
@@ -3958,6 +4391,108 @@
                 125,
                 85,
                 195,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ]
+        },
+        {
+          "id": "roll",
+          "loop": false,
+          "frames": [
+            {
+              "id": "roll-00",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/roll/00.png",
+              "durationMs": 70,
+              "contentBounds": [
+                118,
+                90,
+                203,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-01",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/roll/01.png",
+              "durationMs": 70,
+              "contentBounds": [
+                109,
+                95,
+                211,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-02",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/roll/02.png",
+              "durationMs": 70,
+              "contentBounds": [
+                96,
+                101,
+                224,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-03",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/roll/03.png",
+              "durationMs": 70,
+              "contentBounds": [
+                108,
+                103,
+                212,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-04",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/roll/04.png",
+              "durationMs": 70,
+              "contentBounds": [
+                109,
+                103,
+                211,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-05",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/roll/05.png",
+              "durationMs": 70,
+              "contentBounds": [
+                107,
+                100,
+                213,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-06",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/roll/06.png",
+              "durationMs": 70,
+              "contentBounds": [
+                120,
+                95,
+                200,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-07",
+              "path": "/story/avatars/kore-street-v1/sets/neon-courier/frames/roll/07.png",
+              "durationMs": 70,
+              "contentBounds": [
+                118,
+                90,
+                202,
                 182
               ],
               "bodyAnchorX": 160
@@ -4520,7 +5055,7 @@
     {
       "id": "ember-scout",
       "label": "Ember Scout",
-      "frameCount": 62,
+      "frameCount": 70,
       "source": {
         "kind": "openai-image-generation-reference-sheet",
         "sha256": "87c73fe4149a2059145deb31f7884ed741610ff3a2a765e27329c7f8f3bd8dfd",
@@ -4530,6 +5065,11 @@
         "kind": "openai-image-generation-supplemental-attack-sheet",
         "sha256": "eed0be3ed25906d9600d2f6adf71d7dbd1a1b540798c294ea6aacf3e157a7403",
         "originalFile": "attacks-v2-source.png"
+      },
+      "rollSource": {
+        "kind": "openai-image-generation-roll-sheet",
+        "sha256": "ce085daa505189baf1250894004aca415bf980948823472b6fbff552d992e0da",
+        "originalFile": "roll-source.png"
       },
       "animations": [
         {
@@ -4910,6 +5450,108 @@
                 116,
                 65,
                 204,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ]
+        },
+        {
+          "id": "roll",
+          "loop": false,
+          "frames": [
+            {
+              "id": "roll-00",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/roll/00.png",
+              "durationMs": 70,
+              "contentBounds": [
+                122,
+                92,
+                199,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-01",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/roll/01.png",
+              "durationMs": 70,
+              "contentBounds": [
+                114,
+                96,
+                207,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-02",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/roll/02.png",
+              "durationMs": 70,
+              "contentBounds": [
+                112,
+                102,
+                209,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-03",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/roll/03.png",
+              "durationMs": 70,
+              "contentBounds": [
+                92,
+                105,
+                229,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-04",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/roll/04.png",
+              "durationMs": 70,
+              "contentBounds": [
+                124,
+                105,
+                196,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-05",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/roll/05.png",
+              "durationMs": 70,
+              "contentBounds": [
+                96,
+                101,
+                224,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-06",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/roll/06.png",
+              "durationMs": 70,
+              "contentBounds": [
+                114,
+                96,
+                206,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-07",
+              "path": "/story/avatars/kore-street-v1/sets/ember-scout/frames/roll/07.png",
+              "durationMs": 70,
+              "contentBounds": [
+                121,
+                92,
+                199,
                 182
               ],
               "bodyAnchorX": 160
@@ -5377,7 +6019,7 @@
     {
       "id": "synth-drifter",
       "label": "Synth Drifter",
-      "frameCount": 62,
+      "frameCount": 70,
       "source": {
         "kind": "openai-image-generation-reference-sheet",
         "sha256": "f1fc9061dafd071e8a287fea1235b0928993c223380196671855aa5c47969daa",
@@ -5387,6 +6029,11 @@
         "kind": "openai-image-generation-supplemental-attack-sheet",
         "sha256": "9d46dd588ca1523163b0fd9e7e27e044d31a3ebf511c147e0f5f9f6352ee1507",
         "originalFile": "attacks-v2-source.png"
+      },
+      "rollSource": {
+        "kind": "openai-image-generation-roll-sheet",
+        "sha256": "a085edbfbf5d58a89b20f7418e100cbf5b9d02452f462db9bf3083588e9bce61",
+        "originalFile": "roll-source.png"
       },
       "animations": [
         {
@@ -5767,6 +6414,108 @@
                 122,
                 79,
                 198,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ]
+        },
+        {
+          "id": "roll",
+          "loop": false,
+          "frames": [
+            {
+              "id": "roll-00",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/roll/00.png",
+              "durationMs": 70,
+              "contentBounds": [
+                115,
+                92,
+                205,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-01",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/roll/01.png",
+              "durationMs": 70,
+              "contentBounds": [
+                111,
+                97,
+                210,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-02",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/roll/02.png",
+              "durationMs": 70,
+              "contentBounds": [
+                111,
+                103,
+                210,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-03",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/roll/03.png",
+              "durationMs": 70,
+              "contentBounds": [
+                99,
+                105,
+                222,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-04",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/roll/04.png",
+              "durationMs": 70,
+              "contentBounds": [
+                116,
+                105,
+                204,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-05",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/roll/05.png",
+              "durationMs": 70,
+              "contentBounds": [
+                92,
+                102,
+                229,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-06",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/roll/06.png",
+              "durationMs": 70,
+              "contentBounds": [
+                115,
+                97,
+                206,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-07",
+              "path": "/story/avatars/kore-street-v1/sets/synth-drifter/frames/roll/07.png",
+              "durationMs": 70,
+              "contentBounds": [
+                111,
+                92,
+                209,
                 182
               ],
               "bodyAnchorX": 160
@@ -6329,7 +7078,7 @@
     {
       "id": "forest-warden",
       "label": "Forest Warden",
-      "frameCount": 61,
+      "frameCount": 69,
       "source": {
         "kind": "openai-image-generation-reference-sheet",
         "sha256": "74b2e78cb8d057776619dd00d9c5257c128f3dbed955ec7461b68e1c7cfba096",
@@ -6339,6 +7088,11 @@
         "kind": "openai-image-generation-supplemental-attack-sheet",
         "sha256": "45ab7bf2200438d0c9140a3d6e0f18c31b4d0e8a2440e614a01692249a7b9317",
         "originalFile": "attacks-v2-source.png"
+      },
+      "rollSource": {
+        "kind": "openai-image-generation-roll-sheet",
+        "sha256": "bc464a3f8e32e8f8b60d05e7e62199ed0f4062da0b944990aebce70719cc360d",
+        "originalFile": "roll-source.png"
       },
       "animations": [
         {
@@ -6722,6 +7476,108 @@
                 182
               ],
               "bodyAnchorX": 159
+            }
+          ]
+        },
+        {
+          "id": "roll",
+          "loop": false,
+          "frames": [
+            {
+              "id": "roll-00",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/roll/00.png",
+              "durationMs": 70,
+              "contentBounds": [
+                121,
+                93,
+                199,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-01",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/roll/01.png",
+              "durationMs": 70,
+              "contentBounds": [
+                115,
+                98,
+                205,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-02",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/roll/02.png",
+              "durationMs": 70,
+              "contentBounds": [
+                118,
+                104,
+                202,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-03",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/roll/03.png",
+              "durationMs": 70,
+              "contentBounds": [
+                111,
+                106,
+                209,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-04",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/roll/04.png",
+              "durationMs": 70,
+              "contentBounds": [
+                120,
+                106,
+                201,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-05",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/roll/05.png",
+              "durationMs": 70,
+              "contentBounds": [
+                111,
+                102,
+                210,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-06",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/roll/06.png",
+              "durationMs": 70,
+              "contentBounds": [
+                124,
+                98,
+                197,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-07",
+              "path": "/story/avatars/kore-street-v1/sets/forest-warden/frames/roll/07.png",
+              "durationMs": 70,
+              "contentBounds": [
+                119,
+                93,
+                201,
+                182
+              ],
+              "bodyAnchorX": 160
             }
           ]
         },
@@ -7173,7 +8029,7 @@
     {
       "id": "solar-brawler",
       "label": "Solar Brawler",
-      "frameCount": 62,
+      "frameCount": 70,
       "source": {
         "kind": "openai-image-generation-reference-sheet",
         "sha256": "38b384cb59afef09e44bf8949eea3d34ab4cc15e8b80a5b54e63bf04a23974da",
@@ -7183,6 +8039,11 @@
         "kind": "openai-image-generation-supplemental-attack-sheet",
         "sha256": "6fe170c54c9c8cda69c69bd3fcdc943077b8133fb20e84d89f531cdd83d26a0f",
         "originalFile": "attacks-v2-source.png"
+      },
+      "rollSource": {
+        "kind": "openai-image-generation-roll-sheet",
+        "sha256": "3e9230886b774aea6c64fd997ae99357d0c1f1a47b2e710c226bd60ddb68ee8f",
+        "originalFile": "roll-source.png"
       },
       "animations": [
         {
@@ -7566,6 +8427,108 @@
                 182
               ],
               "bodyAnchorX": 159
+            }
+          ]
+        },
+        {
+          "id": "roll",
+          "loop": false,
+          "frames": [
+            {
+              "id": "roll-00",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/roll/00.png",
+              "durationMs": 70,
+              "contentBounds": [
+                115,
+                85,
+                205,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-01",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/roll/01.png",
+              "durationMs": 70,
+              "contentBounds": [
+                84,
+                90,
+                237,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-02",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/roll/02.png",
+              "durationMs": 70,
+              "contentBounds": [
+                91,
+                96,
+                229,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-03",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/roll/03.png",
+              "durationMs": 70,
+              "contentBounds": [
+                115,
+                99,
+                206,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-04",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/roll/04.png",
+              "durationMs": 70,
+              "contentBounds": [
+                132,
+                99,
+                189,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-05",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/roll/05.png",
+              "durationMs": 70,
+              "contentBounds": [
+                117,
+                95,
+                203,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-06",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/roll/06.png",
+              "durationMs": 70,
+              "contentBounds": [
+                115,
+                90,
+                206,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-07",
+              "path": "/story/avatars/kore-street-v1/sets/solar-brawler/frames/roll/07.png",
+              "durationMs": 70,
+              "contentBounds": [
+                111,
+                85,
+                210,
+                182
+              ],
+              "bodyAnchorX": 160
             }
           ]
         },
@@ -8125,7 +9088,7 @@
     {
       "id": "void-operative",
       "label": "Void Operative",
-      "frameCount": 62,
+      "frameCount": 70,
       "source": {
         "kind": "openai-image-generation-reference-sheet",
         "sha256": "1aa6cb8b3cfef9b7b097fe2cd0d0fc9aa1f367d32438d18cfc4109205d58d358",
@@ -8135,6 +9098,11 @@
         "kind": "openai-image-generation-supplemental-attack-sheet",
         "sha256": "b12c3f6737bacf897cec1c595a07202df799b52142cdd18c9fb22466b8d74d32",
         "originalFile": "attacks-v2-source.png"
+      },
+      "rollSource": {
+        "kind": "openai-image-generation-roll-sheet",
+        "sha256": "9d043c45a3598606354280e46185e3d08a034e59f54444624dac054ab10ef5e6",
+        "originalFile": "roll-source.png"
       },
       "animations": [
         {
@@ -8515,6 +9483,108 @@
                 118,
                 68,
                 202,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ]
+        },
+        {
+          "id": "roll",
+          "loop": false,
+          "frames": [
+            {
+              "id": "roll-00",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/roll/00.png",
+              "durationMs": 70,
+              "contentBounds": [
+                113,
+                90,
+                207,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-01",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/roll/01.png",
+              "durationMs": 70,
+              "contentBounds": [
+                98,
+                95,
+                222,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-02",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/roll/02.png",
+              "durationMs": 70,
+              "contentBounds": [
+                101,
+                101,
+                219,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-03",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/roll/03.png",
+              "durationMs": 70,
+              "contentBounds": [
+                97,
+                103,
+                223,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-04",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/roll/04.png",
+              "durationMs": 70,
+              "contentBounds": [
+                94,
+                103,
+                227,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-05",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/roll/05.png",
+              "durationMs": 70,
+              "contentBounds": [
+                98,
+                100,
+                223,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-06",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/roll/06.png",
+              "durationMs": 70,
+              "contentBounds": [
+                110,
+                95,
+                211,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-07",
+              "path": "/story/avatars/kore-street-v1/sets/void-operative/frames/roll/07.png",
+              "durationMs": 70,
+              "contentBounds": [
+                113,
+                90,
+                208,
                 182
               ],
               "bodyAnchorX": 160
@@ -9077,7 +10147,7 @@
     {
       "id": "circuit-mage",
       "label": "Circuit Mage",
-      "frameCount": 62,
+      "frameCount": 70,
       "source": {
         "kind": "openai-image-generation-reference-sheet",
         "sha256": "6db79cf14eefb14b6a381e08e4e28ed86039e2c423e12ea6210739f514ba2d68",
@@ -9087,6 +10157,11 @@
         "kind": "openai-image-generation-supplemental-attack-sheet",
         "sha256": "517c7cf73559fe87c728a22405f9b76e2d8018f596a4b3011a71858efd65c27f",
         "originalFile": "attacks-v2-source.png"
+      },
+      "rollSource": {
+        "kind": "openai-image-generation-roll-sheet",
+        "sha256": "9d2071ee0e40d2c0a38d7fc32ef0664309ea1b33ed0787a03fc16de42947c648",
+        "originalFile": "roll-source.png"
       },
       "animations": [
         {
@@ -9466,6 +10541,108 @@
               "contentBounds": [
                 121,
                 75,
+                199,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ]
+        },
+        {
+          "id": "roll",
+          "loop": false,
+          "frames": [
+            {
+              "id": "roll-00",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/roll/00.png",
+              "durationMs": 70,
+              "contentBounds": [
+                121,
+                80,
+                199,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-01",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/roll/01.png",
+              "durationMs": 70,
+              "contentBounds": [
+                104,
+                86,
+                217,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-02",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/roll/02.png",
+              "durationMs": 70,
+              "contentBounds": [
+                107,
+                92,
+                214,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-03",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/roll/03.png",
+              "durationMs": 70,
+              "contentBounds": [
+                113,
+                95,
+                207,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-04",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/roll/04.png",
+              "durationMs": 70,
+              "contentBounds": [
+                105,
+                95,
+                215,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-05",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/roll/05.png",
+              "durationMs": 70,
+              "contentBounds": [
+                104,
+                91,
+                217,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-06",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/roll/06.png",
+              "durationMs": 70,
+              "contentBounds": [
+                110,
+                86,
+                210,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-07",
+              "path": "/story/avatars/kore-street-v1/sets/circuit-mage/frames/roll/07.png",
+              "durationMs": 70,
+              "contentBounds": [
+                121,
+                80,
                 199,
                 182
               ],
@@ -10029,7 +11206,7 @@
     {
       "id": "street-medic",
       "label": "Street Medic",
-      "frameCount": 62,
+      "frameCount": 70,
       "source": {
         "kind": "openai-image-generation-reference-sheet",
         "sha256": "a459e3edbff928bc164577ed92187c180badc712cee42aa9067bb7789930e27a",
@@ -10039,6 +11216,11 @@
         "kind": "openai-image-generation-supplemental-attack-sheet",
         "sha256": "82c4cd403861280f08874a6112e5b7d048f56167d3826ca2b522fd2780cb7575",
         "originalFile": "attacks-v2-source.png"
+      },
+      "rollSource": {
+        "kind": "openai-image-generation-roll-sheet",
+        "sha256": "08cecb76b65a409689077a1519d8899b7b220a00c4b63cc3c64f859401116b92",
+        "originalFile": "roll-source.png"
       },
       "animations": [
         {
@@ -10419,6 +11601,108 @@
                 120,
                 72,
                 200,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ]
+        },
+        {
+          "id": "roll",
+          "loop": false,
+          "frames": [
+            {
+              "id": "roll-00",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/roll/00.png",
+              "durationMs": 70,
+              "contentBounds": [
+                123,
+                96,
+                198,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-01",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/roll/01.png",
+              "durationMs": 70,
+              "contentBounds": [
+                120,
+                101,
+                200,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-02",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/roll/02.png",
+              "durationMs": 70,
+              "contentBounds": [
+                120,
+                106,
+                201,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-03",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/roll/03.png",
+              "durationMs": 70,
+              "contentBounds": [
+                119,
+                109,
+                202,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-04",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/roll/04.png",
+              "durationMs": 70,
+              "contentBounds": [
+                122,
+                109,
+                198,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-05",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/roll/05.png",
+              "durationMs": 70,
+              "contentBounds": [
+                121,
+                105,
+                200,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-06",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/roll/06.png",
+              "durationMs": 70,
+              "contentBounds": [
+                117,
+                101,
+                203,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-07",
+              "path": "/story/avatars/kore-street-v1/sets/street-medic/frames/roll/07.png",
+              "durationMs": 70,
+              "contentBounds": [
+                122,
+                96,
+                198,
                 182
               ],
               "bodyAnchorX": 160
@@ -10886,7 +12170,7 @@
     {
       "id": "arena-rebel",
       "label": "Arena Rebel",
-      "frameCount": 62,
+      "frameCount": 70,
       "source": {
         "kind": "openai-image-generation-reference-sheet",
         "sha256": "4613e94356b83c66eed0461caace4e96f897a6e90d849139893705d19ea1e0d7",
@@ -10896,6 +12180,11 @@
         "kind": "openai-image-generation-supplemental-attack-sheet",
         "sha256": "d3fe40f3255aef158befa5bf34ccc6db918d2c2ce2bab6b2f892346abaf9edb5",
         "originalFile": "attacks-v2-source.png"
+      },
+      "rollSource": {
+        "kind": "openai-image-generation-roll-sheet",
+        "sha256": "83105a11c45aa4d2ae543aa8e883353d757914407c28375af9ebea0acc13583f",
+        "originalFile": "roll-source.png"
       },
       "animations": [
         {
@@ -11276,6 +12565,108 @@
                 109,
                 62,
                 211,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ]
+        },
+        {
+          "id": "roll",
+          "loop": false,
+          "frames": [
+            {
+              "id": "roll-00",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/roll/00.png",
+              "durationMs": 70,
+              "contentBounds": [
+                116,
+                79,
+                204,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-01",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/roll/01.png",
+              "durationMs": 70,
+              "contentBounds": [
+                115,
+                85,
+                206,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-02",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/roll/02.png",
+              "durationMs": 70,
+              "contentBounds": [
+                112,
+                92,
+                209,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-03",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/roll/03.png",
+              "durationMs": 70,
+              "contentBounds": [
+                107,
+                94,
+                214,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-04",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/roll/04.png",
+              "durationMs": 70,
+              "contentBounds": [
+                111,
+                94,
+                210,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-05",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/roll/05.png",
+              "durationMs": 70,
+              "contentBounds": [
+                108,
+                90,
+                212,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-06",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/roll/06.png",
+              "durationMs": 70,
+              "contentBounds": [
+                112,
+                85,
+                208,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-07",
+              "path": "/story/avatars/kore-street-v1/sets/arena-rebel/frames/roll/07.png",
+              "durationMs": 70,
+              "contentBounds": [
+                116,
+                79,
+                204,
                 182
               ],
               "bodyAnchorX": 160
@@ -11743,7 +13134,7 @@
     {
       "id": "tech-nomad",
       "label": "Tech Nomad",
-      "frameCount": 62,
+      "frameCount": 70,
       "source": {
         "kind": "openai-image-generation-reference-sheet",
         "sha256": "2238110d0b299ace18560b6c56e3fc50afbc571f5df034f71a25a5c2588957b8",
@@ -11753,6 +13144,11 @@
         "kind": "openai-image-generation-supplemental-attack-sheet",
         "sha256": "afe87e1c94d5b7c2c43c331402c084dceb7295249433dfcd06ad8ae673e816fd",
         "originalFile": "attacks-v2-source.png"
+      },
+      "rollSource": {
+        "kind": "openai-image-generation-roll-sheet",
+        "sha256": "bdfe81705b050a86fc724bf1db4fcd32ab8ddeb45d89e56db309ff21df225627",
+        "originalFile": "roll-source.png"
       },
       "animations": [
         {
@@ -12133,6 +13529,108 @@
                 118,
                 62,
                 202,
+                182
+              ],
+              "bodyAnchorX": 160
+            }
+          ]
+        },
+        {
+          "id": "roll",
+          "loop": false,
+          "frames": [
+            {
+              "id": "roll-00",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/roll/00.png",
+              "durationMs": 70,
+              "contentBounds": [
+                116,
+                80,
+                204,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-01",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/roll/01.png",
+              "durationMs": 70,
+              "contentBounds": [
+                115,
+                86,
+                206,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-02",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/roll/02.png",
+              "durationMs": 70,
+              "contentBounds": [
+                107,
+                92,
+                214,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-03",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/roll/03.png",
+              "durationMs": 70,
+              "contentBounds": [
+                109,
+                95,
+                211,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-04",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/roll/04.png",
+              "durationMs": 70,
+              "contentBounds": [
+                107,
+                95,
+                213,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-05",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/roll/05.png",
+              "durationMs": 70,
+              "contentBounds": [
+                110,
+                91,
+                211,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-06",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/roll/06.png",
+              "durationMs": 70,
+              "contentBounds": [
+                105,
+                86,
+                215,
+                182
+              ],
+              "bodyAnchorX": 160
+            },
+            {
+              "id": "roll-07",
+              "path": "/story/avatars/kore-street-v1/sets/tech-nomad/frames/roll/07.png",
+              "durationMs": 70,
+              "contentBounds": [
+                115,
+                80,
+                205,
                 182
               ],
               "bodyAnchorX": 160

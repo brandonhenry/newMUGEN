@@ -13,4 +13,13 @@ describe('StoryAvatarRig animation restarts', () => {
   it('still restarts when the pose changes normally', () => {
     expect(shouldRestartStoryAvatarAnimation('idle', 'attack-jab', 5, 5)).toBe(true);
   });
+
+  it('restarts repeated rolls when their action sequence changes', () => {
+    expect(shouldRestartStoryAvatarAnimation('roll', 'roll', 2, 3)).toBe(true);
+  });
+
+  it('treats crouch as a stable pose until another action starts', () => {
+    expect(shouldRestartStoryAvatarAnimation('crouch', 'crouch', 3, 3)).toBe(false);
+    expect(shouldRestartStoryAvatarAnimation('roll', 'crouch', 3, 3)).toBe(true);
+  });
 });

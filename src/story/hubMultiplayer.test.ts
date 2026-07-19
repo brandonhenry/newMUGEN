@@ -61,6 +61,8 @@ describe('story hub multiplayer', () => {
       sessionId: 'runner',
       pose: 'sprint'
     })?.pose).toBe('sprint');
+    expect(sanitizeStoryHubPresence({ ...presence, sessionId: 'roller', pose: 'roll' })?.pose).toBe('roll');
+    expect(sanitizeStoryHubPresence({ ...presence, sessionId: 'croucher', pose: 'crouch' })?.pose).toBe('crouch');
     expect(sanitizeStoryHubPresence({ ...presence, sessionId: 'legacy', pose: 'attack' } as unknown)?.pose).toBe('attack-jab');
     for (const pose of ['attack-jab', 'attack-heavy', 'attack-kick', 'attack-special'] as const) {
       expect(sanitizeStoryHubPresence({ ...presence, sessionId: pose, pose })?.pose).toBe(pose);
