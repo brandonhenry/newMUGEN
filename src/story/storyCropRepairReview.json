@@ -1,0 +1,1903 @@
+{
+  "version": 1,
+  "method": "full-resolution-manual-page-review-with-nearest-clean-action-fallback",
+  "frameCount": 266,
+  "repairs": [
+    {
+      "path": "public/story/npcs/characters/dorian-sigil/idle/02.png",
+      "replacement": "public/story/npcs/characters/dorian-sigil/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "dd539c44ba9b793b24314378913306dab36f304a8b2707aef2f301636041522d",
+      "afterSha256": "dd539c44ba9b793b24314378913306dab36f304a8b2707aef2f301636041522d"
+    },
+    {
+      "path": "public/story/npcs/characters/dorian-sigil/protect/04.png",
+      "replacement": "public/story/npcs/characters/dorian-sigil/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "e20bec178a4d7e30a4ea829f26d13d73ccdd2aac82ce94518e191dc873e81854",
+      "afterSha256": "dd539c44ba9b793b24314378913306dab36f304a8b2707aef2f301636041522d"
+    },
+    {
+      "path": "public/story/npcs/characters/edda-veil/counter/03.png",
+      "replacement": "public/story/npcs/characters/edda-veil/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "02f309d4c09c73252ea4cd86ad8e3229ef7c9bebdaad5eca0dd1630bafb2ae23",
+      "afterSha256": "30f5382b4dbe751778a27d15d39e70e487f52a2809683247e65f232ff45621c5"
+    },
+    {
+      "path": "public/story/npcs/characters/vell-wraithkin/protect/03.png",
+      "replacement": "public/story/npcs/characters/vell-wraithkin/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "b1bacb2c43eb1dacd3653216e7cd17b1eaf60929c2e8b984b3767292d2e3cc1c",
+      "afterSha256": "6d10f5ff605e5762dfa25b63fb16d6e97e823784e0045895ff5f695cf44f894f"
+    },
+    {
+      "path": "public/story/npcs/characters/vell-wraithkin/protect/02.png",
+      "replacement": "public/story/npcs/characters/vell-wraithkin/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "b1bacb2c43eb1dacd3653216e7cd17b1eaf60929c2e8b984b3767292d2e3cc1c",
+      "afterSha256": "6d10f5ff605e5762dfa25b63fb16d6e97e823784e0045895ff5f695cf44f894f"
+    },
+    {
+      "path": "public/story/npcs/characters/vell-wraithkin/protect/04.png",
+      "replacement": "public/story/npcs/characters/vell-wraithkin/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "b1bacb2c43eb1dacd3653216e7cd17b1eaf60929c2e8b984b3767292d2e3cc1c",
+      "afterSha256": "6d10f5ff605e5762dfa25b63fb16d6e97e823784e0045895ff5f695cf44f894f"
+    },
+    {
+      "path": "public/story/npcs/characters/dex-gyro/protect/01.png",
+      "replacement": "public/story/npcs/characters/dex-gyro/idle/05.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "573abdee9ab3b5818104509cc20ea136cafc588bccb13b901edc9b98610d7562",
+      "afterSha256": "d2da5aace13b2c8c534b9dd442acaa1478d5467d71e970e50627eabae767abbd"
+    },
+    {
+      "path": "public/story/npcs/characters/eira-watch/protect/03.png",
+      "replacement": "public/story/npcs/characters/eira-watch/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "15e8dbbf92458ee8e178cc304d65c95ef4190d3d4f573043a7fdba86676ff711",
+      "afterSha256": "d67d76b54138353a129a62b7865296223aa4469b3ec715619bdf8749473cc502"
+    },
+    {
+      "path": "public/story/npcs/characters/pyra-scorchkin/protect/03.png",
+      "replacement": "public/story/npcs/characters/pyra-scorchkin/idle/05.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "e434982e7a1e69fa5f3924e2951458ccffac985f7160a47061680a993468b34c",
+      "afterSha256": "c32fc8c77120f6d604f278902accd7507bf1c1cc45646bd4bbbcd0b17ca6b7b4"
+    },
+    {
+      "path": "public/story/npcs/characters/pyra-scorchkin/protect/02.png",
+      "replacement": "public/story/npcs/characters/pyra-scorchkin/idle/05.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "e434982e7a1e69fa5f3924e2951458ccffac985f7160a47061680a993468b34c",
+      "afterSha256": "c32fc8c77120f6d604f278902accd7507bf1c1cc45646bd4bbbcd0b17ca6b7b4"
+    },
+    {
+      "path": "public/story/npcs/characters/pyra-scorchkin/protect/04.png",
+      "replacement": "public/story/npcs/characters/pyra-scorchkin/idle/05.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "e434982e7a1e69fa5f3924e2951458ccffac985f7160a47061680a993468b34c",
+      "afterSha256": "c32fc8c77120f6d604f278902accd7507bf1c1cc45646bd4bbbcd0b17ca6b7b4"
+    },
+    {
+      "path": "public/story/npcs/characters/pyra-scorchkin/dialogue/01.png",
+      "replacement": "public/story/npcs/characters/pyra-scorchkin/idle/05.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "c1046867a897bc8debcc9267a14ce36c9b85a4f804ec0a40c62bd98474f9a554",
+      "afterSha256": "c32fc8c77120f6d604f278902accd7507bf1c1cc45646bd4bbbcd0b17ca6b7b4"
+    },
+    {
+      "path": "public/story/npcs/characters/orin-pike/counter/06.png",
+      "replacement": "public/story/npcs/characters/orin-pike/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "d965c63c06fb99f034082eb4a8444b86b793516f15610cbf9f04b1c65d3463a7",
+      "afterSha256": "9d3d2f9d97ce51819063bd4cb0e9ae4108c8f1c069c29433183e35bb9813d0c3"
+    },
+    {
+      "path": "public/story/npcs/characters/orin-pike/counter/05.png",
+      "replacement": "public/story/npcs/characters/orin-pike/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "d965c63c06fb99f034082eb4a8444b86b793516f15610cbf9f04b1c65d3463a7",
+      "afterSha256": "9d3d2f9d97ce51819063bd4cb0e9ae4108c8f1c069c29433183e35bb9813d0c3"
+    },
+    {
+      "path": "public/story/npcs/characters/corvus-arch/walk/03.png",
+      "replacement": "public/story/npcs/characters/corvus-arch/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "62f6359a2da15d43e834c19c1e2fb4e002267fcec9e96d87423ec44f17b74915",
+      "afterSha256": "5019325d593be70b4b9d3bc38835090edea167b4ae71630d9c0e1c02aff5b738"
+    },
+    {
+      "path": "public/story/npcs/characters/corvus-arch/walk/04.png",
+      "replacement": "public/story/npcs/characters/corvus-arch/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "36c138c7fbd5eb19b8f3373b840b76bb19166d0eb145d2002a5cfb2d942eb645",
+      "afterSha256": "5019325d593be70b4b9d3bc38835090edea167b4ae71630d9c0e1c02aff5b738"
+    },
+    {
+      "path": "public/story/npcs/characters/aero-wispkin/walk/04.png",
+      "replacement": "public/story/npcs/characters/aero-wispkin/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "2ea54b9bc66cad34e6f3f38eba8ab0653e542dd8ec823aece20523c9d05c9fac",
+      "afterSha256": "335e22e53d4a7ccfbf993c13506d3074b81d68d50755095eb95491bb126991bd"
+    },
+    {
+      "path": "public/story/npcs/characters/nym-cloudling/protect/03.png",
+      "replacement": "public/story/npcs/characters/nym-cloudling/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "b5d337f011068cd4d17165852ba2d884071c523699cb150743ca4ddefdf9de6a",
+      "afterSha256": "44b6fe26fde0632d44e2de607aeed36fe4701369d0aee53ebcb8ec873e1421e9"
+    },
+    {
+      "path": "public/story/npcs/characters/nym-cloudling/protect/02.png",
+      "replacement": "public/story/npcs/characters/nym-cloudling/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "b5d337f011068cd4d17165852ba2d884071c523699cb150743ca4ddefdf9de6a",
+      "afterSha256": "44b6fe26fde0632d44e2de607aeed36fe4701369d0aee53ebcb8ec873e1421e9"
+    },
+    {
+      "path": "public/story/npcs/characters/nym-cloudling/protect/04.png",
+      "replacement": "public/story/npcs/characters/nym-cloudling/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "b5d337f011068cd4d17165852ba2d884071c523699cb150743ca4ddefdf9de6a",
+      "afterSha256": "44b6fe26fde0632d44e2de607aeed36fe4701369d0aee53ebcb8ec873e1421e9"
+    },
+    {
+      "path": "public/story/npcs/characters/cael-prism/counter/05.png",
+      "replacement": "public/story/npcs/characters/cael-prism/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "a026800a2047d2179d8b10b3f930e4e40c5bde5cbf43f2c7c49a6c97f8b52803",
+      "afterSha256": "1cea38ce0feec67cc4a69ed37b835107af8d30ad984c6bd5b012d6fda761942c"
+    },
+    {
+      "path": "public/story/npcs/characters/sol-ashling/protect/03.png",
+      "replacement": "public/story/npcs/characters/sol-ashling/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "492a866581af4034b7af26f24da2fea13d7a79f6401087f4b2805994edb17698",
+      "afterSha256": "1e71017cfd8bb6f599a0f67a5bacab0f332d000159b85c4a71ce4ad0c4c9e0f0"
+    },
+    {
+      "path": "public/story/npcs/characters/sol-ashling/protect/02.png",
+      "replacement": "public/story/npcs/characters/sol-ashling/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "492a866581af4034b7af26f24da2fea13d7a79f6401087f4b2805994edb17698",
+      "afterSha256": "1e71017cfd8bb6f599a0f67a5bacab0f332d000159b85c4a71ce4ad0c4c9e0f0"
+    },
+    {
+      "path": "public/story/npcs/characters/sol-ashling/protect/04.png",
+      "replacement": "public/story/npcs/characters/sol-ashling/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "492a866581af4034b7af26f24da2fea13d7a79f6401087f4b2805994edb17698",
+      "afterSha256": "1e71017cfd8bb6f599a0f67a5bacab0f332d000159b85c4a71ce4ad0c4c9e0f0"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/slag-beetle/frames/dead/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/slag-beetle/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "15e720e26f86af536ffa849a431c036f0365266df0dc065011ccfac497d5a24f",
+      "afterSha256": "ec2aa4553f03d2777d5fbd781841f8a3db61c09c6f2fb281b4d88157ec633e58"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/slag-beetle/frames/dead/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/slag-beetle/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "34a4a75cfaa2514e3e5ed2111edc6c78b1d6b9cfa2afca0395a917640f0a3f98",
+      "afterSha256": "ec2aa4553f03d2777d5fbd781841f8a3db61c09c6f2fb281b4d88157ec633e58"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/slag-beetle/frames/special/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/slag-beetle/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "ad81c193467bc687dc96a2fed53829d321b9df62fd36e050c62482803fb97b3d",
+      "afterSha256": "ec2aa4553f03d2777d5fbd781841f8a3db61c09c6f2fb281b4d88157ec633e58"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/slag-beetle/frames/traverse/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/slag-beetle/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "d7987e0416cd2393633e3762dee449f5beeed14cec058baec268c3dd5289efed",
+      "afterSha256": "ec2aa4553f03d2777d5fbd781841f8a3db61c09c6f2fb281b4d88157ec633e58"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/aurora-herald/frames/attack-1/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/aurora-herald/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "5a1f8f6befb7998ab37ff63b2fa31cc9781c0fcd40344cbae05bdca61938f913",
+      "afterSha256": "31c6ba083917059e4992e7c677b6e42007e0f30661c02a50f8296b2e35f4f493"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/aurora-herald/frames/attack-1/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/aurora-herald/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "5a1f8f6befb7998ab37ff63b2fa31cc9781c0fcd40344cbae05bdca61938f913",
+      "afterSha256": "31c6ba083917059e4992e7c677b6e42007e0f30661c02a50f8296b2e35f4f493"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/aurora-herald/frames/special/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/aurora-herald/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "6decca24a62e68bfb3560cb9209ce78489f4615687ace6030006f4f1cb72f735",
+      "afterSha256": "31c6ba083917059e4992e7c677b6e42007e0f30661c02a50f8296b2e35f4f493"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/aurora-herald/frames/attack-2/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/aurora-herald/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "31c6ba083917059e4992e7c677b6e42007e0f30661c02a50f8296b2e35f4f493",
+      "afterSha256": "31c6ba083917059e4992e7c677b6e42007e0f30661c02a50f8296b2e35f4f493"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/aurora-herald/frames/attack-2/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/aurora-herald/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "31c6ba083917059e4992e7c677b6e42007e0f30661c02a50f8296b2e35f4f493",
+      "afterSha256": "31c6ba083917059e4992e7c677b6e42007e0f30661c02a50f8296b2e35f4f493"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/aurora-herald/frames/attack-2/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/aurora-herald/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "31c6ba083917059e4992e7c677b6e42007e0f30661c02a50f8296b2e35f4f493",
+      "afterSha256": "31c6ba083917059e4992e7c677b6e42007e0f30661c02a50f8296b2e35f4f493"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/aurora-herald/frames/attack-2/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/aurora-herald/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "31c6ba083917059e4992e7c677b6e42007e0f30661c02a50f8296b2e35f4f493",
+      "afterSha256": "31c6ba083917059e4992e7c677b6e42007e0f30661c02a50f8296b2e35f4f493"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/aurora-herald/frames/attack-2/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/aurora-herald/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "31c6ba083917059e4992e7c677b6e42007e0f30661c02a50f8296b2e35f4f493",
+      "afterSha256": "31c6ba083917059e4992e7c677b6e42007e0f30661c02a50f8296b2e35f4f493"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/aurora-herald/frames/attack-2/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/aurora-herald/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "31c6ba083917059e4992e7c677b6e42007e0f30661c02a50f8296b2e35f4f493",
+      "afterSha256": "31c6ba083917059e4992e7c677b6e42007e0f30661c02a50f8296b2e35f4f493"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/silver-duelist/frames/dead/08.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/silver-duelist/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "fd65fafc8a1a05e1e3d833d0062037980bb2d326faae1ad072634e10fa0f550e",
+      "afterSha256": "3077209f48460ac50edca84a77464fce159e55cd2738e6076a6dfd275ca99f79"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/dead/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "4eba01349a14b7c3bdcabf48c5c1a0a25fa3b435de26911dda31921d12887c30",
+      "afterSha256": "ade2a0e5e93257bebc3ea827e328f50ea2e01402fd32a7bff26678522d1af7b7"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/attack-1/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "fe4e7c67e728207208813912aa04fd911c74f3b4c0a500837f0e364876b7899b",
+      "afterSha256": "ade2a0e5e93257bebc3ea827e328f50ea2e01402fd32a7bff26678522d1af7b7"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/special/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "af0ab340b4c08681a61f68c83fb0009887a2728a3ee06a73407f0fd8aa004ceb",
+      "afterSha256": "ade2a0e5e93257bebc3ea827e328f50ea2e01402fd32a7bff26678522d1af7b7"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/special/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "9d39d5fc37fecc940d42d6bcee2e44af1000f8bb19d30755c71e94925ae0d288",
+      "afterSha256": "ade2a0e5e93257bebc3ea827e328f50ea2e01402fd32a7bff26678522d1af7b7"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/run/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "9f0ef6e50312c045afe6747efbb57495d8008dcebabcba86686a1dbeeb2fb556",
+      "afterSha256": "ade2a0e5e93257bebc3ea827e328f50ea2e01402fd32a7bff26678522d1af7b7"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/run/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "0c4d0e23f7223fed31e898a630f172fe1b999fc0b445bbb38f256cb3e9bfa7f8",
+      "afterSha256": "ade2a0e5e93257bebc3ea827e328f50ea2e01402fd32a7bff26678522d1af7b7"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/attack-1/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "7f35b943c381a5eb4fc5844a97ed0d55385a570471f1e0a9cbe705a32a7c64e1",
+      "afterSha256": "70e6b2737561b6bf76b80d33c188feaff31265d3a0c3da586030c528fda49f9e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/attack-1/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "7f35b943c381a5eb4fc5844a97ed0d55385a570471f1e0a9cbe705a32a7c64e1",
+      "afterSha256": "70e6b2737561b6bf76b80d33c188feaff31265d3a0c3da586030c528fda49f9e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/attack-1/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "7f35b943c381a5eb4fc5844a97ed0d55385a570471f1e0a9cbe705a32a7c64e1",
+      "afterSha256": "70e6b2737561b6bf76b80d33c188feaff31265d3a0c3da586030c528fda49f9e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/special/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "8ff2f492b7766e6a7ff8739e473b98da5df17ffec46dfdbf2893a691d9c71f5c",
+      "afterSha256": "70e6b2737561b6bf76b80d33c188feaff31265d3a0c3da586030c528fda49f9e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/special/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "a404742da41dca2a6d18c7e2ef3261faeb13b2d3dc8d8365ff2676a9424bbe74",
+      "afterSha256": "70e6b2737561b6bf76b80d33c188feaff31265d3a0c3da586030c528fda49f9e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/special/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "a404742da41dca2a6d18c7e2ef3261faeb13b2d3dc8d8365ff2676a9424bbe74",
+      "afterSha256": "70e6b2737561b6bf76b80d33c188feaff31265d3a0c3da586030c528fda49f9e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/run/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "4afd95f0ccfdb81d58360fa2b47a700aecd921011c45dad7f47c0e65f66923b6",
+      "afterSha256": "70e6b2737561b6bf76b80d33c188feaff31265d3a0c3da586030c528fda49f9e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/run/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "4afd95f0ccfdb81d58360fa2b47a700aecd921011c45dad7f47c0e65f66923b6",
+      "afterSha256": "70e6b2737561b6bf76b80d33c188feaff31265d3a0c3da586030c528fda49f9e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/run/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "4afd95f0ccfdb81d58360fa2b47a700aecd921011c45dad7f47c0e65f66923b6",
+      "afterSha256": "70e6b2737561b6bf76b80d33c188feaff31265d3a0c3da586030c528fda49f9e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/run/07.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "4afd95f0ccfdb81d58360fa2b47a700aecd921011c45dad7f47c0e65f66923b6",
+      "afterSha256": "70e6b2737561b6bf76b80d33c188feaff31265d3a0c3da586030c528fda49f9e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/run/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "4afd95f0ccfdb81d58360fa2b47a700aecd921011c45dad7f47c0e65f66923b6",
+      "afterSha256": "70e6b2737561b6bf76b80d33c188feaff31265d3a0c3da586030c528fda49f9e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/run/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "4afd95f0ccfdb81d58360fa2b47a700aecd921011c45dad7f47c0e65f66923b6",
+      "afterSha256": "70e6b2737561b6bf76b80d33c188feaff31265d3a0c3da586030c528fda49f9e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/run/08.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "4afd95f0ccfdb81d58360fa2b47a700aecd921011c45dad7f47c0e65f66923b6",
+      "afterSha256": "70e6b2737561b6bf76b80d33c188feaff31265d3a0c3da586030c528fda49f9e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/briar-maw/frames/dead/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/briar-maw/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "a54ab1a2ba6596097d94babc1a9fe3037bb8f22a687466ae5d39e8c160d7cf00",
+      "afterSha256": "4645272a8b995c04d7adaa383eb130731f249a60c0f07b57e0878ab88d8e610e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/briar-maw/frames/attack-2/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/briar-maw/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "eea13a1d43ebae787db52cf292303bd2e237cb10bac1d3949347245ed9a4ab5c",
+      "afterSha256": "4645272a8b995c04d7adaa383eb130731f249a60c0f07b57e0878ab88d8e610e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/briar-maw/frames/attack-2/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/briar-maw/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "7ad057417873e6ac15b518b685ec59421f9a9a550fb99a3b965672646ac3123b",
+      "afterSha256": "4645272a8b995c04d7adaa383eb130731f249a60c0f07b57e0878ab88d8e610e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/briar-maw/frames/traverse/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/briar-maw/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "25e8416a322ac260346792608db4bedfd19f8107fa54e23d44f4b89e3fa732fb",
+      "afterSha256": "4645272a8b995c04d7adaa383eb130731f249a60c0f07b57e0878ab88d8e610e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/gale-owl/frames/walk/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/gale-owl/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "1dc3fee565e44dd161ae8024399ca611888c5734be5561022146a5b20fc6daca",
+      "afterSha256": "4240d1afa2d4f9b5bca000f9579c24251a8c2bb40fb42c8a08c0d72f576373f9"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/gale-owl/frames/walk/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/gale-owl/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "1dc3fee565e44dd161ae8024399ca611888c5734be5561022146a5b20fc6daca",
+      "afterSha256": "4240d1afa2d4f9b5bca000f9579c24251a8c2bb40fb42c8a08c0d72f576373f9"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/gale-owl/frames/walk/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/gale-owl/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "ada648d1de96db9aa264cd690264ded8c58a178ed0e106aad30a7466d52c4d90",
+      "afterSha256": "4240d1afa2d4f9b5bca000f9579c24251a8c2bb40fb42c8a08c0d72f576373f9"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/gale-owl/frames/special/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/gale-owl/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "7c5ebf5f3c4094b295f5ac4d7b3f1b4d0ff0a8886ffb99de94f8d525db72569d",
+      "afterSha256": "4240d1afa2d4f9b5bca000f9579c24251a8c2bb40fb42c8a08c0d72f576373f9"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/gale-owl/frames/run/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/gale-owl/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "ca981ff55cba7310bc60beec63fb92d30cb6ac8fbb7cc77856d4b2465ff7ae7d",
+      "afterSha256": "4240d1afa2d4f9b5bca000f9579c24251a8c2bb40fb42c8a08c0d72f576373f9"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/gale-owl/frames/run/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/gale-owl/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "6c4963c117925a76b195518402d478706ce9c2246276715d834f16b0eb0ac3d3",
+      "afterSha256": "4240d1afa2d4f9b5bca000f9579c24251a8c2bb40fb42c8a08c0d72f576373f9"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/crypt-hound/frames/dead/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/crypt-hound/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "d97c32565caa2b0e1af3eb8445ea1772da4d22741ca4a58436282107970ab10a",
+      "afterSha256": "f79a1a087c7460c307d65f33f34c1cd3f874e2b9710a35b3e7c27b316060abc2"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/crypt-hound/frames/special/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/crypt-hound/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "ead798263125c21843c3cc8a1c5f1f27f6e64db93cb4a1aebf546b8c0a67fd8a",
+      "afterSha256": "f79a1a087c7460c307d65f33f34c1cd3f874e2b9710a35b3e7c27b316060abc2"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/crypt-hound/frames/special/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/crypt-hound/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "ead798263125c21843c3cc8a1c5f1f27f6e64db93cb4a1aebf546b8c0a67fd8a",
+      "afterSha256": "f79a1a087c7460c307d65f33f34c1cd3f874e2b9710a35b3e7c27b316060abc2"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/crypt-hound/frames/attack-2/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/crypt-hound/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "c266cb5db72319c06b3d9eff585ac48f81613e80db49495384c356d663a75814",
+      "afterSha256": "f79a1a087c7460c307d65f33f34c1cd3f874e2b9710a35b3e7c27b316060abc2"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/crimson-countess/frames/dead/07.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/crimson-countess/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "7d46f6b6b1cfe9ec51b7f1b1a8833d3a67da3adb6f0e8da4247f51948360c85c",
+      "afterSha256": "2acc644339ffcadfd71dae5413aff75c10aa5802e14f2a9df3c9b3ff29478419"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/haywire-mite/frames/run/07.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/haywire-mite/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "db693f855b5cf320cc45456d6589954cafc6a6cb9cec94a33ca902eff5876904",
+      "afterSha256": "d4bbfb1077c35205822c73bd79ea9b024c49752faba5bc9fac57a9e80f0a9caf"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/dead/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "392b63ed20d88a8207cbeee10b9376938e9b310da96ed2724d7a91be0a4a57a6",
+      "afterSha256": "c21c709f37ea5ae725d7d0b7aa980f247c44b9ec5e433f059c9c9bca60eb6b07"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/dead/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "15b69471174367c6e50a458cf8dd4809654364c4a6f376631e765612fadff022",
+      "afterSha256": "c21c709f37ea5ae725d7d0b7aa980f247c44b9ec5e433f059c9c9bca60eb6b07"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/idle/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "0e9fba1e7fe1ba9749baf4752749ae4c4c439f343361877c9af429baed939dfd",
+      "afterSha256": "c21c709f37ea5ae725d7d0b7aa980f247c44b9ec5e433f059c9c9bca60eb6b07"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/special/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "c21c709f37ea5ae725d7d0b7aa980f247c44b9ec5e433f059c9c9bca60eb6b07",
+      "afterSha256": "c21c709f37ea5ae725d7d0b7aa980f247c44b9ec5e433f059c9c9bca60eb6b07"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/special/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "c21c709f37ea5ae725d7d0b7aa980f247c44b9ec5e433f059c9c9bca60eb6b07",
+      "afterSha256": "c21c709f37ea5ae725d7d0b7aa980f247c44b9ec5e433f059c9c9bca60eb6b07"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/special/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "c21c709f37ea5ae725d7d0b7aa980f247c44b9ec5e433f059c9c9bca60eb6b07",
+      "afterSha256": "c21c709f37ea5ae725d7d0b7aa980f247c44b9ec5e433f059c9c9bca60eb6b07"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/special/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "c21c709f37ea5ae725d7d0b7aa980f247c44b9ec5e433f059c9c9bca60eb6b07",
+      "afterSha256": "c21c709f37ea5ae725d7d0b7aa980f247c44b9ec5e433f059c9c9bca60eb6b07"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/special/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "c21c709f37ea5ae725d7d0b7aa980f247c44b9ec5e433f059c9c9bca60eb6b07",
+      "afterSha256": "c21c709f37ea5ae725d7d0b7aa980f247c44b9ec5e433f059c9c9bca60eb6b07"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/special/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "c21c709f37ea5ae725d7d0b7aa980f247c44b9ec5e433f059c9c9bca60eb6b07",
+      "afterSha256": "c21c709f37ea5ae725d7d0b7aa980f247c44b9ec5e433f059c9c9bca60eb6b07"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/attack-2/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "eb6968542e012a7e23a1ef7cef2494a990f5e2ba30fcb56ada9e5aafae62d104",
+      "afterSha256": "c21c709f37ea5ae725d7d0b7aa980f247c44b9ec5e433f059c9c9bca60eb6b07"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/attack-2/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "eb6968542e012a7e23a1ef7cef2494a990f5e2ba30fcb56ada9e5aafae62d104",
+      "afterSha256": "c21c709f37ea5ae725d7d0b7aa980f247c44b9ec5e433f059c9c9bca60eb6b07"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/traverse/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "fe82da3b47aba9b4040ff4a171fd061fc600d45397519b4fa0368c18eb7598b7",
+      "afterSha256": "c21c709f37ea5ae725d7d0b7aa980f247c44b9ec5e433f059c9c9bca60eb6b07"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/attack-1/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "e0fe64f2e73b023e04fa553e169b30ec85bcc47a10eec6a59fd763c5c9e4b988",
+      "afterSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/walk/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "c6694cf8ba6c2685783babac94b572db7cf9dce10f7fc8459689cf753e3d0d62",
+      "afterSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/run/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6",
+      "afterSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/run/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6",
+      "afterSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/run/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6",
+      "afterSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/run/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6",
+      "afterSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/run/07.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6",
+      "afterSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/run/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6",
+      "afterSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/run/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6",
+      "afterSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/run/08.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6",
+      "afterSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/violet-bellkeeper/frames/dead/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/violet-bellkeeper/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "20acc32b81d6ddb459c1f86aa33b78e514430042a82ba7f12268bdcf423322ee",
+      "afterSha256": "ff8a9a5cabdf25300bfbc321a0ab341a0fc16623e78faa8af6129eacdfe4dc28"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/violet-bellkeeper/frames/walk/07.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/violet-bellkeeper/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "ccc25effd1be427f1c0acf6a784c495255d32135b29927cc3ff6129ce5fc08eb",
+      "afterSha256": "ff8a9a5cabdf25300bfbc321a0ab341a0fc16623e78faa8af6129eacdfe4dc28"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/violet-bellkeeper/frames/run/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/violet-bellkeeper/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "3ea8213112478e7728e697cba61063f94c18eeaef43bac86f69f8f5031d46cbf",
+      "afterSha256": "ff8a9a5cabdf25300bfbc321a0ab341a0fc16623e78faa8af6129eacdfe4dc28"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/violet-bellkeeper/frames/run/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/violet-bellkeeper/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "e57ebc20b1189d8dd3453735118988a8df386069787d64ab82e64bc2b170caf3",
+      "afterSha256": "ff8a9a5cabdf25300bfbc321a0ab341a0fc16623e78faa8af6129eacdfe4dc28"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/violet-bellkeeper/frames/run/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/violet-bellkeeper/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "3ea8213112478e7728e697cba61063f94c18eeaef43bac86f69f8f5031d46cbf",
+      "afterSha256": "ff8a9a5cabdf25300bfbc321a0ab341a0fc16623e78faa8af6129eacdfe4dc28"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/dead/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "a6ac591772b82cf488cad2223d12b9942c4dfab46c3dcd1ee1e95ac579c5e49d",
+      "afterSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/dead/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "a6ac591772b82cf488cad2223d12b9942c4dfab46c3dcd1ee1e95ac579c5e49d",
+      "afterSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/attack-1/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "31ec9202238fde0bb538a74cfea991935861ff2dc0a359838e8e8e8f24c95178",
+      "afterSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/attack-1/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "815944e554cb61fd7811b2b53861d5eec2073f6d1607a8ff05f8a30989cfd625",
+      "afterSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/special/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629",
+      "afterSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/special/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629",
+      "afterSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/special/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629",
+      "afterSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/special/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629",
+      "afterSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/special/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629",
+      "afterSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/special/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629",
+      "afterSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/attack-2/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629",
+      "afterSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/attack-2/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629",
+      "afterSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/attack-2/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629",
+      "afterSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/attack-2/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629",
+      "afterSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/attack-2/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629",
+      "afterSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/attack-2/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629",
+      "afterSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/traverse/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "d62184fa8680bd8c2b0fa634f613e3d2b9a2dd8cfc4227dcac1602048f4c2165",
+      "afterSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/run/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "25e60e87d1908d274ff7093e0c4989844e844b975a95152baf223c24895031ce",
+      "afterSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/shard-caller/frames/attack-1/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/shard-caller/frames/idle/05.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "a5c3f2f70ace75c57a3b758e0d8819e9f71e4c3f5e3082487e8aff31b31cde74",
+      "afterSha256": "f7723e36feac692c16315d5e0651a69dc403dd426ef450a9038e12e2095630b9"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/chime-orb/frames/special/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/chime-orb/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "77523857b6965504c1891acb9c7e561b90edd8503818b44fa80cf528d2667939",
+      "afterSha256": "5ebc72da6a1a22e7add98bb6aeeece1fb4925daefe43d55efc06fc3cc3854133"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/dirge-moth/frames/walk/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/dirge-moth/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "2f1e0b2d6dcae110a93db61bed831b33c6444c0c2f17bc3907656b5fddf906b2",
+      "afterSha256": "7984f3da8b76a9037fbc82a3f876bfa42bd9b4149511c914957f1823d093b25f"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/dirge-moth/frames/special/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/dirge-moth/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "a59c61819619b2a9e475dd7f41ec7d3022e2710e741601c042d0746099023540",
+      "afterSha256": "7984f3da8b76a9037fbc82a3f876bfa42bd9b4149511c914957f1823d093b25f"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/dirge-moth/frames/run/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/dirge-moth/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "98ed70c6301ceb76c537ac983dd7ca8c9e1071c4f2c795f09182c24213e6eff7",
+      "afterSha256": "7984f3da8b76a9037fbc82a3f876bfa42bd9b4149511c914957f1823d093b25f"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/dirge-moth/frames/run/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/dirge-moth/frames/idle/03.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "46568f50f6b535c20e958f87b6822659f26a3d4bd8139ea06635e0b5f1f8f6cb",
+      "afterSha256": "7984f3da8b76a9037fbc82a3f876bfa42bd9b4149511c914957f1823d093b25f"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/walk/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "7d532275f3dcfc7dc9a9f29c10ed4e635a0f56d36e63415e8d15c6163fe511b2",
+      "afterSha256": "2f25a4e0ac07ba78bc0269455b7206109f2b63e0ee1adc64a3c22dfc217dc557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/walk/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "7d532275f3dcfc7dc9a9f29c10ed4e635a0f56d36e63415e8d15c6163fe511b2",
+      "afterSha256": "2f25a4e0ac07ba78bc0269455b7206109f2b63e0ee1adc64a3c22dfc217dc557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/walk/07.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "7d532275f3dcfc7dc9a9f29c10ed4e635a0f56d36e63415e8d15c6163fe511b2",
+      "afterSha256": "2f25a4e0ac07ba78bc0269455b7206109f2b63e0ee1adc64a3c22dfc217dc557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/walk/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "7d532275f3dcfc7dc9a9f29c10ed4e635a0f56d36e63415e8d15c6163fe511b2",
+      "afterSha256": "2f25a4e0ac07ba78bc0269455b7206109f2b63e0ee1adc64a3c22dfc217dc557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/walk/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "7d532275f3dcfc7dc9a9f29c10ed4e635a0f56d36e63415e8d15c6163fe511b2",
+      "afterSha256": "2f25a4e0ac07ba78bc0269455b7206109f2b63e0ee1adc64a3c22dfc217dc557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/walk/08.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "7d532275f3dcfc7dc9a9f29c10ed4e635a0f56d36e63415e8d15c6163fe511b2",
+      "afterSha256": "2f25a4e0ac07ba78bc0269455b7206109f2b63e0ee1adc64a3c22dfc217dc557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/special/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "0f0fd7d7a6f2352521582580cc9a8804de89ec9f71292b2ef4e072b88a0d15b5",
+      "afterSha256": "2f25a4e0ac07ba78bc0269455b7206109f2b63e0ee1adc64a3c22dfc217dc557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/special/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "0f0fd7d7a6f2352521582580cc9a8804de89ec9f71292b2ef4e072b88a0d15b5",
+      "afterSha256": "2f25a4e0ac07ba78bc0269455b7206109f2b63e0ee1adc64a3c22dfc217dc557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/run/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "027f2d105dbd66dd70ea8146f31c4e7b12bb103101073860572723f7d5351767",
+      "afterSha256": "2f25a4e0ac07ba78bc0269455b7206109f2b63e0ee1adc64a3c22dfc217dc557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/run/07.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "027f2d105dbd66dd70ea8146f31c4e7b12bb103101073860572723f7d5351767",
+      "afterSha256": "2f25a4e0ac07ba78bc0269455b7206109f2b63e0ee1adc64a3c22dfc217dc557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/run/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "027f2d105dbd66dd70ea8146f31c4e7b12bb103101073860572723f7d5351767",
+      "afterSha256": "2f25a4e0ac07ba78bc0269455b7206109f2b63e0ee1adc64a3c22dfc217dc557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/run/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "027f2d105dbd66dd70ea8146f31c4e7b12bb103101073860572723f7d5351767",
+      "afterSha256": "2f25a4e0ac07ba78bc0269455b7206109f2b63e0ee1adc64a3c22dfc217dc557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/run/08.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/bellwing-moth/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "027f2d105dbd66dd70ea8146f31c4e7b12bb103101073860572723f7d5351767",
+      "afterSha256": "2f25a4e0ac07ba78bc0269455b7206109f2b63e0ee1adc64a3c22dfc217dc557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/sporecap-stalker/frames/special/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/sporecap-stalker/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "214053c1551a8c3f7da48d47030463d50fb2893938fad7a270a5334e14598142",
+      "afterSha256": "37da87c9b6e66f81febd9c4aea1c42dc99e0c69fa4d68a8c6bf6f66172aa41ad"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/prism-sentinel/frames/special/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/prism-sentinel/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "0f6fbec1c8ec201de8e2ec2f13e2c79d086c3ec980a91c2fcfbc4c8aaa15bb42",
+      "afterSha256": "9b2391a1b81472a727b22df67d74e90435d70a7eecc7ce613793e775525b9e44"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/dune-claw/frames/special/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/dune-claw/frames/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "02ef42f9c23d6521ea6828b43f9a27993c21d0ec94177e5f5a54c446325c54da",
+      "afterSha256": "688470b0ecf50e6a85f1a99d35410ba2f01899c877a37cd4f84c0d4684a20c2e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/dune-claw/frames/special/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/dune-claw/frames/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "a5cc2c7c7937106e66af1025a7a31b2c2f0eb79b2c53373a3c5810df5bd0e5af",
+      "afterSha256": "688470b0ecf50e6a85f1a99d35410ba2f01899c877a37cd4f84c0d4684a20c2e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/dune-claw/frames/traverse/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/dune-claw/frames/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "c8beed7be1a2fb4a2d7a29f2e0e9c5229ac8d6553f2f8e7753cbce64b7527c4a",
+      "afterSha256": "688470b0ecf50e6a85f1a99d35410ba2f01899c877a37cd4f84c0d4684a20c2e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/dune-claw/frames/run/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/dune-claw/frames/idle/06.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "e2c625f5d77e005870895f908fb8e2e238bd9ad804f8471d20d908b01dc4a4cf",
+      "afterSha256": "688470b0ecf50e6a85f1a99d35410ba2f01899c877a37cd4f84c0d4684a20c2e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/walk/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/idle/05.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "354660307dfa4b8f9a7e50660ce2049827265cd94e1abd8892c9aca1e6be422d",
+      "afterSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/special/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/idle/05.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "2b3ec38282ffde2d8e34c4fb796a40311edb296fbb51025ba06d8b69fcd6e819",
+      "afterSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/special/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/idle/05.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "2b3ec38282ffde2d8e34c4fb796a40311edb296fbb51025ba06d8b69fcd6e819",
+      "afterSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/run/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/idle/05.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c",
+      "afterSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/run/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/idle/05.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c",
+      "afterSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/run/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/idle/05.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c",
+      "afterSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/run/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/idle/05.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c",
+      "afterSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/run/07.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/idle/05.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c",
+      "afterSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/run/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/idle/05.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c",
+      "afterSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/run/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/idle/05.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c",
+      "afterSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/run/08.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/idle/05.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c",
+      "afterSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/idle/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "17590c69441c6a57fc4bd364b1fc952d2703cf35fb4638b090833b6c2d5274f3",
+      "afterSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/attack-2/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "1c4b07cc46551c73b661af736a4e6d7816759ce574065390c610f70f06d3df7e",
+      "afterSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/traverse/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15",
+      "afterSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/traverse/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15",
+      "afterSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/traverse/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15",
+      "afterSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/traverse/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15",
+      "afterSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/traverse/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15",
+      "afterSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/traverse/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15",
+      "afterSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/run/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15",
+      "afterSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/run/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15",
+      "afterSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/run/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15",
+      "afterSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/run/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15",
+      "afterSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/run/07.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15",
+      "afterSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/run/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15",
+      "afterSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/run/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15",
+      "afterSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/run/08.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15",
+      "afterSha256": "5b6708ad6dab76e2c5833c6596804329f10391a32faa24a736a8b6f2aa4b1c15"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/attack-1/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "0be1b3d936971e39e53717c451de5cd87375ffb2e0f14450927c76d5c06dc8b9",
+      "afterSha256": "4222862c110fa06ea87c986f45f3972798dced5931ebe1a931143439a6310557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/walk/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "ba67f958e38e4ea07d637ca9cbf7ecd9732106ad50e37c8c637c22fd92079a0a",
+      "afterSha256": "4222862c110fa06ea87c986f45f3972798dced5931ebe1a931143439a6310557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/walk/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "efb220eee66df67617e316e4d7a4006fe956923b10dc954ae4ded35ba6178c01",
+      "afterSha256": "4222862c110fa06ea87c986f45f3972798dced5931ebe1a931143439a6310557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/walk/07.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "efb220eee66df67617e316e4d7a4006fe956923b10dc954ae4ded35ba6178c01",
+      "afterSha256": "4222862c110fa06ea87c986f45f3972798dced5931ebe1a931143439a6310557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/walk/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "efb220eee66df67617e316e4d7a4006fe956923b10dc954ae4ded35ba6178c01",
+      "afterSha256": "4222862c110fa06ea87c986f45f3972798dced5931ebe1a931143439a6310557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/walk/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "efb220eee66df67617e316e4d7a4006fe956923b10dc954ae4ded35ba6178c01",
+      "afterSha256": "4222862c110fa06ea87c986f45f3972798dced5931ebe1a931143439a6310557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/walk/08.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "efb220eee66df67617e316e4d7a4006fe956923b10dc954ae4ded35ba6178c01",
+      "afterSha256": "4222862c110fa06ea87c986f45f3972798dced5931ebe1a931143439a6310557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/run/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "6602980a69dc3e24aad47b029a74d0a6e61b7fe9c5f5e89cab0abf9bc5e7a3bb",
+      "afterSha256": "4222862c110fa06ea87c986f45f3972798dced5931ebe1a931143439a6310557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/spark-drone/frames/special/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/spark-drone/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "02dda6bc5792852f5dd1511db0205110d7df51fde5899f419648ddb8839d6add",
+      "afterSha256": "7698a661692926f53bc08c6e630c90d96eb12ec1960478e9a4756fff9a318ad9"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/spark-drone/frames/run/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/spark-drone/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "b055cf670f9b4a93b37e7cf77234ac8850fb0b4b6cc855f8b75e761f40cd175f",
+      "afterSha256": "7698a661692926f53bc08c6e630c90d96eb12ec1960478e9a4756fff9a318ad9"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/spark-drone/frames/run/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/spark-drone/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "2ad966c5bad0c819fa9c4d15122f29ac23f9d5d7966af8a8c3dd2aa95bcd5a1b",
+      "afterSha256": "7698a661692926f53bc08c6e630c90d96eb12ec1960478e9a4756fff9a318ad9"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rootbound-huntress/frames/special/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rootbound-huntress/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "87d772aeddf940f48a3f9c7d6ba3a7d87d3db10d0a45b17f548eca41fc452dcf",
+      "afterSha256": "87d772aeddf940f48a3f9c7d6ba3a7d87d3db10d0a45b17f548eca41fc452dcf"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rootbound-huntress/frames/special/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rootbound-huntress/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "87d772aeddf940f48a3f9c7d6ba3a7d87d3db10d0a45b17f548eca41fc452dcf",
+      "afterSha256": "87d772aeddf940f48a3f9c7d6ba3a7d87d3db10d0a45b17f548eca41fc452dcf"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rootbound-huntress/frames/special/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rootbound-huntress/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "87d772aeddf940f48a3f9c7d6ba3a7d87d3db10d0a45b17f548eca41fc452dcf",
+      "afterSha256": "87d772aeddf940f48a3f9c7d6ba3a7d87d3db10d0a45b17f548eca41fc452dcf"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rootbound-huntress/frames/special/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rootbound-huntress/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "87d772aeddf940f48a3f9c7d6ba3a7d87d3db10d0a45b17f548eca41fc452dcf",
+      "afterSha256": "87d772aeddf940f48a3f9c7d6ba3a7d87d3db10d0a45b17f548eca41fc452dcf"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rootbound-huntress/frames/special/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rootbound-huntress/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "87d772aeddf940f48a3f9c7d6ba3a7d87d3db10d0a45b17f548eca41fc452dcf",
+      "afterSha256": "87d772aeddf940f48a3f9c7d6ba3a7d87d3db10d0a45b17f548eca41fc452dcf"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rootbound-huntress/frames/special/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rootbound-huntress/frames/idle/02.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "87d772aeddf940f48a3f9c7d6ba3a7d87d3db10d0a45b17f548eca41fc452dcf",
+      "afterSha256": "87d772aeddf940f48a3f9c7d6ba3a7d87d3db10d0a45b17f548eca41fc452dcf"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/dead/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "cc6d12d7286684efc6dfb67747077bfc84d4ec71689081c72a717d9dbf1314b9",
+      "afterSha256": "3b467a707e842fd6586e8e2319919e9257707e0daf76d8c4c7b9ce4d63fd6456"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/idle/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "c289f26764b7dac645eaa267f88f72c26419f0bb0415a1fc20569f1da743c1a2",
+      "afterSha256": "3b467a707e842fd6586e8e2319919e9257707e0daf76d8c4c7b9ce4d63fd6456"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/traverse/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "f65632c419e37412ec117b4135f00e1984cb218f1d9b123d5ca5675a80f97d8e",
+      "afterSha256": "3b467a707e842fd6586e8e2319919e9257707e0daf76d8c4c7b9ce4d63fd6456"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/traverse/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "f65632c419e37412ec117b4135f00e1984cb218f1d9b123d5ca5675a80f97d8e",
+      "afterSha256": "3b467a707e842fd6586e8e2319919e9257707e0daf76d8c4c7b9ce4d63fd6456"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/run/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "3b467a707e842fd6586e8e2319919e9257707e0daf76d8c4c7b9ce4d63fd6456",
+      "afterSha256": "3b467a707e842fd6586e8e2319919e9257707e0daf76d8c4c7b9ce4d63fd6456"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/run/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "3b467a707e842fd6586e8e2319919e9257707e0daf76d8c4c7b9ce4d63fd6456",
+      "afterSha256": "3b467a707e842fd6586e8e2319919e9257707e0daf76d8c4c7b9ce4d63fd6456"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/run/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "3b467a707e842fd6586e8e2319919e9257707e0daf76d8c4c7b9ce4d63fd6456",
+      "afterSha256": "3b467a707e842fd6586e8e2319919e9257707e0daf76d8c4c7b9ce4d63fd6456"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/run/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "3b467a707e842fd6586e8e2319919e9257707e0daf76d8c4c7b9ce4d63fd6456",
+      "afterSha256": "3b467a707e842fd6586e8e2319919e9257707e0daf76d8c4c7b9ce4d63fd6456"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/run/07.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "3b467a707e842fd6586e8e2319919e9257707e0daf76d8c4c7b9ce4d63fd6456",
+      "afterSha256": "3b467a707e842fd6586e8e2319919e9257707e0daf76d8c4c7b9ce4d63fd6456"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/run/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "3b467a707e842fd6586e8e2319919e9257707e0daf76d8c4c7b9ce4d63fd6456",
+      "afterSha256": "3b467a707e842fd6586e8e2319919e9257707e0daf76d8c4c7b9ce4d63fd6456"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/run/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "3b467a707e842fd6586e8e2319919e9257707e0daf76d8c4c7b9ce4d63fd6456",
+      "afterSha256": "3b467a707e842fd6586e8e2319919e9257707e0daf76d8c4c7b9ce4d63fd6456"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/run/08.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/idle/01.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "3b467a707e842fd6586e8e2319919e9257707e0daf76d8c4c7b9ce4d63fd6456",
+      "afterSha256": "3b467a707e842fd6586e8e2319919e9257707e0daf76d8c4c7b9ce4d63fd6456"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/ice-tusk/frames/special/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/ice-tusk/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "591a9e37c9befb2846703a7d1f444a8e61c0130484756285757eb01de552d6cf",
+      "afterSha256": "efc26679999661370de0714e12fb5122e32650f478c88cb96a9d0a9e39adc9b6"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/ice-tusk/frames/special/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/ice-tusk/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "d6b0b6af6922d501d26dfb9736c52ffacf3da4de01b2ad92116f0a871bdcee7b",
+      "afterSha256": "efc26679999661370de0714e12fb5122e32650f478c88cb96a9d0a9e39adc9b6"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/ice-tusk/frames/attack-2/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/ice-tusk/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "0df9dacb0b7a4300e64d7065d140b5b0bb2123ea0d08ff7a8e2f18262d36c88b",
+      "afterSha256": "efc26679999661370de0714e12fb5122e32650f478c88cb96a9d0a9e39adc9b6"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/ice-tusk/frames/traverse/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/ice-tusk/frames/idle/04.png",
+      "reason": "canonical-clean-idle-fallback",
+      "beforeSha256": "baee125fbf7b43e2256d051c9889858db6e607a4642f33959a0cbb137c6dfdd6",
+      "afterSha256": "efc26679999661370de0714e12fb5122e32650f478c88cb96a9d0a9e39adc9b6"
+    }
+  ],
+  "caseByCaseRepairs": {
+    "caldera-titan": {
+      "reason": "Generated idle row contained upper torsos and other rows leaked detached pieces across vertical boundaries.",
+      "strategy": "Use complete locomotion cells for idle and retain only the principal complete body from every animation cell.",
+      "frameCount": 60
+    }
+  },
+  "edgeFragmentRepairs": [
+    {
+      "path": "public/story/npcs/characters/cael-prism/counter/04.png",
+      "replacement": "public/story/npcs/characters/cael-prism/idle/01.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "4133304222128e7b729a70b131009c8d9996f24e50efe4f6a66156550ddbe775",
+      "afterSha256": "4133304222128e7b729a70b131009c8d9996f24e50efe4f6a66156550ddbe775"
+    },
+    {
+      "path": "public/story/npcs/characters/corvus-arch/walk/05.png",
+      "replacement": "public/story/npcs/characters/corvus-arch/idle/06.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "5019325d593be70b4b9d3bc38835090edea167b4ae71630d9c0e1c02aff5b738",
+      "afterSha256": "5019325d593be70b4b9d3bc38835090edea167b4ae71630d9c0e1c02aff5b738"
+    },
+    {
+      "path": "public/story/npcs/characters/edda-veil/counter/02.png",
+      "replacement": "public/story/npcs/characters/edda-veil/idle/02.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "30f5382b4dbe751778a27d15d39e70e487f52a2809683247e65f232ff45621c5",
+      "afterSha256": "30f5382b4dbe751778a27d15d39e70e487f52a2809683247e65f232ff45621c5"
+    },
+    {
+      "path": "public/story/npcs/characters/edda-veil/counter/04.png",
+      "replacement": "public/story/npcs/characters/edda-veil/idle/02.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "30f5382b4dbe751778a27d15d39e70e487f52a2809683247e65f232ff45621c5",
+      "afterSha256": "30f5382b4dbe751778a27d15d39e70e487f52a2809683247e65f232ff45621c5"
+    },
+    {
+      "path": "public/story/npcs/characters/eira-watch/protect/04.png",
+      "replacement": "public/story/npcs/characters/eira-watch/idle/02.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "d67d76b54138353a129a62b7865296223aa4469b3ec715619bdf8749473cc502",
+      "afterSha256": "d67d76b54138353a129a62b7865296223aa4469b3ec715619bdf8749473cc502"
+    },
+    {
+      "path": "public/story/npcs/characters/garrick-rail/counter/06.png",
+      "replacement": "public/story/npcs/characters/garrick-rail/idle/01.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "0ca454c781a90e6c9e24fd50439447076e3406020a7756892dd3df4a60264a00",
+      "afterSha256": "0ca454c781a90e6c9e24fd50439447076e3406020a7756892dd3df4a60264a00"
+    },
+    {
+      "path": "public/story/npcs/characters/kellan-shaft/counter/04.png",
+      "replacement": "public/story/npcs/characters/kellan-shaft/idle/01.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "32a3d8ebf18c4696d0bce05840dbb7b41cc80ad4ee7e5cc5ab4f6f78b8040151",
+      "afterSha256": "32a3d8ebf18c4696d0bce05840dbb7b41cc80ad4ee7e5cc5ab4f6f78b8040151"
+    },
+    {
+      "path": "public/story/npcs/characters/kellan-shaft/counter/05.png",
+      "replacement": "public/story/npcs/characters/kellan-shaft/idle/01.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "32a3d8ebf18c4696d0bce05840dbb7b41cc80ad4ee7e5cc5ab4f6f78b8040151",
+      "afterSha256": "32a3d8ebf18c4696d0bce05840dbb7b41cc80ad4ee7e5cc5ab4f6f78b8040151"
+    },
+    {
+      "path": "public/story/npcs/characters/kellan-shaft/counter/06.png",
+      "replacement": "public/story/npcs/characters/kellan-shaft/idle/01.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "32a3d8ebf18c4696d0bce05840dbb7b41cc80ad4ee7e5cc5ab4f6f78b8040151",
+      "afterSha256": "32a3d8ebf18c4696d0bce05840dbb7b41cc80ad4ee7e5cc5ab4f6f78b8040151"
+    },
+    {
+      "path": "public/story/npcs/characters/moss-bell/counter/03.png",
+      "replacement": "public/story/npcs/characters/moss-bell/idle/05.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "05be38b3de0506f859f6105335c2c7fb5ebac6e0fd79e783e29a50db01ab99c4",
+      "afterSha256": "05be38b3de0506f859f6105335c2c7fb5ebac6e0fd79e783e29a50db01ab99c4"
+    },
+    {
+      "path": "public/story/npcs/characters/moss-bell/counter/04.png",
+      "replacement": "public/story/npcs/characters/moss-bell/idle/05.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "05be38b3de0506f859f6105335c2c7fb5ebac6e0fd79e783e29a50db01ab99c4",
+      "afterSha256": "05be38b3de0506f859f6105335c2c7fb5ebac6e0fd79e783e29a50db01ab99c4"
+    },
+    {
+      "path": "public/story/npcs/characters/moss-bell/counter/05.png",
+      "replacement": "public/story/npcs/characters/moss-bell/idle/05.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "05be38b3de0506f859f6105335c2c7fb5ebac6e0fd79e783e29a50db01ab99c4",
+      "afterSha256": "05be38b3de0506f859f6105335c2c7fb5ebac6e0fd79e783e29a50db01ab99c4"
+    },
+    {
+      "path": "public/story/npcs/characters/moss-bell/counter/06.png",
+      "replacement": "public/story/npcs/characters/moss-bell/idle/05.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "05be38b3de0506f859f6105335c2c7fb5ebac6e0fd79e783e29a50db01ab99c4",
+      "afterSha256": "05be38b3de0506f859f6105335c2c7fb5ebac6e0fd79e783e29a50db01ab99c4"
+    },
+    {
+      "path": "public/story/npcs/characters/orin-pike/counter/04.png",
+      "replacement": "public/story/npcs/characters/orin-pike/idle/02.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "9d3d2f9d97ce51819063bd4cb0e9ae4108c8f1c069c29433183e35bb9813d0c3",
+      "afterSha256": "9d3d2f9d97ce51819063bd4cb0e9ae4108c8f1c069c29433183e35bb9813d0c3"
+    },
+    {
+      "path": "public/story/npcs/characters/pippa-brook/counter/06.png",
+      "replacement": "public/story/npcs/characters/pippa-brook/idle/01.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "420d1d4c864185571843ba4e14eca971a096a8d79fb351df75924e8dd4849c63",
+      "afterSha256": "420d1d4c864185571843ba4e14eca971a096a8d79fb351df75924e8dd4849c63"
+    },
+    {
+      "path": "public/story/npcs/characters/pyra-scorchkin/counter/04.png",
+      "replacement": "public/story/npcs/characters/pyra-scorchkin/idle/05.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "c32fc8c77120f6d604f278902accd7507bf1c1cc45646bd4bbbcd0b17ca6b7b4",
+      "afterSha256": "c32fc8c77120f6d604f278902accd7507bf1c1cc45646bd4bbbcd0b17ca6b7b4"
+    },
+    {
+      "path": "public/story/npcs/characters/rafi-ripple/counter/04.png",
+      "replacement": "public/story/npcs/characters/rafi-ripple/idle/02.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "6bafaa026f27f4d48e655422b4c53aaf6c8cd7f6a9ae7804434b7b82ee3f16c1",
+      "afterSha256": "6bafaa026f27f4d48e655422b4c53aaf6c8cd7f6a9ae7804434b7b82ee3f16c1"
+    },
+    {
+      "path": "public/story/npcs/characters/syl-veyra/counter/02.png",
+      "replacement": "public/story/npcs/characters/syl-veyra/idle/01.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "c2d0be5fae76b00ac263fc5edc8df260f38241aed078aeca11c95950135c3046",
+      "afterSha256": "c2d0be5fae76b00ac263fc5edc8df260f38241aed078aeca11c95950135c3046"
+    },
+    {
+      "path": "public/story/npcs/characters/syl-veyra/counter/04.png",
+      "replacement": "public/story/npcs/characters/syl-veyra/idle/01.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "c2d0be5fae76b00ac263fc5edc8df260f38241aed078aeca11c95950135c3046",
+      "afterSha256": "c2d0be5fae76b00ac263fc5edc8df260f38241aed078aeca11c95950135c3046"
+    },
+    {
+      "path": "public/story/npcs/characters/tobin-reed/protect/03.png",
+      "replacement": "public/story/npcs/characters/tobin-reed/idle/01.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "88abfa9ccdf62ee3a538bfc1ec437a660ab20a9b7d9287a87ef2393eddc3b0ea",
+      "afterSha256": "88abfa9ccdf62ee3a538bfc1ec437a660ab20a9b7d9287a87ef2393eddc3b0ea"
+    },
+    {
+      "path": "public/story/npcs/characters/tobin-reed/protect/04.png",
+      "replacement": "public/story/npcs/characters/tobin-reed/idle/01.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "88abfa9ccdf62ee3a538bfc1ec437a660ab20a9b7d9287a87ef2393eddc3b0ea",
+      "afterSha256": "88abfa9ccdf62ee3a538bfc1ec437a660ab20a9b7d9287a87ef2393eddc3b0ea"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/briar-maw/frames/attack-2/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/briar-maw/frames/idle/01.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "4645272a8b995c04d7adaa383eb130731f249a60c0f07b57e0878ab88d8e610e",
+      "afterSha256": "4645272a8b995c04d7adaa383eb130731f249a60c0f07b57e0878ab88d8e610e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/dirge-moth/frames/traverse/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/dirge-moth/frames/idle/03.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "7984f3da8b76a9037fbc82a3f876bfa42bd9b4149511c914957f1823d093b25f",
+      "afterSha256": "7984f3da8b76a9037fbc82a3f876bfa42bd9b4149511c914957f1823d093b25f"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/dirge-moth/frames/traverse/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/dirge-moth/frames/idle/03.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "7984f3da8b76a9037fbc82a3f876bfa42bd9b4149511c914957f1823d093b25f",
+      "afterSha256": "7984f3da8b76a9037fbc82a3f876bfa42bd9b4149511c914957f1823d093b25f"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/dirge-moth/frames/walk/07.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/dirge-moth/frames/idle/03.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "7984f3da8b76a9037fbc82a3f876bfa42bd9b4149511c914957f1823d093b25f",
+      "afterSha256": "7984f3da8b76a9037fbc82a3f876bfa42bd9b4149511c914957f1823d093b25f"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/dirge-moth/frames/walk/08.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/dirge-moth/frames/idle/03.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "7984f3da8b76a9037fbc82a3f876bfa42bd9b4149511c914957f1823d093b25f",
+      "afterSha256": "7984f3da8b76a9037fbc82a3f876bfa42bd9b4149511c914957f1823d093b25f"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/dune-claw/frames/run/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/dune-claw/frames/idle/06.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "688470b0ecf50e6a85f1a99d35410ba2f01899c877a37cd4f84c0d4684a20c2e",
+      "afterSha256": "688470b0ecf50e6a85f1a99d35410ba2f01899c877a37cd4f84c0d4684a20c2e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/dune-claw/frames/traverse/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/dune-claw/frames/idle/06.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "688470b0ecf50e6a85f1a99d35410ba2f01899c877a37cd4f84c0d4684a20c2e",
+      "afterSha256": "688470b0ecf50e6a85f1a99d35410ba2f01899c877a37cd4f84c0d4684a20c2e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/dune-claw/frames/traverse/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/dune-claw/frames/idle/06.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "688470b0ecf50e6a85f1a99d35410ba2f01899c877a37cd4f84c0d4684a20c2e",
+      "afterSha256": "688470b0ecf50e6a85f1a99d35410ba2f01899c877a37cd4f84c0d4684a20c2e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/run/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/idle/06.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629",
+      "afterSha256": "382d10f63b7ed9917e37514e47ee42724768b6b5dcf8bbcf13051d00a17fb629"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/gale-owl/frames/traverse/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/gale-owl/frames/idle/03.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "4240d1afa2d4f9b5bca000f9579c24251a8c2bb40fb42c8a08c0d72f576373f9",
+      "afterSha256": "4240d1afa2d4f9b5bca000f9579c24251a8c2bb40fb42c8a08c0d72f576373f9"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/block/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/idle/03.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "ade2a0e5e93257bebc3ea827e328f50ea2e01402fd32a7bff26678522d1af7b7",
+      "afterSha256": "ade2a0e5e93257bebc3ea827e328f50ea2e01402fd32a7bff26678522d1af7b7"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/dead/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/idle/03.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "ade2a0e5e93257bebc3ea827e328f50ea2e01402fd32a7bff26678522d1af7b7",
+      "afterSha256": "ade2a0e5e93257bebc3ea827e328f50ea2e01402fd32a7bff26678522d1af7b7"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/run/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/idle/03.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "ade2a0e5e93257bebc3ea827e328f50ea2e01402fd32a7bff26678522d1af7b7",
+      "afterSha256": "ade2a0e5e93257bebc3ea827e328f50ea2e01402fd32a7bff26678522d1af7b7"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/haywire-mite/frames/run/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/haywire-mite/frames/idle/04.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "d4bbfb1077c35205822c73bd79ea9b024c49752faba5bc9fac57a9e80f0a9caf",
+      "afterSha256": "d4bbfb1077c35205822c73bd79ea9b024c49752faba5bc9fac57a9e80f0a9caf"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/ice-tusk/frames/traverse/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/ice-tusk/frames/idle/04.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "efc26679999661370de0714e12fb5122e32650f478c88cb96a9d0a9e39adc9b6",
+      "afterSha256": "efc26679999661370de0714e12fb5122e32650f478c88cb96a9d0a9e39adc9b6"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/ice-tusk/frames/traverse/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/ice-tusk/frames/idle/04.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "efc26679999661370de0714e12fb5122e32650f478c88cb96a9d0a9e39adc9b6",
+      "afterSha256": "efc26679999661370de0714e12fb5122e32650f478c88cb96a9d0a9e39adc9b6"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/walk/01.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/idle/02.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6",
+      "afterSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/walk/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/idle/02.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6",
+      "afterSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/walk/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/idle/02.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6",
+      "afterSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/walk/05.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/idle/02.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6",
+      "afterSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/walk/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/idle/02.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6",
+      "afterSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/walk/07.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/idle/02.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6",
+      "afterSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/walk/08.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/marrow-caster/frames/idle/02.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6",
+      "afterSha256": "645d07d898351f189e8413c877eac133f259351b3bb10ee5c08028dbf18e91e6"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/run/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/idle/02.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "4222862c110fa06ea87c986f45f3972798dced5931ebe1a931143439a6310557",
+      "afterSha256": "4222862c110fa06ea87c986f45f3972798dced5931ebe1a931143439a6310557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/run/07.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/idle/02.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "4222862c110fa06ea87c986f45f3972798dced5931ebe1a931143439a6310557",
+      "afterSha256": "4222862c110fa06ea87c986f45f3972798dced5931ebe1a931143439a6310557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/run/08.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/idle/02.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "4222862c110fa06ea87c986f45f3972798dced5931ebe1a931143439a6310557",
+      "afterSha256": "4222862c110fa06ea87c986f45f3972798dced5931ebe1a931143439a6310557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/walk/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/mirage-cobra/frames/idle/02.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "4222862c110fa06ea87c986f45f3972798dced5931ebe1a931143439a6310557",
+      "afterSha256": "4222862c110fa06ea87c986f45f3972798dced5931ebe1a931143439a6310557"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/dead/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/idle/03.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "c21c709f37ea5ae725d7d0b7aa980f247c44b9ec5e433f059c9c9bca60eb6b07",
+      "afterSha256": "c21c709f37ea5ae725d7d0b7aa980f247c44b9ec5e433f059c9c9bca60eb6b07"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/traverse/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/idle/03.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "c21c709f37ea5ae725d7d0b7aa980f247c44b9ec5e433f059c9c9bca60eb6b07",
+      "afterSha256": "c21c709f37ea5ae725d7d0b7aa980f247c44b9ec5e433f059c9c9bca60eb6b07"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/walk/07.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/idle/05.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c",
+      "afterSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/walk/08.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/idle/05.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c",
+      "afterSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/attack-1/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/sluice-sprite/frames/idle/03.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "70e6b2737561b6bf76b80d33c188feaff31265d3a0c3da586030c528fda49f9e",
+      "afterSha256": "70e6b2737561b6bf76b80d33c188feaff31265d3a0c3da586030c528fda49f9e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/violet-bellkeeper/frames/dead/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/violet-bellkeeper/frames/idle/03.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "ff8a9a5cabdf25300bfbc321a0ab341a0fc16623e78faa8af6129eacdfe4dc28",
+      "afterSha256": "ff8a9a5cabdf25300bfbc321a0ab341a0fc16623e78faa8af6129eacdfe4dc28"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/violet-bellkeeper/frames/run/04.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/violet-bellkeeper/frames/idle/03.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "ff8a9a5cabdf25300bfbc321a0ab341a0fc16623e78faa8af6129eacdfe4dc28",
+      "afterSha256": "ff8a9a5cabdf25300bfbc321a0ab341a0fc16623e78faa8af6129eacdfe4dc28"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/violet-bellkeeper/frames/walk/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/violet-bellkeeper/frames/idle/03.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "ff8a9a5cabdf25300bfbc321a0ab341a0fc16623e78faa8af6129eacdfe4dc28",
+      "afterSha256": "ff8a9a5cabdf25300bfbc321a0ab341a0fc16623e78faa8af6129eacdfe4dc28"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/dune-claw/frames/attack-2/06.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/dune-claw/frames/idle/06.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "94e669f8a440c23664ac6b7a4c841a81776f979559975aa0fd57235781b2d415",
+      "afterSha256": "688470b0ecf50e6a85f1a99d35410ba2f01899c877a37cd4f84c0d4684a20c2e"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/attack-2/02.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/idle/05.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "4d108516bfa365a07c439129dd7c88424dea2a32c4ce88d353b809dd5e0d5539",
+      "afterSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c"
+    },
+    {
+      "path": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/attack-2/03.png",
+      "replacement": "public/story/enemies/kore-enemies-v1/sets/rift-ray/frames/idle/05.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "28bb821aa53fb6ee581207b2323cd66c2ec54d6ed9967d713904c7e3a0388055",
+      "afterSha256": "dca3551aa1f87058543c2897fa7b0152fd76de9c77bd10dea1652ad2b9bde18c"
+    },
+    {
+      "path": "public/story/npcs/characters/dorian-sigil/dialogue/01.png",
+      "replacement": "public/story/npcs/characters/dorian-sigil/walk/05.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "66ba68184deb5b8d6fecb0f3039ee9c101fcded8acc5f5675b2ed41f94af6bed",
+      "afterSha256": "ae34050fa4e79bee889fa9a1e632a1c0f0e331b137d1530a8228d6d78c91a90f"
+    },
+    {
+      "path": "public/story/npcs/characters/mara-bell/counter/03.png",
+      "replacement": "public/story/npcs/characters/mara-bell/idle/03.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "525c534d5081d4cddd8891a4b0e0cb54ce223edb79a46303804cb1d31f6a7aeb",
+      "afterSha256": "57dab76edbfa1c335b6c1231d7cbc1aa5e058ccccdf5777ee476fdedaa586363"
+    },
+    {
+      "path": "public/story/npcs/characters/nuri-sandling/counter/04.png",
+      "replacement": "public/story/npcs/characters/nuri-sandling/idle/02.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "7785951ca4dc8386b3fafee82c26075633d1c35fa0f2961122c1b5d31f2e6f1e",
+      "afterSha256": "c74109c772f87fa688f2658c557383f540065fb2b00c2fb1df6f09185c918ff2"
+    },
+    {
+      "path": "public/story/npcs/characters/nuri-sandling/counter/05.png",
+      "replacement": "public/story/npcs/characters/nuri-sandling/idle/02.png",
+      "reason": "manual-edge-fragment-review-canonical-complete-actor-fallback",
+      "beforeSha256": "c2bd3cef2eb6c4aa3007cedec1f96731794ca4894e5d00a35cd1a50351553abf",
+      "afterSha256": "c74109c772f87fa688f2658c557383f540065fb2b00c2fb1df6f09185c918ff2"
+    }
+  ],
+  "reviewedIntentionalMultiComponentFrames": {
+    "reason": "Full-resolution review confirmed one actor plus an intentional spell, weapon, portal, slash, or death-disintegration effect; no neighboring character cell is present.",
+    "paths": [
+      "public/story/npcs/characters/glint-shardling/counter/04.png",
+      "public/story/npcs/characters/lumi-cloud/counter/04.png",
+      "public/story/enemies/kore-enemies-v1/sets/aurora-herald/frames/special/05.png",
+      "public/story/enemies/kore-enemies-v1/sets/aurora-herald/frames/special/06.png",
+      "public/story/enemies/kore-enemies-v1/sets/chime-orb/frames/special/02.png",
+      "public/story/enemies/kore-enemies-v1/sets/cinder-wisp/frames/special/06.png",
+      "public/story/enemies/kore-enemies-v1/sets/cinder-wisp/frames/special/07.png",
+      "public/story/enemies/kore-enemies-v1/sets/cinder-wisp/frames/special/08.png",
+      "public/story/enemies/kore-enemies-v1/sets/crimson-countess/frames/dead/05.png",
+      "public/story/enemies/kore-enemies-v1/sets/crimson-countess/frames/dead/08.png",
+      "public/story/enemies/kore-enemies-v1/sets/crypt-hound/frames/dead/03.png",
+      "public/story/enemies/kore-enemies-v1/sets/dirge-moth/frames/attack-2/03.png",
+      "public/story/enemies/kore-enemies-v1/sets/dirge-moth/frames/attack-2/04.png",
+      "public/story/enemies/kore-enemies-v1/sets/dirge-moth/frames/attack-2/05.png",
+      "public/story/enemies/kore-enemies-v1/sets/dirge-moth/frames/attack-2/06.png",
+      "public/story/enemies/kore-enemies-v1/sets/dirge-moth/frames/special/04.png",
+      "public/story/enemies/kore-enemies-v1/sets/forge-seer/frames/traverse/02.png",
+      "public/story/enemies/kore-enemies-v1/sets/gale-owl/frames/special/01.png",
+      "public/story/enemies/kore-enemies-v1/sets/gale-owl/frames/special/03.png",
+      "public/story/enemies/kore-enemies-v1/sets/orbit-blade/frames/idle/02.png"
+    ]
+  }
+}

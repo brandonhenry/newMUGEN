@@ -137,6 +137,15 @@ GENERATED_REVIEWED_CELLS: dict[str, dict[str, Any]] = {
             "hurt": (194, 426, 652, 888), "dead": (181, 421, 648, 870, 1090),
         },
     },
+    "caldera-titan": {
+        # The generated idle row contains only upper torsos. Reuse the adjacent
+        # complete locomotion row for idle, then keep only the principal body in
+        # every row so feet/effects leaking across row boundaries cannot survive.
+        "animationSources": {"idle": (1, 1)},
+        "animationBounds": {"idle": (205, 410)},
+        "centers": {"idle": (96, 288, 480, 672, 864, 1056, 1248, 1440)},
+        "primaryOnly": {"idle", "walk", "run", "traverse", "attack-1", "attack-2", "special", "block", "hurt", "dead"},
+    },
     "glasswater-seer": {
         "animationBounds": {"idle": (0, 247), "walk": (247, 465), "run": (465, 662), "traverse": (662, 837), "attack-1": (837, 1024), "attack-2": (0, 232), "special": (232, 422), "block": (422, 623), "hurt": (623, 823), "dead": (823, 1024)},
         "centers": {"idle": (194.5, 386.5, 582.5, 772.5, 960), "walk": (196, 354, 514.5, 688.5, 849.5, 1013.5, 1165, 1320), "run": (193.5, 409, 597.5, 792.5, 982.5, 1177, 1389), "traverse": (197, 389, 581.5, 778.5, 996), "attack-1": (221.5, 450.5, 679.5, 896.5, 1109.5), "attack-2": (221, 457.5, 709, 955.5, 1198.5), "special": (189.5, 440.5, 674, 914.5, 1125, 1322.5), "block": (164, 391.5, 622.5, 846.5), "hurt": (213.5, 415.5, 618, 820.5), "dead": (187, 384, 595, 840.5, 1091, 1331)},
@@ -499,21 +508,22 @@ def main() -> None:
             images: list[Image.Image] = []
             frames = []
             if definition.get("generated"):
-                key = (enemy_id, sheet)
-                if key not in generated_loaded:
-                    generated_loaded[key] = Image.open(generated_source_path(enemy_id, sheet)).convert("RGBA")
-                generated_sheet = generated_loaded[key]
                 reviewed = GENERATED_REVIEWED_CELLS.get(enemy_id, {})
+                source_sheet, source_row = reviewed.get("animationSources", {}).get(animation, (sheet, row))
+                key = (enemy_id, source_sheet)
+                if key not in generated_loaded:
+                    generated_loaded[key] = Image.open(generated_source_path(enemy_id, source_sheet)).convert("RGBA")
+                generated_sheet = generated_loaded[key]
                 vertical_bounds = reviewed.get("animationBounds", {}).get(animation)
                 if not vertical_bounds:
-                    reviewed_boundaries = reviewed.get("bounds", {}).get(sheet)
+                    reviewed_boundaries = reviewed.get("bounds", {}).get(source_sheet)
                     vertical_bounds = (
-                        (reviewed_boundaries[row], reviewed_boundaries[row + 1])
+                        (reviewed_boundaries[source_row], reviewed_boundaries[source_row + 1])
                         if reviewed_boundaries else None
                     )
                 reviewed_centers = reviewed.get("centers", {}).get(animation)
                 centers = list(reviewed_centers) if reviewed_centers else generated_centers(
-                    generated_sheet, row, count, vertical_bounds
+                    generated_sheet, source_row, count, vertical_bounds
                 )
             else:
                 y0, y1 = ROW_BANDS[row]
@@ -522,7 +532,7 @@ def main() -> None:
                     if definition.get("generated"):
                         cleaned = generated_frame(
                             generated_sheet,
-                            row,
+                            source_row,
                             min(index, len(centers) - 1),
                             centers,
                             vertical_bounds,
