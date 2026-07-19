@@ -138,16 +138,7 @@
       "/characters/sasori/frames/frame-104.png"
     ],
     "getupStand": [],
-    "getupRollUp": [
-      "/characters/sasori/frames/frame-271.png",
-      "/characters/sasori/frames/frame-272.png",
-      "/characters/sasori/frames/frame-273.png",
-      "/characters/sasori/frames/frame-274.png",
-      "/characters/sasori/frames/frame-276.png",
-      "/characters/sasori/frames/frame-277.png",
-      "/characters/sasori/frames/frame-278.png",
-      "/characters/sasori/frames/frame-279.png"
-    ],
+    "getupRollUp": [],
     "win": [
       "/characters/sasori/frames/frame-281.png",
       "/characters/sasori/frames/frame-282.png",
@@ -158,8 +149,8 @@
       "/characters/sasori/frames/frame-287.png"
     ],
     "lose": [
-      "/characters/sasori/frames/frame-288.png",
-      "/characters/sasori/frames/frame-289.png"
+      "/characters/sasori/frames/frame-103.png",
+      "/characters/sasori/frames/frame-104.png"
     ],
     "cmd:f+1": [
       "/characters/sasori/frames/frame-338.png",
@@ -2723,64 +2714,6 @@
         "flipY": false
       }
     },
-    "getupRollUp": {
-      "271": {
-        "width": 0.57,
-        "height": 1.35,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
-      },
-      "272": {
-        "width": 0.34,
-        "height": 0.36,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
-      },
-      "273": {
-        "width": 0.7,
-        "height": 1.35,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
-      },
-      "274": {
-        "width": 0.38,
-        "height": 0.34,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
-      },
-      "276": {
-        "width": 0.82,
-        "height": 1.35,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
-      },
-      "277": {
-        "width": 0.84,
-        "height": 1.35,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
-      },
-      "278": {
-        "width": 0.84,
-        "height": 1.35,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
-      },
-      "279": {
-        "width": 0.84,
-        "height": 1.35,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
-      }
-    },
     "win": {
       "281": {
         "width": 0.68,
@@ -2833,19 +2766,19 @@
       }
     },
     "lose": {
-      "288": {
-        "width": 0.25,
-        "height": 0.36,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
+      "103": {
+        "width": 1.06,
+        "height": 0.27,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
       },
-      "289": {
-        "width": 0.25,
-        "height": 0.29,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
+      "104": {
+        "width": 1,
+        "height": 1,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
       }
     },
     "cmd:f+1": {

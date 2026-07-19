@@ -2624,11 +2624,15 @@ function readDevPreviewEndlessRun(): StoryEndlessRunState | null {
 
 function devPreviewHub(hub: StoryHubDefinition): StoryHubDefinition {
   if (typeof window === 'undefined' || !['localhost', '127.0.0.1'].includes(window.location.hostname)) return hub;
-  const previewParam = new URLSearchParams(window.location.search).get('storyX');
+  const params = new URLSearchParams(window.location.search);
+  const previewPortalId = params.get('storyPortal');
+  const previewPortal = previewPortalId ? hub.portals.find((portal) => portal.id === previewPortalId) : null;
+  if (previewPortal) return { ...hub, spawn: [...previewPortal.position] };
+  const previewParam = params.get('storyX');
   if (previewParam === null) return hub;
   const previewX = Number(previewParam);
   if (!Number.isFinite(previewX)) return hub;
-  const previewY = Number(new URLSearchParams(window.location.search).get('storyY'));
+  const previewY = Number(params.get('storyY'));
   return { ...hub, spawn: [THREE.MathUtils.clamp(previewX, hub.bounds.minX + 1, hub.bounds.maxX - 1), Number.isFinite(previewY) ? previewY : hub.spawn[1]] };
 }
 
@@ -3416,11 +3420,6 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
 
   useEffect(() => {
     if (!isStoryAdventureRegionId(activeWorldId) || endlessRun) return;
-    for (const waystone of baseHub.exploration?.waystones ?? []) {
-      if (Math.abs(playerX - waystone.position[0]) <= 2.4 && !adventureProgressRef.current.discoveries.waystones.includes(waystone.id)) {
-        updateAdventureProgress(discoverAdventureWaystone(adventureProgressRef.current, waystone.id));
-      }
-    }
     for (const landmark of baseHub.landmarks ?? []) {
       if (Math.abs(playerX - landmark.position[0]) > Math.max(4, landmark.size[0] / 2)) continue;
       const known = adventureProgressRef.current.discoveries.landmarks[activeWorldId] ?? [];
@@ -3429,11 +3428,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
         updateAdventureProgress(discoverAdventureVista(adventureProgressRef.current, landmark.id));
       }
     }
-    const sanctuary = baseHub.exploration?.mountSanctuary;
-    if (sanctuary && Math.abs(playerX - sanctuary.position[0]) <= 2.8 && !adventureProgressRef.current.mounts[sanctuary.mountId]?.unlocked) {
-      updateAdventureProgress(unlockAdventureMount(adventureProgressRef.current, sanctuary.mountId));
-    }
-  }, [activeWorldId, baseHub.exploration, endlessRun, playerX, updateAdventureProgress]);
+  }, [activeWorldId, baseHub.landmarks, endlessRun, playerX, updateAdventureProgress]);
 
   useEffect(() => {
     if (!mounted || !activeMountId) {
@@ -4763,7 +4758,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
         {nearbyPortal?.locked ? <LockKeyhole size={22} /> : nearbyPortal?.kind === 'shrine' ? <Sparkles size={22} /> : nearbyPortal?.kind === 'tutorial' ? <BookOpen size={22} /> : <DoorOpen size={22} />}
         <span><small>{nearbyPortal?.subtitle}</small><strong>{nearbyPortal?.label ?? 'Destination'}</strong></span>
       </div>
-      <button type="button" disabled={!nearbyPortal} onClick={() => nearbyPortal && activatePortal(nearbyPortal)}>{nearbyPortal?.locked ? 'Inspect' : nearbyPortal?.kind === 'shrine' ? 'Recalibrate' : nearbyPortal?.kind === 'tutorial' ? 'Read' : nearbyPortal?.kind === 'npc' ? 'Talk' : nearbyPortal?.kind === 'chest' ? 'Open' : nearbyPortal?.kind === 'relic' ? 'Claim' : nearbyPortal?.kind === 'restoration' ? 'Restore' : nearbyPortal?.kind === 'checkpoint' ? 'Attune' : nearbyPortal?.kind === 'crafting' ? 'Craft' : 'Enter'}</button>
+      <button type="button" disabled={!nearbyPortal} onClick={() => nearbyPortal && activatePortal(nearbyPortal)}>{nearbyPortal?.locked ? 'Inspect' : nearbyPortal?.id.startsWith('mount-sanctuary:') ? 'Bond' : nearbyPortal?.kind === 'shrine' ? 'Recalibrate' : nearbyPortal?.kind === 'tutorial' ? 'Read' : nearbyPortal?.kind === 'npc' ? 'Talk' : nearbyPortal?.kind === 'chest' ? 'Open' : nearbyPortal?.kind === 'relic' ? 'Claim' : nearbyPortal?.kind === 'restoration' ? 'Restore' : nearbyPortal?.kind === 'checkpoint' ? 'Attune' : nearbyPortal?.kind === 'crafting' ? 'Craft' : 'Enter'}</button>
     </div>
 
     {quickMatchAvailable && <button type="button" className={`story-quick-match is-${quickMatch.status}`} onClick={startQuickMatch} aria-live="polite" data-testid="story-quick-match">

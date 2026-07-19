@@ -205,6 +205,56 @@ test('Central Route tutorial sign explains the Story loop', async ({ page }) => 
   await expect(tutorial).toBeHidden();
 });
 
+test('Story biome interactions stay reachable and acknowledge success and blocked repeats', async ({ page }) => {
+  test.setTimeout(75_000);
+  await installStoryTestProfile(page, 'INTERACTOR');
+  const hub = page.getByTestId('story-hub-screen');
+  const openPreview = async (path: string, portalId: string) => {
+    await startFromSplash(page, { path });
+    await page.getByRole('button', { name: 'Story', exact: true }).click();
+    await expect(hub).toHaveAttribute('data-world', 'greenhollow', { timeout: 15_000 });
+    await expect(hub).toHaveAttribute('data-hub-ready', 'true', { timeout: 15_000 });
+    await expect(hub).toHaveAttribute('data-nearby-portal', portalId, { timeout: 5_000 });
+  };
+
+  await openPreview('/?storyWorld=greenhollow&storyLevel=greenhollow-field-a&storyPortal=chest%3Agreenhollow-cache-1', 'chest:greenhollow-cache-1');
+  await page.getByRole('button', { name: 'Open', exact: true }).click();
+  await expect(page.getByTestId('story-challenge-notice')).toContainText('Rooftop Market Cache opened: +40 Route Coins.');
+  await expect(page.getByRole('complementary', { name: 'Adventure status' })).toContainText('40');
+  await page.keyboard.down('e');
+  await page.waitForTimeout(100);
+  await page.keyboard.up('e');
+  await expect(page.getByTestId('story-challenge-notice')).toContainText('Rooftop Market Cache was already opened.');
+
+  await openPreview('/?storyWorld=greenhollow&storyLevel=greenhollow-field-a&storyPortal=relic%3Agreenhollow-relic-1', 'relic:greenhollow-relic-1');
+  await page.getByRole('button', { name: 'Claim', exact: true }).click();
+  await expect(page.getByTestId('story-challenge-notice')).toContainText('Rooftop Market Relic claimed.');
+  await page.getByRole('button', { name: 'Claim', exact: true }).click();
+  await expect(page.getByTestId('story-challenge-notice')).toContainText('Rooftop Market Relic was already claimed.');
+
+  await openPreview('/?storyWorld=greenhollow&storyLevel=greenhollow-arrival&storyPortal=waystone%3Agreenhollow-waystone-arrival', 'waystone:greenhollow-waystone-arrival');
+  await page.getByRole('button', { name: 'Attune', exact: true }).click();
+  await expect(page.getByTestId('story-challenge-notice')).toContainText('Arrival Waystone attuned. Fast travel is now available.');
+  await page.getByRole('button', { name: 'Attune', exact: true }).click();
+  await expect(page.getByTestId('story-challenge-notice')).toContainText('You need 250 Route Coins to upgrade this waystone.');
+
+  await openPreview('/?storyWorld=greenhollow&storyLevel=greenhollow-mastery&storyPortal=restoration%3Agreenhollow-shortcut', 'restoration:greenhollow-shortcut');
+  await page.getByRole('button', { name: 'Restore', exact: true }).click();
+  await expect(page.getByTestId('story-challenge-notice')).toContainText('You need 100 Route Coins to restore this shortcut.');
+
+  await openPreview('/?storyWorld=greenhollow&storyLevel=greenhollow-mastery&storyPortal=mount-sanctuary%3Averdant-stag', 'mount-sanctuary:verdant-stag');
+  await page.getByRole('button', { name: 'Bond', exact: true }).click();
+  await expect(page.getByTestId('story-challenge-notice')).toContainText('Verdant Stag bonded. Press G to mount.');
+  await expect(page.getByRole('button', { name: 'Mount Verdant Stag' })).toBeEnabled();
+  await page.getByRole('button', { name: 'Bond', exact: true }).click();
+  await expect(page.getByTestId('story-challenge-notice')).toContainText('Verdant Stag is already bonded. Press G to mount.');
+
+  await openPreview('/?storyWorld=greenhollow&storyLevel=greenhollow-field-b&storyPortal=npc%3Apippa-brook', 'npc:pippa-brook');
+  await page.getByRole('button', { name: 'Talk', exact: true }).click();
+  await expect(page.getByTestId('story-npc-dialogue')).toContainText('Pippa Brook');
+  await expect(page.getByTestId('story-adventure-pack')).toBeVisible();
+});
+
 test('Story biome exit warns while map Fast Travel Home returns safely', async ({ page }) => {
   await installStoryTestProfile(page, 'TRAVELER');
   await page.addInitScript(() => {

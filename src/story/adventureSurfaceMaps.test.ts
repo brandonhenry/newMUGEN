@@ -131,9 +131,13 @@ describe('authored Adventure surface campaign', () => {
           expect(map.portals.some((portal) => portal.id === `npc:${npc.id}`), `${map.id}/${npc.id}/portal`).toBe(true);
         }
         for (const portal of map.portals) {
-          const supportTops = map.platforms
-            .filter((platform) => portal.position[0] >= platform.position[0] - platform.size[0] / 2 && portal.position[0] <= platform.position[0] + platform.size[0] / 2)
-            .map((platform) => platform.position[1] + platform.size[1] / 2)
+          const terrainCaps = (map.terrainTiles ?? [])
+            .filter((tile) => ['top', 'outer-top-left', 'outer-top-right'].includes(tile.role) && portal.position[0] >= tile.position[0] - tile.size[0] / 2 && portal.position[0] <= tile.position[0] + tile.size[0] / 2)
+            .map((tile) => tile.position[1] + tile.size[1] / 2);
+          const oneWayCaps = map.platforms
+            .filter((platform) => (platform.oneWay || platform.collision === 'one-way') && portal.position[0] >= platform.position[0] - platform.size[0] / 2 && portal.position[0] <= platform.position[0] + platform.size[0] / 2)
+            .map((platform) => platform.position[1] + platform.size[1] / 2);
+          const supportTops = [...terrainCaps, ...oneWayCaps]
             .filter((top) => top <= portal.position[1] + 0.1)
             .sort((left, right) => right - left);
           expect(supportTops.length, `${map.id}/${portal.id}/support`).toBeGreaterThan(0);

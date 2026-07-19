@@ -195,8 +195,8 @@ function createMap(biome: BiomeId, role: StoryAdventureMapRole): StoryAdventureM
   const id = mapId(biome, role);
   const blueprint = getStorySurfaceLevelBlueprint(biome, role);
   const compiled = compileStoryLevelBlueprint(blueprint, id, 1);
-  const westEntry = surfaceConnectorPosition(blueprint, 'west');
-  const eastEntry = surfaceConnectorPosition(blueprint, 'east');
+  const westConnector = surfaceConnectorPosition(blueprint, 'west');
+  const eastConnector = surfaceConnectorPosition(blueprint, 'east');
   const terrainFloorAtX = (x: number) => {
     const intendedFloor = surfaceFloorAtX(blueprint, x);
     const supportTops = compiled.platforms
@@ -205,11 +205,24 @@ function createMap(biome: BiomeId, role: StoryAdventureMapRole): StoryAdventureM
       .filter((top) => top <= intendedFloor + 0.1);
     return supportTops.length > 0 ? Math.max(...supportTops) : intendedFloor;
   };
+  const interactionFloorAtX = (x: number) => {
+    const intendedFloor = surfaceFloorAtX(blueprint, x);
+    const terrainCaps = compiled.terrainTiles
+      .filter((tile) => ['top', 'outer-top-left', 'outer-top-right'].includes(tile.role) && x >= tile.position[0] - tile.size[0] / 2 && x <= tile.position[0] + tile.size[0] / 2)
+      .map((tile) => tile.position[1] + tile.size[1] / 2);
+    const oneWayCaps = compiled.platforms
+      .filter((platform) => (platform.oneWay || platform.collision === 'one-way') && x >= platform.position[0] - platform.size[0] / 2 && x <= platform.position[0] + platform.size[0] / 2)
+      .map((platform) => platform.position[1] + platform.size[1] / 2);
+    const supportTops = [...terrainCaps, ...oneWayCaps].filter((top) => top <= intendedFloor + 0.1);
+    return supportTops.length > 0 ? Math.max(...supportTops) : intendedFloor;
+  };
   // Carved V2 rooms snap to terrain cells, so their compiled collision cap can
   // sit below the authored room floor between route anchors. Interactive
   // objects must follow the collision cap the player actually stands on or the
   // prompt can wind up just outside the vertical interaction radius.
-  const groundedY = (x: number) => terrainFloorAtX(x) + STORY_GROUNDED_ACTOR_CENTER_Y;
+  const groundedY = (x: number) => interactionFloorAtX(x) + STORY_GROUNDED_ACTOR_CENTER_Y;
+  const westEntry: [number, number] = [westConnector[0], groundedY(westConnector[0])];
+  const eastEntry: [number, number] = [eastConnector[0], groundedY(eastConnector[0])];
   const routeRooms = surfaceRouteRooms(blueprint);
   const slots = (kind: StoryLevelBlueprintV2['slots'][number]['kind']) => blueprint.slots.filter((slot) => slot.kind === kind);
   const anchorX = (x: number) => {
@@ -227,7 +240,8 @@ function createMap(biome: BiomeId, role: StoryAdventureMapRole): StoryAdventureM
   const mapInteractables = interactables(biome, role).map((entry) => ({ ...entry, position: [entry.position[0], groundedY(entry.position[0])] as [number, number] }));
   const npcSlots = slots('npc');
   const npcs = storyNpcsForMap(id).map((entry, index) => {
-    const position = npcSlots[index]?.position ?? [anchorX(entry.position[0]), groundedY(anchorX(entry.position[0]))];
+    const x = npcSlots[index]?.position[0] ?? anchorX(entry.position[0]);
+    const position: [number, number] = [x, groundedY(x)];
     return { ...entry, position, safeAnchor: position, ...(entry.patrolRange ? { patrolRange: [position[0] - 3, position[0] + 3] as [number, number] } : {}) };
   });
   for (const entry of mapInteractables) portals.push({ id: `${entry.kind}:${entry.id}`, label: entry.label, subtitle: entry.subtitle, destination: biome, position: entry.position, size: [1.8, 2.2], accent: entry.kind === 'relic' ? '#ffe071' : spec.accent, kind: entry.kind === 'waystone' ? 'checkpoint' : entry.kind === 'restoration' ? 'restoration' : entry.kind as 'chest' | 'relic' });
