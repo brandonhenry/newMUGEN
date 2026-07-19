@@ -240,6 +240,7 @@ import {
   submitArcadeRunScore
 } from './lib/arcadeRun';
 import { persistStoryProfile, readStoryProfile } from './story/profile';
+import { applyStoryTutorialFixture, type StoryTutorialFixtureId } from './story/storyTutorialFixtures';
 import { readOrCreateStoryHubGuestIdentity } from './story/hubMultiplayer';
 import { LEGACY_STORY_ADVENTURE_PROGRESS_KEY, ORIGINAL_STORY_ADVENTURE_PROGRESS_KEY, STORY_ADVENTURE_PROGRESS_KEY, PREVIOUS_STORY_ADVENTURE_PROGRESS_KEY, readAdventureProgress } from './story/adventureProgress';
 import { LEGACY_STORY_PROFILE_STORAGE_KEY, ORIGINAL_STORY_PROFILE_STORAGE_KEY, PREVIOUS_STORY_PROFILE_STORAGE_KEY, STORY_PROFILE_STORAGE_KEY, STORY_PROFILE_V2_STORAGE_KEY, type AdventureMusicContext, type AdventureMusicTrackDefinition, type HubDestination, type StoryHubPresence, type StoryProfileV4 } from './story/types';
@@ -417,6 +418,7 @@ type E2EWindow = Window & {
   __koreE2ESeedOnlineTournament?: (status: TournamentStatusResult) => void;
   __koreE2ESeedPaidRecoveryPrompt?: (profile: OnlinePlayerProfile, message?: string) => void;
   __koreE2EOpenAuditScreen?: (screen: E2EAuditScreen) => void;
+  __koreE2EOpenStoryFixture?: (fixture: StoryTutorialFixtureId) => void;
   __KORE_E2E_SUPPRESS_BOOT_TITLE__?: boolean;
   __KORE_E2E_SKIP_ONLINE_VERSUS__?: boolean;
   __KORE_E2E_SKIP_ONLINE_ASSET_GATE__?: boolean;
@@ -4118,6 +4120,16 @@ export default function App() {
       setMode(options.mode);
       setScreen('fight');
     };
+    if (isTutorialCaptureMode()) {
+      testWindow.__koreE2EOpenStoryFixture = (fixture) => {
+        testWindow.__KORE_E2E_SUPPRESS_BOOT_TITLE__ = true;
+        const result = applyStoryTutorialFixture(fixture);
+        setStoryProfile(result.profile);
+        setNavigationHome('storyHub');
+        setAvatarCreatorReturnScreen(result.screen === 'avatarCreator' ? 'menu' : 'storyHub');
+        setScreen(result.screen);
+      };
+    }
     testWindow.__koreE2EOpenAuditScreen = (targetScreen) => {
       testWindow.__KORE_E2E_SUPPRESS_BOOT_TITLE__ = true;
       const firstCharacter = roster[0];
@@ -4531,6 +4543,7 @@ export default function App() {
       if (testWindow.__koreE2EStartOnlineFight) delete testWindow.__koreE2EStartOnlineFight;
       if (testWindow.__koreE2EOnlineStartReady) delete testWindow.__koreE2EOnlineStartReady;
       if (testWindow.__koreE2EOpenAuditScreen) delete testWindow.__koreE2EOpenAuditScreen;
+      if (testWindow.__koreE2EOpenStoryFixture) delete testWindow.__koreE2EOpenStoryFixture;
       if (testWindow.__koreE2ESeedOnlineTournament) delete testWindow.__koreE2ESeedOnlineTournament;
       if (testWindow.__koreE2ESeedPaidRecoveryPrompt) delete testWindow.__koreE2ESeedPaidRecoveryPrompt;
     };

@@ -2773,6 +2773,11 @@ function readDevPreviewSurfaceMapId() {
   return new URLSearchParams(window.location.search).get('storyLevel');
 }
 
+function readStoryTutorialFixture() {
+  if (typeof window === 'undefined' || (import.meta as unknown as { env?: { DEV?: boolean; VITE_KORE_TUTORIAL_CAPTURE?: string } }).env?.VITE_KORE_TUTORIAL_CAPTURE !== '1') return '';
+  return new URLSearchParams(window.location.search).get('storyTutorialFixture') ?? '';
+}
+
 function readDevPreviewEndlessRun(): StoryEndlessRunState | null {
   if (typeof window === 'undefined' || !['localhost', '127.0.0.1'].includes(window.location.hostname)) return null;
   const params = new URLSearchParams(window.location.search);
@@ -2963,20 +2968,24 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   activeMusicTrack?: AdventureMusicTrackDefinition | null;
   onExit: () => void;
 }) {
+  const tutorialFixture = readStoryTutorialFixture();
   const [activeWorldId, setActiveWorldId] = useState<StoryWorldId>(readDevPreviewWorldId);
   const [activeSurfaceMapId, setActiveSurfaceMapId] = useState<string | null>(readDevPreviewSurfaceMapId);
   const [surfaceEntry, setSurfaceEntry] = useState<'west' | 'east'>('west');
   const [endlessRun, setEndlessRun] = useState<StoryEndlessRunState | null>(readDevPreviewEndlessRun);
   const [adventureProgress, setAdventureProgress] = useState(readAdventureProgress);
-  const [floorElapsedSeconds, setFloorElapsedSeconds] = useState(0);
+  const [floorElapsedSeconds, setFloorElapsedSeconds] = useState(() => tutorialFixture.startsWith('endless-instability') ? 95 : 0);
   const [pressureHunterAnchor, setPressureHunterAnchor] = useState<number | null>(null);
-  const [boonChoices, setBoonChoices] = useState<StoryRunBoonId[] | null>(null);
+  const [boonChoices, setBoonChoices] = useState<StoryRunBoonId[] | null>(() => tutorialFixture.startsWith('endless-boons') ? ['fury', 'vitality', 'fleetstep'] : null);
   const [boonReroll, setBoonReroll] = useState(0);
-  const [abandonConfirmOpen, setAbandonConfirmOpen] = useState(false);
+  const [abandonConfirmOpen, setAbandonConfirmOpen] = useState(() => tutorialFixture.startsWith('endless-loss-and-coop'));
   const [activeTraderEventId, setActiveTraderEventId] = useState<string | null>(null);
   const [pendingEventChoiceId, setPendingEventChoiceId] = useState<string | null>(null);
   const [partyInstance, setPartyInstance] = useState<StoryPartyInstance | null>(null);
-  const [partyInvites, setPartyInvites] = useState<StoryPartyInvite[]>([]);
+  const [partyInvites, setPartyInvites] = useState<StoryPartyInvite[]>(() => tutorialFixture.startsWith('online-adventure-parties') ? [{
+    version: 1, id: 'tutorial-party-invite', partyId: 'tutorial-party', inviterSessionId: 'tutorial-ally', inviterDisplayName: 'ECHO',
+    targetSessionId: 'tutorial-local', worldId: 'greenhollow', createdAt: Date.now(), expiresAt: Date.now() + 60 * 60_000
+  }] : []);
   const [partyPeerId, setPartyPeerId] = useState('');
   const [partyAuthorityLost, setPartyAuthorityLost] = useState(false);
   const [encounterProgressByHub, setEncounterProgressByHub] = useState<Record<string, StoryEncounterProgress>>({});
@@ -3056,9 +3065,12 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const [playerY, setPlayerY] = useState(activeHub.spawn[1]);
   const [playerPose, setPlayerPose] = useState<StoryAvatarPose>('idle');
   const [hubReady, setHubReady] = useState(false);
-  const [onlineEnabled, setOnlineEnabled] = useState(readStoryHubOnlinePreference);
-  const [connectionStatus, setConnectionStatus] = useState<StoryHubConnectionStatus>(onlineEnabled ? 'connecting' : 'offline');
-  const [remotePlayers, setRemotePlayers] = useState<StoryHubPresence[]>([]);
+  const [onlineEnabled, setOnlineEnabled] = useState(() => tutorialFixture.startsWith('shared-hub') || tutorialFixture.startsWith('online-adventure-parties') ? true : readStoryHubOnlinePreference());
+  const [connectionStatus, setConnectionStatus] = useState<StoryHubConnectionStatus>(tutorialFixture ? 'online' : onlineEnabled ? 'connecting' : 'offline');
+  const [remotePlayers, setRemotePlayers] = useState<StoryHubPresence[]>(() => tutorialFixture.startsWith('shared-hub') || tutorialFixture.startsWith('online-adventure-parties') ? [{
+    sessionId: 'tutorial-ally', playerId: 'tutorial-ally-player', displayName: 'ECHO', avatar: { ...profile.avatar, name: 'ECHO', avatarSet: 'rose-blade' },
+    x: 4, y: STORY_GROUNDED_ACTOR_CENTER_Y, pose: 'idle', facing: -1, worldId: activeWorldId, updatedAt: Date.now()
+  }] : []);
   const [selectedPlayer, setSelectedPlayer] = useState<StoryHubPresence | null>(null);
   const [playerPanelView, setPlayerPanelView] = useState<'actions' | 'stats' | 'history'>('actions');
   const [playerActionMessage, setPlayerActionMessage] = useState('');
@@ -3069,7 +3081,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const [statPointNotice, setStatPointNotice] = useState<AdventureStatPointNotice | null>(null);
   const [musicCombatActive, setMusicCombatActive] = useState(false);
   const [challengeClock, setChallengeClock] = useState(Date.now());
-  const [localSessionId, setLocalSessionId] = useState('');
+  const [localSessionId, setLocalSessionId] = useState(() => tutorialFixture ? 'tutorial-local' : '');
   const [socialRevision, setSocialRevision] = useState(0);
   const [doorTravel, setDoorTravel] = useState<{ target: StoryWorldId; step: number } | null>(null);
   const [quickMatch, setQuickMatch] = useState<{ status: 'idle' | 'searching' | 'assigned' | 'offline'; portalId?: string }>({ status: 'idle' });
@@ -3399,9 +3411,9 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     // Preserve it through the normal first-visit reset so a seed can be loaded
     // directly without walking through the player-facing Endless entrance.
     setEndlessRun(readDevPreviewEndlessRun());
-    setFloorElapsedSeconds(0);
+    setFloorElapsedSeconds(tutorialFixture.startsWith('endless-instability') ? 95 : 0);
     setBreath(STORY_MAX_BREATH);
-  }, [activeWorldId, localSessionId, updateAdventureProgress]);
+  }, [activeWorldId, localSessionId, tutorialFixture, updateAdventureProgress]);
 
   const partyRegistration = useMemo<StoryPartyRegistration>(() => ({
     peerId: partyPeerId || `story-peer-${localSessionId}`,
@@ -3416,6 +3428,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   }), [adventureProgress.stats.partySize, derivedAdventureStats.maxHealth, localSessionId, onlineProfile?.displayName, partyPeerId, playerHealth, profile]);
 
   useEffect(() => {
+    if (tutorialFixture.startsWith('online-adventure-parties')) return undefined;
     if (!onlineEnabled || !localSessionId) {
       setPartyInvites([]);
       return undefined;
@@ -3432,7 +3445,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     void poll();
     const timer = window.setInterval(poll, 2_500);
     return () => { cancelled = true; window.clearInterval(timer); };
-  }, [localSessionId, onlineEnabled]);
+  }, [localSessionId, onlineEnabled, tutorialFixture]);
 
   useEffect(() => {
     if (!onlineEnabled || !localSessionId || !partyInstance || !isStoryAdventureRegionId(activeWorldId) || partyInstance.worldId !== activeWorldId) return undefined;
@@ -4278,6 +4291,11 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   }, [setVirtualAction]);
 
   useEffect(() => {
+    if (tutorialFixture.startsWith('shared-hub') || tutorialFixture.startsWith('online-adventure-parties')) {
+      setConnectionStatus('online');
+      setLocalSessionId('tutorial-local');
+      return undefined;
+    }
     multiplayerSessionRef.current?.close();
     multiplayerSessionRef.current = null;
     setRemotePlayers([]);
@@ -4301,7 +4319,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       session.close();
       if (multiplayerSessionRef.current === session) multiplayerSessionRef.current = null;
     };
-  }, [onlineEnabled, onlineProfile, profile]);
+  }, [onlineEnabled, onlineProfile, profile, tutorialFixture]);
 
   useEffect(() => {
     if (!selectedPlayer) return;
