@@ -136,8 +136,12 @@ def main() -> None:
             target.parent.mkdir(parents=True, exist_ok=True)
             canvas.save(target, optimize=True)
             manifest.append({"id": slug(folder.name), "packId": "svor", "path": "/" + str(target.relative_to(ROOT / "public")), "frameSize": [16, 16], "frames": len(frames), "role": "world-pickup,market-icon,collection"})
+            icon_target = OUTPUT / "icons/svor" / f"{slug(folder.name)}.png"
+            icon_target.parent.mkdir(parents=True, exist_ok=True)
+            Image.open(frames[0]).convert("RGBA").resize((16, 16)).save(icon_target, optimize=True)
+            manifest.append({"id": f"{slug(folder.name)}-icon", "packId": "svor", "path": "/" + str(icon_target.relative_to(ROOT / "public")), "frameSize": [16, 16], "frames": 1, "role": "market-icon,collection"})
 
-    files = {"/" + str(path.relative_to(ROOT / "public")): digest(path) for path in sorted((OUTPUT / "atlases").rglob("*.png"))}
+    files = {"/" + str(path.relative_to(ROOT / "public")): digest(path) for path in sorted(OUTPUT.rglob("*.png"))}
     provenance = {key: {"archive": values[0], "archiveSha256": values[1], "title": values[2], "author": values[3], "license": values[4], "url": values[5], "tier": "free"} for key, values in SOURCES.items()}
     (OUTPUT / "asset-manifest.json").write_text(json.dumps({"version": 1, "assets": manifest, "sources": provenance}, indent=2) + "\n")
     (OUTPUT / "asset-integrity.json").write_text(json.dumps({"version": 1, "files": files}, indent=2) + "\n")

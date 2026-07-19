@@ -94,10 +94,10 @@ export const STORY_RESOURCES: StoryResourceDefinition[] = [
   ...UNIVERSAL.map(([id, label, kind, color, pixelBottom], index) => ({ id, label, kind, color, impactMaterial: storyResourceImpactMaterial(id, kind), footAnchorY: normalizedFootAnchorY(pixelBottom), rarity: index < 2 ? 'common' as const : 'uncommon' as const, iconPath: `/story/resources/icons/universal/${id}.png`, nodeFrames: nodeFrames('universal', id), acquisition: 'harvest' as const })),
   ...STORY_BIOME_IDS.flatMap((biomeId) => BIOME_MATERIALS[biomeId].map(([id, label, kind, color, pixelBottom], index) => ({ id, label, kind, color, biomeId, impactMaterial: storyResourceImpactMaterial(id, kind, biomeId), footAnchorY: normalizedFootAnchorY(pixelBottom), rarity: RARITIES[index], iconPath: `/story/resources/icons/${biomeId}/${id}.png`, nodeFrames: nodeFrames(biomeId, id), acquisition: 'harvest' as const }))),
   ...([
-    ['artisan-thread', 'Artisan Thread', 12, '/story/ecology/atlases/svor/mysterious-object-.png'],
-    ['precision-clasp', 'Precision Clasp', 18, '/story/ecology/atlases/svor/key2.png'],
-    ['alchemical-vial', 'Alchemical Vial', 15, '/story/ecology/atlases/svor/potion1.png'],
-    ['guild-catalyst', 'Guild Catalyst', 40, '/story/ecology/atlases/svor/gemstone2-.png']
+    ['artisan-thread', 'Artisan Thread', 12, '/story/ecology/icons/svor/mysterious-object-.png'],
+    ['precision-clasp', 'Precision Clasp', 18, '/story/ecology/icons/svor/key2.png'],
+    ['alchemical-vial', 'Alchemical Vial', 15, '/story/ecology/icons/svor/potion1.png'],
+    ['guild-catalyst', 'Guild Catalyst', 40, '/story/ecology/icons/svor/gemstone2-.png']
   ] as const).map(([id, label, marketPrice, asset]) => ({
     id, label, marketPrice, acquisition: 'merchant' as const, kind: 'rock' as const, rarity: 'rare' as const,
     color: '#ffe071', impactMaterial: 'metal' as const, footAnchorY: 1, iconPath: asset, nodeFrames: [asset, asset, asset] as const

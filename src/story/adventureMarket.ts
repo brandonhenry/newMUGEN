@@ -18,14 +18,14 @@ export const STORY_REQUIRED_MARKET_GOODS = [
 ] as const;
 
 export const STORY_MARKET_CURIOS: StoryMarketCurioDefinition[] = [
-  ['greenhollow-curio', 'Millwright Seal', 'greenhollow', 80, '/story/ecology/atlases/svor/key1.png', 'A brass guild seal carried by the first route surveyors.'],
-  ['thornwood-curio', 'Sleeping Thornseed', 'thornwood', 90, '/story/ecology/atlases/svor/mushroom-.png', 'It curls away from an open flame.'],
-  ['ironroot-curio', 'Silent Miner Badge', 'ironroot', 100, '/story/ecology/atlases/svor/key2.png', 'Stamped for a shift that never returned.'],
-  ['bonevault-curio', 'Gravekeeper Token', 'bonevault', 110, '/story/ecology/atlases/svor/skull.png', 'A promise to remember a name.'],
-  ['emberdeep-curio', 'Banked Ember Core', 'emberdeep', 120, '/story/ecology/atlases/svor/gemstone2-.png', 'Warm, but never hot enough to burn.'],
-  ['frostpeak-curio', 'Expedition Crest', 'frostpeak', 110, '/story/ecology/atlases/svor/gemstone1-.png', 'Its enamel survived the whiteout.'],
-  ['sunscar-curio', 'Sunscar Waykey', 'sunscar', 100, '/story/ecology/atlases/svor/key1.png', 'Cut for a door buried under the old road.'],
-  ['skyglass-curio', 'Prism Ring', 'skyglass', 130, '/story/ecology/atlases/svor/mysterious-object-.png', 'It hums when the high bridges move.']
+  ['greenhollow-curio', 'Millwright Seal', 'greenhollow', 80, '/story/ecology/icons/svor/key1.png', 'A brass guild seal carried by the first route surveyors.'],
+  ['thornwood-curio', 'Sleeping Thornseed', 'thornwood', 90, '/story/ecology/icons/svor/mushroom-.png', 'It curls away from an open flame.'],
+  ['ironroot-curio', 'Silent Miner Badge', 'ironroot', 100, '/story/ecology/icons/svor/key2.png', 'Stamped for a shift that never returned.'],
+  ['bonevault-curio', 'Gravekeeper Token', 'bonevault', 110, '/story/ecology/icons/svor/skull.png', 'A promise to remember a name.'],
+  ['emberdeep-curio', 'Banked Ember Core', 'emberdeep', 120, '/story/ecology/icons/svor/gemstone2-.png', 'Warm, but never hot enough to burn.'],
+  ['frostpeak-curio', 'Expedition Crest', 'frostpeak', 110, '/story/ecology/icons/svor/gemstone1-.png', 'Its enamel survived the whiteout.'],
+  ['sunscar-curio', 'Sunscar Waykey', 'sunscar', 100, '/story/ecology/icons/svor/key1.png', 'Cut for a door buried under the old road.'],
+  ['skyglass-curio', 'Prism Ring', 'skyglass', 130, '/story/ecology/icons/svor/mysterious-object-.png', 'It hums when the high bridges move.']
 ].map(([id, label, biomeId, price, iconPath, lore]) => ({ id: String(id), label: String(label), biomeId: String(biomeId), price: Number(price), iconPath: String(iconPath), lore: String(lore) }));
 
 export const STORY_MATERIAL_SELL_VALUES = { common: 2, uncommon: 5, rare: 12, legendary: 30 } as const;

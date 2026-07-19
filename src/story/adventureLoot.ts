@@ -31,11 +31,7 @@ export function generateStoryFloorContainers(input: {
   if (input.version < 8) return [];
   const contract = storyBiomeGameplayAssetContract(input.visualSetId);
   if (!contract?.containers.length) return [];
-  const rewardRooms = input.rooms.filter((room) => room.optional && room.id !== input.entranceRoomId && room.id !== input.exitRoomId && room.rewardAlcoves.length > 0)
-    // v9 guarantees the entire reward-room column is hazard-free. This is
-    // intentionally version-gated so the published v8 container seed output
-    // remains byte-for-byte stable.
-    .filter((room) => input.version < 9 || input.hazards.every((hazard) => hazard.bounds[1] < room.bounds[0] || hazard.bounds[0] > room.bounds[1]));
+  const rewardRooms = input.rooms.filter((room) => room.optional && room.id !== input.entranceRoomId && room.id !== input.exitRoomId && room.rewardAlcoves.length > 0);
   if (rewardRooms.length === 0) return [];
   const desired = input.intent === 'exploration' || input.intent === 'harvest' ? 3 : 2;
   const count = Math.min(desired, rewardRooms.length);
@@ -46,8 +42,18 @@ export function generateStoryFloorContainers(input: {
     const alcove = room.rewardAlcoves[hash(`${rollSeed}:alcove`) % room.rewardAlcoves.length];
     const roomCenter = (room.bounds[0] + room.bounds[1]) / 2;
     const unclampedX = roomCenter + alcove[0] + (unit(`${rollSeed}:x`) - 0.5) * 0.8;
-    const x = Math.max(room.bounds[0] + 3, Math.min(room.bounds[1] - 3, unclampedX));
-    const position: [number, number] = [x, room.bounds[2] + 2 + visualDefinition.footprint[1] / 2 - 0.08];
+    const originalX = Math.max(room.bounds[0] + 3, Math.min(room.bounds[1] - 3, unclampedX));
+    const y = room.bounds[2] + 2 + visualDefinition.footprint[1] / 2 - 0.08;
+    // v9 keeps the cache in its selected optional room, but relocates it to a
+    // safe floor cell if the seeded alcove point overlaps a hazard telegraph.
+    // The v8 branch deliberately retains the exact historical position.
+    const safeXs = input.version < 9 ? [originalX] : [
+      originalX,
+      ...room.rewardAlcoves.map(([offset]) => Math.max(room.bounds[0] + 3, Math.min(room.bounds[1] - 3, roomCenter + offset))),
+      ...Array.from({ length: Math.max(0, Math.floor(room.bounds[1] - room.bounds[0] - 6)) + 1 }, (_, candidateIndex) => room.bounds[0] + 3 + candidateIndex)
+    ];
+    const x = safeXs.find((candidateX) => input.hazards.every((hazard) => candidateX < hazard.bounds[0] - 1.5 || candidateX > hazard.bounds[1] + 1.5 || y < hazard.bounds[2] - 1 || y > hazard.bounds[3] + 2)) ?? originalX;
+    const position: [number, number] = [x, y];
     const outcomeRoll = unit(`${rollSeed}:outcome`);
     const base = {
       id: `${room.id}-supply-${index + 1}`,
