@@ -1,13 +1,14 @@
 import type { StageAmbiencePresetId } from '../types';
 import type { StoryResourceImpactMaterial } from './adventureCrafting';
 import type { AdventureMusicContext, StoryAttackInput } from './types';
+import type { StorySurfaceMaterial } from './types';
 
-export type AdventureSurfaceMaterial = 'grass' | 'wood' | 'metal' | 'stone' | 'ice' | 'sand' | 'crystal' | 'water';
+export type AdventureSurfaceMaterial = StorySurfaceMaterial;
 
 export type AdventureAudioEvent =
-  | { kind: 'step'; sprinting: boolean }
-  | { kind: 'jump' }
-  | { kind: 'land'; intensity?: number }
+  | { kind: 'step'; sprinting: boolean; material: AdventureSurfaceMaterial }
+  | { kind: 'jump'; material: AdventureSurfaceMaterial }
+  | { kind: 'land'; intensity?: number; material: AdventureSurfaceMaterial }
   | { kind: 'attack'; attackInput: StoryAttackInput }
   | { kind: 'enemy-hit'; attackInput: StoryAttackInput; critical: boolean; finishing: boolean }
   | { kind: 'player-hit'; damage: number }
@@ -30,21 +31,16 @@ export function subscribeAdventureAudio(listener: (event: AdventureAudioEvent) =
 
 export function adventureSurfaceMaterial(context: AdventureMusicContext, underwater = false): AdventureSurfaceMaterial {
   if (underwater) return 'water';
-  if (context.depth) {
-    if (context.worldId === 'ironroot') return 'metal';
-    if (context.worldId === 'frostpeak') return 'ice';
-    return 'stone';
-  }
   switch (context.worldId) {
-    case 'greenhollow': return context.mapId?.includes('field-b') ? 'wood' : 'grass';
-    case 'thornwood': return context.mapId?.includes('field-b') ? 'wood' : 'grass';
-    case 'ironroot': return 'metal';
-    case 'frostpeak': return 'ice';
+    case 'greenhollow': return 'grass';
+    case 'thornwood': return 'grass';
+    case 'ironroot': return 'stone';
+    case 'frostpeak': return 'snow';
     case 'sunscar': return 'sand';
     case 'skyglass': return 'crystal';
     case 'bonevault':
-    case 'emberdeep':
-    case 'world-route':
+    case 'emberdeep': return 'stone';
+    case 'world-route': return 'grass';
     default: return 'stone';
   }
 }

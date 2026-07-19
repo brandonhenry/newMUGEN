@@ -67,6 +67,8 @@ export function LevelLabOverlay({ hub, floor }: { hub: StoryHubDefinition; floor
   const metrics = useMemo(() => ({
     solids: hub.terrainTiles?.length ?? 0, cavities: hub.cavityTiles?.length ?? 0, props: hub.props?.length ?? 0,
     resources: hub.resourceNodes?.length ?? 0, hazards: hub.hazards?.length ?? 0, enemies: hub.enemySpawns?.length ?? 0,
+    containers: floor?.containers.length ?? 0, pickups: floor?.pickups.length ?? 0, wildlife: floor?.wildlife.length ?? 0,
+    ecology: floor?.ecologyFamilyId ?? 'none', collectibles: floor?.collectibleFamilyId ?? 'none', merchant: floor?.event?.kind === 'depth-trader' ? 1 : 0,
     chunks: hub.levelMeta?.chunkIds.length ?? 0, art: hub.terrainKitId ? 'resolved' : 'legacy'
   }), [hub]);
 
@@ -94,6 +96,9 @@ export function LevelLabOverlay({ hub, floor }: { hub: StoryHubDefinition; floor
     { label: 'Entrance', point: hub.spawn },
     ...witness.slice(1, -1).map((point, index) => ({ label: `Beat ${index + 1}`, point })),
     ...(witness.length > 0 ? [{ label: 'Exit', point: witness[witness.length - 1] }] : [])
+    ,...(floor?.containers.map((entry, index) => ({ label: `Chest ${index + 1}`, point: entry.position })) ?? [])
+    ,...(floor?.pickups.slice(0, 3).map((entry, index) => ({ label: `Pickup ${index + 1}`, point: entry.position })) ?? [])
+    ,...(floor?.wildlife.slice(0, 3).map((entry, index) => ({ label: `Wildlife ${index + 1}`, point: entry.position })) ?? [])
   ];
 
   return <aside className="story-level-lab" data-testid="story-level-lab" data-witness-steps={witnessInputs.length} data-witness-seconds={witnessDurationSeconds.toFixed(2)} aria-label="KORE Level Lab">

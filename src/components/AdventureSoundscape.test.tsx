@@ -53,7 +53,7 @@ describe('AdventureSoundscape', () => {
   it('owns biome ambience and routes attack and damage events to distinct clips', () => {
     render(<AdventureSoundscape audio={defaultGameSettings.audio} active context={frostpeakContext} />);
     const soundscape = screen.getByTestId('adventure-soundscape');
-    expect(soundscape.getAttribute('data-surface')).toBe('ice');
+    expect(soundscape.getAttribute('data-surface')).toBe('snow');
     expect(soundscape.getAttribute('data-ambience')).toBe('snow-wind');
 
     act(() => emitAdventureAudioEvent({ kind: 'enemy-hit', attackInput: 'kick', critical: false, finishing: false }));
@@ -65,6 +65,15 @@ describe('AdventureSoundscape', () => {
     expect(playerHits).toHaveLength(3);
     expect(enemyHits.some((clip) => clip.play.mock.calls.length === 1)).toBe(true);
     expect(playerHits.some((clip) => clip.play.mock.calls.length === 1)).toBe(true);
+  });
+
+  it('reports the exact material carried by the latest movement contact', () => {
+    render(<AdventureSoundscape audio={defaultGameSettings.audio} active context={frostpeakContext} />);
+    expect(screen.getByTestId('adventure-soundscape').getAttribute('data-surface')).toBe('snow');
+    act(() => emitAdventureAudioEvent({ kind: 'step', sprinting: false, material: 'grass' }));
+    expect(screen.getByTestId('adventure-soundscape').getAttribute('data-surface')).toBe('grass');
+    act(() => emitAdventureAudioEvent({ kind: 'land', intensity: 0.8, material: 'ice' }));
+    expect(screen.getByTestId('adventure-soundscape').getAttribute('data-surface')).toBe('ice');
   });
 
   it('does not play gameplay effects after Adventure audio becomes inactive', () => {

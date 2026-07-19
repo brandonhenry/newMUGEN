@@ -6,6 +6,7 @@ export const STORY_DEPTH_ENTRANCE_ASSET = '/story/exploration/doors/depth-entran
 export const STORY_SANCTUARY_ENTRANCE_ASSET = '/story/exploration/doors/sanctuary-entrances.png';
 export const STORY_BIOME_DOOR_ATLAS_SIZE = [1536, 1024] as const;
 export const STORY_BIOME_DOOR_GROUND_SINK_Y = 0.32;
+export const STORY_DEEP_GATE_GROUND_SINK_Y = 0.62;
 export const STORY_DOOR_CHARACTER_HEIGHT_REFERENCE = 3.2;
 export const STORY_NORMAL_DOOR_DISPLAY_SIZE = [5.8, 5.8] as const;
 export const STORY_HERO_DOOR_DISPLAY_SIZE = [5.4, 7.1] as const;
@@ -35,16 +36,16 @@ export type StoryBiomeDoorFrame = {
   groundSinkY: number;
 };
 
-type FrameSpec = Omit<StoryBiomeDoorFrame, 'biome' | 'tier' | 'asset' | 'atlasSize' | 'displaySize' | 'groundSinkY'>;
+type FrameSpec = Omit<StoryBiomeDoorFrame, 'biome' | 'tier' | 'asset' | 'atlasSize' | 'displaySize' | 'groundSinkY'> & { groundSinkY?: number };
 
 const HERO_GATE_BY_BIOME: Record<StoryBiomeId, FrameSpec> = {
   greenhollow: { frame: [0, 0, 384, 512], visibleBottomInset: 28 },
   thornwood: { frame: [384, 0, 384, 512], visibleBottomInset: 26 },
-  ironroot: { frame: [768, 0, 384, 512], visibleBottomInset: 23 },
-  bonevault: { frame: [1152, 0, 384, 512], visibleBottomInset: 0 },
+  ironroot: { frame: [768, 0, 384, 512], visibleBottomInset: 23, groundSinkY: STORY_DEEP_GATE_GROUND_SINK_Y },
+  bonevault: { frame: [1152, 0, 384, 512], visibleBottomInset: 26, groundSinkY: STORY_DEEP_GATE_GROUND_SINK_Y },
   emberdeep: { frame: [0, 512, 384, 512], visibleBottomInset: 95 },
   frostpeak: { frame: [384, 512, 384, 512], visibleBottomInset: 98 },
-  sunscar: { frame: [768, 512, 384, 512], visibleBottomInset: 87 },
+  sunscar: { frame: [768, 512, 384, 512], visibleBottomInset: 87, groundSinkY: STORY_DEEP_GATE_GROUND_SINK_Y },
   skyglass: { frame: [1152, 512, 384, 512], visibleBottomInset: 82 }
 };
 

@@ -15,7 +15,7 @@ function pngDimensions(path: string) {
 describe('Adventure resource assets', () => {
   it('ships every referenced node state and item icon as alpha PNGs', () => {
     const paths = [
-      ...STORY_RESOURCES.flatMap((resource) => [resource.iconPath, ...resource.nodeFrames]),
+      ...STORY_RESOURCES.filter((resource) => resource.acquisition === 'harvest').flatMap((resource) => [resource.iconPath, ...resource.nodeFrames]),
       ...STORY_RECIPES.map((recipe) => recipe.iconPath),
       '/story/resources/workbench.png'
     ];
@@ -39,7 +39,7 @@ describe('Adventure resource assets', () => {
     expect(manifest.outputs).toHaveLength(193);
     expect(manifest.outputs.every((entry: { sha256: string; dimensions: number[]; alphaBounds: number[] | null }) => /^[a-f0-9]{64}$/.test(entry.sha256) && entry.dimensions.length === 2 && entry.alphaBounds?.length === 4)).toBe(true);
     const outputs = new Map<string, { dimensions: number[]; alphaBounds: number[] }>(manifest.outputs.map((entry: { path: string; dimensions: number[]; alphaBounds: number[] }) => [entry.path, entry]));
-    for (const resource of STORY_RESOURCES) {
+    for (const resource of STORY_RESOURCES.filter((resource) => resource.acquisition === 'harvest')) {
       for (const frame of resource.nodeFrames) {
         const entry = outputs.get(`public${frame}`)!;
         expect(entry, frame).toBeDefined();

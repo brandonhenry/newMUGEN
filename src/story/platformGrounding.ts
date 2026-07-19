@@ -8,9 +8,10 @@ export type StoryPlatformSurfacePlacement = {
 
 export function storyPlatformSurfacePlacement(
   platform: StoryPlatformDefinition,
-  surface?: Omit<NonNullable<StoryWorldEnvironmentDefinition['surface']>, 'frame' | 'atlasSize'> & {
+  surface?: Omit<NonNullable<StoryWorldEnvironmentDefinition['surface']>, 'frame' | 'atlasSize' | 'surfaceMaterial'> & {
     readonly frame: readonly [number, number, number, number];
     readonly atlasSize: readonly [number, number];
+    readonly surfaceMaterial?: NonNullable<StoryWorldEnvironmentDefinition['surface']>['surfaceMaterial'];
   }
 ): StoryPlatformSurfacePlacement {
   const height = platform.oneWay ? 0.52 : 0.82;

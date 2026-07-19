@@ -34,14 +34,14 @@ describe('Adventure audio environment mapping', () => {
   });
 
   it('gives each biome an intentional walking surface', () => {
-    expect(adventureSurfaceMaterial(context('world-route'))).toBe('stone');
+    expect(adventureSurfaceMaterial(context('world-route'))).toBe('grass');
     expect(adventureSurfaceMaterial(context('greenhollow'))).toBe('grass');
-    expect(adventureSurfaceMaterial(context('greenhollow', { mapId: 'greenhollow:field-b' }))).toBe('wood');
+    expect(adventureSurfaceMaterial(context('greenhollow', { mapId: 'greenhollow:field-b' }))).toBe('grass');
     expect(adventureSurfaceMaterial(context('thornwood'))).toBe('grass');
-    expect(adventureSurfaceMaterial(context('ironroot'))).toBe('metal');
+    expect(adventureSurfaceMaterial(context('ironroot'))).toBe('stone');
     expect(adventureSurfaceMaterial(context('bonevault'))).toBe('stone');
     expect(adventureSurfaceMaterial(context('emberdeep'))).toBe('stone');
-    expect(adventureSurfaceMaterial(context('frostpeak'))).toBe('ice');
+    expect(adventureSurfaceMaterial(context('frostpeak'))).toBe('snow');
     expect(adventureSurfaceMaterial(context('sunscar'))).toBe('sand');
     expect(adventureSurfaceMaterial(context('skyglass'))).toBe('crystal');
   });
@@ -64,13 +64,15 @@ describe('Adventure audio events', () => {
   it('delivers combat and movement events only while subscribed', () => {
     const listener = vi.fn<(event: AdventureAudioEvent) => void>();
     const unsubscribe = subscribeAdventureAudio(listener);
-    emitAdventureAudioEvent({ kind: 'step', sprinting: false });
+    emitAdventureAudioEvent({ kind: 'step', sprinting: false, material: 'grass' });
+    emitAdventureAudioEvent({ kind: 'attack', attackInput: 'jab' });
     emitAdventureAudioEvent({ kind: 'enemy-hit', attackInput: 'kick', critical: true, finishing: false });
     emitAdventureAudioEvent({ kind: 'resource-hit', attackInput: 'heavy', material: 'wood', broken: true, major: false, legendary: false, sequence: 4 });
-    expect(listener).toHaveBeenCalledTimes(3);
+    expect(listener).toHaveBeenCalledTimes(4);
+    expect(listener).toHaveBeenNthCalledWith(2, { kind: 'attack', attackInput: 'jab' });
 
     unsubscribe();
     emitAdventureAudioEvent({ kind: 'player-hit', damage: 12 });
-    expect(listener).toHaveBeenCalledTimes(3);
+    expect(listener).toHaveBeenCalledTimes(4);
   });
 });

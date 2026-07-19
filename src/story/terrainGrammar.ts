@@ -4,6 +4,7 @@ import type {
   StoryCavityTileDefinition,
   StoryTerrainTileDefinition,
   StoryTerrainTileRole,
+  StorySurfaceMaterial,
   StoryWorldAssetId,
   StoryWorldThemeId
 } from './types';
@@ -36,6 +37,7 @@ export type StoryTerrainKitFrameDefinition = {
   referenceInputs?: string[];
   reviewStatus: string;
   surfaceClass: 'walkable-cap' | 'neutral-solid' | 'cavity' | 'overlay';
+  surfaceMaterial: StorySurfaceMaterial;
 };
 
 export type StoryTerrainKitDefinition = {
@@ -56,7 +58,7 @@ export type StoryTerrainKitDefinition = {
   frames: StoryTerrainKitFrameDefinition[];
 };
 
-type TerrainManifest = { version: 3; tilePixels: 32; runtimeScale: 2; roles: StoryTerrainKitRole[]; sourceMapping: StoryWorldAssetId; kits: StoryTerrainKitDefinition[] };
+type TerrainManifest = { version: 4; tilePixels: 32; runtimeScale: 2; roles: StoryTerrainKitRole[]; sourceMapping: StoryWorldAssetId; kits: StoryTerrainKitDefinition[] };
 const terrainManifest = terrainManifestJson as unknown as TerrainManifest;
 
 export const STORY_BIOME_TERRAIN_THEME: Record<BiomeId, StoryWorldThemeId> = {
@@ -84,6 +86,14 @@ export function storyTerrainFrame(kitId: string | undefined, frameId: string | u
   return kit && frame ? { kit, frame } : undefined;
 }
 
+export function storyTerrainFrameForRole(kitId: string | undefined, role: StoryTerrainKitRole, variant: number) {
+  const kit = kitId ? STORY_TERRAIN_KITS_BY_ID[kitId] : undefined;
+  if (!kit) return undefined;
+  const normalized = Math.abs(variant) % 3;
+  const frame = kit.frames.find((candidate) => candidate.role === role && candidate.variant === normalized);
+  return frame ? { kit, frame } : undefined;
+}
+
 export function resolveStoryTerrainVariant(_theme: StoryWorldThemeId | undefined, _role: StoryTerrainTileRole, authoredVariant: number) {
   return Math.abs(authoredVariant) % 3;
 }
@@ -107,13 +117,14 @@ export function resolveStoryTerrainTile(theme: StoryWorldThemeId, tile: StoryTer
     ...tile,
     kitId: kit.id,
     frameId: frame.id,
+    surfaceMaterial: frame.surfaceMaterial,
     visualLayer: tile.role === 'fill' ? 'solid-fill' : 'exposed-face'
   };
 }
 
 export function resolveStoryTerrainTileForKit(kit: StoryTerrainKitDefinition, tile: StoryTerrainTileDefinition): StoryTerrainTileDefinition {
   const resolved = frameForKit(kit, tile.role, tile.surfaceVariant);
-  return { ...tile, kitId: resolved.kit.id, frameId: resolved.frame.id, visualLayer: tile.role === 'fill' ? 'solid-fill' : 'exposed-face' };
+  return { ...tile, kitId: resolved.kit.id, frameId: resolved.frame.id, surfaceMaterial: resolved.frame.surfaceMaterial, visualLayer: tile.role === 'fill' ? 'solid-fill' : 'exposed-face' };
 }
 
 export function resolveStoryCavityTile(theme: StoryWorldThemeId, tile: StoryCavityTileDefinition): StoryCavityTileDefinition {
@@ -144,6 +155,7 @@ export function storyTerrainGrammarCoverageErrors() {
       const [sourceX, sourceY, sourceWidth, sourceHeight] = frame.sourceFrame;
       if (sourceWidth !== sourceHeight || ![16, 32].includes(sourceWidth) || sourceX !== sourceColumn * sourceWidth || sourceY !== sourceRow * sourceHeight || !frame.sourceSemantic || !frame.mappingTreatment) errors.push(`terrain-source-map:${frame.id}`);
       if (frame.generatedStatus !== 'deterministic-source-derived' || frame.promptProvenance !== null) errors.push(`terrain-source-provenance:${frame.id}`);
+      if (!frame.surfaceMaterial) errors.push(`terrain-surface-material:${frame.id}`);
       if (frame.alphaBounds.some((value, index) => value !== [0, 0, 32, 32][index])) errors.push(`terrain-frame-transparency:${frame.id}`);
     }
   }

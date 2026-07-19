@@ -7,6 +7,9 @@ describe('story adventure world network', () => {
     const route = STORY_ADVENTURE_WORLDS['world-route'];
     expect(STORY_ADVENTURE_REGION_IDS).toHaveLength(8);
     expect(route.bounds.maxX - route.bounds.minX).toBeGreaterThanOrEqual(84);
+    expect(route.platforms).toHaveLength(1);
+    expect(route.platforms[0]).toMatchObject({ id: 'ground' });
+    expect(route.platforms[0].oneWay).toBeFalsy();
     expect(route.portals.filter((portal) => STORY_ADVENTURE_REGION_IDS.includes(portal.destination as typeof STORY_ADVENTURE_REGION_IDS[number]))).toHaveLength(8);
     expect(route.portals.some((portal) => portal.kind === 'shrine')).toBe(true);
     const tutorialSigns = route.portals.filter((portal) => portal.kind === 'tutorial');
@@ -17,6 +20,11 @@ describe('story adventure world network', () => {
     expect(route.environment?.layers.every((layer) => layer.asset?.startsWith('world:'))).toBe(true);
     expect(route.environment?.surface?.asset.startsWith('world:')).toBe(true);
     expect(route.landmarks?.length).toBeGreaterThanOrEqual(6);
+    const skyglassTree = route.props?.find((prop) => prop.id === 'route-pack-prop-11');
+    expect(skyglassTree?.asset).toContain('magical-road/tree.png');
+    expect(skyglassTree?.position[0]).toBeGreaterThan(46);
+    expect(skyglassTree?.position[0]).toBeLessThan(62);
+    expect(skyglassTree?.position[1]).toBeLessThan((skyglassTree?.size[1] ?? 0) / 2 - 0.08);
   });
 
   it('gives every region full-width authored traversal, scenery, and ten local enemies', () => {

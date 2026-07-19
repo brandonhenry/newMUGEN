@@ -347,7 +347,9 @@ export function sanitizeStoryPartyInstance(value: unknown, now = Date.now()): St
     eventState: endlessRecord.eventState && typeof endlessRecord.eventState.id === 'string' ? endlessRecord.eventState : null,
     boonStacks: endlessRecord.boonStacks && typeof endlessRecord.boonStacks === 'object' ? endlessRecord.boonStacks : {},
     rerollTokens: Math.max(0, Math.floor(Number(endlessRecord.rerollTokens) || 0)),
-    ledger: endlessRecord.ledger && typeof endlessRecord.ledger === 'object' ? endlessRecord.ledger : { xp: 0, defeats: 0, routeCoins: 0, materials: {}, consumables: {}, challengerIds: [], cacheIds: [] },
+    ledger: endlessRecord.ledger && typeof endlessRecord.ledger === 'object'
+      ? { ...endlessRecord.ledger, pickupIds: endlessRecord.ledger.pickupIds ?? [], curioIds: endlessRecord.ledger.curioIds ?? [] }
+      : { xp: 0, defeats: 0, routeCoins: 0, materials: {}, consumables: {}, challengerIds: [], cacheIds: [], pickupIds: [], curioIds: [] },
     bankEventIds: Array.isArray(endlessRecord.bankEventIds) ? endlessRecord.bankEventIds.map((id) => clean(id)).filter(Boolean).slice(-64) : [],
     endReason: ['wipe', 'abandon', 'all-left'].includes(String(endlessRecord.endReason)) ? endlessRecord.endReason : null
   } : null;

@@ -1,6 +1,6 @@
 import rawHub from './koreCentralHub.json';
 import { isStoryWorldAssetId } from './adventureAssets';
-import type { HubDestination, StoryAdventureExplorationDefinition, StoryDepthZoneKind, StoryHubDefinition, StoryMountId, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryTraversalKind, StoryWorldBackdropMotif, StoryWorldEnvironmentDefinition, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
+import type { HubDestination, StoryAdventureExplorationDefinition, StoryDepthZoneKind, StoryHubDefinition, StoryMountId, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StorySurfaceMaterial, StoryTraversalKind, StoryWorldBackdropMotif, StoryWorldEnvironmentDefinition, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
 
 const HUB_DESTINATIONS: readonly HubDestination[] = [
   'central', 'story', 'friends', 'online', 'arcade', 'versus', 'training', 'tournament', 'characters', 'avatarStudio', 'options', 'exit'
@@ -16,6 +16,7 @@ const WORLD_DESTINATIONS: StoryPortalDestination[] = [
 const MOUNT_IDS: StoryMountId[] = ['verdant-stag', 'bramble-lynx', 'ironhorn-beetle', 'pale-warg', 'cinder-drake', 'frost-ram', 'dune-strider', 'glasswing'];
 const TRAVERSAL_KINDS: StoryTraversalKind[] = ['walk', 'climb', 'ladder', 'lift', 'break-wall', 'swim', 'glide', 'updraft', 'drop'];
 const DEPTH_KINDS: StoryDepthZoneKind[] = ['cave', 'underwater', 'tower', 'ruin', 'mine', 'crypt', 'grotto', 'sanctuary'];
+const SURFACE_MATERIALS: StorySurfaceMaterial[] = ['grass', 'dirt', 'wood', 'metal', 'stone', 'snow', 'ice', 'sand', 'crystal', 'water'];
 
 export const FALLBACK_STORY_HUB: StoryHubDefinition = {
   id: 'kore-central',
@@ -47,7 +48,8 @@ function sanitizePlatforms(value: unknown): StoryPlatformDefinition[] {
       ...(record.oneWay ? { oneWay: true } : {}),
       ...(['solid', 'one-way'].includes(record.collision ?? '') ? { collision: record.collision } : {}),
       ...(['ground', 'ledge', 'wall', 'ceiling'].includes(record.terrainRole ?? '') ? { terrainRole: record.terrainRole } : {}),
-      ...(Number.isInteger(record.surfaceVariant) && Number(record.surfaceVariant) >= 0 ? { surfaceVariant: Number(record.surfaceVariant) } : {})
+      ...(Number.isInteger(record.surfaceVariant) && Number(record.surfaceVariant) >= 0 ? { surfaceVariant: Number(record.surfaceVariant) } : {}),
+      ...(SURFACE_MATERIALS.includes(record.surfaceMaterial as StorySurfaceMaterial) ? { surfaceMaterial: record.surfaceMaterial as StorySurfaceMaterial } : {})
     }];
   });
 }
@@ -115,17 +117,19 @@ function sanitizeEnvironment(value: unknown): StoryWorldEnvironmentDefinition | 
     asset: surface.asset,
     frame: surface.frame,
     atlasSize: surface.atlasSize,
+    surfaceMaterial: SURFACE_MATERIALS.includes(surface.surfaceMaterial as StorySurfaceMaterial) ? surface.surfaceMaterial as StorySurfaceMaterial : 'stone',
     ...(Number.isFinite(surface.walkSurfaceInsetPixels) ? {
       walkSurfaceInsetPixels: Math.min(surface.frame[3], Math.max(0, Number(surface.walkSurfaceInsetPixels)))
     } : {}),
     ...(Array.isArray(surface.variants) ? {
       variants: surface.variants.flatMap((entry) => {
         if (!entry || typeof entry !== 'object') return [];
-        const variant = entry as { id?: unknown; frame?: unknown; walkSurfaceInsetPixels?: unknown };
+        const variant = entry as { id?: unknown; frame?: unknown; surfaceMaterial?: unknown; walkSurfaceInsetPixels?: unknown };
         if (typeof variant.id !== 'string' || !Array.isArray(variant.frame) || variant.frame.length !== 4 || !variant.frame.every(Number.isFinite)) return [];
         return [{
           id: variant.id,
           frame: variant.frame as [number, number, number, number],
+          ...(SURFACE_MATERIALS.includes(variant.surfaceMaterial as StorySurfaceMaterial) ? { surfaceMaterial: variant.surfaceMaterial as StorySurfaceMaterial } : {}),
           ...(Number.isFinite(variant.walkSurfaceInsetPixels) ? { walkSurfaceInsetPixels: Math.max(0, Number(variant.walkSurfaceInsetPixels)) } : {})
         }];
       })

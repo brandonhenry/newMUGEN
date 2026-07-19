@@ -55,6 +55,12 @@ KIT_SPECS = {
     "ruins-space": ("ruins", "skyglass", "space-skyglass", "space-skyglass/tileset.png", "crystal-space-caverns", 16, "skyglass-backup-space"),
 }
 
+KIT_SURFACE_MATERIALS = {
+    "village": "grass", "forest": "grass", "mine": "stone", "crypt": "stone", "underworld": "stone", "snow": "snow", "desert": "sand", "ruins": "crystal",
+    "village-kings": "grass", "forest-pixel": "grass", "mine-grafx": "stone", "crypt-moon": "stone", "underworld-grafx": "stone", "snow-seasonal": "snow", "desert-pixel": "sand", "ruins-space": "crystal",
+}
+SURFACE_MATERIALS = {"grass", "dirt", "wood", "metal", "stone", "snow", "ice", "sand", "crystal", "water"}
+
 # Manually reviewed 16px source cells. Every runtime role records the exact
 # source frame and treatment in the generated manifest/contact sheet.
 SOURCE_TILE_MAPPINGS = {
@@ -340,6 +346,7 @@ def build_kit(kit_key: str, theme: str, biome: str, family: str, relative: str, 
                 "sourceSemantic": source_key,
                 "mappingTreatment": f"{mapping_treatment}+sealed-hidden-edges",
                 "surfaceClass": "walkable-cap" if role in WALKABLE_CAP_ROLES else "cavity" if role in CAVITY_ROLES else "overlay" if role in OVERLAY_ROLES else "neutral-solid",
+                "surfaceMaterial": KIT_SURFACE_MATERIALS[kit_key],
             })
     kit_path = OUTPUT_ROOT / f"{kit_key}.png"
     atlas.save(kit_path, optimize=True)
@@ -388,6 +395,8 @@ def verify(manifest: dict) -> list[str]:
             expected_class = "walkable-cap" if frame["role"] in WALKABLE_CAP_ROLES else "cavity" if frame["role"] in CAVITY_ROLES else "overlay" if frame["role"] in OVERLAY_ROLES else "neutral-solid"
             if frame.get("surfaceClass") != expected_class:
                 failures.append(f"surface-class:{kit['id']}:{frame['id']}")
+            if frame.get("surfaceMaterial") not in SURFACE_MATERIALS:
+                failures.append(f"surface-material:{kit['id']}:{frame['id']}")
             if frame.get("generatedStatus") != "deterministic-source-derived" or frame.get("promptProvenance") is not None:
                 failures.append(f"source-provenance:{kit['id']}:{frame['id']}")
             if not all(frame.get(field) for field in ("sourcePack", "sourceUrl", "sourceFile", "sourceHash", "license", "generationMethod")):
@@ -427,6 +436,7 @@ def main() -> None:
     expanded_mapping = {
         kit_key: {
             "sourceCellPixels": spec[5],
+            "surfaceMaterial": KIT_SURFACE_MATERIALS[kit_key],
             "roles": {
                 role: [list(SOURCE_TILE_MAPPINGS[kit_key][ROLE_SOURCE_KEYS[role]][variant]) for variant in range(VARIANTS)]
                 for role in ROLES
@@ -441,7 +451,7 @@ def main() -> None:
         "kits": expanded_mapping,
     }, indent=2) + "\n")
     manifest = {
-        "version": 3, "tilePixels": TILE, "runtimeScale": 2, "roles": ROLES,
+        "version": 4, "tilePixels": TILE, "runtimeScale": 2, "roles": ROLES,
         "sourceMapping": "world:terrain-kits/source-mapping.json", "kits": kits,
     }
     RUNTIME_MANIFEST.write_text(json.dumps(manifest, indent=2) + "\n")

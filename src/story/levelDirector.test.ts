@@ -80,6 +80,7 @@ describe('KORE AI Level Director', () => {
       expect(new Set(compiled.platforms.map((platform) => platform.surfaceVariant)).size, blueprint.id).toBeGreaterThanOrEqual(2);
       expect(compiled.terrainKitId, blueprint.id).toBeTruthy();
       expect(compiled.terrainTiles.every((tile) => tile.kitId && tile.frameId), blueprint.id).toBe(true);
+      expect(compiled.terrainTiles.every((tile) => tile.surfaceMaterial), blueprint.id).toBe(true);
       expect(compiled.cavityTiles.every((tile) => tile.kitId && tile.frameId), blueprint.id).toBe(true);
       const columns = Math.round((blueprint.bounds[1] - blueprint.bounds[0]) / 2);
       const rows = Math.round((blueprint.bounds[3] - blueprint.bounds[2]) / 2);
@@ -89,16 +90,19 @@ describe('KORE AI Level Director', () => {
 
   it('provides three provenance-complete frames for every terrain role in all sixteen kits', () => {
     const kits = Object.values(STORY_TERRAIN_KITS_BY_ID);
+    const materialByBiome = { greenhollow: 'grass', thornwood: 'grass', ironroot: 'stone', bonevault: 'stone', emberdeep: 'stone', frostpeak: 'snow', sunscar: 'sand', skyglass: 'crystal' } as const;
     expect(Object.values(STORY_TERRAIN_KITS)).toHaveLength(8);
     expect(kits).toHaveLength(16);
     for (const kit of kits) {
       expect(kit!.tilePixels).toBe(32);
       expect(kit!.runtimeScale).toBe(2);
+      expect(new Set(kit!.frames.filter((frame) => frame.surfaceClass === 'walkable-cap').map((frame) => frame.surfaceMaterial))).toEqual(new Set([materialByBiome[kit!.biome]]));
       for (const role of ['fill', 'top', 'underside', 'left-wall', 'right-wall', 'outer-top-left', 'outer-top-right', 'outer-bottom-left', 'outer-bottom-right', 'inner-top-left', 'inner-top-right', 'inner-bottom-left', 'inner-bottom-right', 'connector-lip', 'background-rock', 'sky-window-edge', 'secret-overlay', 'damage-overlay']) {
         const frames = kit!.frames.filter((frame) => frame.role === role);
         expect(frames, `${kit!.id}:${role}`).toHaveLength(3);
         expect(frames.every((frame) => frame.rotations.length === 1 && frame.rotations[0] === 0 && !frame.mirroring)).toBe(true);
         expect(frames.every((frame) => frame.sourceHash && frame.license && frame.generationMethod)).toBe(true);
+        expect(frames.every((frame) => frame.surfaceMaterial)).toBe(true);
       }
     }
   });

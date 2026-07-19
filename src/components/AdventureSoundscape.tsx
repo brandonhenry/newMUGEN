@@ -17,15 +17,17 @@ import { StageAmbiencePlayer } from './StageAmbiencePlayer';
 type AudioContextWindow = Window & typeof globalThis & { webkitAudioContext?: typeof AudioContext };
 type ClipPool = { clips: HTMLAudioElement[]; cursor: number };
 
-const STEP_PROFILE: Record<AdventureSurfaceMaterial, { cutoff: number; tone: number; duration: number; noise: number }> = {
-  grass: { cutoff: 980, tone: 92, duration: 0.085, noise: 0.9 },
-  wood: { cutoff: 1350, tone: 170, duration: 0.075, noise: 0.42 },
-  metal: { cutoff: 2600, tone: 760, duration: 0.09, noise: 0.32 },
-  stone: { cutoff: 1450, tone: 118, duration: 0.07, noise: 0.48 },
-  ice: { cutoff: 3900, tone: 1280, duration: 0.1, noise: 0.5 },
-  sand: { cutoff: 620, tone: 72, duration: 0.105, noise: 1 },
-  crystal: { cutoff: 4200, tone: 1560, duration: 0.11, noise: 0.28 },
-  water: { cutoff: 480, tone: 82, duration: 0.13, noise: 0.75 }
+const STEP_PROFILE: Record<AdventureSurfaceMaterial, { cutoff: number; tone: number; transient: number; duration: number; noise: number }> = {
+  grass: { cutoff: 980, tone: 92, transient: 420, duration: 0.085, noise: 0.9 },
+  dirt: { cutoff: 760, tone: 84, transient: 310, duration: 0.09, noise: 0.86 },
+  wood: { cutoff: 1350, tone: 170, transient: 680, duration: 0.075, noise: 0.42 },
+  metal: { cutoff: 2600, tone: 760, transient: 2450, duration: 0.09, noise: 0.32 },
+  stone: { cutoff: 1450, tone: 118, transient: 940, duration: 0.07, noise: 0.48 },
+  snow: { cutoff: 520, tone: 66, transient: 240, duration: 0.115, noise: 1 },
+  ice: { cutoff: 3900, tone: 1280, transient: 3100, duration: 0.1, noise: 0.5 },
+  sand: { cutoff: 620, tone: 72, transient: 280, duration: 0.105, noise: 1 },
+  crystal: { cutoff: 4200, tone: 1560, transient: 3600, duration: 0.11, noise: 0.28 },
+  water: { cutoff: 480, tone: 82, transient: 190, duration: 0.13, noise: 0.75 }
 };
 
 function clamp(value: number) {
@@ -86,6 +88,17 @@ function playSynthStep(context: AudioContext, material: AdventureSurfaceMaterial
   toneGain.connect(context.destination);
   tone.start(now);
   tone.stop(now + duration);
+  const transient = context.createOscillator();
+  const transientGain = context.createGain();
+  transient.type = material === 'metal' || material === 'ice' || material === 'crystal' ? 'square' : 'sine';
+  transient.frequency.setValueAtTime(profile.transient * (0.9 + Math.random() * 0.2), now);
+  transient.frequency.exponentialRampToValueAtTime(Math.max(45, profile.transient * 0.42), now + duration * 0.55);
+  transientGain.gain.setValueAtTime(volume * (material === 'snow' || material === 'grass' || material === 'sand' ? 0.06 : 0.13), now);
+  transientGain.gain.exponentialRampToValueAtTime(0.0001, now + duration * 0.55);
+  transient.connect(transientGain);
+  transientGain.connect(context.destination);
+  transient.start(now);
+  transient.stop(now + duration * 0.55);
 }
 
 function playWhoosh(context: AudioContext, attackInput: StoryAttackInput, volume: number) {
@@ -109,6 +122,19 @@ function playWhoosh(context: AudioContext, attackInput: StoryAttackInput, volume
   filter.connect(gain);
   gain.connect(context.destination);
   source.start(now);
+  const body = context.createOscillator();
+  const bodyGain = context.createGain();
+  body.type = attackInput === 'special' ? 'sawtooth' : 'triangle';
+  const bodyStart = attackInput === 'heavy' ? 180 : attackInput === 'special' ? 260 : 320;
+  body.frequency.setValueAtTime(bodyStart, now);
+  body.frequency.exponentialRampToValueAtTime(58, now + duration);
+  bodyGain.gain.setValueAtTime(0.0001, now);
+  bodyGain.gain.linearRampToValueAtTime(volume * 0.24, now + duration * 0.22);
+  bodyGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+  body.connect(bodyGain);
+  bodyGain.connect(context.destination);
+  body.start(now);
+  body.stop(now + duration);
 }
 
 export function AdventureSoundscape({ audio, active, context }: {
@@ -119,6 +145,7 @@ export function AdventureSoundscape({ audio, active, context }: {
   const audioContext = useRef<AudioContext | null>(null);
   const pools = useRef(new Map<string, ClipPool>());
   const [underwater, setUnderwater] = useState(false);
+  const [contactMaterial, setContactMaterial] = useState<AdventureSurfaceMaterial>(() => adventureSurfaceMaterial(context));
   const ambienceStage = useMemo(() => makeAdventureStage(context, underwater), [context, underwater]);
   const sfxVolume = audio.muted || !active ? 0 : clamp(audio.master * audio.sfx);
   const hitVolume = sfxVolume * clamp(audio.hitSfx);
@@ -127,7 +154,10 @@ export function AdventureSoundscape({ audio, active, context }: {
     ambience: audio.ambience * (['elite', 'race', 'tension'].includes(context.phase) ? 0.68 : 1)
   }), [audio, context.phase]);
 
-  useEffect(() => setUnderwater(false), [context.depth, context.mapId, context.worldId]);
+  useEffect(() => {
+    setUnderwater(false);
+    setContactMaterial(adventureSurfaceMaterial(context));
+  }, [context.depth, context.mapId, context.worldId]);
 
   useEffect(() => {
     const playClip = (path: string, volume: number, playbackRate = 1) => {
@@ -151,16 +181,16 @@ export function AdventureSoundscape({ audio, active, context }: {
       const synth = audioContext.current;
       if (!synth) return;
       if (synth.state === 'suspended') void synth.resume().catch(() => undefined);
-      const surface = adventureSurfaceMaterial(context, underwater);
-      if (event.kind === 'step') playSynthStep(synth, surface, sfxVolume * (event.sprinting ? 0.12 : 0.09), event.sprinting ? 0.84 : 1);
-      else if (event.kind === 'jump') playSynthStep(synth, surface, sfxVolume * 0.1, 0.72);
-      else if (event.kind === 'land') playSynthStep(synth, surface, sfxVolume * 0.18 * clamp(event.intensity ?? 1), 1.35);
+      if (event.kind === 'step') playSynthStep(synth, event.material, sfxVolume * (event.sprinting ? 0.12 : 0.09), event.sprinting ? 0.84 : 1);
+      else if (event.kind === 'jump') playSynthStep(synth, event.material, sfxVolume * 0.1, 0.72);
+      else if (event.kind === 'land') playSynthStep(synth, event.material, sfxVolume * 0.18 * clamp(event.intensity ?? 1), 1.35);
       else if (event.kind === 'attack') playWhoosh(synth, event.attackInput, sfxVolume * (event.attackInput === 'special' ? 0.28 : event.attackInput === 'heavy' ? 0.22 : 0.16));
       else if (event.kind === 'water') playSynthStep(synth, 'water', sfxVolume * 0.18, event.entered ? 1.5 : 0.9);
     };
     return subscribeAdventureAudio((event) => {
       if (!active) return;
       if (event.kind === 'water') setUnderwater(event.entered);
+      if (event.kind === 'step' || event.kind === 'jump' || event.kind === 'land') setContactMaterial(event.material);
       if (['step', 'jump', 'land', 'attack', 'water'].includes(event.kind)) playSynth(event);
       else if (event.kind === 'enemy-hit') playClip(ADVENTURE_HIT_SFX[event.attackInput], hitVolume * (event.finishing ? 1 : event.critical ? 0.92 : 0.78), event.finishing ? 0.9 : 0.96 + Math.random() * 0.08);
       else if (event.kind === 'player-hit') playClip(ADVENTURE_PLAYER_HIT_SFX, hitVolume * 0.88, event.damage >= 20 ? 0.82 : 0.94);
@@ -186,7 +216,7 @@ export function AdventureSoundscape({ audio, active, context }: {
     audioContext.current = null;
   }, []);
 
-  return <div className="adventure-soundscape" data-testid="adventure-soundscape" data-surface={adventureSurfaceMaterial(context, underwater)} data-ambience={ambienceStage.ambiencePreset} aria-hidden="true">
+  return <div className="adventure-soundscape" data-testid="adventure-soundscape" data-surface={underwater ? 'water' : contactMaterial} data-ambience={ambienceStage.ambiencePreset} aria-hidden="true">
     <StageAmbiencePlayer audio={ambienceAudio} stage={ambienceStage} active={active} />
   </div>;
 }

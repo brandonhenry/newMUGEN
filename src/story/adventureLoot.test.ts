@@ -45,7 +45,7 @@ describe('Endless family gameplay assets and supply caches', () => {
         if (floor.visualSetId === contract.visualSetId) floor.containers.forEach((container) => outcomes.add(container.outcome));
       }
     }
-    expect(outcomes).toEqual(new Set<StoryFloorLootOutcome>(['empty', 'junk', 'coins', 'material', 'consumable']));
+    expect(outcomes).toEqual(new Set<StoryFloorLootOutcome>(['empty', 'junk', 'coins', 'material', 'consumable', 'trade-good']));
   });
 
   it('preserves v7 replay output without generated containers', () => {

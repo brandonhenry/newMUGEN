@@ -24,7 +24,7 @@ export function createStoryDepthEnvironment(
         { id: 'underwater-mid', asset: 'exploration:underwater/midground.png', depth: -8, y: 5, height: 22, opacity: 0.84, parallax: 0.25, color: '#ffffff', repeatEvery: 41 },
         ...surfaceEnvironment.layers.slice(-1)
       ],
-      surface: { asset: 'exploration:underwater/tiles.png', frame: [0, 0, 32, 32], atlasSize: [480, 656] }
+      surface: { asset: 'exploration:underwater/tiles.png', frame: [0, 0, 32, 32], atlasSize: [480, 656], surfaceMaterial: 'water' }
     };
   }
 

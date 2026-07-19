@@ -24,9 +24,11 @@ import {
 } from './adventureProgress';
 
 describe('Adventure crafting catalog', () => {
-  it('defines 36 unique resources and exactly 48 valid unique recipes', () => {
-    expect(STORY_RESOURCES).toHaveLength(36);
-    expect(new Set(STORY_RESOURCES.map(({ id }) => id)).size).toBe(36);
+  it('defines 36 harvest resources, four permanent market goods, and exactly 48 valid unique recipes', () => {
+    expect(STORY_RESOURCES).toHaveLength(40);
+    expect(STORY_RESOURCES.filter(({ acquisition }) => acquisition === 'harvest')).toHaveLength(36);
+    expect(STORY_RESOURCES.filter(({ acquisition }) => acquisition === 'merchant')).toHaveLength(4);
+    expect(new Set(STORY_RESOURCES.map(({ id }) => id)).size).toBe(40);
     expect(STORY_RECIPES).toHaveLength(48);
     expect(new Set(STORY_RECIPES.map(({ id }) => id)).size).toBe(48);
     const resources = new Set(STORY_RESOURCES.map(({ id }) => id));
@@ -117,6 +119,7 @@ describe('Adventure crafting catalog', () => {
 
     for (const [resourceId, quantity] of [
       ['routewood', 99], ['fieldstone', 99], ['wildberry', 20], ['medicinal-herb', 20],
+      ['artisan-thread', 8], ['precision-clasp', 4], ['alchemical-vial', 4], ['guild-catalyst', 2],
       [common, 99], [uncommon, 99], [rare, 99], [legendary, 4]
     ] as const) progress = addAdventureMaterial(progress, resourceId, quantity).progress;
 

@@ -51,14 +51,14 @@ describe('story adventure progression', () => {
     expect(sanitized.unspentPoints).toBe(0);
     expect(sanitized.xp).toBeLessThan(experienceToNextLevel(3));
     expect(sanitized.lifetimeDefeats).toBe(0);
-    expect(sanitized.version).toBe(5);
+    expect(sanitized.version).toBe(6);
     expect(sanitized.stats.partySize).toBe(1);
     expect(sanitized.discoveries.biomes).toEqual([]);
   });
 
   it('migrates V1 fields and persists discovery and mount mastery', () => {
     const migrated = sanitizeAdventureProgress({ version: 1, level: 8, xp: 12, stats: { power: 3 }, lifetimeDefeats: 4 });
-    expect(migrated).toMatchObject({ version: 5, level: 8, xp: 12, lifetimeDefeats: 4, defeatedChallengerIds: [], partyFeatureRevealSeen: false });
+    expect(migrated).toMatchObject({ version: 6, level: 8, xp: 12, lifetimeDefeats: 4, defeatedChallengerIds: [], partyFeatureRevealSeen: false, wildlifeSightings: [], collectedCurios: [] });
     const visiting = beginAdventureVisit(migrated, 'greenhollow');
     expect(visiting.discoveries.biomes).toContain('greenhollow');
     expect(visiting.visitCounters.greenhollow).toBe(1);
@@ -74,7 +74,7 @@ describe('story adventure progression', () => {
 
   it('migrates v4 endless unlocks and banks chapter rewards idempotently', () => {
     const migrated = sanitizeAdventureProgress({ version: 4, discoveredSurfaceMaps: ['greenhollow-mastery'], routeCoins: 10 });
-    expect(migrated.version).toBe(5);
+    expect(migrated.version).toBe(6);
     expect(migrated.endlessUnlockedBiomes).toContain('greenhollow');
     const unlocked = unlockAdventureEndlessBiome(migrated, 'thornwood');
     const firstRun = beginAdventureEndlessRun(unlocked, 'thornwood');

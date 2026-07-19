@@ -2721,6 +2721,18 @@ body {
 .story-pack-owned small { color: rgba(255, 255, 255, 0.45); font-size: 7px; font-weight: 900; text-transform: uppercase; }
 .story-pack-materials strong { overflow: hidden; font-size: 10px; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
 .story-pack-materials output { color: #ffe071; font-size: 18px; font-weight: 950; }
+.story-route-market { grid-template-rows: auto auto minmax(0, 1fr) auto; }
+.story-route-market .story-pack-materials article { grid-template-columns: 48px minmax(0, 1fr) 86px; grid-template-rows: auto auto; align-items: center; min-height: 104px; padding: 10px; }
+.story-route-market .story-pack-materials article > img { grid-column: 1; grid-row: 1 / 3; }
+.story-route-market .story-pack-materials article > div { grid-column: 2; grid-row: 1 / 3; align-self: center; }
+.story-route-market .story-pack-materials article > output { grid-column: 3; grid-row: 1; justify-self: center; font-size: 14px; }
+.story-route-market .story-pack-materials article > button { grid-column: 3; grid-row: 2; min-height: 38px; border-radius: 9px; padding: 0 8px; color: #071120; background: #ffe071; font-size: 8px; font-weight: 950; text-transform: uppercase; }
+.story-route-market .story-pack-materials article > button:disabled { color: rgba(255, 255, 255, 0.35); background: rgba(255, 255, 255, 0.08); }
+.story-route-market .story-pack-materials strong { overflow: visible; text-overflow: clip; white-space: normal; text-wrap: balance; }
+.story-route-market .story-pack-materials p { display: -webkit-box; overflow: hidden; margin: 3px 0 0; color: rgba(255, 255, 255, 0.55); font-size: 7px; line-height: 1.45; text-wrap: pretty; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+.story-route-market > footer { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 10px 8px 3px; }
+.story-route-market > footer strong { color: #ffe071; font-size: 12px; white-space: nowrap; }
+.story-route-market > footer small { color: rgba(255, 255, 255, 0.5); font-size: 7px; text-align: right; }
 .story-pack-recipes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .story-pack-recipes article { display: grid; grid-template-columns: 58px minmax(0, 1fr) auto; grid-template-rows: auto auto; align-items: start; gap: 8px 10px; border-radius: 15px; padding: 10px; background: rgba(9, 17, 35, 0.96); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08); }
 .story-pack-recipes article.is-craftable { background: linear-gradient(130deg, rgba(46, 230, 255, 0.1), rgba(9, 17, 35, 0.98) 50%); box-shadow: inset 3px 0 0 #2ee6ff, inset 0 0 0 1px rgba(46, 230, 255, 0.16); }

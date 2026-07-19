@@ -289,6 +289,8 @@ export type StoryAdventureAssetId =
   | 'pixel-terrain'
   | 'pixel-trap';
 
+export type StorySurfaceMaterial = 'grass' | 'dirt' | 'wood' | 'metal' | 'stone' | 'snow' | 'ice' | 'sand' | 'crystal' | 'water';
+
 export type StoryWorldAssetId = StoryAdventureAssetId
   | 'city-back'
   | 'city-middle'
@@ -339,12 +341,14 @@ export type StoryWorldEnvironmentDefinition = {
     asset: StoryWorldAssetId;
     frame: [number, number, number, number];
     atlasSize: [number, number];
+    surfaceMaterial: StorySurfaceMaterial;
     /** Source-pixel inset for atlases whose painted cap sits below the physics walk line. */
     walkSurfaceInsetPixels?: number;
     /** Alternate authored atlas pieces used to break up repeated terrain. */
     variants?: Array<{
       id: string;
       frame: [number, number, number, number];
+      surfaceMaterial?: StorySurfaceMaterial;
       walkSurfaceInsetPixels?: number;
     }>;
   };
@@ -567,7 +571,7 @@ export type StoryFloorEvent = {
   roomId: string;
   position: [number, number];
   rewardCoins: number;
-  traderCosts?: { heal: number; consumable: number; reroll: number };
+  traderCosts?: { heal: number; consumable: number; reroll: number; tradeGood?: number };
 };
 
 export type StoryFloorPressureState = {
@@ -579,7 +583,7 @@ export type StoryFloorPressureState = {
 
 export type StoryFloorIntent = 'combat' | 'harvest' | 'exploration' | 'boss';
 
-export type StoryFloorLootOutcome = 'empty' | 'junk' | 'coins' | 'material' | 'consumable';
+export type StoryFloorLootOutcome = 'empty' | 'junk' | 'coins' | 'material' | 'consumable' | 'trade-good';
 
 export type StoryGeneratedContainer = {
   id: string;
@@ -597,8 +601,54 @@ export type StoryGeneratedContainer = {
   consumableId?: string;
 };
 
+export type StoryWildlifeBehavior = 'passive' | 'fleeing' | 'hostile' | 'ambient';
+
+export type StoryWildlifeSpeciesDefinition = {
+  id: string;
+  label: string;
+  packId: string;
+  biomes: Array<Exclude<StoryAdventureWorldId, 'world-route'>>;
+  behavior: StoryWildlifeBehavior;
+  habitat: 'ground' | 'air' | 'cave' | 'settlement';
+  atlasPath: string;
+  frameSize: [number, number];
+  frameCount: number;
+  frameDurationMs: number;
+  scale: number;
+  sourcePack: string;
+  license: string;
+  integrityPath: string;
+};
+
+export type StoryGeneratedWildlife = {
+  id: string;
+  roomId: string;
+  speciesId: string;
+  packId: string;
+  behavior: StoryWildlifeBehavior;
+  position: [number, number];
+  leash: [number, number];
+  linkedEnemySpawnId?: string;
+};
+
+export type StoryGeneratedPickup = {
+  id: string;
+  roomId: string;
+  familyId: string;
+  visualId: string;
+  atlasPath: string;
+  frameSize: [number, number];
+  frameCount: number;
+  position: [number, number];
+  rewardKind: 'coins' | 'material' | 'curio';
+  rewardCoins?: number;
+  materialId?: string;
+  materialQuantity?: number;
+  curioId?: string;
+};
+
 export type StoryGeneratedFloor = {
-  version: 3 | 4 | 5 | 6 | 7 | 8;
+  version: 3 | 4 | 5 | 6 | 7 | 8 | 9;
   worldId: Exclude<StoryAdventureWorldId, 'world-route'>;
   seed: string;
   floorNumber: number;
@@ -629,6 +679,10 @@ export type StoryGeneratedFloor = {
   enemySpawns: StoryEnemySpawnDefinition[];
   event: StoryFloorEvent | null;
   containers: StoryGeneratedContainer[];
+  pickups: StoryGeneratedPickup[];
+  wildlife: StoryGeneratedWildlife[];
+  ecologyFamilyId?: string;
+  collectibleFamilyId?: string;
   parTimeSeconds: number;
   bossEnemyId?: StoryEnemyId;
   levelMeta?: StoryHubDefinition['levelMeta'];
@@ -642,11 +696,13 @@ export type StoryRunRewardLedger = {
   consumables: Record<string, number>;
   challengerIds: StoryEnemyId[];
   cacheIds: string[];
+  pickupIds: string[];
+  curioIds: string[];
 };
 
 export type StoryEndlessRunState = {
   version: 3 | 4;
-  generationVersion?: 3 | 4 | 5 | 6 | 7 | 8;
+  generationVersion?: 3 | 4 | 5 | 6 | 7 | 8 | 9;
   worldId: Exclude<StoryAdventureWorldId, 'world-route'>;
   seed: string;
   floorNumber: number;
@@ -766,6 +822,7 @@ export type StoryNpcDefinition = {
   bark: string;
   warningBark: string;
   defense: StoryNpcDefenseProfile;
+  services?: Array<'market'>;
 };
 
 export type StoryAdventureMapDefinition = {
@@ -836,6 +893,8 @@ export type StoryPlatformDefinition = {
   terrainRole?: 'ground' | 'ledge' | 'wall' | 'ceiling';
   /** Stable index into the biome surface's authored atlas variants. */
   surfaceVariant?: number;
+  /** Optional authored override for the material heard while standing here. */
+  surfaceMaterial?: StorySurfaceMaterial;
   /** Terrain-grid colliders render through terrainTiles instead of per collider. */
   visual?: boolean;
 };
@@ -872,6 +931,8 @@ export type StoryTerrainTileDefinition = {
   mirrored: boolean;
   kitId?: string;
   frameId?: string;
+  /** Physical material attached to the exact rendered atlas frame. */
+  surfaceMaterial?: StorySurfaceMaterial;
   visualLayer?: 'solid-fill' | 'exposed-face' | 'overlay';
 };
 
@@ -917,6 +978,8 @@ export type StoryHubDefinition = {
   npcs?: StoryNpcDefinition[];
   musicPhase?: AdventureMusicPhase;
   resourceNodes?: StoryResourceNodeDefinition[];
+  pickups?: StoryGeneratedPickup[];
+  wildlife?: StoryGeneratedWildlife[];
   levelMeta?: {
     blueprintId: string;
     blueprintVersion: 1 | 2;

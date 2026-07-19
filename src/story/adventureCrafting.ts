@@ -19,6 +19,8 @@ export type StoryResourceDefinition = {
   footAnchorY: number;
   iconPath: string;
   nodeFrames: readonly [string, string, string];
+  acquisition: 'harvest' | 'merchant' | 'reward';
+  marketPrice?: number;
 };
 
 export type StoryConsumableEffect = {
@@ -89,8 +91,17 @@ export function storyResourceImpactMaterial(id: string, kind: StoryResourceKind,
 }
 
 export const STORY_RESOURCES: StoryResourceDefinition[] = [
-  ...UNIVERSAL.map(([id, label, kind, color, pixelBottom], index) => ({ id, label, kind, color, impactMaterial: storyResourceImpactMaterial(id, kind), footAnchorY: normalizedFootAnchorY(pixelBottom), rarity: index < 2 ? 'common' as const : 'uncommon' as const, iconPath: `/story/resources/icons/universal/${id}.png`, nodeFrames: nodeFrames('universal', id) })),
-  ...STORY_BIOME_IDS.flatMap((biomeId) => BIOME_MATERIALS[biomeId].map(([id, label, kind, color, pixelBottom], index) => ({ id, label, kind, color, biomeId, impactMaterial: storyResourceImpactMaterial(id, kind, biomeId), footAnchorY: normalizedFootAnchorY(pixelBottom), rarity: RARITIES[index], iconPath: `/story/resources/icons/${biomeId}/${id}.png`, nodeFrames: nodeFrames(biomeId, id) })))
+  ...UNIVERSAL.map(([id, label, kind, color, pixelBottom], index) => ({ id, label, kind, color, impactMaterial: storyResourceImpactMaterial(id, kind), footAnchorY: normalizedFootAnchorY(pixelBottom), rarity: index < 2 ? 'common' as const : 'uncommon' as const, iconPath: `/story/resources/icons/universal/${id}.png`, nodeFrames: nodeFrames('universal', id), acquisition: 'harvest' as const })),
+  ...STORY_BIOME_IDS.flatMap((biomeId) => BIOME_MATERIALS[biomeId].map(([id, label, kind, color, pixelBottom], index) => ({ id, label, kind, color, biomeId, impactMaterial: storyResourceImpactMaterial(id, kind, biomeId), footAnchorY: normalizedFootAnchorY(pixelBottom), rarity: RARITIES[index], iconPath: `/story/resources/icons/${biomeId}/${id}.png`, nodeFrames: nodeFrames(biomeId, id), acquisition: 'harvest' as const }))),
+  ...([
+    ['artisan-thread', 'Artisan Thread', 12, '/story/ecology/atlases/svor/mysterious-object-.png'],
+    ['precision-clasp', 'Precision Clasp', 18, '/story/ecology/atlases/svor/key2.png'],
+    ['alchemical-vial', 'Alchemical Vial', 15, '/story/ecology/atlases/svor/potion1.png'],
+    ['guild-catalyst', 'Guild Catalyst', 40, '/story/ecology/atlases/svor/gemstone2-.png']
+  ] as const).map(([id, label, marketPrice, asset]) => ({
+    id, label, marketPrice, acquisition: 'merchant' as const, kind: 'rock' as const, rarity: 'rare' as const,
+    color: '#ffe071', impactMaterial: 'metal' as const, footAnchorY: 1, iconPath: asset, nodeFrames: [asset, asset, asset] as const
+  }))
 ];
 
 export const STORY_RESOURCE_BY_ID = Object.fromEntries(STORY_RESOURCES.map((resource) => [resource.id, resource])) as Record<string, StoryResourceDefinition>;
@@ -121,9 +132,9 @@ const BIOME_META: Record<StoryBiomeId, { set: string; stats: [StoryAdventureStat
 const iconPath = (biome: StoryBiomeId | 'universal', id: string) => `/story/resources/icons/${biome}/${id}.png`;
 const armorIngredients = (biomeId: StoryBiomeId, slot: StoryArmorSlot) => {
   const [common, uncommon, rare, legendary] = STORY_BIOME_RESOURCE_IDS[biomeId];
-  if (slot === 'head') return { routewood: 6, [common]: 4, [uncommon]: 2 };
-  if (slot === 'coat') return { routewood: 8, fieldstone: 4, [common]: 6, [uncommon]: 4, [legendary]: 1 };
-  return { routewood: 6, fieldstone: 4, [common]: 5, [rare]: 2 };
+  if (slot === 'head') return { routewood: 6, [common]: 4, [uncommon]: 2, 'artisan-thread': 1 };
+  if (slot === 'coat') return { routewood: 8, fieldstone: 4, [common]: 6, [uncommon]: 4, [legendary]: 1, 'artisan-thread': 2, 'precision-clasp': 1 };
+  return { routewood: 6, fieldstone: 4, [common]: 5, [rare]: 2, 'artisan-thread': 1, 'precision-clasp': 1 };
 };
 
 const ARMOR_SLOTS: Array<[StoryArmorSlot, string]> = [['head', 'Hood'], ['coat', 'Coat'], ['boots', 'Boots']];
@@ -142,7 +153,7 @@ const STARTER_CONSUMABLES: StoryRecipeDefinition[] = [
 const REGIONAL_CONSUMABLES: StoryRecipeDefinition[] = STORY_BIOME_IDS.map((biomeId) => {
   const [id, label, kind, multiplier] = BIOME_META[biomeId].potion;
   const [common, , rare] = STORY_BIOME_RESOURCE_IDS[biomeId];
-  return { id, label, biomeId, kind: 'consumable', iconPath: iconPath(biomeId, id), ingredients: { wildberry: 2, 'medicinal-herb': 1, [common]: 2, [rare]: 1 }, consumable: { kind, multiplier, durationMs: 180_000, label: `${label} active for 3 minutes` } };
+  return { id, label, biomeId, kind: 'consumable', iconPath: iconPath(biomeId, id), ingredients: { wildberry: 2, 'medicinal-herb': 1, [common]: 2, [rare]: 1, 'alchemical-vial': 1 }, consumable: { kind, multiplier, durationMs: 180_000, label: `${label} active for 3 minutes` } };
 });
 
 const ADVANCED: Array<[string, string, StoryBiomeId, StoryBiomeId, StoryConsumableEffect]> = [
@@ -153,13 +164,13 @@ const ADVANCED: Array<[string, string, StoryBiomeId, StoryBiomeId, StoryConsumab
 ];
 
 const ADVANCED_CONSUMABLES: StoryRecipeDefinition[] = ADVANCED.map(([id, label, first, second, consumable]) => ({
-  id, label, kind: 'consumable', iconPath: iconPath('universal', id), ingredients: { 'medicinal-herb': 2, wildberry: 2, [STORY_BIOME_RESOURCE_IDS[first][3]]: 1, [STORY_BIOME_RESOURCE_IDS[second][3]]: 1 }, consumable
+  id, label, kind: 'consumable', iconPath: iconPath('universal', id), ingredients: { 'medicinal-herb': 2, wildberry: 2, [STORY_BIOME_RESOURCE_IDS[first][3]]: 1, [STORY_BIOME_RESOURCE_IDS[second][3]]: 1, 'alchemical-vial': 2, 'guild-catalyst': 1 }, consumable
 }));
 
 const UTILITY_RECIPES: StoryRecipeDefinition[] = STORY_BIOME_IDS.map((biomeId) => {
   const [id, label] = BIOME_META[biomeId].utility;
   const [common, uncommon, rare, legendary] = STORY_BIOME_RESOURCE_IDS[biomeId];
-  return { id, label, biomeId, kind: 'utility', iconPath: iconPath(biomeId, id), ingredients: { routewood: 8, fieldstone: 8, [common]: 4, [uncommon]: 3, [rare]: 2, [legendary]: 1 }, utilityId: id };
+  return { id, label, biomeId, kind: 'utility', iconPath: iconPath(biomeId, id), ingredients: { routewood: 8, fieldstone: 8, [common]: 4, [uncommon]: 3, [rare]: 2, [legendary]: 1, 'precision-clasp': 2, 'guild-catalyst': 1 }, utilityId: id };
 });
 
 export const STORY_RECIPES: StoryRecipeDefinition[] = [...ARMOR_RECIPES, ...STARTER_CONSUMABLES, ...REGIONAL_CONSUMABLES, ...ADVANCED_CONSUMABLES, ...UTILITY_RECIPES];

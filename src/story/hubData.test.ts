@@ -5,6 +5,9 @@ import { STORY_MODE_WORLDS } from './modeWorlds';
 describe('story hub data', () => {
   it('loads unique, in-bounds K.O.R.E. Central destinations', () => {
     expect(KORE_CENTRAL_HUB.portals).toHaveLength(11);
+    expect(KORE_CENTRAL_HUB.platforms).toHaveLength(1);
+    expect(KORE_CENTRAL_HUB.platforms[0]).toMatchObject({ id: 'ground' });
+    expect(KORE_CENTRAL_HUB.platforms[0].oneWay).toBeFalsy();
     expect(new Set(KORE_CENTRAL_HUB.portals.map((portal) => portal.id)).size).toBe(KORE_CENTRAL_HUB.portals.length);
     expect(new Set(KORE_CENTRAL_HUB.portals.map((portal) => portal.destination))).toEqual(new Set([
       'story', 'friends', 'online', 'arcade', 'versus', 'training', 'tournament', 'characters', 'avatarStudio', 'options', 'exit'

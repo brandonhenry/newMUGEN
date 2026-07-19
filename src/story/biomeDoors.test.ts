@@ -4,6 +4,7 @@ import {
   STORY_BIOME_DOOR_GROUND_SINK_Y,
   STORY_CENTRAL_DOOR_SCALE,
   STORY_CENTRAL_FLOOR_VISIBLE_TOP_Y,
+  STORY_DEEP_GATE_GROUND_SINK_Y,
   STORY_DEPTH_ENTRANCE_ASSET,
   STORY_DOOR_CHARACTER_HEIGHT_REFERENCE,
   STORY_HERO_DOOR_DISPLAY_SIZE,
@@ -32,6 +33,14 @@ describe('biome entrance library', () => {
     expect(frames.every(Boolean)).toBe(true);
     expect(new Set(frames).size).toBe(BIOMES.length);
     expect(BIOMES.every((biome) => storyBiomeDoorFrame(biome)?.tier === 'biome-gate')).toBe(true);
+  });
+
+  it('sinks the Ironroot, Bonevault, and Sunscar gates deeper into the Central Route ground', () => {
+    expect(storyBiomeDoorFrame('bonevault')?.visibleBottomInset).toBe(26);
+    expect(storyBiomeDoorFrame('ironroot')?.groundSinkY).toBe(STORY_DEEP_GATE_GROUND_SINK_Y);
+    expect(storyBiomeDoorFrame('bonevault')?.groundSinkY).toBe(STORY_DEEP_GATE_GROUND_SINK_Y);
+    expect(storyBiomeDoorFrame('sunscar')?.groundSinkY).toBe(STORY_DEEP_GATE_GROUND_SINK_Y);
+    expect(STORY_DEEP_GATE_GROUND_SINK_Y).toBeGreaterThan(STORY_BIOME_DOOR_GROUND_SINK_Y);
   });
 
   it('uses all three ordinary door variants for normal surface travel', () => {

@@ -33,7 +33,7 @@ function npc(input: Omit<StoryNpcDefinition, 'safeAnchor' | 'defense'> & { defen
 export const STORY_STARTER_NPCS: StoryNpcDefinition[] = [
   npc({ id: 'mina-quill', displayName: 'Mina Quill', role: 'archivist', biomeId: 'world-route', mapId: 'world-route', position: [-9.5, 0.82], spriteId: 'mina-quill', bark: 'Every road leaves a trace. I keep the atlas honest.', warningBark: 'Please lower your guard before I raise mine.', defense: STARTER_DEFENSE.mina }),
   npc({ id: 'hana-rook', displayName: 'Hana Rook', role: 'warden', biomeId: 'world-route', mapId: 'world-route', position: [4.5, 0.82], spriteId: 'hana-rook', bark: 'Daily routes reward attention, not rushing.', warningBark: 'That was your warning step.', defense: STARTER_DEFENSE.hana }),
-  npc({ id: 'tamsin-reed', displayName: 'Tamsin Reed', role: 'steward', biomeId: 'world-route', mapId: 'world-route', position: [19, 0.82], spriteId: 'tamsin-reed', bark: 'Coins rebuild roads. Rebuilt roads remember you.', warningBark: 'Tools are safer when everyone stands back.', defense: STARTER_DEFENSE.tamsin })
+  npc({ id: 'tamsin-reed', displayName: 'Tamsin Reed', role: 'steward', biomeId: 'world-route', mapId: 'world-route', position: [19, 0.82], spriteId: 'tamsin-reed', bark: 'Coins rebuild roads. Rebuilt roads remember you.', warningBark: 'Tools are safer when everyone stands back.', services: ['market'], defense: STARTER_DEFENSE.tamsin })
 ];
 
 const BIOME_NPC_DATA: Record<BiomeId, Array<[string, string, 'guide' | 'specialist' | 'resident', string, string]>> = {

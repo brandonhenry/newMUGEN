@@ -5,6 +5,7 @@
   "kits": {
     "village": {
       "sourceCellPixels": 16,
+      "surfaceMaterial": "grass",
       "roles": {
         "fill": [
           [
@@ -304,6 +305,7 @@
     },
     "forest": {
       "sourceCellPixels": 16,
+      "surfaceMaterial": "grass",
       "roles": {
         "fill": [
           [
@@ -603,6 +605,7 @@
     },
     "mine": {
       "sourceCellPixels": 16,
+      "surfaceMaterial": "stone",
       "roles": {
         "fill": [
           [
@@ -902,6 +905,7 @@
     },
     "crypt": {
       "sourceCellPixels": 16,
+      "surfaceMaterial": "stone",
       "roles": {
         "fill": [
           [
@@ -1201,6 +1205,7 @@
     },
     "underworld": {
       "sourceCellPixels": 16,
+      "surfaceMaterial": "stone",
       "roles": {
         "fill": [
           [
@@ -1500,6 +1505,7 @@
     },
     "snow": {
       "sourceCellPixels": 16,
+      "surfaceMaterial": "snow",
       "roles": {
         "fill": [
           [
@@ -1799,6 +1805,7 @@
     },
     "desert": {
       "sourceCellPixels": 16,
+      "surfaceMaterial": "sand",
       "roles": {
         "fill": [
           [
@@ -2098,6 +2105,7 @@
     },
     "ruins": {
       "sourceCellPixels": 16,
+      "surfaceMaterial": "crystal",
       "roles": {
         "fill": [
           [
@@ -2397,6 +2405,7 @@
     },
     "village-kings": {
       "sourceCellPixels": 32,
+      "surfaceMaterial": "grass",
       "roles": {
         "fill": [
           [
@@ -2696,6 +2705,7 @@
     },
     "forest-pixel": {
       "sourceCellPixels": 16,
+      "surfaceMaterial": "grass",
       "roles": {
         "fill": [
           [
@@ -2995,6 +3005,7 @@
     },
     "mine-grafx": {
       "sourceCellPixels": 16,
+      "surfaceMaterial": "stone",
       "roles": {
         "fill": [
           [
@@ -3294,6 +3305,7 @@
     },
     "crypt-moon": {
       "sourceCellPixels": 32,
+      "surfaceMaterial": "stone",
       "roles": {
         "fill": [
           [
@@ -3593,6 +3605,7 @@
     },
     "underworld-grafx": {
       "sourceCellPixels": 16,
+      "surfaceMaterial": "stone",
       "roles": {
         "fill": [
           [
@@ -3892,6 +3905,7 @@
     },
     "snow-seasonal": {
       "sourceCellPixels": 16,
+      "surfaceMaterial": "snow",
       "roles": {
         "fill": [
           [
@@ -4191,6 +4205,7 @@
     },
     "desert-pixel": {
       "sourceCellPixels": 16,
+      "surfaceMaterial": "sand",
       "roles": {
         "fill": [
           [
@@ -4490,6 +4505,7 @@
     },
     "ruins-space": {
       "sourceCellPixels": 16,
+      "surfaceMaterial": "crystal",
       "roles": {
         "fill": [
           [

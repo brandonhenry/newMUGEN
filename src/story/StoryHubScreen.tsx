@@ -14,7 +14,7 @@ import { STORY_HAZARD_SPRITES, storyHazardContactDamageReady, storyHazardDealsCo
 import { STORY_ATTACK_VISUAL_SYNC_DELAY_MS, advanceStoryAttackInputBuffer, adventureAttackHits, canAdventureEnemyDamagePlayer, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureAttackFrameHitbox, getAdventureEnemyStats, getStoryAttackDurationMs, getStoryProjectileSpawnPosition, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, resolveStoryAttackInput, stepAdventureProjectile, storyAreaEntryInvulnerableUntil, storyPlayerProjectileHits, type AdventureDamageFeedback, type StoryBufferedAttackInput } from './adventureCombat';
 import { makeStoryEncounterProgress, recordChallengerDefeat, recordFixedChallengerDefeat, recordRegularDefeat, rerollStoryRegularSpawns, resetActiveChallenger, storyEncounterMovementLock, type StoryEncounterProgress } from './adventureEncounters';
 import { storyChallengerSpawnPosition } from './adventureEncounterPlacement';
-import { STORY_ADVENTURE_COMBAT_STAT_KEYS, STORY_ADVENTURE_PARTY_SIZE_CAP, STORY_ADVENTURE_STAT_CAP, acknowledgeAdventurePartyFeatureReveal, addAdventureMaterial, adventureResourceYieldModifiers, allocateAdventureStat, applyAdventureEnemyDefeat, awardMountMastery, bankAdventureRunLedger, beginAdventureEndlessRun, beginAdventureVisit, canRespecAdventureStats, claimAdventureCache, collectAdventureRelic, consumeAdventureItem, craftAdventureRecipe, depleteAdventureResourceNode, discoverAdventureLandmark, discoverAdventureSurfaceMap, discoverAdventureVista, discoverAdventureWaystone, equipAdventureArmor, experienceToNextLevel, getAdventureDerivedStats, getAdventurePartySizeProgress, isAdventureResourceNodeAvailable, pinAdventureDaily, readAdventureProgress, recordAdventureBestDepth, respecAdventureStats, restoreAdventureShortcut, unlockAdventureEndlessBiome, unlockAdventureMasteryRecipe, unlockAdventureMount, unlockAdventureSpecialistRecipes, upgradeAdventureWaystone, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
+import { STORY_ADVENTURE_COMBAT_STAT_KEYS, STORY_ADVENTURE_PARTY_SIZE_CAP, STORY_ADVENTURE_STAT_CAP, acknowledgeAdventurePartyFeatureReveal, addAdventureMaterial, adventureResourceYieldModifiers, allocateAdventureStat, applyAdventureEnemyDefeat, awardMountMastery, bankAdventureRunLedger, beginAdventureEndlessRun, beginAdventureVisit, canRespecAdventureStats, claimAdventureCache, collectAdventureRelic, consumeAdventureItem, craftAdventureRecipe, depleteAdventureResourceNode, discoverAdventureLandmark, discoverAdventureSurfaceMap, discoverAdventureVista, discoverAdventureWaystone, equipAdventureArmor, experienceToNextLevel, getAdventureDerivedStats, getAdventurePartySizeProgress, isAdventureResourceNodeAvailable, pinAdventureDaily, readAdventureProgress, recordAdventureBestDepth, recordAdventureWildlifeSighting, respecAdventureStats, restoreAdventureShortcut, unlockAdventureEndlessBiome, unlockAdventureMasteryRecipe, unlockAdventureMount, unlockAdventureSpecialistRecipes, upgradeAdventureWaystone, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_REGION_LABELS, STORY_WORLDS, isStoryAdventureRegionId, isStoryAdventureWorldId, isStoryWorldId } from './adventureWorlds';
 import { STORY_BREATH_DRAIN_PER_SECOND, STORY_BREATH_REFILL_PER_SECOND, STORY_MAX_BREATH, STORY_MOUNTS, STORY_WORLD_MOUNT, shouldSyncAdventureWaterState, storyPartyEnemyHealthScale, type StoryPartyAiActor, type StoryPartyInstance, type StoryPartyInvite } from './adventureExploration';
 import { STORY_ENDLESS_GENERATION_VERSION, createAdventureRunSeed, emptyStoryRunLedger, generateAdventureFloor, storyBoonChoices, storyEndlessHash, storyEndlessPressure, storyEndlessRewardScale } from './adventureEndless';
@@ -27,6 +27,8 @@ import { storyGameplayVisual, storyTraversalGameplayVisual } from './biomeGamepl
 import { connectStoryHubMultiplayer, readOrCreateStoryHubGuestIdentity, readStoryHubOnlinePreference, STORY_HUB_CHALLENGE_TIMEOUT_MS, writeStoryHubOnlinePreference, type StoryHubMultiplayerSession } from './hubMultiplayer';
 import { KORE_CENTRAL_HUB } from './hubData';
 import { storyPlatformSurfacePlacement } from './platformGrounding';
+import { resolveStorySurfaceContact, type StorySurfaceContact } from './storySurfaceContact';
+import { advanceStoryMovementAudio, type StoryMovementAudioState } from './storyMovementAudio';
 import { STORY_MOVEMENT_PROFILE } from './movementProfile';
 import { resolveStoryTerrainMotion } from './storyTerrainCollision';
 import { resolveStoryTerrainVariant, storyTerrainFrame } from './terrainGrammar';
@@ -42,11 +44,13 @@ import { createAdventureSurfaceHub, firstStoryAdventureSurfaceMap, getStoryAdven
 import { STORY_NPC_POPUP_ANCHOR_Y, STORY_NPC_SPRITES, storyNpcFootContactSinkY, storyNpcPlaneSize, storyNpcWatchFacing } from './adventureNpcs';
 import { adventureUtcDate, getStoryDailyActivities } from './adventureObjectives';
 import { STORY_ARMOR_SET_BONUSES, STORY_BIOME_IDS, STORY_RECIPE_BY_ID, STORY_RECIPES, STORY_RESOURCES, canCraftRecipe, storyRecipeStationLabel, storyResourceVisualDefinition, type StoryBiomeId, type StoryCraftingContext } from './adventureCrafting';
+import { STORY_MARKET_CURIOS, STORY_REQUIRED_MARKET_GOODS, STORY_SELLABLE_MATERIALS, buyStoryMarketCurio, buyStoryMarketMaterial, sellStoryMarketMaterial, storyRouteMarketStock } from './adventureMarket';
+import { STORY_WILDLIFE_BY_ID } from './adventureEcology';
 import { adventureAttackCanHitResource, adventureResourceHitStrength, createEndlessFloorResourceNodes, resourceYield } from './adventureResources';
 import { AdventureStatPointNotification, type AdventureStatPointNotice } from './AdventureStatPointNotification';
 import { LevelLabOverlay, storyLevelLabCameraOverride, storyLevelLabEnabled } from './LevelLabOverlay';
 import { getEquippedStoryAvatarSlots, normalizeStoryAvatarRoster, setActiveStoryAvatar } from './profile';
-import type { AdventureMusicContext, AdventureMusicTrackDefinition, HubDestination, StoryAttackInput, StoryAvatarSet, StoryEndlessRunState, StoryEnemyDefeatEvent, StoryEnemyId, StoryEnemySpawnDefinition, StoryEnemyTier, StoryGeneratedFloor, StoryHazardDefinition, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryMountDefinition, StoryMountId, StoryNpcDefinition, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StoryResourceNodeDefinition, StoryRunBoonId, StorySpriteProjectileDefinition, StoryWorldBackdropLayerDefinition, StoryWorldId, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
+import type { AdventureMusicContext, AdventureMusicTrackDefinition, HubDestination, StoryAttackInput, StoryAvatarSet, StoryEndlessRunState, StoryEnemyDefeatEvent, StoryEnemyId, StoryEnemySpawnDefinition, StoryEnemyTier, StoryGeneratedFloor, StoryGeneratedPickup, StoryGeneratedWildlife, StoryHazardDefinition, StoryHubChallenge, StoryHubConnectionStatus, StoryHubDefinition, StoryHubPlayerState, StoryHubPresence, StoryMountDefinition, StoryMountId, StoryNpcDefinition, StoryPlatformDefinition, StoryPortalDefinition, StoryPortalDestination, StoryProfileV4, StoryResourceNodeDefinition, StoryRunBoonId, StorySpriteProjectileDefinition, StoryWorldBackdropLayerDefinition, StoryWorldId, StoryWorldLandmarkDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
 
 type StoryHubInput = Pick<InputFrame, 'left' | 'right' | 'down' | 'up' | 'jump' | 'jab' | 'kick' | 'heavy' | 'special' | 'block' | 'back' | 'pause'> & { interact: boolean };
 type SetVirtualAction = (player: 1 | 2, action: keyof InputFrame, pressed: boolean) => void;
@@ -1723,7 +1727,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
   onWaterState: (underwater: boolean, airPocket?: [number, number]) => void;
   onExit: () => void;
   onPause: () => void;
-  onStateSample: (state: StoryHubPlayerState) => void;
+  onStateSample: (state: StoryHubPlayerState, contact: StorySurfaceContact, grounded: boolean) => void;
   onReady?: () => void;
 }) {
   const bodyRef = useRef<RapierRigidBody>(null);
@@ -1751,6 +1755,12 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
   const releasedInputFrames = useRef(0);
   const nearbyId = useRef<string | null>(null);
   const lastSampleAt = useRef(0);
+  const lastGroundedContact = useRef<StorySurfaceContact>({
+    material: hub.environment?.surface?.surfaceMaterial ?? 'stone',
+    platformId: 'ground',
+    tileId: null,
+    source: hub.environment?.surface ? 'environment' : 'fallback'
+  });
   const flashUntil = useRef(0);
   const platformSurfaceInsets = useMemo(() => {
     const insets = new globalThis.Map(
@@ -1960,6 +1970,17 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
     if (avatarGroup.current) avatarGroup.current.visible = avatarVisible && (performance.now() >= flashUntil.current || Math.floor(performance.now() / 70) % 2 === 0);
 
     const nextPose: StoryAvatarPose = attackUntil.current > now ? attackPose.current : swimming || groundedUntil.current < now ? 'jump' : sprinting || mounted ? 'sprint' : horizontal !== 0 ? 'walk' : 'idle';
+    const grounded = !swimming && groundedUntil.current >= now;
+    const resolvedContact = resolveStorySurfaceContact({
+      hub,
+      x: nextX,
+      feetY: nextY - STORY_GROUNDED_ACTOR_CENTER_Y,
+      groundedPlatformId: groundedPlatform.current,
+      fallbackMaterial: hub.environment?.surface?.surfaceMaterial ?? 'stone',
+      underwater: swimming
+    });
+    if (grounded || swimming) lastGroundedContact.current = resolvedContact;
+    const sampledContact = grounded || swimming ? resolvedContact : lastGroundedContact.current;
     if (visualState.pose !== nextPose || visualState.facing !== facing.current || visualState.attackSequence !== attackSequence.current) {
       setVisualState({ pose: nextPose, facing: facing.current, attackSequence: attackSequence.current });
     }
@@ -1975,7 +1996,7 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
     else if (interactEdge && quickMatchAvailable) onQuickMatch();
     if (now - lastSampleAt.current > 0.12) {
       lastSampleAt.current = now;
-      onStateSample({ x: nextX, y: nextY, pose: nextPose, facing: facing.current });
+      onStateSample({ x: nextX, y: nextY, pose: nextPose, facing: facing.current }, sampledContact, grounded);
     }
     previousButtons.current = { jump: jumpPressed, interact: interactPressed, ...attackButtons, back: backPressed, pause: pausePressed };
   });
@@ -1997,7 +2018,66 @@ function readForcedChallengerId(): StoryEnemyId | undefined {
   return STORY_CHALLENGER_IDS.includes(candidate as StoryEnemyId) ? candidate as StoryEnemyId : undefined;
 }
 
-function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVisible, quickMatchAvailable, assignedPortalId, nearbyPortal, remotePlayers, selectedPlayerSessionId, progress, activePartyMembers, partyAiActors, mounted, mount, attackEvent, impactEvent, encounterSeed, initialEncounterProgress, onEncounterProgressChange, onChallengerStarted, onAttack, onPlayerDamage, onEnemyDefeated, onResourceHarvest, onQuickMatch, onSelectPlayer, onNearbyPortal, onActivatePortal, onWaterState, onExit, onPause, onStateSample, onReady }: {
+function StoryAnimatedEcologySprite({ path, frameCount, size, reducedMotion }: { path: string; frameCount: number; size: [number, number]; reducedMotion: boolean }) {
+  const source = useTexture(path);
+  const texture = useMemo(() => source.clone(), [source]);
+  useLayoutEffect(() => {
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.magFilter = THREE.NearestFilter;
+    texture.minFilter = THREE.NearestFilter;
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.repeat.set(1 / Math.max(1, frameCount), 1);
+    texture.needsUpdate = true;
+    return () => texture.dispose();
+  }, [frameCount, texture]);
+  useFrame(({ clock }) => {
+    const frame = reducedMotion ? 0 : Math.floor(clock.elapsedTime * 7) % Math.max(1, frameCount);
+    texture.offset.x = frame / Math.max(1, frameCount);
+  });
+  return <mesh position={[0, 0, 0]}><planeGeometry args={size} /><meshBasicMaterial map={texture} transparent alphaTest={0.08} toneMapped={false} /></mesh>;
+}
+
+function StoryWildlifeActor({ wildlife, playerPosition, reducedMotion, onSighting }: { wildlife: StoryGeneratedWildlife; playerPosition: MutableRefObject<THREE.Vector3>; reducedMotion: boolean; onSighting: (speciesId: string) => void }) {
+  const definition = STORY_WILDLIFE_BY_ID[wildlife.speciesId];
+  const group = useRef<THREE.Group>(null);
+  const sighted = useRef(false);
+  const home = wildlife.position[0];
+  useFrame((_, delta) => {
+    if (!group.current || !definition) return;
+    const distance = playerPosition.current.x - group.current.position.x;
+    if (!sighted.current && Math.abs(distance) < 4.5) { sighted.current = true; onSighting(wildlife.speciesId); }
+    if (wildlife.behavior === 'fleeing' && Math.abs(distance) < 5) {
+      group.current.position.x = THREE.MathUtils.clamp(group.current.position.x - Math.sign(distance || 1) * delta * 2.2, wildlife.leash[0], wildlife.leash[1]);
+      group.current.scale.x = distance > 0 ? -1 : 1;
+    } else if (wildlife.behavior === 'passive' && !reducedMotion) {
+      group.current.position.x = THREE.MathUtils.clamp(home + Math.sin(performance.now() / 1800 + home) * 0.65, wildlife.leash[0], wildlife.leash[1]);
+    }
+  });
+  if (!definition || wildlife.behavior === 'hostile') return null;
+  const size: [number, number] = [definition.scale * definition.frameSize[0] / 16, definition.scale * definition.frameSize[1] / 16];
+  return <group ref={group} position={[wildlife.position[0], wildlife.position[1] + size[1] / 2 - 0.65, -1.35]}>
+    <StoryAnimatedEcologySprite path={definition.atlasPath} frameCount={definition.frameCount} size={size} reducedMotion={reducedMotion} />
+  </group>;
+}
+
+function StoryFloorPickupActor({ pickup, playerPosition, reducedMotion, onCollect }: { pickup: StoryGeneratedPickup; playerPosition: MutableRefObject<THREE.Vector3>; reducedMotion: boolean; onCollect: (pickup: StoryGeneratedPickup) => void }) {
+  const group = useRef<THREE.Group>(null);
+  const collected = useRef(false);
+  useFrame(({ clock }) => {
+    if (!group.current || collected.current) return;
+    if (!reducedMotion) group.current.position.y = pickup.position[1] + Math.sin(clock.elapsedTime * 3 + pickup.position[0]) * 0.18;
+    if (Math.hypot(playerPosition.current.x - pickup.position[0], playerPosition.current.y - pickup.position[1]) < 1.25) {
+      collected.current = true;
+      group.current.visible = false;
+      onCollect(pickup);
+    }
+  });
+  return <group ref={group} position={[pickup.position[0], pickup.position[1], -1.1]}>
+    <StoryAnimatedEcologySprite path={pickup.atlasPath} frameCount={pickup.frameCount} size={[0.75, 0.75]} reducedMotion={reducedMotion} />
+  </group>;
+}
+
+function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVisible, quickMatchAvailable, assignedPortalId, nearbyPortal, remotePlayers, selectedPlayerSessionId, progress, activePartyMembers, partyAiActors, mounted, mount, attackEvent, impactEvent, encounterSeed, initialEncounterProgress, onEncounterProgressChange, onChallengerStarted, onAttack, onPlayerDamage, onEnemyDefeated, onResourceHarvest, onPickup, onWildlifeSighting, onQuickMatch, onSelectPlayer, onNearbyPortal, onActivatePortal, onWaterState, onExit, onPause, onStateSample, onReady }: {
   hub: StoryHubDefinition;
   profile: StoryProfileV4;
   reducedMotion: boolean;
@@ -2025,13 +2105,15 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
   onPlayerDamage: (damage: number, sourceX: number) => void;
   onEnemyDefeated: (event: StoryEnemyDefeatEvent) => void;
   onResourceHarvest: (node: StoryResourceNodeDefinition) => void;
+  onPickup: (pickup: StoryGeneratedPickup) => void;
+  onWildlifeSighting: (speciesId: string) => void;
   onSelectPlayer: (presence: StoryHubPresence) => void;
   onNearbyPortal: (portal: StoryPortalDefinition | null) => void;
   onActivatePortal: (portal: StoryPortalDefinition) => void;
   onWaterState: (underwater: boolean, airPocket?: [number, number]) => void;
   onExit: () => void;
   onPause: () => void;
-  onStateSample: (state: StoryHubPlayerState) => void;
+  onStateSample: (state: StoryHubPlayerState, contact: StorySurfaceContact, grounded: boolean) => void;
   onReady: () => void;
 }) {
   const playerPosition = useRef(new THREE.Vector3(hub.spawn[0], hub.spawn[1], 0));
@@ -2160,6 +2242,8 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
         {hub.portals.map((portal) => <PortalVisual key={portal.id} portal={portal} theme={hub.theme} nearby={nearbyPortal?.id === portal.id} assigned={assignedPortalId === portal.id} reducedMotion={reducedMotion} compactDoorways={hub.id === 'kore-central'} />)}
         {(hub.npcs ?? []).map((npc) => <AdventureNpcVisual key={npc.id} npc={npc} attackEvent={attackEvent} playerPosition={playerPosition} maxHealth={derivedStats.maxHealth} reducedMotion={reducedMotion} onPlayerDamage={(damage, sourceX) => { if (!disabled) onPlayerDamage(damage, sourceX); }} surfaceInsetY={groundSurfaceInsetY} surfacePixelWorldHeight={groundSurfacePixelWorldHeight} />)}
         {hub.biomeId && (hub.resourceNodes ?? []).map((node) => <AdventureResourceNode key={node.id} node={node} biomeId={hub.biomeId!} progress={progress} attackEvent={attackEvent} playerPosition={playerPosition} playerProjectile={playerProjectile} reducedMotion={reducedMotion} onHarvest={onResourceHarvest} />)}
+        {(hub.wildlife ?? []).map((wildlife) => <StoryWildlifeActor key={wildlife.id} wildlife={wildlife} playerPosition={playerPosition} reducedMotion={reducedMotion} onSighting={onWildlifeSighting} />)}
+        {(hub.pickups ?? []).map((pickup) => <StoryFloorPickupActor key={pickup.id} pickup={pickup} playerPosition={playerPosition} reducedMotion={reducedMotion} onCollect={onPickup} />)}
         {remotePlayers.map((presence, index) => <RemoteStoryPlayer key={presence.sessionId} presence={presence} reducedMotion={reducedMotion} groundingOffsetY={groundingOffsetY} surfaceInsetY={groundSurfaceInsetY} lane={index % 5} selected={selectedPlayerSessionId === presence.sessionId} onSelect={onSelectPlayer} />)}
         {partyAiActors.map((actor, index) => <StoryPartyAiCompanion key={actor.id} actor={actor} index={index} profile={profile} leaderPosition={playerPosition} reducedMotion={reducedMotion} groundingOffsetY={groundingOffsetY} surfaceInsetY={groundSurfaceInsetY} />)}
         {attackEvent?.projectile && <StoryPlayerProjectile key={attackEvent.id} attackEvent={attackEvent as StoryAdventureAttackEvent & { projectile: StorySpriteProjectileDefinition }} playerPosition={playerPosition} avatarRigOffset={[mounted && mount ? mount.riderOffset[0] : 0, groundingOffsetY - groundSurfaceInsetY + (mounted && mount ? mount.riderOffset[1] : 0)]} runtime={playerProjectile} />}
@@ -2456,6 +2540,33 @@ function AdventurePackPanel({ progress, context, onCraft, onEquip, onUse, onClos
   </div>;
 }
 
+function RouteMarketPanel({ progress, onBuy, onSell, onBuyCurio, onClose }: {
+  progress: StoryAdventureProgressV1;
+  onBuy: (resourceId: string) => void;
+  onSell: (resourceId: string) => void;
+  onBuyCurio: (curioId: string) => void;
+  onClose: () => void;
+}) {
+  const [tab, setTab] = useState<'buy' | 'sell' | 'collection'>('buy');
+  const dailyCurio = storyRouteMarketStock(adventureUtcDate()).curio;
+  return <div className="story-adventure-overlay story-pack-overlay" role="presentation">
+    <section className="story-adventure-pack story-route-market" role="dialog" aria-modal="true" aria-labelledby="story-market-title" data-testid="story-route-market">
+      <header><div><span><Handshake size={17} /> Tamsin Reed</span><h2 id="story-market-title">Route Market</h2></div><button type="button" aria-label="Close Route Market" onClick={onClose}><X size={19} /></button></header>
+      <nav aria-label="Route Market sections">
+        <button type="button" className={tab === 'buy' ? 'is-active' : ''} onClick={() => setTab('buy')}><PackageOpen size={17} /> Buy</button>
+        <button type="button" className={tab === 'sell' ? 'is-active' : ''} onClick={() => setTab('sell')}><Gem size={17} /> Sell</button>
+        <button type="button" className={tab === 'collection' ? 'is-active' : ''} onClick={() => setTab('collection')}><BookOpen size={17} /> Collection</button>
+      </nav>
+      <div className="story-pack-grid story-pack-materials">
+        {tab === 'buy' && <>{STORY_REQUIRED_MARKET_GOODS.map((good) => { const resource = STORY_RESOURCES.find((entry) => entry.id === good.resourceId)!; return <article key={good.resourceId} className="is-discovered is-rare"><img src={resource.iconPath} alt="" /><div><small>Permanent stock · required for crafting</small><strong>{good.label}</strong></div><output>{progress.inventory.materials[good.resourceId] ?? 0}</output><button type="button" disabled={progress.routeCoins < good.price} onClick={() => onBuy(good.resourceId)}>Buy · {good.price}</button></article>; })}{!progress.collectedCurios.includes(dailyCurio.id) && <article key={dailyCurio.id} className="is-discovered is-legendary"><img src={dailyCurio.iconPath} alt="" /><div><small>Optional daily curio</small><strong>{dailyCurio.label}</strong><p>{dailyCurio.lore}</p></div><button type="button" disabled={progress.routeCoins < dailyCurio.price} onClick={() => onBuyCurio(dailyCurio.id)}>Buy · {dailyCurio.price}</button></article>}</>}
+        {tab === 'sell' && STORY_SELLABLE_MATERIALS.map((resource) => <article key={resource.id} className={`is-discovered is-${resource.rarity}`}><img src={resource.iconPath} alt="" /><div><small>Harvested · {resource.rarity}</small><strong>{resource.label}</strong></div><output>{progress.inventory.materials[resource.id] ?? 0}</output><button type="button" disabled={(progress.inventory.materials[resource.id] ?? 0) <= 0} onClick={() => onSell(resource.id)}>Sell one</button></article>)}
+        {tab === 'collection' && STORY_MARKET_CURIOS.map((curio) => { const owned = progress.collectedCurios.includes(curio.id); return <article key={curio.id} className={`${owned ? 'is-discovered' : 'is-locked'} is-legendary`}><img src={curio.iconPath} alt="" /><div><small>{curio.biomeId}</small><strong>{owned ? curio.label : 'Undiscovered curio'}</strong>{owned && <p>{curio.lore}</p>}</div></article>; })}
+      </div>
+      <footer><strong>{progress.routeCoins} Route Coins</strong><small>Required crafting stock never rotates. Merchant goods cannot be mined or sold back.</small></footer>
+    </section>
+  </div>;
+}
+
 function PartySizeUnlockReveal({ progress, reducedMotion, onOpenStats, onContinue }: {
   progress: StoryAdventureProgressV1;
   reducedMotion: boolean;
@@ -2521,7 +2632,7 @@ function devPreviewHub(hub: StoryHubDefinition): StoryHubDefinition {
   return { ...hub, spawn: [THREE.MathUtils.clamp(previewX, hub.bounds.minX + 1, hub.bounds.maxX - 1), Number.isFinite(previewY) ? previewY : hub.spawn[1]] };
 }
 
-function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGeneratedFloor | null, exitLocked: boolean, pressureRank: number, pressureHunterAnchor: number | null, claimedContainerIds: string[] = []): StoryHubDefinition {
+function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGeneratedFloor | null, exitLocked: boolean, pressureRank: number, pressureHunterAnchor: number | null, claimedContainerIds: string[] = [], claimedPickupIds: string[] = []): StoryHubDefinition {
   if (!floor) return surface;
   const visualSet = storyBiomeVisualSet(floor.visualSetId) ?? storyPrimaryBiomeVisualSet(floor.worldId);
   const pressure = storyEndlessPressure(floor.parTimeSeconds + Math.max(0, pressureRank - 1) * 30, floor.parTimeSeconds);
@@ -2652,6 +2763,8 @@ function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGenerate
     traversal: floor.traversal,
     interactables: [...(eventInteractable ? [eventInteractable] : []), ...containerInteractables],
     resourceNodes: createEndlessFloorResourceNodes(floor.worldId, floor),
+    wildlife: floor.wildlife,
+    pickups: floor.pickups.filter((pickup) => !claimedPickupIds.includes(pickup.id)),
     levelMeta,
     musicPhase: floor.intent === 'boss' ? 'elite' : floor.intent === 'harvest' ? 'safe' : floor.intent === 'exploration' ? 'mystery' : pressure.rank > 0 ? 'tension' : floor.chapterFloor === 3 ? 'mystery' : 'explore',
     exploration: surface.exploration ? {
@@ -2723,7 +2836,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const endlessEncounterProgress = endlessHubId ? encounterProgressByHub[endlessHubId] ?? makeStoryEncounterProgress() : makeStoryEncounterProgress();
   const endlessExitLocked = Boolean(generatedFloor?.encounters.some((encounter) => !endlessEncounterProgress.resolvedZoneIds.includes(encounter.id)));
   const floorPressure = generatedFloor ? storyEndlessPressure(floorElapsedSeconds, generatedFloor.parTimeSeconds) : null;
-  const activeHub = useMemo(() => createEndlessFloorHub(baseHub, generatedFloor, endlessExitLocked, floorPressure?.rank ?? 0, pressureHunterAnchor, endlessRun?.ledger.cacheIds ?? []), [baseHub, endlessExitLocked, endlessRun?.ledger.cacheIds, floorPressure?.rank, generatedFloor, pressureHunterAnchor]);
+  const activeHub = useMemo(() => devPreviewHub(createEndlessFloorHub(baseHub, generatedFloor, endlessExitLocked, floorPressure?.rank ?? 0, pressureHunterAnchor, endlessRun?.ledger.cacheIds ?? [], endlessRun?.ledger.pickupIds ?? [])), [baseHub, endlessExitLocked, endlessRun?.ledger.cacheIds, endlessRun?.ledger.pickupIds, floorPressure?.rank, generatedFloor, pressureHunterAnchor]);
   const [nearbyPortal, setNearbyPortal] = useState<StoryPortalDefinition | null>(null);
   const [pauseOpen, setPauseOpen] = useState(false);
   const [tutorialOpen, setTutorialOpen] = useState(false);
@@ -2732,6 +2845,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const [mapOpen, setMapOpen] = useState(false);
   const [statsOpen, setStatsOpen] = useState(false);
   const [packOpen, setPackOpen] = useState(false);
+  const [marketOpen, setMarketOpen] = useState(false);
   const [craftingContext, setCraftingContext] = useState<StoryCraftingContext>({ kind: 'field' });
   const derivedAdventureStats = useMemo(() => {
     const base = getAdventureDerivedStats(adventureProgress);
@@ -2821,7 +2935,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const encounterStartedAtRef = useRef<Record<string, number>>({});
   const playerStateRef = useRef<StoryHubPlayerState>({ x: activeHub.spawn[0], y: activeHub.spawn[1], pose: 'idle', facing: 1, worldId: activeWorldId });
   const activeHubBoundsRef = useRef(activeHub.bounds);
-  const audioMotionRef = useRef<{ worldId: StoryWorldId; x: number; y: number; pose: StoryAvatarPose; distance: number }>({ worldId: activeWorldId, x: activeHub.spawn[0], y: activeHub.spawn[1], pose: 'idle', distance: 0 });
+  const audioMotionRef = useRef<StoryMovementAudioState>({ worldId: activeWorldId, x: activeHub.spawn[0], y: activeHub.spawn[1], pose: 'idle', grounded: true, distance: 0, material: activeHub.environment?.surface?.surfaceMaterial ?? 'stone' });
   const readInput = useCallback(() => {
     const input = readInputs()[0];
     return { ...input, interact: storyInteractRef.current || input.charge };
@@ -2857,26 +2971,11 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     };
   }, []);
   const handleHubReady = useCallback(() => setHubReady(true), []);
-  const handlePlayerState = useCallback((state: StoryHubPlayerState) => {
+  const handlePlayerState = useCallback((state: StoryHubPlayerState, contact: StorySurfaceContact, grounded: boolean) => {
     const worldState = { ...state, worldId: activeWorldId };
-    const motion = audioMotionRef.current;
-    if (motion.worldId !== activeWorldId) {
-      audioMotionRef.current = { worldId: activeWorldId, x: state.x, y: state.y, pose: state.pose, distance: 0 };
-    } else {
-      if (motion.pose !== 'jump' && state.pose === 'jump') emitAdventureAudioEvent({ kind: 'jump' });
-      if (motion.pose === 'jump' && state.pose !== 'jump') emitAdventureAudioEvent({ kind: 'land', intensity: Math.min(1, 0.65 + Math.abs(state.y - motion.y) * 0.12) });
-      const travel = Math.abs(state.x - motion.x);
-      const movingOnFoot = !mounted && !underwater && (state.pose === 'walk' || state.pose === 'sprint');
-      motion.distance = movingOnFoot ? motion.distance + travel : 0;
-      const stride = state.pose === 'sprint' ? 1.12 : 0.82;
-      if (movingOnFoot && motion.distance >= stride) {
-        emitAdventureAudioEvent({ kind: 'step', sprinting: state.pose === 'sprint' });
-        motion.distance %= stride;
-      }
-      motion.x = state.x;
-      motion.y = state.y;
-      motion.pose = state.pose;
-    }
+    const audio = advanceStoryMovementAudio(audioMotionRef.current, { worldId: activeWorldId, x: state.x, y: state.y, pose: state.pose, grounded, material: contact.material, mounted, underwater });
+    audioMotionRef.current = audio.state;
+    audio.events.forEach(emitAdventureAudioEvent);
     playerStateRef.current = worldState;
     setPlayerX(state.x);
     setPlayerY(state.y);
@@ -2927,6 +3026,21 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     setAdventureProgress(saved);
     return saved;
   }, []);
+  const handleWildlifeSighting = useCallback((speciesId: string) => {
+    if (adventureProgressRef.current.wildlifeSightings.includes(speciesId)) return;
+    updateAdventureProgress(recordAdventureWildlifeSighting(adventureProgressRef.current, speciesId));
+    const label = STORY_WILDLIFE_BY_ID[speciesId]?.label ?? speciesId;
+    setChallengeNotice({ id: `wildlife:${speciesId}`, text: `Bestiary sighting recorded: ${label}.` });
+  }, [updateAdventureProgress]);
+  const handleFloorPickup = useCallback((pickup: StoryGeneratedPickup) => {
+    if (!endlessRun || endlessRun.ledger.pickupIds.includes(pickup.id)) return;
+    setEndlessRun((current) => {
+      if (!current || current.ledger.pickupIds.includes(pickup.id)) return current;
+      const materials = { ...current.ledger.materials };
+      if (pickup.materialId && pickup.materialQuantity) materials[pickup.materialId] = (materials[pickup.materialId] ?? 0) + pickup.materialQuantity;
+      return { ...current, ledger: { ...current.ledger, routeCoins: current.ledger.routeCoins + (pickup.rewardCoins ?? 0), materials, pickupIds: [...current.ledger.pickupIds, pickup.id], curioIds: pickup.curioId ? [...current.ledger.curioIds, pickup.curioId] : current.ledger.curioIds } };
+    });
+  }, [endlessRun]);
   const switchPartyMember = useCallback((avatarId: string, force = false) => {
     if (avatarId === profile.activeAvatarId) return true;
     const equipped = getEquippedStoryAvatarSlots(profile).slice(0, adventureProgressRef.current.stats.partySize);
@@ -3430,6 +3544,18 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     setPauseOpen(false);
     setPackOpen(true);
   }, []);
+  const buyMarketMaterial = useCallback((resourceId: string) => {
+    const result = buyStoryMarketMaterial(adventureProgressRef.current, resourceId);
+    if (result.purchased) updateAdventureProgress(result.progress);
+  }, [updateAdventureProgress]);
+  const sellMarketMaterial = useCallback((resourceId: string) => {
+    const result = sellStoryMarketMaterial(adventureProgressRef.current, resourceId);
+    if (result.sold) updateAdventureProgress(result.progress);
+  }, [updateAdventureProgress]);
+  const buyMarketCurio = useCallback((curioId: string) => {
+    const result = buyStoryMarketCurio(adventureProgressRef.current, curioId);
+    if (result.purchased) updateAdventureProgress(result.progress);
+  }, [updateAdventureProgress]);
   const handleResourceHarvest = useCallback((node: StoryResourceNodeDefinition) => {
     if (!isStoryAdventureRegionId(activeWorldId) || !isAdventureResourceNodeAvailable(adventureProgressRef.current, node, activeWorldId)) return;
     const modifiers = adventureResourceYieldModifiers(adventureProgressRef.current, node);
@@ -3757,6 +3883,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
           openAdventurePack({ kind: 'specialist', biomeId: npc.biomeId });
           analyticsRef.current?.('adventure_recipes_learned', { source: 'specialist', world_id: npc.biomeId, count: result.learned.length });
         }
+        if (!refusing && npc.services?.includes('market')) setMarketOpen(true);
       }
       return;
     }
@@ -4280,10 +4407,10 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     setBoonChoices(storyBoonChoices(endlessRun.seed, generatedFloor.floorNumber, endlessRun.boons, reroll));
   }, [boonReroll, endlessRun, generatedFloor, localSessionId, partyInstance]);
 
-  const buyFromDepthTrader = useCallback((purchase: 'heal' | 'consumable' | 'reroll') => {
+  const buyFromDepthTrader = useCallback((purchase: 'heal' | 'consumable' | 'reroll' | 'tradeGood') => {
     if (!endlessRun || !generatedFloor || !activeTraderEventId) return;
     if (partyInstance && partyInstance.leaderSessionId !== localSessionId) return;
-    const cost = generatedFloor.event?.traderCosts?.[purchase] ?? Math.ceil(({ heal: 25, consumable: 40, reroll: 60 } as const)[purchase] * storyEndlessRewardScale(generatedFloor.floorNumber));
+    const cost = generatedFloor.event?.traderCosts?.[purchase] ?? Math.ceil(({ heal: 25, consumable: 40, reroll: 60, tradeGood: 55 } as const)[purchase] * storyEndlessRewardScale(generatedFloor.floorNumber));
     if (endlessRun.ledger.routeCoins < cost) return;
     let ledger = { ...endlessRun.ledger, routeCoins: endlessRun.ledger.routeCoins - cost };
     let rerollTokens = endlessRun.rerollTokens;
@@ -4296,7 +4423,10 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       playerHealthRef.current = health[profile.activeAvatarId] ?? playerHealthRef.current;
       setPlayerHealth(playerHealthRef.current);
     } else if (purchase === 'reroll') rerollTokens += 1;
-    else {
+    else if (purchase === 'tradeGood') {
+      const good = STORY_REQUIRED_MARKET_GOODS[storyEndlessHash(`${endlessRun.seed}:trader-good:${generatedFloor.floorNumber}`) % STORY_REQUIRED_MARKET_GOODS.length];
+      ledger = { ...ledger, materials: { ...ledger.materials, [good.resourceId]: (ledger.materials[good.resourceId] ?? 0) + 1 } };
+    } else {
       const consumables = STORY_RECIPES.filter((candidate) => candidate.kind === 'consumable');
       const recipe = consumables[storyEndlessHash(`${endlessRun.seed}:trader-consumable:${generatedFloor.floorNumber}`) % Math.max(1, consumables.length)];
       if (recipe) ledger = { ...ledger, consumables: { ...ledger.consumables, [recipe.id]: (ledger.consumables[recipe.id] ?? 0) + 1 } };
@@ -4409,13 +4539,14 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   }, [updateAdventureProgress]);
   const effectiveAttackEvent = partyAttackEvent && (!attackEvent || partyAttackEvent.id > attackEvent.id) ? partyAttackEvent : attackEvent;
   const traderScale = generatedFloor ? storyEndlessRewardScale(generatedFloor.floorNumber) : 1;
-  const traderCosts = generatedFloor?.event?.traderCosts ?? { heal: Math.ceil(25 * traderScale), consumable: Math.ceil(40 * traderScale), reroll: Math.ceil(60 * traderScale) };
+  const traderCosts = generatedFloor?.event?.traderCosts ?? { heal: Math.ceil(25 * traderScale), consumable: Math.ceil(40 * traderScale), reroll: Math.ceil(60 * traderScale), tradeGood: Math.ceil(55 * traderScale) };
   const traderConsumables = STORY_RECIPES.filter((candidate) => candidate.kind === 'consumable');
   const traderConsumable = endlessRun && generatedFloor ? traderConsumables[storyEndlessHash(`${endlessRun.seed}:trader-consumable:${generatedFloor.floorNumber}`) % Math.max(1, traderConsumables.length)] : null;
+  const traderGood = endlessRun && generatedFloor ? STORY_REQUIRED_MARKET_GOODS[storyEndlessHash(`${endlessRun.seed}:trader-good:${generatedFloor.floorNumber}`) % STORY_REQUIRED_MARKET_GOODS.length] : null;
 
   return <div className="story-hub-screen" data-testid="story-hub-screen" data-world={activeWorldId} data-hub-ready={hubReady ? 'true' : 'false'} data-controls-open={controlsOpen ? 'true' : 'false'} data-map-open={mapOpen ? 'true' : 'false'} data-stats-open={statsOpen ? 'true' : 'false'} data-tutorial-open={tutorialOpen ? 'true' : 'false'} data-return-home-confirm={returnHomeConfirmOpen ? 'true' : 'false'} data-quick-match={quickMatchAvailable ? 'true' : 'false'} data-player-x={playerX.toFixed(2)} data-player-y={playerY.toFixed(2)} data-player-pose={playerPose} data-player-projectile-asset={effectiveAttackEvent?.projectile?.frames[0]?.path ?? ''} data-player-projectile-launch={effectiveAttackEvent?.projectile?.launchPoint.join(',') ?? ''} data-player-health={playerHealth} data-player-level={adventureProgress.level} data-party-id={partyInstance?.id ?? ''} data-nearby-portal={nearbyPortal?.id ?? ''} data-online={onlineEnabled ? 'true' : 'false'} data-connection-status={connectionStatus} data-player-count={playerCount}>
     <div className="story-hub-canvas-shell">
-      <HubCanvas key={activeHub.id} hub={activeHub} profile={profile} reducedMotion={reducedMotion} readInput={readInput} disabled={pauseOpen || tutorialOpen || returnHomeConfirmOpen || controlsOpen || mapOpen || statsOpen || packOpen || partyUnlockOpen || Boolean(selectedPlayer) || Boolean(incomingChallenge) || Boolean(doorTravel) || Boolean(boonChoices) || abandonConfirmOpen || Boolean(activeTraderEventId) || Boolean(pendingEventChoiceId)} avatarVisible={!doorTravel || doorTravel.step < 4 || doorTravel.step >= 18} quickMatchAvailable={quickMatchAvailable} assignedPortalId={quickMatch.portalId} nearbyPortal={nearbyPortal} remotePlayers={visibleRemotePlayers} selectedPlayerSessionId={selectedPlayer?.sessionId} progress={adventureProgress} activePartyMembers={partyInstance ? partyInstance.members.length + partyInstance.aiActors.length : 1} partyAiActors={partyInstance?.aiActors ?? []} mounted={mounted} mount={activeMount} attackEvent={effectiveAttackEvent} impactEvent={impactEvent} encounterSeed={encounterSeed} initialEncounterProgress={activeEncounterProgress} onEncounterProgressChange={handleEncounterProgressChange} onChallengerStarted={handleChallengerStarted} onAttack={handleAdventureAttack} onPlayerDamage={handlePlayerDamage} onEnemyDefeated={handleEnemyDefeated} onResourceHarvest={handleResourceHarvest} onQuickMatch={startQuickMatch} onSelectPlayer={selectRemotePlayer} onNearbyPortal={setNearbyPortal} onActivatePortal={activatePortal} onWaterState={handleWaterState} onExit={exitCurrentWorld} onPause={openPause} onStateSample={handlePlayerState} onReady={handleHubReady} />
+      <HubCanvas key={activeHub.id} hub={activeHub} profile={profile} reducedMotion={reducedMotion} readInput={readInput} disabled={pauseOpen || tutorialOpen || returnHomeConfirmOpen || controlsOpen || mapOpen || statsOpen || packOpen || marketOpen || partyUnlockOpen || Boolean(selectedPlayer) || Boolean(incomingChallenge) || Boolean(doorTravel) || Boolean(boonChoices) || abandonConfirmOpen || Boolean(activeTraderEventId) || Boolean(pendingEventChoiceId)} avatarVisible={!doorTravel || doorTravel.step < 4 || doorTravel.step >= 18} quickMatchAvailable={quickMatchAvailable} assignedPortalId={quickMatch.portalId} nearbyPortal={nearbyPortal} remotePlayers={visibleRemotePlayers} selectedPlayerSessionId={selectedPlayer?.sessionId} progress={adventureProgress} activePartyMembers={partyInstance ? partyInstance.members.length + partyInstance.aiActors.length : 1} partyAiActors={partyInstance?.aiActors ?? []} mounted={mounted} mount={activeMount} attackEvent={effectiveAttackEvent} impactEvent={impactEvent} encounterSeed={encounterSeed} initialEncounterProgress={activeEncounterProgress} onEncounterProgressChange={handleEncounterProgressChange} onChallengerStarted={handleChallengerStarted} onAttack={handleAdventureAttack} onPlayerDamage={handlePlayerDamage} onEnemyDefeated={handleEnemyDefeated} onResourceHarvest={handleResourceHarvest} onPickup={handleFloorPickup} onWildlifeSighting={handleWildlifeSighting} onQuickMatch={startQuickMatch} onSelectPlayer={selectRemotePlayer} onNearbyPortal={setNearbyPortal} onActivatePortal={activatePortal} onWaterState={handleWaterState} onExit={exitCurrentWorld} onPause={openPause} onStateSample={handlePlayerState} onReady={handleHubReady} />
     </div>
     {storyLevelLabEnabled() && <LevelLabOverlay hub={activeHub} floor={generatedFloor} />}
 
@@ -4717,6 +4848,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
         <button type="button" className="story-pause-edit" disabled={endlessRun.ledger.routeCoins < traderCosts.heal} onClick={() => buyFromDepthTrader('heal')}><Heart size={18} /> Heal the party 25% · {traderCosts.heal}</button>
         <button type="button" className="story-pause-edit" disabled={endlessRun.ledger.routeCoins < traderCosts.consumable} onClick={() => buyFromDepthTrader('consumable')}><Beaker size={18} /> {traderConsumable?.label ?? 'Crafted consumable'} · {traderCosts.consumable}</button>
         <button type="button" className="story-pause-edit" disabled={endlessRun.ledger.routeCoins < traderCosts.reroll} onClick={() => buyFromDepthTrader('reroll')}><RotateCcw size={18} /> Boon reroll token · {traderCosts.reroll}</button>
+        <button type="button" className="story-pause-edit" disabled={endlessRun.ledger.routeCoins < (traderCosts.tradeGood ?? 0)} onClick={() => buyFromDepthTrader('tradeGood')}><Gem size={18} /> {traderGood?.label ?? 'Trade-good bundle'} · {traderCosts.tradeGood ?? 0}</button>
         <button type="button" className="story-primary-button" onClick={leaveDepthTrader}>Leave safely</button>
       </section>
     </div>}
@@ -4724,6 +4856,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     {mapOpen && <AdventureRouteMap activeWorldId={activeWorldId} activeSurfaceMapId={activeSurfaceMapId} progress={adventureProgress} endlessRun={endlessRun} generatedFloor={generatedFloor} onFastTravel={fastTravelToWaystone} onFastTravelHome={fastTravelHome} onPinDaily={pinDailyActivity} onClose={() => setMapOpen(false)} />}
     {statsOpen && <AdventureStatsPanel progress={adventureProgress} canRespec={canRespecAdventureStats(activeWorldId, nearbyPortal?.kind)} onAllocate={allocateStat} onManageParty={() => onDestination('avatarStudio')} onRespec={respecStats} onClose={() => setStatsOpen(false)} />}
     {packOpen && <AdventurePackPanel progress={adventureProgress} context={craftingContext} onCraft={craftRecipe} onEquip={equipArmor} onUse={useConsumable} onClose={() => setPackOpen(false)} />}
+    {marketOpen && <RouteMarketPanel progress={adventureProgress} onBuy={buyMarketMaterial} onSell={sellMarketMaterial} onBuyCurio={buyMarketCurio} onClose={() => setMarketOpen(false)} />}
     {harvestNotice && <aside className="story-harvest-toast" role="status" data-testid="story-harvest-toast"><Gem size={18} /><span><strong>+{harvestNotice.quantity} {harvestNotice.label}</strong>{harvestNotice.learned.length > 0 && <small>{harvestNotice.learned.length} new {harvestNotice.learned.length === 1 ? 'recipe' : 'recipes'} discovered</small>}</span></aside>}
   </div>;
 }

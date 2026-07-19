@@ -1,5 +1,5 @@
 import { worldPackAsset } from './adventureAssets';
-import type { StoryWorldBackdropLayerDefinition, StoryWorldEnvironmentDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
+import type { StorySurfaceMaterial, StoryWorldBackdropLayerDefinition, StoryWorldEnvironmentDefinition, StoryWorldPropDefinition, StoryWorldThemeId } from './types';
 
 type EnvironmentPalette = Omit<StoryWorldEnvironmentDefinition, 'layers'>;
 type LayerInput = [file: string, depth: number, height: number, parallax: number, repeatEvery: number, opacity?: number, y?: number];
@@ -129,6 +129,12 @@ const SURFACES: Record<StoryWorldThemeId, SurfaceInput> = {
   ruins: ['skyglass/tileset.png', [48, 16, 32, 16], [224, 128]]
 };
 
+const SURFACE_MATERIALS: Record<StoryWorldThemeId, StorySurfaceMaterial> = {
+  city: 'metal', arcade: 'stone', versus: 'stone', online: 'metal', training: 'metal', tournament: 'stone',
+  route: 'grass', village: 'grass', forest: 'grass', mine: 'stone', crypt: 'stone', underworld: 'stone',
+  snow: 'snow', desert: 'sand', ruins: 'crystal'
+};
+
 /**
  * Authored neighboring cap pieces from each biome atlas. The renderer selects
  * among these per platform, which keeps one collision language while avoiding
@@ -194,11 +200,13 @@ export function createStoryWorldEnvironment(theme: StoryWorldThemeId): StoryWorl
       asset: worldPackAsset(file),
       frame,
       atlasSize,
+      surfaceMaterial: SURFACE_MATERIALS[theme],
       ...(walkSurfaceInsetPixels ? { walkSurfaceInsetPixels } : {}),
       ...(SURFACE_VARIANT_FRAMES[theme] ? {
         variants: SURFACE_VARIANT_FRAMES[theme]!.map((variantFrame, index) => ({
           id: `${theme}-terrain-${index + 1}`,
           frame: variantFrame,
+          surfaceMaterial: SURFACE_MATERIALS[theme],
           ...(walkSurfaceInsetPixels ? { walkSurfaceInsetPixels } : {})
         }))
       } : {})
@@ -216,7 +224,7 @@ export function createStoryBiomeVisualSetEnvironment(theme: StoryWorldThemeId, v
       const [layerFile, depth, height, parallax, repeatEvery, opacity = 1, y = height / 2 - 0.5] = input;
       return { id: `${visualSetId}-art-${index + 1}`, asset: worldPackAsset(layerFile), depth, y, height, opacity, parallax, color: '#ffffff', repeatEvery };
     }),
-    surface: { asset: worldPackAsset(file), frame, atlasSize, ...(walkSurfaceInsetPixels ? { walkSurfaceInsetPixels } : {}) }
+    surface: { asset: worldPackAsset(file), frame, atlasSize, surfaceMaterial: SURFACE_MATERIALS[theme], ...(walkSurfaceInsetPixels ? { walkSurfaceInsetPixels } : {}) }
   };
 }
 

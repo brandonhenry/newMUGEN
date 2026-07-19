@@ -14,6 +14,7 @@ function unit(value: string) {
 
 const JUNK = ['Bent nails and damp cloth.', 'A cracked token with no trade value.', 'Dust, string, and a blunt spoon.', 'Spoiled trail rations.'];
 const CONSUMABLES = ['berry-tonic', 'herbal-draught', 'stoneguard-tonic', 'gatherers-tea'];
+const TRADE_GOODS = ['artisan-thread', 'precision-clasp', 'alchemical-vial', 'guild-catalyst'];
 
 export function generateStoryFloorContainers(input: {
   worldId: StoryBiomeId;
@@ -30,7 +31,11 @@ export function generateStoryFloorContainers(input: {
   if (input.version < 8) return [];
   const contract = storyBiomeGameplayAssetContract(input.visualSetId);
   if (!contract?.containers.length) return [];
-  const rewardRooms = input.rooms.filter((room) => room.optional && room.id !== input.entranceRoomId && room.id !== input.exitRoomId && room.rewardAlcoves.length > 0);
+  const rewardRooms = input.rooms.filter((room) => room.optional && room.id !== input.entranceRoomId && room.id !== input.exitRoomId && room.rewardAlcoves.length > 0)
+    // v9 guarantees the entire reward-room column is hazard-free. This is
+    // intentionally version-gated so the published v8 container seed output
+    // remains byte-for-byte stable.
+    .filter((room) => input.version < 9 || input.hazards.every((hazard) => hazard.bounds[1] < room.bounds[0] || hazard.bounds[0] > room.bounds[1]));
   if (rewardRooms.length === 0) return [];
   const desired = input.intent === 'exploration' || input.intent === 'harvest' ? 3 : 2;
   const count = Math.min(desired, rewardRooms.length);
@@ -52,20 +57,27 @@ export function generateStoryFloorContainers(input: {
       position,
       label: room.hidden ? 'Hidden Supply Cache' : 'Route Supply Cache'
     };
-    if (outcomeRoll < 0.18) return { ...base, outcome: 'empty' as const, quality: 'empty' as const, resultText: 'Empty. Someone reached it first.' };
-    if (outcomeRoll < 0.38) return { ...base, outcome: 'junk' as const, quality: 'poor' as const, resultText: JUNK[hash(`${rollSeed}:junk`) % JUNK.length] };
-    if (outcomeRoll < 0.68) {
+    const thresholds = input.version >= 9
+      ? { empty: 0.18, junk: 0.36, coins: 0.64, material: 0.82, consumable: 0.92 }
+      : { empty: 0.18, junk: 0.38, coins: 0.68, material: 0.90, consumable: 1 };
+    if (outcomeRoll < thresholds.empty) return { ...base, outcome: 'empty' as const, quality: 'empty' as const, resultText: 'Empty. Someone reached it first.' };
+    if (outcomeRoll < thresholds.junk) return { ...base, outcome: 'junk' as const, quality: 'poor' as const, resultText: JUNK[hash(`${rollSeed}:junk`) % JUNK.length] };
+    if (outcomeRoll < thresholds.coins) {
       const rewardCoins = 2 + hash(`${rollSeed}:coins`) % Math.max(4, 7 + Math.min(8, input.floorNumber));
       return { ...base, outcome: 'coins' as const, quality: 'common' as const, rewardCoins, resultText: `${rewardCoins} provisional Route Coins.` };
     }
-    if (outcomeRoll < 0.90) {
+    if (outcomeRoll < thresholds.material) {
       const local = STORY_BIOME_RESOURCE_IDS[input.worldId];
       const materialId = local[hash(`${rollSeed}:material`) % 3];
       const materialQuantity = 1 + hash(`${rollSeed}:quantity`) % 2;
       return { ...base, outcome: 'material' as const, quality: 'useful' as const, materialId, materialQuantity, resultText: `${materialQuantity} ${STORY_RESOURCE_BY_ID[materialId].label}.` };
     }
-    const consumableId = CONSUMABLES[hash(`${rollSeed}:consumable`) % CONSUMABLES.length];
-    return { ...base, outcome: 'consumable' as const, quality: 'useful' as const, consumableId, resultText: `${STORY_RECIPE_BY_ID[consumableId].label}.` };
+    if (outcomeRoll < thresholds.consumable) {
+      const consumableId = CONSUMABLES[hash(`${rollSeed}:consumable`) % CONSUMABLES.length];
+      return { ...base, outcome: 'consumable' as const, quality: 'useful' as const, consumableId, resultText: `${STORY_RECIPE_BY_ID[consumableId].label}.` };
+    }
+    const materialId = TRADE_GOODS[hash(`${rollSeed}:trade-good`) % TRADE_GOODS.length];
+    return { ...base, outcome: 'trade-good' as const, quality: 'useful' as const, materialId, materialQuantity: 1, resultText: `${STORY_RESOURCE_BY_ID[materialId].label}.` };
   });
 }
 
@@ -91,6 +103,7 @@ export function storyFloorContainerValidationErrors(input: {
     if (input.hazards.some((hazard) => container.position[0] >= hazard.bounds[0] - 1.5 && container.position[0] <= hazard.bounds[1] + 1.5 && container.position[1] >= hazard.bounds[2] - 1 && container.position[1] <= hazard.bounds[3] + 2)) errors.push(`container-hazard:${container.id}`);
     if (container.outcome === 'coins' && !container.rewardCoins) errors.push(`container-coins:${container.id}`);
     if (container.outcome === 'material' && (!container.materialId || !container.materialQuantity)) errors.push(`container-material:${container.id}`);
+    if (container.outcome === 'trade-good' && (!container.materialId || !container.materialQuantity || STORY_RESOURCE_BY_ID[container.materialId]?.acquisition !== 'merchant')) errors.push(`container-trade-good:${container.id}`);
     if (container.outcome === 'consumable' && !container.consumableId) errors.push(`container-consumable:${container.id}`);
     if ((container.outcome === 'empty' || container.outcome === 'junk') && (container.rewardCoins || container.materialId || container.consumableId)) errors.push(`container-empty-reward:${container.id}`);
   }

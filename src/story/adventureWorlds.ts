@@ -40,6 +40,15 @@ const routeGate = (id: typeof STORY_ADVENTURE_REGION_IDS[number], x: number): St
   position: [x, 1.7], size: [2.8, 3.4], accent: REGION_ACCENTS[id], kind: 'adventure-gate'
 });
 
+const WORLD_ROUTE_SKYGLASS_TREE_ID = 'route-pack-prop-11';
+const WORLD_ROUTE_SKYGLASS_TREE_SINK_Y = 0.35;
+
+function createWorldRouteProps() {
+  return createStoryWorldProps('route', -90, 90).map((prop) => prop.id === WORLD_ROUTE_SKYGLASS_TREE_ID
+    ? { ...prop, position: [prop.position[0], prop.position[1] - WORLD_ROUTE_SKYGLASS_TREE_SINK_Y, prop.position[2]] as [number, number, number] }
+    : prop);
+}
+
 function landmark(id: string, label: string, subtitle: string, x: number, y: number, width: number, height: number, color: string, kind: StoryWorldLandmarkDefinition['kind'] = 'district'): StoryWorldLandmarkDefinition {
   return { id, label, subtitle, position: [x, y, -1.15], size: [width, height], color, kind };
 }
@@ -49,12 +58,7 @@ const WORLD_ROUTE: StoryHubDefinition = {
   spawn: [0, STORY_GROUNDED_ACTOR_CENTER_Y], checkpoint: [0, STORY_GROUNDED_ACTOR_CENTER_Y], bounds: { minX: -90, maxX: 90, floorY: 0 }, theme: 'route',
   environment: createStoryWorldEnvironment('route'), adventure: true,
   platforms: [
-    { id: 'ground', position: [0, -0.5], size: [182, 1] },
-    { id: 'route-overlook-far-left', position: [-70, 4.7], size: [11, 0.45], oneWay: true },
-    { id: 'route-overlook-left', position: [-36, 4.1], size: [13, 0.45], oneWay: true },
-    { id: 'route-shrine-overlook', position: [0, 5.4], size: [12, 0.45], oneWay: true },
-    { id: 'route-overlook-right', position: [36, 4.1], size: [13, 0.45], oneWay: true },
-    { id: 'route-overlook-far-right', position: [70, 4.7], size: [11, 0.45], oneWay: true }
+    { id: 'ground', position: [0, -0.5], size: [182, 1] }
   ],
   portals: [
     { id: 'route-central-return', label: 'K.O.R.E. Central', subtitle: 'Return to the main hub', destination: 'central', position: [-87.5, 1.7], size: [2.8, 3.4], accent: '#2ee6ff', kind: 'adventure-gate' },
@@ -76,7 +80,7 @@ const WORLD_ROUTE: StoryHubDefinition = {
     landmark('route-horizon-district', 'Horizon Gates', 'Sunscar and Skyglass roads', 54, 5.1, 18, 6, '#ff83d1'),
     landmark('route-east-outlook', 'East Outlook', 'A quiet view over every road', 76, 6.2, 14, 8, '#8ee8ff', 'secret')
   ],
-  props: createStoryWorldProps('route', -90, 90),
+  props: createWorldRouteProps(),
   enemySpawns: [],
   npcs: STORY_STARTER_NPCS,
   interactables: [{ id: 'route-board', kind: 'restoration', label: 'Route Restoration Board', subtitle: 'Review regional reconstruction projects', position: [25, 1.1] }],

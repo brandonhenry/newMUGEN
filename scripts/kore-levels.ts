@@ -124,6 +124,10 @@ async function sample() {
   const entranceTiers = [0, 0, 0];
   const visualSets: Record<string, number> = {};
   const containerOutcomes: Record<string, number> = {};
+  const ecologyFamilies: Record<string, number> = {};
+  const collectibleFamilies: Record<string, number> = {};
+  const wildlifeBehaviors: Record<string, number> = {};
+  let pickups = 0;
   for (const biome of STORY_ADVENTURE_REGION_IDS) for (let index = 0; index < count; index += 1) {
     const floorNumber = [1, 2, 3, 4, 8, 100, Number.MAX_SAFE_INTEGER][index % 7];
     const floor = generateAdventureFloor(biome, `level-director-${index}`, floorNumber);
@@ -132,6 +136,10 @@ async function sample() {
     if (floor.entranceTier !== undefined) entranceTiers[floor.entranceTier] += 1;
     if (floor.visualSetId) visualSets[floor.visualSetId] = (visualSets[floor.visualSetId] ?? 0) + 1;
     for (const container of floor.containers) containerOutcomes[container.outcome] = (containerOutcomes[container.outcome] ?? 0) + 1;
+    if (floor.ecologyFamilyId) ecologyFamilies[floor.ecologyFamilyId] = (ecologyFamilies[floor.ecologyFamilyId] ?? 0) + 1;
+    if (floor.collectibleFamilyId) collectibleFamilies[floor.collectibleFamilyId] = (collectibleFamilies[floor.collectibleFamilyId] ?? 0) + 1;
+    for (const wildlife of floor.wildlife) wildlifeBehaviors[wildlife.behavior] = (wildlifeBehaviors[wildlife.behavior] ?? 0) + 1;
+    pickups += floor.pickups.length;
     failures.push(...floor.validationFailures.map((failure) => `${biome}:${index}:${failure}`));
     if ((floor.intent === 'harvest' || floor.intent === 'exploration') && floor.enemySpawns.length > 0) failures.push(`${biome}:${index}:peaceful-floor-enemies`);
     if (!floor.platforms.some((platform) => platform.terrainRole === 'wall')) failures.push(`${biome}:${index}:missing-structural-terrain`);
@@ -139,7 +147,10 @@ async function sample() {
     if (floor.version >= 7 && STORY_BIOME_VISUAL_SETS[floor.visualSetId ?? '']?.terrainKitId !== floor.terrainKitId) failures.push(`${biome}:${index}:mixed-visual-set`);
     signatures.add(floor.rooms.filter((room) => room.critical).sort((a, b) => a.column - b.column || a.row - b.row).map((room) => `${room.column}:${room.row}:${room.templateId}`).join('|'));
   }
-  const result = { valid: failures.length === 0 && fallbacks === 0 && entranceTiers.every((value) => value > 0) && Object.keys(visualSets).length === 16 && ['empty', 'junk', 'coins', 'material', 'consumable'].every((outcome) => (containerOutcomes[outcome] ?? 0) > 0), seeds: count * STORY_ADVENTURE_REGION_IDS.length, fallbacks, failures, uniqueSignatures: signatures.size, intents, entranceTiers, visualSets, containerOutcomes };
+  const interactiveWildlife = (wildlifeBehaviors.passive ?? 0) + (wildlifeBehaviors.fleeing ?? 0) + (wildlifeBehaviors.hostile ?? 0);
+  const wildlifeRatios = Object.fromEntries(['passive', 'fleeing', 'hostile'].map((behavior) => [behavior, interactiveWildlife ? (wildlifeBehaviors[behavior] ?? 0) / interactiveWildlife : 0]));
+  const ratioValid = Math.abs(wildlifeRatios.passive - 0.60) <= 0.08 && Math.abs(wildlifeRatios.fleeing - 0.25) <= 0.08 && Math.abs(wildlifeRatios.hostile - 0.15) <= 0.08;
+  const result = { valid: failures.length === 0 && fallbacks === 0 && entranceTiers.every((value) => value > 0) && Object.keys(visualSets).length === 16 && ['empty', 'junk', 'coins', 'material', 'consumable', 'trade-good'].every((outcome) => (containerOutcomes[outcome] ?? 0) > 0) && Object.keys(ecologyFamilies).length >= 8 && Object.keys(collectibleFamilies).length === 4 && pickups > 0 && ratioValid, seeds: count * STORY_ADVENTURE_REGION_IDS.length, fallbacks, failures, uniqueSignatures: signatures.size, intents, entranceTiers, visualSets, containerOutcomes, ecologyFamilies, collectibleFamilies, wildlifeBehaviors, wildlifeRatios, pickups };
   await writeJson(`sample-${count}.json`, result);
   return result;
 }

@@ -3,24 +3,21 @@
   "name": "K.O.R.E. Central",
   "subtitle": "Where every route begins",
   "spawn": [-4.5, 0.9],
-  "bounds": { "minX": -31, "maxX": 31, "floorY": 0 },
+  "bounds": { "minX": -39, "maxX": 39, "floorY": 0 },
   "platforms": [
-    { "id": "ground", "position": [0, -0.5], "size": [66, 1] },
-    { "id": "central-overlook", "position": [0, 4.2], "size": [12, 0.45], "oneWay": true },
-    { "id": "social-overlook", "position": [-19, 4.2], "size": [8, 0.45], "oneWay": true },
-    { "id": "competition-overlook", "position": [19, 4.2], "size": [8, 0.45], "oneWay": true }
+    { "id": "ground", "position": [0, -0.5], "size": [82, 1] }
   ],
   "portals": [
-    { "id": "friends-lounge", "label": "Friends", "subtitle": "Meet your crew", "destination": "friends", "position": [-27, 1.5], "size": [2.8, 3.2], "accent": "#67d9ff" },
-    { "id": "online-gate", "label": "Online", "subtitle": "Enter the Online Exchange", "destination": "online", "position": [-21, 1.7], "size": [2.8, 3.4], "accent": "#7d91ff", "kind": "mode-door" },
-    { "id": "characters-kiosk", "label": "Characters", "subtitle": "Browse the roster", "destination": "characters", "position": [-14.5, 1.4], "size": [2.6, 3], "accent": "#b883ff" },
-    { "id": "avatar-studio", "label": "Avatar Studio", "subtitle": "Change your look", "destination": "avatarStudio", "position": [-8, 1.4], "size": [2.6, 3], "accent": "#ff77c8" },
+    { "id": "friends-lounge", "label": "Friends", "subtitle": "Meet your crew", "destination": "friends", "position": [-35, 1.5], "size": [2.8, 3.2], "accent": "#67d9ff" },
+    { "id": "online-gate", "label": "Online", "subtitle": "Enter the Online Exchange", "destination": "online", "position": [-28, 1.7], "size": [2.8, 3.4], "accent": "#7d91ff", "kind": "mode-door" },
+    { "id": "characters-kiosk", "label": "Characters", "subtitle": "Browse the roster", "destination": "characters", "position": [-21, 1.4], "size": [2.6, 3], "accent": "#b883ff" },
+    { "id": "avatar-studio", "label": "Avatar Studio", "subtitle": "Change your look", "destination": "avatarStudio", "position": [-14, 1.4], "size": [2.6, 3], "accent": "#ff77c8" },
+    { "id": "options-kiosk", "label": "Options", "subtitle": "Tune K.O.R.E.", "destination": "options", "position": [-7, 1.4], "size": [2.4, 2.6], "accent": "#a8b2c4" },
     { "id": "story-gate", "label": "World Route", "subtitle": "Explore the adventure worlds", "destination": "story", "position": [0, 1.8], "size": [4.2, 4], "accent": "#ffe071" },
-    { "id": "arcade-gate", "label": "Arcade", "subtitle": "Enter the Arcade World", "destination": "arcade", "position": [8, 1.7], "size": [2.6, 3.4], "accent": "#ff9d35", "kind": "mode-door" },
-    { "id": "versus-gate", "label": "Versus", "subtitle": "Enter the Versus Hall", "destination": "versus", "position": [14, 1.7], "size": [2.6, 3.4], "accent": "#ff5d69", "kind": "mode-door" },
-    { "id": "training-gate", "label": "Training", "subtitle": "Enter the Training Lab", "destination": "training", "position": [20, 1.7], "size": [2.6, 3.4], "accent": "#52e1a1", "kind": "mode-door" },
-    { "id": "tournament-gate", "label": "Tournament", "subtitle": "Enter Tournament Floor", "destination": "tournament", "position": [26, 1.7], "size": [2.8, 3.4], "accent": "#ffe071", "kind": "mode-door" },
-    { "id": "options-kiosk", "label": "Options", "subtitle": "Tune K.O.R.E.", "destination": "options", "position": [-4, 5.7], "size": [2.4, 2.6], "accent": "#a8b2c4" },
-    { "id": "exit-gate", "label": "Exit", "subtitle": "Return to menu", "destination": "exit", "position": [4, 5.7], "size": [2.4, 2.6], "accent": "#a8b2c4" }
+    { "id": "exit-gate", "label": "Exit", "subtitle": "Return to menu", "destination": "exit", "position": [7, 1.4], "size": [2.4, 2.6], "accent": "#a8b2c4" },
+    { "id": "arcade-gate", "label": "Arcade", "subtitle": "Enter the Arcade World", "destination": "arcade", "position": [14, 1.7], "size": [2.6, 3.4], "accent": "#ff9d35", "kind": "mode-door" },
+    { "id": "versus-gate", "label": "Versus", "subtitle": "Enter the Versus Hall", "destination": "versus", "position": [21, 1.7], "size": [2.6, 3.4], "accent": "#ff5d69", "kind": "mode-door" },
+    { "id": "training-gate", "label": "Training", "subtitle": "Enter the Training Lab", "destination": "training", "position": [28, 1.7], "size": [2.6, 3.4], "accent": "#52e1a1", "kind": "mode-door" },
+    { "id": "tournament-gate", "label": "Tournament", "subtitle": "Enter Tournament Floor", "destination": "tournament", "position": [35, 1.7], "size": [2.8, 3.4], "accent": "#ffe071", "kind": "mode-door" }
   ]
 }

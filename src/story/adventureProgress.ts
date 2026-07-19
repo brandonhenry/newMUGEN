@@ -3,12 +3,13 @@ import { STORY_ROSTER_CHALLENGER_IDS } from './enemyRosterIds';
 import type { StoryAdventureWorldId, StoryEnemyDefeatEvent, StoryEnemyId, StoryMountId, StoryResourceNodeDefinition, StoryRunRewardLedger } from './types';
 import { STORY_RECIPE_BY_ID, STORY_RECIPES, STORY_RESOURCE_BY_ID, STORY_STARTER_RECIPE_IDS, advancedRecipesLearned, canCraftRecipe, recipeLearnedFromMastery, recipeLearnedFromRareResource, recipesLearnedFromSpecialist, type StoryActiveEffect, type StoryAdventureInventory, type StoryArmorSlot, type StoryBiomeId, type StoryCraftingContext } from './adventureCrafting';
 
-export const STORY_ADVENTURE_PROGRESS_VERSION = 5 as const;
-export const STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v5';
-export const PREVIOUS_STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v4';
-export const LEGACY_STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v3';
-export const ORIGINAL_STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v2';
-export const FIRST_STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v1';
+export const STORY_ADVENTURE_PROGRESS_VERSION = 6 as const;
+export const STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v6';
+export const PREVIOUS_STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v5';
+export const LEGACY_STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v4';
+export const ORIGINAL_STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v3';
+export const FIRST_STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v2';
+export const EARLIEST_STORY_ADVENTURE_PROGRESS_KEY = 'kore.story.adventure.v1';
 export const STORY_ADVENTURE_MAX_LEVEL = 100;
 export const STORY_ADVENTURE_STAT_CAP = 25;
 export const STORY_ADVENTURE_PARTY_SIZE_CAP = 5;
@@ -90,15 +91,21 @@ export type StoryAdventureProgressV4 = Omit<StoryAdventureProgressV3, 'version' 
 };
 
 export type StoryAdventureProgressV5 = Omit<StoryAdventureProgressV4, 'version'> & {
-  version: typeof STORY_ADVENTURE_PROGRESS_VERSION;
+  version: 5;
   endlessUnlockedBiomes: Exclude<StoryAdventureWorldId, 'world-route'>[];
   bestDepthByBiome: Partial<Record<Exclude<StoryAdventureWorldId, 'world-route'>, number>>;
   endlessRunCounters: Partial<Record<Exclude<StoryAdventureWorldId, 'world-route'>, number>>;
   endlessBossesDefeated: number;
 };
 
+export type StoryAdventureProgressV6 = Omit<StoryAdventureProgressV5, 'version'> & {
+  version: typeof STORY_ADVENTURE_PROGRESS_VERSION;
+  wildlifeSightings: string[];
+  collectedCurios: string[];
+};
+
 /** @deprecated Kept as a source-compatible alias while callers migrate to V2. */
-export type StoryAdventureProgressV1 = StoryAdventureProgressV5;
+export type StoryAdventureProgressV1 = StoryAdventureProgressV6;
 
 export type StoryAdventureDerivedStats = {
   maxHealth: number;
@@ -178,7 +185,9 @@ export function makeDefaultAdventureProgress(): StoryAdventureProgressV1 {
     endlessUnlockedBiomes: [],
     bestDepthByBiome: {},
     endlessRunCounters: {},
-    endlessBossesDefeated: 0
+    endlessBossesDefeated: 0,
+    wildlifeSightings: [],
+    collectedCurios: []
   };
 }
 
@@ -202,7 +211,7 @@ export function getAdventurePartySizeProgress(progress: Pick<StoryAdventureProgr
 
 export function sanitizeAdventureProgress(value: unknown): StoryAdventureProgressV1 {
   if (!value || typeof value !== 'object') return makeDefaultAdventureProgress();
-  const record = value as Partial<StoryAdventureProgressV5>;
+  const record = value as Partial<StoryAdventureProgressV6>;
   const level = clamp(finiteInteger(record.level, 1), 1, STORY_ADVENTURE_MAX_LEVEL);
   const rawStats = record.stats && typeof record.stats === 'object' ? record.stats as Partial<StoryAdventureStats> : {};
   const uniqueStrings = (input: unknown, limit = 256) => Array.from(new Set(Array.isArray(input) ? input.filter((entry): entry is string => typeof entry === 'string' && entry.length > 0).slice(0, limit) : []));
@@ -327,7 +336,9 @@ export function sanitizeAdventureProgress(value: unknown): StoryAdventureProgres
     endlessUnlockedBiomes,
     bestDepthByBiome,
     endlessRunCounters,
-    endlessBossesDefeated: Math.max(0, finiteInteger(record.endlessBossesDefeated))
+    endlessBossesDefeated: Math.max(0, finiteInteger(record.endlessBossesDefeated)),
+    wildlifeSightings: uniqueStrings(record.wildlifeSightings, 256),
+    collectedCurios: uniqueStrings(record.collectedCurios, 64)
   };
 }
 
@@ -335,7 +346,7 @@ export function readAdventureProgress(): StoryAdventureProgressV1 {
   if (typeof window === 'undefined') return makeDefaultAdventureProgress();
   try {
     const current = window.localStorage.getItem(STORY_ADVENTURE_PROGRESS_KEY);
-    const legacy = window.localStorage.getItem(PREVIOUS_STORY_ADVENTURE_PROGRESS_KEY) ?? window.localStorage.getItem(LEGACY_STORY_ADVENTURE_PROGRESS_KEY) ?? window.localStorage.getItem(ORIGINAL_STORY_ADVENTURE_PROGRESS_KEY) ?? window.localStorage.getItem(FIRST_STORY_ADVENTURE_PROGRESS_KEY);
+    const legacy = window.localStorage.getItem(PREVIOUS_STORY_ADVENTURE_PROGRESS_KEY) ?? window.localStorage.getItem(LEGACY_STORY_ADVENTURE_PROGRESS_KEY) ?? window.localStorage.getItem(ORIGINAL_STORY_ADVENTURE_PROGRESS_KEY) ?? window.localStorage.getItem(FIRST_STORY_ADVENTURE_PROGRESS_KEY) ?? window.localStorage.getItem(EARLIEST_STORY_ADVENTURE_PROGRESS_KEY);
     const sanitized = sanitizeAdventureProgress(JSON.parse(current ?? legacy ?? 'null'));
     if (!current && legacy) window.localStorage.setItem(STORY_ADVENTURE_PROGRESS_KEY, JSON.stringify(sanitized));
     return sanitized;
@@ -581,9 +592,10 @@ export function bankAdventureRunLedger(
     ...next,
     lifetimeDefeats: current.lifetimeDefeats + Math.max(0, finiteInteger(ledger.defeats)),
     routeCoins: next.routeCoins + Math.max(0, finiteInteger(ledger.routeCoins)),
-    claimedCaches: [...next.claimedCaches, ...ledger.cacheIds],
+    claimedCaches: [...next.claimedCaches, ...ledger.cacheIds, ...ledger.pickupIds],
     claimedObjectives: [...next.claimedObjectives, bankEventId],
-    endlessBossesDefeated: next.endlessBossesDefeated + 1
+    endlessBossesDefeated: next.endlessBossesDefeated + 1,
+    collectedCurios: [...next.collectedCurios, ...ledger.curioIds]
   });
   for (const [resourceId, quantity] of Object.entries(ledger.materials)) next = addAdventureMaterial(next, resourceId, quantity).progress;
   const consumables = { ...next.inventory.consumables };
@@ -598,6 +610,18 @@ export function bankAdventureRunLedger(
   const dailyBonus = !claims.includes(dailyId);
   if (dailyBonus) next = sanitizeAdventureProgress({ ...next, routeCoins: next.routeCoins + 75, dailyClaims: { ...next.dailyClaims, [date]: [...claims, dailyId] } });
   return { progress: next, banked: true, dailyBonus };
+}
+
+export function recordAdventureWildlifeSighting(progress: StoryAdventureProgressV1, speciesId: string) {
+  const current = sanitizeAdventureProgress(progress);
+  if (!speciesId || current.wildlifeSightings.includes(speciesId)) return current;
+  return sanitizeAdventureProgress({ ...current, wildlifeSightings: [...current.wildlifeSightings, speciesId] });
+}
+
+export function collectAdventureCurio(progress: StoryAdventureProgressV1, curioId: string) {
+  const current = sanitizeAdventureProgress(progress);
+  if (!curioId || current.collectedCurios.includes(curioId)) return current;
+  return sanitizeAdventureProgress({ ...current, collectedCurios: [...current.collectedCurios, curioId] });
 }
 
 export function restoreAdventureShortcut(progress: StoryAdventureProgressV1, shortcutId: string, cost = 100) {

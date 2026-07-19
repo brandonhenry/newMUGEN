@@ -1,0 +1,993 @@
+{
+  "version": 1,
+  "assets": [
+    {
+      "id": "minibear",
+      "packId": "minifolks",
+      "path": "/story/ecology/atlases/minifolks/minibear.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 4,
+      "role": "world-wildlife,bestiary"
+    },
+    {
+      "id": "minibird",
+      "packId": "minifolks",
+      "path": "/story/ecology/atlases/minifolks/minibird.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "role": "world-wildlife,bestiary"
+    },
+    {
+      "id": "miniboar",
+      "packId": "minifolks",
+      "path": "/story/ecology/atlases/minifolks/miniboar.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 4,
+      "role": "world-wildlife,bestiary"
+    },
+    {
+      "id": "minibunny",
+      "packId": "minifolks",
+      "path": "/story/ecology/atlases/minifolks/minibunny.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 4,
+      "role": "world-wildlife,bestiary"
+    },
+    {
+      "id": "minideer1",
+      "packId": "minifolks",
+      "path": "/story/ecology/atlases/minifolks/minideer1.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 4,
+      "role": "world-wildlife,bestiary"
+    },
+    {
+      "id": "minideer2",
+      "packId": "minifolks",
+      "path": "/story/ecology/atlases/minifolks/minideer2.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 4,
+      "role": "world-wildlife,bestiary"
+    },
+    {
+      "id": "minifox",
+      "packId": "minifolks",
+      "path": "/story/ecology/atlases/minifolks/minifox.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 4,
+      "role": "world-wildlife,bestiary"
+    },
+    {
+      "id": "miniwolf",
+      "packId": "minifolks",
+      "path": "/story/ecology/atlases/minifolks/miniwolf.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 4,
+      "role": "world-wildlife,bestiary"
+    },
+    {
+      "id": "dog",
+      "packId": "street",
+      "path": "/story/ecology/atlases/street/dog.png",
+      "frameSize": [
+        48,
+        48
+      ],
+      "frames": 4,
+      "role": "world-wildlife,bestiary"
+    },
+    {
+      "id": "dog-2",
+      "packId": "street",
+      "path": "/story/ecology/atlases/street/dog-2.png",
+      "frameSize": [
+        48,
+        48
+      ],
+      "frames": 4,
+      "role": "world-wildlife,bestiary"
+    },
+    {
+      "id": "cat",
+      "packId": "street",
+      "path": "/story/ecology/atlases/street/cat.png",
+      "frameSize": [
+        48,
+        48
+      ],
+      "frames": 4,
+      "role": "world-wildlife,bestiary"
+    },
+    {
+      "id": "cat-2",
+      "packId": "street",
+      "path": "/story/ecology/atlases/street/cat-2.png",
+      "frameSize": [
+        48,
+        48
+      ],
+      "frames": 4,
+      "role": "world-wildlife,bestiary"
+    },
+    {
+      "id": "rat",
+      "packId": "street",
+      "path": "/story/ecology/atlases/street/rat.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 4,
+      "role": "world-wildlife,bestiary"
+    },
+    {
+      "id": "rat-2",
+      "packId": "street",
+      "path": "/story/ecology/atlases/street/rat-2.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 4,
+      "role": "world-wildlife,bestiary"
+    },
+    {
+      "id": "bird",
+      "packId": "street",
+      "path": "/story/ecology/atlases/street/bird.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 4,
+      "role": "world-wildlife,bestiary"
+    },
+    {
+      "id": "bird-2",
+      "packId": "street",
+      "path": "/story/ecology/atlases/street/bird-2.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 4,
+      "role": "world-wildlife,bestiary"
+    },
+    {
+      "id": "blue-frog",
+      "packId": "froglet",
+      "path": "/story/ecology/atlases/froglet/blue-frog.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 8,
+      "role": "world-wildlife,bestiary"
+    },
+    {
+      "id": "green-frog",
+      "packId": "froglet",
+      "path": "/story/ecology/atlases/froglet/green-frog.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 8,
+      "role": "world-wildlife,bestiary"
+    },
+    {
+      "id": "pink-frog",
+      "packId": "froglet",
+      "path": "/story/ecology/atlases/froglet/pink-frog.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 8,
+      "role": "world-wildlife,bestiary"
+    },
+    {
+      "id": "yellow-frog",
+      "packId": "froglet",
+      "path": "/story/ecology/atlases/froglet/yellow-frog.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 8,
+      "role": "world-wildlife,bestiary"
+    },
+    {
+      "id": "kimbul-bat",
+      "packId": "bat",
+      "path": "/story/ecology/atlases/bat/kimbul-bat.png",
+      "frameSize": [
+        80,
+        80
+      ],
+      "frames": 15,
+      "role": "world-wildlife,bestiary"
+    },
+    {
+      "id": "crow",
+      "packId": "birds",
+      "path": "/story/ecology/atlases/birds/crow.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 12,
+      "role": "ambient-wildlife,bestiary"
+    },
+    {
+      "id": "pigeon",
+      "packId": "birds",
+      "path": "/story/ecology/atlases/birds/pigeon.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 12,
+      "role": "ambient-wildlife,bestiary"
+    },
+    {
+      "id": "yellowbird",
+      "packId": "birds",
+      "path": "/story/ecology/atlases/birds/yellowbird.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 12,
+      "role": "ambient-wildlife,bestiary"
+    },
+    {
+      "id": "rat-blonde",
+      "packId": "rats",
+      "path": "/story/ecology/atlases/rats/rat-blonde.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 4,
+      "role": "ambient-wildlife,bestiary"
+    },
+    {
+      "id": "rat-chocolate",
+      "packId": "rats",
+      "path": "/story/ecology/atlases/rats/rat-chocolate.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 4,
+      "role": "ambient-wildlife,bestiary"
+    },
+    {
+      "id": "rat-cinnamon",
+      "packId": "rats",
+      "path": "/story/ecology/atlases/rats/rat-cinnamon.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 4,
+      "role": "ambient-wildlife,bestiary"
+    },
+    {
+      "id": "rat-darkgrey",
+      "packId": "rats",
+      "path": "/story/ecology/atlases/rats/rat-darkgrey.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 4,
+      "role": "ambient-wildlife,bestiary"
+    },
+    {
+      "id": "rat-lightgrey",
+      "packId": "rats",
+      "path": "/story/ecology/atlases/rats/rat-lightgrey.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 4,
+      "role": "ambient-wildlife,bestiary"
+    },
+    {
+      "id": "rat-white",
+      "packId": "rats",
+      "path": "/story/ecology/atlases/rats/rat-white.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 4,
+      "role": "ambient-wildlife,bestiary"
+    },
+    {
+      "id": "snakealbino",
+      "packId": "snakes",
+      "path": "/story/ecology/atlases/snakes/snakealbino.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 7,
+      "role": "ambient-wildlife,bestiary"
+    },
+    {
+      "id": "snakeblue",
+      "packId": "snakes",
+      "path": "/story/ecology/atlases/snakes/snakeblue.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 7,
+      "role": "ambient-wildlife,bestiary"
+    },
+    {
+      "id": "snakebrown",
+      "packId": "snakes",
+      "path": "/story/ecology/atlases/snakes/snakebrown.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 7,
+      "role": "ambient-wildlife,bestiary"
+    },
+    {
+      "id": "snakecorn",
+      "packId": "snakes",
+      "path": "/story/ecology/atlases/snakes/snakecorn.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 7,
+      "role": "ambient-wildlife,bestiary"
+    },
+    {
+      "id": "snakegreen",
+      "packId": "snakes",
+      "path": "/story/ecology/atlases/snakes/snakegreen.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 7,
+      "role": "ambient-wildlife,bestiary"
+    },
+    {
+      "id": "snakered",
+      "packId": "snakes",
+      "path": "/story/ecology/atlases/snakes/snakered.png",
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": 7,
+      "role": "ambient-wildlife,bestiary"
+    },
+    {
+      "id": "clucking-chicken",
+      "packId": "deepdive",
+      "path": "/story/ecology/atlases/deepdive/clucking-chicken.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "role": "tiny-wildlife,bestiary"
+    },
+    {
+      "id": "coral-crab",
+      "packId": "deepdive",
+      "path": "/story/ecology/atlases/deepdive/coral-crab.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "role": "tiny-wildlife,bestiary"
+    },
+    {
+      "id": "croaking-toad",
+      "packId": "deepdive",
+      "path": "/story/ecology/atlases/deepdive/croaking-toad.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "role": "tiny-wildlife,bestiary"
+    },
+    {
+      "id": "dainty-pig",
+      "packId": "deepdive",
+      "path": "/story/ecology/atlases/deepdive/dainty-pig.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "role": "tiny-wildlife,bestiary"
+    },
+    {
+      "id": "honking-goose",
+      "packId": "deepdive",
+      "path": "/story/ecology/atlases/deepdive/honking-goose.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "role": "tiny-wildlife,bestiary"
+    },
+    {
+      "id": "leaping-frog",
+      "packId": "deepdive",
+      "path": "/story/ecology/atlases/deepdive/leaping-frog.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "role": "tiny-wildlife,bestiary"
+    },
+    {
+      "id": "mad-boar",
+      "packId": "deepdive",
+      "path": "/story/ecology/atlases/deepdive/mad-boar.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "role": "tiny-wildlife,bestiary"
+    },
+    {
+      "id": "meowing-cat",
+      "packId": "deepdive",
+      "path": "/story/ecology/atlases/deepdive/meowing-cat.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "role": "tiny-wildlife,bestiary"
+    },
+    {
+      "id": "pasturing-sheep",
+      "packId": "deepdive",
+      "path": "/story/ecology/atlases/deepdive/pasturing-sheep.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "role": "tiny-wildlife,bestiary"
+    },
+    {
+      "id": "slow-turtle",
+      "packId": "deepdive",
+      "path": "/story/ecology/atlases/deepdive/slow-turtle.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "role": "tiny-wildlife,bestiary"
+    },
+    {
+      "id": "snow-fox",
+      "packId": "deepdive",
+      "path": "/story/ecology/atlases/deepdive/snow-fox.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "role": "tiny-wildlife,bestiary"
+    },
+    {
+      "id": "spikey-porcupine",
+      "packId": "deepdive",
+      "path": "/story/ecology/atlases/deepdive/spikey-porcupine.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "role": "tiny-wildlife,bestiary"
+    },
+    {
+      "id": "stinky-skunk",
+      "packId": "deepdive",
+      "path": "/story/ecology/atlases/deepdive/stinky-skunk.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "role": "tiny-wildlife,bestiary"
+    },
+    {
+      "id": "timber-wolf",
+      "packId": "deepdive",
+      "path": "/story/ecology/atlases/deepdive/timber-wolf.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "role": "tiny-wildlife,bestiary"
+    },
+    {
+      "id": "tiny-chick",
+      "packId": "deepdive",
+      "path": "/story/ecology/atlases/deepdive/tiny-chick.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "role": "tiny-wildlife,bestiary"
+    },
+    {
+      "id": "tiny-animals-catalog",
+      "packId": "tinyheroes",
+      "path": "/story/ecology/atlases/tinyheroes/tiny-animals.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 480,
+      "role": "tiny-wildlife,bestiary"
+    },
+    {
+      "id": "greatdoc-collectibles",
+      "packId": "greatdoc",
+      "path": "/story/ecology/atlases/collectibles/greatdoc.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 1,
+      "role": "world-pickup,market-icon,collection"
+    },
+    {
+      "id": "fantasy-collectibles",
+      "packId": "fantasy",
+      "path": "/story/ecology/atlases/collectibles/fantasy.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 1,
+      "role": "world-pickup,market-icon,collection"
+    },
+    {
+      "id": "fantasy-orb",
+      "packId": "fantasy",
+      "path": "/story/ecology/atlases/collectibles/fantasy-orb.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 12,
+      "role": "world-pickup,collection"
+    },
+    {
+      "id": "greatdoc-coin",
+      "packId": "greatdoc",
+      "path": "/story/ecology/atlases/collectibles/greatdoc-coin.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 8,
+      "role": "world-pickup,collection"
+    },
+    {
+      "id": "monedad",
+      "packId": "lared",
+      "path": "/story/ecology/atlases/lared/monedad.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 5,
+      "role": "world-pickup,collection"
+    },
+    {
+      "id": "monedap",
+      "packId": "lared",
+      "path": "/story/ecology/atlases/lared/monedap.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 5,
+      "role": "world-pickup,collection"
+    },
+    {
+      "id": "monedar",
+      "packId": "lared",
+      "path": "/story/ecology/atlases/lared/monedar.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 5,
+      "role": "world-pickup,collection"
+    },
+    {
+      "id": "spr-coin-ama",
+      "packId": "lared",
+      "path": "/story/ecology/atlases/lared/spr-coin-ama.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "role": "world-pickup,collection"
+    },
+    {
+      "id": "spr-coin-azu",
+      "packId": "lared",
+      "path": "/story/ecology/atlases/lared/spr-coin-azu.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "role": "world-pickup,collection"
+    },
+    {
+      "id": "spr-coin-gri",
+      "packId": "lared",
+      "path": "/story/ecology/atlases/lared/spr-coin-gri.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "role": "world-pickup,collection"
+    },
+    {
+      "id": "spr-coin-roj",
+      "packId": "lared",
+      "path": "/story/ecology/atlases/lared/spr-coin-roj.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "role": "world-pickup,collection"
+    },
+    {
+      "id": "spr-coin-strip4",
+      "packId": "lared",
+      "path": "/story/ecology/atlases/lared/spr-coin-strip4.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 4,
+      "role": "world-pickup,collection"
+    },
+    {
+      "id": "coin-",
+      "packId": "svor",
+      "path": "/story/ecology/atlases/svor/coin-.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 7,
+      "role": "world-pickup,market-icon,collection"
+    },
+    {
+      "id": "gemstone1-",
+      "packId": "svor",
+      "path": "/story/ecology/atlases/svor/gemstone1-.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 8,
+      "role": "world-pickup,market-icon,collection"
+    },
+    {
+      "id": "gemstone2-",
+      "packId": "svor",
+      "path": "/story/ecology/atlases/svor/gemstone2-.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 10,
+      "role": "world-pickup,market-icon,collection"
+    },
+    {
+      "id": "heart",
+      "packId": "svor",
+      "path": "/story/ecology/atlases/svor/heart.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 2,
+      "role": "world-pickup,market-icon,collection"
+    },
+    {
+      "id": "key1",
+      "packId": "svor",
+      "path": "/story/ecology/atlases/svor/key1.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 6,
+      "role": "world-pickup,market-icon,collection"
+    },
+    {
+      "id": "key2",
+      "packId": "svor",
+      "path": "/story/ecology/atlases/svor/key2.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 5,
+      "role": "world-pickup,market-icon,collection"
+    },
+    {
+      "id": "mushroom-",
+      "packId": "svor",
+      "path": "/story/ecology/atlases/svor/mushroom-.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 2,
+      "role": "world-pickup,market-icon,collection"
+    },
+    {
+      "id": "mysterious-object-",
+      "packId": "svor",
+      "path": "/story/ecology/atlases/svor/mysterious-object-.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 5,
+      "role": "world-pickup,market-icon,collection"
+    },
+    {
+      "id": "potion1",
+      "packId": "svor",
+      "path": "/story/ecology/atlases/svor/potion1.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 3,
+      "role": "world-pickup,market-icon,collection"
+    },
+    {
+      "id": "potion2-",
+      "packId": "svor",
+      "path": "/story/ecology/atlases/svor/potion2-.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 3,
+      "role": "world-pickup,market-icon,collection"
+    },
+    {
+      "id": "potion3",
+      "packId": "svor",
+      "path": "/story/ecology/atlases/svor/potion3.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 3,
+      "role": "world-pickup,market-icon,collection"
+    },
+    {
+      "id": "potion4-",
+      "packId": "svor",
+      "path": "/story/ecology/atlases/svor/potion4-.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 3,
+      "role": "world-pickup,market-icon,collection"
+    },
+    {
+      "id": "potion5-",
+      "packId": "svor",
+      "path": "/story/ecology/atlases/svor/potion5-.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 3,
+      "role": "world-pickup,market-icon,collection"
+    },
+    {
+      "id": "potion6-",
+      "packId": "svor",
+      "path": "/story/ecology/atlases/svor/potion6-.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 3,
+      "role": "world-pickup,market-icon,collection"
+    },
+    {
+      "id": "skull",
+      "packId": "svor",
+      "path": "/story/ecology/atlases/svor/skull.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "frames": 2,
+      "role": "world-pickup,market-icon,collection"
+    }
+  ],
+  "sources": {
+    "minifolks": {
+      "archive": "MinifolksForestAnimals.7z",
+      "archiveSha256": "e1ee9f5a1a7f5ea41d39b8d318dc59e885d6344768278d388fc71ecf7492d18f",
+      "title": "MiniFolks Forest Animals",
+      "author": "LyaSeeK",
+      "license": "CC BY 4.0",
+      "url": "https://lyaseek.itch.io/miniffanimals",
+      "tier": "free"
+    },
+    "street": {
+      "archive": "street.zip",
+      "archiveSha256": "e2f5a0e92c76a4641768680b7cbac14c643c4daaac15793466307639ab979f79",
+      "title": "Free Street Animal Pixel Art",
+      "author": "Free Game Assets",
+      "license": "free commercial use with attribution",
+      "url": "https://free-game-assets.itch.io/free-street-animal-pixel-art-asset-pack",
+      "tier": "free"
+    },
+    "froglet": {
+      "archive": "froglet.zip",
+      "archiveSha256": "88d788a496f363b48d71dcd48ba68fb030d7908228503f9a6dd87f5881a9c09d",
+      "title": "Froglet",
+      "author": "Phewcumber",
+      "license": "CC0",
+      "url": "https://phewcumber.itch.io/froglet",
+      "tier": "free"
+    },
+    "bat": {
+      "archive": "bat.rar",
+      "archiveSha256": "acc9afa2fac318fbbbc6a39999911a6bcc6a49bc4786018ac95d6cf17c822d4b",
+      "title": "Bat",
+      "author": "Kimbulworks",
+      "license": "CC0",
+      "url": "https://kimbulworks.itch.io/bat",
+      "tier": "free"
+    },
+    "birds": {
+      "archive": "birds.zip",
+      "archiveSha256": "96a64bda1c822e8878ee13121c69fa8d951a1f14184362c04095e1cf58b0fdbd",
+      "title": "Free Bird Sprites",
+      "author": "Carysaurus",
+      "license": "free animation tier; attribution required",
+      "url": "https://carysaurus.itch.io/bird-sprites",
+      "tier": "free"
+    },
+    "rats": {
+      "archive": "rats.zip",
+      "archiveSha256": "dff5d314341492b10ed49c88b62e1dc1972fdcbf60cd3cabf3ceece014d37052",
+      "title": "Free Rat Sprites",
+      "author": "Carysaurus",
+      "license": "free animation tier; attribution required",
+      "url": "https://carysaurus.itch.io/rat-sprites",
+      "tier": "free"
+    },
+    "snakes": {
+      "archive": "snakes.zip",
+      "archiveSha256": "295749702d07949a6e106c7b1248c3cb984a0fa23237c2e5be115a6100bafa64",
+      "title": "Free Snake Sprites",
+      "author": "Carysaurus",
+      "license": "free animation tier; attribution required",
+      "url": "https://carysaurus.itch.io/snake-sprites",
+      "tier": "free"
+    },
+    "deepdive": {
+      "archive": "deepdive.zip",
+      "archiveSha256": "f71cf31b4f18fca572af343d720888b3789511c3d566affdf5d409e0bf7b57b1",
+      "title": "Animal Asset Pack free basic tier",
+      "author": "DeepDiveGameStudio",
+      "license": "free basic tier",
+      "url": "https://deepdivegamestudio.itch.io/animal-asset-pack",
+      "tier": "free"
+    },
+    "tinyheroes": {
+      "archive": "tinyheroes.zip",
+      "archiveSha256": "e6a11aeba2a1c86e8927bac709ab4afd97d1997a9427e9100d5f4671c080bfdb",
+      "title": "Tiny, Tiny Heroes Animals",
+      "author": "Thkaspar",
+      "license": "CC BY 4.0",
+      "url": "https://thkaspar.itch.io/tth-animals",
+      "tier": "free"
+    },
+    "greatdoc": {
+      "archive": "greatdoc.png",
+      "archiveSha256": "ac928a44326d5c7b674ffb70acc0c84a52a3bc5246453cdd835a9e90b4b03910",
+      "title": "Coins, Gems, Chests & More",
+      "author": "GreatDocBrown",
+      "license": "free use; attribution requested",
+      "url": "https://greatdocbrown.itch.io/coins-gems-etc",
+      "tier": "free"
+    },
+    "fantasy": {
+      "archive": "fantasy.png",
+      "archiveSha256": "fe87d2889bb6e62e6276588c75c6d7ff4c2906cde53f601d7204dbd73ee28e59",
+      "title": "Fantasy Collectables",
+      "author": "SoulGATE Studios",
+      "license": "CC0",
+      "url": "https://soulgatestudios.itch.io/2d-fantasy-sprite-collectables",
+      "tier": "free"
+    },
+    "lared": {
+      "archive": "lared.zip",
+      "archiveSha256": "5903e06b9a7be1c7f4452fae18bed3403645b37b53d24e2ff08007df2c6718da",
+      "title": "Gems/Coins Free",
+      "author": "LaRed Games",
+      "license": "free commercial use",
+      "url": "https://laredgames.itch.io/gems-coins-free",
+      "tier": "free"
+    },
+    "svor": {
+      "archive": "svor.zip",
+      "archiveSha256": "136ae7d6c3831146afdd1cab1ee9e921c3f57c64ff0b7074014788f7bb3c73c5",
+      "title": "16x16 Item Pack",
+      "author": "Svor",
+      "license": "CC0",
+      "url": "https://svor.itch.io/16x16itempack",
+      "tier": "free"
+    }
+  }
+}
