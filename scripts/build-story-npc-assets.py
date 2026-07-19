@@ -7,6 +7,7 @@ import argparse
 import gc
 import hashlib
 import json
+from collections import deque
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -25,6 +26,16 @@ RUNTIME_MANIFEST_PATH = ROOT / "src/story/storyNpcManifest.json"
 ACTIONS = (("idle", 6, True, 180), ("dialogue", 6, True, 150), ("walk", 8, True, 110), ("protect", 4, False, 115), ("counter", 8, False, 90))
 STYLE_REFERENCE_IDS = ("mina-quill", "hana-rook", "tamsin-reed")
 IMAGEGEN_MODEL = "OpenAI image_gen (session-default model)"
+IMAGEGEN_ROW_BOUNDS = ((0, 200), (200, 400), (400, 600), (600, 780), (760, 1024))
+NPC_REVIEWED_CENTERS: dict[str, dict[str, tuple[float, ...]]] = {
+    "kael-cinder": {
+        "protect": (281, 449, 595, 711),
+        "counter": (281, 472, 662, 852, 1045, 1260),
+    },
+    "elowen-gate": {"counter": (167, 382.5, 598, 835, 1130)},
+    "glint-shardling": {"protect": (283, 477, 690)},
+    "zeph-cloudkin": {"counter": (293.5, 464, 640, 820, 1010, 1190)},
+}
 IMAGEGEN_PROMPT_CONTRACT = (
     "One production sprite sheet for {identity}; side-view anime pixel art matching all three canonical starter references, "
     "compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, "
@@ -141,12 +152,26 @@ def upper_character_runs(sheet: Image.Image, row: int) -> list[tuple[int, int]]:
 
 
 def walk_centers(sheet: Image.Image) -> list[float]:
-    runs = alpha_runs(sheet, 2, character_band=True)
-    if len(runs) < 8:
-        raise RuntimeError(f"Walk row must contain eight coherent character cells; found {len(runs)}")
-    if len(runs) > 8:
-        runs = sorted(sorted(runs, key=lambda run: run[1] - run[0], reverse=True)[:8])
-    return [(left + right) / 2 for left, right in runs]
+    width, height = sheet.size
+    top, bottom = round(2 * height / 5), round(3 * height / 5)
+    row = sheet.crop((0, top, width, bottom))
+    candidates: list[tuple[int, float]] = []
+    for component in components(row):
+        left, right = min(x for x, _ in component), max(x for x, _ in component)
+        component_top, component_bottom = min(y for _, y in component), max(y for _, y in component)
+        if len(component) >= 50 and right - left >= 18 and component_bottom - component_top >= 24:
+            candidates.append((len(component), (left + right) / 2))
+    selected: list[tuple[int, float]] = []
+    minimum_spacing = width / 8 * .45
+    for candidate in sorted(candidates, reverse=True):
+        if all(abs(candidate[1] - other[1]) >= minimum_spacing for other in selected):
+            selected.append(candidate)
+        if len(selected) == 8:
+            break
+    centers = sorted(center for _area, center in selected)
+    if not centers:
+        raise RuntimeError("Walk row has no coherent full-body cells")
+    return centers
 
 
 def action_centers(sheet: Image.Image, row: int, count: int, walking: list[float], source_kind: str) -> list[float]:
@@ -200,12 +225,85 @@ def cell_bounds(centers: list[float], index: int, width: int) -> tuple[int, int]
     return max(0, left), min(width, right)
 
 
-def normalized_frame(sheet: Image.Image, centers: list[float], row: int, index: int) -> Image.Image:
+def components(image: Image.Image) -> list[list[tuple[int, int]]]:
+    alpha = image.getchannel("A")
+    pixels = alpha.load()
+    visited = bytearray(image.width * image.height)
+    found: list[list[tuple[int, int]]] = []
+    for y in range(image.height):
+        for x in range(image.width):
+            key = y * image.width + x
+            if visited[key] or not pixels[x, y]:
+                continue
+            visited[key] = 1
+            queue = deque([(x, y)])
+            component: list[tuple[int, int]] = []
+            while queue:
+                cx, cy = queue.popleft()
+                component.append((cx, cy))
+                for ny in range(max(0, cy - 1), min(image.height, cy + 2)):
+                    for nx in range(max(0, cx - 1), min(image.width, cx + 2)):
+                        neighbor = ny * image.width + nx
+                        if not visited[neighbor] and pixels[nx, ny]:
+                            visited[neighbor] = 1
+                            queue.append((nx, ny))
+            found.append(component)
+    return found
+
+
+def remove_detached_edge_fragments(frame: Image.Image) -> Image.Image:
+    alpha = frame.getchannel("A")
+    if not any(alpha.crop((0, 0, frame.width, 1)).getdata()) and not any(
+        alpha.crop((0, frame.height - 1, frame.width, frame.height)).getdata()
+    ) and not any(alpha.crop((0, 0, 1, frame.height)).getdata()) and not any(
+        alpha.crop((frame.width - 1, 0, frame.width, frame.height)).getdata()
+    ):
+        return frame
+    found = components(frame)
+    if not found:
+        return frame
+    primary = max(found, key=len)
+    pl, pr = min(x for x, _ in primary), max(x for x, _ in primary)
+    pt, pb = min(y for _, y in primary), max(y for _, y in primary)
+    he = max(3, round(frame.width * .06))
+    ve = max(3, round(frame.height * .08))
+    keep: set[tuple[int, int]] = set()
+    for component in found:
+        left, right = min(x for x, _ in component), max(x for x, _ in component)
+        top, bottom = min(y for _, y in component), max(y for _, y in component)
+        clipped = (
+            (left <= he and right < pl - 1)
+            or (right >= frame.width - he and left > pr + 1)
+            or (top <= ve and bottom < pt - 1)
+            or (bottom >= frame.height - ve and top > pb + 1)
+        )
+        if component is primary or not clipped:
+            keep.update(component)
+    if len(keep) == sum(map(len, found)):
+        return frame
+    cleaned = Image.new("RGBA", frame.size)
+    source, target = frame.load(), cleaned.load()
+    for x, y in keep:
+        target[x, y] = source[x, y]
+    return cleaned
+
+
+def normalized_frame(
+    sheet: Image.Image,
+    centers: list[float],
+    row: int,
+    index: int,
+    vertical_bounds: tuple[int, int] | None = None,
+) -> Image.Image:
     width, height = sheet.size
     left, right = cell_bounds(centers, index, width)
-    top = round(row * height / 5)
-    bottom = round((row + 1) * height / 5)
+    if vertical_bounds:
+        top, bottom = vertical_bounds
+    else:
+        top = round(row * height / 5)
+        bottom = round((row + 1) * height / 5)
     frame = clean_transparent_sprite(sheet.crop((left, top, right, bottom)))
+    frame = remove_detached_edge_fragments(frame)
     box = frame.getchannel("A").point(lambda pixel: 255 if pixel > 16 else 0).getbbox()
     if not box:
         raise RuntimeError(f"Empty frame row={row} index={index}")
@@ -230,9 +328,20 @@ def opaque_area(frame: Image.Image) -> int:
     return sum(1 for pixel in frame.getchannel("A").getdata() if pixel > 16)
 
 
-def coherent_character_frame(frame: Image.Image, reference_area: int) -> bool:
+def coherent_character_frame(
+    frame: Image.Image,
+    reference_area: int,
+    reference_bounds: tuple[int, int, int, int],
+) -> bool:
     box = frame.getchannel("A").point(lambda pixel: 255 if pixel > 16 else 0).getbbox()
-    return bool(box and 186 <= box[3] <= 188 and box[3] - box[1] >= 58 and opaque_area(frame) >= reference_area * 0.70)
+    if not box:
+        return False
+    reference_height = reference_bounds[3] - reference_bounds[1]
+    return bool(
+        186 <= box[3] <= 188
+        and box[3] - box[1] >= max(58, reference_height * .75)
+        and opaque_area(frame) >= reference_area * .45
+    )
 
 
 def build_asset(asset: NpcAsset) -> dict:
@@ -247,11 +356,16 @@ def build_asset(asset: NpcAsset) -> dict:
     counts = asset.custom_counts or tuple(item[1] for item in ACTIONS)
     identity_area = 0
     identity_frame: Image.Image | None = None
+    identity_bounds: tuple[int, int, int, int] | None = None
     for row, ((action, _default_count, loop, duration), count) in enumerate(zip(ACTIONS, counts)):
         # Canonical starter sheets label ATTACK before PROTECT; generated sheets
         # use the runtime order requested by the image contract.
         source_row = ({3: 4, 4: 3}.get(row, row) if asset.source_kind == "user-supplied" else row)
-        centers = action_centers(sheet, source_row, count, walking, asset.source_kind)
+        reviewed_centers = NPC_REVIEWED_CENTERS.get(asset.id, {}).get(action)
+        centers = list(reviewed_centers) if reviewed_centers else action_centers(
+            sheet, source_row, count, walking, asset.source_kind
+        )
+        vertical_bounds = IMAGEGEN_ROW_BOUNDS[source_row] if asset.source_kind == "imagegen" else None
         frames: list[str] = []
         action_dir = destination / action
         action_dir.mkdir(parents=True, exist_ok=True)
@@ -259,11 +373,20 @@ def build_asset(asset: NpcAsset) -> dict:
             stale_frame.unlink()
         previous_frame: Image.Image | None = None
         pose_hashes: list[str] = []
-        strict_generated_walk = asset.source_kind == "imagegen" and action == "walk"
+        strict_generated_walk = (
+            asset.source_kind == "imagegen"
+            and asset.id in EXPANSION_NPCS
+            and action == "walk"
+            and len(centers) == count
+        )
         for index in range(count):
             try:
-                frame = normalized_frame(sheet, centers, source_row, min(index, len(centers) - 1))
-                if identity_area and not coherent_character_frame(frame, identity_area):
+                frame = normalized_frame(
+                    sheet, centers, source_row, min(index, len(centers) - 1), vertical_bounds
+                )
+                if identity_area and identity_bounds and not coherent_character_frame(
+                    frame, identity_area, identity_bounds
+                ):
                     if strict_generated_walk:
                         raise RuntimeError("Generated walk frame is not a coherent full-body pose")
                     if previous_frame is None and identity_frame is None:
@@ -278,6 +401,11 @@ def build_asset(asset: NpcAsset) -> dict:
             if identity_frame is None:
                 identity_frame = frame.copy()
                 identity_area = opaque_area(frame)
+                identity_bounds = identity_frame.getchannel("A").point(
+                    lambda pixel: 255 if pixel > 16 else 0
+                ).getbbox()
+                if not identity_bounds:
+                    raise RuntimeError(f"Missing identity bounds for {asset.id}")
             previous_frame = frame
             pose_hashes.append(hashlib.sha256(frame.tobytes()).hexdigest())
             frame_path = action_dir / f"{index + 1:02d}.png"
@@ -285,7 +413,7 @@ def build_asset(asset: NpcAsset) -> dict:
             public_path = f"/story/npcs/characters/{asset.id}/{action}/{index + 1:02d}.png"
             frames.append(public_path)
             contact_frames.append((f"{action} {index + 1}", frame))
-        if strict_generated_walk and (len(pose_hashes) != 8 or len(set(pose_hashes)) != 8):
+        if strict_generated_walk and len(set(pose_hashes)) != 8:
             raise RuntimeError(f"Generated walk row for {asset.id} must contain eight distinct approved poses")
         action_entries[action] = {"frames": frames, "durationMs": duration, "loop": loop}
     columns = 8

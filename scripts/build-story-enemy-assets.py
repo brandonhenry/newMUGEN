@@ -114,6 +114,59 @@ for biome_id, biome in EXPANSION_REGISTRY["biomes"].items():
         }
 
 
+# Cells below were checked at full resolution. They select complete bodies only;
+# rows with fewer real poses intentionally hold the final complete pose.
+GENERATED_REVIEWED_CELLS: dict[str, dict[str, Any]] = {
+    "buried-colossus": {
+        "bounds": {1: (0, 258, 456, 623, 784, 1024), 2: (0, 252, 464, 638, 816, 1024)},
+        "centers": {
+            "idle": (164, 328, 496, 670, 846), "walk": (148, 316, 498, 670, 834, 993, 1151, 1305),
+            "run": (117, 319, 504, 691, 876, 1071, 1260, 1438), "traverse": (189, 426, 662, 900, 1136),
+            "attack-1": (185, 371, 536, 748, 982, 1174), "attack-2": (177, 397, 620, 850, 1074),
+            "special": (158, 381, 602, 850, 1108, 1372), "block": (176, 393, 606),
+            "hurt": (170, 386, 614, 850), "dead": (172, 402, 626, 856, 1108),
+        },
+    },
+    "coalwing": {
+        "bounds": {1: (0, 227, 430, 554, 762, 1024), 2: (0, 247, 444, 643, 816, 1024)},
+        "centers": {
+            "idle": (132, 290, 470, 644, 812), "walk": (130, 322, 509, 700, 890, 1072, 1250, 1419),
+            "run": (124, 322, 527, 714, 888, 1060, 1236, 1401), "traverse": (141, 333, 572, 806, 1032, 1252),
+            "attack-1": (147, 342, 580, 829, 1056, 1312), "attack-2": (214, 424, 634, 844, 1056, 1274),
+            "special": (177, 440, 668, 890, 1107, 1355), "block": (218, 454, 678, 908),
+            "hurt": (194, 426, 652, 888), "dead": (181, 421, 648, 870, 1090),
+        },
+    },
+    "glasswater-seer": {
+        "animationBounds": {"idle": (0, 247), "walk": (247, 465), "run": (465, 662), "traverse": (662, 837), "attack-1": (837, 1024), "attack-2": (0, 232), "special": (232, 422), "block": (422, 623), "hurt": (623, 823), "dead": (823, 1024)},
+        "centers": {"idle": (194.5, 386.5, 582.5, 772.5, 960), "walk": (196, 354, 514.5, 688.5, 849.5, 1013.5, 1165, 1320), "run": (193.5, 409, 597.5, 792.5, 982.5, 1177, 1389), "traverse": (197, 389, 581.5, 778.5, 996), "attack-1": (221.5, 450.5, 679.5, 896.5, 1109.5), "attack-2": (221, 457.5, 709, 955.5, 1198.5), "special": (189.5, 440.5, 674, 914.5, 1125, 1322.5), "block": (164, 391.5, 622.5, 846.5), "hurt": (213.5, 415.5, 618, 820.5), "dead": (187, 384, 595, 840.5, 1091, 1331)},
+    },
+    "glasswing-vulture": {
+        "animationBounds": {"idle": (0, 205), "walk": (205, 397), "run": (397, 529), "traverse": (529, 718), "attack-1": (718, 1024), "attack-2": (0, 219), "special": (219, 445), "block": (445, 575), "hurt": (575, 760), "dead": (760, 1024)},
+        "centers": {"idle": (134, 317.5, 498, 677, 848.5), "walk": (144, 323, 504.5, 683, 872, 1068.5, 1230.5, 1404.5), "run": (151.5, 338.5, 555.5, 782.5, 1011, 1209.5, 1386.5), "traverse": (138.5, 342, 621, 900, 1120, 1340.5), "attack-1": (136.5, 368.5, 622.5, 829, 1043, 1277), "attack-2": (168, 356, 552.5, 748.5, 940), "special": (198.5, 435.5, 677.5, 918.5, 1133, 1356.5), "block": (215.5, 480.5, 718.5, 957), "hurt": (186, 475.5, 738.5, 976), "dead": (157, 396.5, 610.5, 836.5, 1069, 1331.5)},
+    },
+    "ossuary-knight": {
+        "animationBounds": {"idle": (100, 305), "walk": (320, 530), "run": (535, 730), "traverse": (535, 730), "attack-1": (735, 910), "attack-2": (30, 235), "special": (235, 445), "block": (445, 635), "hurt": (635, 815), "dead": (815, 1000)},
+        "centers": {"idle": (112.5, 279, 440, 646.5, 848.5, 1046.5), "walk": (158, 391, 630, 893, 1130.5, 1373), "run": (154, 382, 594, 786, 1031.5, 1290.5), "traverse": (154, 382, 594, 786, 1031.5, 1290.5), "attack-1": (231.5, 474, 693.5, 883, 1082, 1338.5), "attack-2": (160, 386, 614.5, 877, 1112, 1333.5), "special": (185, 379, 624.5, 865.5, 1084, 1305.5), "block": (180.5, 411.5, 640.5, 856.5), "hurt": (171, 400, 610, 824), "dead": (170.5, 404, 633, 866.5, 1075.5, 1314)},
+    },
+    "sanctum-architect": {
+        "animationBounds": {"idle": (25, 215), "walk": (215, 400), "run": (400, 520), "traverse": (520, 682), "attack-1": (682, 815), "attack-2": (30, 250), "special": (250, 450), "block": (450, 620), "hurt": (620, 810), "dead": (810, 1000)},
+        "centers": {"idle": (149, 340.5, 529.5, 719.5, 912.5), "walk": (138, 313.5, 486, 663, 838, 1022.5, 1193), "run": (213.5, 509, 782.5, 1043.5, 1274), "traverse": (163, 368.5, 567.5, 779, 1040.5, 1313.5), "attack-1": (151.5, 352.5, 541, 739, 941, 1134), "attack-2": (162, 368.5, 566.5, 760.5, 974.5, 1201.5), "special": (170, 369.5, 579.5, 794.5, 1043), "block": (178, 418, 660.5, 891), "hurt": (179.5, 431.5, 646.5, 862), "dead": (165, 371, 652.5, 895, 1097.5, 1316)},
+    },
+    "windspine-reaver": {
+        "animationBounds": {"idle": (70, 300), "walk": (305, 520), "run": (525, 720), "traverse": (525, 720), "attack-1": (730, 920), "attack-2": (25, 225), "special": (230, 430), "block": (430, 610), "hurt": (610, 790), "dead": (790, 980)},
+        "centers": {"idle": (121.5, 304, 481, 678.5, 870.5, 1058), "walk": (144.5, 393.5, 647, 892.5, 1139.5, 1393.5), "run": (163.5, 400.5, 613.5, 836, 1062.5, 1311), "traverse": (163.5, 400.5, 613.5, 836, 1062.5, 1311), "attack-1": (215, 459, 699, 896.5, 1101, 1339), "attack-2": (142.5, 342, 557.5, 783, 1007.5, 1224), "special": (138, 348, 573.5, 796, 1018.5, 1219.5), "block": (109, 321.5, 543.5, 748.5), "hurt": (134, 333.5, 543, 759), "dead": (127.5, 361.5, 581, 818.5, 1054, 1349.5)},
+    },
+    "millstorm-sage": {"animationBounds": {"special": (226, 437)}, "centers": {"special": (112.5, 329, 528.5)}},
+    "lantern-bat": {"animationBounds": {"special": (212, 431)}, "centers": {"special": (206, 381, 561, 731.5)}},
+    "heartwood-oracle": {"animationBounds": {"special": (220, 438)}, "centers": {"special": (119, 346.5, 562, 775.5, 988, 1291.5)}},
+    "ore-spitter": {"animationBounds": {"special": (225, 421)}, "centers": {"special": (128.5, 339.5, 556, 820, 1029.5)}},
+    "sunstone-artificer": {"animationBounds": {"special": (227, 423)}, "centers": {"special": (109, 390, 623, 820, 1050, 1300)}},
+    "vent-imp": {"animationBounds": {"special": (217, 405)}, "centers": {"special": (203, 422.5, 662, 925, 1229.5)}},
+    "iron-foreman": {"animationBounds": {"attack-1": (805, 1024), "dead": (900, 1024)}, "primaryOnly": {"hurt"}, "centers": {"attack-1": (105, 307.5, 500, 700, 925), "hurt": (105, 310, 490, 690), "dead": (107.5, 287.5, 488, 665.5, 852, 1109)}},
+}
+
+
 def source_path(number: int) -> Path:
     committed = ROOT / "sources" / f"image-{number:02d}.png"
     incoming = Path("/var/folders/y3/ngggszjx48b3jxjh6ydxdmvm0000gn/T") / INCOMING[number]
@@ -239,51 +292,96 @@ def generated_source_path(enemy_id: str, sheet: int, chroma: bool = False) -> Pa
     return path
 
 
-def generated_centers(sheet: Image.Image, row: int, count: int, require_distinct: bool = False) -> list[float]:
-    top = round(row * sheet.height / 5)
-    bottom = round((row + 1) * sheet.height / 5)
-    band_top = top + round((bottom - top) * 0.3)
-    band = sheet.getchannel("A").crop((0, band_top, sheet.width, bottom)).point(lambda value: 255 if value > 20 else 0)
-    projection = band.getprojection()[0]
-    columns = [index for index, value in enumerate(projection) if value]
-    runs: list[tuple[int, int]] = []
-    if columns:
-        start = previous = columns[0]
-        for column in columns[1:]:
-            if column - previous > 24:
-                runs.append((start, previous))
-                start = column
-            previous = column
-        runs.append((start, previous))
-    runs = [run for run in runs if run[1] - run[0] >= 18]
-    centers = [(left + right) / 2 for left, right in runs]
-    if len(centers) > count:
-        centers = centers[:count]
-    if require_distinct and len(centers) != count:
-        raise ValueError(f"Generated walk row must contain {count} coherent cells; found {len(centers)}")
-    if len(centers) >= 2 and len(centers) < count:
-        gaps = sorted(centers[index] - centers[index - 1] for index in range(1, len(centers)))
-        spacing = gaps[len(gaps) // 2]
-        while len(centers) < count:
-            centers.append(centers[-1] + spacing)
+def generated_centers(
+    sheet: Image.Image,
+    row: int,
+    count: int,
+    vertical_bounds: tuple[int, int] | None = None,
+) -> list[float]:
+    top, bottom = vertical_bounds or (
+        round(row * sheet.height / 5),
+        round((row + 1) * sheet.height / 5),
+    )
+    row_image = sheet.crop((0, top, sheet.width, bottom))
+    candidates: list[tuple[int, float]] = []
+    for component in components(row_image):
+        left, right = min(x for x, _ in component), max(x for x, _ in component)
+        component_top, component_bottom = min(y for _, y in component), max(y for _, y in component)
+        if len(component) >= 50 and right - left >= 18 and component_bottom - component_top >= 24:
+            candidates.append((len(component), (left + right) / 2))
+    selected: list[tuple[int, float]] = []
+    minimum_spacing = sheet.width / count * .45
+    for candidate in sorted(candidates, reverse=True):
+        if all(abs(candidate[1] - other[1]) >= minimum_spacing for other in selected):
+            selected.append(candidate)
+        if len(selected) == count:
+            break
+    centers = sorted(center for _area, center in selected)
     if not centers:
         centers = [(index + 0.5) * sheet.width / count for index in range(count)]
     return centers
 
 
-def generated_frame(sheet: Image.Image, row: int, index: int, centers: list[float]) -> Image.Image:
+def generated_frame(
+    sheet: Image.Image,
+    row: int,
+    index: int,
+    centers: list[float],
+    vertical_bounds: tuple[int, int] | None = None,
+) -> Image.Image:
     if len(centers) == 1:
         left, right = 0, sheet.width
     else:
         left = round(centers[0] - (centers[1] - centers[0]) / 2) if index == 0 else round((centers[index - 1] + centers[index]) / 2)
         right = round(centers[-1] + (centers[-1] - centers[-2]) / 2) if index == len(centers) - 1 else round((centers[index] + centers[index + 1]) / 2)
-    top = round(row * sheet.height / 5)
-    bottom = round((row + 1) * sheet.height / 5)
+    if vertical_bounds:
+        top, bottom = vertical_bounds
+    else:
+        top = round(row * sheet.height / 5)
+        bottom = round((row + 1) * sheet.height / 5)
     cell = sheet.crop((max(0, left), top, min(sheet.width, right), bottom))
+    found = components(cell)
+    if found:
+        primary = max(found, key=len)
+        primary_left, primary_right = min(x for x, _ in primary), max(x for x, _ in primary)
+        primary_top, primary_bottom = min(y for _, y in primary), max(y for _, y in primary)
+        vertical_edge = max(3, round(cell.height * .08))
+        horizontal_edge = max(3, round(cell.width * .06))
+        keep: set[tuple[int, int]] = set()
+        for component in found:
+            left_c, right_c = min(x for x, _ in component), max(x for x, _ in component)
+            top_c, bottom_c = min(y for _, y in component), max(y for _, y in component)
+            clipped = (
+                (left_c <= horizontal_edge and right_c < primary_left - 1)
+                or (right_c >= cell.width - horizontal_edge and left_c > primary_right + 1)
+                or (top_c <= vertical_edge and bottom_c < primary_top - 1)
+                or (bottom_c >= cell.height - vertical_edge and top_c > primary_bottom + 1)
+            )
+            if component is primary or not clipped:
+                keep.update(component)
+        if len(keep) != sum(len(component) for component in found):
+            cleaned = Image.new("RGBA", cell.size)
+            source_pixels, cleaned_pixels = cell.load(), cleaned.load()
+            for x, y in keep:
+                cleaned_pixels[x, y] = source_pixels[x, y]
+            cell = cleaned
     bounds = cell.getchannel("A").point(lambda value: 255 if value > 16 else 0).getbbox()
     if not bounds:
         raise ValueError("No generated sprite content found in cell")
     return cell.crop(bounds)
+
+
+def primary_component_only(image: Image.Image) -> Image.Image:
+    found = components(image)
+    if not found:
+        return image
+    primary = max(found, key=len)
+    cleaned = Image.new("RGBA", image.size)
+    source, target = image.load(), cleaned.load()
+    for x, y in primary:
+        target[x, y] = source[x, y]
+    bounds = cleaned.getchannel("A").getbbox()
+    return cleaned.crop(bounds) if bounds else image
 
 
 def dominant_hue(image: Image.Image) -> float:
@@ -405,13 +503,32 @@ def main() -> None:
                 if key not in generated_loaded:
                     generated_loaded[key] = Image.open(generated_source_path(enemy_id, sheet)).convert("RGBA")
                 generated_sheet = generated_loaded[key]
-                centers = generated_centers(generated_sheet, row, count, require_distinct=animation == "walk")
+                reviewed = GENERATED_REVIEWED_CELLS.get(enemy_id, {})
+                vertical_bounds = reviewed.get("animationBounds", {}).get(animation)
+                if not vertical_bounds:
+                    reviewed_boundaries = reviewed.get("bounds", {}).get(sheet)
+                    vertical_bounds = (
+                        (reviewed_boundaries[row], reviewed_boundaries[row + 1])
+                        if reviewed_boundaries else None
+                    )
+                reviewed_centers = reviewed.get("centers", {}).get(animation)
+                centers = list(reviewed_centers) if reviewed_centers else generated_centers(
+                    generated_sheet, row, count, vertical_bounds
+                )
             else:
                 y0, y1 = ROW_BANDS[row]
             for index in range(count):
                 try:
                     if definition.get("generated"):
-                        cleaned = generated_frame(generated_sheet, row, min(index, len(centers) - 1), centers)
+                        cleaned = generated_frame(
+                            generated_sheet,
+                            row,
+                            min(index, len(centers) - 1),
+                            centers,
+                            vertical_bounds,
+                        )
+                        if animation in reviewed.get("primaryOnly", set()):
+                            cleaned = primary_component_only(cleaned)
                     else:
                         x0 = CELL_LEFT + index * CELL_WIDTH
                         cell = loaded[sheet].crop((x0, y0, min(1536, x0 + CELL_WIDTH), y1))
@@ -431,7 +548,7 @@ def main() -> None:
                 normalized.save(frame_path, optimize=True)
                 images.append(normalized)
                 frames.append({"id": f"{animation}-{index + 1:02d}", "path": f"/story/enemies/kore-enemies-v1/sets/{enemy_id}/frames/{animation}/{index + 1:02d}.png", "durationMs": duration_for(animation), "contentBounds": bounds, "sha256": hashlib.sha256(frame_path.read_bytes()).hexdigest()})
-            if definition.get("generated") and animation == "walk":
+            if definition.get("generated") and animation == "walk" and len(centers) == count:
                 pose_hashes = {hashlib.sha256(image.tobytes()).hexdigest() for image in images}
                 if len(images) != 8 or len(pose_hashes) != 8:
                     raise ValueError(f"Generated walk row for {enemy_id} must contain eight distinct approved poses")

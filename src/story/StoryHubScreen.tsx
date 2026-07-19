@@ -667,6 +667,14 @@ function RecalibrationShrine({ emphasized, reducedMotion }: { emphasized: boolea
 
 function AdventurePortalMarker({ kind, accent, emphasized }: { kind: StoryPortalDefinition['kind']; accent: string; emphasized: boolean }) {
   if (kind === 'npc') return null;
+  if (kind === 'tutorial') return <group position={[0, -0.25, 0]} scale={emphasized ? 1.07 : 1}>
+    <mesh position={[-0.55, -0.48, -0.03]}><boxGeometry args={[0.16, 1.25, 0.14]} /><meshBasicMaterial color="#4a2f24" /></mesh>
+    <mesh position={[0.55, -0.48, -0.03]}><boxGeometry args={[0.16, 1.25, 0.14]} /><meshBasicMaterial color="#4a2f24" /></mesh>
+    <mesh position={[0, 0.08, 0]}><boxGeometry args={[1.55, 1.05, 0.18]} /><meshBasicMaterial color="#68472f" /></mesh>
+    <mesh position={[0, 0.08, 0.1]}><planeGeometry args={[1.28, 0.78]} /><meshBasicMaterial color="#e7c98b" /></mesh>
+    <mesh position={[0, 0.29, 0.115]}><planeGeometry args={[0.86, 0.09]} /><meshBasicMaterial color={accent} /></mesh>
+    {[-0.03, -0.2].map((y) => <mesh key={y} position={[0, y, 0.115]}><planeGeometry args={[0.72, 0.055]} /><meshBasicMaterial color="#68472f" /></mesh>)}
+  </group>;
   if (kind === 'crafting') return <PixelProp path="/story/resources/workbench.png" position={[0, -0.08, 0]} size={[2.5, 2.5]} opacity={emphasized ? 1 : 0.9} />;
   if (kind === 'chest') return <group position={[0, -0.55, 0]} scale={emphasized ? 1.08 : 1}>
     <mesh><boxGeometry args={[1.15, 0.68, 0.5]} /><meshBasicMaterial color="#7d4c2d" /></mesh>
@@ -724,7 +732,7 @@ function PortalVisual({ portal, theme, nearby, assigned, reducedMotion, compactD
       <ringGeometry args={[1.08, 1.17, 24]} />
       <meshBasicMaterial color={portal.accent} transparent opacity={nearby ? 0.55 : 0.2} depthWrite={false} />
     </mesh>}
-    {['npc', 'chest', 'relic', 'checkpoint', 'restoration', 'crafting'].includes(portal.kind ?? '') ? <AdventurePortalMarker kind={portal.kind} accent={portal.accent} emphasized={nearby || assigned} /> : biomeDoor ? <BiomeDoor door={biomeDoor} portalY={portal.position[1]} emphasized={nearby || assigned} /> : portal.kind === 'mode-door' || portal.kind === 'adventure-gate' ? <ModeDoor emphasized={nearby || assigned} displayScale={doorwayScale} centerY={modeDoorCenterY} /> : portal.kind === 'shrine' ? <RecalibrationShrine emphasized={nearby} reducedMotion={reducedMotion} /> : portal.kind === 'arcade-machine' ? <AnimatedCabinet position={[0, -0.14, 0]} scale={nearby || assigned ? 1.08 : 1} reducedMotion={reducedMotion} /> : portal.kind === 'versus-machine' ? <>
+    {['npc', 'chest', 'relic', 'checkpoint', 'restoration', 'crafting', 'tutorial'].includes(portal.kind ?? '') ? <AdventurePortalMarker kind={portal.kind} accent={portal.accent} emphasized={nearby || assigned} /> : biomeDoor ? <BiomeDoor door={biomeDoor} portalY={portal.position[1]} emphasized={nearby || assigned} /> : portal.kind === 'mode-door' || portal.kind === 'adventure-gate' ? <ModeDoor emphasized={nearby || assigned} displayScale={doorwayScale} centerY={modeDoorCenterY} /> : portal.kind === 'shrine' ? <RecalibrationShrine emphasized={nearby} reducedMotion={reducedMotion} /> : portal.kind === 'arcade-machine' ? <AnimatedCabinet position={[0, -0.14, 0]} scale={nearby || assigned ? 1.08 : 1} reducedMotion={reducedMotion} /> : portal.kind === 'versus-machine' ? <>
       <AnimatedCabinet position={[-0.56, -0.14, -0.18]} scale={nearby || assigned ? 0.94 : 0.88} reducedMotion={reducedMotion} />
       <AnimatedCabinet position={[0.56, -0.14, -0.16]} mirrored scale={nearby || assigned ? 0.94 : 0.88} reducedMotion={reducedMotion} />
     </> : portal.kind === 'terminal' ? <>
@@ -732,7 +740,7 @@ function PortalVisual({ portal, theme, nearby, assigned, reducedMotion, compactD
       <mesh position={[0, 0.04, 0.02]} renderOrder={22}><planeGeometry args={[0.72, 0.48]} /><meshBasicMaterial color={portal.accent} transparent opacity={0.42} depthWrite={false} /></mesh>
     </> : <Storefront destination={hubDestination} size={storefrontSize} centerY={storefrontCenterY} emphasized={nearby} />}
     {assigned && <mesh position={[0, -1.08, 0.05]} renderOrder={23}><ringGeometry args={[0.72, 0.9, 24]} /><meshBasicMaterial color="#ffe071" transparent opacity={0.9} depthWrite={false} /></mesh>}
-    {(nearby || assigned || !['npc', 'chest', 'relic', 'checkpoint', 'restoration', 'crafting'].includes(portal.kind ?? '')) && <Html center position={[0, popupY, 0.7]} zIndexRange={[8, 0]} className="story-destination-sign-shell">
+    {(nearby || assigned || !['npc', 'chest', 'relic', 'checkpoint', 'restoration', 'crafting', 'tutorial'].includes(portal.kind ?? '')) && <Html center position={[0, popupY, 0.7]} zIndexRange={[8, 0]} className="story-destination-sign-shell">
       <div data-testid={`story-destination-${portal.id}`} className={`story-destination-sign ${nearby ? 'is-nearby' : ''} ${assigned ? 'is-assigned' : ''} ${portal.locked ? 'is-locked' : ''}`} style={{ '--story-destination-accent': portal.accent } as CSSProperties}>
         <span aria-hidden="true">{portal.locked ? <LockKeyhole size={16} /> : <DestinationIcon size={16} />}</span>
         <strong>{assigned ? `Go Here · ${portal.label}` : portal.label}</strong>
@@ -2240,13 +2248,14 @@ const STORY_ATLAS_HOTSPOTS: Record<typeof STORY_ADVENTURE_REGION_IDS[number], { 
   skyglass: { x: 19, y: 19, hazard: 'Unstable bridges and open sky', feature: 'Floating towers · cloud caves' }
 };
 
-function AdventureRouteMap({ activeWorldId, activeSurfaceMapId, progress, endlessRun, generatedFloor, onFastTravel, onPinDaily, onClose }: {
+function AdventureRouteMap({ activeWorldId, activeSurfaceMapId, progress, endlessRun, generatedFloor, onFastTravel, onFastTravelHome, onPinDaily, onClose }: {
   activeWorldId: StoryWorldId;
   activeSurfaceMapId: string | null;
   progress: StoryAdventureProgressV1;
   endlessRun: StoryEndlessRunState | null;
   generatedFloor: StoryGeneratedFloor | null;
   onFastTravel: (waystoneId: string, position: [number, number]) => void;
+  onFastTravelHome: () => void;
   onPinDaily: (worldId: typeof STORY_ADVENTURE_REGION_IDS[number], activityId: string) => void;
   onClose: () => void;
 }) {
@@ -2260,6 +2269,7 @@ function AdventureRouteMap({ activeWorldId, activeSurfaceMapId, progress, endles
   const knownWaystones = selectedWorld.exploration?.waystones.filter((waystone) => progress.discoveries.waystones.includes(waystone.id)) ?? [];
   const explorationPercent = Math.round(((discovered ? 1 : 0) + knownWaystones.length + knownSurfaceMaps.length) / (1 + (selectedWorld.exploration?.waystones.length ?? 0) + surfaceMaps.length) * 100);
   const dailyActivities = getStoryDailyActivities(selectedRegion);
+  const canFastTravelHome = isStoryAdventureRegionId(activeWorldId) && !endlessRun;
   return <div className="story-adventure-overlay" role="presentation">
     <section className="story-adventure-map" role="dialog" aria-modal="true" aria-labelledby="story-adventure-map-title" data-testid="story-adventure-map">
       <header>
@@ -2270,7 +2280,14 @@ function AdventureRouteMap({ activeWorldId, activeSurfaceMapId, progress, endles
         <span className="visually-hidden">{STORY_ADVENTURE_REGION_IDS.map((id) => STORY_ADVENTURE_REGION_LABELS[id]).join(' · ')}</span>
         <div className="story-atlas-stage">
           <img src="/story/map/kore-world-atlas.png" alt="Pixel-art atlas showing K.O.R.E. Central and the eight surrounding adventure biomes" />
-          <div className={`story-atlas-central ${activeWorldId === 'central' || activeWorldId === 'world-route' ? 'is-current' : ''}`}><Map size={18} /><span>K.O.R.E.</span></div>
+          {isStoryAdventureRegionId(activeWorldId) ? <button
+            type="button"
+            className={`story-atlas-central is-home-action ${endlessRun ? 'is-locked' : ''}`}
+            aria-label={endlessRun ? 'Fast Travel Home unavailable during Endless Descent' : 'Fast Travel Home to Central Route'}
+            title={endlessRun ? 'Fast Travel Home is unavailable during Endless Descent' : 'Fast Travel Home to Central Route'}
+            disabled={!canFastTravelHome}
+            onClick={onFastTravelHome}
+          ><Map size={18} /><span>{endlessRun ? 'Locked' : 'Home'}</span></button> : <div className="story-atlas-central is-current" aria-label="K.O.R.E. Central Route, current location"><Map size={18} /><span>K.O.R.E.</span></div>}
           {STORY_ADVENTURE_REGION_IDS.map((id) => {
             const hotspot = STORY_ATLAS_HOTSPOTS[id];
             const Icon = DESTINATION_ICONS[id];
@@ -2278,7 +2295,7 @@ function AdventureRouteMap({ activeWorldId, activeSurfaceMapId, progress, endles
             return <button
               key={id}
               type="button"
-              className={`${selectedRegion === id ? 'is-selected' : ''} ${activeWorldId === id ? 'is-current' : ''} ${known ? 'is-known' : 'is-unknown'}`}
+              className={`story-atlas-region ${selectedRegion === id ? 'is-selected' : ''} ${activeWorldId === id ? 'is-current' : ''} ${known ? 'is-known' : 'is-unknown'}`}
               style={{ '--story-hotspot-x': `${hotspot.x}%`, '--story-hotspot-y': `${hotspot.y}%`, '--story-map-accent': STORY_WORLDS[id].environment?.accent ?? '#2ee6ff' } as CSSProperties}
               aria-label={`${STORY_ADVENTURE_REGION_LABELS[id]}${known ? `, ${explorationPercent}% explored` : ', undiscovered'}`}
               onMouseEnter={() => setSelectedRegion(id)}
@@ -2662,6 +2679,8 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const activeHub = useMemo(() => createEndlessFloorHub(baseHub, generatedFloor, endlessExitLocked, floorPressure?.rank ?? 0, pressureHunterAnchor), [baseHub, endlessExitLocked, floorPressure?.rank, generatedFloor, pressureHunterAnchor]);
   const [nearbyPortal, setNearbyPortal] = useState<StoryPortalDefinition | null>(null);
   const [pauseOpen, setPauseOpen] = useState(false);
+  const [tutorialOpen, setTutorialOpen] = useState(false);
+  const [returnHomeConfirmOpen, setReturnHomeConfirmOpen] = useState(false);
   const [controlsOpen, setControlsOpen] = useState(false);
   const [mapOpen, setMapOpen] = useState(false);
   const [statsOpen, setStatsOpen] = useState(false);
@@ -2867,7 +2886,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     if (!equipped.some((slot) => slot.id === avatarId) || (memberHealthRef.current[avatarId] ?? 0) <= 0) return false;
     const now = performance.now();
     const hasIncomingChallenge = challenges.some((challenge) => challenge.targetSessionId === localSessionId && challenge.status === 'pending' && challenge.expiresAt > Date.now());
-    const movementBlocked = pauseOpen || controlsOpen || mapOpen || statsOpen || packOpen || partyUnlockOpen || Boolean(selectedPlayer) || hasIncomingChallenge || Boolean(doorTravel);
+    const movementBlocked = pauseOpen || tutorialOpen || returnHomeConfirmOpen || controlsOpen || mapOpen || statsOpen || packOpen || partyUnlockOpen || Boolean(selectedPlayer) || hasIncomingChallenge || Boolean(doorTravel);
     const actionBlocked = playerPose.startsWith('attack');
     if (!force && (movementBlocked || actionBlocked || now < partySwapCooldownUntilRef.current)) return false;
     const health = { ...memberHealthRef.current, [profile.activeAvatarId]: playerHealthRef.current };
@@ -2882,7 +2901,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     playerInvulnerableUntilRef.current = now + 900;
     setImpactEvent({ id: ++impactSequenceRef.current, sourceX: playerX, knockback: 0, respawn: [playerX, playerY] });
     return true;
-  }, [challenges, controlsOpen, derivedAdventureStats.maxHealth, doorTravel, localSessionId, mapOpen, onProfileChange, packOpen, partyUnlockOpen, pauseOpen, playerPose, playerX, playerY, profile, selectedPlayer, statsOpen]);
+  }, [challenges, controlsOpen, derivedAdventureStats.maxHealth, doorTravel, localSessionId, mapOpen, onProfileChange, packOpen, partyUnlockOpen, pauseOpen, playerPose, playerX, playerY, profile, returnHomeConfirmOpen, selectedPlayer, statsOpen, tutorialOpen]);
   useEffect(() => {
     const onPartySwap = (event: KeyboardEvent) => {
       if (event.repeat || (event.code !== 'KeyZ' && event.code !== 'KeyX')) return;
@@ -3224,7 +3243,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     if (!partyInstance || partyInstance.leaderSessionId !== localSessionId || partyInstance.aiActors.length === 0 || partyAuthorityLost) return undefined;
     let cursor = 0;
     const timer = window.setInterval(() => {
-      if (pauseOpen || controlsOpen || mapOpen || statsOpen || packOpen || partyUnlockOpen) return;
+      if (pauseOpen || tutorialOpen || returnHomeConfirmOpen || controlsOpen || mapOpen || statsOpen || packOpen || partyUnlockOpen) return;
       const actors = partyInstance.aiActors.filter((actor) => actor.state !== 'ko');
       const actor = actors[cursor++ % Math.max(1, actors.length)];
       if (!actor) return;
@@ -3232,7 +3251,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       setPartyAttackEvent({ id: ++attackSequenceRef.current, x: playerStateRef.current.x - ((actor.slot + 1) * 0.45), y: playerStateRef.current.y, facing: playerStateRef.current.facing, attackInput: 'jab', avatarSet: actor.avatarSet, startedAt: now + STORY_ATTACK_VISUAL_SYNC_DELAY_MS, activeUntil: now + STORY_ATTACK_VISUAL_SYNC_DELAY_MS + getStoryAttackDurationMs(actor.avatarSet, 'jab'), ...resolveAdventurePlayerAttack(adventureProgressRef.current, 'jab') });
     }, 810);
     return () => window.clearInterval(timer);
-  }, [controlsOpen, localSessionId, mapOpen, packOpen, partyAuthorityLost, partyInstance, partyUnlockOpen, pauseOpen, statsOpen]);
+  }, [controlsOpen, localSessionId, mapOpen, packOpen, partyAuthorityLost, partyInstance, partyUnlockOpen, pauseOpen, returnHomeConfirmOpen, statsOpen, tutorialOpen]);
 
   useEffect(() => {
     if (!isStoryAdventureRegionId(activeWorldId) || endlessRun) return;
@@ -3554,6 +3573,18 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     closePause();
     onDestination('avatarStudio');
   }, [closePause, onDestination]);
+  const requestMainMenuExit = useCallback(() => {
+    if (!isStoryAdventureRegionId(activeWorldId)) {
+      onExit();
+      return;
+    }
+    setPauseOpen(false);
+    setReturnHomeConfirmOpen(true);
+  }, [activeWorldId, onExit]);
+  const cancelMainMenuExit = useCallback(() => {
+    setReturnHomeConfirmOpen(false);
+    setPauseOpen(true);
+  }, []);
 
   const beginWorldTravel = useCallback((target: StoryWorldId) => {
     if (doorTravel || target === activeWorldId) return;
@@ -3568,6 +3599,10 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   }, [activeWorldId, doorTravel]);
 
   const activatePortal = useCallback((portal: StoryPortalDefinition) => {
+    if (portal.kind === 'tutorial') {
+      setTutorialOpen(true);
+      return;
+    }
     if (portal.kind === 'adventure-gate' || portal.kind === 'mode-door' || portal.kind === 'shrine') emitAdventureAudioEvent({ kind: 'portal' });
     if (portal.surfaceMapTarget && isStoryAdventureRegionId(activeWorldId)) {
       setEndlessRun(null);
@@ -4007,7 +4042,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.repeat || !activeHub.adventure || event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
+      if (event.repeat || !activeHub.adventure || tutorialOpen || returnHomeConfirmOpen || event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
       if (event.key.toLowerCase() === 'm') {
         event.preventDefault();
         event.stopImmediatePropagation();
@@ -4036,7 +4071,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     };
     window.addEventListener('keydown', onKeyDown, true);
     return () => window.removeEventListener('keydown', onKeyDown, true);
-  }, [activeHub.adventure, openAdventurePack, packOpen, toggleMount]);
+  }, [activeHub.adventure, openAdventurePack, packOpen, returnHomeConfirmOpen, toggleMount, tutorialOpen]);
 
   useEffect(() => {
     if (!activeHub.adventure) return undefined;
@@ -4044,13 +4079,13 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     let r3Held = false;
     const poll = () => {
       const pressed = Boolean(navigator.getGamepads?.()[0]?.buttons[11]?.pressed);
-      if (pressed && !r3Held && !pauseOpen && !mapOpen && !statsOpen && !packOpen) toggleMount();
+      if (pressed && !r3Held && !pauseOpen && !tutorialOpen && !returnHomeConfirmOpen && !mapOpen && !statsOpen && !packOpen) toggleMount();
       r3Held = pressed;
       frame = window.requestAnimationFrame(poll);
     };
     frame = window.requestAnimationFrame(poll);
     return () => window.cancelAnimationFrame(frame);
-  }, [activeHub.adventure, mapOpen, packOpen, pauseOpen, statsOpen, toggleMount]);
+  }, [activeHub.adventure, mapOpen, packOpen, pauseOpen, returnHomeConfirmOpen, statsOpen, toggleMount, tutorialOpen]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -4059,6 +4094,14 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       pauseKeyHeldRef.current = true;
       event.preventDefault();
       event.stopImmediatePropagation();
+      if (returnHomeConfirmOpen) {
+        cancelMainMenuExit();
+        return;
+      }
+      if (tutorialOpen) {
+        setTutorialOpen(false);
+        return;
+      }
       if (mapOpen) {
         setMapOpen(false);
         return;
@@ -4091,7 +4134,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       window.removeEventListener('keydown', onKeyDown, true);
       window.removeEventListener('keyup', onKeyUp, true);
     };
-  }, [closePause, controlsOpen, mapOpen, openPause, packOpen, pauseOpen, selectedPlayer, statsOpen]);
+  }, [cancelMainMenuExit, closePause, controlsOpen, mapOpen, openPause, packOpen, pauseOpen, returnHomeConfirmOpen, selectedPlayer, statsOpen, tutorialOpen]);
 
   useEffect(() => {
     setFloorElapsedSeconds(0);
@@ -4105,10 +4148,10 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   }, [generatedFloor?.floorNumber, generatedFloor?.seed]);
 
   useEffect(() => {
-    if (!generatedFloor || (partyInstance && partyInstance.leaderSessionId !== localSessionId) || pauseOpen || controlsOpen || mapOpen || statsOpen || packOpen || boonChoices || abandonConfirmOpen || activeTraderEventId || pendingEventChoiceId || doorTravel) return undefined;
+    if (!generatedFloor || (partyInstance && partyInstance.leaderSessionId !== localSessionId) || pauseOpen || tutorialOpen || returnHomeConfirmOpen || controlsOpen || mapOpen || statsOpen || packOpen || boonChoices || abandonConfirmOpen || activeTraderEventId || pendingEventChoiceId || doorTravel) return undefined;
     const timer = window.setInterval(() => setFloorElapsedSeconds((elapsed) => elapsed + 1), 1_000);
     return () => window.clearInterval(timer);
-  }, [abandonConfirmOpen, activeTraderEventId, boonChoices, controlsOpen, doorTravel, generatedFloor, localSessionId, mapOpen, packOpen, partyInstance, pauseOpen, pendingEventChoiceId, statsOpen]);
+  }, [abandonConfirmOpen, activeTraderEventId, boonChoices, controlsOpen, doorTravel, generatedFloor, localSessionId, mapOpen, packOpen, partyInstance, pauseOpen, pendingEventChoiceId, returnHomeConfirmOpen, statsOpen, tutorialOpen]);
 
   useEffect(() => {
     if (!generatedFloor || !floorPressure || floorPressure.rank <= 0) return;
@@ -4281,6 +4324,14 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     setMapOpen(false);
     setImpactEvent({ id: ++impactSequenceRef.current, sourceX: position[0], knockback: 0, respawn: position });
   }, [activeWorldId, endlessRun]);
+  const fastTravelHome = useCallback(() => {
+    if (!isStoryAdventureRegionId(activeWorldId) || endlessRun) return;
+    setMounted(false);
+    setUnderwater(false);
+    setBreath(STORY_MAX_BREATH);
+    setMapOpen(false);
+    beginWorldTravel('world-route');
+  }, [activeWorldId, beginWorldTravel, endlessRun]);
   const pinDailyActivity = useCallback((worldId: typeof STORY_ADVENTURE_REGION_IDS[number], activityId: string) => {
     updateAdventureProgress(pinAdventureDaily(adventureProgressRef.current, adventureUtcDate(), worldId, activityId));
   }, [updateAdventureProgress]);
@@ -4290,9 +4341,9 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const traderConsumables = STORY_RECIPES.filter((candidate) => candidate.kind === 'consumable');
   const traderConsumable = endlessRun && generatedFloor ? traderConsumables[storyEndlessHash(`${endlessRun.seed}:trader-consumable:${generatedFloor.floorNumber}`) % Math.max(1, traderConsumables.length)] : null;
 
-  return <div className="story-hub-screen" data-testid="story-hub-screen" data-world={activeWorldId} data-hub-ready={hubReady ? 'true' : 'false'} data-controls-open={controlsOpen ? 'true' : 'false'} data-map-open={mapOpen ? 'true' : 'false'} data-stats-open={statsOpen ? 'true' : 'false'} data-quick-match={quickMatchAvailable ? 'true' : 'false'} data-player-x={playerX.toFixed(2)} data-player-y={playerY.toFixed(2)} data-player-pose={playerPose} data-player-projectile-asset={effectiveAttackEvent?.projectile?.frames[0]?.path ?? ''} data-player-projectile-launch={effectiveAttackEvent?.projectile?.launchPoint.join(',') ?? ''} data-player-health={playerHealth} data-player-level={adventureProgress.level} data-party-id={partyInstance?.id ?? ''} data-nearby-portal={nearbyPortal?.id ?? ''} data-online={onlineEnabled ? 'true' : 'false'} data-connection-status={connectionStatus} data-player-count={playerCount}>
+  return <div className="story-hub-screen" data-testid="story-hub-screen" data-world={activeWorldId} data-hub-ready={hubReady ? 'true' : 'false'} data-controls-open={controlsOpen ? 'true' : 'false'} data-map-open={mapOpen ? 'true' : 'false'} data-stats-open={statsOpen ? 'true' : 'false'} data-tutorial-open={tutorialOpen ? 'true' : 'false'} data-return-home-confirm={returnHomeConfirmOpen ? 'true' : 'false'} data-quick-match={quickMatchAvailable ? 'true' : 'false'} data-player-x={playerX.toFixed(2)} data-player-y={playerY.toFixed(2)} data-player-pose={playerPose} data-player-projectile-asset={effectiveAttackEvent?.projectile?.frames[0]?.path ?? ''} data-player-projectile-launch={effectiveAttackEvent?.projectile?.launchPoint.join(',') ?? ''} data-player-health={playerHealth} data-player-level={adventureProgress.level} data-party-id={partyInstance?.id ?? ''} data-nearby-portal={nearbyPortal?.id ?? ''} data-online={onlineEnabled ? 'true' : 'false'} data-connection-status={connectionStatus} data-player-count={playerCount}>
     <div className="story-hub-canvas-shell">
-      <HubCanvas key={activeHub.id} hub={activeHub} profile={profile} reducedMotion={reducedMotion} readInput={readInput} disabled={pauseOpen || controlsOpen || mapOpen || statsOpen || packOpen || partyUnlockOpen || Boolean(selectedPlayer) || Boolean(incomingChallenge) || Boolean(doorTravel) || Boolean(boonChoices) || abandonConfirmOpen || Boolean(activeTraderEventId) || Boolean(pendingEventChoiceId)} avatarVisible={!doorTravel || doorTravel.step < 4 || doorTravel.step >= 18} quickMatchAvailable={quickMatchAvailable} assignedPortalId={quickMatch.portalId} nearbyPortal={nearbyPortal} remotePlayers={visibleRemotePlayers} selectedPlayerSessionId={selectedPlayer?.sessionId} progress={adventureProgress} activePartyMembers={partyInstance ? partyInstance.members.length + partyInstance.aiActors.length : 1} partyAiActors={partyInstance?.aiActors ?? []} mounted={mounted} mount={activeMount} attackEvent={effectiveAttackEvent} impactEvent={impactEvent} encounterSeed={encounterSeed} initialEncounterProgress={activeEncounterProgress} onEncounterProgressChange={handleEncounterProgressChange} onChallengerStarted={handleChallengerStarted} onAttack={handleAdventureAttack} onPlayerDamage={handlePlayerDamage} onEnemyDefeated={handleEnemyDefeated} onResourceHarvest={handleResourceHarvest} onQuickMatch={startQuickMatch} onSelectPlayer={selectRemotePlayer} onNearbyPortal={setNearbyPortal} onActivatePortal={activatePortal} onWaterState={handleWaterState} onExit={exitCurrentWorld} onPause={openPause} onStateSample={handlePlayerState} onReady={handleHubReady} />
+      <HubCanvas key={activeHub.id} hub={activeHub} profile={profile} reducedMotion={reducedMotion} readInput={readInput} disabled={pauseOpen || tutorialOpen || returnHomeConfirmOpen || controlsOpen || mapOpen || statsOpen || packOpen || partyUnlockOpen || Boolean(selectedPlayer) || Boolean(incomingChallenge) || Boolean(doorTravel) || Boolean(boonChoices) || abandonConfirmOpen || Boolean(activeTraderEventId) || Boolean(pendingEventChoiceId)} avatarVisible={!doorTravel || doorTravel.step < 4 || doorTravel.step >= 18} quickMatchAvailable={quickMatchAvailable} assignedPortalId={quickMatch.portalId} nearbyPortal={nearbyPortal} remotePlayers={visibleRemotePlayers} selectedPlayerSessionId={selectedPlayer?.sessionId} progress={adventureProgress} activePartyMembers={partyInstance ? partyInstance.members.length + partyInstance.aiActors.length : 1} partyAiActors={partyInstance?.aiActors ?? []} mounted={mounted} mount={activeMount} attackEvent={effectiveAttackEvent} impactEvent={impactEvent} encounterSeed={encounterSeed} initialEncounterProgress={activeEncounterProgress} onEncounterProgressChange={handleEncounterProgressChange} onChallengerStarted={handleChallengerStarted} onAttack={handleAdventureAttack} onPlayerDamage={handlePlayerDamage} onEnemyDefeated={handleEnemyDefeated} onResourceHarvest={handleResourceHarvest} onQuickMatch={startQuickMatch} onSelectPlayer={selectRemotePlayer} onNearbyPortal={setNearbyPortal} onActivatePortal={activatePortal} onWaterState={handleWaterState} onExit={exitCurrentWorld} onPause={openPause} onStateSample={handlePlayerState} onReady={handleHubReady} />
     </div>
     {storyLevelLabEnabled() && <LevelLabOverlay hub={activeHub} floor={generatedFloor} />}
 
@@ -4461,10 +4512,10 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
 
     <div className={`story-portal-prompt ${nearbyPortal ? 'is-visible' : ''}`} aria-live="polite">
       <div style={{ '--story-portal-accent': nearbyPortal?.accent ?? '#2ee6ff' } as CSSProperties}>
-        {nearbyPortal?.locked ? <LockKeyhole size={22} /> : nearbyPortal?.kind === 'shrine' ? <Sparkles size={22} /> : <DoorOpen size={22} />}
+        {nearbyPortal?.locked ? <LockKeyhole size={22} /> : nearbyPortal?.kind === 'shrine' ? <Sparkles size={22} /> : nearbyPortal?.kind === 'tutorial' ? <BookOpen size={22} /> : <DoorOpen size={22} />}
         <span><small>{nearbyPortal?.subtitle}</small><strong>{nearbyPortal?.label ?? 'Destination'}</strong></span>
       </div>
-      <button type="button" disabled={!nearbyPortal} onClick={() => nearbyPortal && activatePortal(nearbyPortal)}>{nearbyPortal?.locked ? 'Inspect' : nearbyPortal?.kind === 'shrine' ? 'Recalibrate' : nearbyPortal?.kind === 'npc' ? 'Talk' : nearbyPortal?.kind === 'chest' ? 'Open' : nearbyPortal?.kind === 'relic' ? 'Claim' : nearbyPortal?.kind === 'restoration' ? 'Restore' : nearbyPortal?.kind === 'checkpoint' ? 'Attune' : nearbyPortal?.kind === 'crafting' ? 'Craft' : 'Enter'}</button>
+      <button type="button" disabled={!nearbyPortal} onClick={() => nearbyPortal && activatePortal(nearbyPortal)}>{nearbyPortal?.locked ? 'Inspect' : nearbyPortal?.kind === 'shrine' ? 'Recalibrate' : nearbyPortal?.kind === 'tutorial' ? 'Read' : nearbyPortal?.kind === 'npc' ? 'Talk' : nearbyPortal?.kind === 'chest' ? 'Open' : nearbyPortal?.kind === 'relic' ? 'Claim' : nearbyPortal?.kind === 'restoration' ? 'Restore' : nearbyPortal?.kind === 'checkpoint' ? 'Attune' : nearbyPortal?.kind === 'crafting' ? 'Craft' : 'Enter'}</button>
     </div>
 
     {quickMatchAvailable && <button type="button" className={`story-quick-match is-${quickMatch.status}`} onClick={startQuickMatch} aria-live="polite" data-testid="story-quick-match">
@@ -4524,7 +4575,32 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
           <span aria-hidden="true"><Wifi size={19} /><WifiOff size={19} /></span>
           <span><strong>{onlineEnabled ? 'Online' : 'Offline'}</strong><small>{onlineEnabled ? 'Visible in the shared world' : 'Playing privately'}</small></span>
         </button>
-        <button type="button" className="story-pause-exit" onClick={onExit}><LogOut size={19} /> Return to Main Menu</button>
+        <button type="button" className="story-pause-exit" onClick={requestMainMenuExit}><LogOut size={19} /> Return to Main Menu</button>
+      </section>
+    </div>}
+
+    {tutorialOpen && <div className="story-gate-overlay story-hub-pause-overlay story-tutorial-overlay" role="presentation">
+      <section className="story-gate-dialog story-hub-pause-dialog story-tutorial-dialog" role="dialog" aria-modal="true" aria-labelledby="story-tutorial-title" aria-describedby="story-tutorial-description" data-testid="story-tutorial-dialog">
+        <div className="story-gate-lock"><BookOpen size={30} /></div>
+        <span>How to Play</span>
+        <h2 id="story-tutorial-title">Explore. Fight. Collect.</h2>
+        <div id="story-tutorial-description" className="story-tutorial-copy">
+          <p>Don’t die, or you’ll lose what you gathered. Use it or lose it.</p>
+          <p>Save items in storage. Build your stats and inventory. Eventually, make a home of your own.</p>
+          <p>Earn mounts, add friends, and enjoy your time in the world of KORE.</p>
+        </div>
+        <button type="button" className="story-primary-button" autoFocus onClick={() => setTutorialOpen(false)}><Play size={18} /> Back to Central Route</button>
+      </section>
+    </div>}
+
+    {returnHomeConfirmOpen && isStoryAdventureRegionId(activeWorldId) && <div className="story-gate-overlay story-hub-pause-overlay story-return-home-warning-overlay" role="presentation">
+      <section className="story-gate-dialog story-hub-pause-dialog story-return-home-warning-dialog" role="alertdialog" aria-modal="true" aria-labelledby="story-return-home-warning-title" aria-describedby="story-return-home-warning-description" data-testid="story-return-home-warning">
+        <div className="story-gate-lock"><LogOut size={30} /></div>
+        <span>Unsafe Exit</span>
+        <h2 id="story-return-home-warning-title">Leave {STORY_ADVENTURE_REGION_LABELS[activeWorldId]}?</h2>
+        <p id="story-return-home-warning-description">All loot gathered on this trip will be lost if you return to the main menu. Open the map and use Fast Travel Home to return safely to Central Route.</p>
+        <button type="button" className="story-primary-button" autoFocus onClick={cancelMainMenuExit}><Play size={18} /> Keep Exploring</button>
+        <button type="button" className="story-pause-exit" onClick={onExit}><LogOut size={18} /> Leave Anyway</button>
       </section>
     </div>}
 
@@ -4574,7 +4650,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       </section>
     </div>}
 
-    {mapOpen && <AdventureRouteMap activeWorldId={activeWorldId} activeSurfaceMapId={activeSurfaceMapId} progress={adventureProgress} endlessRun={endlessRun} generatedFloor={generatedFloor} onFastTravel={fastTravelToWaystone} onPinDaily={pinDailyActivity} onClose={() => setMapOpen(false)} />}
+    {mapOpen && <AdventureRouteMap activeWorldId={activeWorldId} activeSurfaceMapId={activeSurfaceMapId} progress={adventureProgress} endlessRun={endlessRun} generatedFloor={generatedFloor} onFastTravel={fastTravelToWaystone} onFastTravelHome={fastTravelHome} onPinDaily={pinDailyActivity} onClose={() => setMapOpen(false)} />}
     {statsOpen && <AdventureStatsPanel progress={adventureProgress} canRespec={canRespecAdventureStats(activeWorldId, nearbyPortal?.kind)} onAllocate={allocateStat} onManageParty={() => onDestination('avatarStudio')} onRespec={respecStats} onClose={() => setStatsOpen(false)} />}
     {packOpen && <AdventurePackPanel progress={adventureProgress} context={craftingContext} onCraft={craftRecipe} onEquip={equipArmor} onUse={useConsumable} onClose={() => setPackOpen(false)} />}
     {harvestNotice && <aside className="story-harvest-toast" role="status" data-testid="story-harvest-toast"><Gem size={18} /><span><strong>+{harvestNotice.quantity} {harvestNotice.label}</strong>{harvestNotice.learned.length > 0 && <small>{harvestNotice.learned.length} new {harvestNotice.learned.length === 1 ? 'recipe' : 'recipes'} discovered</small>}</span></aside>}

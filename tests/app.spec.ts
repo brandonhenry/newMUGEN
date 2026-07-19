@@ -58,14 +58,29 @@ async function forceMenuLagHealthy(page: Page) {
   });
 }
 
-async function startFromSplash(page: Page, options: { dismissStarterGuide?: boolean } = {}) {
+async function startFromSplash(page: Page, options: { dismissStarterGuide?: boolean; path?: string } = {}) {
   const dismissStarterGuide = options.dismissStarterGuide ?? true;
-  await page.goto('/');
+  await page.goto(options.path ?? '/');
   if (dismissStarterGuide) {
     await page.evaluate((key) => window.localStorage.setItem(key, '1'), STARTER_GUIDE_DISMISSED_KEY);
   }
   await activateAnyInputScreen(page, '.title-screen');
   await expectMainMenu(page);
+}
+
+async function installStoryTestProfile(page: Page, name: string) {
+  await page.addInitScript((profileName) => {
+    window.localStorage.setItem('kore.story.profile.v4', JSON.stringify({
+      version: 4,
+      avatarStyle: 'kore-street-v1',
+      avatar: {
+        name: profileName, avatarSet: 'solar-runner', lineage: 'human', bodyPreset: 'standard', bodyTone: 'tan', hairStyle: 'short', hairColor: '#15131a', outfit: 'kore-cyan', accessory: 'none'
+      },
+      createdAt: 1,
+      updatedAt: 1,
+      reviewedAt: 1
+    }));
+  }, name);
 }
 
 async function selectTournamentMode(page: Page, label: 'Free' | 'Custom' | 'Online' | 'K.O.R.E.' | 'Prizepool' | 'Infinite') {
@@ -166,6 +181,89 @@ test('Play creates a story avatar and enters K.O.R.E. Central', async ({ page })
   await expect(pack.getByRole('button', { name: /Gear/ })).toBeVisible();
   await pack.getByRole('button', { name: 'Close Adventure Pack' }).click();
   await expect(pack).toBeHidden();
+});
+
+test('Central Route tutorial sign explains the Story loop', async ({ page }) => {
+  await installStoryTestProfile(page, 'TUTORIAL');
+  await startFromSplash(page, { path: '/?storyWorld=world-route' });
+  await page.getByRole('button', { name: 'Story', exact: true }).click();
+
+  const hub = page.getByTestId('story-hub-screen');
+  await expect(hub).toHaveAttribute('data-world', 'world-route', { timeout: 15_000 });
+  await expect(hub).toHaveAttribute('data-hub-ready', 'true', { timeout: 15_000 });
+  await moveUntilPortal(page, hub, 'ArrowLeft', 'route-tutorial-sign', 5_000);
+  await page.getByRole('button', { name: 'Read', exact: true }).click();
+
+  const tutorial = page.getByTestId('story-tutorial-dialog');
+  await expect(tutorial).toBeVisible();
+  await expect(tutorial.getByRole('heading', { name: 'Explore. Fight. Collect.' })).toBeVisible();
+  await expect(tutorial).toContainText('Don’t die, or you’ll lose what you gathered. Use it or lose it.');
+  await expect(tutorial).toContainText('Save items in storage. Build your stats and inventory. Eventually, make a home of your own.');
+  await expect(tutorial).toContainText('Earn mounts, add friends, and enjoy your time in the world of KORE.');
+  await expect(page.getByRole('button', { name: 'Back to Central Route' })).toBeFocused();
+  await page.getByRole('button', { name: 'Back to Central Route' }).click();
+  await expect(tutorial).toBeHidden();
+});
+
+test('Story biome exit warns while map Fast Travel Home returns safely', async ({ page }) => {
+  await installStoryTestProfile(page, 'TRAVELER');
+  await page.addInitScript(() => {
+    window.localStorage.setItem('kore.story.adventure.v5', JSON.stringify({
+      version: 5,
+      inventory: { materials: { fieldstone: 3 }, consumables: {}, armor: [] },
+      discoveredMaterials: ['fieldstone']
+    }));
+  });
+  await startFromSplash(page, { path: '/?storyWorld=greenhollow' });
+  await page.getByRole('button', { name: 'Story', exact: true }).click();
+
+  const hub = page.getByTestId('story-hub-screen');
+  await expect(hub).toHaveAttribute('data-world', 'greenhollow', { timeout: 15_000 });
+  await expect(hub).toHaveAttribute('data-hub-ready', 'true', { timeout: 15_000 });
+  await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: 'Return to Main Menu' }).click();
+
+  const warning = page.getByTestId('story-return-home-warning');
+  await expect(warning).toBeVisible();
+  await expect(warning).toContainText('All loot gathered on this trip will be lost');
+  await expect(warning).toContainText('Fast Travel Home');
+  await expect(page.getByRole('button', { name: 'Keep Exploring' })).toBeFocused();
+  await page.getByRole('button', { name: 'Keep Exploring' }).click();
+  await expect(warning).toBeHidden();
+  await expect(page.getByRole('heading', { name: 'Hub Paused' })).toBeVisible();
+  await page.getByRole('button', { name: 'Resume' }).click();
+
+  await page.keyboard.press('m');
+  const home = page.getByRole('button', { name: 'Fast Travel Home to Central Route' });
+  await expect(home).toBeEnabled();
+  await home.click();
+  await expect(page.getByTestId('story-door-transition')).toBeVisible();
+  await expect(hub).toHaveAttribute('data-world', 'world-route', { timeout: 4_000 });
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.story.adventure.v5') ?? '{}')?.inventory?.materials?.fieldstone)).toBe(3);
+
+  await expect(page.getByTestId('story-door-transition')).toBeHidden({ timeout: 8_000 });
+  await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: 'Return to Main Menu' }).click();
+  await expect(page.getByTestId('story-return-home-warning')).toHaveCount(0);
+  await expectMainMenu(page);
+});
+
+test('Story biome exit confirmation can leave and Endless Descent locks home travel', async ({ page }) => {
+  await installStoryTestProfile(page, 'WANDERER');
+  await startFromSplash(page, { path: '/?storyWorld=greenhollow' });
+  await page.getByRole('button', { name: 'Story', exact: true }).click();
+  const hub = page.getByTestId('story-hub-screen');
+  await expect(hub).toHaveAttribute('data-world', 'greenhollow', { timeout: 15_000 });
+  await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: 'Return to Main Menu' }).click();
+  await page.getByRole('button', { name: 'Leave Anyway' }).click();
+  await expectMainMenu(page);
+
+  await startFromSplash(page, { path: '/?storyWorld=greenhollow&storyEndlessSeed=home-lock&storyFloor=1' });
+  await page.getByRole('button', { name: 'Story', exact: true }).click();
+  await expect(hub).toHaveAttribute('data-world', 'greenhollow', { timeout: 15_000 });
+  await page.keyboard.press('m');
+  await expect(page.getByRole('button', { name: 'Fast Travel Home unavailable during Endless Descent' })).toBeDisabled();
 });
 
 test('adventure combat levels the player and Central Route shrine respecs stats', async ({ page }) => {

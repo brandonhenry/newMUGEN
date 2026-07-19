@@ -9,6 +9,10 @@ describe('story adventure world network', () => {
     expect(route.bounds.maxX - route.bounds.minX).toBeGreaterThanOrEqual(84);
     expect(route.portals.filter((portal) => STORY_ADVENTURE_REGION_IDS.includes(portal.destination as typeof STORY_ADVENTURE_REGION_IDS[number]))).toHaveLength(8);
     expect(route.portals.some((portal) => portal.kind === 'shrine')).toBe(true);
+    const tutorialSigns = route.portals.filter((portal) => portal.kind === 'tutorial');
+    expect(tutorialSigns).toHaveLength(1);
+    expect(tutorialSigns[0]).toMatchObject({ id: 'route-tutorial-sign', destination: 'world-route' });
+    expect(Math.abs(tutorialSigns[0].position[0] - route.spawn[0])).toBeLessThanOrEqual(5);
     expect(route.environment?.layers.length).toBeGreaterThanOrEqual(3);
     expect(route.environment?.layers.every((layer) => layer.asset?.startsWith('world:'))).toBe(true);
     expect(route.environment?.surface?.asset.startsWith('world:')).toBe(true);

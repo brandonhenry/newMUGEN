@@ -61,6 +61,7 @@ const WORLD_ROUTE: StoryHubDefinition = {
     routeGate('greenhollow', -62), routeGate('thornwood', -46), routeGate('ironroot', -30), routeGate('bonevault', -14),
     routeGate('emberdeep', 14), routeGate('frostpeak', 30), routeGate('sunscar', 46), routeGate('skyglass', 62),
     { id: 'route-respec-shrine', label: 'Recalibration Shrine', subtitle: 'Heal and reset stat points', destination: 'world-route', position: [0, 1.25], size: [2.2, 2.5], accent: '#ffe071', kind: 'shrine' },
+    { id: 'route-tutorial-sign', label: 'How to Play', subtitle: 'Explore. Fight. Collect.', destination: 'world-route', position: [-4.5, 0.82], size: [1.8, 2.2], accent: '#8ee8ff', kind: 'tutorial' },
     ...STORY_STARTER_NPCS.map((npc) => ({ id: `npc:${npc.id}`, label: npc.displayName, subtitle: npc.bark, destination: 'world-route' as const, position: npc.position, size: [1.4, 2] as [number, number], accent: '#ffe071', kind: 'npc' as const })),
     { id: 'crafting:route-workbench', label: 'Wayfarer Workbench', subtitle: 'Craft any learned armor set', destination: 'world-route', position: [13, 1.05], size: [2.2, 2.2], accent: '#d9a066', kind: 'crafting' },
     { id: 'restoration:route-board', label: 'Route Restoration Board', subtitle: 'Review regional reconstruction projects', destination: 'world-route', position: [25, 1.1], size: [1.8, 2.2], accent: '#d9a066', kind: 'restoration' },

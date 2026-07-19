@@ -233,7 +233,7 @@ export type StoryAdventureWorldId =
   | 'skyglass';
 export type StoryWorldId = StoryModeWorldId | StoryAdventureWorldId;
 export type StoryPortalDestination = HubDestination | StoryAdventureWorldId;
-export type StoryPortalKind = 'storefront' | 'mode-door' | 'adventure-gate' | 'shrine' | 'arcade-machine' | 'versus-machine' | 'terminal' | 'chest' | 'npc' | 'relic' | 'checkpoint' | 'restoration' | 'crafting';
+export type StoryPortalKind = 'storefront' | 'mode-door' | 'adventure-gate' | 'shrine' | 'arcade-machine' | 'versus-machine' | 'terminal' | 'chest' | 'npc' | 'relic' | 'checkpoint' | 'restoration' | 'crafting' | 'tutorial';
 export type StoryWorldThemeId =
   | 'city'
   | 'arcade'
