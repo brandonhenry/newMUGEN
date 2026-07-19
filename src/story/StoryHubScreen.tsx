@@ -29,12 +29,13 @@ import { KORE_CENTRAL_HUB } from './hubData';
 import { storyPlatformSurfacePlacement } from './platformGrounding';
 import { resolveStorySurfaceContact, type StorySurfaceContact } from './storySurfaceContact';
 import { advanceStoryMovementAudio, type StoryMovementAudioState } from './storyMovementAudio';
-import { canStartStoryRoll, resolveStoryRollRequest, STORY_MOVEMENT_PROFILE, storyRollCombatWindowBlocksDamage, storyRollRecoveryFacing, type StoryPlayerDamageKind } from './movementProfile';
+import { canStartStoryRoll, resolveStoryRollRequest, STORY_MOVEMENT_PROFILE, storyRollActiveFacing, storyRollCombatWindowBlocksDamage, storyRollRecoveryFacing, type StoryPlayerDamageKind } from './movementProfile';
 import { resolveStoryTerrainMotion } from './storyTerrainCollision';
 import { resolveStoryTerrainVariant, storyTerrainFrame } from './terrainGrammar';
 import { createStoryBiomeVisualSetEnvironment } from './worldEnvironments';
 import { getStorySpriteProjectile, STORY_ATTACK_POSES } from './streetAvatarCatalog';
 import { StoryAvatarRig, type StoryAvatarPose } from './StoryAvatarRig';
+import { StoryRollSmoke } from './StoryRollSmoke';
 import { acceptStoryPartyInvite, advanceStoryPartyEndlessFloor, bankStoryPartyEndlessChapter, createStoryParty, endStoryPartyEndlessRun, heartbeatStoryParty, inviteToStoryParty, leaveStoryParty, listStoryPartyInvites, resolveStoryPartyEndlessEvent, selectStoryPartyEndlessBoon, startStoryPartyEndlessRun, transferStoryPartyLeadership, updateStoryPartyRoom, type StoryPartyRegistration } from './storyParty';
 import { unseenStoryPartyRewards, type StoryPartyAuthoritativeSnapshot, type StoryPartyRewardEvent } from './storyPartyProtocol';
 import { createStoryPartyTransport, type StoryPartyTransport } from './storyPartyTransport';
@@ -1840,7 +1841,6 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
   const rollDirection = useRef<-1 | 1>(1);
   const rollStartedFacing = useRef<-1 | 1>(1);
   const rollFromCrouch = useRef(false);
-  const directionalTapStartedFacing = useRef<{ left: -1 | 1; right: -1 | 1 }>({ left: 1, right: 1 });
   const bufferedAttack = useRef<StoryBufferedAttackInput>(null);
   const actionInputArmed = useRef(false);
   const releasedInputFrames = useRef(0);
@@ -1956,13 +1956,6 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
       facing.current = storyRollRecoveryFacing(rollStartedFacing.current, true);
       rollFromCrouch.current = false;
     }
-    const doubleTapStartedFacing = input.rollDirection
-      ? directionalTapStartedFacing.current[input.rollDirection]
-      : facing.current;
-    if (!input.rollDirection) {
-      if (input.left && !previousButtons.current.left) directionalTapStartedFacing.current.left = facing.current;
-      if (input.right && !previousButtons.current.right) directionalTapStartedFacing.current.right = facing.current;
-    }
     const rollRequest = resolveStoryRollRequest({
       left: input.left,
       right: input.right,
@@ -1982,8 +1975,8 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
       cooldownReady: rollCooldownUntil.current <= now
     })) {
       rollDirection.current = rollRequest.direction;
-      rollStartedFacing.current = rollRequest.fromCrouch ? facing.current : doubleTapStartedFacing;
-      facing.current = rollStartedFacing.current;
+      rollStartedFacing.current = facing.current;
+      facing.current = storyRollActiveFacing(rollRequest.direction);
       rollFromCrouch.current = rollRequest.fromCrouch;
       rollUntil.current = now + STORY_MOVEMENT_PROFILE.rollDurationSeconds;
       rollCooldownUntil.current = now + STORY_MOVEMENT_PROFILE.rollCooldownSeconds;
@@ -2153,7 +2146,9 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
     previousButtons.current = { left: input.left, right: input.right, down: input.down, jump: jumpPressed, interact: interactPressed, ...attackButtons, back: backPressed, pause: pausePressed };
   });
 
-  return <RigidBody ref={bodyRef} type="kinematicPosition" position={[hub.spawn[0], hub.spawn[1], 0]} colliders={false} enabledRotations={[false, false, false]}>
+  return <>
+    <StoryRollSmoke active={visualState.pose === 'roll'} direction={rollDirection.current} playerPosition={playerPosition} reducedMotion={reducedMotion} />
+    <RigidBody ref={bodyRef} type="kinematicPosition" position={[hub.spawn[0], hub.spawn[1], 0]} colliders={false} enabledRotations={[false, false, false]}>
     <CuboidCollider args={[STORY_MOVEMENT_PROFILE.avatarHalfWidth, STORY_MOVEMENT_PROFILE.avatarHalfHeight, 0.3]} />
     <group ref={groundedVisualGroup} position={[0, -initialSurfaceInsetY, 0]}>
       {mounted && mount && <StoryMountVisual mount={mount} facing={visualState.facing} />}
@@ -2161,7 +2156,8 @@ function StoryPlayerController({ hub, avatar, avatarVisible, groundingOffsetY, p
         <StoryAvatarRig avatar={avatar} pose={visualState.pose} facing={visualState.facing} reducedMotion={reducedMotion} restartToken={visualState.actionSequence} />
       </group>
     </group>
-  </RigidBody>;
+    </RigidBody>
+  </>;
 }
 
 function readForcedChallengerId(): StoryEnemyId | undefined {
@@ -4949,7 +4945,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       <div className="story-hub-controls-grid">
         <div><strong>Move</strong><kbd>← →</kbd><span>Left stick / D-pad</span></div>
         <div><strong>Run</strong><kbd>Shift</kbd><span>L1 / R1</span></div>
-        <div><strong>Roll</strong><kbd>←← / →→</kbd><span>Double-tap forward/back · preserves facing · unlocks at 10 total AGI · {derivedAdventureStats.rollUnlocked ? 'Unlocked' : `Locked (${derivedAdventureStats.effectiveAgility}/10)`}</span></div>
+        <div><strong>Roll</strong><kbd>←← / →→</kbd><span>Double-tap forward/back · faces travel direction · unlocks at 10 total AGI · {derivedAdventureStats.rollUnlocked ? 'Unlocked' : `Locked (${derivedAdventureStats.effectiveAgility}/10)`}</span></div>
         <div><strong>Crouch Roll</strong><kbd>↓ + ← / →</kbd><span>Roll from crouch · recover crouched facing the opposite way</span></div>
         <div><strong>Crouch</strong><kbd>Hold ↓</kbd><span>Stay low while grounded</span></div>
         <div><strong>Double Jump</strong><kbd>Space ×2</kbd><span>R2 ×2</span></div>

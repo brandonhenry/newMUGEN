@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { canStartStoryRoll, resolveStoryRollRequest, STORY_MOVEMENT_PROFILE, storyRollCombatWindowBlocksDamage, storyRollHasCombatInvulnerability, storyRollRecoveryFacing } from './movementProfile';
+import { canStartStoryRoll, resolveStoryRollRequest, STORY_MOVEMENT_PROFILE, storyRollActiveFacing, storyRollCombatWindowBlocksDamage, storyRollHasCombatInvulnerability, storyRollRecoveryFacing } from './movementProfile';
 
 describe('story roll movement profile', () => {
-  it('travels about 4.2 world units over eight 70ms frames with a start-to-start cooldown', () => {
-    expect(STORY_MOVEMENT_PROFILE.rollDurationSeconds).toBe(0.56);
-    expect(STORY_MOVEMENT_PROFILE.rollSpeed).toBe(7.5);
+  it('travels about 4.2 world units over eight 60ms frames with a start-to-start cooldown', () => {
+    expect(STORY_MOVEMENT_PROFILE.rollDurationSeconds).toBe(0.48);
+    expect(STORY_MOVEMENT_PROFILE.rollSpeed).toBe(8.75);
     expect(STORY_MOVEMENT_PROFILE.rollSpeed * STORY_MOVEMENT_PROFILE.rollDurationSeconds).toBeCloseTo(4.2, 5);
     expect(STORY_MOVEMENT_PROFILE.rollCooldownSeconds).toBe(0.9);
   });
@@ -18,15 +18,15 @@ describe('story roll movement profile', () => {
     ]) expect(canStartStoryRoll({ ...ready, ...blocked })).toBe(false);
   });
 
-  it('grants combat i-frames only from 140ms through 420ms', () => {
-    expect(storyRollHasCombatInvulnerability(0.139)).toBe(false);
-    expect(storyRollHasCombatInvulnerability(0.14)).toBe(true);
-    expect(storyRollHasCombatInvulnerability(0.419)).toBe(true);
-    expect(storyRollHasCombatInvulnerability(0.42)).toBe(false);
-    const window = { startMs: 1_140, endMs: 1_420 };
+  it('grants combat i-frames only from 120ms through 360ms', () => {
+    expect(storyRollHasCombatInvulnerability(0.119)).toBe(false);
+    expect(storyRollHasCombatInvulnerability(0.12)).toBe(true);
+    expect(storyRollHasCombatInvulnerability(0.359)).toBe(true);
+    expect(storyRollHasCombatInvulnerability(0.36)).toBe(false);
+    const window = { startMs: 1_120, endMs: 1_360 };
     expect(storyRollCombatWindowBlocksDamage('combat', 1_200, window)).toBe(true);
     expect(storyRollCombatWindowBlocksDamage('environment', 1_200, window)).toBe(false);
-    expect(storyRollCombatWindowBlocksDamage('combat', 1_420, window)).toBe(false);
+    expect(storyRollCombatWindowBlocksDamage('combat', 1_360, window)).toBe(false);
   });
 
   it('resolves double taps and crouch-direction presses as distinct roll styles', () => {
@@ -49,7 +49,9 @@ describe('story roll movement profile', () => {
     })).toBeNull();
   });
 
-  it('preserves facing for double-tap rolls and reverses it after completed crouch-rolls', () => {
+  it('faces the travel direction during rolls and reverses after completed crouch-rolls', () => {
+    expect(storyRollActiveFacing(1)).toBe(1);
+    expect(storyRollActiveFacing(-1)).toBe(-1);
     expect(storyRollRecoveryFacing(1, false)).toBe(1);
     expect(storyRollRecoveryFacing(1, true)).toBe(-1);
     expect(storyRollRecoveryFacing(-1, true)).toBe(1);

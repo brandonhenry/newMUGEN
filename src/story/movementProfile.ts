@@ -42,11 +42,11 @@ export const STORY_MOVEMENT_PROFILE: Readonly<StoryMovementProfile> = Object.fre
   solidEdgeCatch: 0.46,
   dropThroughSeconds: 0.28,
   jumpBufferSeconds: 0.12,
-  rollSpeed: 7.5,
-  rollDurationSeconds: 0.56,
+  rollSpeed: 8.75,
+  rollDurationSeconds: 0.48,
   rollCooldownSeconds: 0.9,
-  rollInvulnerabilityStartSeconds: 0.14,
-  rollInvulnerabilityEndSeconds: 0.42,
+  rollInvulnerabilityStartSeconds: 0.12,
+  rollInvulnerabilityEndSeconds: 0.36,
   rollAgilityRequirement: 10
 });
 
@@ -85,6 +85,10 @@ export function resolveStoryRollRequest(input: {
 
 export function storyRollRecoveryFacing(startFacing: -1 | 1, fromCrouch: boolean, completed = true): -1 | 1 {
   return fromCrouch && completed ? (startFacing === 1 ? -1 : 1) : startFacing;
+}
+
+export function storyRollActiveFacing(direction: -1 | 1): -1 | 1 {
+  return direction;
 }
 
 export function canStartStoryRoll(context: StoryRollStartContext) {

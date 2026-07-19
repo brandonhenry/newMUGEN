@@ -137,7 +137,7 @@ TIMINGS = {
     "walk": 92,
     "sprint": 72,
     "jump": 86,
-    "roll": 70,
+    "roll": 60,
     "attack": 82,
     "attack-heavy": 110,
     "attack-kick": 82,

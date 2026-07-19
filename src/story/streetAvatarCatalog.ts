@@ -111,8 +111,8 @@ export function validateStorySpriteManifest(value: unknown): string[] {
         const range = animation.activeFrameRange;
         if (!range || range[0] < 0 || range[0] > range[1] || range[1] >= animation.frames.length) errors.push(`${set.id}/${animation.id} has an invalid active frame range`);
       }
-      if (animation.id === 'roll' && (animation.loop || animation.frames.length !== 8 || animation.frames.some((frame) => frame.durationMs !== 70))) {
-        errors.push(`${set.id}/roll must be eight non-looping 70ms frames`);
+      if (animation.id === 'roll' && (animation.loop || animation.frames.length !== 8 || animation.frames.some((frame) => frame.durationMs !== 60))) {
+        errors.push(`${set.id}/roll must be eight non-looping 60ms frames`);
       }
     }
     for (const required of ['idle', 'walk', 'sprint', 'jump', 'roll', 'attack', 'attack-heavy', 'attack-kick', 'attack-special']) {

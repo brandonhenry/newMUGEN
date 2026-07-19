@@ -64,7 +64,7 @@ describe('K.O.R.E. full-frame street avatar assets', () => {
       expect(roll.loop, set.id).toBe(false);
       expect(roll.frames).toHaveLength(8);
       roll.frames.forEach((frame, index) => {
-        expect(frame.durationMs, `${set.id}/${frame.id}`).toBe(70);
+        expect(frame.durationMs, `${set.id}/${frame.id}`).toBe(60);
         expect(frame.bodyAnchorX, `${set.id}/${frame.id}`).toBe(160);
         expect(frame.visualScale, `${set.id}/${frame.id}`).toBeUndefined();
         expect(frame.contentBounds[3], `${set.id}/${frame.id} baseline`).toBe(182);
