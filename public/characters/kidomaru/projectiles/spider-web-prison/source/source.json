@@ -1,0 +1,10 @@
+{
+  "characterId": "kidomaru",
+  "assetId": "spider-web-prison",
+  "classification": "trap-visual",
+  "source": "Kidomaru original sprite sheet",
+  "sourceSheetPath": "/characters/kidomaru/animation-sheet.png",
+  "extraction": "standalone giant web cell from frame 104",
+  "sourceFrames": [104],
+  "matchedMoves": ["jableft", "kickright", "cmd:FC+1", "cmd:1+3", "cmd:2+3", "cmd:2+4", "cmd:3+4"]
+}

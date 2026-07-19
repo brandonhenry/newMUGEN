@@ -172,14 +172,18 @@ function makeSurfaceBlueprint(biomeId: BiomeId, mapRole: StoryAdventureMapRole):
     const priorY = floorY(tiers[index - 1]);
     const midpoint = snap((priorX + platformXs[index]) / 2);
     if (priorY === baseY) {
-      geometry.push({ id: `${id}-corridor-${index}`, kind: 'carve', rect: [priorX, baseY + 2, platformXs[index] - priorX, 4], surfaceIntent: 'air' });
+      geometry.push({ id: `${id}-corridor-${index}`, kind: 'carve', rect: [priorX, baseY, platformXs[index] - priorX, 6], surfaceIntent: 'air' });
     } else {
-      geometry.push({ id: `${id}-corridor-${index}-a`, kind: 'carve', rect: [priorX, priorY + 2, midpoint - priorX + 2, 4], surfaceIntent: 'air' });
-      geometry.push({ id: `${id}-shaft-${index}`, kind: 'carve', rect: [midpoint - 2, Math.min(priorY, baseY), 4, Math.abs(baseY - priorY) + 8], surfaceIntent: 'air' });
-      geometry.push({ id: `${id}-corridor-${index}-b`, kind: 'carve', rect: [midpoint - 2, baseY + 2, platformXs[index] - midpoint + 2, 4], surfaceIntent: 'air' });
+      // Eight-unit shafts leave enough room for the avatar to clear a ledge and
+      // steer toward the next step. The former four-unit carve became a pair of
+      // opposing collision walls after grid snapping and could trap players.
+      geometry.push({ id: `${id}-corridor-${index}-a`, kind: 'carve', rect: [priorX, priorY, midpoint - priorX + 4, 6], surfaceIntent: 'air' });
+      geometry.push({ id: `${id}-shaft-${index}`, kind: 'carve', rect: [midpoint - 4, Math.min(priorY, baseY), 8, Math.abs(baseY - priorY) + 8], surfaceIntent: 'air' });
+      geometry.push({ id: `${id}-corridor-${index}-b`, kind: 'carve', rect: [midpoint - 4, baseY, platformXs[index] - midpoint + 4, 6], surfaceIntent: 'air' });
       const lowerY = Math.min(priorY, baseY);
-      geometry.push({ id: `${id}-shaft-step-${index}-1`, kind: 'one-way', rect: [midpoint - 2, lowerY + 4, 3.5, 0.5], surfaceIntent: 'ledge' });
-      geometry.push({ id: `${id}-shaft-step-${index}-2`, kind: 'one-way', rect: [midpoint - 1.5, lowerY + 7, 3.5, 0.5], surfaceIntent: 'ledge' });
+      const upperStepX = baseY > priorY ? midpoint - 1 : midpoint - 4;
+      geometry.push({ id: `${id}-shaft-step-${index}-1`, kind: 'one-way', rect: [midpoint - 4, lowerY + 3, 8, 0.5], surfaceIntent: 'ledge' });
+      geometry.push({ id: `${id}-shaft-step-${index}-2`, kind: 'one-way', rect: [upperStepX, lowerY + 6, 5, 0.5], surfaceIntent: 'ledge' });
     }
   }
   const optionalWidth = 14 + (biomeIndex * ROLES.length + roleIndex) * 0.25;

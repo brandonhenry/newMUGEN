@@ -379,6 +379,13 @@ export type ProjectileHomingMode = 'none' | 'limited';
 export type ProjectileTargetMode = 'forward' | 'targetLocation';
 export type ProjectileDeliveryMode = 'additional' | 'replaceMoveHit';
 
+export type ProjectileTrapDefinition = {
+  kind: 'web';
+  durationFrames: number;
+  escapePresses: number;
+  visualProjectileId?: string;
+};
+
 export type MoveProjectileInstance = {
   id: string;
   projectileId: string;
@@ -418,6 +425,7 @@ export type MoveProjectileInstance = {
   chargeFramesMax?: number;
   minDamageScale?: number;
   maxDamageScale?: number;
+  trap?: ProjectileTrapDefinition;
 };
 
 export type VoxelFidelitySettings = {
@@ -1394,6 +1402,17 @@ export type ProjectileRuntime = {
   chargeDamageScale?: number;
 };
 
+export type ProjectileTrapRuntime = {
+  kind: 'web';
+  ownerSlot: 1 | 2;
+  projectileId: string;
+  framesRemaining: number;
+  totalFrames: number;
+  escapeProgress: number;
+  escapeGoal: number;
+  shakeFrames: number;
+};
+
 export type AiObjective = 'standard' | 'tagger' | 'runner';
 
 export type MatchOptions = {
@@ -1533,6 +1552,7 @@ export type FighterRuntime = {
   throwEscapeProgress: number;
   throwEscapeGoal: number;
   throwShakeFrames: number;
+  projectileTrap: ProjectileTrapRuntime | null;
   lotusFinisherDefenderSlot: 1 | 2 | null;
   lotusCinematicFrames: number;
   blockFlash: number;

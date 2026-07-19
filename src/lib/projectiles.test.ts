@@ -16,4 +16,22 @@ describe('projectile opt-in behavior', () => {
       delivery: 'replaceMoveHit'
     }).delivery).toBe('replaceMoveHit');
   });
+
+  it('sanitizes authored web traps and rejects unknown trap kinds', () => {
+    expect(sanitizeMoveProjectileInstance({
+      id: 'web',
+      projectileId: 'web-shot',
+      trap: { kind: 'web', durationFrames: 240, escapePresses: 12, visualProjectileId: 'web-prison' }
+    }).trap).toEqual({
+      kind: 'web',
+      durationFrames: 240,
+      escapePresses: 12,
+      visualProjectileId: 'web-prison'
+    });
+    expect(sanitizeMoveProjectileInstance({
+      id: 'unknown',
+      projectileId: 'shot',
+      trap: { kind: 'ice' }
+    }).trap).toBeUndefined();
+  });
 });

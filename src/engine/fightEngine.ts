@@ -120,6 +120,7 @@ const THROW_RELEASE_RECOVERY_FRAMES = 12;
 const THROW_HAND_FORWARD_OFFSET = 0.68;
 const THROW_RELEASE_SPACING = 0.98;
 const THROW_SHAKE_FRAMES = 10;
+const PROJECTILE_TRAP_SHAKE_FRAMES = 10;
 const KI_HIT_GAIN = 9;
 const KI_BLOCK_GAIN = 4;
 const KI_DEFENDER_BLOCK_GAIN = 5;
@@ -835,6 +836,7 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     throwEscapeProgress: 0,
     throwEscapeGoal: 0,
     throwShakeFrames: 0,
+    projectileTrap: null,
     lotusFinisherDefenderSlot: null,
     lotusCinematicFrames: 0,
     blockFlash: 0,
@@ -1001,6 +1003,11 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   }
   fighter.getupInvulnerableFrames = Math.max(0, fighter.getupInvulnerableFrames - frameDelta);
   updateCommandHistory(fighter, opponent, input, dt);
+  if (fighter.projectileTrap) {
+    handleProjectileTrapStep(fighter, input, frameDelta);
+    finishFighterStep();
+    return;
+  }
   if (fighter.state === 'throwHold' || fighter.state === 'throwHeld') {
     handleThrowCaptureStep(match, fighter, opponent, input, dt);
     finishFighterStep();
@@ -1308,6 +1315,65 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   applyGravity(fighter, dt);
   fighter.wasCrouching = crouching;
   finishFighterStep();
+}
+
+function handleProjectileTrapStep(fighter: FighterRuntime, input: InputFrame, frameDelta: number) {
+  const trap = fighter.projectileTrap;
+  if (!trap) return;
+  fighter.state = 'hit';
+  fighter.currentMove = null;
+  fighter.velocityY = 0;
+  fighter.position.y = 0;
+  fighter.walkDirection = 0;
+  fighter.sidestepDirection = 0;
+  fighter.actionTimer = framesToSeconds(trap.framesRemaining);
+  fighter.actionFramesRemaining = trap.framesRemaining;
+  fighter.stunTimer = fighter.actionTimer;
+  fighter.stunFramesRemaining = trap.framesRemaining;
+  fighter.blockstunFramesRemaining = 0;
+  resetKiChargeRuntime(fighter);
+  trap.framesRemaining = Math.max(0, trap.framesRemaining - frameDelta);
+  trap.shakeFrames = Math.max(0, trap.shakeFrames - frameDelta);
+  const freshMashes = countFreshAttackPresses(fighter, input);
+  if (freshMashes > 0) {
+    trap.escapeProgress += freshMashes;
+    trap.shakeFrames = PROJECTILE_TRAP_SHAKE_FRAMES;
+  }
+  if (trap.framesRemaining === 0 || trap.escapeProgress >= trap.escapeGoal) {
+    clearProjectileTrap(fighter);
+  }
+}
+
+function startProjectileTrap(
+  defender: FighterRuntime,
+  attacker: FighterRuntime,
+  projectile: ProjectileRuntime,
+  trap: NonNullable<MoveProjectileInstance['trap']>
+) {
+  const duration = Math.max(30, Math.round(trap.durationFrames));
+  const existing = defender.projectileTrap;
+  defender.projectileTrap = {
+    kind: 'web',
+    ownerSlot: attacker.slot,
+    projectileId: trap.visualProjectileId ?? projectile.projectileId,
+    framesRemaining: existing ? Math.max(existing.framesRemaining, duration) : duration,
+    totalFrames: existing ? Math.max(existing.totalFrames, duration) : duration,
+    escapeProgress: existing?.escapeProgress ?? 0,
+    escapeGoal: Math.max(existing?.escapeGoal ?? 0, Math.round(trap.escapePresses)),
+    shakeFrames: existing?.shakeFrames ?? 0
+  };
+  defender.state = 'hit';
+  defender.velocityY = 0;
+  defender.position.y = 0;
+}
+
+function clearProjectileTrap(fighter: FighterRuntime) {
+  fighter.projectileTrap = null;
+  fighter.stunFramesRemaining = 0;
+  fighter.stunTimer = 0;
+  fighter.actionFramesRemaining = 0;
+  fighter.actionTimer = 0;
+  if (fighter.hp > 0) fighter.state = 'idle';
 }
 
 function handleThrowCaptureStep(match: MatchSnapshot, fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame, dt: number) {
@@ -4191,7 +4257,9 @@ function pushProjectileClashSpark(match: MatchSnapshot, first: ProjectileRuntime
 
 function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defender: FighterRuntime, projectile: ProjectileRuntime, position: [number, number, number]) {
   const sourceMove = projectile.move;
-  const replacesMoveHit = getProjectileInstanceForRuntime(attacker, sourceMove, projectile.instanceId)?.delivery === 'replaceMoveHit';
+  const projectileInstance = getProjectileInstanceForRuntime(attacker, sourceMove, projectile.instanceId);
+  const replacesMoveHit = projectileInstance?.delivery === 'replaceMoveHit';
+  const trapsDefender = Boolean(projectileInstance?.trap);
   const wasJuggled = defender.state === 'juggle';
   const tornadoExtendsJuggle = wasJuggled && defender.juggleTornadoCount < TORNADO_EXTENSION_LIMIT;
   const move: MoveDefinition = {
@@ -4200,11 +4268,11 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
     blockDamage: Math.max(0, Math.round(sourceMove.blockDamage * projectile.blockDamageScale)),
     pushback: sourceMove.pushback * projectile.pushbackScale,
     blockPushback: sourceMove.blockPushback * projectile.blockPushbackScale,
-    launchHeight: replacesMoveHit || projectile.kind === 'blast' ? Math.max(0, sourceMove.launchHeight ?? 0) : 0,
-    launchVelocity: replacesMoveHit || projectile.kind === 'blast' ? sourceMove.launchVelocity : undefined,
-    tornado: replacesMoveHit ? sourceMove.tornado : tornadoExtendsJuggle,
+    launchHeight: trapsDefender ? 0 : replacesMoveHit || projectile.kind === 'blast' ? Math.max(0, sourceMove.launchHeight ?? 0) : 0,
+    launchVelocity: trapsDefender ? undefined : replacesMoveHit || projectile.kind === 'blast' ? sourceMove.launchVelocity : undefined,
+    tornado: trapsDefender ? false : replacesMoveHit ? sourceMove.tornado : tornadoExtendsJuggle,
     throwCapture: false,
-    knockdown: replacesMoveHit ? sourceMove.knockdown : false,
+    knockdown: trapsDefender ? false : replacesMoveHit ? sourceMove.knockdown : false,
     hitbox: projectile.hitbox
   };
   const defenderPosition = getFighterCombatPosition(defender);
@@ -4336,6 +4404,9 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
     move.knockdown || move.kiBurst ? 10 : wasJuggled || wasAirborne ? 8 : 6
   );
   applyVisualHitstop(attacker, defender, move, counterHit ? 'counterHit' : whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : 'hit');
+  if (projectileInstance?.trap && defender.hp > 0) {
+    startProjectileTrap(defender, attacker, projectile, projectileInstance.trap);
+  }
   if (defender.hp <= 0) beginRoundFinisher(match, attacker, defender, impactId, position);
 }
 
@@ -5015,6 +5086,7 @@ function makeShadowCloneFighter(source: FighterRuntime, clone: NonNullable<Fight
     hitFlash: 0,
     visualHitstop: { ...clone.visualHitstop },
     shadowClone: null,
+    projectileTrap: null,
     shadowCloneChargeConsumed: true
   };
 }
@@ -5915,6 +5987,10 @@ function applyFighterDamage(fighter: FighterRuntime, damage: number, context: Re
   fighter.hp = Math.max(0, fighter.hp - damage);
   if (fighter.hp < previousHp) {
     fighter.tookDamageThisRound = true;
+    if (fighter.projectileTrap) {
+      fighter.hitFlash = Math.max(fighter.hitFlash, 0.18);
+      fighter.projectileTrap.shakeFrames = PROJECTILE_TRAP_SHAKE_FRAMES;
+    }
     fighter.recoverableRecoveryDelayFrames = RECOVERABLE_DAMAGE_DELAY_FRAMES;
     addRecoverableDamage(fighter, previousHp - fighter.hp, context);
   }
@@ -6057,6 +6133,7 @@ function finishRound(match: MatchSnapshot, reason: RoundFinishReason = 'ko') {
     fighter.visualHitstop = createEmptyVisualHitstop();
     fighter.shadowClone = null;
     fighter.shadowCloneChargeConsumed = false;
+    fighter.projectileTrap = null;
     clearIdleFlourish(fighter);
     clearThrowRuntime(fighter);
   });
@@ -6183,6 +6260,7 @@ function beginRoundIntro(match: MatchSnapshot) {
     fighter.visualHitstop = createEmptyVisualHitstop();
     fighter.shadowClone = null;
     fighter.shadowCloneChargeConsumed = false;
+    fighter.projectileTrap = null;
     clearIdleFlourish(fighter);
   });
 }
@@ -6843,6 +6921,10 @@ function makeObjectiveAiInput(
   roundAiSeed: number
 ): InputFrame {
   const input = emptyInputFrame();
+  if (ai.projectileTrap) {
+    applyAiProjectileTrapEscapeInput(input, ai, opponent, difficulty, Math.max(0, match.roundTime - timer), roundAiSeed);
+    return input;
+  }
   if (ai.state === 'throwHold') {
     input.jab = true;
     (input as InputFrameWithMetadata).__pressedActions = ['jab'];
@@ -6960,6 +7042,10 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
   const comboPhase = positiveModulo(elapsed + ai.slot * 0.11 + style.comboPhaseOffset + roundStyle.comboPhaseOffset * 0.75, comboCycle);
   const selector = positiveModulo(Math.floor(elapsed * 1000) + ai.slot * 17 + Math.floor(ai.hp) + style.selectorJitter + roundStyle.selectorJitter, 100);
   const routeRoll = positiveModulo(Math.floor(elapsed * 760) + ai.slot * 29 + Math.floor(opponent.hp) + style.routeJitter + roundStyle.routeJitter, 100);
+  if (ai.projectileTrap) {
+    applyAiProjectileTrapEscapeInput(input, ai, opponent, difficulty, elapsed, roundAiSeed);
+    return input;
+  }
   if (ai.state === 'throwHold') {
     if (!ai.throwJabActive && ai.throwJabCooldownFrames === 0) {
       input.jab = true;
@@ -7596,6 +7682,18 @@ function applyAiThrowEscapeInput(input: InputFrame, ai: FighterRuntime, opponent
   const buttons: MoveInput[] = ['jab', 'kick', 'heavy', 'special'];
   const index = positiveModulo(Math.floor(elapsed * 60) + ai.slot * 5 + ai.throwEscapeProgress * 2 + Math.floor(ai.hp), buttons.length);
   const button = buttons[index];
+  input[button] = true;
+  (input as InputFrameWithMetadata).__pressedActions = [button];
+}
+
+function applyAiProjectileTrapEscapeInput(input: InputFrame, ai: FighterRuntime, opponent: FighterRuntime, difficulty: CpuDifficulty, elapsed: number, roundAiSeed: number) {
+  const trap = ai.projectileTrap;
+  if (!trap || trap.escapeProgress >= trap.escapeGoal) return;
+  const chance = [0, 0.22, 0.38, 0.58, 0.76, 0.92][difficulty] ?? 0.58;
+  const escapeRoll = aiDecisionRoll(ai, opponent, elapsed, 47 + trap.escapeProgress, roundAiSeed);
+  if (escapeRoll >= chance) return;
+  const buttons: MoveInput[] = ['jab', 'kick', 'heavy', 'special'];
+  const button = buttons[positiveModulo(Math.floor(elapsed * 60) + trap.escapeProgress + ai.slot, buttons.length)];
   input[button] = true;
   (input as InputFrameWithMetadata).__pressedActions = [button];
 }

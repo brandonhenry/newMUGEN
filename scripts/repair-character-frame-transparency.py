@@ -11,6 +11,7 @@ Dry-run is the default; pass ``--apply`` to write assets.
 from __future__ import annotations
 
 import argparse
+from array import array
 from collections import Counter, deque
 import hashlib
 import importlib.util
@@ -33,10 +34,17 @@ EXACT_KEYS_BY_CHARACTER: dict[str, set[tuple[int, int, int]]] = {
     "gaara": {(0, 0, 248), (0, 200, 120), (0, 216, 0)},
     "ino-yamanaka": {(56, 192, 48)},
     "kiba-inuzuka": {(248, 0, 0), (0, 0, 248)},
+    # Karin's source uses the same exact keyed magenta matte as Pain and
+    # Suigetsu. Her authored pinks and purples use different palette values.
+    "karin": {(248, 0, 248)},
     "kimimaro": {(32, 192, 32)},
     # Pain's sheet alternates between a blue-gray matte and this exact
     # magenta matte. The latter was left opaque by the original import.
     "pain": {(248, 0, 248)},
+    # Sai uses the same exact keyed magenta matte. Many imported frames kept
+    # that matte opaque while also losing body pixels that remain recoverable
+    # from the original source sheet.
+    "sai": {(248, 0, 248)},
     "sakon-curse-mark": {(0, 160, 0), (0, 255, 255)},
     # Suigetsu's imported frames retain the same exact keyed magenta behind
     # the fighter and effects; authored purples use different palette values.
@@ -55,6 +63,11 @@ TARGETED_CROP_OVERRIDES: dict[str, dict[int, Box]] = {
         130: (0, 0, 184, 72),
     },
 }
+
+# These sheets were imported with incorrect crop coordinates. When a keyed
+# frame is encountered, recover the complete connected source sprite that the
+# historic crop intersects instead of preserving the partial imported body.
+SOURCE_COMPONENT_RESTORE_CHARACTERS = {"sai"}
 
 
 def color_distance(a: tuple[int, int, int], b: tuple[int, int, int]) -> int:
@@ -353,6 +366,92 @@ def clear_exact_keys(image: Image.Image, keys: set[tuple[int, int, int]]) -> tup
     return rgba, removed
 
 
+def label_source_components(
+    source: Image.Image,
+    backgrounds: Iterable[tuple[int, int, int]],
+) -> tuple[array, list[tuple[int, Box]]]:
+    """Label non-background source pixels for full-sprite crop recovery."""
+    rgba = source.convert("RGBA")
+    width, height = rgba.size
+    raw = rgba.tobytes()
+    background_set = set(backgrounds)
+    foreground = bytearray(width * height)
+    for key in range(width * height):
+        offset = key * 4
+        red, green, blue, alpha = raw[offset : offset + 4]
+        if alpha > 16 and (red, green, blue) not in background_set:
+            foreground[key] = 1
+
+    labels = array("I", [0]) * (width * height)
+    components: list[tuple[int, Box]] = [(0, (0, 0, 0, 0))]
+    component_id = 0
+    for start, value in enumerate(foreground):
+        if not value or labels[start]:
+            continue
+        component_id += 1
+        queue = deque([start])
+        labels[start] = component_id
+        area = 0
+        min_x, min_y, max_x, max_y = width, height, -1, -1
+        while queue:
+            key = queue.popleft()
+            x, y = key % width, key // width
+            area += 1
+            min_x, min_y = min(min_x, x), min(min_y, y)
+            max_x, max_y = max(max_x, x), max(max_y, y)
+            neighbors = (
+                key - 1 if x else -1,
+                key + 1 if x + 1 < width else -1,
+                key - width if y else -1,
+                key + width if y + 1 < height else -1,
+            )
+            for next_key in neighbors:
+                if next_key >= 0 and foreground[next_key] and not labels[next_key]:
+                    labels[next_key] = component_id
+                    queue.append(next_key)
+        components.append((area, (min_x, min_y, max_x + 1, max_y + 1)))
+    return labels, components
+
+
+def restore_intersecting_source_component(
+    source: Image.Image,
+    source_box: Box,
+    labels: array,
+    components: list[tuple[int, Box]],
+    exact_keys: set[tuple[int, int, int]],
+    sheet_backgrounds: list[tuple[int, int, int]],
+) -> tuple[Image.Image, Box, dict[str, int]] | None:
+    """Restore the complete source sprite intersected by a broken crop."""
+    width, _ = source.size
+    left, top, right, bottom = source_box
+    overlaps: Counter[int] = Counter()
+    for y in range(top, bottom):
+        row = y * width
+        for x in range(left, right):
+            component_id = labels[row + x]
+            if component_id:
+                overlaps[component_id] += 1
+    candidates = [
+        (components[component_id][0], overlap, component_id)
+        for component_id, overlap in overlaps.items()
+        if overlap >= 4 and components[component_id][0] >= 25
+    ]
+    if not candidates:
+        return None
+    area, overlap, component_id = max(candidates)
+    component_box = components[component_id][1]
+    candidate_box = padded_box(component_box, source.size, 1)
+    candidate = source.crop(candidate_box).convert("RGBA")
+    candidate, _ = clear_exact_keys(candidate, exact_keys)
+    candidate = clear_border_background(candidate, sheet_backgrounds, 0)
+    return candidate, candidate_box, {
+        "restoredPixels": area,
+        "preservedTransparentPixels": 0,
+        "sourceComponentArea": area,
+        "sourceComponentOverlap": overlap,
+    }
+
+
 def trim_candidate(
     image: Image.Image,
     source_box: Box,
@@ -629,6 +728,13 @@ def repair_character(
 
     source = Image.open(source_path).convert("RGBA")
     sheet_backgrounds = dominant_perimeter_colors(source)
+    component_restore = character_id in SOURCE_COMPONENT_RESTORE_CHARACTERS
+    source_components = None
+    if component_restore:
+        source_components = label_source_components(
+            source,
+            [*sheet_backgrounds, *EXACT_KEYS_BY_CHARACTER.get(character_id, set())],
+        )
     provenance_by_index = {int(frame["index"]): frame for frame in provenance_frames}
     changes: list[dict[str, Any]] = []
     accepted: list[tuple[int, Image.Image, Box]] = []
@@ -648,16 +754,36 @@ def repair_character(
             changes.append({"frame": index, "action": "ambiguous", "reason": "missing-frame-png"})
             continue
         current = Image.open(frame_path).convert("RGBA")
-        candidate, candidate_box, metrics = make_candidate(
-            source,
-            source_box,
-            current,
-            sheet_backgrounds,
-            0 if isinstance(frame.get("sourceBox"), list) else padding,
-            border_tolerance,
-            restore_distance,
+        current_key_pixels = sum(
+            1
+            for red, green, blue, alpha in current.get_flattened_data()
+            if alpha > 16 and (red, green, blue) in EXACT_KEYS_BY_CHARACTER.get(character_id, set())
         )
+        if component_restore and not current_key_pixels:
+            continue
+        restored_component = None
+        if component_restore and current_key_pixels and source_components is not None:
+            restored_component = restore_intersecting_source_component(
+                source,
+                source_box,
+                *source_components,
+                EXACT_KEYS_BY_CHARACTER.get(character_id, set()),
+                sheet_backgrounds,
+            )
+        if restored_component is not None:
+            candidate, candidate_box, metrics = restored_component
+        else:
+            candidate, candidate_box, metrics = make_candidate(
+                source,
+                source_box,
+                current,
+                sheet_backgrounds,
+                0 if isinstance(frame.get("sourceBox"), list) else padding,
+                border_tolerance,
+                restore_distance,
+            )
         candidate, removed_pixels = clear_exact_keys(candidate, EXACT_KEYS_BY_CHARACTER.get(character_id, set()))
+        removed_pixels = max(removed_pixels, current_key_pixels)
         configured_override = TARGETED_CROP_OVERRIDES.get(character_id, {}).get(index)
         crop_override = configured_override
         if configured_override is not None and (
@@ -671,7 +797,11 @@ def repair_character(
             continue
         if images_equal(current, candidate):
             continue
-        reasons = suspicious_candidate(current, candidate, metrics["restoredPixels"])
+        reasons = (
+            []
+            if restored_component is not None
+            else suspicious_candidate(current, candidate, metrics["restoredPixels"])
+        )
         entry = {
             "frame": index,
             "sourceBox": list(source_box),
@@ -684,7 +814,8 @@ def repair_character(
             changes.append({**entry, "action": "ambiguous", "reason": ",".join(reasons)})
             save_comparison(preview_dir / character_id / "ambiguous" / f"frame-{index:03d}.png", current, candidate)
             continue
-        changes.append({**entry, "action": "repair", "verification": "automated-high-confidence"})
+        verification = "source-component-recovery" if restored_component is not None else "automated-high-confidence"
+        changes.append({**entry, "action": "repair", "verification": verification})
         save_comparison(preview_dir / character_id / "repair" / f"frame-{index:03d}.png", current, candidate)
         accepted.append((index, candidate, candidate_box))
 

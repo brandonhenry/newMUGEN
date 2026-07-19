@@ -236,7 +236,12 @@ test('Story biome interactions stay reachable and acknowledge success and blocke
   await page.getByRole('button', { name: 'Attune', exact: true }).click();
   await expect(page.getByTestId('story-challenge-notice')).toContainText('Arrival Waystone attuned. Fast travel is now available.');
   await page.getByRole('button', { name: 'Attune', exact: true }).click();
-  await expect(page.getByTestId('story-challenge-notice')).toContainText('You need 250 Route Coins to upgrade this waystone.');
+  const waystoneMap = page.getByTestId('story-adventure-map');
+  await expect(waystoneMap).toBeVisible();
+  await waystoneMap.getByRole('button', { name: 'Arrival Waystone', exact: true }).click();
+  await expect(waystoneMap).toBeHidden();
+  await expect(hub).toHaveAttribute('data-surface-map', 'greenhollow-arrival');
+  await expect.poll(async () => Number(await hub.getAttribute('data-player-x')), { timeout: 3_000 }).toBeLessThan(-54);
 
   await openPreview('/?storyWorld=greenhollow&storyLevel=greenhollow-mastery&storyPortal=restoration%3Agreenhollow-shortcut', 'restoration:greenhollow-shortcut');
   await page.getByRole('button', { name: 'Restore', exact: true }).click();

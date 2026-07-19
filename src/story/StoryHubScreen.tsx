@@ -14,7 +14,7 @@ import { STORY_HAZARD_SPRITES, storyHazardContactDamageReady, storyHazardDealsCo
 import { STORY_ATTACK_VISUAL_SYNC_DELAY_MS, advanceStoryAttackInputBuffer, adventureAttackHits, canAdventureEnemyDamagePlayer, createAdventureDamageFeedback, createAdventureHitReaction, getAdventureAttackFrameHitbox, getAdventureEnemyStats, getStoryAttackDurationMs, getStoryProjectileSpawnPosition, resolveAdventurePlayerAttack, resolveAdventurePlayerDamage, resolveStoryAttackInput, stepAdventureProjectile, storyAreaEntryInvulnerableUntil, storyPlayerProjectileHits, type AdventureDamageFeedback, type StoryBufferedAttackInput } from './adventureCombat';
 import { makeStoryEncounterProgress, recordChallengerDefeat, recordFixedChallengerDefeat, recordRegularDefeat, rerollStoryRegularSpawns, resetActiveChallenger, storyEncounterMovementLock, type StoryEncounterProgress } from './adventureEncounters';
 import { storyChallengerSpawnPosition } from './adventureEncounterPlacement';
-import { STORY_ADVENTURE_COMBAT_STAT_KEYS, STORY_ADVENTURE_PARTY_SIZE_CAP, STORY_ADVENTURE_STAT_CAP, acknowledgeAdventurePartyFeatureReveal, addAdventureMaterial, adventureResourceYieldModifiers, allocateAdventureStat, applyAdventureEnemyDefeat, awardMountMastery, bankAdventureRunLedger, beginAdventureEndlessRun, beginAdventureVisit, canRespecAdventureStats, claimAdventureCache, collectAdventureRelic, consumeAdventureItem, craftAdventureRecipe, depleteAdventureResourceNode, discoverAdventureLandmark, discoverAdventureSurfaceMap, discoverAdventureVista, discoverAdventureWaystone, equipAdventureArmor, experienceToNextLevel, getAdventureDerivedStats, getAdventurePartySizeProgress, isAdventureResourceNodeAvailable, pinAdventureDaily, readAdventureProgress, recordAdventureBestDepth, recordAdventureWildlifeSighting, respecAdventureStats, restoreAdventureShortcut, unlockAdventureEndlessBiome, unlockAdventureMasteryRecipe, unlockAdventureMount, unlockAdventureSpecialistRecipes, upgradeAdventureWaystone, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
+import { STORY_ADVENTURE_COMBAT_STAT_KEYS, STORY_ADVENTURE_PARTY_SIZE_CAP, STORY_ADVENTURE_STAT_CAP, acknowledgeAdventurePartyFeatureReveal, addAdventureMaterial, adventureResourceYieldModifiers, allocateAdventureStat, applyAdventureEnemyDefeat, awardMountMastery, bankAdventureRunLedger, beginAdventureEndlessRun, beginAdventureVisit, canRespecAdventureStats, claimAdventureCache, collectAdventureRelic, consumeAdventureItem, craftAdventureRecipe, depleteAdventureResourceNode, discoverAdventureLandmark, discoverAdventureSurfaceMap, discoverAdventureVista, discoverAdventureWaystone, equipAdventureArmor, experienceToNextLevel, getAdventureDerivedStats, getAdventurePartySizeProgress, isAdventureResourceNodeAvailable, pinAdventureDaily, readAdventureProgress, recordAdventureBestDepth, recordAdventureWildlifeSighting, respecAdventureStats, restoreAdventureShortcut, unlockAdventureEndlessBiome, unlockAdventureMasteryRecipe, unlockAdventureMount, unlockAdventureSpecialistRecipes, writeAdventureProgress, type StoryAdventureProgressV1, type StoryAdventureStatKey } from './adventureProgress';
 import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_REGION_LABELS, STORY_WORLDS, isStoryAdventureRegionId, isStoryAdventureWorldId, isStoryWorldId } from './adventureWorlds';
 import { STORY_BREATH_DRAIN_PER_SECOND, STORY_BREATH_REFILL_PER_SECOND, STORY_MAX_BREATH, STORY_MOUNTS, STORY_WORLD_MOUNT, shouldSyncAdventureWaterState, storyPartyEnemyHealthScale, type StoryPartyAiActor, type StoryPartyInstance, type StoryPartyInvite } from './adventureExploration';
 import { STORY_ENDLESS_GENERATION_VERSION, createAdventureRunSeed, emptyStoryRunLedger, generateAdventureFloor, storyBoonChoices, storyEndlessHash, storyEndlessPressure, storyEndlessRewardScale } from './adventureEndless';
@@ -2358,7 +2358,7 @@ function AdventureRouteMap({ activeWorldId, activeSurfaceMapId, progress, endles
   progress: StoryAdventureProgressV1;
   endlessRun: StoryEndlessRunState | null;
   generatedFloor: StoryGeneratedFloor | null;
-  onFastTravel: (waystoneId: string, position: [number, number]) => void;
+  onFastTravel: (waystoneId: string, surfaceMapId: string) => void;
   onFastTravelHome: () => void;
   onPinDaily: (worldId: typeof STORY_ADVENTURE_REGION_IDS[number], activityId: string) => void;
   onClose: () => void;
@@ -2370,8 +2370,18 @@ function AdventureRouteMap({ activeWorldId, activeSurfaceMapId, progress, endles
   const discovered = progress.discoveries.biomes.includes(selectedRegion);
   const surfaceMaps = selectedWorld.surfaceMaps ?? [];
   const knownSurfaceMaps = surfaceMaps.filter((map) => progress.discoveredSurfaceMaps.includes(map.id));
-  const knownWaystones = selectedWorld.exploration?.waystones.filter((waystone) => progress.discoveries.waystones.includes(waystone.id)) ?? [];
-  const explorationPercent = Math.round(((discovered ? 1 : 0) + knownWaystones.length + knownSurfaceMaps.length) / (1 + (selectedWorld.exploration?.waystones.length ?? 0) + surfaceMaps.length) * 100);
+  const surfaceWaystones = surfaceMaps.flatMap((map) => map.interactables
+    .filter((interactable) => interactable.kind === 'waystone')
+    .map((waystone) => ({ ...waystone, surfaceMapId: map.id })));
+  const knownWaystones = surfaceWaystones.filter((waystone) => {
+    if (progress.discoveries.waystones.includes(waystone.id)) return true;
+    // Profiles from the retired single-map biome layout used "entry" instead
+    // of "arrival". Preserve that discovery while routing it to the real
+    // arrival surface rather than its obsolete out-of-bounds coordinate.
+    const legacyEntryId = waystone.id.replace(/-waystone-arrival$/, '-waystone-entry');
+    return legacyEntryId !== waystone.id && progress.discoveries.waystones.includes(legacyEntryId);
+  });
+  const explorationPercent = Math.round(((discovered ? 1 : 0) + knownWaystones.length + knownSurfaceMaps.length) / (1 + surfaceWaystones.length + surfaceMaps.length) * 100);
   const dailyActivities = getStoryDailyActivities(selectedRegion);
   const canFastTravelHome = isStoryAdventureRegionId(activeWorldId) && !endlessRun;
   return <div className="story-adventure-overlay" role="presentation">
@@ -2415,7 +2425,7 @@ function AdventureRouteMap({ activeWorldId, activeSurfaceMapId, progress, endles
           <dl><div><dt>Hazards</dt><dd>{STORY_ATLAS_HOTSPOTS[selectedRegion].hazard}</dd></div><div><dt>Depths</dt><dd>{STORY_ATLAS_HOTSPOTS[selectedRegion].feature}</dd></div><div><dt>Biome mount</dt><dd>{selectedMount.label} · {selectedMount.ability}</dd></div></dl>
           <div className="story-run-map" aria-label={`${selectedRegion} surface route`}><strong>Surface route</strong><div>{surfaceMaps.map((map) => <span key={map.id} className={`${progress.discoveredSurfaceMaps.includes(map.id) ? 'is-discovered' : ''} ${activeWorldId === selectedRegion && map.id === activeSurfaceMapId ? 'is-current' : ''}`} title={map.name}>{map.order + 1}</span>)}</div><small>{surfaceMaps.map((map) => map.name).join(' → ')}</small></div>
           <div className="story-atlas-dailies"><strong>UTC daily routes</strong>{dailyActivities.map((activity) => { const pinned = progress.pinnedDaily?.date === activity.date && progress.pinnedDaily.activityId === activity.id; return <button key={activity.id} type="button" className={pinned ? 'is-pinned' : ''} onClick={() => onPinDaily(selectedRegion, activity.id)}><Clock3 size={14} /><span><b>{activity.label}</b><small>{activity.description} · {activity.rewardCoins} coins</small></span>{pinned ? 'Pinned' : 'Pin'}</button>; })}</div>
-          {selectedRegion === activeWorldId && knownWaystones.length > 0 && <div className="story-atlas-waystones"><strong>Discovered waystones</strong>{knownWaystones.map((waystone) => <button key={waystone.id} type="button" onClick={() => onFastTravel(waystone.id, waystone.position)}><Zap size={14} /> {waystone.label}</button>)}</div>}
+          {selectedRegion === activeWorldId && knownWaystones.length > 0 && <div className="story-atlas-waystones"><strong>Discovered waystones</strong>{knownWaystones.map((waystone) => <button key={waystone.id} type="button" onClick={() => onFastTravel(waystone.id, waystone.surfaceMapId)}><Zap size={14} /> {waystone.label}</button>)}</div>}
           {endlessRun && generatedFloor && selectedRegion === activeWorldId && <div className="story-run-map" aria-label="Current endless descent floor map">
             <strong>Depth {generatedFloor.floorNumber} · Chapter {generatedFloor.chapter}</strong>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gridTemplateRows: 'repeat(3, 1fr)', gap: 4 }}>
@@ -3947,12 +3957,12 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       if (!current.discoveries.waystones.includes(waystoneId)) {
         updateAdventureProgress(discoverAdventureWaystone(current, waystoneId));
         setChallengeNotice({ id: portal.id, text: `${portal.label} attuned. Fast travel is now available.` });
-      } else if (current.upgradedWaystones.includes(waystoneId)) {
-        setChallengeNotice({ id: portal.id, text: `${portal.label} is already fully upgraded.` });
       } else {
-        const result = upgradeAdventureWaystone(current, waystoneId, 250);
-        updateAdventureProgress(result.progress);
-        setChallengeNotice({ id: portal.id, text: result.upgraded ? `${portal.label} upgraded for 250 Route Coins.` : 'You need 250 Route Coins to upgrade this waystone.' });
+        // A waystone press means travel. Previously the second press silently
+        // became an unrelated 250-coin upgrade attempt, which looked like an
+        // error after arriving. Open the route map and keep travel explicit.
+        setChallengeNotice(null);
+        setMapOpen(true);
       }
       return;
     }
@@ -4557,14 +4567,21 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     }
   }, [activeHub, activeSurfaceMapId, activeWorldId, derivedAdventureStats.maxHealth, encounterProgressByHub, endlessRun, updateAdventureProgress]);
   const handleChallengerStarted = useCallback(() => setMounted(false), []);
-  const fastTravelToWaystone = useCallback((waystoneId: string, position: [number, number]) => {
-    if (!adventureProgressRef.current.discoveries.waystones.includes(waystoneId) || !isStoryAdventureRegionId(activeWorldId)) return;
+  const fastTravelToWaystone = useCallback((waystoneId: string, surfaceMapId: string) => {
+    const legacyEntryId = waystoneId.replace(/-waystone-arrival$/, '-waystone-entry');
+    const waystoneKnown = adventureProgressRef.current.discoveries.waystones.includes(waystoneId)
+      || (legacyEntryId !== waystoneId && adventureProgressRef.current.discoveries.waystones.includes(legacyEntryId));
+    if (!waystoneKnown || !isStoryAdventureRegionId(activeWorldId)) return;
     if (endlessRun) return;
+    const destinationMap = getStoryAdventureSurfaceMap(activeWorldId, surfaceMapId);
+    const destination = destinationMap.spawn;
     setMounted(false);
     setUnderwater(false);
     setBreath(STORY_MAX_BREATH);
     setMapOpen(false);
-    setImpactEvent({ id: ++impactSequenceRef.current, sourceX: position[0], knockback: 0, respawn: position });
+    setSurfaceEntry('west');
+    setActiveSurfaceMapId(destinationMap.id);
+    setImpactEvent({ id: ++impactSequenceRef.current, sourceX: destination[0], knockback: 0, respawn: destination });
   }, [activeWorldId, endlessRun]);
   const fastTravelHome = useCallback(() => {
     if (!isStoryAdventureRegionId(activeWorldId) || endlessRun) return;
@@ -4584,7 +4601,7 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const traderConsumable = endlessRun && generatedFloor ? traderConsumables[storyEndlessHash(`${endlessRun.seed}:trader-consumable:${generatedFloor.floorNumber}`) % Math.max(1, traderConsumables.length)] : null;
   const traderGood = endlessRun && generatedFloor ? STORY_REQUIRED_MARKET_GOODS[storyEndlessHash(`${endlessRun.seed}:trader-good:${generatedFloor.floorNumber}`) % STORY_REQUIRED_MARKET_GOODS.length] : null;
 
-  return <div className="story-hub-screen" data-testid="story-hub-screen" data-world={activeWorldId} data-hub-ready={hubReady ? 'true' : 'false'} data-controls-open={controlsOpen ? 'true' : 'false'} data-map-open={mapOpen ? 'true' : 'false'} data-stats-open={statsOpen ? 'true' : 'false'} data-tutorial-open={tutorialOpen ? 'true' : 'false'} data-return-home-confirm={returnHomeConfirmOpen ? 'true' : 'false'} data-quick-match={quickMatchAvailable ? 'true' : 'false'} data-player-x={playerX.toFixed(2)} data-player-y={playerY.toFixed(2)} data-player-pose={playerPose} data-player-projectile-asset={effectiveAttackEvent?.projectile?.frames[0]?.path ?? ''} data-player-projectile-launch={effectiveAttackEvent?.projectile?.launchPoint.join(',') ?? ''} data-player-health={playerHealth} data-player-level={adventureProgress.level} data-party-id={partyInstance?.id ?? ''} data-nearby-portal={nearbyPortal?.id ?? ''} data-online={onlineEnabled ? 'true' : 'false'} data-connection-status={connectionStatus} data-player-count={playerCount}>
+  return <div className="story-hub-screen" data-testid="story-hub-screen" data-world={activeWorldId} data-surface-map={activeSurfaceMapId ?? ''} data-hub-ready={hubReady ? 'true' : 'false'} data-controls-open={controlsOpen ? 'true' : 'false'} data-map-open={mapOpen ? 'true' : 'false'} data-stats-open={statsOpen ? 'true' : 'false'} data-tutorial-open={tutorialOpen ? 'true' : 'false'} data-return-home-confirm={returnHomeConfirmOpen ? 'true' : 'false'} data-quick-match={quickMatchAvailable ? 'true' : 'false'} data-player-x={playerX.toFixed(2)} data-player-y={playerY.toFixed(2)} data-player-pose={playerPose} data-player-projectile-asset={effectiveAttackEvent?.projectile?.frames[0]?.path ?? ''} data-player-projectile-launch={effectiveAttackEvent?.projectile?.launchPoint.join(',') ?? ''} data-player-health={playerHealth} data-player-level={adventureProgress.level} data-party-id={partyInstance?.id ?? ''} data-nearby-portal={nearbyPortal?.id ?? ''} data-online={onlineEnabled ? 'true' : 'false'} data-connection-status={connectionStatus} data-player-count={playerCount}>
     <div className="story-hub-canvas-shell">
       <HubCanvas key={activeHub.id} hub={activeHub} profile={profile} reducedMotion={reducedMotion} readInput={readInput} disabled={pauseOpen || tutorialOpen || returnHomeConfirmOpen || controlsOpen || mapOpen || statsOpen || packOpen || marketOpen || partyUnlockOpen || Boolean(selectedPlayer) || Boolean(incomingChallenge) || Boolean(doorTravel) || Boolean(boonChoices) || abandonConfirmOpen || Boolean(activeTraderEventId) || Boolean(pendingEventChoiceId)} avatarVisible={!doorTravel || doorTravel.step < 4 || doorTravel.step >= 18} quickMatchAvailable={quickMatchAvailable} assignedPortalId={quickMatch.portalId} nearbyPortal={nearbyPortal} remotePlayers={visibleRemotePlayers} selectedPlayerSessionId={selectedPlayer?.sessionId} progress={adventureProgress} activePartyMembers={partyInstance ? partyInstance.members.length + partyInstance.aiActors.length : 1} partyAiActors={partyInstance?.aiActors ?? []} mounted={mounted} mount={activeMount} attackEvent={effectiveAttackEvent} impactEvent={impactEvent} encounterSeed={encounterSeed} initialEncounterProgress={activeEncounterProgress} onEncounterProgressChange={handleEncounterProgressChange} onChallengerStarted={handleChallengerStarted} onAttack={handleAdventureAttack} onPlayerDamage={handlePlayerDamage} onEnemyDefeated={handleEnemyDefeated} onResourceHarvest={handleResourceHarvest} onPickup={handleFloorPickup} onWildlifeSighting={handleWildlifeSighting} onQuickMatch={startQuickMatch} onSelectPlayer={selectRemotePlayer} onNearbyPortal={setNearbyPortal} onActivatePortal={activatePortal} onWaterState={handleWaterState} onExit={exitCurrentWorld} onPause={openPause} onStateSample={handlePlayerState} onReady={handleHubReady} />
     </div>

@@ -52,4 +52,20 @@ describe('enclosed story terrain', () => {
     const floor = resolveStoryTerrainMotion({ previous: { x: 0, y: 3 }, proposed: { x: 0, y: 1 }, velocityY: -5, platforms, horizontalDirection: 0, dropThrough: false });
     expect(floor.landing?.id).toBe('floor');
   });
+
+  it('allows grounded actors to walk off one-way platform edges', () => {
+    const platforms: StoryPlatformDefinition[] = [
+      { id: 'ledge', position: [0, 0.75], size: [4, 0.5], collision: 'one-way', oneWay: true }
+    ];
+    const motion = resolveStoryTerrainMotion({
+      previous: { x: 1.95, y: 1.82 },
+      proposed: { x: 2.2, y: 1.8 },
+      velocityY: -0.4,
+      platforms,
+      horizontalDirection: 1,
+      dropThrough: false
+    });
+    expect(motion.landing).toBeNull();
+    expect(motion.x).toBe(2.2);
+  });
 });

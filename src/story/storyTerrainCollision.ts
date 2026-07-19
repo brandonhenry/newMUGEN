@@ -44,20 +44,29 @@ export function resolveStoryTerrainMotion(input: {
   }
   let landing: StoryPlatformDefinition | null = null;
   if (velocityY <= 0) for (const platform of input.platforms) {
-    if ((platform.oneWay || platform.collision === 'one-way') && input.dropThrough) continue;
+    const oneWay = Boolean(platform.oneWay || platform.collision === 'one-way');
+    if (oneWay && input.dropThrough) continue;
     const top = platform.position[1] + platform.size[1] / 2;
     const previousBottom = input.previous.y - STORY_GROUNDED_ACTOR_CENTER_Y;
     const nextBottom = y - STORY_GROUNDED_ACTOR_CENTER_Y;
     const left = platform.position[0] - platform.size[0] / 2;
     const right = platform.position[0] + platform.size[0] / 2;
-    const edgeCatch = platform.oneWay || platform.collision === 'one-way' ? STORY_MOVEMENT_PROFILE.oneWayEdgeCatch : STORY_MOVEMENT_PROFILE.solidEdgeCatch;
+    // Edge catch helps a vertical landing, but must not glue a grounded actor
+    // to a one-way platform while they are deliberately walking off its edge.
+    if (oneWay && ((input.horizontalDirection > 0 && x > right) || (input.horizontalDirection < 0 && x < left))) continue;
+    const edgeCatch = oneWay ? STORY_MOVEMENT_PROFILE.oneWayEdgeCatch : STORY_MOVEMENT_PROFILE.solidEdgeCatch;
     if (x < left - edgeCatch || x > right + edgeCatch || previousBottom < top - 0.42 || nextBottom > top + 0.16) continue;
     if (!landing || top > landing.position[1] + landing.size[1] / 2) landing = platform;
   }
   if (landing) {
     const left = landing.position[0] - landing.size[0] / 2;
     const right = landing.position[0] + landing.size[0] / 2;
-    x = Math.max(left + 0.12, Math.min(right - 0.12, x));
+    // Solid floors keep the body inside their support. A one-way platform only
+    // clamps an actual outside edge-catch; otherwise preserve horizontal motion
+    // so the next frame can walk cleanly off the ledge.
+    if (!landing.oneWay && landing.collision !== 'one-way') x = Math.max(left + 0.12, Math.min(right - 0.12, x));
+    else if (x < left) x = left + 0.12;
+    else if (x > right) x = right - 0.12;
     y = landing.position[1] + landing.size[1] / 2 + STORY_GROUNDED_ACTOR_CENTER_Y;
     velocityY = 0;
   }

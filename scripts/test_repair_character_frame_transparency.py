@@ -81,13 +81,37 @@ class TransparencyRepairTests(unittest.TestCase):
         self.assertEqual(trimmed.size, (3, 3))
         self.assertEqual(source_box, (11, 21, 14, 24))
 
+    def test_source_component_recovery_expands_a_partial_keyed_crop(self) -> None:
+        source = Image.new("RGBA", (12, 10), (248, 0, 248, 255))
+        for y in range(2, 8):
+            for x in range(3, 9):
+                source.putpixel((x, y), (30, 40, 50, 255))
+        labels, components = repair.label_source_components(source, {(248, 0, 248)})
+        recovered = repair.restore_intersecting_source_component(
+            source,
+            (3, 2, 6, 8),
+            labels,
+            components,
+            {(248, 0, 248)},
+            [],
+        )
+        self.assertIsNotNone(recovered)
+        assert recovered is not None
+        candidate, candidate_box, metrics = recovered
+        self.assertEqual(candidate_box, (2, 1, 10, 9))
+        self.assertEqual(candidate.size, (8, 8))
+        self.assertEqual(metrics["sourceComponentArea"], 36)
+        self.assertEqual(sum(alpha > 16 for alpha in candidate.getchannel("A").tobytes()), 36)
+
     def test_naruto_matte_keys_are_scoped_away_from_authored_effect_palettes(self) -> None:
         self.assertEqual(repair.EXACT_KEYS_BY_CHARACTER["choji-akimichi"], {(48, 200, 152)})
         self.assertEqual(repair.EXACT_KEYS_BY_CHARACTER["gaara"], {(0, 0, 248), (0, 200, 120), (0, 216, 0)})
         self.assertEqual(repair.EXACT_KEYS_BY_CHARACTER["kiba-inuzuka"], {(248, 0, 0), (0, 0, 248)})
+        self.assertEqual(repair.EXACT_KEYS_BY_CHARACTER["karin"], {(248, 0, 248)})
         self.assertEqual(repair.EXACT_KEYS_BY_CHARACTER["pain"], {(248, 0, 248)})
+        self.assertEqual(repair.EXACT_KEYS_BY_CHARACTER["sai"], {(248, 0, 248)})
+        self.assertIn("sai", repair.SOURCE_COMPONENT_RESTORE_CHARACTERS)
         self.assertEqual(repair.EXACT_KEYS_BY_CHARACTER["suigetsu"], {(248, 0, 248)})
-        self.assertNotIn("sai", repair.EXACT_KEYS_BY_CHARACTER)
         self.assertNotIn("sasori", repair.EXACT_KEYS_BY_CHARACTER)
         self.assertNotIn("kidomaru-curse-mark", repair.EXACT_KEYS_BY_CHARACTER)
 

@@ -8827,6 +8827,64 @@ describe('fight engine', () => {
     expect(match.fighters[1].hp).toBe(hpAfterHit);
   });
 
+  it('turns web projectile victims into stationary mashable traps after knockback', () => {
+    const shooter = makeProjectileCharacter('projectile-web-trap-test', {}, {
+      delivery: 'replaceMoveHit',
+      trap: { kind: 'web', durationFrames: 180, escapePresses: 3, visualProjectileId: 'test-bullet' }
+    });
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(shooter, defender, stages[0], 'local2p');
+    const startX = match.fighters[1].position.x;
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    for (let frame = 0; frame < 30 && !match.fighters[1].projectileTrap; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[1].projectileTrap).toMatchObject({
+      kind: 'web',
+      ownerSlot: 1,
+      projectileId: 'test-bullet',
+      escapeGoal: 3
+    });
+    match = stepFrames(match, 7, emptyInputFrame(), makeInput('right'));
+    expect(match.fighters[1].position.x).toBeGreaterThan(startX);
+    const settledX = match.fighters[1].position.x;
+    match = stepFrames(match, 8, emptyInputFrame(), makeInput('right'));
+    expect(match.fighters[1].position.x).toBeCloseTo(settledX, 5);
+
+    for (const action of ['jab', 'kick', 'heavy'] as const) {
+      match = stepMatch(match, emptyInputFrame(), makeInput(action), 1 / 60);
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    expect(match.fighters[1].projectileTrap).toBeNull();
+    expect(match.fighters[1].state).toBe('idle');
+  });
+
+  it('keeps trapped victims damageable, flashes them on damage, and releases on timeout', () => {
+    const shooter = makeProjectileCharacter('projectile-web-trap-damage-test', {}, {
+      delivery: 'replaceMoveHit',
+      trap: { kind: 'web', durationFrames: 45, escapePresses: 20, visualProjectileId: 'test-bullet' }
+    });
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(shooter, defender, stages[0], 'local2p');
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    for (let frame = 0; frame < 30 && !match.fighters[1].projectileTrap; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    const trappedHp = match.fighters[1].hp;
+    match = stepFrames(match, 8);
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    for (let frame = 0; frame < 30 && match.fighters[1].hp === trappedHp; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    expect(match.fighters[1].hp).toBeLessThan(trappedHp);
+    expect(match.fighters[1].projectileTrap).not.toBeNull();
+    expect(match.fighters[1].hitFlash).toBeGreaterThan(0);
+
+    match = stepFrames(match, 50);
+    expect(match.fighters[1].projectileTrap).toBeNull();
+  });
+
   it('applies short hit-stun knockback without knockdown for projectile hits', () => {
     const shooter = makeProjectileCharacter('projectile-hitstun-knockback-test', {
       knockdown: true,
@@ -9262,6 +9320,18 @@ describe('fight engine', () => {
     expect(hydrated.projectiles[0].kind).toBe('blast');
     expect(hydrated.projectiles[0].chargeFrames).toBe(match.projectiles[0].chargeFrames);
     expect(hydrated.projectiles[0].chargeDamageScale).toBe(match.projectiles[0].chargeDamageScale);
+    match.fighters[1].projectileTrap = {
+      kind: 'web',
+      ownerSlot: 1,
+      projectileId: 'test-bullet',
+      framesRemaining: 120,
+      totalFrames: 180,
+      escapeProgress: 2,
+      escapeGoal: 10,
+      shakeFrames: 4
+    };
+    const trappedHydrated = hydrateMatchSnapshot(createMatch(shooter, defender, stages[0], 'online'), compactMatchSnapshot(match, 13));
+    expect(trappedHydrated.fighters[1].projectileTrap).toEqual(match.fighters[1].projectileTrap);
   });
 
   it('emits counter hit events and uses counter-hit advantage only for eligible moves', () => {

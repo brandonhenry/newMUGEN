@@ -165,14 +165,8 @@
     ],
     "cmd:FC+1": [
       "/characters/kidomaru/frames/frame-195.png",
-      "/characters/kidomaru/frames/frame-196.png",
-      "/characters/kidomaru/frames/frame-197.png",
-      "/characters/kidomaru/frames/frame-198.png",
       "/characters/kidomaru/frames/frame-199.png",
-      "/characters/kidomaru/frames/frame-200.png",
-      "/characters/kidomaru/frames/frame-201.png",
-      "/characters/kidomaru/frames/frame-202.png",
-      "/characters/kidomaru/frames/frame-203.png"
+      "/characters/kidomaru/frames/frame-202.png"
     ],
     "cmd:FC+2": [
       "/characters/kidomaru/frames/frame-223.png",
@@ -191,49 +185,29 @@
       "/characters/kidomaru/frames/frame-043.png"
     ],
     "cmd:1+3": [
-      "/characters/kidomaru/frames/frame-074.png",
       "/characters/kidomaru/frames/frame-075.png",
-      "/characters/kidomaru/frames/frame-076.png",
       "/characters/kidomaru/frames/frame-077.png",
-      "/characters/kidomaru/frames/frame-078.png",
       "/characters/kidomaru/frames/frame-079.png",
-      "/characters/kidomaru/frames/frame-080.png",
       "/characters/kidomaru/frames/frame-081.png",
-      "/characters/kidomaru/frames/frame-082.png",
       "/characters/kidomaru/frames/frame-083.png"
     ],
     "cmd:2+3": [
       "/characters/kidomaru/frames/frame-103.png",
-      "/characters/kidomaru/frames/frame-104.png",
       "/characters/kidomaru/frames/frame-105.png",
-      "/characters/kidomaru/frames/frame-106.png",
       "/characters/kidomaru/frames/frame-107.png",
-      "/characters/kidomaru/frames/frame-108.png",
       "/characters/kidomaru/frames/frame-109.png",
-      "/characters/kidomaru/frames/frame-110.png",
       "/characters/kidomaru/frames/frame-111.png"
     ],
     "cmd:2+4": [
       "/characters/kidomaru/frames/frame-119.png",
-      "/characters/kidomaru/frames/frame-120.png",
       "/characters/kidomaru/frames/frame-121.png",
-      "/characters/kidomaru/frames/frame-122.png",
-      "/characters/kidomaru/frames/frame-123.png",
       "/characters/kidomaru/frames/frame-124.png",
-      "/characters/kidomaru/frames/frame-125.png",
-      "/characters/kidomaru/frames/frame-126.png",
       "/characters/kidomaru/frames/frame-127.png"
     ],
     "cmd:3+4": [
       "/characters/kidomaru/frames/frame-168.png",
-      "/characters/kidomaru/frames/frame-169.png",
-      "/characters/kidomaru/frames/frame-170.png",
-      "/characters/kidomaru/frames/frame-171.png",
       "/characters/kidomaru/frames/frame-172.png",
-      "/characters/kidomaru/frames/frame-173.png",
-      "/characters/kidomaru/frames/frame-174.png",
-      "/characters/kidomaru/frames/frame-175.png",
-      "/characters/kidomaru/frames/frame-176.png"
+      "/characters/kidomaru/frames/frame-175.png"
     ],
     "cmd:O+2": [
       "/characters/kidomaru/frames/frame-228.png",
@@ -4234,8 +4208,598 @@
   "unplayable": false,
   "hasTransform": false,
   "animationScales": {},
-  "projectiles": [],
-  "moveProjectiles": {},
+  "projectiles": [
+    {
+      "id": "spider-web-shot",
+      "name": "Spider Web Shot",
+      "kind": "projectile",
+      "sourcePath": "/characters/kidomaru/animation-sheet.png",
+      "frames": [
+        "/characters/kidomaru/projectiles/spider-web-shot/frames/frame-000.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/kidomaru/projectiles/spider-web-shot/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/kidomaru/projectiles/spider-web-shot/frames/frame-000.png"
+        ],
+        "recovery": [
+          "/characters/kidomaru/projectiles/spider-web-shot/frames/frame-000.png"
+        ]
+      },
+      "fps": 12,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "normal",
+      "voxelProfile": "hd-image-source",
+      "defaultScale": [
+        0.78,
+        0.78,
+        0.78
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "alignToVelocity": true,
+      "color": "#ffffff",
+      "voxelFidelity": {
+        "resolutionScale": 1,
+        "maxRows": 64,
+        "depth": 0.14,
+        "alphaThreshold": 24,
+        "paletteSnap": 8,
+        "mergeRuns": true
+      }
+    },
+    {
+      "id": "spider-web-prison",
+      "name": "Spider Web Prison",
+      "kind": "projectile",
+      "sourcePath": "/characters/kidomaru/animation-sheet.png",
+      "frames": [
+        "/characters/kidomaru/projectiles/spider-web-prison/frames/frame-000.png"
+      ],
+      "animationFrames": {
+        "active": [
+          "/characters/kidomaru/projectiles/spider-web-prison/frames/frame-000.png"
+        ]
+      },
+      "fps": 1,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "normal",
+      "voxelProfile": "hd-image-source",
+      "defaultScale": [
+        1.05,
+        1.05,
+        1.05
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#ffffff",
+      "voxelFidelity": {
+        "resolutionScale": 1,
+        "maxRows": 64,
+        "depth": 0.14,
+        "alphaThreshold": 24,
+        "paletteSnap": 8,
+        "mergeRuns": true
+      }
+    },
+    {
+      "id": "spider-gold-volley",
+      "name": "Spider Gold Volley",
+      "kind": "projectile",
+      "sourcePath": "/characters/kidomaru/animation-sheet.png",
+      "frames": [
+        "/characters/kidomaru/projectiles/spider-gold-volley/frames/frame-000.png"
+      ],
+      "animationFrames": {
+        "active": [
+          "/characters/kidomaru/projectiles/spider-gold-volley/frames/frame-000.png"
+        ]
+      },
+      "fps": 14,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "hd-image-source",
+      "defaultScale": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "alignToVelocity": true,
+      "color": "#ffe9a6",
+      "voxelFidelity": {
+        "resolutionScale": 1,
+        "maxRows": 64,
+        "depth": 0.14,
+        "alphaThreshold": 24,
+        "paletteSnap": 8,
+        "mergeRuns": true
+      }
+    }
+  ],
+  "moveProjectiles": {
+    "jableft": [
+      {
+        "id": "jableft-spider-web-shot",
+        "projectileId": "spider-web-shot",
+        "label": "Spider Web Shot",
+        "spawnFrame": 9,
+        "spawnOffset": [
+          0,
+          0.95,
+          0.68
+        ],
+        "startupFrames": 0,
+        "activeFrames": 84,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 90,
+        "speed": 8.6,
+        "forwardVelocity": 8.6,
+        "homingMode": "limited",
+        "homingStrength": 2.6,
+        "homingTurnRate": 3.2,
+        "homingEndFrame": 36,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.72,
+            0.66,
+            0.9
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true,
+        "trap": {
+          "kind": "web",
+          "durationFrames": 210,
+          "escapePresses": 10,
+          "visualProjectileId": "spider-web-prison"
+        }
+      }
+    ],
+    "kickright": [
+      {
+        "id": "kickright-spider-web-shot",
+        "projectileId": "spider-web-shot",
+        "label": "Spider Web Shot",
+        "spawnFrame": 13,
+        "spawnOffset": [
+          0,
+          0.95,
+          0.68
+        ],
+        "startupFrames": 0,
+        "activeFrames": 84,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 90,
+        "speed": 8.6,
+        "forwardVelocity": 8.6,
+        "homingMode": "limited",
+        "homingStrength": 2.6,
+        "homingTurnRate": 3.2,
+        "homingEndFrame": 36,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.72,
+            0.66,
+            0.9
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true,
+        "trap": {
+          "kind": "web",
+          "durationFrames": 210,
+          "escapePresses": 10,
+          "visualProjectileId": "spider-web-prison"
+        }
+      }
+    ],
+    "cmd:FC+1": [
+      {
+        "id": "fc1-spider-web-shot",
+        "projectileId": "spider-web-shot",
+        "label": "Spider Web Shot",
+        "spawnFrame": 15,
+        "spawnOffset": [
+          0,
+          0.92,
+          0.74
+        ],
+        "startupFrames": 0,
+        "activeFrames": 84,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 90,
+        "speed": 8.8,
+        "forwardVelocity": 8.8,
+        "homingMode": "limited",
+        "homingStrength": 2.8,
+        "homingTurnRate": 3.4,
+        "homingEndFrame": 38,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.72,
+            0.66,
+            0.9
+          ]
+        },
+        "damageScale": 0.75,
+        "blockDamageScale": 0.75,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true,
+        "trap": {
+          "kind": "web",
+          "durationFrames": 210,
+          "escapePresses": 10,
+          "visualProjectileId": "spider-web-prison"
+        }
+      },
+      {
+        "id": "fc1-spider-gold-volley",
+        "projectileId": "spider-gold-volley",
+        "label": "Spider Gold Volley",
+        "spawnFrame": 17,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.76
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 5,
+        "lifetimeFrames": 77,
+        "speed": 10.5,
+        "forwardVelocity": 10.5,
+        "homingMode": "limited",
+        "homingStrength": 2.2,
+        "homingTurnRate": 3,
+        "homingEndFrame": 28,
+        "nearMissRadius": 0.38,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.34,
+            0.28,
+            0.58
+          ]
+        },
+        "damageScale": 0.3,
+        "blockDamageScale": 0.3,
+        "pushbackScale": 0.4,
+        "blockPushbackScale": 0.4,
+        "mirrorWithFacing": true,
+        "delivery": "additional",
+        "clash": true
+      }
+    ],
+    "cmd:1+3": [
+      {
+        "id": "cross-spider-web-shot",
+        "projectileId": "spider-web-shot",
+        "label": "Spider Web Shot",
+        "spawnFrame": 19,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.78
+        ],
+        "startupFrames": 0,
+        "activeFrames": 90,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 96,
+        "speed": 9.2,
+        "forwardVelocity": 9.2,
+        "homingMode": "limited",
+        "homingStrength": 3,
+        "homingTurnRate": 3.8,
+        "homingEndFrame": 42,
+        "nearMissRadius": 0.6,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.78,
+            0.7,
+            0.96
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1.2,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true,
+        "trap": {
+          "kind": "web",
+          "durationFrames": 240,
+          "escapePresses": 12,
+          "visualProjectileId": "spider-web-prison"
+        }
+      }
+    ],
+    "cmd:2+3": [
+      {
+        "id": "low-feint-spider-web-shot",
+        "projectileId": "spider-web-shot",
+        "label": "Low Spider Web",
+        "spawnFrame": 21,
+        "spawnOffset": [
+          0,
+          0.58,
+          0.75
+        ],
+        "startupFrames": 0,
+        "activeFrames": 86,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 92,
+        "speed": 8.4,
+        "forwardVelocity": 8.4,
+        "homingMode": "limited",
+        "homingStrength": 2.5,
+        "homingTurnRate": 3.2,
+        "homingEndFrame": 36,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.8,
+            0.55,
+            0.96
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true,
+        "trap": {
+          "kind": "web",
+          "durationFrames": 210,
+          "escapePresses": 10,
+          "visualProjectileId": "spider-web-prison"
+        }
+      }
+    ],
+    "cmd:2+4": [
+      {
+        "id": "driving-spider-web-shot",
+        "projectileId": "spider-web-shot",
+        "label": "Driving Spider Web",
+        "spawnFrame": 29,
+        "spawnOffset": [
+          0,
+          0.7,
+          0.8
+        ],
+        "startupFrames": 0,
+        "activeFrames": 90,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 96,
+        "speed": 9.4,
+        "forwardVelocity": 9.4,
+        "homingMode": "limited",
+        "homingStrength": 3,
+        "homingTurnRate": 3.8,
+        "homingEndFrame": 42,
+        "nearMissRadius": 0.6,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.82,
+            0.66,
+            1
+          ]
+        },
+        "damageScale": 0.75,
+        "blockDamageScale": 0.75,
+        "pushbackScale": 1.25,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true,
+        "trap": {
+          "kind": "web",
+          "durationFrames": 240,
+          "escapePresses": 12,
+          "visualProjectileId": "spider-web-prison"
+        }
+      },
+      {
+        "id": "driving-spider-gold-volley",
+        "projectileId": "spider-gold-volley",
+        "label": "Spider Gold Volley",
+        "spawnFrame": 31,
+        "spawnOffset": [
+          0,
+          0.96,
+          0.8
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 5,
+        "lifetimeFrames": 77,
+        "speed": 11,
+        "forwardVelocity": 11,
+        "homingMode": "limited",
+        "homingStrength": 2.2,
+        "homingTurnRate": 3,
+        "homingEndFrame": 28,
+        "nearMissRadius": 0.38,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.34,
+            0.28,
+            0.58
+          ]
+        },
+        "damageScale": 0.3,
+        "blockDamageScale": 0.3,
+        "pushbackScale": 0.4,
+        "blockPushbackScale": 0.4,
+        "mirrorWithFacing": true,
+        "delivery": "additional",
+        "clash": true
+      }
+    ],
+    "cmd:3+4": [
+      {
+        "id": "power-spider-web-shot",
+        "projectileId": "spider-web-shot",
+        "label": "Power Spider Web",
+        "spawnFrame": 24,
+        "spawnOffset": [
+          0,
+          1.05,
+          0.86
+        ],
+        "startupFrames": 0,
+        "activeFrames": 96,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 102,
+        "speed": 9.8,
+        "forwardVelocity": 9.8,
+        "homingMode": "limited",
+        "homingStrength": 3.2,
+        "homingTurnRate": 4,
+        "homingEndFrame": 44,
+        "nearMissRadius": 0.62,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.86,
+            0.72,
+            1.04
+          ]
+        },
+        "damageScale": 0.75,
+        "blockDamageScale": 0.75,
+        "pushbackScale": 1.35,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true,
+        "trap": {
+          "kind": "web",
+          "durationFrames": 270,
+          "escapePresses": 14,
+          "visualProjectileId": "spider-web-prison"
+        }
+      },
+      {
+        "id": "power-spider-gold-volley",
+        "projectileId": "spider-gold-volley",
+        "label": "Spider Gold Volley",
+        "spawnFrame": 26,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.84
+        ],
+        "startupFrames": 0,
+        "activeFrames": 78,
+        "recoveryFrames": 5,
+        "lifetimeFrames": 83,
+        "speed": 11.5,
+        "forwardVelocity": 11.5,
+        "homingMode": "limited",
+        "homingStrength": 2.4,
+        "homingTurnRate": 3.2,
+        "homingEndFrame": 30,
+        "nearMissRadius": 0.4,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.36,
+            0.3,
+            0.62
+          ]
+        },
+        "damageScale": 0.3,
+        "blockDamageScale": 0.3,
+        "pushbackScale": 0.45,
+        "blockPushbackScale": 0.4,
+        "mirrorWithFacing": true,
+        "delivery": "additional",
+        "clash": true
+      }
+    ]
+  },
   "beginnerComboRoutes": [
     {
       "id": "kidomaru:beginner:light-core",

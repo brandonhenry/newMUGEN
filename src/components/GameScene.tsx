@@ -2048,6 +2048,7 @@ function makeShadowCloneRenderFighter(fighter: FighterRuntime): FighterRuntime |
     hitFlash: 0,
     visualHitstop: { ...clone.visualHitstop },
     shadowClone: null,
+    projectileTrap: null,
     shadowCloneChargeConsumed: true
   };
 }
@@ -3165,7 +3166,8 @@ function ProjectileLayer({ match, stage, reducedMotion, renderTick }: { match: M
   void renderTick;
   const projectiles = match.projectiles ?? [];
   const chargeBindings = getActiveBlastChargeBindings(match);
-  if (projectiles.length === 0 && chargeBindings.length === 0) return null;
+  const trappedFighters = match.fighters.filter((fighter) => fighter.projectileTrap);
+  if (projectiles.length === 0 && chargeBindings.length === 0 && trappedFighters.length === 0) return null;
   return (
     <group>
       {chargeBindings.map((binding) => (
@@ -3195,7 +3197,67 @@ function ProjectileLayer({ match, stage, reducedMotion, renderTick }: { match: M
           />
         );
       })}
+      {trappedFighters.map((fighter) => (
+        <ProjectileTrapVisual key={`projectile-trap-${fighter.slot}`} match={match} fighter={fighter} stage={stage} />
+      ))}
     </group>
+  );
+}
+
+function ProjectileTrapVisual({ match, fighter, stage }: { match: MatchSnapshot; fighter: FighterRuntime; stage: StageDefinition }) {
+  const trap = fighter.projectileTrap;
+  if (!trap) return null;
+  const owner = match.fighters[trap.ownerSlot - 1];
+  const definition = owner.character.projectiles?.find((candidate) => candidate.id === trap.projectileId);
+  const move = owner.currentMove ?? owner.character.moves[0];
+  if (!definition || !move) return null;
+  const elapsed = Math.max(0, trap.totalFrames - trap.framesRemaining);
+  const shake = trap.shakeFrames > 0 ? Math.min(0.1, 0.02 + trap.shakeFrames * 0.007) : 0;
+  const projectile: ProjectileRuntime = {
+    id: -fighter.slot,
+    ownerSlot: trap.ownerSlot,
+    projectileId: trap.projectileId,
+    kind: definition.kind ?? 'projectile',
+    instanceId: `trap-${fighter.slot}`,
+    moveInstanceId: owner.moveInstanceId,
+    move,
+    position: {
+      x: fighter.position.x + Math.sin(elapsed * 0.9 + fighter.slot) * shake,
+      y: 0,
+      z: fighter.position.z + Math.cos(elapsed * 0.82 + fighter.slot) * shake * 0.45
+    },
+    previousPosition: { x: fighter.position.x, y: 0, z: fighter.position.z },
+    velocity: { x: 0, y: 0, z: 0 },
+    facing: fighter.facing,
+    phase: 'active',
+    ageFrames: elapsed,
+    startupFrames: 0,
+    activeFrames: trap.totalFrames,
+    recoveryFrames: 0,
+    lifetimeFrames: trap.totalFrames,
+    homingMode: 'none',
+    homingStrength: 0,
+    homingTurnRate: 0,
+    nearMissRadius: 0,
+    hitbox: { offset: [0, 0, 0], size: [1, 1, 1] },
+    damageScale: 0,
+    blockDamageScale: 0,
+    pushbackScale: 0,
+    blockPushbackScale: 0,
+    mirrorWithFacing: true,
+    pierce: false,
+    clash: false,
+    hitConnected: true,
+    expired: false,
+    trailSeed: fighter.slot * 101
+  };
+  return (
+    <ProjectileVisual
+      projectile={projectile}
+      definition={definition}
+      stage={stage}
+      tintOverride={fighter.hitFlash > 0 ? '#ff2d2d' : undefined}
+    />
   );
 }
 
@@ -3476,11 +3538,13 @@ function BlastElectricityField({
 function ProjectileVisual({
   projectile,
   definition,
-  stage
+  stage,
+  tintOverride
 }: {
   projectile: ProjectileRuntime;
   definition: CharacterProjectileDefinition;
   stage: StageDefinition;
+  tintOverride?: string;
 }) {
   const camera = useThree((state) => state.camera);
   const source = getProjectileFrameSource(projectile, definition);
@@ -3507,13 +3571,13 @@ function ProjectileVisual({
   const parts = useMemo(() => buildVoxelParts(voxels, lodStep, source), [lodStep, source, voxels]);
   const outlineStyle = useMemo(() => getFighterOutlineStyle(stage), [stage]);
   const renderStyle = useMemo(() => withDefaultRenderStyle({
-    tint: definition.color ?? '#ffffff',
+    tint: tintOverride ?? definition.color ?? '#ffffff',
     opacity: projectile.phase === 'recovery' ? 0.72 : 1,
     renderOrder: 35,
     depthWrite: false,
     castShadow: false,
     receiveShadow: false
-  }), [definition.color, projectile.phase]);
+  }), [definition.color, projectile.phase, tintOverride]);
   if (!source || voxels.length === 0) return null;
   const quaternion = getProjectileVisualQuaternion(projectile, definition);
   const reveal = getProjectileRevealProgress(projectile);
@@ -5108,6 +5172,7 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
     throwEscapeProgress: 0,
     throwEscapeGoal: 0,
     throwShakeFrames: 0,
+    projectileTrap: null,
     lotusFinisherDefenderSlot: null,
     lotusCinematicFrames: 0,
     blockFlash: 0,
@@ -7027,6 +7092,7 @@ function FighterRig({
   preferProcedural?: boolean;
   visualScale?: number;
 }) {
+  if (fighter.projectileTrap) return null;
   if (fighter.state === 'throwHeld' && fighter.lotusCinematicFrames > 0) return null;
   const group = useRef<THREE.Group>(null);
   const yawInitialized = useRef(false);

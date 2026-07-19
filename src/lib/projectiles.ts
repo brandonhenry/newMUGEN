@@ -9,6 +9,7 @@ import type {
   ProjectileHomingMode,
   ProjectileKind,
   ProjectileTargetMode,
+  ProjectileTrapDefinition,
   ProceduralEffectKind,
   Vec3Tuple,
   VoxelFidelitySettings
@@ -136,7 +137,22 @@ export function sanitizeMoveProjectileInstance(instance: unknown): MoveProjectil
     releaseGated,
     chargeFramesMax: source.chargeFramesMax === undefined ? (releaseGated ? 120 : undefined) : clampFrame(source.chargeFramesMax, 1, 720, 120),
     minDamageScale,
-    maxDamageScale
+    maxDamageScale,
+    trap: sanitizeProjectileTrap(source.trap)
+  };
+}
+
+function sanitizeProjectileTrap(value: unknown): ProjectileTrapDefinition | undefined {
+  if (!value || typeof value !== 'object') return undefined;
+  const source = value as Record<string, unknown>;
+  if (source.kind !== 'web') return undefined;
+  return {
+    kind: 'web',
+    durationFrames: clampFrame(source.durationFrames, 30, 600, 180),
+    escapePresses: clampFrame(source.escapePresses, 1, 40, 10),
+    visualProjectileId: typeof source.visualProjectileId === 'string' && source.visualProjectileId.trim()
+      ? safeId(source.visualProjectileId, '')
+      : undefined
   };
 }
 

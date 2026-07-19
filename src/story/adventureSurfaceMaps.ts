@@ -330,7 +330,9 @@ export function createAdventureSurfaceHub(base: StoryHubDefinition, map: StoryAd
       districts: [{ id: map.id, label: map.name, range: [-58, 58], safe: map.role === 'arrival' }],
       encounters: map.encounters,
       entrances: map.role === 'mastery' ? exploration.entrances.slice(0, 1) : [],
-      waystones: map.role === 'arrival' ? [{ id: `${map.biomeId}-waystone-arrival`, label: 'Arrival Waystone', position: [-34, STORY_GROUNDED_ACTOR_CENTER_Y] }] : [],
+      waystones: map.interactables
+        .filter((interactable) => interactable.kind === 'waystone')
+        .map((waystone) => ({ id: waystone.id, label: waystone.label, position: waystone.position })),
       waterVolumes: map.hazards.filter((hazard) => hazard.kind === 'drowning').map((hazard) => ({
         id: `${hazard.id}-water`, bounds: [hazard.bounds[0], hazard.bounds[1], hazard.bounds[2], hazard.bounds[2] + 5.4] as [number, number, number, number], current: [0.2, 0] as [number, number],
         airPockets: [[hazard.bounds[0] + 1, hazard.bounds[2] + 5.2], [hazard.bounds[1] - 1, hazard.bounds[2] + 5.2]] as Array<[number, number]>

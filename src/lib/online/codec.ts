@@ -118,6 +118,7 @@ export type CompactFighterSnapshot = {
   throwEscapeProgress: number;
   throwEscapeGoal: number;
   throwShakeFrames: number;
+  projectileTrap?: FighterRuntime['projectileTrap'];
   blockFlash: number;
   hitFlash: number;
   visualHitstop?: FighterRuntime['visualHitstop'];
@@ -386,6 +387,7 @@ function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
     throwEscapeProgress: fighter.throwEscapeProgress,
     throwEscapeGoal: fighter.throwEscapeGoal,
     throwShakeFrames: fighter.throwShakeFrames,
+    projectileTrap: fighter.projectileTrap ? { ...fighter.projectileTrap } : null,
     blockFlash: fighter.blockFlash,
     hitFlash: fighter.hitFlash,
     visualHitstop: { ...fighter.visualHitstop },
@@ -502,6 +504,7 @@ function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot, 
     throwEscapeProgress: snapshot.throwEscapeProgress ?? base.throwEscapeProgress,
     throwEscapeGoal: snapshot.throwEscapeGoal ?? base.throwEscapeGoal,
     throwShakeFrames: snapshot.throwShakeFrames ?? base.throwShakeFrames,
+    projectileTrap: snapshot.projectileTrap ? { ...snapshot.projectileTrap } : null,
     blockFlash: snapshot.blockFlash,
     hitFlash: snapshot.hitFlash,
     visualHitstop: snapshot.visualHitstop ? { ...snapshot.visualHitstop } : { ...base.visualHitstop },
