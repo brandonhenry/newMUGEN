@@ -77,8 +77,7 @@
       "/characters/impmon/frames/frame-145.png"
     ],
     "jump": [
-      "/characters/impmon/frames/frame-003.png",
-      "/characters/impmon/frames/frame-006.png"
+      "/characters/impmon/frames/frame-003.png"
     ],
     "crouch": [
       "/characters/impmon/frames/frame-011.png"
@@ -512,15 +511,11 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
-      "label": "Impmon Left Check",
-      "hitLevel": "high",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 8
+      "forwardForceEndFrame": 8,
+      "label": "Impmon Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
       "startupFrames": 15,
@@ -532,15 +527,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
-      "label": "Impmon Right Check",
-      "hitLevel": "mid",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.85,
       "forwardForceStartFrame": 36,
-      "forwardForceEndFrame": 39
+      "forwardForceEndFrame": 39,
+      "label": "Impmon Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 30,
@@ -552,15 +543,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Impmon Left Kick",
-      "hitLevel": "low",
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 0.95,
       "forwardForceStartFrame": 64,
-      "forwardForceEndFrame": 70
+      "forwardForceEndFrame": 70,
+      "label": "Impmon Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 14,
@@ -572,15 +559,11 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 7,
       "range": 1.7,
-      "label": "Impmon Right Kick",
-      "hitLevel": "mid",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 0.83,
       "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 19
+      "forwardForceEndFrame": 19,
+      "label": "Impmon Right Kick",
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
       "startupFrames": 14,
@@ -593,14 +576,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Impmon Rush",
-      "hitLevel": "mid",
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForceStartFrame": 26,
-      "forwardForceEndFrame": 30
+      "forwardForceEndFrame": 30,
+      "label": "Impmon Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
       "startupFrames": 18,
@@ -612,19 +591,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 12,
       "range": 1.68,
+      "forwardForce": 1.79,
+      "forwardForceStartFrame": 37,
+      "forwardForceEndFrame": 42,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Impmon Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 19,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
-      "forwardForce": 1.79,
-      "forwardForceStartFrame": 37,
-      "forwardForceEndFrame": 42
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
       "startupFrames": 25,
@@ -636,16 +611,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 41,
       "range": 2.05,
-      "label": "Impmon Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 3.72,
       "forwardForceStartFrame": 36,
-      "forwardForceEndFrame": 44
+      "forwardForceEndFrame": 44,
+      "label": "Impmon Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 15,
@@ -657,15 +628,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Impmon Rising Strike",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 16,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.22,
       "forwardForceStartFrame": 13,
-      "forwardForceEndFrame": 20
+      "forwardForceEndFrame": 20,
+      "label": "Impmon Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 13,
@@ -677,15 +644,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "Impmon Crouch Jab",
-      "hitLevel": "mid",
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5,
       "forwardForce": 1.66,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 10
+      "forwardForceEndFrame": 10,
+      "label": "Impmon Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -697,16 +660,12 @@
       "onCounterHitFrames": 30,
       "whiffRecoveryFrames": 12,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "Impmon Crouch Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
       "forwardForce": 1.94,
       "forwardForceStartFrame": 41,
-      "forwardForceEndFrame": 45
+      "forwardForceEndFrame": 45,
+      "launchHeight": 2,
+      "label": "Impmon Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -718,15 +677,11 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 9,
       "range": 1.72,
-      "label": "Impmon Twin Assault",
-      "hitLevel": "mid",
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 1.73,
       "forwardForceStartFrame": 41,
-      "forwardForceEndFrame": 45
+      "forwardForceEndFrame": 45,
+      "label": "Impmon Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -738,16 +693,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 32,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Impmon Cross Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 20,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
       "forwardForce": 2.04,
       "forwardForceStartFrame": 43,
-      "forwardForceEndFrame": 47
+      "forwardForceEndFrame": 47,
+      "launchHeight": 2.2,
+      "label": "Impmon Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -759,15 +710,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
-      "label": "Impmon Low Feint",
-      "hitLevel": "low",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.65,
       "forwardForceStartFrame": 40,
-      "forwardForceEndFrame": 43
+      "forwardForceEndFrame": 43,
+      "label": "Impmon Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 22,
@@ -779,16 +726,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 12,
       "range": 1.74,
-      "label": "Impmon Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 1.49,
       "forwardForceStartFrame": 20,
-      "forwardForceEndFrame": 27
+      "forwardForceEndFrame": 27,
+      "label": "Impmon Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -800,16 +743,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 35,
       "range": 1.9,
-      "label": "Impmon Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 2.69,
       "forwardForceStartFrame": 20,
-      "forwardForceEndFrame": 28
+      "forwardForceEndFrame": 28,
+      "label": "Impmon Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 30,
@@ -821,192 +760,188 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 47,
       "range": 2.1,
+      "forwardForce": 3.79,
+      "forwardForceStartFrame": 54,
+      "forwardForceEndFrame": 68,
       "kiCost": 35,
       "label": "Impmon Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
-      "forwardForce": 3.79,
-      "forwardForceStartFrame": 54,
-      "forwardForceEndFrame": 68
+      "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Impmon Second Beat",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "label": "Impmon Body Blow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "label": "Impmon Low Changeup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "label": "Impmon Pressure Feint",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "label": "Impmon Drive",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Drive"
     },
     "neutral:jab-heavy-kick": {
-      "label": "Impmon Barrage",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Barrage"
     },
     "neutral:jab-heavy-special": {
-      "label": "Impmon Finisher",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Finisher"
     },
     "neutral:jab-kick": {
-      "label": "Impmon Step Kick",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "label": "Impmon Palm String",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Palm String"
     },
     "neutral:jab-kick-special": {
-      "label": "Impmon Rising Chain",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Rising Chain"
     },
     "neutral:jab-special": {
-      "label": "Impmon Special Setup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "label": "Impmon Break Art",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Break Art"
     },
     "neutral:heavy-jab": {
-      "label": "Impmon Check Hook",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Impmon Heavy Break",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "label": "Impmon Charged Follow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Charged Follow"
     },
     "neutral:heavy-kick": {
-      "label": "Impmon Drop Kick",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "label": "Impmon Arc Finisher",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Arc Finisher"
     },
     "neutral:heavy-special": {
-      "label": "Impmon Focus Stance",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "label": "Impmon Mode Shift",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Mode Shift"
     },
     "neutral:kick-jab": {
-      "label": "Impmon Heel Feint",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "label": "Impmon Summon Strike",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Summon Strike"
     },
     "neutral:kick-heavy": {
-      "label": "Impmon Guard Snare",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "label": "Impmon Armor Break",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Armor Break"
     },
     "neutral:kick-special": {
-      "label": "Impmon Power Setup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "label": "Impmon Switch Strike",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Switch Strike"
     },
     "neutral:special-jab": {
-      "label": "Impmon Spark Jab",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "label": "Impmon Binding Blow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Binding Blow"
     },
     "neutral:special-heavy": {
-      "label": "Impmon Heavy Draw",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Heavy Draw"
     },
     "neutral:special-kick": {
-      "label": "Impmon Kick Ender",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Impmon Kick Ender"
     }
   },
   "effects": [
@@ -1018,6 +953,7 @@
         "/characters/impmon/effects/impmon-cast-ring/frames/frame-000.png",
         "/characters/impmon/effects/impmon-cast-ring/frames/frame-001.png"
       ],
+      "effectFrameEdits": {},
       "fps": 18,
       "loop": true,
       "billboard": true,
@@ -1041,7 +977,9 @@
         ],
         "opacity": 1,
         "color": "#ffffff"
-      }
+      },
+      "proceduralLayers": [],
+      "soundCues": []
     }
   ],
   "moveEffects": {
@@ -1049,12 +987,11 @@
       {
         "id": "cmd-qcf-4-impmon-cast-ring",
         "effectId": "impmon-cast-ring",
-        "label": "Impmon Cast Ring",
         "startFrame": 23,
         "endFrame": 29,
         "layer": 1,
-        "mirrorWithFacing": true,
         "anchor": "body",
+        "mirrorWithFacing": true,
         "loop": true,
         "keyframes": [
           {
@@ -1077,7 +1014,8 @@
             "opacity": 1,
             "color": "#ffffff"
           }
-        ]
+        ],
+        "soundCues": []
       }
     ]
   },
@@ -1933,12 +1871,11 @@
         "flipY": false
       },
       "11": {
-        "width": 0.53879,
+        "width": 0.54,
         "height": 0.43813,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.16011
+        "flipY": false
       },
       "13": {
         "width": 0.55,
@@ -1992,12 +1929,11 @@
     },
     "crouchBlock": {
       "46": {
-        "width": 0.50125,
+        "width": 0.5,
         "height": 0.43813,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.05726
+        "flipY": false
       },
       "101": {
         "width": 0.48,
@@ -2072,12 +2008,11 @@
         "flipY": false
       },
       "114": {
-        "width": 0.53879,
-        "height": 0.53879,
+        "width": 0.54,
+        "height": 0.54,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.94919
+        "flipY": false
       },
       "167": {
         "width": 0.68,
@@ -2182,145 +2117,130 @@
     },
     "jableft": {
       "52": {
-        "width": 0.53879,
-        "height": 0.53879,
+        "width": 0.54,
+        "height": 0.54,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.94919
+        "flipY": false
       },
       "53": {
-        "width": 0.53879,
-        "height": 0.53879,
+        "width": 0.54,
+        "height": 0.54,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.91403
+        "flipY": false
       },
       "54": {
-        "width": 0.53879,
-        "height": 0.53879,
+        "width": 0.54,
+        "height": 0.54,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.94919
+        "flipY": false
       },
       "55": {
-        "width": 0.53879,
-        "height": 0.53879,
+        "width": 0.54,
+        "height": 0.54,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.91403
+        "flipY": false
       },
       "56": {
-        "width": 0.53879,
-        "height": 0.53879,
+        "width": 0.54,
+        "height": 0.54,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.91404
+        "flipY": false
       },
       "57": {
-        "width": 0.6689,
-        "height": 0.6689,
+        "width": 0.67,
+        "height": 0.67,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.04782
+        "flipY": false
       },
       "58": {
-        "width": 0.69023,
-        "height": 0.69023,
-        "voxelScaleX": 1.0324,
-        "voxelScaleY": 0.96862,
-        "offsetX": 0
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "59": {
-        "width": 0.69023,
-        "height": 0.69023,
-        "voxelScaleX": 1.03239,
-        "voxelScaleY": 0.96862,
-        "offsetX": 0
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "60": {
-        "width": 0.63131,
-        "height": 0.63131,
+        "width": 0.63,
+        "height": 0.63,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.10945
+        "flipY": false
       },
       "61": {
-        "width": 0.67079,
-        "height": 0.67079,
-        "voxelScaleX": 1.06233,
-        "voxelScaleY": 0.94133,
-        "offsetX": 0
+        "width": 0.67,
+        "height": 0.67,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "62": {
-        "width": 0.68681,
-        "height": 0.68681,
+        "width": 0.69,
+        "height": 0.69,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.93684
+        "flipY": false
       },
       "63": {
-        "width": 0.68681,
-        "height": 0.68681,
+        "width": 0.69,
+        "height": 0.69,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.88173
+        "flipY": false
       },
       "69": {
-        "width": 0.53879,
-        "height": 0.53879,
+        "width": 0.54,
+        "height": 0.54,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.87888
+        "flipY": false
       },
       "70": {
-        "width": 0.81699,
-        "height": 0.81699,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.67194
+        "width": 0.67557,
+        "height": 0.67557,
+        "voxelScaleX": 0.82674,
+        "voxelScaleY": 1.20957,
+        "offsetX": 0
       },
       "71": {
-        "width": 0.78003,
-        "height": 0.78003,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.72821
+        "width": 0.67132,
+        "height": 0.67132,
+        "voxelScaleX": 0.86066,
+        "voxelScaleY": 1.1619,
+        "offsetX": 0
       },
       "72": {
-        "width": 0.72464,
-        "height": 0.72464,
+        "width": 0.72,
+        "height": 0.72,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.0195
+        "flipY": false
       },
       "73": {
-        "width": 0.74294,
-        "height": 0.74294,
+        "width": 0.74,
+        "height": 0.74,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.01949
+        "flipY": false
       },
       "74": {
-        "width": 0.74294,
-        "height": 0.74294,
+        "width": 0.74,
+        "height": 0.74,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.14693
+        "flipY": false
       },
       "88": {
         "width": 0.58,
@@ -2451,12 +2371,11 @@
         "flipY": false
       },
       "120": {
-        "width": 0.53879,
-        "height": 0.53879,
+        "width": 0.54,
+        "height": 0.54,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.91403
+        "flipY": false
       },
       "121": {
         "width": 0.56,
@@ -2466,11 +2385,11 @@
         "flipY": false
       },
       "122": {
-        "width": 0.51931,
-        "height": 0.51931,
-        "voxelScaleX": 0.96424,
-        "voxelScaleY": 1.03709,
-        "offsetX": 0
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "123": {
         "width": 0.51,
@@ -2552,68 +2471,60 @@
         "flipY": false
       },
       "115": {
-        "width": 0.6689,
-        "height": 0.6689,
+        "width": 0.67,
+        "height": 0.67,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.96286
+        "flipY": false
       },
       "116": {
-        "width": 0.53879,
-        "height": 0.53879,
+        "width": 0.54,
+        "height": 0.54,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.91403
+        "flipY": false
       },
       "117": {
-        "width": 0.6689,
-        "height": 0.6689,
+        "width": 0.67,
+        "height": 0.67,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.96286
+        "flipY": false
       },
       "118": {
-        "width": 0.53879,
-        "height": 0.53879,
+        "width": 0.54,
+        "height": 0.54,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.91404
+        "flipY": false
       },
       "119": {
-        "width": 0.74294,
-        "height": 0.74294,
+        "width": 0.74,
+        "height": 0.74,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.86656
+        "flipY": false
       },
       "120": {
-        "width": 0.53879,
-        "height": 0.53879,
+        "width": 0.54,
+        "height": 0.54,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.91403
+        "flipY": false
       },
       "121": {
-        "width": 0.61312,
-        "height": 0.61312,
+        "width": 0.61,
+        "height": 0.61,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.08129
+        "flipY": false
       },
       "122": {
-        "width": 0.53879,
-        "height": 0.53879,
+        "width": 0.54,
+        "height": 0.54,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.91404
+        "flipY": false
       },
       "123": {
         "width": 0.52,
@@ -2623,12 +2534,11 @@
         "flipY": false
       },
       "124": {
-        "width": 0.61312,
-        "height": 0.61312,
+        "width": 0.61,
+        "height": 0.61,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.08129
+        "flipY": false
       },
       "127": {
         "width": 0.56,
@@ -3694,53 +3604,53 @@
         "flipY": false
       },
       "125": {
-        "width": 0.50923,
-        "height": 0.50923,
-        "voxelScaleX": 0.94551,
-        "voxelScaleY": 1.05763,
-        "offsetX": 0
+        "width": 0.51,
+        "height": 0.51,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "126": {
-        "width": 0.54846,
-        "height": 0.54846,
-        "voxelScaleX": 1.01835,
-        "voxelScaleY": 0.98198,
-        "offsetX": 0
+        "width": 0.55,
+        "height": 0.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "127": {
-        "width": 0.50037,
-        "height": 0.50037,
-        "voxelScaleX": 0.96225,
-        "voxelScaleY": 1.03923,
-        "offsetX": 0
+        "width": 0.5,
+        "height": 0.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "128": {
-        "width": 0.6241,
-        "height": 0.6241,
-        "voxelScaleX": 1.01835,
-        "voxelScaleY": 0.98198,
-        "offsetX": 0
+        "width": 0.62,
+        "height": 0.62,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "129": {
-        "width": 0.53892,
-        "height": 0.53892,
-        "voxelScaleX": 1.03638,
-        "voxelScaleY": 0.9649,
-        "offsetX": 0
+        "width": 0.54,
+        "height": 0.54,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "130": {
-        "width": 0.71842,
-        "height": 0.71842,
-        "voxelScaleX": 0.99189,
-        "voxelScaleY": 1.00817,
-        "offsetX": 0
+        "width": 0.72,
+        "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "131": {
-        "width": 0.60045,
-        "height": 0.60045,
-        "voxelScaleX": 1.1547,
-        "voxelScaleY": 0.86603,
-        "offsetX": 0
+        "width": 0.6,
+        "height": 0.6,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "cmd:d/f+2": {
@@ -3843,60 +3753,60 @@
         "flipY": false
       },
       "132": {
-        "width": 0.71842,
-        "height": 0.71842,
-        "voxelScaleX": 0.99189,
-        "voxelScaleY": 1.00817,
-        "offsetX": 0
+        "width": 0.72,
+        "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "133": {
-        "width": 0.63009,
-        "height": 0.63009,
-        "voxelScaleX": 1.13093,
-        "voxelScaleY": 0.88423,
-        "offsetX": 0
+        "width": 0.63,
+        "height": 0.63,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "134": {
-        "width": 0.70763,
-        "height": 0.70763,
-        "voxelScaleX": 0.95258,
-        "voxelScaleY": 1.04978,
-        "offsetX": 0
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "135": {
-        "width": 0.6301,
-        "height": 0.6301,
-        "voxelScaleX": 1.13093,
-        "voxelScaleY": 0.88423,
-        "offsetX": 0
+        "width": 0.63,
+        "height": 0.63,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "136": {
-        "width": 0.66085,
-        "height": 0.66085,
-        "voxelScaleX": 1.0783,
-        "voxelScaleY": 0.92738,
-        "offsetX": 0
+        "width": 0.66,
+        "height": 0.66,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "137": {
-        "width": 0.57675,
-        "height": 0.57675,
-        "voxelScaleX": 1.03518,
-        "voxelScaleY": 0.96601,
-        "offsetX": 0
+        "width": 0.58,
+        "height": 0.58,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "138": {
-        "width": 0.66085,
-        "height": 0.66085,
-        "voxelScaleX": 1.0783,
-        "voxelScaleY": 0.92739,
-        "offsetX": 0
+        "width": 0.66,
+        "height": 0.66,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "139": {
-        "width": 0.57675,
-        "height": 0.57675,
-        "voxelScaleX": 1.03518,
-        "voxelScaleY": 0.96601,
-        "offsetX": 0
+        "width": 0.58,
+        "height": 0.58,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "cmd:qcf+4": {
@@ -3978,18 +3888,18 @@
         "flipY": false
       },
       "86": {
-        "width": 0.54845,
-        "height": 0.54845,
-        "voxelScaleX": 1.01835,
-        "voxelScaleY": 0.98199,
-        "offsetX": 0
+        "width": 0.55,
+        "height": 0.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "87": {
-        "width": 0.52819,
-        "height": 0.52819,
-        "voxelScaleX": 1.09388,
-        "voxelScaleY": 0.91418,
-        "offsetX": 0
+        "width": 0.53,
+        "height": 0.53,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "88": {
         "width": 0.58,
@@ -3999,11 +3909,11 @@
         "flipY": false
       },
       "89": {
-        "width": 0.66003,
-        "height": 0.66003,
-        "voxelScaleX": 1.22553,
-        "voxelScaleY": 0.81598,
-        "offsetX": 0
+        "width": 0.66,
+        "height": 0.66,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "90": {
         "width": 0.56,
@@ -5004,18 +4914,18 @@
         "flipY": false
       },
       "97": {
-        "width": 0.54846,
-        "height": 0.54846,
-        "voxelScaleX": 1.01835,
-        "voxelScaleY": 0.98198,
-        "offsetX": 0
+        "width": 0.55,
+        "height": 0.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "98": {
-        "width": 0.54845,
-        "height": 0.54845,
-        "voxelScaleX": 1.01835,
-        "voxelScaleY": 0.98199,
-        "offsetX": 0
+        "width": 0.55,
+        "height": 0.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "99": {
         "width": 0.57,
@@ -5025,11 +4935,11 @@
         "flipY": false
       },
       "100": {
-        "width": 0.41607,
-        "height": 0.41607,
-        "voxelScaleX": 1.01835,
-        "voxelScaleY": 0.98198,
-        "offsetX": 0
+        "width": 0.42,
+        "height": 0.42,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "101": {
         "width": 0.55,
@@ -5039,18 +4949,18 @@
         "flipY": false
       },
       "102": {
-        "width": 0.41607,
-        "height": 0.41607,
-        "voxelScaleX": 1.01835,
-        "voxelScaleY": 0.98198,
-        "offsetX": 0
+        "width": 0.42,
+        "height": 0.42,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "103": {
-        "width": 0.59386,
-        "height": 0.59386,
-        "voxelScaleX": 1.10264,
-        "voxelScaleY": 0.90691,
-        "offsetX": 0
+        "width": 0.59,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "104": {
         "width": 1.06,
@@ -5060,11 +4970,11 @@
         "flipY": false
       },
       "105": {
-        "width": 0.60401,
-        "height": 0.60401,
-        "voxelScaleX": 1.08411,
-        "voxelScaleY": 0.92241,
-        "offsetX": 0
+        "width": 0.6,
+        "height": 0.6,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "107": {
         "width": 0.63,
@@ -5191,7 +5101,6 @@
     {
       "id": "bada-boom-fireball",
       "name": "Bada Boom Fireball",
-      "kind": "projectile",
       "sourcePath": "/characters/impmon/animation-sheet.png",
       "frames": [
         "/characters/impmon/projectiles/bada-boom-fireball/frames/frame-000.png",
@@ -5218,6 +5127,18 @@
       "billboard": false,
       "blendMode": "additive",
       "voxelProfile": "hd-image-source",
+      "voxelFidelity": {
+        "resolutionScale": 1,
+        "maxRows": 64,
+        "depth": 0.14,
+        "alphaThreshold": 24,
+        "paletteSnap": 8,
+        "mergeRuns": true,
+        "lod": {
+          "mobileStep": 2,
+          "farStep": 2
+        }
+      },
       "defaultScale": [
         0.5,
         0.5,
@@ -5228,21 +5149,13 @@
         0,
         0
       ],
-      "alignToVelocity": true,
       "color": "#ff8a24",
-      "voxelFidelity": {
-        "resolutionScale": 1,
-        "maxRows": 64,
-        "depth": 0.14,
-        "alphaThreshold": 24,
-        "paletteSnap": 8,
-        "mergeRuns": true
-      }
+      "soundCues": [],
+      "proceduralLayers": []
     },
     {
       "id": "aura-drive-green-orb",
       "name": "Aura Drive Green Orb",
-      "kind": "projectile",
       "sourcePath": "/characters/impmon/animation-sheet.png",
       "frames": [
         "/characters/impmon/projectiles/aura-drive-green-orb/frames/frame-000.png",
@@ -5265,6 +5178,18 @@
       "billboard": false,
       "blendMode": "additive",
       "voxelProfile": "hd-image-source",
+      "voxelFidelity": {
+        "resolutionScale": 1,
+        "maxRows": 64,
+        "depth": 0.14,
+        "alphaThreshold": 24,
+        "paletteSnap": 8,
+        "mergeRuns": true,
+        "lod": {
+          "mobileStep": 2,
+          "farStep": 2
+        }
+      },
       "defaultScale": [
         0.55,
         0.55,
@@ -5275,16 +5200,9 @@
         0,
         0
       ],
-      "alignToVelocity": true,
       "color": "#4acb8c",
-      "voxelFidelity": {
-        "resolutionScale": 1,
-        "maxRows": 64,
-        "depth": 0.14,
-        "alphaThreshold": 24,
-        "paletteSnap": 8,
-        "mergeRuns": true
-      }
+      "soundCues": [],
+      "proceduralLayers": []
     }
   ],
   "moveProjectiles": {
@@ -5292,7 +5210,6 @@
       {
         "id": "jableft-bada-boom-fireball",
         "projectileId": "bada-boom-fireball",
-        "kind": "projectile",
         "label": "Bada Boom Fireball",
         "spawnFrame": 8,
         "spawnOffset": [
@@ -5328,15 +5245,15 @@
         "pushbackScale": 1,
         "blockPushbackScale": 1,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit",
-        "clash": true
+        "pierce": false,
+        "clash": true,
+        "kiBurst": false
       }
     ],
     "cmd:O+2": [
       {
         "id": "aura-drive-green-orb-shot",
         "projectileId": "aura-drive-green-orb",
-        "kind": "projectile",
         "label": "Aura Drive Green Orb",
         "spawnFrame": 30,
         "spawnOffset": [
@@ -5372,8 +5289,9 @@
         "pushbackScale": 1,
         "blockPushbackScale": 1,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit",
-        "clash": true
+        "pierce": false,
+        "clash": true,
+        "kiBurst": false
       }
     ]
   },

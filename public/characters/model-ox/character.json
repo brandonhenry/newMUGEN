@@ -113,8 +113,7 @@
       "/characters/model-ox/frames/frame-173.png"
     ],
     "jump": [
-      "/characters/model-ox/frames/frame-118.png",
-      "/characters/model-ox/frames/frame-119.png"
+      "/characters/model-ox/frames/frame-021.png"
     ],
     "crouch": [
       "/characters/model-ox/frames/frame-266.png"
@@ -627,15 +626,11 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
-      "label": "Model OX Left Check",
-      "hitLevel": "high",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 20,
-      "forwardForceEndFrame": 22
+      "forwardForceEndFrame": 22,
+      "label": "Model OX Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
       "startupFrames": 15,
@@ -647,15 +642,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
-      "label": "Model OX Right Check",
-      "hitLevel": "mid",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.85,
       "forwardForceStartFrame": 18,
-      "forwardForceEndFrame": 20
+      "forwardForceEndFrame": 20,
+      "label": "Model OX Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 30,
@@ -667,15 +658,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Model OX Left Kick",
-      "hitLevel": "low",
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 0.61,
       "forwardForceStartFrame": 63,
-      "forwardForceEndFrame": 70
+      "forwardForceEndFrame": 70,
+      "label": "Model OX Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 15,
@@ -687,15 +674,11 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 7,
       "range": 1.7,
-      "label": "Model OX Right Kick",
-      "hitLevel": "mid",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.2,
       "forwardForceStartFrame": 4,
-      "forwardForceEndFrame": 7
+      "forwardForceEndFrame": 7,
+      "label": "Model OX Right Kick",
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
       "startupFrames": 15,
@@ -708,14 +691,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Model OX Rush",
-      "hitLevel": "mid",
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForceStartFrame": 28,
-      "forwardForceEndFrame": 31
+      "forwardForceEndFrame": 31,
+      "label": "Model OX Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
       "startupFrames": 19,
@@ -727,19 +706,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 37,
       "range": 1.68,
+      "forwardForce": 2.03,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Model OX Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 20,
-      "onJuggleHitFrames": 18,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
-      "forwardForce": 2.03,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 10
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
       "startupFrames": 30,
@@ -751,16 +726,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 47,
       "range": 2.05,
-      "label": "Model OX Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 3.38,
       "forwardForceStartFrame": 31,
-      "forwardForceEndFrame": 37
+      "forwardForceEndFrame": 37,
+      "label": "Model OX Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 15,
@@ -772,15 +743,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Model OX Rising Strike",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 15,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.47,
       "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 19
+      "forwardForceEndFrame": 19,
+      "label": "Model OX Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 15,
@@ -792,15 +759,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "Model OX Crouch Jab",
-      "hitLevel": "mid",
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5,
       "forwardForce": 0.98,
       "forwardForceStartFrame": 4,
-      "forwardForceEndFrame": 7
+      "forwardForceEndFrame": 7,
+      "label": "Model OX Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
       "startupFrames": 19,
@@ -812,16 +775,12 @@
       "onCounterHitFrames": 30,
       "whiffRecoveryFrames": 12,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "Model OX Crouch Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
       "forwardForce": 1.69,
       "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 10
+      "forwardForceEndFrame": 10,
+      "launchHeight": 2,
+      "label": "Model OX Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 15,
@@ -833,15 +792,11 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 26,
       "range": 1.72,
-      "label": "Model OX Twin Assault",
-      "hitLevel": "mid",
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 2.35,
       "forwardForceStartFrame": 36,
-      "forwardForceEndFrame": 39
+      "forwardForceEndFrame": 39,
+      "label": "Model OX Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
       "startupFrames": 19,
@@ -853,16 +808,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 38,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Model OX Cross Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 18,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
       "forwardForce": 2.66,
       "forwardForceStartFrame": 44,
-      "forwardForceEndFrame": 48
+      "forwardForceEndFrame": 48,
+      "launchHeight": 2.2,
+      "label": "Model OX Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 30,
@@ -874,15 +825,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
-      "label": "Model OX Low Feint",
-      "hitLevel": "low",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.28,
       "forwardForceStartFrame": 42,
-      "forwardForceEndFrame": 48
+      "forwardForceEndFrame": 48,
+      "label": "Model OX Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 30,
@@ -894,16 +841,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 44,
       "range": 1.74,
-      "label": "Model OX Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
-      "onComboHitFrames": 7,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 2.79,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 27
+      "forwardForceEndFrame": 27,
+      "label": "Model OX Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 25,
@@ -915,16 +858,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 44,
       "range": 1.9,
-      "label": "Model OX Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 3.99,
       "forwardForceStartFrame": 45,
-      "forwardForceEndFrame": 64
+      "forwardForceEndFrame": 64,
+      "label": "Model OX Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 30,
@@ -936,18 +875,14 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 45,
       "range": 2.1,
+      "forwardForce": 2.74,
+      "forwardForceStartFrame": 23,
+      "forwardForceEndFrame": 30,
       "kiCost": 35,
       "label": "Model OX Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
-      "forwardForce": 2.74,
-      "forwardForceStartFrame": 23,
-      "forwardForceEndFrame": 30
+      "usesKi": true
     },
     "neutral:jab-jab": {
       "startupFrames": 14,
@@ -1341,11 +1276,11 @@
         "flipY": false
       },
       "25": {
-        "width": 0.62067,
-        "height": 0.62067,
-        "voxelScaleX": 1.00758,
-        "voxelScaleY": 0.99247,
-        "offsetX": 0
+        "width": 0.62,
+        "height": 0.62,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "26": {
         "width": 0.69,
@@ -1525,11 +1460,11 @@
         "flipY": false
       },
       "25": {
-        "width": 0.62067,
-        "height": 0.62067,
-        "voxelScaleX": 1.00758,
-        "voxelScaleY": 0.99247,
-        "offsetX": 0
+        "width": 0.62,
+        "height": 0.62,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "26": {
         "width": 0.69,
@@ -1835,6 +1770,13 @@
       }
     },
     "jump": {
+      "21": {
+        "width": 0.80109,
+        "height": 0.80109,
+        "voxelScaleX": 1.21378,
+        "voxelScaleY": 0.82387,
+        "offsetX": 0
+      },
       "118": {
         "width": 1.3,
         "height": 0.82,
@@ -2049,11 +1991,11 @@
         "flipY": false
       },
       "63": {
-        "width": 1.51385,
-        "height": 1.51385,
-        "voxelScaleX": 1.1663,
-        "voxelScaleY": 0.85741,
-        "offsetX": 0
+        "width": 1.51,
+        "height": 1.51,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "64": {
         "width": 0.78,
@@ -2070,11 +2012,11 @@
         "flipY": false
       },
       "66": {
-        "width": 1.12994,
-        "height": 1.12994,
-        "voxelScaleX": 1.22287,
-        "voxelScaleY": 0.81775,
-        "offsetX": 0
+        "width": 1.13,
+        "height": 1.13,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "67": {
         "width": 0.9,
@@ -2298,18 +2240,18 @@
         "flipY": false
       },
       "121": {
-        "width": 1.34719,
-        "height": 1.34719,
-        "voxelScaleX": 1.17761,
-        "voxelScaleY": 0.84918,
-        "offsetX": 0
+        "width": 1.35,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "122": {
-        "width": 1.36875,
-        "height": 1.36875,
-        "voxelScaleX": 1.19646,
-        "voxelScaleY": 0.8358,
-        "offsetX": 0
+        "width": 1.37,
+        "height": 1.37,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "123": {
         "width": 1.22,
@@ -2419,11 +2361,11 @@
         "flipY": false
       },
       "156": {
-        "width": 1.73835,
-        "height": 1.73835,
-        "voxelScaleX": 0.89791,
-        "voxelScaleY": 1.1137,
-        "offsetX": 0
+        "width": 1.74,
+        "height": 1.74,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "157": {
         "width": 1.2,
@@ -4063,25 +4005,25 @@
         "flipY": false
       },
       "214": {
-        "width": 0.93441,
-        "height": 0.93441,
-        "voxelScaleX": 1.28706,
-        "voxelScaleY": 0.77696,
-        "offsetX": 0
+        "width": 0.93,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "215": {
-        "width": 0.7315,
-        "height": 0.7315,
-        "voxelScaleX": 1.00758,
-        "voxelScaleY": 0.99248,
-        "offsetX": 0
+        "width": 0.73,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "216": {
-        "width": 0.93441,
-        "height": 0.93441,
-        "voxelScaleX": 1.28706,
-        "voxelScaleY": 0.77696,
-        "offsetX": 0
+        "width": 0.93,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "217": {
         "width": 1,
@@ -4368,46 +4310,46 @@
         "flipY": false
       },
       "128": {
-        "width": 1.44093,
-        "height": 1.44093,
-        "voxelScaleX": 1.00764,
-        "voxelScaleY": 0.99242,
-        "offsetX": 0
+        "width": 1.44,
+        "height": 1.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "129": {
-        "width": 1.79051,
-        "height": 1.79051,
-        "voxelScaleX": 1.21473,
-        "voxelScaleY": 0.82323,
-        "offsetX": 0
+        "width": 1.79,
+        "height": 1.79,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "130": {
-        "width": 1.63644,
-        "height": 1.63644,
-        "voxelScaleX": 1.04765,
-        "voxelScaleY": 0.95452,
-        "offsetX": 0
+        "width": 1.64,
+        "height": 1.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "131": {
-        "width": 1.71914,
-        "height": 1.71914,
-        "voxelScaleX": 1.0419,
-        "voxelScaleY": 0.95978,
-        "offsetX": 0
+        "width": 1.72,
+        "height": 1.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "132": {
-        "width": 1.66068,
-        "height": 1.66068,
-        "voxelScaleX": 1.06317,
-        "voxelScaleY": 0.94058,
-        "offsetX": 0
+        "width": 1.66,
+        "height": 1.66,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "133": {
-        "width": 1.75559,
-        "height": 1.75559,
-        "voxelScaleX": 1.06399,
-        "voxelScaleY": 0.93986,
-        "offsetX": 0
+        "width": 1.76,
+        "height": 1.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "134": {
         "width": 0.39702,
@@ -4552,18 +4494,18 @@
         "offsetX": 0
       },
       "139": {
-        "width": 0.64891,
-        "height": 0.64891,
-        "voxelScaleX": 0.86752,
-        "voxelScaleY": 1.15271,
-        "offsetX": 0
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "140": {
-        "width": 0.70936,
-        "height": 0.70936,
-        "voxelScaleX": 1.00762,
-        "voxelScaleY": 0.99244,
-        "offsetX": 0
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "141": {
         "width": 0.32876,
@@ -4601,18 +4543,18 @@
         "offsetX": 0
       },
       "146": {
-        "width": 0.70936,
-        "height": 0.70936,
-        "voxelScaleX": 1.00762,
-        "voxelScaleY": 0.99244,
-        "offsetX": 0
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "147": {
-        "width": 0.83818,
-        "height": 0.83818,
-        "voxelScaleX": 1.1906,
-        "voxelScaleY": 0.83991,
-        "offsetX": 0
+        "width": 0.84,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "289": {
         "width": 0.8,
@@ -4729,11 +4671,11 @@
         "offsetX": 0
       },
       "176": {
-        "width": 0.80844,
-        "height": 0.80844,
-        "voxelScaleX": 0.85458,
-        "voxelScaleY": 1.17016,
-        "offsetX": 0
+        "width": 0.81,
+        "height": 0.81,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "177": {
         "width": 1,
@@ -4764,11 +4706,11 @@
         "offsetX": 0
       },
       "181": {
-        "width": 0.76368,
-        "height": 0.76368,
-        "voxelScaleX": 0.93818,
-        "voxelScaleY": 1.06589,
-        "offsetX": 0
+        "width": 0.76,
+        "height": 0.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "182": {
         "width": 1,
@@ -4778,11 +4720,11 @@
         "offsetX": 0
       },
       "183": {
-        "width": 0.73972,
-        "height": 0.73972,
-        "voxelScaleX": 0.93399,
-        "voxelScaleY": 1.07068,
-        "offsetX": 0
+        "width": 0.74,
+        "height": 0.74,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "309": {
         "width": 0.86,
@@ -4927,18 +4869,18 @@
         "flipY": false
       },
       "184": {
-        "width": 0.66772,
-        "height": 0.66772,
-        "voxelScaleX": 0.84308,
-        "voxelScaleY": 1.18613,
-        "offsetX": 0
+        "width": 0.67,
+        "height": 0.67,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "185": {
-        "width": 0.66772,
-        "height": 0.66772,
-        "voxelScaleX": 0.84308,
-        "voxelScaleY": 1.18613,
-        "offsetX": 0
+        "width": 0.67,
+        "height": 0.67,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "186": {
         "width": 1,
@@ -4948,11 +4890,11 @@
         "offsetX": 0
       },
       "187": {
-        "width": 1.18418,
-        "height": 1.18418,
-        "voxelScaleX": 1.14525,
-        "voxelScaleY": 0.87318,
-        "offsetX": 0
+        "width": 1.18,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "188": {
         "width": 1.22185,
@@ -4976,18 +4918,18 @@
         "offsetX": 0
       },
       "191": {
-        "width": 0.70463,
-        "height": 0.70463,
-        "voxelScaleX": 0.7626,
-        "voxelScaleY": 1.31131,
-        "offsetX": 0
+        "width": 0.7,
+        "height": 0.7,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "192": {
-        "width": 0.79333,
-        "height": 0.79333,
-        "voxelScaleX": 0.83861,
-        "voxelScaleY": 1.19244,
-        "offsetX": 0
+        "width": 0.79,
+        "height": 0.79,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "193": {
         "width": 1,
@@ -5111,11 +5053,11 @@
         "offsetX": 0
       },
       "200": {
-        "width": 0.79404,
-        "height": 0.79404,
-        "voxelScaleX": 0.90232,
-        "voxelScaleY": 1.10826,
-        "offsetX": 0
+        "width": 0.79,
+        "height": 0.79,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "201": {
         "width": 1,
@@ -5125,25 +5067,25 @@
         "offsetX": 0
       },
       "202": {
-        "width": 0.74992,
-        "height": 0.74992,
-        "voxelScaleX": 0.92128,
-        "voxelScaleY": 1.08545,
-        "offsetX": 0
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "203": {
-        "width": 0.67693,
-        "height": 0.67693,
-        "voxelScaleX": 0.83161,
-        "voxelScaleY": 1.20249,
-        "offsetX": 0
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "204": {
-        "width": 0.67693,
-        "height": 0.67693,
-        "voxelScaleX": 0.83161,
-        "voxelScaleY": 1.20249,
-        "offsetX": 0
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "205": {
         "width": 1,
@@ -5153,11 +5095,11 @@
         "offsetX": 0
       },
       "206": {
-        "width": 1.22139,
-        "height": 1.22139,
-        "voxelScaleX": 1.11035,
-        "voxelScaleY": 0.90061,
-        "offsetX": 0
+        "width": 1.22,
+        "height": 1.22,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "207": {
         "width": 1.32018,
@@ -5510,7 +5452,6 @@
     {
       "id": "model-ox-buster-blast",
       "name": "Model OX Buster Blast",
-      "kind": "blast",
       "sourcePath": "/characters/model-ox/animation-sheet.png",
       "frames": [
         "/characters/model-ox/projectiles/model-ox-buster-blast/frames/frame-000.png",
@@ -5539,6 +5480,18 @@
       "billboard": false,
       "blendMode": "additive",
       "voxelProfile": "image-source",
+      "voxelFidelity": {
+        "resolutionScale": 2,
+        "maxRows": 64,
+        "depth": 0.24,
+        "alphaThreshold": 24,
+        "paletteSnap": 1,
+        "mergeRuns": true,
+        "lod": {
+          "mobileStep": 2,
+          "farStep": 2
+        }
+      },
       "defaultScale": [
         1,
         1,
@@ -5550,16 +5503,8 @@
         0
       ],
       "color": "#62eaff",
-      "blastVisual": {
-        "coreColor": "#ffffff",
-        "glowColor": "#62eaff",
-        "outerColor": "#35e956",
-        "impactColor": "#ffffff",
-        "radius": 0.34,
-        "growFrames": 4,
-        "fadeFrames": 8,
-        "shake": 0.12
-      }
+      "soundCues": [],
+      "proceduralLayers": []
     }
   ],
   "moveProjectiles": {
@@ -5567,7 +5512,6 @@
       {
         "id": "cmd-2-4-model-ox-buster-blast",
         "projectileId": "model-ox-buster-blast",
-        "kind": "blast",
         "label": "Model OX Buster Blast",
         "spawnFrame": 30,
         "spawnOffset": [
@@ -5581,7 +5525,6 @@
         "lifetimeFrames": 20,
         "speed": 0,
         "forwardVelocity": 0,
-        "blastRange": 5,
         "homingMode": "none",
         "homingStrength": 0,
         "homingTurnRate": 0,
@@ -5604,20 +5547,15 @@
         "pushbackScale": 1,
         "blockPushbackScale": 1,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit",
         "pierce": true,
         "clash": true,
-        "kiBurst": true,
-        "releaseGated": false,
-        "minDamageScale": 1,
-        "maxDamageScale": 1
+        "kiBurst": true
       }
     ],
     "cmd:3+4": [
       {
         "id": "cmd-3-4-model-ox-buster-blast",
         "projectileId": "model-ox-buster-blast",
-        "kind": "blast",
         "label": "Model OX Buster Blast",
         "spawnFrame": 25,
         "spawnOffset": [
@@ -5631,7 +5569,6 @@
         "lifetimeFrames": 20,
         "speed": 0,
         "forwardVelocity": 0,
-        "blastRange": 5,
         "homingMode": "none",
         "homingStrength": 0,
         "homingTurnRate": 0,
@@ -5654,20 +5591,15 @@
         "pushbackScale": 1,
         "blockPushbackScale": 1,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit",
         "pierce": true,
         "clash": true,
-        "kiBurst": true,
-        "releaseGated": false,
-        "minDamageScale": 1,
-        "maxDamageScale": 1
+        "kiBurst": true
       }
     ],
     "cmd:qcf+4": [
       {
         "id": "cmd-qcf-4-model-ox-buster-blast",
         "projectileId": "model-ox-buster-blast",
-        "kind": "blast",
         "label": "Model OX Buster Blast",
         "spawnFrame": 30,
         "spawnOffset": [
@@ -5681,7 +5613,6 @@
         "lifetimeFrames": 20,
         "speed": 0,
         "forwardVelocity": 0,
-        "blastRange": 5,
         "homingMode": "none",
         "homingStrength": 0,
         "homingTurnRate": 0,
@@ -5704,13 +5635,9 @@
         "pushbackScale": 1,
         "blockPushbackScale": 1,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit",
         "pierce": true,
         "clash": true,
-        "kiBurst": true,
-        "releaseGated": false,
-        "minDamageScale": 1,
-        "maxDamageScale": 1
+        "kiBurst": true
       }
     ]
   },

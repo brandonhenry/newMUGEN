@@ -66,10 +66,7 @@
       "/characters/cure-white/frames/frame-026.png"
     ],
     "jump": [
-      "/characters/cure-white/frames/frame-029.png",
-      "/characters/cure-white/frames/frame-030.png",
-      "/characters/cure-white/frames/frame-031.png",
-      "/characters/cure-white/frames/frame-032.png"
+      "/characters/cure-white/frames/frame-051.png"
     ],
     "crouch": [
       "/characters/cure-white/frames/frame-073.png"
@@ -459,15 +456,11 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
-      "label": "Cure White Left Check",
-      "hitLevel": "high",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 14
+      "forwardForceEndFrame": 14,
+      "label": "Cure White Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
       "startupFrames": 13,
@@ -479,15 +472,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
-      "label": "Cure White Right Check",
-      "hitLevel": "mid",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.85,
       "forwardForceStartFrame": 21,
-      "forwardForceEndFrame": 31
+      "forwardForceEndFrame": 31,
+      "label": "Cure White Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 16,
@@ -499,15 +488,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Cure White Left Kick",
-      "hitLevel": "low",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 19
+      "forwardForceEndFrame": 19,
+      "label": "Cure White Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 13,
@@ -519,15 +504,11 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 7,
       "range": 1.7,
-      "label": "Cure White Right Kick",
-      "hitLevel": "mid",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.2,
       "forwardForceStartFrame": 21,
-      "forwardForceEndFrame": 31
+      "forwardForceEndFrame": 31,
+      "label": "Cure White Right Kick",
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
       "startupFrames": 13,
@@ -540,14 +521,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Cure White Rush",
-      "hitLevel": "mid",
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForceStartFrame": 24,
-      "forwardForceEndFrame": 32
+      "forwardForceEndFrame": 32,
+      "label": "Cure White Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
       "startupFrames": 17,
@@ -559,19 +536,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 33,
       "range": 1.68,
+      "forwardForce": 2.19,
+      "forwardForceStartFrame": 34,
+      "forwardForceEndFrame": 40,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Cure White Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 18,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
-      "forwardForce": 2.19,
-      "forwardForceStartFrame": 34,
-      "forwardForceEndFrame": 40
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
       "startupFrames": 23,
@@ -583,16 +556,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 41,
       "range": 2.05,
-      "label": "Cure White Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 4,
       "forwardForceStartFrame": 50,
-      "forwardForceEndFrame": 59
+      "forwardForceEndFrame": 59,
+      "label": "Cure White Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 13,
@@ -604,15 +573,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Cure White Rising Strike",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 15,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.4,
       "forwardForceStartFrame": 21,
-      "forwardForceEndFrame": 31
+      "forwardForceEndFrame": 31,
+      "label": "Cure White Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 13,
@@ -624,15 +589,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "Cure White Crouch Jab",
-      "hitLevel": "mid",
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5,
       "forwardForce": 1.68,
       "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 20
+      "forwardForceEndFrame": 20,
+      "label": "Cure White Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -644,16 +605,12 @@
       "onCounterHitFrames": 30,
       "whiffRecoveryFrames": 12,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "Cure White Crouch Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 22,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
       "forwardForce": 1.73,
       "forwardForceStartFrame": 30,
-      "forwardForceEndFrame": 45
+      "forwardForceEndFrame": 45,
+      "launchHeight": 2,
+      "label": "Cure White Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -665,15 +622,11 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 9,
       "range": 1.72,
-      "label": "Cure White Twin Assault",
-      "hitLevel": "mid",
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 1.52,
       "forwardForceStartFrame": 30,
-      "forwardForceEndFrame": 45
+      "forwardForceEndFrame": 45,
+      "label": "Cure White Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -685,16 +638,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 13,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Cure White Cross Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
       "forwardForce": 1.36,
       "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "launchHeight": 2.2,
+      "label": "Cure White Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -706,15 +655,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
-      "label": "Cure White Low Feint",
-      "hitLevel": "low",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 0.97,
       "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "label": "Cure White Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 22,
@@ -726,16 +671,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 31,
       "range": 1.74,
-      "label": "Cure White Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 2.08,
       "forwardForceStartFrame": 34,
-      "forwardForceEndFrame": 50
+      "forwardForceEndFrame": 50,
+      "label": "Cure White Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -747,16 +688,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 36,
       "range": 1.9,
-      "label": "Cure White Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 3.28,
       "forwardForceStartFrame": 36,
-      "forwardForceEndFrame": 54
+      "forwardForceEndFrame": 54,
+      "label": "Cure White Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -768,192 +705,188 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 38,
       "range": 2.1,
+      "forwardForce": 2.96,
+      "forwardForceStartFrame": 39,
+      "forwardForceEndFrame": 58,
       "kiCost": 35,
       "label": "Cure White Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
-      "forwardForce": 2.96,
-      "forwardForceStartFrame": 39,
-      "forwardForceEndFrame": 58
+      "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Cure White Second Beat",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "label": "Cure White Body Blow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "label": "Cure White Low Changeup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "label": "Cure White Pressure Feint",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "label": "Cure White Drive",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Drive"
     },
     "neutral:jab-heavy-kick": {
-      "label": "Cure White Barrage",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Barrage"
     },
     "neutral:jab-heavy-special": {
-      "label": "Cure White Finisher",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Finisher"
     },
     "neutral:jab-kick": {
-      "label": "Cure White Step Kick",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "label": "Cure White Palm String",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Palm String"
     },
     "neutral:jab-kick-special": {
-      "label": "Cure White Rising Chain",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Rising Chain"
     },
     "neutral:jab-special": {
-      "label": "Cure White Special Setup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "label": "Cure White Break Art",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Break Art"
     },
     "neutral:heavy-jab": {
-      "label": "Cure White Check Hook",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Cure White Heavy Break",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "label": "Cure White Charged Follow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Charged Follow"
     },
     "neutral:heavy-kick": {
-      "label": "Cure White Drop Kick",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "label": "Cure White Arc Finisher",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Arc Finisher"
     },
     "neutral:heavy-special": {
-      "label": "Cure White Focus Stance",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "label": "Cure White Mode Shift",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Mode Shift"
     },
     "neutral:kick-jab": {
-      "label": "Cure White Heel Feint",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "label": "Cure White Summon Strike",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Summon Strike"
     },
     "neutral:kick-heavy": {
-      "label": "Cure White Guard Snare",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "label": "Cure White Armor Break",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Armor Break"
     },
     "neutral:kick-special": {
-      "label": "Cure White Power Setup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "label": "Cure White Switch Strike",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Switch Strike"
     },
     "neutral:special-jab": {
-      "label": "Cure White Spark Jab",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "label": "Cure White Binding Blow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Binding Blow"
     },
     "neutral:special-heavy": {
-      "label": "Cure White Heavy Draw",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Heavy Draw"
     },
     "neutral:special-kick": {
-      "label": "Cure White Kick Ender",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Cure White Kick Ender"
     },
     "cmd:b+1": {
       "startupFrames": 15,
@@ -966,14 +899,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.45,
-      "label": "Cure White Backfist Rush",
-      "hitLevel": "mid",
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForceStartFrame": 13,
-      "forwardForceEndFrame": 25
+      "forwardForceEndFrame": 25,
+      "label": "Cure White Backfist Rush",
+      "hitLevel": "mid"
     },
     "cmd:f,f+1": {
       "startupFrames": 18,
@@ -986,14 +915,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.7,
-      "label": "Cure White Running Chain",
-      "hitLevel": "mid",
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 29
+      "forwardForceEndFrame": 29,
+      "label": "Cure White Running Chain",
+      "hitLevel": "mid"
     },
     "cmd:qcb+4": {
       "startupFrames": 23,
@@ -1005,16 +930,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 34,
       "range": 2,
-      "label": "Cure White Crescent Spin",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 2.66,
       "forwardForceStartFrame": 36,
-      "forwardForceEndFrame": 54
+      "forwardForceEndFrame": 54,
+      "label": "Cure White Crescent Spin",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WR+3": {
       "startupFrames": 15,
@@ -1027,14 +948,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.9,
       "forwardForce": 0.75,
-      "label": "Cure White Running Kick",
-      "hitLevel": "mid",
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForceStartFrame": 13,
-      "forwardForceEndFrame": 20
+      "forwardForceEndFrame": 20,
+      "label": "Cure White Running Kick",
+      "hitLevel": "mid"
     },
     "cmd:b,b+3": {
       "startupFrames": 22,
@@ -1046,16 +963,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 13,
       "range": 1.9,
-      "label": "Cure White Retreating Sweep",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 20,
-      "forwardForceEndFrame": 28
+      "forwardForceEndFrame": 28,
+      "label": "Cure White Retreating Sweep",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+3": {
       "startupFrames": 22,
@@ -1067,18 +980,14 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 34,
       "range": 2.1,
+      "forwardForce": 2.28,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 28,
       "kiCost": 30,
       "label": "Cure White Ki Flurry",
       "hitLevel": "mid",
       "knockdown": true,
-      "usesKi": true,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
-      "forwardForce": 2.28,
-      "forwardForceStartFrame": 20,
-      "forwardForceEndFrame": 28
+      "usesKi": true
     },
     "cmd:dp+4": {
       "startupFrames": 18,
@@ -1090,19 +999,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 32,
       "range": 1.68,
+      "forwardForce": 2.72,
+      "forwardForceStartFrame": 31,
+      "forwardForceEndFrame": 46,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Cure White Rising Kick",
-      "hitLevel": "mid",
-      "onComboHitFrames": 20,
-      "onJuggleHitFrames": 18,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
-      "forwardForce": 2.72,
-      "forwardForceStartFrame": 31,
-      "forwardForceEndFrame": 46
+      "hitLevel": "mid"
     },
     "cmd:qcf+3": {
       "startupFrames": 15,
@@ -1115,14 +1020,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.95,
       "forwardForce": 0.8,
-      "label": "Cure White Forward Blitz",
-      "hitLevel": "mid",
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForceStartFrame": 13,
-      "forwardForceEndFrame": 20
+      "forwardForceEndFrame": 20,
+      "label": "Cure White Forward Blitz",
+      "hitLevel": "mid"
     }
   },
   "effects": [],
@@ -1368,11 +1269,11 @@
         "flipY": false
       },
       "30": {
-        "width": 2.99499,
-        "height": 2.99499,
-        "voxelScaleX": 1.17578,
-        "voxelScaleY": 0.8505,
-        "offsetX": 0
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "31": {
         "width": 2.5,
@@ -1387,6 +1288,13 @@
         "offsetX": 0,
         "flipX": false,
         "flipY": false
+      },
+      "51": {
+        "width": 2.48501,
+        "height": 2.48501,
+        "voxelScaleX": 1.03364,
+        "voxelScaleY": 0.96746,
+        "offsetX": 0
       }
     },
     "crouch": {
@@ -1440,24 +1348,20 @@
         "flipY": false
       },
       "73": {
-        "width": 1.62866,
+        "width": 1.63,
         "height": 1.90813,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.62006,
-        "voxelScaleY": 1
+        "flipY": false
       }
     },
     "crouchBlock": {
       "73": {
-        "width": 1.62866,
+        "width": 1.63,
         "height": 1.90813,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.62006,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "257": {
         "width": 1.95,
@@ -1525,13 +1429,11 @@
         "flipY": false
       },
       "113": {
-        "width": 2.40385,
-        "height": 2.40385,
+        "width": 2.4,
+        "height": 2.4,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.9302,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "119": {
         "width": 1.56,
@@ -1557,60 +1459,48 @@
         "flipY": false
       },
       "237": {
-        "width": 2.40385,
-        "height": 2.40385,
+        "width": 2.4,
+        "height": 2.4,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.9302,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "238": {
-        "width": 2.43309,
-        "height": 2.43309,
+        "width": 2.43,
+        "height": 2.43,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.04461,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "239": {
-        "width": 2.54453,
-        "height": 2.54453,
+        "width": 2.5,
+        "height": 2.5,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.19719,
-        "voxelScaleY": 1
+        "flipY": false
       }
     },
     "jableft": {
       "21": {
-        "width": 2.48756,
-        "height": 2.48756,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.83689,
-        "voxelScaleY": 1
+        "width": 2.05657,
+        "height": 2.05657,
+        "voxelScaleX": 0.82593,
+        "voxelScaleY": 1.21076,
+        "offsetX": 0
       },
       "22": {
-        "width": 2.28833,
-        "height": 2.28833,
+        "width": 2.29,
+        "height": 2.29,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.00003,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "27": {
-        "width": 2.43309,
-        "height": 2.43309,
+        "width": 2.43,
+        "height": 2.43,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.16997,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "56": {
         "width": 1.59,
@@ -1692,31 +1582,25 @@
         "flipY": false
       },
       "91": {
-        "width": 2.0284,
-        "height": 2.0284,
+        "width": 2.03,
+        "height": 2.03,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.00004,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "92": {
-        "width": 2.00401,
-        "height": 2.00401,
+        "width": 2,
+        "height": 2,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.00002,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "93": {
-        "width": 1.85874,
-        "height": 1.85874,
+        "width": 1.86,
+        "height": 1.86,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.99991,
-        "voxelScaleY": 1
+        "flipY": false
       }
     },
     "kickleft": {
@@ -1807,13 +1691,11 @@
         "flipY": false
       },
       "167": {
-        "width": 2.31481,
-        "height": 2.31481,
+        "width": 2.31,
+        "height": 2.31,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.00004,
-        "voxelScaleY": 1
+        "flipY": false
       }
     },
     "hitLight": {
@@ -1832,13 +1714,11 @@
         "flipY": false
       },
       "145": {
-        "width": 2.20264,
-        "height": 2.20264,
+        "width": 2.2,
+        "height": 2.2,
         "offsetX": 0,
         "flipX": true,
-        "flipY": false,
-        "voxelScaleX": 1.22378,
-        "voxelScaleY": 1
+        "flipY": false
       }
     },
     "hitHeavy": {
@@ -1899,13 +1779,11 @@
         "flipY": false
       },
       "195": {
-        "width": 1.5456,
-        "height": 1.5456,
+        "width": 1.55,
+        "height": 1.55,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.99982,
-        "voxelScaleY": 1
+        "flipY": false
       }
     },
     "juggle": {
@@ -1958,9 +1836,11 @@
       "193": {
         "width": 2.49,
         "height": 2.49,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
         "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
+        "voxelScaleY": 1
       },
       "194": {
         "width": 2.48999,
@@ -2092,32 +1972,32 @@
         "flipY": false
       },
       "116": {
-        "width": 2.38267,
-        "height": 2.38267,
-        "voxelScaleX": 0.99108,
-        "voxelScaleY": 1.009,
-        "offsetX": 0
+        "width": 2.38,
+        "height": 2.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "117": {
-        "width": 2.02782,
-        "height": 2.02782,
-        "voxelScaleX": 1.04193,
-        "voxelScaleY": 0.95975,
-        "offsetX": 0
+        "width": 2.03,
+        "height": 2.03,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "118": {
-        "width": 1.81329,
-        "height": 1.81329,
-        "voxelScaleX": 1.07383,
-        "voxelScaleY": 0.93125,
-        "offsetX": 0
+        "width": 1.81,
+        "height": 1.81,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "119": {
-        "width": 2.02782,
-        "height": 2.02782,
-        "voxelScaleX": 1.04193,
-        "voxelScaleY": 0.95975,
-        "offsetX": 0
+        "width": 2.03,
+        "height": 2.03,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "165": {
         "width": 2.19,
@@ -2136,53 +2016,53 @@
     },
     "cmd:d/f+2": {
       "84": {
-        "width": 2.24851,
-        "height": 2.24851,
-        "voxelScaleX": 0.75541,
-        "voxelScaleY": 1.32378,
-        "offsetX": 0
+        "width": 2.25,
+        "height": 2.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "85": {
-        "width": 2.1827,
-        "height": 2.1827,
-        "voxelScaleX": 0.7782,
-        "voxelScaleY": 1.28502,
-        "offsetX": 0
+        "width": 2.18,
+        "height": 2.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "86": {
-        "width": 2.12963,
-        "height": 2.12963,
-        "voxelScaleX": 0.87539,
-        "voxelScaleY": 1.14234,
-        "offsetX": 0
+        "width": 2.13,
+        "height": 2.13,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "87": {
-        "width": 2.19948,
-        "height": 2.19948,
-        "voxelScaleX": 0.90412,
-        "voxelScaleY": 1.10605,
-        "offsetX": 0
+        "width": 2.2,
+        "height": 2.2,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "88": {
-        "width": 2.16935,
-        "height": 2.16935,
-        "voxelScaleX": 0.93576,
-        "voxelScaleY": 1.06865,
-        "offsetX": 0
+        "width": 2.17,
+        "height": 2.17,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "89": {
-        "width": 2.65054,
-        "height": 2.65054,
-        "voxelScaleX": 1.23479,
-        "voxelScaleY": 0.80985,
-        "offsetX": 0
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "90": {
-        "width": 2.21827,
-        "height": 2.21827,
-        "voxelScaleX": 0.9338,
-        "voxelScaleY": 1.07089,
-        "offsetX": 0
+        "width": 2.22,
+        "height": 2.22,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "112": {
         "width": 1.95,
@@ -2243,32 +2123,32 @@
         "offsetX": 0
       },
       "37": {
-        "width": 1.96728,
-        "height": 1.96728,
-        "voxelScaleX": 1.01083,
-        "voxelScaleY": 0.98929,
-        "offsetX": 0
+        "width": 1.97,
+        "height": 1.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "38": {
-        "width": 1.86073,
-        "height": 1.86073,
-        "voxelScaleX": 0.8906,
-        "voxelScaleY": 1.12284,
-        "offsetX": 0
+        "width": 1.86,
+        "height": 1.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "39": {
-        "width": 2.57843,
-        "height": 2.57843,
-        "voxelScaleX": 1.01224,
-        "voxelScaleY": 0.9879,
-        "offsetX": 0
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "40": {
-        "width": 2.27579,
-        "height": 2.27579,
-        "voxelScaleX": 0.94661,
-        "voxelScaleY": 1.0564,
-        "offsetX": 0
+        "width": 2.28,
+        "height": 2.28,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "41": {
         "width": 3.0795,
@@ -2406,18 +2286,18 @@
         "offsetX": 0
       },
       "163": {
-        "width": 2.17065,
-        "height": 2.17065,
-        "voxelScaleX": 0.90288,
-        "voxelScaleY": 1.10757,
-        "offsetX": 0
+        "width": 2.17,
+        "height": 2.17,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "164": {
-        "width": 2.57843,
-        "height": 2.57843,
-        "voxelScaleX": 1.01224,
-        "voxelScaleY": 0.9879,
-        "offsetX": 0
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "165": {
         "width": 2.19,

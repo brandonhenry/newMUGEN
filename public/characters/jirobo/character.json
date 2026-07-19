@@ -71,12 +71,7 @@
       "/characters/jirobo/frames/frame-038.png"
     ],
     "jump": [
-      "/characters/jirobo/frames/frame-041.png",
-      "/characters/jirobo/frames/frame-042.png",
-      "/characters/jirobo/frames/frame-043.png",
-      "/characters/jirobo/frames/frame-044.png",
-      "/characters/jirobo/frames/frame-045.png",
-      "/characters/jirobo/frames/frame-046.png"
+      "/characters/jirobo/frames/frame-045.png"
     ],
     "crouch": [
       "/characters/jirobo/frames/frame-052.png"
@@ -482,15 +477,11 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
-      "label": "Jirobo Left Check",
-      "hitLevel": "high",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 16
+      "forwardForceEndFrame": 16,
+      "label": "Jirobo Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
       "startupFrames": 14,
@@ -502,15 +493,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
-      "label": "Jirobo Right Check",
-      "hitLevel": "mid",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.85,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 19
+      "forwardForceEndFrame": 19,
+      "label": "Jirobo Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 19,
@@ -522,15 +509,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Jirobo Left Kick",
-      "hitLevel": "low",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 0.95,
       "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 20
+      "forwardForceEndFrame": 20,
+      "label": "Jirobo Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 15,
@@ -542,16 +525,12 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 7,
       "range": 1.7,
-      "label": "Jirobo Right Kick",
-      "hitLevel": "throw",
-      "throwCapture": true,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.2,
       "forwardForceStartFrame": 26,
-      "forwardForceEndFrame": 29
+      "forwardForceEndFrame": 29,
+      "label": "Jirobo Right Kick",
+      "hitLevel": "throw",
+      "throwCapture": true
     },
     "cmd:f+1": {
       "startupFrames": 13,
@@ -564,17 +543,13 @@
       "whiffRecoveryFrames": 10,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Jirobo Rush",
-      "hitLevel": "mid",
-      "knockdown": true,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15,
       "pushback": 1,
       "blockPushback": 0.48,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 9,
-      "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 15
+      "label": "Jirobo Rush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:d/f+2": {
       "startupFrames": 15,
@@ -586,19 +561,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 12,
       "range": 1.68,
+      "forwardForce": 1.72,
+      "forwardForceStartFrame": 26,
+      "forwardForceEndFrame": 39,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Jirobo Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 22,
-      "onJuggleHitFrames": 19,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
-      "forwardForce": 1.72,
-      "forwardForceStartFrame": 26,
-      "forwardForceEndFrame": 39
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
       "startupFrames": 20,
@@ -610,16 +581,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 35,
       "range": 2.05,
-      "label": "Jirobo Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 3.27,
       "forwardForceStartFrame": 18,
-      "forwardForceEndFrame": 26
+      "forwardForceEndFrame": 26,
+      "label": "Jirobo Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 15,
@@ -631,15 +598,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Jirobo Rising Strike",
-      "hitLevel": "mid",
-      "onComboHitFrames": 20,
-      "onJuggleHitFrames": 15,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.76,
       "forwardForceStartFrame": 28,
-      "forwardForceEndFrame": 31
+      "forwardForceEndFrame": 31,
+      "label": "Jirobo Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 13,
@@ -651,15 +614,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "Jirobo Crouch Jab",
-      "hitLevel": "mid",
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5,
       "forwardForce": 1.25,
       "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "label": "Jirobo Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -671,16 +630,12 @@
       "onCounterHitFrames": 30,
       "whiffRecoveryFrames": 12,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "Jirobo Crouch Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
       "forwardForce": 1.93,
       "forwardForceStartFrame": 18,
-      "forwardForceEndFrame": 26
+      "forwardForceEndFrame": 26,
+      "launchHeight": 2,
+      "label": "Jirobo Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -692,15 +647,11 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 9,
       "range": 1.72,
-      "label": "Jirobo Twin Assault",
-      "hitLevel": "mid",
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 1.72,
       "forwardForceStartFrame": 18,
-      "forwardForceEndFrame": 26
+      "forwardForceEndFrame": 26,
+      "label": "Jirobo Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -712,16 +663,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 32,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Jirobo Cross Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 20,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
       "forwardForce": 2.2,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "launchHeight": 2.2,
+      "label": "Jirobo Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -733,15 +680,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
-      "label": "Jirobo Low Feint",
-      "hitLevel": "low",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.81,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "label": "Jirobo Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 22,
@@ -753,16 +696,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 12,
       "range": 1.74,
-      "label": "Jirobo Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 1.86,
       "forwardForceStartFrame": 34,
-      "forwardForceEndFrame": 38
+      "forwardForceEndFrame": 38,
+      "label": "Jirobo Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -774,16 +713,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 36,
       "range": 1.9,
-      "label": "Jirobo Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 3.06,
       "forwardForceStartFrame": 36,
-      "forwardForceEndFrame": 41
+      "forwardForceEndFrame": 41,
+      "label": "Jirobo Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -795,192 +730,188 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 38,
       "range": 2.1,
+      "forwardForce": 3.16,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 34,
       "kiCost": 35,
       "label": "Jirobo Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
-      "forwardForce": 3.16,
-      "forwardForceStartFrame": 24,
-      "forwardForceEndFrame": 34
+      "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Jirobo Second Beat",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "label": "Jirobo Body Blow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "label": "Jirobo Low Changeup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "label": "Jirobo Pressure Feint",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "label": "Jirobo Drive",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Drive"
     },
     "neutral:jab-heavy-kick": {
-      "label": "Jirobo Barrage",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Barrage"
     },
     "neutral:jab-heavy-special": {
-      "label": "Jirobo Finisher",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Finisher"
     },
     "neutral:jab-kick": {
-      "label": "Jirobo Step Kick",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "label": "Jirobo Palm String",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Palm String"
     },
     "neutral:jab-kick-special": {
-      "label": "Jirobo Rising Chain",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Rising Chain"
     },
     "neutral:jab-special": {
-      "label": "Jirobo Special Setup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "label": "Jirobo Break Art",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Break Art"
     },
     "neutral:heavy-jab": {
-      "label": "Jirobo Check Hook",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Jirobo Heavy Break",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "label": "Jirobo Charged Follow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Charged Follow"
     },
     "neutral:heavy-kick": {
-      "label": "Jirobo Drop Kick",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "label": "Jirobo Arc Finisher",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Arc Finisher"
     },
     "neutral:heavy-special": {
-      "label": "Jirobo Focus Stance",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "label": "Jirobo Mode Shift",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Mode Shift"
     },
     "neutral:kick-jab": {
-      "label": "Jirobo Heel Feint",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "label": "Jirobo Summon Strike",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Summon Strike"
     },
     "neutral:kick-heavy": {
-      "label": "Jirobo Guard Snare",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "label": "Jirobo Armor Break",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Armor Break"
     },
     "neutral:kick-special": {
-      "label": "Jirobo Power Setup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "label": "Jirobo Switch Strike",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Switch Strike"
     },
     "neutral:special-jab": {
-      "label": "Jirobo Spark Jab",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "label": "Jirobo Binding Blow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Binding Blow"
     },
     "neutral:special-heavy": {
-      "label": "Jirobo Heavy Draw",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Heavy Draw"
     },
     "neutral:special-kick": {
-      "label": "Jirobo Kick Ender",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Jirobo Kick Ender"
     }
   },
   "effects": [],
@@ -1526,12 +1457,11 @@
         "flipY": false
       },
       "219": {
-        "width": 1.19048,
-        "height": 1.19048,
+        "width": 1.19,
+        "height": 1.19,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.82736
+        "flipY": false
       }
     },
     "chargeKi": {
@@ -1587,78 +1517,69 @@
         "flipY": false
       },
       "84": {
-        "width": 1.10011,
-        "height": 1.10011,
+        "width": 1.1,
+        "height": 1.1,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.14815
+        "flipY": false
       },
       "85": {
-        "width": 1.11732,
-        "height": 1.11732,
+        "width": 1.12,
+        "height": 1.12,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.91903
+        "flipY": false
       },
       "86": {
-        "width": 1.11732,
-        "height": 1.11732,
+        "width": 1.12,
+        "height": 1.12,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.14878
+        "flipY": false
       },
       "87": {
-        "width": 1.11732,
-        "height": 1.11732,
+        "width": 1.12,
+        "height": 1.12,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.07219
+        "flipY": false
       }
     },
     "jabright": {
       "5": {
-        "width": 1.10011,
-        "height": 1.10011,
+        "width": 1.1,
+        "height": 1.1,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.01193
+        "flipY": false
       },
       "6": {
-        "width": 1.19048,
-        "height": 1.19048,
+        "width": 1.19,
+        "height": 1.19,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.88131
+        "flipY": false
       },
       "7": {
-        "width": 1.04603,
-        "height": 1.04603,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.39174
+        "width": 1.23443,
+        "height": 1.23443,
+        "voxelScaleX": 1.18041,
+        "voxelScaleY": 0.84716,
+        "offsetX": 0
       },
       "9": {
-        "width": 1.00908,
-        "height": 1.00908,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.37785
+        "width": 1.1859,
+        "height": 1.1859,
+        "voxelScaleX": 1.17451,
+        "voxelScaleY": 0.85142,
+        "offsetX": 0
       },
       "10": {
-        "width": 0.99206,
-        "height": 0.99206,
+        "width": 0.99,
+        "height": 0.99,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.16549
+        "flipY": false
       },
       "79": {
         "width": 1.02,
@@ -1698,52 +1619,46 @@
     },
     "kickleft": {
       "8": {
-        "width": 1.24378,
-        "height": 1.24378,
+        "width": 1.24,
+        "height": 1.24,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.79138
+        "flipY": false
       },
       "11": {
-        "width": 1.04603,
-        "height": 1.04603,
+        "width": 1.05,
+        "height": 1.05,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.02335
+        "flipY": false
       },
       "12": {
-        "width": 0.99206,
-        "height": 0.99206,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.57558
+        "width": 1.2455,
+        "height": 1.2455,
+        "voxelScaleX": 1.25596,
+        "voxelScaleY": 0.7962,
+        "offsetX": 0
       },
       "13": {
-        "width": 0.99206,
-        "height": 0.99206,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.53241
+        "width": 1.22831,
+        "height": 1.22831,
+        "voxelScaleX": 1.23863,
+        "voxelScaleY": 0.80734,
+        "offsetX": 0
       },
       "14": {
-        "width": 0.99206,
-        "height": 0.99206,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.48923
+        "width": 1.21089,
+        "height": 1.21089,
+        "voxelScaleX": 1.22106,
+        "voxelScaleY": 0.81896,
+        "offsetX": 0
       },
       "15": {
-        "width": 1.13636,
-        "height": 1.13636,
+        "width": 1.14,
+        "height": 1.14,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.96097
+        "flipY": false
       },
       "84": {
         "width": 1.26,
@@ -1776,76 +1691,67 @@
     },
     "kickright": {
       "16": {
-        "width": 1.00908,
-        "height": 1.00908,
+        "width": 1.01,
+        "height": 1.01,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.12347
+        "flipY": false
       },
       "17": {
-        "width": 1.2987,
-        "height": 1.2987,
+        "width": 1.3,
+        "height": 1.3,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.89031
+        "flipY": false
       },
       "18": {
-        "width": 1.31752,
-        "height": 1.31752,
+        "width": 1.32,
+        "height": 1.32,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.86185
+        "flipY": false
       },
       "20": {
-        "width": 1.17233,
-        "height": 1.17233,
+        "width": 1.17,
+        "height": 1.17,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.85835
+        "flipY": false
       },
       "21": {
-        "width": 1.31752,
-        "height": 1.31752,
+        "width": 1.32,
+        "height": 1.32,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.86185
+        "flipY": false
       },
       "22": {
-        "width": 1.22549,
-        "height": 1.22549,
+        "width": 1.23,
+        "height": 1.23,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.90777
+        "flipY": false
       },
       "23": {
-        "width": 1.19048,
-        "height": 1.19048,
+        "width": 1.19,
+        "height": 1.19,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.11513
+        "flipY": false
       },
       "24": {
-        "width": 1.15473,
-        "height": 1.15473,
+        "width": 1.16,
+        "height": 1.16,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.18709
+        "flipY": false
       },
       "25": {
-        "width": 1.20773,
-        "height": 1.20773,
+        "width": 1.21,
+        "height": 1.21,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.79729
+        "flipY": false
       },
       "88": {
         "width": 1.07,
@@ -2131,11 +2037,9 @@
       "180": {
         "width": 1.18999,
         "height": 1.18999,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
         "voxelScaleX": 1.18707,
-        "voxelScaleY": 0.82456
+        "voxelScaleY": 0.82456,
+        "offsetX": 0
       },
       "181": {
         "width": 1.18999,
@@ -2474,11 +2378,9 @@
       "180": {
         "width": 1.18999,
         "height": 1.18999,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
         "voxelScaleX": 1.18707,
-        "voxelScaleY": 0.82456
+        "voxelScaleY": 0.82456,
+        "offsetX": 0
       }
     },
     "cmd:f+1": {
@@ -2497,11 +2399,11 @@
         "offsetX": 0
       },
       "90": {
-        "width": 1.25799,
-        "height": 1.25799,
-        "voxelScaleX": 1.09018,
-        "voxelScaleY": 0.91728,
-        "offsetX": 0
+        "width": 1.26,
+        "height": 1.26,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "91": {
         "width": 1,
@@ -2718,25 +2620,25 @@
     },
     "cmd:qcf+4": {
       "67": {
-        "width": 1.27704,
-        "height": 1.27704,
-        "voxelScaleX": 1.12425,
-        "voxelScaleY": 0.88948,
-        "offsetX": 0
+        "width": 1.28,
+        "height": 1.28,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "68": {
-        "width": 1.26778,
-        "height": 1.26778,
-        "voxelScaleX": 1.08175,
-        "voxelScaleY": 0.92442,
-        "offsetX": 0
+        "width": 1.27,
+        "height": 1.27,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "69": {
-        "width": 1.333,
-        "height": 1.333,
-        "voxelScaleX": 1.01276,
-        "voxelScaleY": 0.9874,
-        "offsetX": 0
+        "width": 1.33,
+        "height": 1.33,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "70": {
         "width": 1,

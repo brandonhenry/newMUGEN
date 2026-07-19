@@ -96,14 +96,7 @@
       "/characters/purprill/frames/frame-051.png"
     ],
     "jump": [
-      "/characters/purprill/frames/frame-043.png",
-      "/characters/purprill/frames/frame-044.png",
-      "/characters/purprill/frames/frame-045.png",
-      "/characters/purprill/frames/frame-046.png",
-      "/characters/purprill/frames/frame-047.png",
-      "/characters/purprill/frames/frame-048.png",
-      "/characters/purprill/frames/frame-049.png",
-      "/characters/purprill/frames/frame-050.png"
+      "/characters/purprill/frames/frame-099.png"
     ],
     "crouch": [
       "/characters/purprill/frames/frame-000.png"
@@ -517,15 +510,11 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
-      "label": "Purprill Left Check",
-      "hitLevel": "high",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 10
+      "forwardForceEndFrame": 10,
+      "label": "Purprill Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
       "startupFrames": 15,
@@ -537,15 +526,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
-      "label": "Purprill Right Check",
-      "hitLevel": "mid",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.48,
       "forwardForceStartFrame": 13,
-      "forwardForceEndFrame": 20
+      "forwardForceEndFrame": 20,
+      "label": "Purprill Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 20,
@@ -557,15 +542,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Purprill Left Kick",
-      "hitLevel": "low",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 0.73,
       "forwardForceStartFrame": 41,
-      "forwardForceEndFrame": 46
+      "forwardForceEndFrame": 46,
+      "label": "Purprill Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 15,
@@ -577,18 +558,14 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 10,
       "range": 1.7,
-      "label": "Purprill Right Kick",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "pushback": 1,
-      "blockPushback": 0.48,
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 1.2,
       "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 14
+      "forwardForceEndFrame": 14,
+      "pushback": 1,
+      "blockPushback": 0.48,
+      "label": "Purprill Right Kick",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:f+1": {
       "startupFrames": 13,
@@ -601,14 +578,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Purprill Rush",
-      "hitLevel": "mid",
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "label": "Purprill Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
       "startupFrames": 15,
@@ -620,19 +593,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 12,
       "range": 1.68,
+      "forwardForce": 1.35,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Purprill Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 22,
-      "onJuggleHitFrames": 20,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
-      "forwardForce": 1.35,
-      "forwardForceStartFrame": 13,
-      "forwardForceEndFrame": 18
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
       "startupFrames": 19,
@@ -644,16 +613,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 37,
       "range": 2.05,
-      "label": "Purprill Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 3.98,
       "forwardForceStartFrame": 13,
-      "forwardForceEndFrame": 18
+      "forwardForceEndFrame": 18,
+      "label": "Purprill Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 13,
@@ -665,15 +630,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Purprill Rising Strike",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 16,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.22,
       "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 16
+      "forwardForceEndFrame": 16,
+      "label": "Purprill Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 13,
@@ -685,15 +646,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "Purprill Crouch Jab",
-      "hitLevel": "mid",
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 11
+      "forwardForceEndFrame": 11,
+      "label": "Purprill Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -705,16 +662,12 @@
       "onCounterHitFrames": 30,
       "whiffRecoveryFrames": 12,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "Purprill Crouch Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 22,
-      "onJuggleHitFrames": 13,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
       "forwardForce": 1.26,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 22
+      "forwardForceEndFrame": 22,
+      "launchHeight": 2,
+      "label": "Purprill Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 14,
@@ -726,15 +679,11 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 9,
       "range": 1.72,
-      "label": "Purprill Twin Assault",
-      "hitLevel": "mid",
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 1.58,
       "forwardForceStartFrame": 20,
-      "forwardForceEndFrame": 26
+      "forwardForceEndFrame": 26,
+      "label": "Purprill Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -746,16 +695,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 13,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Purprill Cross Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
       "forwardForce": 1.54,
       "forwardForceStartFrame": 42,
-      "forwardForceEndFrame": 47
+      "forwardForceEndFrame": 47,
+      "launchHeight": 2.2,
+      "label": "Purprill Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -767,15 +712,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
-      "label": "Purprill Low Feint",
-      "hitLevel": "low",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.15,
       "forwardForceStartFrame": 38,
-      "forwardForceEndFrame": 43
+      "forwardForceEndFrame": 43,
+      "label": "Purprill Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 22,
@@ -787,16 +728,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 31,
       "range": 1.74,
-      "label": "Purprill Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 2.2,
       "forwardForceStartFrame": 13,
-      "forwardForceEndFrame": 18
+      "forwardForceEndFrame": 18,
+      "label": "Purprill Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -808,16 +745,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 37,
       "range": 1.9,
-      "label": "Purprill Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 3.4,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 20
+      "forwardForceEndFrame": 20,
+      "label": "Purprill Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -829,18 +762,14 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 37,
       "range": 2.1,
+      "forwardForce": 2.49,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 30,
       "kiCost": 35,
       "label": "Purprill Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
-      "forwardForce": 2.49,
-      "forwardForceStartFrame": 22,
-      "forwardForceEndFrame": 30
+      "usesKi": true
     },
     "neutral:jab-jab": {
       "startupFrames": 14,
@@ -1255,18 +1184,18 @@
         "flipY": false
       },
       "72": {
-        "width": 0.82658,
-        "height": 0.82658,
-        "voxelScaleX": 0.85215,
-        "voxelScaleY": 1.17351,
-        "offsetX": 0
+        "width": 0.83,
+        "height": 0.83,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "73": {
-        "width": 0.80654,
-        "height": 0.80654,
-        "voxelScaleX": 0.81637,
-        "voxelScaleY": 1.22493,
-        "offsetX": 0
+        "width": 0.81,
+        "height": 0.81,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "74": {
         "width": 0.98,
@@ -1390,18 +1319,18 @@
         "flipY": false
       },
       "72": {
-        "width": 0.82658,
-        "height": 0.82658,
-        "voxelScaleX": 0.85215,
-        "voxelScaleY": 1.17351,
-        "offsetX": 0
+        "width": 0.83,
+        "height": 0.83,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "73": {
-        "width": 0.80654,
-        "height": 0.80654,
-        "voxelScaleX": 0.81637,
-        "voxelScaleY": 1.22493,
-        "offsetX": 0
+        "width": 0.81,
+        "height": 0.81,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "74": {
         "width": 0.98,
@@ -1469,11 +1398,11 @@
         "flipY": false
       },
       "60": {
-        "width": 1.18137,
-        "height": 1.18137,
-        "voxelScaleX": 0.76474,
-        "voxelScaleY": 1.30764,
-        "offsetX": 0
+        "width": 1.18,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "61": {
         "width": 0.88,
@@ -1525,11 +1454,11 @@
         "offsetX": 0
       },
       "68": {
-        "width": 1.28498,
-        "height": 1.28498,
-        "voxelScaleX": 0.82224,
-        "voxelScaleY": 1.21619,
-        "offsetX": 0
+        "width": 1.28,
+        "height": 1.28,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "69": {
         "width": 0.72,
@@ -1641,11 +1570,11 @@
     },
     "sidestepLeft": {
       "51": {
-        "width": 1.08627,
-        "height": 1.08627,
-        "voxelScaleX": 0.7753,
-        "voxelScaleY": 1.28982,
-        "offsetX": 0
+        "width": 1.09,
+        "height": 1.09,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "90": {
         "width": 0.98,
@@ -1706,11 +1635,11 @@
     },
     "sidestepRight": {
       "51": {
-        "width": 1.08627,
-        "height": 1.08627,
-        "voxelScaleX": 0.7753,
-        "voxelScaleY": 1.28982,
-        "offsetX": 0
+        "width": 1.09,
+        "height": 1.09,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "102": {
         "width": 0.86,
@@ -1771,59 +1700,66 @@
     },
     "jump": {
       "43": {
-        "width": 1.42156,
-        "height": 1.42156,
-        "voxelScaleX": 0.85095,
-        "voxelScaleY": 1.17516,
-        "offsetX": 0
+        "width": 1.42,
+        "height": 1.42,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "44": {
-        "width": 1.3868,
-        "height": 1.3868,
-        "voxelScaleX": 0.83917,
-        "voxelScaleY": 1.19166,
-        "offsetX": 0
+        "width": 1.39,
+        "height": 1.39,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "45": {
-        "width": 1.35347,
-        "height": 1.35347,
-        "voxelScaleX": 0.8372,
-        "voxelScaleY": 1.19445,
-        "offsetX": 0
+        "width": 1.35,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "46": {
-        "width": 1.35174,
-        "height": 1.35174,
-        "voxelScaleX": 0.82694,
-        "voxelScaleY": 1.20928,
-        "offsetX": 0
+        "width": 1.35,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "47": {
-        "width": 1.26568,
-        "height": 1.26568,
-        "voxelScaleX": 0.77429,
-        "voxelScaleY": 1.2915,
-        "offsetX": 0
+        "width": 1.27,
+        "height": 1.27,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "48": {
-        "width": 1.22548,
-        "height": 1.22548,
-        "voxelScaleX": 0.7497,
-        "voxelScaleY": 1.33386,
-        "offsetX": 0
+        "width": 1.23,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "49": {
-        "width": 1.21523,
-        "height": 1.21523,
-        "voxelScaleX": 0.74343,
-        "voxelScaleY": 1.34511,
-        "offsetX": 0
+        "width": 1.22,
+        "height": 1.22,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "50": {
-        "width": 1.30463,
-        "height": 1.30463,
-        "voxelScaleX": 0.79812,
-        "voxelScaleY": 1.25295,
+        "width": 1.3,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "99": {
+        "width": 1.30926,
+        "height": 1.30926,
+        "voxelScaleX": 0.95904,
+        "voxelScaleY": 1.04271,
         "offsetX": 0
       },
       "124": {
@@ -2089,18 +2025,18 @@
         "flipY": false
       },
       "5": {
-        "width": 1.04366,
-        "height": 1.04366,
-        "voxelScaleX": 0.80695,
-        "voxelScaleY": 1.23923,
-        "offsetX": 0
+        "width": 1.04,
+        "height": 1.04,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "6": {
-        "width": 1.04944,
-        "height": 1.04944,
-        "voxelScaleX": 0.75874,
-        "voxelScaleY": 1.31798,
-        "offsetX": 0
+        "width": 1.05,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "7": {
         "width": 1.44736,
@@ -2366,39 +2302,39 @@
     },
     "kickleft": {
       "43": {
-        "width": 1.42156,
-        "height": 1.42156,
-        "voxelScaleX": 0.85095,
-        "voxelScaleY": 1.17516,
-        "offsetX": 0
+        "width": 1.42,
+        "height": 1.42,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "44": {
-        "width": 1.3868,
-        "height": 1.3868,
-        "voxelScaleX": 0.83917,
-        "voxelScaleY": 1.19166,
-        "offsetX": 0
+        "width": 1.39,
+        "height": 1.39,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "45": {
-        "width": 1.35347,
-        "height": 1.35347,
-        "voxelScaleX": 0.8372,
-        "voxelScaleY": 1.19445,
-        "offsetX": 0
+        "width": 1.35,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "46": {
-        "width": 1.35174,
-        "height": 1.35174,
-        "voxelScaleX": 0.82694,
-        "voxelScaleY": 1.20928,
-        "offsetX": 0
+        "width": 1.35,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "47": {
-        "width": 1.26568,
-        "height": 1.26568,
-        "voxelScaleX": 0.77429,
-        "voxelScaleY": 1.2915,
-        "offsetX": 0
+        "width": 1.27,
+        "height": 1.27,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "48": {
         "width": 1.22548,
@@ -2415,11 +2351,11 @@
         "offsetX": 0
       },
       "50": {
-        "width": 1.30463,
-        "height": 1.30463,
-        "voxelScaleX": 0.79812,
-        "voxelScaleY": 1.25295,
-        "offsetX": 0
+        "width": 1.3,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "102": {
         "width": 0.86,
@@ -2717,11 +2653,11 @@
     },
     "juggle": {
       "43": {
-        "width": 1.42156,
-        "height": 1.42156,
-        "voxelScaleX": 0.85095,
-        "voxelScaleY": 1.17516,
-        "offsetX": 0
+        "width": 1.42,
+        "height": 1.42,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "48": {
         "width": 0.91,
@@ -2840,9 +2776,11 @@
       "94": {
         "width": 0.97,
         "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
         "voxelScaleX": 0.59409,
-        "voxelScaleY": 0.5942,
-        "offsetX": 0
+        "voxelScaleY": 0.5942
       },
       "95": {
         "width": 0.97,
@@ -2956,9 +2894,11 @@
       "94": {
         "width": 0.97,
         "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
         "voxelScaleX": 0.59409,
-        "voxelScaleY": 0.5942,
-        "offsetX": 0
+        "voxelScaleY": 0.5942
       },
       "95": {
         "width": 0.97,
@@ -3284,11 +3224,11 @@
         "flipY": false
       },
       "99": {
-        "width": 1.30926,
-        "height": 1.30926,
-        "voxelScaleX": 0.95904,
-        "voxelScaleY": 1.04271,
-        "offsetX": 0
+        "width": 1.31,
+        "height": 1.31,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "100": {
         "width": 1,
@@ -3574,11 +3514,11 @@
         "offsetX": 0
       },
       "53": {
-        "width": 1.06634,
-        "height": 1.06634,
-        "voxelScaleX": 0.76107,
-        "voxelScaleY": 1.31393,
-        "offsetX": 0
+        "width": 1.07,
+        "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "54": {
         "width": 1.13603,

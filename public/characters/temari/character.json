@@ -59,19 +59,13 @@
       "/characters/temari/frames/frame-019.png"
     ],
     "sidestepLeft": [
-      "/characters/temari/frames/frame-019.png",
       "/characters/temari/frames/frame-020.png"
     ],
     "sidestepRight": [
-      "/characters/temari/frames/frame-021.png",
-      "/characters/temari/frames/frame-022.png",
-      "/characters/temari/frames/frame-023.png",
-      "/characters/temari/frames/frame-024.png",
-      "/characters/temari/frames/frame-025.png"
+      "/characters/temari/frames/frame-020.png"
     ],
     "jump": [
-      "/characters/temari/frames/frame-026.png",
-      "/characters/temari/frames/frame-027.png"
+      "/characters/temari/frames/frame-026.png"
     ],
     "crouch": [
       "/characters/temari/frames/frame-015.png"
@@ -457,15 +451,11 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
-      "label": "Temari Left Check",
-      "hitLevel": "high",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 18
+      "forwardForceEndFrame": 18,
+      "label": "Temari Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
       "startupFrames": 13,
@@ -477,15 +467,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
-      "label": "Temari Right Check",
-      "hitLevel": "mid",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.73,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "label": "Temari Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 16,
@@ -497,15 +483,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Temari Left Kick",
-      "hitLevel": "low",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 0.81,
       "forwardForceStartFrame": 24,
-      "forwardForceEndFrame": 36
+      "forwardForceEndFrame": 36,
+      "label": "Temari Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 14,
@@ -518,14 +500,10 @@
       "whiffRecoveryFrames": 24,
       "range": 1.7,
       "forwardForce": 2,
-      "label": "Temari Right Kick",
-      "hitLevel": "mid",
-      "onComboHitFrames": 7,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 27
+      "forwardForceEndFrame": 27,
+      "label": "Temari Right Kick",
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
       "startupFrames": 14,
@@ -538,14 +516,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Temari Rush",
-      "hitLevel": "mid",
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 13
+      "forwardForceEndFrame": 13,
+      "label": "Temari Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
       "startupFrames": 16,
@@ -557,19 +531,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 12,
       "range": 1.68,
+      "forwardForce": 1.6,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 30,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Temari Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 22,
-      "onJuggleHitFrames": 19,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
-      "forwardForce": 1.6,
-      "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 30
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
       "startupFrames": 28,
@@ -581,16 +551,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 45,
       "range": 2.05,
-      "label": "Temari Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 3.78,
       "forwardForceStartFrame": 40,
-      "forwardForceEndFrame": 47
+      "forwardForceEndFrame": 47,
+      "label": "Temari Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 13,
@@ -602,15 +568,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Temari Rising Strike",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 15,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.53,
       "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "label": "Temari Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 13,
@@ -622,15 +584,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "Temari Crouch Jab",
-      "hitLevel": "mid",
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5,
       "forwardForce": 1.15,
       "forwardForceStartFrame": 13,
-      "forwardForceEndFrame": 25
+      "forwardForceEndFrame": 25,
+      "label": "Temari Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
       "startupFrames": 16,
@@ -642,16 +600,12 @@
       "onCounterHitFrames": 30,
       "whiffRecoveryFrames": 12,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "Temari Crouch Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 22,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
       "forwardForce": 1.51,
       "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 30
+      "forwardForceEndFrame": 30,
+      "launchHeight": 2,
+      "label": "Temari Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 22,
@@ -663,15 +617,11 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 9,
       "range": 1.72,
-      "label": "Temari Twin Assault",
-      "hitLevel": "mid",
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 41
+      "forwardForceEndFrame": 41,
+      "label": "Temari Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
       "startupFrames": 16,
@@ -683,16 +633,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 13,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Temari Cross Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
       "forwardForce": 1.62,
       "forwardForceStartFrame": 28,
-      "forwardForceEndFrame": 41
+      "forwardForceEndFrame": 41,
+      "launchHeight": 2.2,
+      "label": "Temari Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 17,
@@ -704,15 +650,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
-      "label": "Temari Low Feint",
-      "hitLevel": "low",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.23,
       "forwardForceStartFrame": 26,
-      "forwardForceEndFrame": 38
+      "forwardForceEndFrame": 38,
+      "label": "Temari Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 22,
@@ -724,16 +666,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 12,
       "range": 1.74,
-      "label": "Temari Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 1.8,
       "forwardForceStartFrame": 25,
-      "forwardForceEndFrame": 36
+      "forwardForceEndFrame": 36,
+      "label": "Temari Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 19,
@@ -745,16 +683,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 33,
       "range": 1.9,
-      "label": "Temari Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 3,
       "forwardForceStartFrame": 24,
-      "forwardForceEndFrame": 35
+      "forwardForceEndFrame": 35,
+      "label": "Temari Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 18,
@@ -766,18 +700,14 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 32,
       "range": 2.1,
+      "forwardForce": 2.74,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 34,
       "kiCost": 35,
       "label": "Temari Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
-      "forwardForce": 2.74,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 34
+      "usesKi": true
     },
     "neutral:jab-jab": {
       "startupFrames": 14,
@@ -1024,90 +954,90 @@
     },
     "walkForward": {
       "8": {
-        "width": 1.19919,
-        "height": 1.19919,
-        "voxelScaleX": 1.17698,
-        "voxelScaleY": 0.84963,
-        "offsetX": 0
+        "width": 1.2,
+        "height": 1.2,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "9": {
-        "width": 1.19287,
-        "height": 1.19287,
-        "voxelScaleX": 1.24551,
-        "voxelScaleY": 0.80288,
-        "offsetX": 0
+        "width": 1.19,
+        "height": 1.19,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "10": {
-        "width": 1.22695,
-        "height": 1.22695,
-        "voxelScaleX": 1.18061,
-        "voxelScaleY": 0.84702,
-        "offsetX": 0
+        "width": 1.23,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "11": {
-        "width": 1.20265,
-        "height": 1.20265,
-        "voxelScaleX": 1.20447,
-        "voxelScaleY": 0.83024,
-        "offsetX": 0
+        "width": 1.2,
+        "height": 1.2,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "12": {
-        "width": 1.17497,
-        "height": 1.17497,
-        "voxelScaleX": 1.20126,
-        "voxelScaleY": 0.83246,
-        "offsetX": 0
+        "width": 1.18,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "13": {
-        "width": 1.21113,
-        "height": 1.21113,
-        "voxelScaleX": 1.16538,
-        "voxelScaleY": 0.85809,
-        "offsetX": 0
+        "width": 1.21,
+        "height": 1.21,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "walkBack": {
       "8": {
-        "width": 1.19919,
-        "height": 1.19919,
-        "voxelScaleX": 1.17698,
-        "voxelScaleY": 0.84963,
-        "offsetX": 0
+        "width": 1.2,
+        "height": 1.2,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "9": {
-        "width": 1.19287,
-        "height": 1.19287,
-        "voxelScaleX": 1.24551,
-        "voxelScaleY": 0.80288,
-        "offsetX": 0
+        "width": 1.19,
+        "height": 1.19,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "10": {
-        "width": 1.22695,
-        "height": 1.22695,
-        "voxelScaleX": 1.18061,
-        "voxelScaleY": 0.84702,
-        "offsetX": 0
+        "width": 1.23,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "11": {
-        "width": 1.20265,
-        "height": 1.20265,
-        "voxelScaleX": 1.20447,
-        "voxelScaleY": 0.83024,
-        "offsetX": 0
+        "width": 1.2,
+        "height": 1.2,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "12": {
-        "width": 1.17497,
-        "height": 1.17497,
-        "voxelScaleX": 1.20126,
-        "voxelScaleY": 0.83246,
-        "offsetX": 0
+        "width": 1.18,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "13": {
-        "width": 1.21113,
-        "height": 1.21113,
-        "voxelScaleX": 1.16538,
-        "voxelScaleY": 0.85809,
-        "offsetX": 0
+        "width": 1.21,
+        "height": 1.21,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "14": {
         "width": 1.04,
@@ -1126,11 +1056,11 @@
     },
     "sprint": {
       "16": {
-        "width": 1.04011,
-        "height": 1.04011,
-        "voxelScaleX": 0.94728,
-        "voxelScaleY": 1.05566,
-        "offsetX": 0
+        "width": 1.04,
+        "height": 1.04,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "backHop": {
@@ -1158,21 +1088,28 @@
     },
     "sidestepLeft": {
       "19": {
-        "width": 0.96134,
-        "height": 0.96134,
-        "voxelScaleX": 0.79713,
-        "voxelScaleY": 1.2545,
-        "offsetX": 0
+        "width": 0.96,
+        "height": 0.96,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "20": {
-        "width": 0.96135,
-        "height": 0.96135,
-        "voxelScaleX": 0.79713,
-        "voxelScaleY": 1.2545,
-        "offsetX": 0
+        "width": 0.96,
+        "height": 0.96,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "sidestepRight": {
+      "20": {
+        "width": 1,
+        "height": 1,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
+      },
       "21": {
         "width": 1.04,
         "height": 1.04,
@@ -1188,11 +1125,11 @@
         "flipY": false
       },
       "23": {
-        "width": 0.86546,
-        "height": 0.86546,
-        "voxelScaleX": 0.98125,
-        "voxelScaleY": 1.01911,
-        "offsetX": 0
+        "width": 0.86,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "24": {
         "width": 0.87,
@@ -1211,26 +1148,26 @@
     },
     "jump": {
       "26": {
-        "width": 0.9154,
-        "height": 0.9154,
-        "voxelScaleX": 0.80723,
-        "voxelScaleY": 1.2388,
-        "offsetX": 0
+        "width": 0.92,
+        "height": 0.92,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "27": {
-        "width": 0.93221,
-        "height": 0.93221,
-        "voxelScaleX": 0.82205,
-        "voxelScaleY": 1.21647,
-        "offsetX": 0
+        "width": 0.93,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "crouch": {
       "15": {
-        "width": 0.80866,
+        "width": 0.81852,
         "height": 0.82311,
-        "voxelScaleX": 1.24014,
-        "voxelScaleY": 0.80636,
+        "voxelScaleX": 1.33745,
+        "voxelScaleY": 0.74769,
         "offsetX": 0
       },
       "28": {
@@ -1257,20 +1194,20 @@
     },
     "crouchBlock": {
       "15": {
-        "width": 0.80866,
+        "width": 0.81852,
         "height": 0.82311,
-        "voxelScaleX": 1.24014,
-        "voxelScaleY": 0.80636,
+        "voxelScaleX": 1.33745,
+        "voxelScaleY": 0.74769,
         "offsetX": 0
       }
     },
     "block": {
       "33": {
-        "width": 0.8867,
-        "height": 0.8867,
-        "voxelScaleX": 0.86423,
-        "voxelScaleY": 1.1571,
-        "offsetX": 0
+        "width": 0.89,
+        "height": 0.89,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "34": {
         "width": 1.67,
@@ -1310,18 +1247,18 @@
         "flipY": false
       },
       "2": {
-        "width": 0.92264,
-        "height": 0.92264,
-        "voxelScaleX": 0.94922,
-        "voxelScaleY": 1.05349,
-        "offsetX": 0
+        "width": 0.92,
+        "height": 0.92,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "3": {
-        "width": 0.91406,
-        "height": 0.91406,
-        "voxelScaleX": 0.95814,
-        "voxelScaleY": 1.04369,
-        "offsetX": 0
+        "width": 0.91,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "4": {
         "width": 1.04,
@@ -1389,12 +1326,11 @@
         "flipY": false
       },
       "23": {
-        "width": 0.86546,
-        "height": 0.86546,
-        "voxelScaleX": 0.98125,
-        "voxelScaleY": 1.01911,
+        "width": 0.86,
+        "height": 0.86,
         "offsetX": 0,
-        "flipX": true
+        "flipX": true,
+        "flipY": false
       },
       "24": {
         "width": 1,
@@ -1490,11 +1426,11 @@
         "flipY": false
       },
       "53": {
-        "width": 1.1142,
-        "height": 1.1142,
-        "voxelScaleX": 1.10535,
-        "voxelScaleY": 0.90469,
-        "offsetX": 0
+        "width": 1.11,
+        "height": 1.11,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "kickleft": {
@@ -1545,58 +1481,58 @@
       "136": {
         "width": 1,
         "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
       },
       "139": {
         "width": 1,
         "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
       },
       "140": {
         "width": 1,
         "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
       },
       "141": {
         "width": 1,
         "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
       },
       "142": {
         "width": 1,
         "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
       },
       "146": {
         "width": 1,
         "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
       },
       "149": {
         "width": 1,
         "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
       },
       "150": {
         "width": 1,
         "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
       }
     },
     "hitLight": {
@@ -1659,10 +1595,10 @@
     },
     "hitHeavy": {
       "57": {
-        "width": 0.81147,
-        "height": 0.81147,
-        "voxelScaleX": 2.6548,
-        "voxelScaleY": 0.37668,
+        "width": 0.73211,
+        "height": 0.73211,
+        "voxelScaleX": 2.39253,
+        "voxelScaleY": 0.41797,
         "offsetX": 0
       },
       "64": {
@@ -1735,23 +1671,29 @@
       "58": {
         "width": 1.08,
         "height": 1.08,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
         "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
+        "voxelScaleY": 1
       },
       "59": {
         "width": 1.08,
         "height": 1.08,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
         "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
+        "voxelScaleY": 1
       },
       "60": {
         "width": 1.08,
         "height": 1.08,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
         "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
+        "voxelScaleY": 1
       },
       "71": {
         "width": 1.32,
@@ -1837,17 +1779,17 @@
         "flipY": false
       },
       "82": {
-        "width": 1.06676,
-        "height": 1.06676,
-        "voxelScaleX": 1.07753,
-        "voxelScaleY": 0.92805,
-        "offsetX": 0
+        "width": 1.07,
+        "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "83": {
-        "width": 1.19603,
-        "height": 1.19603,
-        "voxelScaleX": 1.30432,
-        "voxelScaleY": 0.76668,
+        "width": 1.01881,
+        "height": 1.01881,
+        "voxelScaleX": 1.15512,
+        "voxelScaleY": 0.86571,
         "offsetX": 0
       },
       "84": {
@@ -1858,48 +1800,48 @@
         "flipY": false
       },
       "85": {
-        "width": 1.16233,
-        "height": 1.16233,
-        "voxelScaleX": 1.11843,
-        "voxelScaleY": 0.89411,
-        "offsetX": 0
+        "width": 1.16,
+        "height": 1.16,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "lose": {
       "86": {
-        "width": 1.19773,
-        "height": 1.19773,
-        "voxelScaleX": 1.18822,
-        "voxelScaleY": 0.84159,
-        "offsetX": 0
+        "width": 1.2,
+        "height": 1.2,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "87": {
-        "width": 1.19773,
-        "height": 1.19773,
-        "voxelScaleX": 1.18822,
-        "voxelScaleY": 0.84159,
-        "offsetX": 0
+        "width": 1.2,
+        "height": 1.2,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "88": {
-        "width": 1.17111,
-        "height": 1.17111,
-        "voxelScaleX": 1.12175,
-        "voxelScaleY": 0.89146,
-        "offsetX": 0
+        "width": 1.17,
+        "height": 1.17,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "89": {
-        "width": 1.30952,
-        "height": 1.30952,
-        "voxelScaleX": 1.23307,
-        "voxelScaleY": 0.81099,
-        "offsetX": 0
+        "width": 1.31,
+        "height": 1.31,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "90": {
-        "width": 1.30934,
-        "height": 1.30934,
-        "voxelScaleX": 1.21234,
-        "voxelScaleY": 0.82485,
-        "offsetX": 0
+        "width": 1.31,
+        "height": 1.31,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "91": {
         "width": 1.57,
@@ -1925,18 +1867,18 @@
         "offsetX": 0
       },
       "29": {
-        "width": 1.26521,
-        "height": 1.26521,
-        "voxelScaleX": 1.32105,
-        "voxelScaleY": 0.75697,
-        "offsetX": 0
+        "width": 1.26,
+        "height": 1.26,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "30": {
-        "width": 1.2105,
-        "height": 1.2105,
-        "voxelScaleX": 1.35008,
-        "voxelScaleY": 0.74069,
-        "offsetX": 0
+        "width": 1.21,
+        "height": 1.21,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "31": {
         "width": 1,
@@ -2006,18 +1948,18 @@
     },
     "cmd:qcf+4": {
       "99": {
-        "width": 1.21113,
-        "height": 1.21113,
-        "voxelScaleX": 1.16538,
-        "voxelScaleY": 0.85809,
-        "offsetX": 0
+        "width": 1.21,
+        "height": 1.21,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "100": {
-        "width": 0.64328,
-        "height": 0.64328,
-        "voxelScaleX": 1.02108,
-        "voxelScaleY": 0.97935,
-        "offsetX": 0
+        "width": 0.64,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "101": {
         "width": 1,
@@ -2034,39 +1976,39 @@
         "offsetX": 0
       },
       "103": {
-        "width": 0.60048,
-        "height": 0.60048,
-        "voxelScaleX": 0.98118,
-        "voxelScaleY": 1.01918,
-        "offsetX": 0
+        "width": 0.6,
+        "height": 0.6,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "104": {
-        "width": 0.98908,
-        "height": 0.98908,
-        "voxelScaleX": 0.98122,
-        "voxelScaleY": 1.01913,
-        "offsetX": 0
+        "width": 0.99,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "105": {
-        "width": 0.98908,
-        "height": 0.98908,
-        "voxelScaleX": 0.98123,
-        "voxelScaleY": 1.01913,
-        "offsetX": 0
+        "width": 0.99,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "106": {
-        "width": 0.98908,
-        "height": 0.98908,
-        "voxelScaleX": 0.98123,
-        "voxelScaleY": 1.01913,
-        "offsetX": 0
+        "width": 0.99,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "107": {
-        "width": 0.98908,
-        "height": 0.98908,
-        "voxelScaleX": 0.98122,
-        "voxelScaleY": 1.01913,
-        "offsetX": 0
+        "width": 0.99,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "108": {
         "width": 0.95,
@@ -2645,7 +2587,6 @@
     {
       "id": "wind-scythe-projectile",
       "name": "Wind Scythe",
-      "kind": "projectile",
       "sourcePath": "/characters/temari/animation-sheet.png",
       "frames": [
         "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-000.png",
@@ -2686,7 +2627,11 @@
         "depth": 0.14,
         "alphaThreshold": 24,
         "paletteSnap": 8,
-        "mergeRuns": true
+        "mergeRuns": true,
+        "lod": {
+          "mobileStep": 2,
+          "farStep": 2
+        }
       },
       "defaultScale": [
         0.54,
@@ -2698,8 +2643,9 @@
         0,
         0
       ],
-      "alignToVelocity": false,
-      "color": "#eef6ff"
+      "color": "#eef6ff",
+      "soundCues": [],
+      "proceduralLayers": []
     }
   ],
   "moveProjectiles": {
@@ -2707,7 +2653,6 @@
       {
         "id": "kickright-wind-scythe",
         "projectileId": "wind-scythe-projectile",
-        "kind": "projectile",
         "label": "Wind Scythe",
         "spawnFrame": 14,
         "spawnOffset": [
@@ -2743,8 +2688,9 @@
         "pushbackScale": 1,
         "blockPushbackScale": 1,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit",
-        "clash": true
+        "pierce": false,
+        "clash": true,
+        "kiBurst": false
       }
     ]
   },

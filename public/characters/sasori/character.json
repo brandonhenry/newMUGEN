@@ -453,16 +453,12 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
-      "label": "Sasori Left Check",
-      "hitLevel": "high",
-      "endsInCrouch": true,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 2,
-      "forwardForceEndFrame": 3
+      "forwardForceEndFrame": 3,
+      "label": "Sasori Left Check",
+      "hitLevel": "high",
+      "endsInCrouch": true
     },
     "jabright": {
       "startupFrames": 13,
@@ -474,15 +470,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
-      "label": "Sasori Right Check",
-      "hitLevel": "mid",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.56,
       "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 20
+      "forwardForceEndFrame": 20,
+      "label": "Sasori Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 20,
@@ -494,15 +486,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Sasori Left Kick",
-      "hitLevel": "low",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 0.95,
       "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 11
+      "forwardForceEndFrame": 11,
+      "label": "Sasori Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 15,
@@ -514,18 +502,14 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 10,
       "range": 1.7,
-      "label": "Sasori Right Kick",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "pushback": 1,
-      "blockPushback": 0.48,
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 1.2,
       "forwardForceStartFrame": 4,
-      "forwardForceEndFrame": 7
+      "forwardForceEndFrame": 7,
+      "pushback": 1,
+      "blockPushback": 0.48,
+      "label": "Sasori Right Kick",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:f+1": {
       "startupFrames": 15,
@@ -538,14 +522,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Sasori Rush",
-      "hitLevel": "mid",
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForceStartFrame": 28,
-      "forwardForceEndFrame": 31
+      "forwardForceEndFrame": 31,
+      "label": "Sasori Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
       "startupFrames": 18,
@@ -557,19 +537,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 12,
       "range": 1.68,
+      "forwardForce": 1.43,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 32,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Sasori Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 22,
-      "onJuggleHitFrames": 19,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
-      "forwardForce": 1.43,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 32
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
       "startupFrames": 18,
@@ -581,16 +557,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 35,
       "range": 2.05,
-      "label": "Sasori Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 3.99,
       "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 8
+      "forwardForceEndFrame": 8,
+      "label": "Sasori Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 14,
@@ -602,15 +574,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Sasori Rising Strike",
-      "hitLevel": "mid",
-      "onComboHitFrames": 20,
-      "onJuggleHitFrames": 15,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.94,
       "forwardForceStartFrame": 3,
-      "forwardForceEndFrame": 5
+      "forwardForceEndFrame": 5,
+      "label": "Sasori Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 14,
@@ -622,15 +590,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "Sasori Crouch Jab",
-      "hitLevel": "mid",
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5,
       "forwardForce": 1.7,
       "forwardForceStartFrame": 3,
-      "forwardForceEndFrame": 4
+      "forwardForceEndFrame": 4,
+      "label": "Sasori Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
       "startupFrames": 18,
@@ -642,16 +606,12 @@
       "onCounterHitFrames": 30,
       "whiffRecoveryFrames": 12,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "Sasori Crouch Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 22,
-      "onJuggleHitFrames": 13,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
       "forwardForce": 1.34,
       "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 32
+      "forwardForceEndFrame": 32,
+      "launchHeight": 2,
+      "label": "Sasori Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 21,
@@ -663,15 +623,11 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 9,
       "range": 1.72,
-      "label": "Sasori Twin Assault",
-      "hitLevel": "mid",
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 1.13,
       "forwardForceStartFrame": 18,
-      "forwardForceEndFrame": 35
+      "forwardForceEndFrame": 35,
+      "label": "Sasori Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
       "startupFrames": 15,
@@ -683,16 +639,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 29,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Sasori Cross Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 20,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
       "forwardForce": 2.33,
       "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 9
+      "forwardForceEndFrame": 9,
+      "launchHeight": 2.2,
+      "label": "Sasori Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 17,
@@ -704,15 +656,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
-      "label": "Sasori Low Feint",
-      "hitLevel": "low",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.94,
       "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 9
+      "forwardForceEndFrame": 9,
+      "label": "Sasori Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -724,16 +672,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 38,
       "range": 1.74,
-      "label": "Sasori Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 2.21,
       "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 11
+      "forwardForceEndFrame": 11,
+      "label": "Sasori Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 19,
@@ -745,16 +689,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 34,
       "range": 1.9,
-      "label": "Sasori Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 3.41,
       "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 8
+      "forwardForceEndFrame": 8,
+      "label": "Sasori Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 26,
@@ -766,18 +706,14 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 40,
       "range": 2.1,
+      "forwardForce": 2.57,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 43,
       "kiCost": 35,
       "label": "Sasori Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
-      "forwardForce": 2.57,
-      "forwardForceStartFrame": 22,
-      "forwardForceEndFrame": 43
+      "usesKi": true
     },
     "neutral:jab-jab": {
       "startupFrames": 14,
@@ -1143,18 +1079,18 @@
         "offsetX": 0
       },
       "75": {
-        "width": 1.28926,
-        "height": 1.28926,
-        "voxelScaleX": 0.8353,
-        "voxelScaleY": 1.19717,
-        "offsetX": 0
+        "width": 1.29,
+        "height": 1.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "79": {
-        "width": 1.17154,
-        "height": 1.17154,
-        "voxelScaleX": 0.80434,
-        "voxelScaleY": 1.24326,
-        "offsetX": 0
+        "width": 1.17,
+        "height": 1.17,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "83": {
         "width": 1,
@@ -1171,11 +1107,11 @@
         "offsetX": 0
       },
       "90": {
-        "width": 1.15192,
-        "height": 1.15192,
-        "voxelScaleX": 0.76795,
-        "voxelScaleY": 1.30217,
-        "offsetX": 0
+        "width": 1.15,
+        "height": 1.15,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "158": {
         "width": 1.22,
@@ -1420,39 +1356,39 @@
         "flipY": false
       },
       "68": {
-        "width": 1.37814,
-        "height": 1.37814,
-        "voxelScaleX": 0.8233,
-        "voxelScaleY": 1.21463,
-        "offsetX": 0
+        "width": 1.38,
+        "height": 1.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "82": {
-        "width": 1.34389,
-        "height": 1.34389,
-        "voxelScaleX": 1.03032,
-        "voxelScaleY": 0.97058,
-        "offsetX": 0
+        "width": 1.34,
+        "height": 1.34,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "86": {
-        "width": 1.32792,
-        "height": 1.32792,
-        "voxelScaleX": 1.07166,
-        "voxelScaleY": 0.93313,
-        "offsetX": 0
+        "width": 1.33,
+        "height": 1.33,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "91": {
-        "width": 1.36977,
-        "height": 1.36977,
-        "voxelScaleX": 0.95468,
-        "voxelScaleY": 1.04747,
-        "offsetX": 0
+        "width": 1.37,
+        "height": 1.37,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "92": {
-        "width": 1.36916,
-        "height": 1.36916,
-        "voxelScaleX": 0.8287,
-        "voxelScaleY": 1.20671,
-        "offsetX": 0
+        "width": 1.37,
+        "height": 1.37,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "backHop": {
@@ -1710,11 +1646,11 @@
         "flipY": false
       },
       "41": {
-        "width": 0.70825,
+        "width": 0.71,
         "height": 0.74477,
-        "voxelScaleX": 0.81449,
-        "voxelScaleY": 1.22776,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "129": {
         "width": 1.18,
@@ -1861,11 +1797,11 @@
         "flipY": false
       },
       "209": {
-        "width": 1.31876,
-        "height": 1.31876,
-        "voxelScaleX": 0.94786,
-        "voxelScaleY": 1.05501,
-        "offsetX": 0
+        "width": 1.32,
+        "height": 1.32,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "chargeKi": {
@@ -2767,15 +2703,15 @@
     },
     "lose": {
       "103": {
-        "width": 1.06,
-        "height": 0.27,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1,
+        "width": 0.73818,
+        "height": 0.73818,
+        "voxelScaleX": 1.61169,
+        "voxelScaleY": 0.62047,
         "offsetX": 0
       },
       "104": {
-        "width": 1,
-        "height": 1,
+        "width": 0.99999,
+        "height": 0.99999,
         "voxelScaleX": 1,
         "voxelScaleY": 1,
         "offsetX": 0
@@ -3538,7 +3474,6 @@
     {
       "id": "puppet-flame-stream",
       "name": "Puppet Flame Stream",
-      "kind": "projectile",
       "sourcePath": "/characters/sasori/animation-sheet.png",
       "frames": [
         "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-000.png",
@@ -3575,6 +3510,18 @@
       "billboard": false,
       "blendMode": "additive",
       "voxelProfile": "hd-image-source",
+      "voxelFidelity": {
+        "resolutionScale": 1,
+        "maxRows": 64,
+        "depth": 0.14,
+        "alphaThreshold": 24,
+        "paletteSnap": 8,
+        "mergeRuns": true,
+        "lod": {
+          "mobileStep": 2,
+          "farStep": 2
+        }
+      },
       "defaultScale": [
         0.58,
         0.58,
@@ -3585,16 +3532,9 @@
         0,
         0
       ],
-      "alignToVelocity": true,
       "color": "#ff7b24",
-      "voxelFidelity": {
-        "resolutionScale": 1,
-        "maxRows": 64,
-        "depth": 0.14,
-        "alphaThreshold": 24,
-        "paletteSnap": 8,
-        "mergeRuns": true
-      }
+      "soundCues": [],
+      "proceduralLayers": []
     }
   ],
   "moveProjectiles": {
@@ -3602,7 +3542,6 @@
       {
         "id": "kickright-puppet-flame-stream",
         "projectileId": "puppet-flame-stream",
-        "kind": "projectile",
         "label": "Puppet Flame Stream",
         "spawnFrame": 13,
         "spawnOffset": [
@@ -3638,8 +3577,9 @@
         "pushbackScale": 1,
         "blockPushbackScale": 1,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit",
-        "clash": true
+        "pierce": false,
+        "clash": true,
+        "kiBurst": false
       }
     ]
   },

@@ -75,9 +75,7 @@
       "/characters/jirobo-curse-mark/frames/frame-031.png"
     ],
     "jump": [
-      "/characters/jirobo-curse-mark/frames/frame-034.png",
-      "/characters/jirobo-curse-mark/frames/frame-035.png",
-      "/characters/jirobo-curse-mark/frames/frame-036.png"
+      "/characters/jirobo-curse-mark/frames/frame-013.png"
     ],
     "crouch": [
       "/characters/jirobo-curse-mark/frames/frame-050.png"
@@ -512,15 +510,11 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
-      "label": "Jirobo Curse Mark Left Check",
-      "hitLevel": "high",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.35,
       "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 11
+      "forwardForceEndFrame": 11,
+      "label": "Jirobo Curse Mark Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
       "startupFrames": 17,
@@ -532,19 +526,15 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 38,
       "launchHeight": 2.2,
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
       "label": "Jirobo Curse Mark Right Check",
-      "hitLevel": "mid",
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 13,
-      "forwardForce": 0.85,
-      "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 38
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 17,
@@ -556,15 +546,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Jirobo Curse Mark Left Kick",
-      "hitLevel": "low",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 0.55,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 20
+      "forwardForceEndFrame": 20,
+      "label": "Jirobo Curse Mark Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 13,
@@ -576,15 +562,11 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 7,
       "range": 1.7,
-      "label": "Jirobo Curse Mark Right Kick",
-      "hitLevel": "mid",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 20
+      "forwardForceEndFrame": 20,
+      "label": "Jirobo Curse Mark Right Kick",
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
       "startupFrames": 15,
@@ -597,14 +579,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Jirobo Curse Mark Rush",
-      "hitLevel": "mid",
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForceStartFrame": 36,
-      "forwardForceEndFrame": 39
+      "forwardForceEndFrame": 39,
+      "label": "Jirobo Curse Mark Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
       "startupFrames": 19,
@@ -616,19 +594,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 38,
       "range": 1.68,
+      "forwardForce": 2.65,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 10,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Jirobo Curse Mark Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 19,
-      "onJuggleHitFrames": 17,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
-      "forwardForce": 2.65,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 10
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
       "startupFrames": 20,
@@ -640,16 +614,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 35,
       "range": 2.05,
-      "label": "Jirobo Curse Mark Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 3.27,
       "forwardForceStartFrame": 18,
-      "forwardForceEndFrame": 26
+      "forwardForceEndFrame": 26,
+      "label": "Jirobo Curse Mark Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 15,
@@ -661,15 +631,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Jirobo Curse Mark Rising Strike",
-      "hitLevel": "mid",
-      "onComboHitFrames": 20,
-      "onJuggleHitFrames": 15,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.82,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 15
+      "forwardForceEndFrame": 15,
+      "label": "Jirobo Curse Mark Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 15,
@@ -681,15 +647,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "Jirobo Curse Mark Crouch Jab",
-      "hitLevel": "mid",
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5,
       "forwardForce": 1.55,
       "forwardForceStartFrame": 4,
-      "forwardForceEndFrame": 7
+      "forwardForceEndFrame": 7,
+      "label": "Jirobo Curse Mark Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
       "startupFrames": 18,
@@ -701,16 +663,12 @@
       "onCounterHitFrames": 30,
       "whiffRecoveryFrames": 12,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "Jirobo Curse Mark Crouch Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 20,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
       "forwardForce": 1.8,
       "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 11
+      "forwardForceEndFrame": 11,
+      "launchHeight": 2,
+      "label": "Jirobo Curse Mark Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -722,15 +680,11 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 9,
       "range": 1.72,
-      "label": "Jirobo Curse Mark Twin Assault",
-      "hitLevel": "mid",
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 1.52,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 37
+      "forwardForceEndFrame": 37,
+      "label": "Jirobo Curse Mark Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -742,16 +696,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 13,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Jirobo Curse Mark Cross Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
       "forwardForce": 1.36,
       "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "launchHeight": 2.2,
+      "label": "Jirobo Curse Mark Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -763,15 +713,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
-      "label": "Jirobo Curse Mark Low Feint",
-      "hitLevel": "low",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 0.97,
       "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "label": "Jirobo Curse Mark Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 22,
@@ -783,16 +729,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 12,
       "range": 1.74,
-      "label": "Jirobo Curse Mark Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 1.8,
       "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 33
+      "forwardForceEndFrame": 33,
+      "label": "Jirobo Curse Mark Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -804,16 +746,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 36,
       "range": 1.9,
-      "label": "Jirobo Curse Mark Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 3,
       "forwardForceStartFrame": 18,
-      "forwardForceEndFrame": 35
+      "forwardForceEndFrame": 35,
+      "label": "Jirobo Curse Mark Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 30,
@@ -825,18 +763,14 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 46,
       "range": 2.1,
+      "forwardForce": 2.87,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15,
       "kiCost": 35,
       "label": "Jirobo Curse Mark Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
-      "forwardForce": 2.87,
-      "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 15
+      "usesKi": true
     },
     "neutral:jab-jab": {
       "startupFrames": 14,
@@ -1365,11 +1299,11 @@
         "flipY": false
       },
       "62": {
-        "width": 1.34271,
-        "height": 1.34271,
-        "voxelScaleX": 1.16201,
-        "voxelScaleY": 0.86058,
-        "offsetX": 0
+        "width": 1.34,
+        "height": 1.34,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "63": {
         "width": 1.37,
@@ -1535,6 +1469,13 @@
       }
     },
     "jump": {
+      "13": {
+        "width": 1.19421,
+        "height": 1.19421,
+        "voxelScaleX": 1.17363,
+        "voxelScaleY": 0.85206,
+        "offsetX": 0
+      },
       "34": {
         "width": 1.37,
         "height": 1.15,
@@ -1617,18 +1558,18 @@
       "50": {
         "width": 1.37,
         "height": 0.97019,
-        "offsetX": 0,
+        "offsetX": 0.0,
         "flipX": false,
         "flipY": false
       }
     },
     "crouchBlock": {
       "50": {
-        "width": 1.15242,
+        "width": 1.15,
         "height": 0.99128,
-        "voxelScaleX": 1.19323,
-        "voxelScaleY": 0.83806,
-        "offsetX": 0
+        "offsetX": 0.0,
+        "flipX": false,
+        "flipY": false
       },
       "51": {
         "width": 1.77,
@@ -1800,18 +1741,18 @@
         "flipY": false
       },
       "13": {
-        "width": 1.19421,
-        "height": 1.19421,
-        "voxelScaleX": 1.17363,
-        "voxelScaleY": 0.85206,
-        "offsetX": 0
+        "width": 1.19,
+        "height": 1.19,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "14": {
-        "width": 1.23846,
-        "height": 1.23846,
-        "voxelScaleX": 1.21711,
-        "voxelScaleY": 0.82162,
-        "offsetX": 0
+        "width": 1.24,
+        "height": 1.24,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "15": {
         "width": 1.23569,
@@ -1821,11 +1762,11 @@
         "offsetX": 0
       },
       "16": {
-        "width": 1.30113,
-        "height": 1.30113,
-        "voxelScaleX": 1.30075,
-        "voxelScaleY": 0.76878,
-        "offsetX": 0
+        "width": 1.3,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "17": {
         "width": 1.05,
@@ -2676,11 +2617,11 @@
         "flipY": false
       },
       "156": {
-        "width": 1.26847,
-        "height": 1.26847,
-        "voxelScaleX": 1.16746,
-        "voxelScaleY": 0.85656,
-        "offsetX": 0
+        "width": 1.27,
+        "height": 1.27,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "157": {
         "width": 1.14,
@@ -2690,11 +2631,11 @@
         "flipY": false
       },
       "158": {
-        "width": 1.27975,
-        "height": 1.27975,
-        "voxelScaleX": 1.17784,
-        "voxelScaleY": 0.84901,
-        "offsetX": 0
+        "width": 1.28,
+        "height": 1.28,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "159": {
         "width": 1,
@@ -2725,11 +2666,11 @@
         "offsetX": 0
       },
       "163": {
-        "width": 1.29145,
-        "height": 1.29145,
-        "voxelScaleX": 1.08525,
-        "voxelScaleY": 0.92144,
-        "offsetX": 0
+        "width": 1.29,
+        "height": 1.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "164": {
         "width": 1,
@@ -2739,41 +2680,41 @@
         "offsetX": 0
       },
       "165": {
-        "width": 1.30078,
-        "height": 1.30078,
-        "voxelScaleX": 1.07747,
-        "voxelScaleY": 0.9281,
-        "offsetX": 0
+        "width": 1.3,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "cmd:qcf+4": {
       "51": {
-        "width": 1.44148,
-        "height": 1.44148,
-        "voxelScaleX": 1.22914,
-        "voxelScaleY": 0.81358,
-        "offsetX": 0
+        "width": 1.44,
+        "height": 1.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "52": {
-        "width": 1.30358,
-        "height": 1.30358,
-        "voxelScaleX": 1.09545,
-        "voxelScaleY": 0.91287,
-        "offsetX": 0
+        "width": 1.3,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "53": {
-        "width": 1.3681,
-        "height": 1.3681,
-        "voxelScaleX": 1.10176,
-        "voxelScaleY": 0.90764,
-        "offsetX": 0
+        "width": 1.37,
+        "height": 1.37,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "54": {
-        "width": 1.30306,
-        "height": 1.30306,
-        "voxelScaleX": 1.035,
-        "voxelScaleY": 0.96618,
-        "offsetX": 0
+        "width": 1.3,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "135": {
         "width": 1.02,
@@ -2946,74 +2887,74 @@
         "flipY": false
       },
       "168": {
-        "width": 1.31767,
-        "height": 1.31767,
-        "voxelScaleX": 0.94325,
-        "voxelScaleY": 1.06017,
-        "offsetX": 0
+        "width": 1.32,
+        "height": 1.32,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "169": {
-        "width": 1.31767,
-        "height": 1.31767,
-        "voxelScaleX": 0.94325,
-        "voxelScaleY": 1.06017,
-        "offsetX": 0
+        "width": 1.32,
+        "height": 1.32,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "170": {
-        "width": 1.3716,
-        "height": 1.3716,
-        "voxelScaleX": 1.0604,
-        "voxelScaleY": 0.94304,
-        "offsetX": 0
+        "width": 1.37,
+        "height": 1.37,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "171": {
-        "width": 1.48388,
-        "height": 1.48388,
-        "voxelScaleX": 1.21183,
-        "voxelScaleY": 0.8252,
-        "offsetX": 0
+        "width": 1.48,
+        "height": 1.48,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "172": {
-        "width": 1.43068,
-        "height": 1.43068,
-        "voxelScaleX": 1.2569,
-        "voxelScaleY": 0.79561,
-        "offsetX": 0
+        "width": 1.43,
+        "height": 1.43,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "173": {
-        "width": 1.22419,
-        "height": 1.22419,
-        "voxelScaleX": 1.14488,
-        "voxelScaleY": 0.87345,
-        "offsetX": 0
+        "width": 1.22,
+        "height": 1.22,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "174": {
-        "width": 1.22419,
-        "height": 1.22419,
-        "voxelScaleX": 1.14488,
-        "voxelScaleY": 0.87345,
-        "offsetX": 0
+        "width": 1.22,
+        "height": 1.22,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "175": {
-        "width": 1.19421,
-        "height": 1.19421,
-        "voxelScaleX": 1.17363,
-        "voxelScaleY": 0.85206,
-        "offsetX": 0
+        "width": 1.19,
+        "height": 1.19,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "176": {
-        "width": 1.18289,
-        "height": 1.18289,
-        "voxelScaleX": 1.31899,
-        "voxelScaleY": 0.75815,
-        "offsetX": 0
+        "width": 1.18,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "177": {
-        "width": 1.18289,
-        "height": 1.18289,
-        "voxelScaleX": 1.31899,
-        "voxelScaleY": 0.75815,
-        "offsetX": 0
+        "width": 1.18,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "204": {
         "width": 1.21,
@@ -3256,11 +3197,11 @@
         "offsetX": 0
       },
       "208": {
-        "width": 1.22009,
-        "height": 1.22009,
-        "voxelScaleX": 1.10538,
-        "voxelScaleY": 0.90466,
-        "offsetX": 0
+        "width": 1.22,
+        "height": 1.22,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "209": {
         "width": 1,
@@ -3277,25 +3218,25 @@
         "offsetX": 0
       },
       "211": {
-        "width": 1.22958,
-        "height": 1.22958,
-        "voxelScaleX": 1.09685,
-        "voxelScaleY": 0.9117,
-        "offsetX": 0
+        "width": 1.23,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "212": {
-        "width": 1.2999,
-        "height": 1.2999,
-        "voxelScaleX": 1.32233,
-        "voxelScaleY": 0.75624,
-        "offsetX": 0
+        "width": 1.3,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "213": {
-        "width": 1.20656,
-        "height": 1.20656,
-        "voxelScaleX": 1.22737,
-        "voxelScaleY": 0.81475,
-        "offsetX": 0
+        "width": 1.21,
+        "height": 1.21,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "cmd:FC+2": {
@@ -3419,25 +3360,25 @@
         "offsetX": 0
       },
       "217": {
-        "width": 1.43068,
-        "height": 1.43068,
-        "voxelScaleX": 1.2569,
-        "voxelScaleY": 0.79561,
-        "offsetX": 0
+        "width": 1.43,
+        "height": 1.43,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "218": {
-        "width": 1.30985,
-        "height": 1.30985,
-        "voxelScaleX": 1.15076,
-        "voxelScaleY": 0.86899,
-        "offsetX": 0
+        "width": 1.31,
+        "height": 1.31,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "219": {
-        "width": 1.39681,
-        "height": 1.39681,
-        "voxelScaleX": 1.3063,
-        "voxelScaleY": 0.76552,
-        "offsetX": 0
+        "width": 1.4,
+        "height": 1.4,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "220": {
         "width": 1,
@@ -3468,11 +3409,11 @@
         "offsetX": 0
       },
       "224": {
-        "width": 1.22419,
-        "height": 1.22419,
-        "voxelScaleX": 1.14488,
-        "voxelScaleY": 0.87346,
-        "offsetX": 0
+        "width": 1.22,
+        "height": 1.22,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "cmd:1+2": {
@@ -4215,25 +4156,25 @@
     },
     "cmd:O+2": {
       "180": {
-        "width": 1.22009,
-        "height": 1.22009,
-        "voxelScaleX": 1.10538,
-        "voxelScaleY": 0.90467,
-        "offsetX": 0
+        "width": 1.22,
+        "height": 1.22,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "181": {
-        "width": 1.30253,
-        "height": 1.30253,
-        "voxelScaleX": 1.21815,
-        "voxelScaleY": 0.82092,
-        "offsetX": 0
+        "width": 1.3,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "182": {
-        "width": 1.22419,
-        "height": 1.22419,
-        "voxelScaleX": 1.14488,
-        "voxelScaleY": 0.87345,
-        "offsetX": 0
+        "width": 1.22,
+        "height": 1.22,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "183": {
         "width": 1,
@@ -4413,11 +4354,11 @@
     },
     "cmd:d/f+2": {
       "96": {
-        "width": 0.87533,
-        "height": 0.87533,
-        "voxelScaleX": 1.26885,
-        "voxelScaleY": 0.78811,
-        "offsetX": 0
+        "width": 0.88,
+        "height": 0.88,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "97": {
         "width": 2.09178,

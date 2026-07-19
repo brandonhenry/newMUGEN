@@ -76,13 +76,7 @@
       "/characters/amy-rose/frames/frame-011.png"
     ],
     "jump": [
-      "/characters/amy-rose/frames/frame-039.png",
-      "/characters/amy-rose/frames/frame-040.png",
-      "/characters/amy-rose/frames/frame-041.png",
-      "/characters/amy-rose/frames/frame-042.png",
-      "/characters/amy-rose/frames/frame-043.png",
-      "/characters/amy-rose/frames/frame-044.png",
-      "/characters/amy-rose/frames/frame-045.png"
+      "/characters/amy-rose/frames/frame-110.png"
     ],
     "crouch": [
       "/characters/amy-rose/frames/frame-261.png"
@@ -477,15 +471,11 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
-      "label": "Amy Rose Left Check",
-      "hitLevel": "high",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 11
+      "forwardForceEndFrame": 11,
+      "label": "Amy Rose Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
       "startupFrames": 14,
@@ -497,15 +487,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
-      "label": "Amy Rose Right Check",
-      "hitLevel": "mid",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.85,
       "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 16
+      "forwardForceEndFrame": 16,
+      "label": "Amy Rose Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 19,
@@ -517,15 +503,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Amy Rose Left Kick",
-      "hitLevel": "low",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 0.73,
       "forwardForceStartFrame": 26,
-      "forwardForceEndFrame": 31
+      "forwardForceEndFrame": 31,
+      "label": "Amy Rose Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 14,
@@ -537,15 +519,11 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 7,
       "range": 1.7,
-      "label": "Amy Rose Right Kick",
-      "hitLevel": "mid",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.14,
       "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 13
+      "forwardForceEndFrame": 13,
+      "label": "Amy Rose Right Kick",
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
       "startupFrames": 13,
@@ -558,14 +536,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Amy Rose Rush",
-      "hitLevel": "mid",
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "label": "Amy Rose Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
       "startupFrames": 16,
@@ -577,19 +551,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 12,
       "range": 1.68,
+      "forwardForce": 1.35,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 21,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Amy Rose Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 22,
-      "onJuggleHitFrames": 20,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
-      "forwardForce": 1.35,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 21
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
       "startupFrames": 20,
@@ -601,16 +571,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 37,
       "range": 2.05,
-      "label": "Amy Rose Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 4,
       "forwardForceStartFrame": 26,
-      "forwardForceEndFrame": 51
+      "forwardForceEndFrame": 51,
+      "label": "Amy Rose Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 14,
@@ -622,15 +588,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Amy Rose Rising Strike",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 15,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.49,
       "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 13
+      "forwardForceEndFrame": 13,
+      "label": "Amy Rose Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 13,
@@ -642,15 +604,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "Amy Rose Crouch Jab",
-      "hitLevel": "mid",
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5,
       "forwardForce": 1.4,
       "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 15
+      "forwardForceEndFrame": 15,
+      "label": "Amy Rose Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -662,16 +620,12 @@
       "onCounterHitFrames": 30,
       "whiffRecoveryFrames": 12,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "Amy Rose Crouch Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 22,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
       "forwardForce": 1.65,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 22
+      "forwardForceEndFrame": 22,
+      "launchHeight": 2,
+      "label": "Amy Rose Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -683,15 +637,11 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 9,
       "range": 1.72,
-      "label": "Amy Rose Twin Assault",
-      "hitLevel": "mid",
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 1.44,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 22
+      "forwardForceEndFrame": 22,
+      "label": "Amy Rose Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -703,16 +653,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 13,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Amy Rose Cross Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
       "forwardForce": 1.54,
       "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 33
+      "forwardForceEndFrame": 33,
+      "launchHeight": 2.2,
+      "label": "Amy Rose Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -724,15 +670,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
-      "label": "Amy Rose Low Feint",
-      "hitLevel": "low",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.15,
       "forwardForceStartFrame": 25,
-      "forwardForceEndFrame": 30
+      "forwardForceEndFrame": 30,
+      "label": "Amy Rose Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 22,
@@ -744,16 +686,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 12,
       "range": 1.74,
-      "label": "Amy Rose Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 1.8,
       "forwardForceStartFrame": 13,
-      "forwardForceEndFrame": 18
+      "forwardForceEndFrame": 18,
+      "label": "Amy Rose Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -765,16 +703,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 36,
       "range": 1.9,
-      "label": "Amy Rose Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 3,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 20
+      "forwardForceEndFrame": 20,
+      "label": "Amy Rose Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -786,192 +720,188 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 38,
       "range": 2.1,
+      "forwardForce": 2.88,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 28,
       "kiCost": 35,
       "label": "Amy Rose Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
-      "forwardForce": 2.88,
-      "forwardForceStartFrame": 20,
-      "forwardForceEndFrame": 28
+      "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Amy Rose Second Beat",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "label": "Amy Rose Body Blow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "label": "Amy Rose Low Changeup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "label": "Amy Rose Pressure Feint",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "label": "Amy Rose Drive",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Drive"
     },
     "neutral:jab-heavy-kick": {
-      "label": "Amy Rose Barrage",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Barrage"
     },
     "neutral:jab-heavy-special": {
-      "label": "Amy Rose Finisher",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Finisher"
     },
     "neutral:jab-kick": {
-      "label": "Amy Rose Step Kick",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "label": "Amy Rose Palm String",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Palm String"
     },
     "neutral:jab-kick-special": {
-      "label": "Amy Rose Rising Chain",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Rising Chain"
     },
     "neutral:jab-special": {
-      "label": "Amy Rose Special Setup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "label": "Amy Rose Break Art",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Break Art"
     },
     "neutral:heavy-jab": {
-      "label": "Amy Rose Check Hook",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Amy Rose Heavy Break",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "label": "Amy Rose Charged Follow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Charged Follow"
     },
     "neutral:heavy-kick": {
-      "label": "Amy Rose Drop Kick",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "label": "Amy Rose Arc Finisher",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Arc Finisher"
     },
     "neutral:heavy-special": {
-      "label": "Amy Rose Focus Stance",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "label": "Amy Rose Mode Shift",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Mode Shift"
     },
     "neutral:kick-jab": {
-      "label": "Amy Rose Heel Feint",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "label": "Amy Rose Summon Strike",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Summon Strike"
     },
     "neutral:kick-heavy": {
-      "label": "Amy Rose Guard Snare",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "label": "Amy Rose Armor Break",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Armor Break"
     },
     "neutral:kick-special": {
-      "label": "Amy Rose Power Setup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "label": "Amy Rose Switch Strike",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Switch Strike"
     },
     "neutral:special-jab": {
-      "label": "Amy Rose Spark Jab",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "label": "Amy Rose Binding Blow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Binding Blow"
     },
     "neutral:special-heavy": {
-      "label": "Amy Rose Heavy Draw",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Heavy Draw"
     },
     "neutral:special-kick": {
-      "label": "Amy Rose Kick Ender",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Amy Rose Kick Ender"
     }
   },
   "effects": [],
@@ -1065,114 +995,90 @@
         "flipY": false
       },
       "11": {
-        "width": 0.58997,
-        "height": 0.58997,
+        "width": 0.59,
+        "height": 0.59,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.9955,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "12": {
-        "width": 0.57241,
-        "height": 0.57241,
+        "width": 0.57,
+        "height": 0.57,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.95056,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "13": {
-        "width": 0.55402,
-        "height": 0.55402,
+        "width": 0.55,
+        "height": 0.55,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.86348,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "14": {
-        "width": 0.58997,
-        "height": 0.58997,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.73741,
-        "voxelScaleY": 1
+        "width": 0.50285,
+        "height": 0.50285,
+        "voxelScaleX": 0.85228,
+        "voxelScaleY": 1.17332,
+        "offsetX": 0
       },
       "15": {
-        "width": 0.51867,
-        "height": 0.51867,
+        "width": 0.52,
+        "height": 0.52,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.09086,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "16": {
-        "width": 0.55402,
-        "height": 0.55402,
+        "width": 0.55,
+        "height": 0.55,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.05974,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "17": {
-        "width": 0.53619,
-        "height": 0.53619,
+        "width": 0.54,
+        "height": 0.54,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.85172,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "18": {
-        "width": 0.58997,
-        "height": 0.58997,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.70054,
-        "voxelScaleY": 1
+        "width": 0.49012,
+        "height": 0.49012,
+        "voxelScaleX": 0.83071,
+        "voxelScaleY": 1.2038,
+        "offsetX": 0
       },
       "19": {
-        "width": 0.53619,
-        "height": 0.53619,
+        "width": 0.54,
+        "height": 0.54,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.01394,
-        "voxelScaleY": 1
+        "flipY": false
       }
     },
     "walkBack": {
       "5": {
-        "width": 0.58997,
-        "height": 0.58997,
+        "width": 0.59,
+        "height": 0.59,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.06924,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "6": {
-        "width": 0.60753,
-        "height": 0.60753,
+        "width": 0.61,
+        "height": 0.61,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.14516,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "7": {
-        "width": 0.58997,
-        "height": 0.58997,
+        "width": 0.59,
+        "height": 0.59,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.21672,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "11": {
         "width": 0.58,
@@ -1268,78 +1174,62 @@
         "flipY": false
       },
       "28": {
-        "width": 0.58997,
-        "height": 0.58997,
+        "width": 0.59,
+        "height": 0.59,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.99551,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "29": {
-        "width": 0.58997,
-        "height": 0.58997,
+        "width": 0.59,
+        "height": 0.59,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.06925,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "30": {
-        "width": 0.55402,
-        "height": 0.55402,
+        "width": 0.55,
+        "height": 0.55,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.17748,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "31": {
-        "width": 0.57241,
-        "height": 0.57241,
+        "width": 0.57,
+        "height": 0.57,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.06464,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "32": {
-        "width": 0.57241,
-        "height": 0.57241,
+        "width": 0.57,
+        "height": 0.57,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.10266,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "33": {
-        "width": 0.57241,
-        "height": 0.57241,
+        "width": 0.57,
+        "height": 0.57,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.14069,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "34": {
-        "width": 0.58997,
-        "height": 0.58997,
+        "width": 0.59,
+        "height": 0.59,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.03236,
-        "voxelScaleY": 1
+        "flipY": false
       }
     },
     "backHop": {
       "21": {
-        "width": 0.51867,
-        "height": 0.51867,
+        "width": 0.52,
+        "height": 0.52,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.17478,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "24": {
         "width": 0.6,
@@ -1372,13 +1262,11 @@
     },
     "sidestepLeft": {
       "11": {
-        "width": 0.58997,
-        "height": 0.58997,
+        "width": 0.59,
+        "height": 0.59,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.9955,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "28": {
         "width": 0.58,
@@ -1432,13 +1320,11 @@
     },
     "sidestepRight": {
       "11": {
-        "width": 0.58997,
-        "height": 0.58997,
+        "width": 0.59,
+        "height": 0.59,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.9955,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "35": {
         "width": 0.43,
@@ -1518,6 +1404,13 @@
         "offsetX": 0,
         "flipX": false,
         "flipY": false
+      },
+      "110": {
+        "width": 0.50853,
+        "height": 0.50853,
+        "voxelScaleX": 1.05346,
+        "voxelScaleY": 0.94926,
+        "offsetX": 0
       }
     },
     "crouch": {
@@ -1543,24 +1436,20 @@
         "flipY": false
       },
       "261": {
-        "width": 0.4649,
+        "width": 0.47,
         "height": 0.47365,
         "offsetX": 0,
         "flipX": true,
-        "flipY": false,
-        "voxelScaleX": 1.26353,
-        "voxelScaleY": 1
+        "flipY": false
       }
     },
     "crouchBlock": {
       "73": {
-        "width": 0.55402,
+        "width": 0.55,
         "height": 0.50873,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.05974,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "245": {
         "width": 0.58,
@@ -1593,13 +1482,11 @@
         "flipY": false
       },
       "73": {
-        "width": 0.55402,
-        "height": 0.55402,
+        "width": 0.55,
+        "height": 0.55,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.05974,
-        "voxelScaleY": 1
+        "flipY": false
       }
     },
     "chargeKi": {
@@ -1901,13 +1788,11 @@
         "flipY": false
       },
       "217": {
-        "width": 0.53619,
-        "height": 0.53619,
+        "width": 0.54,
+        "height": 0.54,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.25728,
-        "voxelScaleY": 1
+        "flipY": false
       }
     },
     "hitHeavy": {
@@ -2051,9 +1936,11 @@
       "270": {
         "width": 0.59,
         "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
         "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
+        "voxelScaleY": 1
       }
     },
     "getupStand": {
@@ -2283,39 +2170,41 @@
       "270": {
         "width": 0.59,
         "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
         "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
+        "voxelScaleY": 1
       }
     },
     "cmd:f+1": {
       "112": {
-        "width": 0.72395,
-        "height": 0.72395,
-        "voxelScaleX": 1.06558,
-        "voxelScaleY": 0.93845,
-        "offsetX": 0
+        "width": 0.72,
+        "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "113": {
-        "width": 0.71275,
-        "height": 0.71275,
-        "voxelScaleX": 1.02219,
-        "voxelScaleY": 0.97829,
-        "offsetX": 0
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "114": {
-        "width": 0.73237,
-        "height": 0.73237,
-        "voxelScaleX": 1.02407,
-        "voxelScaleY": 0.97649,
-        "offsetX": 0
+        "width": 0.73,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "115": {
-        "width": 0.60107,
-        "height": 0.60107,
-        "voxelScaleX": 0.81997,
-        "voxelScaleY": 1.21955,
-        "offsetX": 0
+        "width": 0.6,
+        "height": 0.6,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "179": {
         "width": 0.67,
@@ -2376,11 +2265,11 @@
     },
     "cmd:d/f+2": {
       "98": {
-        "width": 0.78269,
-        "height": 0.78269,
-        "voxelScaleX": 1.06774,
-        "voxelScaleY": 0.93655,
-        "offsetX": 0
+        "width": 0.78,
+        "height": 0.78,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "99": {
         "width": 1,
@@ -2390,25 +2279,25 @@
         "offsetX": 0
       },
       "100": {
-        "width": 0.64977,
-        "height": 0.64977,
-        "voxelScaleX": 0.95639,
-        "voxelScaleY": 1.0456,
-        "offsetX": 0
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "101": {
-        "width": 0.59883,
-        "height": 0.59883,
-        "voxelScaleX": 0.93038,
-        "voxelScaleY": 1.07483,
-        "offsetX": 0
+        "width": 0.6,
+        "height": 0.6,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "102": {
-        "width": 0.61024,
-        "height": 0.61024,
-        "voxelScaleX": 0.94811,
-        "voxelScaleY": 1.05473,
-        "offsetX": 0
+        "width": 0.61,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "193": {
         "width": 0.64,
@@ -2469,32 +2358,32 @@
     },
     "cmd:qcf+4": {
       "94": {
-        "width": 0.5911,
-        "height": 0.5911,
-        "voxelScaleX": 0.87005,
-        "voxelScaleY": 1.14936,
-        "offsetX": 0
+        "width": 0.59,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "95": {
-        "width": 0.58327,
-        "height": 0.58327,
-        "voxelScaleX": 0.88173,
-        "voxelScaleY": 1.13414,
-        "offsetX": 0
+        "width": 0.58,
+        "height": 0.58,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "96": {
-        "width": 0.61462,
-        "height": 0.61462,
-        "voxelScaleX": 1.01108,
-        "voxelScaleY": 0.98904,
-        "offsetX": 0
+        "width": 0.61,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "97": {
-        "width": 0.78269,
-        "height": 0.78269,
-        "voxelScaleX": 1.06774,
-        "voxelScaleY": 0.93655,
-        "offsetX": 0
+        "width": 0.78,
+        "height": 0.78,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "204": {
         "width": 0.45,
@@ -2548,39 +2437,39 @@
     },
     "cmd:WS+4": {
       "130": {
-        "width": 0.67521,
-        "height": 0.67521,
-        "voxelScaleX": 1.07903,
-        "voxelScaleY": 0.92676,
-        "offsetX": 0
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "131": {
-        "width": 0.73394,
-        "height": 0.73394,
-        "voxelScaleX": 1.10948,
-        "voxelScaleY": 0.90133,
-        "offsetX": 0
+        "width": 0.73,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "132": {
-        "width": 0.70437,
-        "height": 0.70437,
-        "voxelScaleX": 1.12563,
-        "voxelScaleY": 0.88839,
-        "offsetX": 0
+        "width": 0.7,
+        "height": 0.7,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "133": {
-        "width": 0.67464,
-        "height": 0.67464,
-        "voxelScaleX": 1.14347,
-        "voxelScaleY": 0.87453,
-        "offsetX": 0
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "134": {
-        "width": 0.61586,
-        "height": 0.61586,
-        "voxelScaleX": 1.04384,
-        "voxelScaleY": 0.958,
-        "offsetX": 0
+        "width": 0.62,
+        "height": 0.62,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "211": {
         "width": 0.25,

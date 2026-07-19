@@ -80,9 +80,7 @@
       "/characters/huntsclan-female/frames/frame-067.png"
     ],
     "jump": [
-      "/characters/huntsclan-female/frames/frame-079.png",
-      "/characters/huntsclan-female/frames/frame-080.png",
-      "/characters/huntsclan-female/frames/frame-081.png"
+      "/characters/huntsclan-female/frames/frame-072.png"
     ],
     "crouch": [
       "/characters/huntsclan-female/frames/frame-036.png"
@@ -447,15 +445,11 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
-      "label": "Huntsclan Female Left Check",
-      "hitLevel": "high",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 10
+      "forwardForceEndFrame": 10,
+      "label": "Huntsclan Female Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
       "startupFrames": 15,
@@ -467,15 +461,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
-      "label": "Huntsclan Female Right Check",
-      "hitLevel": "mid",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.85,
       "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 18
+      "forwardForceEndFrame": 18,
+      "label": "Huntsclan Female Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 21,
@@ -487,15 +477,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Huntsclan Female Left Kick",
-      "hitLevel": "low",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 0.95,
       "forwardForceStartFrame": 32,
-      "forwardForceEndFrame": 39
+      "forwardForceEndFrame": 39,
+      "label": "Huntsclan Female Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 14,
@@ -507,15 +493,11 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 7,
       "range": 1.7,
-      "label": "Huntsclan Female Right Kick",
-      "hitLevel": "mid",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 0.91,
       "forwardForceStartFrame": 25,
-      "forwardForceEndFrame": 37
+      "forwardForceEndFrame": 37,
+      "label": "Huntsclan Female Right Kick",
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
       "startupFrames": 14,
@@ -528,14 +510,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Huntsclan Female Rush",
-      "hitLevel": "mid",
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 18
+      "forwardForceEndFrame": 18,
+      "label": "Huntsclan Female Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
       "startupFrames": 15,
@@ -547,19 +525,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 12,
       "range": 1.68,
+      "forwardForce": 1.43,
+      "forwardForceStartFrame": 26,
+      "forwardForceEndFrame": 39,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Huntsclan Female Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 22,
-      "onJuggleHitFrames": 19,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
-      "forwardForce": 1.43,
-      "forwardForceStartFrame": 26,
-      "forwardForceEndFrame": 39
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
       "startupFrames": 23,
@@ -571,16 +545,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 41,
       "range": 2.05,
-      "label": "Huntsclan Female Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 4,
       "forwardForceStartFrame": 40,
-      "forwardForceEndFrame": 49
+      "forwardForceEndFrame": 49,
+      "label": "Huntsclan Female Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 15,
@@ -592,15 +562,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Huntsclan Female Rising Strike",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 16,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 26,
-      "forwardForceEndFrame": 39
+      "forwardForceEndFrame": 39,
+      "label": "Huntsclan Female Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 13,
@@ -612,15 +578,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "Huntsclan Female Crouch Jab",
-      "hitLevel": "mid",
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5,
       "forwardForce": 1.34,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 15
+      "forwardForceEndFrame": 15,
+      "label": "Huntsclan Female Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -632,16 +594,12 @@
       "onCounterHitFrames": 30,
       "whiffRecoveryFrames": 12,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "Huntsclan Female Crouch Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 22,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
       "forwardForce": 1.71,
       "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 22
+      "forwardForceEndFrame": 22,
+      "launchHeight": 2,
+      "label": "Huntsclan Female Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -653,15 +611,11 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 9,
       "range": 1.72,
-      "label": "Huntsclan Female Twin Assault",
-      "hitLevel": "mid",
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 1.5,
       "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 22
+      "forwardForceEndFrame": 22,
+      "label": "Huntsclan Female Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -673,16 +627,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 33,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Huntsclan Female Cross Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 19,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
       "forwardForce": 2.54,
       "forwardForceStartFrame": 32,
-      "forwardForceEndFrame": 39
+      "forwardForceEndFrame": 39,
+      "launchHeight": 2.2,
+      "label": "Huntsclan Female Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -694,15 +644,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 26,
       "range": 1.58,
-      "label": "Huntsclan Female Low Feint",
-      "hitLevel": "low",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 2.15,
       "forwardForceStartFrame": 29,
-      "forwardForceEndFrame": 35
+      "forwardForceEndFrame": 35,
+      "label": "Huntsclan Female Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 22,
@@ -714,16 +660,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 12,
       "range": 1.74,
-      "label": "Huntsclan Female Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 1.57,
       "forwardForceStartFrame": 34,
-      "forwardForceEndFrame": 50
+      "forwardForceEndFrame": 50,
+      "label": "Huntsclan Female Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -735,16 +677,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 35,
       "range": 1.9,
-      "label": "Huntsclan Female Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 2.77,
       "forwardForceStartFrame": 36,
-      "forwardForceEndFrame": 54
+      "forwardForceEndFrame": 54,
+      "label": "Huntsclan Female Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -756,18 +694,14 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 38,
       "range": 2.1,
+      "forwardForce": 2.94,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 28,
       "kiCost": 35,
       "label": "Huntsclan Female Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
-      "forwardForce": 2.94,
-      "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 28
+      "usesKi": true
     },
     "neutral:jab-jab": {
       "startupFrames": 14,
@@ -1508,6 +1442,13 @@
       }
     },
     "jump": {
+      "72": {
+        "width": 1,
+        "height": 1,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
+      },
       "78": {
         "width": 1.03,
         "height": 0.91,
@@ -1631,17 +1572,23 @@
       "23": {
         "width": 1.07,
         "height": 1.12,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "24": {
         "width": 1.15,
         "height": 1.03,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "35": {
         "width": 1.07,
         "height": 1.12,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "91": {
         "width": 0.94,
@@ -1846,22 +1793,30 @@
       "41": {
         "width": 0.9,
         "height": 0.9,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "44": {
         "width": 0.88,
         "height": 0.88,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "45": {
         "width": 0.84,
         "height": 0.84,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "46": {
         "width": 0.86,
         "height": 0.86,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "118": {
         "width": 1.07,
@@ -1985,38 +1940,38 @@
     },
     "kickleft": {
       "49": {
-        "width": 0.71826,
-        "height": 0.71826,
-        "voxelScaleX": 1.00671,
-        "voxelScaleY": 0.99333,
-        "offsetX": 0
+        "width": 0.72,
+        "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "50": {
-        "width": 0.73599,
-        "height": 0.73599,
-        "voxelScaleX": 1.03157,
-        "voxelScaleY": 0.96939,
-        "offsetX": 0
+        "width": 0.74,
+        "height": 0.74,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "51": {
-        "width": 0.70874,
-        "height": 0.70874,
-        "voxelScaleX": 1.02023,
-        "voxelScaleY": 0.98017,
-        "offsetX": 0
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "52": {
-        "width": 0.70923,
-        "height": 0.70923,
-        "voxelScaleX": 0.96856,
-        "voxelScaleY": 1.03246,
-        "offsetX": 0
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "53": {
-        "width": 1.02838,
-        "height": 1.02838,
-        "voxelScaleX": 1.33593,
-        "voxelScaleY": 0.74854,
+        "width": 0.77485,
+        "height": 0.77485,
+        "voxelScaleX": 1.00656,
+        "voxelScaleY": 0.99348,
         "offsetX": 0
       },
       "54": {
@@ -2113,25 +2068,25 @@
     },
     "kickright": {
       "88": {
-        "width": 0.56917,
-        "height": 0.56917,
-        "voxelScaleX": 1.01047,
-        "voxelScaleY": 0.98963,
-        "offsetX": 0
+        "width": 0.57,
+        "height": 0.57,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "89": {
-        "width": 0.58815,
-        "height": 0.58815,
-        "voxelScaleX": 1.01049,
-        "voxelScaleY": 0.98962,
-        "offsetX": 0
+        "width": 0.59,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "90": {
-        "width": 0.58814,
-        "height": 0.58814,
-        "voxelScaleX": 1.01048,
-        "voxelScaleY": 0.98963,
-        "offsetX": 0
+        "width": 0.59,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "118": {
         "width": 0.91,
@@ -2311,11 +2266,11 @@
         "flipY": false
       },
       "79": {
-        "width": 1.00772,
-        "height": 1.00772,
-        "voxelScaleX": 1.21983,
-        "voxelScaleY": 0.81979,
-        "offsetX": 0
+        "width": 1.01,
+        "height": 1.01,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "hitHeavy": {
@@ -2383,11 +2338,11 @@
         "flipY": false
       },
       "79": {
-        "width": 1.00772,
-        "height": 1.00772,
-        "voxelScaleX": 1.21983,
-        "voxelScaleY": 0.81979,
-        "offsetX": 0
+        "width": 1.01,
+        "height": 1.01,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "juggle": {
@@ -2522,9 +2477,11 @@
       "74": {
         "width": 0.92,
         "height": 0.92,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
         "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
+        "voxelScaleY": 1
       }
     },
     "getupStand": {
@@ -2903,25 +2860,25 @@
         "flipY": false
       },
       "88": {
-        "width": 0.56917,
-        "height": 0.56917,
-        "voxelScaleX": 1.01047,
-        "voxelScaleY": 0.98963,
-        "offsetX": 0
+        "width": 0.57,
+        "height": 0.57,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "89": {
-        "width": 0.58815,
-        "height": 0.58815,
-        "voxelScaleX": 1.01049,
-        "voxelScaleY": 0.98962,
-        "offsetX": 0
+        "width": 0.59,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "90": {
-        "width": 0.58814,
-        "height": 0.58814,
-        "voxelScaleX": 1.01048,
-        "voxelScaleY": 0.98963,
-        "offsetX": 0
+        "width": 0.59,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "128": {
         "width": 1.18,
@@ -2989,38 +2946,38 @@
     },
     "cmd:qcf+4": {
       "49": {
-        "width": 0.71826,
-        "height": 0.71826,
-        "voxelScaleX": 1.00671,
-        "voxelScaleY": 0.99333,
-        "offsetX": 0
+        "width": 0.72,
+        "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "50": {
-        "width": 0.73599,
-        "height": 0.73599,
-        "voxelScaleX": 1.03157,
-        "voxelScaleY": 0.96939,
-        "offsetX": 0
+        "width": 0.74,
+        "height": 0.74,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "51": {
-        "width": 0.70874,
-        "height": 0.70874,
-        "voxelScaleX": 1.02023,
-        "voxelScaleY": 0.98017,
-        "offsetX": 0
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "52": {
-        "width": 0.70923,
-        "height": 0.70923,
-        "voxelScaleX": 0.96856,
-        "voxelScaleY": 1.03246,
-        "offsetX": 0
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "53": {
-        "width": 1.02838,
-        "height": 1.02838,
-        "voxelScaleX": 1.33593,
-        "voxelScaleY": 0.74854,
+        "width": 0.77485,
+        "height": 0.77485,
+        "voxelScaleX": 1.00656,
+        "voxelScaleY": 0.99348,
         "offsetX": 0
       },
       "54": {

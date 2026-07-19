@@ -66,12 +66,7 @@
       "/characters/daichi/frames/frame-040.png"
     ],
     "jump": [
-      "/characters/daichi/frames/frame-054.png",
-      "/characters/daichi/frames/frame-055.png",
-      "/characters/daichi/frames/frame-056.png",
-      "/characters/daichi/frames/frame-057.png",
-      "/characters/daichi/frames/frame-058.png",
-      "/characters/daichi/frames/frame-059.png"
+      "/characters/daichi/frames/frame-101.png"
     ],
     "crouch": [
       "/characters/daichi/frames/frame-062.png"
@@ -484,15 +479,11 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
-      "label": "Daichi Left Check",
-      "hitLevel": "high",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 14
+      "forwardForceEndFrame": 14,
+      "label": "Daichi Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
       "startupFrames": 14,
@@ -504,15 +495,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
-      "label": "Daichi Right Check",
-      "hitLevel": "mid",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.85,
       "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 22
+      "forwardForceEndFrame": 22,
+      "label": "Daichi Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 16,
@@ -524,15 +511,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Daichi Left Kick",
-      "hitLevel": "low",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 0.55,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 19
+      "forwardForceEndFrame": 19,
+      "label": "Daichi Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 16,
@@ -544,19 +527,15 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 7,
       "range": 1.7,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 26,
       "launchHeight": 2.2,
       "launchVelocity": 5.95,
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
       "label": "Daichi Right Kick",
-      "hitLevel": "mid",
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 14,
-      "forwardForce": 1.2,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 26
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
       "startupFrames": 13,
@@ -569,14 +548,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Daichi Rush",
-      "hitLevel": "mid",
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 32
+      "forwardForceEndFrame": 32,
+      "label": "Daichi Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
       "startupFrames": 18,
@@ -588,19 +563,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 12,
       "range": 1.68,
+      "forwardForce": 1.89,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 18,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Daichi Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 19,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
-      "forwardForce": 1.89,
-      "forwardForceStartFrame": 13,
-      "forwardForceEndFrame": 18
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
       "startupFrames": 18,
@@ -612,16 +583,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 34,
       "range": 2.05,
-      "label": "Daichi Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 3.47,
       "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 30
+      "forwardForceEndFrame": 30,
+      "label": "Daichi Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 14,
@@ -633,15 +600,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Daichi Rising Strike",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 16,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.34,
       "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 18
+      "forwardForceEndFrame": 18,
+      "label": "Daichi Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 13,
@@ -653,15 +616,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "Daichi Crouch Jab",
-      "hitLevel": "mid",
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5,
       "forwardForce": 1.33,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 17
+      "forwardForceEndFrame": 17,
+      "label": "Daichi Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -673,16 +632,12 @@
       "onCounterHitFrames": 30,
       "whiffRecoveryFrames": 12,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "Daichi Crouch Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
       "forwardForce": 1.78,
       "forwardForceStartFrame": 23,
-      "forwardForceEndFrame": 29
+      "forwardForceEndFrame": 29,
+      "launchHeight": 2,
+      "label": "Daichi Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -694,15 +649,11 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 9,
       "range": 1.72,
-      "label": "Daichi Twin Assault",
-      "hitLevel": "mid",
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 1.57,
       "forwardForceStartFrame": 23,
-      "forwardForceEndFrame": 29
+      "forwardForceEndFrame": 29,
+      "label": "Daichi Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -714,16 +665,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 13,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Daichi Cross Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
       "forwardForce": 1.36,
       "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "launchHeight": 2.2,
+      "label": "Daichi Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -735,15 +682,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
-      "label": "Daichi Low Feint",
-      "hitLevel": "low",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 0.97,
       "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "label": "Daichi Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 22,
@@ -755,16 +698,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 31,
       "range": 1.74,
-      "label": "Daichi Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 2.15,
       "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 29
+      "forwardForceEndFrame": 29,
+      "label": "Daichi Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -776,16 +715,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 37,
       "range": 1.9,
-      "label": "Daichi Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 3.35,
       "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 32
+      "forwardForceEndFrame": 32,
+      "label": "Daichi Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 25,
@@ -797,192 +732,188 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 41,
       "range": 2.1,
+      "forwardForce": 3.37,
+      "forwardForceStartFrame": 36,
+      "forwardForceEndFrame": 44,
       "kiCost": 35,
       "label": "Daichi Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
-      "forwardForce": 3.37,
-      "forwardForceStartFrame": 36,
-      "forwardForceEndFrame": 44
+      "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Daichi Second Beat",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "label": "Daichi Body Blow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "label": "Daichi Low Changeup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "label": "Daichi Pressure Feint",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "label": "Daichi Drive",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Drive"
     },
     "neutral:jab-heavy-kick": {
-      "label": "Daichi Barrage",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Barrage"
     },
     "neutral:jab-heavy-special": {
-      "label": "Daichi Finisher",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Finisher"
     },
     "neutral:jab-kick": {
-      "label": "Daichi Step Kick",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "label": "Daichi Palm String",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Palm String"
     },
     "neutral:jab-kick-special": {
-      "label": "Daichi Rising Chain",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Rising Chain"
     },
     "neutral:jab-special": {
-      "label": "Daichi Special Setup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "label": "Daichi Break Art",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Break Art"
     },
     "neutral:heavy-jab": {
-      "label": "Daichi Check Hook",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Daichi Heavy Break",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "label": "Daichi Charged Follow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Charged Follow"
     },
     "neutral:heavy-kick": {
-      "label": "Daichi Drop Kick",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "label": "Daichi Arc Finisher",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Arc Finisher"
     },
     "neutral:heavy-special": {
-      "label": "Daichi Focus Stance",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "label": "Daichi Mode Shift",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Mode Shift"
     },
     "neutral:kick-jab": {
-      "label": "Daichi Heel Feint",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "label": "Daichi Summon Strike",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Summon Strike"
     },
     "neutral:kick-heavy": {
-      "label": "Daichi Guard Snare",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "label": "Daichi Armor Break",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Armor Break"
     },
     "neutral:kick-special": {
-      "label": "Daichi Power Setup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "label": "Daichi Switch Strike",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Switch Strike"
     },
     "neutral:special-jab": {
-      "label": "Daichi Spark Jab",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "label": "Daichi Binding Blow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Binding Blow"
     },
     "neutral:special-heavy": {
-      "label": "Daichi Heavy Draw",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Heavy Draw"
     },
     "neutral:special-kick": {
-      "label": "Daichi Kick Ender",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Daichi Kick Ender"
     }
   },
   "effects": [],
@@ -1005,7 +936,6 @@
     {
       "id": "daichi-energy-orb",
       "name": "Daichi Energy Orb",
-      "kind": "projectile",
       "sourcePath": "/characters/daichi/animation-sheet.png",
       "frames": [
         "/characters/daichi/projectiles/daichi-energy-orb/frames/frame-000.png",
@@ -1030,6 +960,18 @@
       "billboard": false,
       "blendMode": "additive",
       "voxelProfile": "hd-image-source",
+      "voxelFidelity": {
+        "resolutionScale": 1,
+        "maxRows": 64,
+        "depth": 0.14,
+        "alphaThreshold": 24,
+        "paletteSnap": 8,
+        "mergeRuns": true,
+        "lod": {
+          "mobileStep": 2,
+          "farStep": 2
+        }
+      },
       "defaultScale": [
         0.55,
         0.55,
@@ -1040,16 +982,9 @@
         0,
         0
       ],
-      "alignToVelocity": true,
       "color": "#ffe04f",
-      "voxelFidelity": {
-        "resolutionScale": 1,
-        "maxRows": 64,
-        "depth": 0.14,
-        "alphaThreshold": 24,
-        "paletteSnap": 8,
-        "mergeRuns": true
-      }
+      "soundCues": [],
+      "proceduralLayers": []
     }
   ],
   "moveProjectiles": {
@@ -1057,7 +992,6 @@
       {
         "id": "kickright-daichi-energy-orb",
         "projectileId": "daichi-energy-orb",
-        "kind": "projectile",
         "label": "Daichi Energy Orb",
         "spawnFrame": 12,
         "spawnOffset": [
@@ -1093,15 +1027,15 @@
         "pushbackScale": 1,
         "blockPushbackScale": 1,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit",
-        "clash": true
+        "pierce": false,
+        "clash": true,
+        "kiBurst": false
       }
     ],
     "cmd:f+1": [
       {
         "id": "cmd-f-1-daichi-energy-orb",
         "projectileId": "daichi-energy-orb",
-        "kind": "projectile",
         "label": "Daichi Energy Orb",
         "spawnFrame": 11,
         "spawnOffset": [
@@ -1137,8 +1071,9 @@
         "pushbackScale": 1,
         "blockPushbackScale": 1,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit",
-        "clash": true
+        "pierce": false,
+        "clash": true,
+        "kiBurst": false
       }
     ]
   },
@@ -1535,6 +1470,13 @@
         "offsetX": 0,
         "flipX": false,
         "flipY": false
+      },
+      "101": {
+        "width": 1,
+        "height": 1,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
       }
     },
     "crouch": {
@@ -1546,13 +1488,11 @@
         "flipY": false
       },
       "62": {
-        "width": 1.27483,
+        "width": 1.01536,
         "height": 0.91116,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.63357,
-        "voxelScaleY": 1
+        "voxelScaleX": 0.79544,
+        "voxelScaleY": 1.25717,
+        "offsetX": 0
       },
       "64": {
         "width": 1.48,
@@ -1599,13 +1539,11 @@
     },
     "crouchBlock": {
       "62": {
-        "width": 1.27483,
+        "width": 1.01536,
         "height": 0.91116,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.63357,
-        "voxelScaleY": 1
+        "voxelScaleX": 0.79544,
+        "voxelScaleY": 1.25717,
+        "offsetX": 0
       }
     },
     "block": {
@@ -1666,13 +1604,11 @@
         "flipY": false
       },
       "140": {
-        "width": 1.06952,
-        "height": 1.06952,
+        "width": 1.07,
+        "height": 1.07,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "flipY": false
       }
     },
     "chargeKi": {
@@ -1828,58 +1764,46 @@
     },
     "jabright": {
       "14": {
-        "width": 1.03199,
-        "height": 1.03199,
+        "width": 1.03,
+        "height": 1.03,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.01818,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "15": {
-        "width": 0.99502,
-        "height": 0.99502,
+        "width": 0.99,
+        "height": 0.99,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.09434,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "16": {
-        "width": 0.99502,
-        "height": 0.99502,
+        "width": 0.99,
+        "height": 0.99,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.09434,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "17": {
-        "width": 0.91996,
-        "height": 0.91996,
+        "width": 0.92,
+        "height": 0.92,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.99984,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "18": {
-        "width": 0.91996,
-        "height": 0.91996,
+        "width": 0.92,
+        "height": 0.92,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.99984,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "19": {
-        "width": 1.14416,
-        "height": 1.14416,
+        "width": 1.14,
+        "height": 1.14,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.90164,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "106": {
         "width": 0.25,
@@ -1991,49 +1915,39 @@
     },
     "kickright": {
       "19": {
-        "width": 1.14416,
-        "height": 1.14416,
+        "width": 1.14,
+        "height": 1.14,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.90164,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "20": {
-        "width": 0.97561,
-        "height": 0.97561,
+        "width": 0.98,
+        "height": 0.98,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.23078,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "21": {
-        "width": 1.23916,
-        "height": 1.23916,
+        "width": 1.24,
+        "height": 1.24,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.22727,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "22": {
-        "width": 1.25628,
-        "height": 1.25628,
+        "width": 1.26,
+        "height": 1.26,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.01493,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "23": {
-        "width": 1.06952,
-        "height": 1.06952,
+        "width": 1.07,
+        "height": 1.07,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.07019,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "121": {
         "width": 1.09,
@@ -2136,24 +2050,20 @@
         "flipY": false
       },
       "135": {
-        "width": 1.05042,
-        "height": 1.05042,
+        "width": 1.05,
+        "height": 1.05,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.07142,
-        "voxelScaleY": 1
+        "flipY": false
       }
     },
     "hitHeavy": {
       "29": {
-        "width": 0.52521,
-        "height": 0.52521,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 2.35713,
-        "voxelScaleY": 1
+        "width": 0.80721,
+        "height": 0.80721,
+        "voxelScaleX": 1.53573,
+        "voxelScaleY": 0.65116,
+        "offsetX": 0
       },
       "84": {
         "width": 1.05,
@@ -2207,10 +2117,10 @@
     },
     "juggle": {
       "25": {
-        "width": 0.99608,
-        "height": 0.99608,
-        "voxelScaleX": 1.26339,
-        "voxelScaleY": 0.79152,
+        "width": 1,
+        "height": 1,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
         "offsetX": 0
       },
       "141": {
@@ -2283,37 +2193,47 @@
       "157": {
         "width": 1.07,
         "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
         "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
+        "voxelScaleY": 1
       },
       "160": {
         "width": 1.07,
         "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
         "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
+        "voxelScaleY": 1
       },
       "163": {
         "width": 1.07,
         "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
         "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
+        "voxelScaleY": 1
       },
       "166": {
         "width": 1.07,
         "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
         "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
+        "voxelScaleY": 1
       },
       "169": {
         "width": 1.07,
         "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
         "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
+        "voxelScaleY": 1
       },
       "172": {
         "width": 1.07,
@@ -2578,11 +2498,11 @@
         "offsetX": 0
       },
       "50": {
-        "width": 1.37293,
-        "height": 1.37293,
-        "voxelScaleX": 1.10814,
-        "voxelScaleY": 0.90242,
-        "offsetX": 0
+        "width": 1.37,
+        "height": 1.37,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "221": {
         "width": 0.54,
@@ -2657,18 +2577,18 @@
         "offsetX": 0
       },
       "85": {
-        "width": 1.26799,
-        "height": 1.26799,
-        "voxelScaleX": 1.18504,
-        "voxelScaleY": 0.84386,
-        "offsetX": 0
+        "width": 1.27,
+        "height": 1.27,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "86": {
-        "width": 1.25682,
-        "height": 1.25682,
-        "voxelScaleX": 1.19557,
-        "voxelScaleY": 0.83642,
-        "offsetX": 0
+        "width": 1.26,
+        "height": 1.26,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "87": {
         "width": 1,
@@ -2827,11 +2747,11 @@
         "offsetX": 0
       },
       "43": {
-        "width": 1.26004,
-        "height": 1.26004,
-        "voxelScaleX": 1.17761,
-        "voxelScaleY": 0.84918,
-        "offsetX": 0
+        "width": 1.26,
+        "height": 1.26,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "cmd:WS+4": {
@@ -3328,11 +3248,11 @@
         "offsetX": 0
       },
       "124": {
-        "width": 0.86171,
-        "height": 0.86171,
-        "voxelScaleX": 0.85008,
-        "voxelScaleY": 1.17636,
-        "offsetX": 0
+        "width": 0.86,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "125": {
         "width": 1,
@@ -3342,11 +3262,11 @@
         "offsetX": 0
       },
       "126": {
-        "width": 1.3235,
-        "height": 1.3235,
-        "voxelScaleX": 1.02179,
-        "voxelScaleY": 0.97867,
-        "offsetX": 0
+        "width": 1.32,
+        "height": 1.32,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "127": {
         "width": 1,

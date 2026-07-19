@@ -80,14 +80,7 @@
       "/characters/omega-zero/frames/frame-103.png"
     ],
     "jump": [
-      "/characters/omega-zero/frames/frame-030.png",
-      "/characters/omega-zero/frames/frame-031.png",
-      "/characters/omega-zero/frames/frame-032.png",
-      "/characters/omega-zero/frames/frame-033.png",
-      "/characters/omega-zero/frames/frame-034.png",
-      "/characters/omega-zero/frames/frame-035.png",
-      "/characters/omega-zero/frames/frame-036.png",
-      "/characters/omega-zero/frames/frame-037.png"
+      "/characters/omega-zero/frames/frame-024.png"
     ],
     "crouch": [
       "/characters/omega-zero/frames/frame-113.png"
@@ -497,15 +490,11 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
-      "label": "Omega Zero Left Check",
-      "hitLevel": "high",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 4,
-      "forwardForceEndFrame": 7
+      "forwardForceEndFrame": 7,
+      "label": "Omega Zero Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
       "startupFrames": 14,
@@ -517,15 +506,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
-      "label": "Omega Zero Right Check",
-      "hitLevel": "mid",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.48,
       "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 17
+      "forwardForceEndFrame": 17,
+      "label": "Omega Zero Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 30,
@@ -537,15 +522,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Omega Zero Left Kick",
-      "hitLevel": "low",
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 0.95,
       "forwardForceStartFrame": 25,
-      "forwardForceEndFrame": 27
+      "forwardForceEndFrame": 27,
+      "label": "Omega Zero Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 14,
@@ -557,18 +538,14 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 10,
       "range": 1.7,
-      "label": "Omega Zero Right Kick",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "pushback": 1,
-      "blockPushback": 0.48,
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 1.2,
       "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 15
+      "forwardForceEndFrame": 15,
+      "pushback": 1,
+      "blockPushback": 0.48,
+      "label": "Omega Zero Right Kick",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:f+1": {
       "startupFrames": 14,
@@ -581,14 +558,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Omega Zero Rush",
-      "hitLevel": "mid",
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForceStartFrame": 31,
-      "forwardForceEndFrame": 36
+      "forwardForceEndFrame": 36,
+      "label": "Omega Zero Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
       "startupFrames": 18,
@@ -600,19 +573,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 12,
       "range": 1.68,
+      "forwardForce": 1.47,
+      "forwardForceStartFrame": 35,
+      "forwardForceEndFrame": 40,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Omega Zero Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 18,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
-      "forwardForce": 1.47,
-      "forwardForceStartFrame": 35,
-      "forwardForceEndFrame": 40
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -624,16 +593,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 36,
       "range": 2.05,
-      "label": "Omega Zero Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 3.4,
       "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 22
+      "forwardForceEndFrame": 22,
+      "label": "Omega Zero Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 14,
@@ -645,15 +610,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Omega Zero Rising Strike",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 16,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.35,
       "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 16
+      "forwardForceEndFrame": 16,
+      "label": "Omega Zero Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 13,
@@ -665,15 +626,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "Omega Zero Crouch Jab",
-      "hitLevel": "mid",
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5,
       "forwardForce": 1.28,
       "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 8
+      "forwardForceEndFrame": 8,
+      "label": "Omega Zero Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -685,16 +642,12 @@
       "onCounterHitFrames": 30,
       "whiffRecoveryFrames": 12,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "Omega Zero Crouch Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 22,
-      "onJuggleHitFrames": 13,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
       "forwardForce": 1.26,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 22
+      "forwardForceEndFrame": 22,
+      "launchHeight": 2,
+      "label": "Omega Zero Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 15,
@@ -706,15 +659,11 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 9,
       "range": 1.72,
-      "label": "Omega Zero Twin Assault",
-      "hitLevel": "mid",
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 1.51,
       "forwardForceStartFrame": 24,
-      "forwardForceEndFrame": 27
+      "forwardForceEndFrame": 27,
+      "label": "Omega Zero Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -726,16 +675,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 33,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Omega Zero Cross Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 19,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
       "forwardForce": 2.66,
       "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 18
+      "forwardForceEndFrame": 18,
+      "launchHeight": 2.2,
+      "label": "Omega Zero Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -747,15 +692,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 27,
       "range": 1.58,
-      "label": "Omega Zero Low Feint",
-      "hitLevel": "low",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 2.27,
       "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 17
+      "forwardForceEndFrame": 17,
+      "label": "Omega Zero Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 22,
@@ -767,16 +708,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 12,
       "range": 1.74,
-      "label": "Omega Zero Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 1.62,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "label": "Omega Zero Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -788,16 +725,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 36,
       "range": 1.9,
-      "label": "Omega Zero Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 2.82,
       "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "label": "Omega Zero Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -809,18 +742,14 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 37,
       "range": 2.1,
+      "forwardForce": 2.49,
+      "forwardForceStartFrame": 22,
+      "forwardForceEndFrame": 30,
       "kiCost": 35,
       "label": "Omega Zero Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
-      "forwardForce": 2.49,
-      "forwardForceStartFrame": 22,
-      "forwardForceEndFrame": 30
+      "usesKi": true
     },
     "neutral:jab-jab": {
       "startupFrames": 14,
@@ -1010,6 +939,7 @@
         "/characters/omega-zero/effects/omega-saber-arc/frames/frame-004.png",
         "/characters/omega-zero/effects/omega-saber-arc/frames/frame-005.png"
       ],
+      "effectFrameEdits": {},
       "fps": 18,
       "loop": true,
       "billboard": true,
@@ -1033,7 +963,9 @@
         ],
         "opacity": 1,
         "color": "#ffffff"
-      }
+      },
+      "proceduralLayers": [],
+      "soundCues": []
     }
   ],
   "moveEffects": {
@@ -1041,12 +973,11 @@
       {
         "id": "kickright-omega-saber-arc",
         "effectId": "omega-saber-arc",
-        "label": "Omega Saber Arc",
         "startFrame": 12,
         "endFrame": 30,
         "layer": 1,
-        "mirrorWithFacing": true,
         "anchor": "hitbox",
+        "mirrorWithFacing": true,
         "loop": true,
         "keyframes": [
           {
@@ -1069,7 +1000,8 @@
             "opacity": 1,
             "color": "#ffffff"
           }
-        ]
+        ],
+        "soundCues": []
       }
     ]
   },
@@ -1332,12 +1264,11 @@
         "flipY": false
       },
       "33": {
-        "width": 0.67652,
-        "height": 0.67652,
-        "voxelScaleX": 1.28861,
-        "voxelScaleY": 0.77603,
+        "width": 0.68,
+        "height": 0.68,
         "offsetX": 0,
-        "flipX": true
+        "flipX": true,
+        "flipY": false
       },
       "34": {
         "width": 0.87,
@@ -1347,12 +1278,11 @@
         "flipY": false
       },
       "35": {
-        "width": 0.67652,
-        "height": 0.67652,
-        "voxelScaleX": 1.28861,
-        "voxelScaleY": 0.77603,
+        "width": 0.68,
+        "height": 0.68,
         "offsetX": 0,
-        "flipX": true
+        "flipX": true,
+        "flipY": false
       },
       "36": {
         "width": 0.75,
@@ -1513,11 +1443,11 @@
     },
     "backHop": {
       "23": {
-        "width": 0.77046,
-        "height": 0.77046,
-        "voxelScaleX": 0.89328,
-        "voxelScaleY": 1.11946,
-        "offsetX": 0
+        "width": 0.77,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "32": {
         "width": 0.87,
@@ -1742,6 +1672,13 @@
         "flipX": false,
         "flipY": false
       },
+      "24": {
+        "width": 0.77046,
+        "height": 0.77046,
+        "voxelScaleX": 0.89328,
+        "voxelScaleY": 1.11946,
+        "offsetX": 0
+      },
       "30": {
         "width": 0.82,
         "height": 0.88,
@@ -1864,22 +1801,20 @@
         "flipY": false
       },
       "113": {
-        "width": 0.66822,
+        "width": 0.67,
         "height": 0.57021,
-        "voxelScaleX": 0.89314,
-        "voxelScaleY": 1.11965,
         "offsetX": 0,
-        "flipX": true
+        "flipX": true,
+        "flipY": false
       }
     },
     "crouchBlock": {
       "113": {
-        "width": 0.66822,
+        "width": 0.67,
         "height": 0.57021,
-        "voxelScaleX": 0.89314,
-        "voxelScaleY": 1.11965,
         "offsetX": 0,
-        "flipX": true
+        "flipX": true,
+        "flipY": false
       }
     },
     "block": {
@@ -2677,10 +2612,11 @@
       "60": {
         "width": 0.75,
         "height": 0.75,
-        "voxelScaleX": 0.84192,
-        "voxelScaleY": 1,
         "offsetX": 0,
-        "flipX": true
+        "flipX": true,
+        "flipY": false,
+        "voxelScaleX": 0.84192,
+        "voxelScaleY": 1
       },
       "61": {
         "width": 0.75,
@@ -2917,10 +2853,11 @@
       "60": {
         "width": 0.75,
         "height": 0.75,
-        "voxelScaleX": 0.84192,
-        "voxelScaleY": 1,
         "offsetX": 0,
-        "flipX": true
+        "flipX": true,
+        "flipY": false,
+        "voxelScaleX": 0.84192,
+        "voxelScaleY": 1
       },
       "61": {
         "width": 0.75,
@@ -3106,32 +3043,32 @@
         "flipY": false
       },
       "45": {
-        "width": 0.69099,
-        "height": 0.69099,
-        "voxelScaleX": 0.99602,
-        "voxelScaleY": 1.004,
-        "offsetX": 0
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "46": {
-        "width": 0.62316,
-        "height": 0.62316,
-        "voxelScaleX": 1.00712,
-        "voxelScaleY": 0.99293,
-        "offsetX": 0
+        "width": 0.62,
+        "height": 0.62,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "47": {
-        "width": 0.67982,
-        "height": 0.67982,
-        "voxelScaleX": 1.00715,
-        "voxelScaleY": 0.9929,
-        "offsetX": 0
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "48": {
-        "width": 0.7256,
-        "height": 0.7256,
-        "voxelScaleX": 1.07496,
-        "voxelScaleY": 0.93026,
-        "offsetX": 0
+        "width": 0.73,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "49": {
         "width": 1,
@@ -3269,67 +3206,67 @@
         "flipY": false
       },
       "104": {
-        "width": 0.71232,
-        "height": 0.71232,
-        "voxelScaleX": 1.0473,
-        "voxelScaleY": 0.95484,
-        "offsetX": 0
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "105": {
-        "width": 0.70336,
-        "height": 0.70336,
-        "voxelScaleX": 1.03413,
-        "voxelScaleY": 0.967,
-        "offsetX": 0
+        "width": 0.7,
+        "height": 0.7,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "106": {
-        "width": 0.70336,
-        "height": 0.70336,
-        "voxelScaleX": 1.03413,
-        "voxelScaleY": 0.967,
-        "offsetX": 0
+        "width": 0.7,
+        "height": 0.7,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "107": {
-        "width": 0.71232,
-        "height": 0.71232,
-        "voxelScaleX": 1.0473,
-        "voxelScaleY": 0.95483,
-        "offsetX": 0
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "108": {
-        "width": 0.68509,
-        "height": 0.68509,
-        "voxelScaleX": 1.00726,
-        "voxelScaleY": 0.99279,
-        "offsetX": 0
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "109": {
-        "width": 0.60913,
-        "height": 0.60913,
-        "voxelScaleX": 0.91854,
-        "voxelScaleY": 1.08868,
-        "offsetX": 0
+        "width": 0.61,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "110": {
-        "width": 0.65504,
-        "height": 0.65504,
-        "voxelScaleX": 0.93958,
-        "voxelScaleY": 1.0643,
-        "offsetX": 0
+        "width": 0.66,
+        "height": 0.66,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "111": {
-        "width": 0.65503,
-        "height": 0.65503,
-        "voxelScaleX": 0.93958,
-        "voxelScaleY": 1.0643,
-        "offsetX": 0
+        "width": 0.66,
+        "height": 0.66,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "112": {
-        "width": 0.63712,
-        "height": 0.63712,
-        "voxelScaleX": 0.93674,
-        "voxelScaleY": 1.06754,
-        "offsetX": 0
+        "width": 0.64,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "cmd:qcf+4": {
@@ -3895,46 +3832,46 @@
     },
     "cmd:1+2": {
       "20": {
-        "width": 0.73561,
-        "height": 0.73561,
-        "voxelScaleX": 1.06034,
-        "voxelScaleY": 0.94309,
-        "offsetX": 0
+        "width": 0.74,
+        "height": 0.74,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "21": {
-        "width": 0.78319,
-        "height": 0.78319,
-        "voxelScaleX": 0.90805,
-        "voxelScaleY": 1.10127,
-        "offsetX": 0
+        "width": 0.78,
+        "height": 0.78,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "22": {
-        "width": 0.73092,
-        "height": 0.73092,
-        "voxelScaleX": 0.84744,
-        "voxelScaleY": 1.18002,
-        "offsetX": 0
+        "width": 0.73,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "23": {
-        "width": 0.77046,
-        "height": 0.77046,
-        "voxelScaleX": 0.89328,
-        "voxelScaleY": 1.11946,
-        "offsetX": 0
+        "width": 0.77,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "24": {
-        "width": 0.77046,
-        "height": 0.77046,
-        "voxelScaleX": 0.89328,
-        "voxelScaleY": 1.11946,
-        "offsetX": 0
+        "width": 0.77,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "25": {
-        "width": 0.74433,
-        "height": 0.74433,
-        "voxelScaleX": 0.86299,
-        "voxelScaleY": 1.15876,
-        "offsetX": 0
+        "width": 0.74,
+        "height": 0.74,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "26": {
         "width": 1,
@@ -3944,18 +3881,18 @@
         "offsetX": 0
       },
       "27": {
-        "width": 0.79572,
-        "height": 0.79572,
-        "voxelScaleX": 0.92258,
-        "voxelScaleY": 1.08392,
-        "offsetX": 0
+        "width": 0.8,
+        "height": 0.8,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "28": {
-        "width": 0.77824,
-        "height": 0.77824,
-        "voxelScaleX": 0.94331,
-        "voxelScaleY": 1.06009,
-        "offsetX": 0
+        "width": 0.78,
+        "height": 0.78,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "29": {
         "width": 1,
@@ -4659,7 +4596,6 @@
     {
       "id": "omega-energy-orb",
       "name": "Omega Energy Orb",
-      "kind": "projectile",
       "sourcePath": "/characters/omega-zero/animation-sheet.png",
       "frames": [
         "/characters/omega-zero/projectiles/omega-energy-orb/frames/frame-000.png",
@@ -4682,6 +4618,18 @@
       "billboard": false,
       "blendMode": "additive",
       "voxelProfile": "hd-image-source",
+      "voxelFidelity": {
+        "resolutionScale": 1,
+        "maxRows": 64,
+        "depth": 0.14,
+        "alphaThreshold": 24,
+        "paletteSnap": 8,
+        "mergeRuns": true,
+        "lod": {
+          "mobileStep": 2,
+          "farStep": 2
+        }
+      },
       "defaultScale": [
         0.46,
         0.46,
@@ -4692,16 +4640,9 @@
         0,
         0
       ],
-      "alignToVelocity": true,
       "color": "#43dfff",
-      "voxelFidelity": {
-        "resolutionScale": 1,
-        "maxRows": 64,
-        "depth": 0.14,
-        "alphaThreshold": 24,
-        "paletteSnap": 8,
-        "mergeRuns": true
-      }
+      "soundCues": [],
+      "proceduralLayers": []
     }
   ],
   "moveProjectiles": {
@@ -4709,7 +4650,6 @@
       {
         "id": "cmd-qcf-4-omega-energy-orb",
         "projectileId": "omega-energy-orb",
-        "kind": "projectile",
         "label": "Omega Energy Orb",
         "spawnFrame": 18,
         "spawnOffset": [
@@ -4745,8 +4685,9 @@
         "pushbackScale": 1,
         "blockPushbackScale": 1,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit",
-        "clash": true
+        "pierce": false,
+        "clash": true,
+        "kiBurst": false
       }
     ]
   },

@@ -58,17 +58,13 @@
       "/characters/tayuya-curse-mark/frames/frame-013.png"
     ],
     "sidestepLeft": [
-      "/characters/tayuya-curse-mark/frames/frame-135.png",
-      "/characters/tayuya-curse-mark/frames/frame-147.png"
+      "/characters/tayuya-curse-mark/frames/frame-037.png"
     ],
     "sidestepRight": [
-      "/characters/tayuya-curse-mark/frames/frame-153.png"
+      "/characters/tayuya-curse-mark/frames/frame-037.png"
     ],
     "jump": [
-      "/characters/tayuya-curse-mark/frames/frame-156.png",
-      "/characters/tayuya-curse-mark/frames/frame-157.png",
-      "/characters/tayuya-curse-mark/frames/frame-160.png",
-      "/characters/tayuya-curse-mark/frames/frame-161.png"
+      "/characters/tayuya-curse-mark/frames/frame-100.png"
     ],
     "crouch": [
       "/characters/tayuya-curse-mark/frames/frame-007.png"
@@ -443,15 +439,11 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
-      "label": "Tayuya Curse Mark Left Check",
-      "hitLevel": "high",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 22
+      "forwardForceEndFrame": 22,
+      "label": "Tayuya Curse Mark Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
       "startupFrames": 13,
@@ -463,15 +455,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
-      "label": "Tayuya Curse Mark Right Check",
-      "hitLevel": "mid",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.48,
       "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 16
+      "forwardForceEndFrame": 16,
+      "label": "Tayuya Curse Mark Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 21,
@@ -483,15 +471,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Tayuya Curse Mark Left Kick",
-      "hitLevel": "low",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 0.95,
       "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 31
+      "forwardForceEndFrame": 31,
+      "label": "Tayuya Curse Mark Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 13,
@@ -503,18 +487,14 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 10,
       "range": 1.7,
-      "label": "Tayuya Curse Mark Right Kick",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "pushback": 1,
-      "blockPushback": 0.48,
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 1.07,
       "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 16
+      "forwardForceEndFrame": 16,
+      "pushback": 1,
+      "blockPushback": 0.48,
+      "label": "Tayuya Curse Mark Right Kick",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:f+1": {
       "startupFrames": 14,
@@ -527,14 +507,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Tayuya Curse Mark Rush",
-      "hitLevel": "mid",
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "label": "Tayuya Curse Mark Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
       "startupFrames": 17,
@@ -546,19 +522,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 12,
       "range": 1.68,
+      "forwardForce": 1.35,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 22,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Tayuya Curse Mark Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 22,
-      "onJuggleHitFrames": 20,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
-      "forwardForce": 1.35,
-      "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 22
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
       "startupFrames": 23,
@@ -570,16 +542,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 38,
       "range": 2.05,
-      "label": "Tayuya Curse Mark Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 3.27,
       "forwardForceStartFrame": 21,
-      "forwardForceEndFrame": 31
+      "forwardForceEndFrame": 31,
+      "label": "Tayuya Curse Mark Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 14,
@@ -591,15 +559,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Tayuya Curse Mark Rising Strike",
-      "hitLevel": "mid",
-      "onComboHitFrames": 20,
-      "onJuggleHitFrames": 15,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.81,
       "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "label": "Tayuya Curse Mark Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 14,
@@ -611,15 +575,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "Tayuya Curse Mark Crouch Jab",
-      "hitLevel": "mid",
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5,
       "forwardForce": 1.26,
       "forwardForceStartFrame": 18,
-      "forwardForceEndFrame": 36
+      "forwardForceEndFrame": 36,
+      "label": "Tayuya Curse Mark Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
       "startupFrames": 18,
@@ -631,16 +591,12 @@
       "onCounterHitFrames": 30,
       "whiffRecoveryFrames": 12,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "Tayuya Curse Mark Crouch Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 22,
-      "onJuggleHitFrames": 13,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
       "forwardForce": 1.26,
       "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "launchHeight": 2,
+      "label": "Tayuya Curse Mark Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 20,
@@ -652,15 +608,11 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 9,
       "range": 1.72,
-      "label": "Tayuya Curse Mark Twin Assault",
-      "hitLevel": "mid",
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 1.05,
       "forwardForceStartFrame": 18,
-      "forwardForceEndFrame": 26
+      "forwardForceEndFrame": 26,
+      "label": "Tayuya Curse Mark Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
       "startupFrames": 17,
@@ -672,16 +624,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 32,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Tayuya Curse Mark Cross Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 19,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
       "forwardForce": 2.44,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 29
+      "forwardForceEndFrame": 29,
+      "launchHeight": 2.2,
+      "label": "Tayuya Curse Mark Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 19,
@@ -693,15 +641,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 26,
       "range": 1.58,
-      "label": "Tayuya Curse Mark Low Feint",
-      "hitLevel": "low",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 2.05,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 29
+      "forwardForceEndFrame": 29,
+      "label": "Tayuya Curse Mark Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 26,
@@ -713,16 +657,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 12,
       "range": 1.74,
-      "label": "Tayuya Curse Mark Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 1.49,
       "forwardForceStartFrame": 24,
-      "forwardForceEndFrame": 31
+      "forwardForceEndFrame": 31,
+      "label": "Tayuya Curse Mark Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 21,
@@ -734,16 +674,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 35,
       "range": 1.9,
-      "label": "Tayuya Curse Mark Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 2.69,
       "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 27
+      "forwardForceEndFrame": 27,
+      "label": "Tayuya Curse Mark Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 18,
@@ -755,18 +691,14 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 32,
       "range": 2.1,
+      "forwardForce": 2.49,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 23,
       "kiCost": 35,
       "label": "Tayuya Curse Mark Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
-      "forwardForce": 2.49,
-      "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 23
+      "usesKi": true
     },
     "neutral:jab-jab": {
       "startupFrames": 14,
@@ -1328,6 +1260,13 @@
       }
     },
     "sidestepLeft": {
+      "37": {
+        "width": 1.35327,
+        "height": 1.35327,
+        "voxelScaleX": 0.97793,
+        "voxelScaleY": 1.02256,
+        "offsetX": 0
+      },
       "135": {
         "width": 2.5,
         "height": 2.5,
@@ -1386,6 +1325,13 @@
       }
     },
     "sidestepRight": {
+      "37": {
+        "width": 1.35327,
+        "height": 1.35327,
+        "voxelScaleX": 0.97793,
+        "voxelScaleY": 1.02256,
+        "offsetX": 0
+      },
       "151": {
         "width": 0.31,
         "height": 0.51,
@@ -1423,6 +1369,13 @@
       }
     },
     "jump": {
+      "100": {
+        "width": 1.25819,
+        "height": 1.25819,
+        "voxelScaleX": 1.14136,
+        "voxelScaleY": 0.87614,
+        "offsetX": 0
+      },
       "156": {
         "width": 2.02,
         "height": 1.8,
@@ -1974,11 +1927,11 @@
         "flipY": false
       },
       "53": {
-        "width": 1.14121,
-        "height": 1.14121,
-        "voxelScaleX": 0.8389,
-        "voxelScaleY": 1.19203,
-        "offsetX": 0
+        "width": 1.14,
+        "height": 1.14,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "hitHeavy": {
@@ -2402,18 +2355,18 @@
         "flipY": false
       },
       "24": {
-        "width": 1.46122,
-        "height": 1.46122,
-        "voxelScaleX": 1.17547,
-        "voxelScaleY": 0.85072,
-        "offsetX": 0
+        "width": 1.46,
+        "height": 1.46,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "25": {
-        "width": 1.34618,
-        "height": 1.34618,
-        "voxelScaleX": 1.02492,
-        "voxelScaleY": 0.97569,
-        "offsetX": 0
+        "width": 1.35,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "26": {
         "width": 1,
@@ -2430,25 +2383,25 @@
         "flipY": false
       },
       "28": {
-        "width": 1.44508,
-        "height": 1.44508,
-        "voxelScaleX": 1.20808,
-        "voxelScaleY": 0.82776,
-        "offsetX": 0
+        "width": 1.45,
+        "height": 1.45,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "29": {
-        "width": 1.27046,
-        "height": 1.27046,
-        "voxelScaleX": 1.15249,
-        "voxelScaleY": 0.86769,
-        "offsetX": 0
+        "width": 1.27,
+        "height": 1.27,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "30": {
-        "width": 1.2271,
-        "height": 1.2271,
-        "voxelScaleX": 0.91786,
-        "voxelScaleY": 1.08949,
-        "offsetX": 0
+        "width": 1.23,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "31": {
         "width": 1.19,
@@ -2576,25 +2529,25 @@
     },
     "cmd:WS+4": {
       "16": {
-        "width": 1.43706,
-        "height": 1.43706,
-        "voxelScaleX": 1.03848,
-        "voxelScaleY": 0.96295,
-        "offsetX": 0
+        "width": 1.44,
+        "height": 1.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "17": {
-        "width": 1.32042,
-        "height": 1.32042,
-        "voxelScaleX": 1.02359,
-        "voxelScaleY": 0.97695,
-        "offsetX": 0
+        "width": 1.32,
+        "height": 1.32,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "18": {
-        "width": 1.3875,
-        "height": 1.3875,
-        "voxelScaleX": 1.11617,
-        "voxelScaleY": 0.89592,
-        "offsetX": 0
+        "width": 1.39,
+        "height": 1.39,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "19": {
         "width": 1,
@@ -2604,11 +2557,11 @@
         "offsetX": 0
       },
       "20": {
-        "width": 1.42623,
-        "height": 1.42623,
-        "voxelScaleX": 1.08586,
-        "voxelScaleY": 0.92093,
-        "offsetX": 0
+        "width": 1.43,
+        "height": 1.43,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "21": {
         "width": 1,
@@ -2618,18 +2571,18 @@
         "offsetX": 0
       },
       "22": {
-        "width": 1.23781,
-        "height": 1.23781,
-        "voxelScaleX": 0.90992,
-        "voxelScaleY": 1.099,
-        "offsetX": 0
+        "width": 1.24,
+        "height": 1.24,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "23": {
-        "width": 1.38679,
-        "height": 1.38679,
-        "voxelScaleX": 1.13705,
-        "voxelScaleY": 0.87947,
-        "offsetX": 0
+        "width": 1.39,
+        "height": 1.39,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "118": {
         "width": 2.5,
@@ -3059,7 +3012,6 @@
     {
       "id": "demonic-flute-note",
       "name": "Demonic Flute Note",
-      "kind": "projectile",
       "sourcePath": "/characters/tayuya-curse-mark/animation-sheet.png",
       "frames": [
         "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-000.png",
@@ -3102,6 +3054,18 @@
       "billboard": false,
       "blendMode": "additive",
       "voxelProfile": "hd-image-source",
+      "voxelFidelity": {
+        "resolutionScale": 1,
+        "maxRows": 64,
+        "depth": 0.14,
+        "alphaThreshold": 24,
+        "paletteSnap": 8,
+        "mergeRuns": true,
+        "lod": {
+          "mobileStep": 2,
+          "farStep": 2
+        }
+      },
       "defaultScale": [
         0.48,
         0.48,
@@ -3112,16 +3076,9 @@
         0,
         0
       ],
-      "alignToVelocity": true,
       "color": "#ff69d4",
-      "voxelFidelity": {
-        "resolutionScale": 1,
-        "maxRows": 64,
-        "depth": 0.14,
-        "alphaThreshold": 24,
-        "paletteSnap": 8,
-        "mergeRuns": true
-      }
+      "soundCues": [],
+      "proceduralLayers": []
     }
   ],
   "moveProjectiles": {
@@ -3129,7 +3086,6 @@
       {
         "id": "jabright-demonic-flute-note",
         "projectileId": "demonic-flute-note",
-        "kind": "projectile",
         "label": "Demonic Flute Note",
         "spawnFrame": 11,
         "spawnOffset": [
@@ -3165,15 +3121,15 @@
         "pushbackScale": 1,
         "blockPushbackScale": 1,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit",
-        "clash": true
+        "pierce": false,
+        "clash": true,
+        "kiBurst": false
       }
     ],
     "kickright": [
       {
         "id": "kickright-demonic-flute-note",
         "projectileId": "demonic-flute-note",
-        "kind": "projectile",
         "label": "Demonic Flute Note",
         "spawnFrame": 11,
         "spawnOffset": [
@@ -3209,8 +3165,9 @@
         "pushbackScale": 1,
         "blockPushbackScale": 1,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit",
-        "clash": true
+        "pierce": false,
+        "clash": true,
+        "kiBurst": false
       }
     ]
   },

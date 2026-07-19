@@ -70,8 +70,7 @@
       "/characters/agumon/frames/frame-106.png"
     ],
     "jump": [
-      "/characters/agumon/frames/frame-044.png",
-      "/characters/agumon/frames/frame-045.png"
+      "/characters/agumon/frames/frame-101.png"
     ],
     "crouch": [
       "/characters/agumon/frames/frame-050.png"
@@ -439,15 +438,11 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
-      "label": "Agumon Left Check",
-      "hitLevel": "high",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 22
+      "forwardForceEndFrame": 22,
+      "label": "Agumon Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
       "startupFrames": 13,
@@ -459,15 +454,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
-      "label": "Agumon Right Check",
-      "hitLevel": "mid",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.64,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "label": "Agumon Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 17,
@@ -479,15 +470,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Agumon Left Kick",
-      "hitLevel": "low",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 0.73,
       "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 18
+      "forwardForceEndFrame": 18,
+      "label": "Agumon Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 14,
@@ -499,15 +486,11 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 7,
       "range": 1.7,
-      "label": "Agumon Right Kick",
-      "hitLevel": "mid",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 0.96,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 19
+      "forwardForceEndFrame": 19,
+      "label": "Agumon Right Kick",
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
       "startupFrames": 15,
@@ -520,14 +503,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Agumon Rush",
-      "hitLevel": "mid",
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForceStartFrame": 30,
-      "forwardForceEndFrame": 39
+      "forwardForceEndFrame": 39,
+      "label": "Agumon Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
       "startupFrames": 19,
@@ -539,19 +518,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 12,
       "range": 1.68,
+      "forwardForce": 1.51,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 35,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Agumon Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 22,
-      "onJuggleHitFrames": 19,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
-      "forwardForce": 1.51,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 35
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
       "startupFrames": 30,
@@ -563,16 +538,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 47,
       "range": 2.05,
-      "label": "Agumon Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 3.79,
       "forwardForceStartFrame": 61,
-      "forwardForceEndFrame": 68
+      "forwardForceEndFrame": 68,
+      "label": "Agumon Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 15,
@@ -584,15 +555,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Agumon Rising Strike",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 16,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.35,
       "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "label": "Agumon Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 13,
@@ -604,15 +571,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "Agumon Crouch Jab",
-      "hitLevel": "mid",
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5,
       "forwardForce": 1.5,
       "forwardForceStartFrame": 24,
-      "forwardForceEndFrame": 31
+      "forwardForceEndFrame": 31,
+      "label": "Agumon Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -624,16 +587,12 @@
       "onCounterHitFrames": 30,
       "whiffRecoveryFrames": 12,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "Agumon Crouch Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 22,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
       "forwardForce": 1.42,
       "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 33
+      "forwardForceEndFrame": 33,
+      "launchHeight": 2,
+      "label": "Agumon Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -645,15 +604,11 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 9,
       "range": 1.72,
-      "label": "Agumon Twin Assault",
-      "hitLevel": "mid",
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 1.21,
       "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 33
+      "forwardForceEndFrame": 33,
+      "label": "Agumon Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -665,16 +620,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 13,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Agumon Cross Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
       "forwardForce": 1.54,
       "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "launchHeight": 2.2,
+      "label": "Agumon Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -686,15 +637,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
-      "label": "Agumon Low Feint",
-      "hitLevel": "low",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.15,
       "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "label": "Agumon Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 22,
@@ -706,16 +653,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 12,
       "range": 1.74,
-      "label": "Agumon Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 1.62,
       "forwardForceStartFrame": 20,
-      "forwardForceEndFrame": 29
+      "forwardForceEndFrame": 29,
+      "label": "Agumon Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -727,16 +670,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 36,
       "range": 1.9,
-      "label": "Agumon Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 2.82,
       "forwardForceStartFrame": 22,
-      "forwardForceEndFrame": 32
+      "forwardForceEndFrame": 32,
+      "label": "Agumon Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -748,192 +687,188 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 37,
       "range": 2.1,
+      "forwardForce": 2.65,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 43,
       "kiCost": 35,
       "label": "Agumon Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
-      "forwardForce": 2.65,
-      "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 43
+      "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Agumon Second Beat",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "label": "Agumon Body Blow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "label": "Agumon Low Changeup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "label": "Agumon Pressure Feint",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "label": "Agumon Drive",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Drive"
     },
     "neutral:jab-heavy-kick": {
-      "label": "Agumon Barrage",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Barrage"
     },
     "neutral:jab-heavy-special": {
-      "label": "Agumon Finisher",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Finisher"
     },
     "neutral:jab-kick": {
-      "label": "Agumon Step Kick",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "label": "Agumon Palm String",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Palm String"
     },
     "neutral:jab-kick-special": {
-      "label": "Agumon Rising Chain",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Rising Chain"
     },
     "neutral:jab-special": {
-      "label": "Agumon Special Setup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "label": "Agumon Break Art",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Break Art"
     },
     "neutral:heavy-jab": {
-      "label": "Agumon Check Hook",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Agumon Heavy Break",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "label": "Agumon Charged Follow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Charged Follow"
     },
     "neutral:heavy-kick": {
-      "label": "Agumon Drop Kick",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "label": "Agumon Arc Finisher",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Arc Finisher"
     },
     "neutral:heavy-special": {
-      "label": "Agumon Focus Stance",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "label": "Agumon Mode Shift",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Mode Shift"
     },
     "neutral:kick-jab": {
-      "label": "Agumon Heel Feint",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "label": "Agumon Summon Strike",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Summon Strike"
     },
     "neutral:kick-heavy": {
-      "label": "Agumon Guard Snare",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "label": "Agumon Armor Break",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Armor Break"
     },
     "neutral:kick-special": {
-      "label": "Agumon Power Setup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "label": "Agumon Switch Strike",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Switch Strike"
     },
     "neutral:special-jab": {
-      "label": "Agumon Spark Jab",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "label": "Agumon Binding Blow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Binding Blow"
     },
     "neutral:special-heavy": {
-      "label": "Agumon Heavy Draw",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Heavy Draw"
     },
     "neutral:special-kick": {
-      "label": "Agumon Kick Ender",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Agumon Kick Ender"
     }
   },
   "effects": [],
@@ -956,7 +891,6 @@
     {
       "id": "pepper-breath-fireball",
       "name": "Pepper Breath Fireball",
-      "kind": "projectile",
       "sourcePath": "/characters/agumon/animation-sheet.png",
       "frames": [
         "/characters/agumon/projectiles/pepper-breath-fireball/frames/frame-000.png"
@@ -977,6 +911,18 @@
       "billboard": false,
       "blendMode": "additive",
       "voxelProfile": "hd-image-source",
+      "voxelFidelity": {
+        "resolutionScale": 1,
+        "maxRows": 64,
+        "depth": 0.14,
+        "alphaThreshold": 24,
+        "paletteSnap": 8,
+        "mergeRuns": true,
+        "lod": {
+          "mobileStep": 2,
+          "farStep": 2
+        }
+      },
       "defaultScale": [
         0.5,
         0.5,
@@ -987,16 +933,9 @@
         0,
         0
       ],
-      "alignToVelocity": true,
       "color": "#ff8a24",
-      "voxelFidelity": {
-        "resolutionScale": 1,
-        "maxRows": 64,
-        "depth": 0.14,
-        "alphaThreshold": 24,
-        "paletteSnap": 8,
-        "mergeRuns": true
-      }
+      "soundCues": [],
+      "proceduralLayers": []
     }
   ],
   "moveProjectiles": {
@@ -1004,7 +943,6 @@
       {
         "id": "cmd-qcf-4-pepper-breath-fireball",
         "projectileId": "pepper-breath-fireball",
-        "kind": "projectile",
         "label": "Pepper Breath Fireball",
         "spawnFrame": 23,
         "spawnOffset": [
@@ -1040,8 +978,9 @@
         "pushbackScale": 1,
         "blockPushbackScale": 1,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit",
-        "clash": true
+        "pierce": false,
+        "clash": true,
+        "kiBurst": false
       }
     ]
   },
@@ -1656,6 +1595,13 @@
         "flipX": false,
         "flipY": false
       },
+      "101": {
+        "width": 1,
+        "height": 1,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
+      },
       "129": {
         "width": 0.83,
         "height": 0.6,
@@ -1782,13 +1728,11 @@
     },
     "block": {
       "55": {
-        "width": 0.85616,
-        "height": 0.85616,
+        "width": 0.86,
+        "height": 0.86,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.93492,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "61": {
         "width": 1.11,
@@ -1856,18 +1800,18 @@
     },
     "chargeKi": {
       "174": {
-        "width": 0.81681,
-        "height": 0.81681,
-        "voxelScaleX": 0.99424,
-        "voxelScaleY": 1.00579,
-        "offsetX": 0
+        "width": 0.82,
+        "height": 0.82,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "176": {
-        "width": 0.71469,
-        "height": 0.71469,
-        "voxelScaleX": 0.99422,
-        "voxelScaleY": 1.00581,
-        "offsetX": 0
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "177": {
         "width": 0.96,
@@ -1956,11 +1900,11 @@
         "flipY": false
       },
       "118": {
-        "width": 1.29034,
-        "height": 1.29034,
-        "voxelScaleX": 1.17798,
-        "voxelScaleY": 0.84891,
-        "offsetX": 0
+        "width": 1.29,
+        "height": 1.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "200": {
         "width": 0.5,
@@ -2028,25 +1972,25 @@
         "flipY": false
       },
       "130": {
-        "width": 1.23615,
-        "height": 1.23615,
-        "voxelScaleX": 1.16491,
-        "voxelScaleY": 0.85844,
-        "offsetX": 0
+        "width": 1.24,
+        "height": 1.24,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "131": {
-        "width": 1.19101,
-        "height": 1.19101,
-        "voxelScaleX": 1.24263,
-        "voxelScaleY": 0.80474,
-        "offsetX": 0
+        "width": 1.19,
+        "height": 1.19,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "132": {
-        "width": 1.20701,
-        "height": 1.20701,
-        "voxelScaleX": 1.25932,
-        "voxelScaleY": 0.79408,
-        "offsetX": 0
+        "width": 1.21,
+        "height": 1.21,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "219": {
         "width": 0.87,
@@ -2072,18 +2016,18 @@
     },
     "kickleft": {
       "136": {
-        "width": 1.08767,
-        "height": 1.08767,
-        "voxelScaleX": 1.17683,
-        "voxelScaleY": 0.84974,
-        "offsetX": 0
+        "width": 1.09,
+        "height": 1.09,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "137": {
-        "width": 1.23614,
-        "height": 1.23614,
-        "voxelScaleX": 1.16491,
-        "voxelScaleY": 0.85843,
-        "offsetX": 0
+        "width": 1.24,
+        "height": 1.24,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "138": {
         "width": 1.11,
@@ -2634,34 +2578,32 @@
         "flipY": false
       },
       "130": {
-        "width": 1.23615,
-        "height": 1.23615,
-        "voxelScaleX": 1.16491,
-        "voxelScaleY": 0.85844,
-        "offsetX": 0
-      },
-      "131": {
-        "width": 1.19101,
-        "height": 1.19101,
-        "voxelScaleX": 1.24263,
-        "voxelScaleY": 0.80474,
-        "offsetX": 0
-      },
-      "132": {
-        "width": 1.20701,
-        "height": 1.20701,
-        "voxelScaleX": 1.25932,
-        "voxelScaleY": 0.79408,
-        "offsetX": 0
-      },
-      "133": {
-        "width": 1.23216,
-        "height": 1.23216,
+        "width": 1.24,
+        "height": 1.24,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.04021,
-        "voxelScaleY": 1
+        "flipY": false
+      },
+      "131": {
+        "width": 1.19,
+        "height": 1.19,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "132": {
+        "width": 1.21,
+        "height": 1.21,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "133": {
+        "width": 1.23,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "134": {
         "width": 1.11,
@@ -2861,18 +2803,18 @@
     },
     "cmd:qcf+4": {
       "119": {
-        "width": 1.35656,
-        "height": 1.35656,
-        "voxelScaleX": 1.23843,
-        "voxelScaleY": 0.80748,
-        "offsetX": 0
+        "width": 1.36,
+        "height": 1.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "120": {
-        "width": 1.39831,
-        "height": 1.39831,
-        "voxelScaleX": 1.20145,
-        "voxelScaleY": 0.83233,
-        "offsetX": 0
+        "width": 1.4,
+        "height": 1.4,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "121": {
         "width": 1,
@@ -2896,11 +2838,11 @@
         "offsetX": 0
       },
       "124": {
-        "width": 0.84785,
-        "height": 0.84785,
-        "voxelScaleX": 1.17946,
-        "voxelScaleY": 0.84785,
-        "offsetX": 0
+        "width": 0.85,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "125": {
         "width": 1,

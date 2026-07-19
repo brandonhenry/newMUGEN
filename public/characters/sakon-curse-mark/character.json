@@ -64,31 +64,13 @@
       "/characters/sakon-curse-mark/frames/frame-063.png"
     ],
     "sidestepLeft": [
-      "/characters/sakon-curse-mark/frames/frame-056.png",
-      "/characters/sakon-curse-mark/frames/frame-249.png",
-      "/characters/sakon-curse-mark/frames/frame-250.png",
-      "/characters/sakon-curse-mark/frames/frame-251.png",
-      "/characters/sakon-curse-mark/frames/frame-252.png",
-      "/characters/sakon-curse-mark/frames/frame-253.png",
-      "/characters/sakon-curse-mark/frames/frame-254.png",
-      "/characters/sakon-curse-mark/frames/frame-255.png"
+      "/characters/sakon-curse-mark/frames/frame-016.png"
     ],
     "sidestepRight": [
-      "/characters/sakon-curse-mark/frames/frame-057.png",
-      "/characters/sakon-curse-mark/frames/frame-058.png",
-      "/characters/sakon-curse-mark/frames/frame-059.png",
-      "/characters/sakon-curse-mark/frames/frame-060.png",
-      "/characters/sakon-curse-mark/frames/frame-061.png"
+      "/characters/sakon-curse-mark/frames/frame-016.png"
     ],
     "jump": [
-      "/characters/sakon-curse-mark/frames/frame-062.png",
-      "/characters/sakon-curse-mark/frames/frame-065.png",
-      "/characters/sakon-curse-mark/frames/frame-068.png",
-      "/characters/sakon-curse-mark/frames/frame-071.png",
-      "/characters/sakon-curse-mark/frames/frame-074.png",
-      "/characters/sakon-curse-mark/frames/frame-077.png",
-      "/characters/sakon-curse-mark/frames/frame-080.png",
-      "/characters/sakon-curse-mark/frames/frame-083.png"
+      "/characters/sakon-curse-mark/frames/frame-020.png"
     ],
     "crouch": [
       "/characters/sakon-curse-mark/frames/frame-246.png"
@@ -141,7 +123,7 @@
       "/characters/sakon-curse-mark/frames/frame-179.png"
     ],
     "juggle": [
-      "/characters/sakon-curse-mark/frames/frame-181.png"
+      "/characters/sakon-curse-mark/frames/frame-248.png"
     ],
     "knockdown": [
       "/characters/sakon-curse-mark/frames/frame-179.png",
@@ -459,15 +441,11 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
-      "label": "Sakon Curse Mark Left Check",
-      "hitLevel": "high",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 22
+      "forwardForceEndFrame": 22,
+      "label": "Sakon Curse Mark Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
       "startupFrames": 14,
@@ -479,15 +457,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
-      "label": "Sakon Curse Mark Right Check",
-      "hitLevel": "mid",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.85,
       "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 9
+      "forwardForceEndFrame": 9,
+      "label": "Sakon Curse Mark Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 19,
@@ -499,15 +473,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Sakon Curse Mark Left Kick",
-      "hitLevel": "low",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 0.89,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 20
+      "forwardForceEndFrame": 20,
+      "label": "Sakon Curse Mark Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 13,
@@ -519,18 +489,14 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 10,
       "range": 1.7,
-      "label": "Sakon Curse Mark Right Kick",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "pushback": 1,
-      "blockPushback": 0.48,
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 1.2,
       "forwardForceStartFrame": 21,
-      "forwardForceEndFrame": 31
+      "forwardForceEndFrame": 31,
+      "pushback": 1,
+      "blockPushback": 0.48,
+      "label": "Sakon Curse Mark Right Kick",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:f+1": {
       "startupFrames": 13,
@@ -543,14 +509,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Sakon Curse Mark Rush",
-      "hitLevel": "mid",
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForceStartFrame": 24,
-      "forwardForceEndFrame": 32
+      "forwardForceEndFrame": 32,
+      "label": "Sakon Curse Mark Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
       "startupFrames": 17,
@@ -562,19 +524,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 12,
       "range": 1.68,
+      "forwardForce": 1.98,
+      "forwardForceStartFrame": 6,
+      "forwardForceEndFrame": 11,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Sakon Curse Mark Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 19,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
-      "forwardForce": 1.98,
-      "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 11
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
       "startupFrames": 23,
@@ -586,16 +544,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 39,
       "range": 2.05,
-      "label": "Sakon Curse Mark Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 3.41,
       "forwardForceStartFrame": 39,
-      "forwardForceEndFrame": 58
+      "forwardForceEndFrame": 58,
+      "label": "Sakon Curse Mark Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 13,
@@ -607,15 +561,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Sakon Curse Mark Rising Strike",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 15,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.36,
       "forwardForceStartFrame": 22,
-      "forwardForceEndFrame": 32
+      "forwardForceEndFrame": 32,
+      "label": "Sakon Curse Mark Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 14,
@@ -627,15 +577,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "Sakon Curse Mark Crouch Jab",
-      "hitLevel": "mid",
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5,
       "forwardForce": 1.53,
       "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 36
+      "forwardForceEndFrame": 36,
+      "label": "Sakon Curse Mark Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
       "startupFrames": 18,
@@ -647,16 +593,12 @@
       "onCounterHitFrames": 30,
       "whiffRecoveryFrames": 12,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "Sakon Curse Mark Crouch Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
       "forwardForce": 1.89,
       "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "launchHeight": 2,
+      "label": "Sakon Curse Mark Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 19,
@@ -668,15 +610,11 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 9,
       "range": 1.72,
-      "label": "Sakon Curse Mark Twin Assault",
-      "hitLevel": "mid",
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 1.68,
       "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 11
+      "forwardForceEndFrame": 11,
+      "label": "Sakon Curse Mark Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
       "startupFrames": 17,
@@ -688,16 +626,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 13,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Sakon Curse Mark Cross Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
       "forwardForce": 1.7,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 22
+      "forwardForceEndFrame": 22,
+      "launchHeight": 2.2,
+      "label": "Sakon Curse Mark Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 20,
@@ -709,15 +643,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
-      "label": "Sakon Curse Mark Low Feint",
-      "hitLevel": "low",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.31,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 22
+      "forwardForceEndFrame": 22,
+      "label": "Sakon Curse Mark Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 26,
@@ -729,16 +659,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 12,
       "range": 1.74,
-      "label": "Sakon Curse Mark Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 1.63,
       "forwardForceStartFrame": 40,
-      "forwardForceEndFrame": 60
+      "forwardForceEndFrame": 60,
+      "label": "Sakon Curse Mark Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -750,16 +676,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 38,
       "range": 1.9,
-      "label": "Sakon Curse Mark Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 2.83,
       "forwardForceStartFrame": 38,
-      "forwardForceEndFrame": 56
+      "forwardForceEndFrame": 56,
+      "label": "Sakon Curse Mark Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 26,
@@ -771,18 +693,14 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 41,
       "range": 2.1,
+      "forwardForce": 3.12,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 16,
       "kiCost": 35,
       "label": "Sakon Curse Mark Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
-      "forwardForce": 3.12,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 16
+      "usesKi": true
     },
     "neutral:jab-jab": {
       "startupFrames": 14,
@@ -1337,6 +1255,13 @@
       }
     },
     "sidestepLeft": {
+      "16": {
+        "width": 1,
+        "height": 1,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
+      },
       "56": {
         "width": 0.76,
         "height": 0.94,
@@ -1395,6 +1320,13 @@
       }
     },
     "sidestepRight": {
+      "16": {
+        "width": 1,
+        "height": 1,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
+      },
       "57": {
         "width": 1.04,
         "height": 1.42,
@@ -1432,6 +1364,13 @@
       }
     },
     "jump": {
+      "20": {
+        "width": 1,
+        "height": 1,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
+      },
       "62": {
         "width": 1.18,
         "height": 1.18,
@@ -1639,11 +1578,11 @@
         "flipY": false
       },
       "31": {
-        "width": 1.04801,
-        "height": 1.04801,
-        "voxelScaleX": 0.76564,
-        "voxelScaleY": 1.3061,
-        "offsetX": 0
+        "width": 1.05,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "32": {
         "width": 1.18,
@@ -1778,20 +1717,18 @@
     },
     "kickright": {
       "141": {
-        "width": 1.41285,
-        "height": 1.41285,
-        "voxelScaleX": 0.93542,
-        "voxelScaleY": 1.06904,
+        "width": 1.41,
+        "height": 1.41,
         "offsetX": 0,
-        "flipX": true
+        "flipX": true,
+        "flipY": false
       },
       "142": {
-        "width": 1.35571,
-        "height": 1.35571,
-        "voxelScaleX": 0.87039,
-        "voxelScaleY": 1.14891,
+        "width": 1.36,
+        "height": 1.36,
         "offsetX": 0,
-        "flipX": true
+        "flipX": true,
+        "flipY": false
       },
       "144": {
         "width": 1.13,
@@ -1973,6 +1910,13 @@
         "offsetX": 0,
         "flipX": false,
         "flipY": false
+      },
+      "248": {
+        "width": 0.94105,
+        "height": 0.94105,
+        "voxelScaleX": 1.32916,
+        "voxelScaleY": 0.75235,
+        "offsetX": 0
       }
     },
     "knockdown": {
@@ -1994,7 +1938,7 @@
         "width": 1.18,
         "height": 1.18,
         "voxelScaleX": 1,
-        "voxelScaleY": 0.88571,
+        "voxelScaleY": 1,
         "offsetX": 0
       },
       "182": {

@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "reviewedNpcCount": 99,
+  "reviewedFrameCount": 2973,
+  "changedFrameCountFromBaseline": 1688,
+  "reviewMethod": [
+    "Manual black-background contact-sheet inspection of every runtime frame",
+    "Individual source-sheet and 192x192 frame inspection for every suspicious crop",
+    "Fresh full-roster connected-component audit after rebuilding all assets"
+  ],
+  "repairMethods": [
+    "Tight action-row crop bounds to prevent neighboring sprite-row bleed",
+    "Per-NPC reviewed horizontal centers and vertical bounds for atypical source sheets",
+    "Nearest clean coherent pose substitution where the source cell itself is partial or corrupted",
+    "Targeted removal of visually confirmed detached edge islands and preceding-row pixels"
+  ],
+  "acceptedIntentionalDetachedElements": [
+    {
+      "npc": "nym-cloudling",
+      "frameCount": 22,
+      "reason": "The character's floating boots are stable intentional anatomy."
+    },
+    {
+      "npc": "aero-wispkin",
+      "frameCount": 4,
+      "reason": "The detached regions are intentional wisp and attack particles."
+    }
+  ],
+  "sourceFallbacks": [
+    {
+      "npcs": [
+        "della-gear",
+        "inga-stove",
+        "ivo-ossin"
+      ],
+      "action": "protect",
+      "frame": 4,
+      "decision": "Retain the previous clean pose because the requested source cell is empty."
+    },
+    {
+      "npcs": [
+        "mara-bell"
+      ],
+      "action": "protect",
+      "frame": 3,
+      "decision": "Use protect frame 2 because the source cell is not a complete actor."
+    }
+  ],
+  "finalAudit": {
+    "accidentalFragmentCandidates": 0,
+    "acceptedIntentionalCandidates": 26
+  }
+}

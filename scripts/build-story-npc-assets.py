@@ -26,7 +26,23 @@ RUNTIME_MANIFEST_PATH = ROOT / "src/story/storyNpcManifest.json"
 ACTIONS = (("idle", 6, True, 180), ("dialogue", 6, True, 150), ("walk", 8, True, 110), ("protect", 4, False, 115), ("counter", 8, False, 90))
 STYLE_REFERENCE_IDS = ("mina-quill", "hana-rook", "tamsin-reed")
 IMAGEGEN_MODEL = "OpenAI image_gen (session-default model)"
-IMAGEGEN_ROW_BOUNDS = ((0, 200), (200, 400), (400, 600), (600, 780), (760, 1024))
+IMAGEGEN_ROW_BOUNDS = ((0, 200), (200, 400), (400, 580), (600, 760), (700, 1024))
+NPC_REVIEWED_VERTICAL_BOUNDS: dict[str, dict[str, tuple[int, int]]] = {
+    # Mina's supplied protect poses begin above the nominal fifth-row split.
+    "mina-quill": {"protect": (900, 1200)},
+    # These generated walk actors extend slightly below the conservative shared
+    # cutoff. Each lower edge was reviewed against its following protect row.
+    "aero-wispkin": {"walk": (400, 610)},
+    "glint-shardling": {"walk": (400, 590)},
+    "moki-frostling": {"walk": (400, 600)},
+    "nuri-sandling": {"walk": (400, 590)},
+    "nym-cloudling": {"walk": (400, 590)},
+    # Rian's walk feet extend below the shared row boundary; 615 keeps every
+    # complete gait pose without admitting the protect actors below it.
+    "rian-basalt": {"walk": (400, 615)},
+    "varek-lava": {"walk": (400, 590)},
+    "zeph-cloudkin": {"walk": (400, 600)},
+}
 NPC_REVIEWED_CENTERS: dict[str, dict[str, tuple[float, ...]]] = {
     "kael-cinder": {
         "protect": (281, 449, 595, 711),
@@ -34,7 +50,88 @@ NPC_REVIEWED_CENTERS: dict[str, dict[str, tuple[float, ...]]] = {
     },
     "elowen-gate": {"counter": (167, 382.5, 598, 835, 1130)},
     "glint-shardling": {"protect": (283, 477, 690)},
+    # The lower-body projection splits each crouching pose into multiple runs;
+    # use the visually reviewed head/torso centers so the protect row retains
+    # the four complete bodies instead of extracting isolated hair fragments.
+    "rafi-ripple": {"protect": (307.5, 535, 748, 971)},
     "zeph-cloudkin": {"counter": (293.5, 464, 640, 820, 1010, 1190)},
+}
+
+# Source sheets occasionally contain a partial adjacent cell instead of a
+# complete actor.  These visually reviewed substitutions retain the closest
+# clean pose rather than shipping a severed or fragment-only runtime frame.
+NPC_FRAME_REPLACEMENTS: dict[tuple[str, str, int], tuple[str, int]] = {
+    ("ada-sunstone", "counter", 4): ("counter", 3),
+    ("aero-wispkin", "walk", 5): ("walk", 4),
+    ("asha-lantern", "counter", 5): ("counter", 4),
+    ("asha-lantern", "counter", 6): ("counter", 4),
+    ("cedric-thatch", "counter", 4): ("counter", 3),
+    ("kesh-scarabkin", "counter", 2): ("counter", 1),
+    ("kesh-scarabkin", "counter", 5): ("counter", 4),
+    ("kip-mossfoot", "counter", 3): ("counter", 2),
+    ("kip-mossfoot", "counter", 6): ("counter", 5),
+    ("lark-hollow", "counter", 4): ("counter", 3),
+    ("lumi-cloud", "protect", 1): ("protect", 3),
+    ("lumi-cloud", "protect", 2): ("protect", 3),
+    ("mira-mooring", "counter", 1): ("protect", 1),
+    ("mira-mooring", "counter", 2): ("protect", 2),
+    ("mira-mooring", "counter", 3): ("protect", 3),
+    ("mira-mooring", "counter", 4): ("protect", 4),
+    ("mira-mooring", "counter", 5): ("protect", 3),
+    ("mira-mooring", "counter", 6): ("protect", 4),
+    ("moki-frostling", "counter", 5): ("counter", 4),
+    ("moss-bell", "counter", 6): ("counter", 5),
+    ("nia-rivet", "counter", 5): ("counter", 4),
+    ("nia-rivet", "counter", 6): ("counter", 4),
+    ("nib-bonekin", "counter", 1): ("counter", 3),
+    ("nib-bonekin", "counter", 2): ("counter", 3),
+    ("orla-sanctum", "counter", 3): ("counter", 2),
+    ("orla-sanctum", "counter", 5): ("counter", 4),
+    ("pip-bramble", "counter", 5): ("counter", 4),
+    ("pip-bramble", "counter", 6): ("counter", 4),
+    ("pippa-brook", "counter", 5): ("counter", 4),
+    ("pippa-brook", "counter", 6): ("counter", 4),
+    ("puck-snowkin", "counter", 3): ("counter", 2),
+    ("puck-snowkin", "counter", 4): ("counter", 5),
+    ("rowan-root", "counter", 4): ("counter", 3),
+    ("ruk-emberling", "counter", 2): ("counter", 1),
+    ("ruk-emberling", "counter", 3): ("counter", 4),
+    ("tali-chime", "protect", 1): ("counter", 3),
+    ("tali-chime", "protect", 2): ("counter", 3),
+    ("tali-chime", "protect", 3): ("counter", 3),
+    ("tali-chime", "protect", 4): ("counter", 3),
+    ("tali-chime", "counter", 5): ("counter", 4),
+    ("tali-chime", "counter", 6): ("counter", 4),
+    ("thalia-thorn", "counter", 4): ("counter", 3),
+    ("thalia-thorn", "counter", 5): ("counter", 3),
+    ("thalia-thorn", "counter", 6): ("counter", 3),
+    ("tobin-reed", "counter", 3): ("counter", 6),
+    ("tobin-reed", "counter", 5): ("counter", 6),
+    ("veya-spore", "counter", 6): ("counter", 5),
+    ("ylva-snow", "counter", 2): ("counter", 1),
+    ("ylva-snow", "counter", 3): ("counter", 4),
+    ("ylva-snow", "counter", 5): ("counter", 4),
+}
+NPC_EDGE_CLEANUPS = {
+    ("hana-rook", "counter", 1),
+    ("hana-rook", "counter", 2),
+    ("tamsin-reed", "counter", 1),
+    ("tamsin-reed", "counter", 2),
+    ("tiko-fennec", "protect", 1),
+    ("tiko-fennec", "protect", 2),
+    ("tiko-fennec", "protect", 3),
+    ("tiko-fennec", "protect", 4),
+    ("veya-spore", "protect", 2),
+    ("veya-spore", "protect", 3),
+    ("veya-spore", "protect", 4),
+}
+NPC_ABOVE_ROW_BLEED_CLEANUPS = {
+    # The previous protect row leaves tiny shield pixels above these otherwise
+    # complete counter actors. They are not part of the counter animation.
+    ("veya-spore", "counter", 1),
+    ("veya-spore", "counter", 2),
+    ("veya-spore", "counter", 3),
+    ("veya-spore", "counter", 4),
 }
 IMAGEGEN_PROMPT_CONTRACT = (
     "One production sprite sheet for {identity}; side-view anime pixel art matching all three canonical starter references, "
@@ -288,6 +385,79 @@ def remove_detached_edge_fragments(frame: Image.Image) -> Image.Image:
     return cleaned
 
 
+def remove_reviewed_edge_islands(frame: Image.Image) -> Image.Image:
+    """Repeatedly remove visually confirmed isolated edge debris."""
+    current = frame
+    while True:
+        found = sorted(components(current), key=len, reverse=True)
+        if len(found) < 2:
+            return current
+        primary = found[0]
+        ml, mr = min(x for x, _ in primary), max(x for x, _ in primary)
+        mt, mb = min(y for _, y in primary), max(y for _, y in primary)
+        remove: set[int] = set()
+        for rank, component in enumerate(found[1:], 1):
+            left, right = min(x for x, _ in component), max(x for x, _ in component)
+            top, bottom = min(y for _, y in component), max(y for _, y in component)
+            below_gap = top - mb
+            above_gap = mt - bottom
+            left_gap = ml - right
+            right_gap = left - mr
+            floor_bleed = bottom >= current.height - 4 and top >= mb + 4
+            ceiling_bleed = top <= 2 and bottom <= mt - 4
+            side_bleed = (left <= 2 and right <= ml - 5) or (
+                right >= current.width - 2 and left >= mr + 5
+            )
+            edge = left <= 1 or right >= current.width - 2 or top <= 1 or bottom >= current.height - 4
+            isolated = max(below_gap, above_gap, left_gap, right_gap) >= 5
+            substantial_island = len(component) >= 12 and isolated and len(component) <= len(primary) * .6
+            if floor_bleed or ceiling_bleed or side_bleed or (edge and substantial_island):
+                remove.add(rank)
+        if not remove:
+            return current
+        cleaned = Image.new("RGBA", current.size)
+        source, target = current.load(), cleaned.load()
+        for rank, component in enumerate(found):
+            if rank in remove:
+                continue
+            for x, y in component:
+                target[x, y] = source[x, y]
+        box = cleaned.getchannel("A").getbbox()
+        if not box:
+            raise RuntimeError("Reviewed edge cleanup removed the entire frame")
+        actor = cleaned.crop(box)
+        recentered = Image.new("RGBA", (192, 192))
+        recentered.alpha_composite(actor, ((192 - actor.width) // 2, 188 - actor.height))
+        current = recentered
+
+
+def remove_reviewed_above_row_bleed(frame: Image.Image) -> Image.Image:
+    """Remove isolated pixels known to belong to the preceding source row."""
+    found = sorted(components(frame), key=len, reverse=True)
+    if not found:
+        return frame
+    primary_top = min(y for _, y in found[0])
+    keep = [
+        component
+        for rank, component in enumerate(found)
+        if rank == 0 or max(y for _, y in component) >= primary_top - 10
+    ]
+    if len(keep) == len(found):
+        return frame
+    cleaned = Image.new("RGBA", frame.size)
+    source, target = frame.load(), cleaned.load()
+    for component in keep:
+        for x, y in component:
+            target[x, y] = source[x, y]
+    box = cleaned.getchannel("A").getbbox()
+    if not box:
+        raise RuntimeError("Reviewed row-bleed cleanup removed the entire frame")
+    actor = cleaned.crop(box)
+    recentered = Image.new("RGBA", (192, 192))
+    recentered.alpha_composite(actor, ((192 - actor.width) // 2, 188 - actor.height))
+    return recentered
+
+
 def normalized_frame(
     sheet: Image.Image,
     centers: list[float],
@@ -365,7 +535,10 @@ def build_asset(asset: NpcAsset) -> dict:
         centers = list(reviewed_centers) if reviewed_centers else action_centers(
             sheet, source_row, count, walking, asset.source_kind
         )
-        vertical_bounds = IMAGEGEN_ROW_BOUNDS[source_row] if asset.source_kind == "imagegen" else None
+        reviewed_vertical_bounds = NPC_REVIEWED_VERTICAL_BOUNDS.get(asset.id, {}).get(action)
+        vertical_bounds = reviewed_vertical_bounds or (
+            IMAGEGEN_ROW_BOUNDS[source_row] if asset.source_kind == "imagegen" else None
+        )
         frames: list[str] = []
         action_dir = destination / action
         action_dir.mkdir(parents=True, exist_ok=True)
@@ -416,6 +589,40 @@ def build_asset(asset: NpcAsset) -> dict:
         if strict_generated_walk and len(set(pose_hashes)) != 8:
             raise RuntimeError(f"Generated walk row for {asset.id} must contain eight distinct approved poses")
         action_entries[action] = {"frames": frames, "durationMs": duration, "loop": loop}
+
+    for (npc_id, action, index), (source_action, source_index) in NPC_FRAME_REPLACEMENTS.items():
+        if npc_id != asset.id:
+            continue
+        target_path = destination / action / f"{index:02d}.png"
+        replacement_path = destination / source_action / f"{source_index:02d}.png"
+        with Image.open(replacement_path) as replacement:
+            replacement.convert("RGBA").save(target_path, optimize=True)
+    for npc_id, action, index in NPC_EDGE_CLEANUPS:
+        if npc_id != asset.id:
+            continue
+        target_path = destination / action / f"{index:02d}.png"
+        with Image.open(target_path) as source:
+            cleaned = remove_reviewed_edge_islands(source.convert("RGBA"))
+        cleaned.save(target_path, optimize=True)
+        cleaned.close()
+    for npc_id, action, index in NPC_ABOVE_ROW_BLEED_CLEANUPS:
+        if npc_id != asset.id:
+            continue
+        target_path = destination / action / f"{index:02d}.png"
+        with Image.open(target_path) as source:
+            cleaned = remove_reviewed_above_row_bleed(source.convert("RGBA"))
+        cleaned.save(target_path, optimize=True)
+        cleaned.close()
+
+    # Rebuild the proof list from the final on-disk frames so replacements and
+    # reviewed component cleanups are reflected in the contact sheet.
+    for _label, frame in contact_frames:
+        frame.close()
+    contact_frames = []
+    for action, entry in action_entries.items():
+        for index, public_path in enumerate(entry["frames"], 1):
+            with Image.open(ROOT / "public" / public_path.lstrip("/")) as source:
+                contact_frames.append((f"{action} {index}", source.convert("RGBA")))
     columns = 8
     rows = (len(contact_frames) + columns - 1) // columns
     contact = Image.new("RGB", (columns * 192, rows * 216), "#11151b")

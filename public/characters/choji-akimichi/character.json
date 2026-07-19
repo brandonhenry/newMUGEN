@@ -76,11 +76,7 @@
       "/characters/choji-akimichi/frames/frame-027.png"
     ],
     "jump": [
-      "/characters/choji-akimichi/frames/frame-032.png",
-      "/characters/choji-akimichi/frames/frame-033.png",
-      "/characters/choji-akimichi/frames/frame-034.png",
-      "/characters/choji-akimichi/frames/frame-035.png",
-      "/characters/choji-akimichi/frames/frame-036.png"
+      "/characters/choji-akimichi/frames/frame-020.png"
     ],
     "crouch": [
       "/characters/choji-akimichi/frames/frame-038.png"
@@ -652,15 +648,11 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
-      "label": "Choji Akimichi Left Check",
-      "hitLevel": "high",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 10
+      "forwardForceEndFrame": 10,
+      "label": "Choji Akimichi Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
       "startupFrames": 14,
@@ -672,15 +664,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
-      "label": "Choji Akimichi Right Check",
-      "hitLevel": "mid",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.85,
       "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 22
+      "forwardForceEndFrame": 22,
+      "label": "Choji Akimichi Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 30,
@@ -692,15 +680,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Choji Akimichi Left Kick",
-      "hitLevel": "low",
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 0.95,
       "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 13
+      "forwardForceEndFrame": 13,
+      "label": "Choji Akimichi Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 14,
@@ -712,15 +696,11 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 7,
       "range": 1.7,
-      "label": "Choji Akimichi Right Kick",
-      "hitLevel": "mid",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.2,
       "forwardForceStartFrame": 26,
-      "forwardForceEndFrame": 30
+      "forwardForceEndFrame": 30,
+      "label": "Choji Akimichi Right Kick",
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
       "startupFrames": 13,
@@ -733,14 +713,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Choji Akimichi Rush",
-      "hitLevel": "mid",
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 20
+      "forwardForceEndFrame": 20,
+      "label": "Choji Akimichi Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
       "startupFrames": 16,
@@ -752,19 +728,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 12,
       "range": 1.68,
+      "forwardForce": 1.35,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 19,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Choji Akimichi Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 22,
-      "onJuggleHitFrames": 20,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
-      "forwardForce": 1.35,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 19
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
       "startupFrames": 20,
@@ -776,16 +748,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 36,
       "range": 2.05,
-      "label": "Choji Akimichi Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 3.61,
       "forwardForceStartFrame": 26,
-      "forwardForceEndFrame": 38
+      "forwardForceEndFrame": 38,
+      "label": "Choji Akimichi Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 13,
@@ -797,15 +765,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Choji Akimichi Rising Strike",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 15,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.71,
       "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 31
+      "forwardForceEndFrame": 31,
+      "label": "Choji Akimichi Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 13,
@@ -817,15 +781,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "Choji Akimichi Crouch Jab",
-      "hitLevel": "mid",
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5,
       "forwardForce": 1.18,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 15
+      "forwardForceEndFrame": 15,
+      "label": "Choji Akimichi Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -837,16 +797,12 @@
       "onCounterHitFrames": 30,
       "whiffRecoveryFrames": 31,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "Choji Akimichi Crouch Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
       "forwardForce": 2.01,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 29
+      "forwardForceEndFrame": 29,
+      "launchHeight": 2,
+      "label": "Choji Akimichi Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 18,
@@ -858,15 +814,11 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 9,
       "range": 1.72,
-      "label": "Choji Akimichi Twin Assault",
-      "hitLevel": "mid",
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 1.8,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 29
+      "forwardForceEndFrame": 29,
+      "label": "Choji Akimichi Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -878,16 +830,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 33,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Choji Akimichi Cross Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 19,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
       "forwardForce": 2.42,
       "forwardForceStartFrame": 4,
-      "forwardForceEndFrame": 9
+      "forwardForceEndFrame": 9,
+      "launchHeight": 2.2,
+      "label": "Choji Akimichi Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -899,15 +847,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 26,
       "range": 1.58,
-      "label": "Choji Akimichi Low Feint",
-      "hitLevel": "low",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 2.03,
       "forwardForceStartFrame": 3,
-      "forwardForceEndFrame": 8
+      "forwardForceEndFrame": 8,
+      "label": "Choji Akimichi Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 22,
@@ -919,16 +863,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 12,
       "range": 1.74,
-      "label": "Choji Akimichi Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 1.98,
       "forwardForceStartFrame": 36,
-      "forwardForceEndFrame": 42
+      "forwardForceEndFrame": 42,
+      "label": "Choji Akimichi Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -940,16 +880,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 36,
       "range": 1.9,
-      "label": "Choji Akimichi Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 3.18,
       "forwardForceStartFrame": 39,
-      "forwardForceEndFrame": 46
+      "forwardForceEndFrame": 46,
+      "label": "Choji Akimichi Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -961,192 +897,188 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 38,
       "range": 2.1,
+      "forwardForce": 3.24,
+      "forwardForceStartFrame": 20,
+      "forwardForceEndFrame": 38,
       "kiCost": 35,
       "label": "Choji Akimichi Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
-      "forwardForce": 3.24,
-      "forwardForceStartFrame": 20,
-      "forwardForceEndFrame": 38
+      "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Choji Akimichi Second Beat",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "label": "Choji Akimichi Body Blow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "label": "Choji Akimichi Low Changeup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "label": "Choji Akimichi Pressure Feint",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "label": "Choji Akimichi Drive",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Drive"
     },
     "neutral:jab-heavy-kick": {
-      "label": "Choji Akimichi Barrage",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Barrage"
     },
     "neutral:jab-heavy-special": {
-      "label": "Choji Akimichi Finisher",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Finisher"
     },
     "neutral:jab-kick": {
-      "label": "Choji Akimichi Step Kick",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "label": "Choji Akimichi Palm String",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Palm String"
     },
     "neutral:jab-kick-special": {
-      "label": "Choji Akimichi Rising Chain",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Rising Chain"
     },
     "neutral:jab-special": {
-      "label": "Choji Akimichi Special Setup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "label": "Choji Akimichi Break Art",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Break Art"
     },
     "neutral:heavy-jab": {
-      "label": "Choji Akimichi Check Hook",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Choji Akimichi Heavy Break",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "label": "Choji Akimichi Charged Follow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Charged Follow"
     },
     "neutral:heavy-kick": {
-      "label": "Choji Akimichi Drop Kick",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "label": "Choji Akimichi Arc Finisher",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Arc Finisher"
     },
     "neutral:heavy-special": {
-      "label": "Choji Akimichi Focus Stance",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "label": "Choji Akimichi Mode Shift",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Mode Shift"
     },
     "neutral:kick-jab": {
-      "label": "Choji Akimichi Heel Feint",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "label": "Choji Akimichi Summon Strike",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Summon Strike"
     },
     "neutral:kick-heavy": {
-      "label": "Choji Akimichi Guard Snare",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "label": "Choji Akimichi Armor Break",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Armor Break"
     },
     "neutral:kick-special": {
-      "label": "Choji Akimichi Power Setup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "label": "Choji Akimichi Switch Strike",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Switch Strike"
     },
     "neutral:special-jab": {
-      "label": "Choji Akimichi Spark Jab",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "label": "Choji Akimichi Binding Blow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Binding Blow"
     },
     "neutral:special-heavy": {
-      "label": "Choji Akimichi Heavy Draw",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Heavy Draw"
     },
     "neutral:special-kick": {
-      "label": "Choji Akimichi Kick Ender",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Choji Akimichi Kick Ender"
     }
   },
   "effects": [],
@@ -1249,11 +1181,9 @@
       "12": {
         "width": 1,
         "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.00009,
-        "voxelScaleY": 1
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
       },
       "13": {
         "width": 0.98,
@@ -1295,11 +1225,9 @@
       "0": {
         "width": 1,
         "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.98609,
-        "voxelScaleY": 1
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
       },
       "18": {
         "width": 0.98,
@@ -1409,6 +1337,13 @@
       }
     },
     "jump": {
+      "20": {
+        "width": 0.57458,
+        "height": 0.57458,
+        "voxelScaleX": 1.00089,
+        "voxelScaleY": 0.99911,
+        "offsetX": 0
+      },
       "32": {
         "width": 1.41,
         "height": 0.84,
@@ -1507,13 +1442,11 @@
         "flipY": false
       },
       "53": {
-        "width": 0.98135,
-        "height": 0.98135,
+        "width": 0.98,
+        "height": 0.98,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.00014,
-        "voxelScaleY": 1
+        "flipY": false
       }
     },
     "chargeKi": {
@@ -1562,56 +1495,44 @@
       "6": {
         "width": 1,
         "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.06194,
-        "voxelScaleY": 1
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
       },
       "7": {
         "width": 1,
         "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.024,
-        "voxelScaleY": 1
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
       },
       "8": {
         "width": 1,
         "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.94816,
-        "voxelScaleY": 1
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
       },
       "9": {
         "width": 1,
         "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.94816,
-        "voxelScaleY": 1
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
       },
       "10": {
         "width": 1,
         "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.94816,
-        "voxelScaleY": 1
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
       },
       "11": {
         "width": 1,
         "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.91023,
-        "voxelScaleY": 1
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
       },
       "48": {
         "width": 1.58,
@@ -1658,40 +1579,32 @@
     },
     "jableft": {
       "39": {
-        "width": 0.98135,
-        "height": 0.98135,
+        "width": 0.98,
+        "height": 0.98,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.00015,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "40": {
-        "width": 0.94429,
-        "height": 0.94429,
+        "width": 0.94,
+        "height": 0.94,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.00012,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "41": {
-        "width": 0.94429,
-        "height": 0.94429,
+        "width": 0.94,
+        "height": 0.94,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.00014,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "42": {
-        "width": 0.98135,
-        "height": 0.98135,
+        "width": 0.98,
+        "height": 0.98,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.19791,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "54": {
         "width": 0.8,
@@ -1703,58 +1616,46 @@
     },
     "jabright": {
       "48": {
-        "width": 0.88889,
-        "height": 0.88889,
+        "width": 0.89,
+        "height": 0.89,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.00006,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "49": {
-        "width": 0.92593,
-        "height": 0.92593,
+        "width": 0.93,
+        "height": 0.93,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.00008,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "50": {
-        "width": 0.85179,
-        "height": 0.85179,
+        "width": 0.85,
+        "height": 0.85,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.99996,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "51": {
-        "width": 0.85179,
-        "height": 0.85179,
+        "width": 0.85,
+        "height": 0.85,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.99996,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "52": {
-        "width": 0.87032,
-        "height": 0.87032,
+        "width": 0.87,
+        "height": 0.87,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.00006,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "53": {
-        "width": 0.98135,
-        "height": 0.98135,
+        "width": 0.98,
+        "height": 0.98,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.00014,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "55": {
         "width": 0.97,
@@ -1973,13 +1874,11 @@
     },
     "hitLight": {
       "56": {
-        "width": 0.94429,
-        "height": 0.94429,
+        "width": 0.94,
+        "height": 0.94,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.00014,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "64": {
         "width": 1.61,
@@ -2026,13 +1925,11 @@
     },
     "hitHeavy": {
       "56": {
-        "width": 0.94429,
-        "height": 0.94429,
+        "width": 0.94,
+        "height": 0.94,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.00014,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "70": {
         "width": 0.96,
@@ -3536,9 +3433,9 @@
       "315": {
         "width": 1,
         "height": 1,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
       },
       "316": {
         "width": 2.13689,
@@ -3760,13 +3657,11 @@
         "flipY": false
       },
       "57": {
-        "width": 0.79086,
-        "height": 0.79086,
+        "width": 0.79,
+        "height": 0.79,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.99954,
-        "voxelScaleY": 1
+        "flipY": false
       }
     },
     "cmd:f+1": {

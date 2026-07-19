@@ -64,13 +64,7 @@
       "/characters/orochimaru/frames/frame-073.png"
     ],
     "jump": [
-      "/characters/orochimaru/frames/frame-047.png",
-      "/characters/orochimaru/frames/frame-048.png",
-      "/characters/orochimaru/frames/frame-049.png",
-      "/characters/orochimaru/frames/frame-052.png",
-      "/characters/orochimaru/frames/frame-053.png",
-      "/characters/orochimaru/frames/frame-059.png",
-      "/characters/orochimaru/frames/frame-060.png"
+      "/characters/orochimaru/frames/frame-017.png"
     ],
     "crouch": [
       "/characters/orochimaru/frames/frame-044.png"
@@ -502,15 +496,11 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
-      "label": "Orochimaru Left Check",
-      "hitLevel": "high",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 14
+      "forwardForceEndFrame": 14,
+      "label": "Orochimaru Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
       "startupFrames": 13,
@@ -522,15 +512,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
-      "label": "Orochimaru Right Check",
-      "hitLevel": "mid",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.75,
       "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 20
+      "forwardForceEndFrame": 20,
+      "label": "Orochimaru Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 20,
@@ -542,16 +528,12 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Orochimaru Left Kick",
-      "hitLevel": "low",
-      "endsInCrouch": true,
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 0.95,
       "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 22
+      "forwardForceEndFrame": 22,
+      "label": "Orochimaru Left Kick",
+      "hitLevel": "low",
+      "endsInCrouch": true
     },
     "kickright": {
       "startupFrames": 13,
@@ -563,18 +545,14 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 10,
       "range": 1.7,
-      "label": "Orochimaru Right Kick",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "pushback": 1,
-      "blockPushback": 0.48,
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 1.07,
       "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 16
+      "forwardForceEndFrame": 16,
+      "pushback": 1,
+      "blockPushback": 0.48,
+      "label": "Orochimaru Right Kick",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:f+1": {
       "startupFrames": 15,
@@ -587,14 +565,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Orochimaru Rush",
-      "hitLevel": "mid",
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForceStartFrame": 32,
-      "forwardForceEndFrame": 35
+      "forwardForceEndFrame": 35,
+      "label": "Orochimaru Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
       "startupFrames": 16,
@@ -606,19 +580,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 30,
       "range": 1.68,
+      "forwardForce": 2.38,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 30,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Orochimaru Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 18,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
-      "forwardForce": 2.38,
-      "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 30
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
@@ -630,16 +600,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 35,
       "range": 2.05,
-      "label": "Orochimaru Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 3.27,
       "forwardForceStartFrame": 20,
-      "forwardForceEndFrame": 28
+      "forwardForceEndFrame": 28,
+      "label": "Orochimaru Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 15,
@@ -651,15 +617,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 26,
       "range": 1.62,
-      "label": "Orochimaru Rising Strike",
-      "hitLevel": "mid",
-      "onComboHitFrames": 20,
-      "onJuggleHitFrames": 14,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 2.27,
       "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 15
+      "forwardForceEndFrame": 15,
+      "label": "Orochimaru Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 14,
@@ -671,15 +633,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "Orochimaru Crouch Jab",
-      "hitLevel": "mid",
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5,
       "forwardForce": 1.25,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 19
+      "forwardForceEndFrame": 19,
+      "label": "Orochimaru Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -691,16 +649,12 @@
       "onCounterHitFrames": 30,
       "whiffRecoveryFrames": 12,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "Orochimaru Crouch Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 22,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
       "forwardForce": 1.53,
       "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 29
+      "forwardForceEndFrame": 29,
+      "launchHeight": 2,
+      "label": "Orochimaru Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 14,
@@ -712,15 +666,11 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 24,
       "range": 1.72,
-      "label": "Orochimaru Twin Assault",
-      "hitLevel": "mid",
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 2.33,
       "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 15
+      "forwardForceEndFrame": 15,
+      "label": "Orochimaru Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -732,16 +682,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 33,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Orochimaru Cross Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 20,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
       "forwardForce": 2.36,
       "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "launchHeight": 2.2,
+      "label": "Orochimaru Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -753,15 +699,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
-      "label": "Orochimaru Low Feint",
-      "hitLevel": "low",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.97,
       "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 21
+      "forwardForceEndFrame": 21,
+      "label": "Orochimaru Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 22,
@@ -773,16 +715,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 12,
       "range": 1.74,
-      "label": "Orochimaru Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 1.49,
       "forwardForceStartFrame": 20,
-      "forwardForceEndFrame": 27
+      "forwardForceEndFrame": 27,
+      "label": "Orochimaru Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -794,16 +732,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 35,
       "range": 1.9,
-      "label": "Orochimaru Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 2.69,
       "forwardForceStartFrame": 20,
-      "forwardForceEndFrame": 28
+      "forwardForceEndFrame": 28,
+      "label": "Orochimaru Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 30,
@@ -815,18 +749,14 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 47,
       "range": 2.1,
+      "forwardForce": 3.66,
+      "forwardForceStartFrame": 69,
+      "forwardForceEndFrame": 76,
       "kiCost": 35,
       "label": "Orochimaru Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
-      "forwardForce": 3.66,
-      "forwardForceStartFrame": 69,
-      "forwardForceEndFrame": 76
+      "usesKi": true
     },
     "neutral:jab-jab": {
       "startupFrames": 14,
@@ -1171,11 +1101,11 @@
     },
     "walkForward": {
       "39": {
-        "width": 0.95137,
-        "height": 0.95137,
-        "voxelScaleX": 0.99977,
-        "voxelScaleY": 1.00023,
-        "offsetX": 0
+        "width": 0.95,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "43": {
         "width": 1.01,
@@ -1329,11 +1259,11 @@
     },
     "sprint": {
       "39": {
-        "width": 0.95137,
-        "height": 0.95137,
-        "voxelScaleX": 0.99977,
-        "voxelScaleY": 1.00023,
-        "offsetX": 0
+        "width": 0.95,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "106": {
         "width": 1.08,
@@ -1408,11 +1338,11 @@
     },
     "backHop": {
       "19": {
-        "width": 1.58906,
-        "height": 1.58906,
-        "voxelScaleX": 1.27851,
-        "voxelScaleY": 0.78216,
-        "offsetX": 0
+        "width": 1.59,
+        "height": 1.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "47": {
         "width": 2.16,
@@ -1595,6 +1525,13 @@
       }
     },
     "jump": {
+      "17": {
+        "width": 1.38981,
+        "height": 1.38981,
+        "voxelScaleX": 1.21296,
+        "voxelScaleY": 0.82443,
+        "offsetX": 0
+      },
       "47": {
         "width": 2.16,
         "height": 0.62,
@@ -1703,11 +1640,11 @@
     },
     "crouch": {
       "44": {
-        "width": 1.55,
-        "height": 1.01257,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
+        "width": 1.04304,
+        "height": 1.03558,
+        "voxelScaleX": 1.49191,
+        "voxelScaleY": 0.67028,
+        "offsetX": 0
       },
       "173": {
         "width": 1.25,
@@ -1768,11 +1705,11 @@
     },
     "crouchBlock": {
       "44": {
-        "width": 1.55,
-        "height": 1.01257,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
+        "width": 1.04304,
+        "height": 1.03558,
+        "voxelScaleX": 1.49191,
+        "voxelScaleY": 0.67028,
+        "offsetX": 0
       },
       "218": {
         "width": 1.22,
@@ -2387,11 +2324,11 @@
         "flipY": false
       },
       "97": {
-        "width": 1.44229,
-        "height": 1.44229,
-        "voxelScaleX": 1.25877,
-        "voxelScaleY": 0.79443,
-        "offsetX": 0
+        "width": 1.44,
+        "height": 1.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "98": {
         "width": 1.53531,
@@ -2436,11 +2373,11 @@
         "flipY": false
       },
       "104": {
-        "width": 1.14985,
-        "height": 1.14985,
-        "voxelScaleX": 1.31574,
-        "voxelScaleY": 0.76003,
-        "offsetX": 0
+        "width": 1.15,
+        "height": 1.15,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "kickright": {
@@ -2713,11 +2650,11 @@
     },
     "hitLight": {
       "19": {
-        "width": 1.58906,
-        "height": 1.58906,
-        "voxelScaleX": 1.27851,
-        "voxelScaleY": 0.78216,
-        "offsetX": 0
+        "width": 1.59,
+        "height": 1.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "106": {
         "width": 0.89,
@@ -2896,14 +2833,14 @@
       "47": {
         "width": 1.34,
         "height": 1.34,
-        "voxelScaleX": 2.22663,
-        "voxelScaleY": 0.64,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
         "offsetX": 0
       },
       "48": {
         "width": 1.34,
         "height": 1.34,
-        "voxelScaleX": 1.84126,
+        "voxelScaleX": 1,
         "voxelScaleY": 1,
         "offsetX": 0
       },
@@ -3110,11 +3047,11 @@
         "flipY": false
       },
       "61": {
-        "width": 1.35403,
-        "height": 1.35403,
-        "voxelScaleX": 1.24504,
-        "voxelScaleY": 0.80319,
-        "offsetX": 0
+        "width": 1.35,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "62": {
         "width": 1.51,
@@ -3317,11 +3254,11 @@
         "flipY": false
       },
       "208": {
-        "width": 1.47735,
-        "height": 1.47735,
-        "voxelScaleX": 1.17035,
-        "voxelScaleY": 0.85445,
-        "offsetX": 0
+        "width": 1.48,
+        "height": 1.48,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "209": {
         "width": 1.34,
@@ -3331,11 +3268,11 @@
         "flipY": false
       },
       "210": {
-        "width": 1.4957,
-        "height": 1.4957,
-        "voxelScaleX": 1.18489,
-        "voxelScaleY": 0.84396,
-        "offsetX": 0
+        "width": 1.5,
+        "height": 1.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "211": {
         "width": 1.51,
@@ -3517,18 +3454,18 @@
         "flipY": false
       },
       "24": {
-        "width": 1.77968,
-        "height": 1.77968,
-        "voxelScaleX": 1.19014,
-        "voxelScaleY": 0.84024,
-        "offsetX": 0
+        "width": 1.78,
+        "height": 1.78,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "25": {
-        "width": 1.53641,
-        "height": 1.53641,
-        "voxelScaleX": 1.04097,
-        "voxelScaleY": 0.96064,
-        "offsetX": 0
+        "width": 1.54,
+        "height": 1.54,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "26": {
         "width": 1.7905,
@@ -3559,18 +3496,18 @@
         "offsetX": 0
       },
       "30": {
-        "width": 1.53641,
-        "height": 1.53641,
-        "voxelScaleX": 1.04097,
-        "voxelScaleY": 0.96064,
-        "offsetX": 0
+        "width": 1.54,
+        "height": 1.54,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "31": {
-        "width": 1.41347,
-        "height": 1.41347,
-        "voxelScaleX": 1.07034,
-        "voxelScaleY": 0.93428,
-        "offsetX": 0
+        "width": 1.41,
+        "height": 1.41,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "32": {
         "width": 1.93776,
@@ -3722,18 +3659,18 @@
         "flipY": false
       },
       "93": {
-        "width": 1.27352,
-        "height": 1.27352,
-        "voxelScaleX": 0.95039,
-        "voxelScaleY": 1.0522,
-        "offsetX": 0
+        "width": 1.27,
+        "height": 1.27,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "94": {
-        "width": 1.42176,
-        "height": 1.42176,
-        "voxelScaleX": 1.30732,
-        "voxelScaleY": 0.76492,
-        "offsetX": 0
+        "width": 1.42,
+        "height": 1.42,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "95": {
         "width": 1.62252,
@@ -3743,11 +3680,11 @@
         "offsetX": 0
       },
       "96": {
-        "width": 1.40901,
-        "height": 1.40901,
-        "voxelScaleX": 1.31916,
-        "voxelScaleY": 0.75806,
-        "offsetX": 0
+        "width": 1.41,
+        "height": 1.41,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "201": {
         "width": 1.32,
@@ -4216,11 +4153,11 @@
         "flipY": false
       },
       "109": {
-        "width": 1.41763,
-        "height": 1.41763,
-        "voxelScaleX": 1.28066,
-        "voxelScaleY": 0.78085,
-        "offsetX": 0
+        "width": 1.42,
+        "height": 1.42,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "110": {
         "width": 1.34,
@@ -4244,18 +4181,18 @@
         "offsetX": 0
       },
       "113": {
-        "width": 1.41319,
-        "height": 1.41319,
-        "voxelScaleX": 1.19293,
-        "voxelScaleY": 0.83827,
-        "offsetX": 0
+        "width": 1.41,
+        "height": 1.41,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "114": {
-        "width": 1.46737,
-        "height": 1.46737,
-        "voxelScaleX": 1.32559,
-        "voxelScaleY": 0.75438,
-        "offsetX": 0
+        "width": 1.47,
+        "height": 1.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "115": {
         "width": 1.51,
@@ -4733,11 +4670,11 @@
         "offsetX": 0
       },
       "15": {
-        "width": 1.46737,
-        "height": 1.46737,
-        "voxelScaleX": 1.32559,
-        "voxelScaleY": 0.75438,
-        "offsetX": 0
+        "width": 1.47,
+        "height": 1.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "16": {
         "width": 1.35897,
@@ -4747,11 +4684,11 @@
         "offsetX": 0
       },
       "17": {
-        "width": 1.38981,
-        "height": 1.38981,
-        "voxelScaleX": 1.21296,
-        "voxelScaleY": 0.82443,
-        "offsetX": 0
+        "width": 1.39,
+        "height": 1.39,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "18": {
         "width": 1,
@@ -5723,11 +5660,11 @@
         "offsetX": 0
       },
       "122": {
-        "width": 1.50216,
-        "height": 1.50216,
-        "voxelScaleX": 1.2086,
-        "voxelScaleY": 0.82741,
-        "offsetX": 0
+        "width": 1.5,
+        "height": 1.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "123": {
         "width": 1.93776,
@@ -5737,25 +5674,25 @@
         "offsetX": 0
       },
       "124": {
-        "width": 1.46652,
-        "height": 1.46652,
-        "voxelScaleX": 1.23794,
-        "voxelScaleY": 0.80779,
-        "offsetX": 0
+        "width": 1.47,
+        "height": 1.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "125": {
-        "width": 1.37127,
-        "height": 1.37127,
-        "voxelScaleX": 1.10329,
-        "voxelScaleY": 0.90638,
-        "offsetX": 0
+        "width": 1.37,
+        "height": 1.37,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "126": {
-        "width": 1.35216,
-        "height": 1.35216,
-        "voxelScaleX": 1.05494,
-        "voxelScaleY": 0.94792,
-        "offsetX": 0
+        "width": 1.35,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "127": {
         "width": 1,

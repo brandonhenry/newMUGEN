@@ -76,12 +76,7 @@
       "/characters/kidomaru-curse-mark/frames/frame-095.png"
     ],
     "jump": [
-      "/characters/kidomaru-curse-mark/frames/frame-074.png",
-      "/characters/kidomaru-curse-mark/frames/frame-076.png",
-      "/characters/kidomaru-curse-mark/frames/frame-079.png",
-      "/characters/kidomaru-curse-mark/frames/frame-081.png",
-      "/characters/kidomaru-curse-mark/frames/frame-084.png",
-      "/characters/kidomaru-curse-mark/frames/frame-087.png"
+      "/characters/kidomaru-curse-mark/frames/frame-054.png"
     ],
     "crouch": [
       "/characters/kidomaru-curse-mark/frames/frame-065.png"
@@ -516,15 +511,11 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
-      "label": "Kidomaru Curse Mark Left Check",
-      "hitLevel": "high",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.35,
       "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 11
+      "forwardForceEndFrame": 11,
+      "label": "Kidomaru Curse Mark Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
       "startupFrames": 14,
@@ -536,15 +527,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
-      "label": "Kidomaru Curse Mark Right Check",
-      "hitLevel": "mid",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.85,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 19
+      "forwardForceEndFrame": 19,
+      "label": "Kidomaru Curse Mark Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 19,
@@ -556,15 +543,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Kidomaru Curse Mark Left Kick",
-      "hitLevel": "low",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 0.95,
       "forwardForceStartFrame": 13,
-      "forwardForceEndFrame": 18
+      "forwardForceEndFrame": 18,
+      "label": "Kidomaru Curse Mark Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 14,
@@ -576,15 +559,11 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 7,
       "range": 1.7,
-      "label": "Kidomaru Curse Mark Right Kick",
-      "hitLevel": "mid",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.2,
       "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 20
+      "forwardForceEndFrame": 20,
+      "label": "Kidomaru Curse Mark Right Kick",
+      "hitLevel": "mid"
     },
     "cmd:f+1": {
       "startupFrames": 14,
@@ -597,14 +576,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Spider War Bow: Quick Shot",
-      "hitLevel": "mid",
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 19
+      "forwardForceEndFrame": 19,
+      "label": "Spider War Bow: Quick Shot",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
       "startupFrames": 19,
@@ -616,19 +591,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 12,
       "range": 1.68,
+      "forwardForce": 1.35,
+      "forwardForceStartFrame": 17,
+      "forwardForceEndFrame": 24,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Spider War Bow: Rising Shot",
-      "hitLevel": "mid",
-      "onComboHitFrames": 22,
-      "onJuggleHitFrames": 20,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
-      "forwardForce": 1.35,
-      "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 24
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
       "startupFrames": 20,
@@ -640,16 +611,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 35,
       "range": 2.05,
-      "label": "Spider War Bow: Falling Shot",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 2.89,
       "forwardForceStartFrame": 39,
-      "forwardForceEndFrame": 51
+      "forwardForceEndFrame": 51,
+      "label": "Spider War Bow: Falling Shot",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 13,
@@ -661,15 +628,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 8,
       "range": 1.62,
-      "label": "Spider War Bow: Guarded Shot",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 15,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.6,
       "forwardForceStartFrame": 11,
-      "forwardForceEndFrame": 15
+      "forwardForceEndFrame": 15,
+      "label": "Spider War Bow: Guarded Shot",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 13,
@@ -681,15 +644,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "Spider War Bow: Crouching Shot",
-      "hitLevel": "mid",
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5,
       "forwardForce": 1.58,
       "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 10
+      "forwardForceEndFrame": 10,
+      "label": "Spider War Bow: Crouching Shot",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -701,16 +660,12 @@
       "onCounterHitFrames": 30,
       "whiffRecoveryFrames": 31,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "Spider War Bow: Sky Shot",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
       "forwardForce": 2.12,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 14
+      "forwardForceEndFrame": 14,
+      "launchHeight": 2,
+      "label": "Spider War Bow: Sky Shot",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 15,
@@ -722,15 +677,11 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 9,
       "range": 1.72,
-      "label": "Kidomaru Curse Mark Twin Assault",
-      "hitLevel": "mid",
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 1.69,
       "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 15
+      "forwardForceEndFrame": 15,
+      "label": "Kidomaru Curse Mark Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
       "startupFrames": 17,
@@ -742,16 +693,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 13,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Kidomaru Curse Mark Cross Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 20,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
       "forwardForce": 1.78,
       "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 15
+      "forwardForceEndFrame": 15,
+      "launchHeight": 2.2,
+      "label": "Kidomaru Curse Mark Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 19,
@@ -763,15 +710,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
-      "label": "Kidomaru Curse Mark Low Feint",
-      "hitLevel": "low",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 1.49,
       "forwardForceStartFrame": 13,
-      "forwardForceEndFrame": 25
+      "forwardForceEndFrame": 25,
+      "label": "Kidomaru Curse Mark Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 29,
@@ -783,16 +726,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 12,
       "range": 1.74,
-      "label": "Spider War Bow: Piercing Low Shot",
-      "hitLevel": "low",
-      "knockdown": true,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 1.87,
       "forwardForceStartFrame": 27,
-      "forwardForceEndFrame": 40
+      "forwardForceEndFrame": 40,
+      "label": "Spider War Bow: Piercing Low Shot",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -804,16 +743,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 13,
       "range": 1.9,
-      "label": "Spider War Bow: Arrow Fan",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 1.87,
       "forwardForceStartFrame": 16,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "label": "Spider War Bow: Arrow Fan",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 24,
@@ -825,18 +760,14 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 38,
       "range": 2.1,
+      "forwardForce": 2.87,
+      "forwardForceStartFrame": 24,
+      "forwardForceEndFrame": 34,
       "kiCost": 35,
       "label": "Kidomaru Curse Mark Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
-      "forwardForce": 2.87,
-      "forwardForceStartFrame": 24,
-      "forwardForceEndFrame": 34
+      "usesKi": true
     },
     "neutral:jab-jab": {
       "startupFrames": 14,
@@ -1316,11 +1247,11 @@
         "flipY": false
       },
       "32": {
-        "width": 0.89896,
-        "height": 0.89896,
-        "voxelScaleX": 0.85813,
-        "voxelScaleY": 1.16533,
-        "offsetX": 0
+        "width": 0.9,
+        "height": 0.9,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "34": {
         "width": 1.16,
@@ -1619,6 +1550,13 @@
       }
     },
     "jump": {
+      "54": {
+        "width": 1,
+        "height": 1,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
+      },
       "74": {
         "width": 1.06,
         "height": 1.16,
@@ -1724,11 +1662,11 @@
     },
     "block": {
       "48": {
-        "width": 1.11542,
-        "height": 1.11542,
-        "voxelScaleX": 0.8398,
-        "voxelScaleY": 1.19076,
-        "offsetX": 0
+        "width": 1.11,
+        "height": 1.11,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "53": {
         "width": 1.26,
@@ -1861,11 +1799,11 @@
     },
     "jableft": {
       "6": {
-        "width": 1.00575,
-        "height": 1.00575,
-        "voxelScaleX": 0.84006,
-        "voxelScaleY": 1.1904,
-        "offsetX": 0
+        "width": 1.01,
+        "height": 1.01,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "121": {
         "width": 1,
@@ -2709,24 +2647,24 @@
     },
     "cmd:qcf+4": {
       "186": {
-        "width": 1,
-        "height": 1,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1,
+        "width": 1.24084,
+        "height": 1.24084,
+        "voxelScaleX": 1.08807,
+        "voxelScaleY": 0.91906,
         "offsetX": 0
       },
       "187": {
-        "width": 0.54336,
-        "height": 0.54336,
-        "voxelScaleX": 1.00159,
-        "voxelScaleY": 0.99841,
-        "offsetX": 0
+        "width": 0.54,
+        "height": 0.54,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "188": {
-        "width": 1,
-        "height": 1,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1,
+        "width": 0.74626,
+        "height": 0.74626,
+        "voxelScaleX": 1.08049,
+        "voxelScaleY": 0.9255,
         "offsetX": 0
       },
       "189": {
@@ -3058,24 +2996,24 @@
         "offsetX": 0
       },
       "247": {
-        "width": 1,
-        "height": 1,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1,
+        "width": 1.24084,
+        "height": 1.24084,
+        "voxelScaleX": 1.08807,
+        "voxelScaleY": 0.91906,
         "offsetX": 0
       },
       "248": {
-        "width": 0.54336,
-        "height": 0.54336,
-        "voxelScaleX": 1.00159,
-        "voxelScaleY": 0.99841,
-        "offsetX": 0
+        "width": 0.54,
+        "height": 0.54,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "249": {
-        "width": 1,
-        "height": 1,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1,
+        "width": 0.74626,
+        "height": 0.74626,
+        "voxelScaleX": 1.08049,
+        "voxelScaleY": 0.9255,
         "offsetX": 0
       },
       "250": {
@@ -3307,18 +3245,18 @@
         "offsetX": 0
       },
       "56": {
-        "width": 0.80542,
-        "height": 0.80542,
-        "voxelScaleX": 0.72975,
-        "voxelScaleY": 1.37034,
-        "offsetX": 0
+        "width": 0.81,
+        "height": 0.81,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "57": {
-        "width": 0.81222,
-        "height": 0.81222,
-        "voxelScaleX": 0.72364,
-        "voxelScaleY": 1.38191,
-        "offsetX": 0
+        "width": 0.81,
+        "height": 0.81,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "217": {
         "width": 0.29,
@@ -3625,33 +3563,26 @@
         "voxelScaleY": 1,
         "offsetX": 0
       },
-      "113": {
-        "width": 1,
-        "height": 1,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
-      },
       "114": {
-        "width": 0.73213,
-        "height": 0.73213,
-        "voxelScaleX": 0.97841,
-        "voxelScaleY": 1.02206,
-        "offsetX": 0
+        "width": 0.73,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "115": {
-        "width": 0.25685,
-        "height": 0.25685,
-        "voxelScaleX": 0.42906,
-        "voxelScaleY": 2.33066,
-        "offsetX": 0
+        "width": 0.26,
+        "height": 0.26,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "116": {
-        "width": 0.3428,
-        "height": 0.3428,
-        "voxelScaleX": 0.48223,
-        "voxelScaleY": 2.07371,
-        "offsetX": 0
+        "width": 0.34,
+        "height": 0.34,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "231": {
         "width": 1.41,
@@ -4052,7 +3983,11 @@
         "depth": 0.14,
         "alphaThreshold": 24,
         "paletteSnap": 8,
-        "mergeRuns": true
+        "mergeRuns": true,
+        "lod": {
+          "mobileStep": 2,
+          "farStep": 2
+        }
       },
       "defaultScale": [
         0.5,
@@ -4064,7 +3999,6 @@
         0,
         0
       ],
-      "alignToVelocity": true,
       "color": "#ffffff",
       "soundCues": [],
       "proceduralLayers": []
@@ -4088,7 +4022,6 @@
         "lifetimeFrames": 96,
         "speed": 13,
         "forwardVelocity": 13,
-        "verticalVelocity": 0,
         "homingMode": "limited",
         "homingStrength": 0,
         "homingTurnRate": 0,
@@ -4111,7 +4044,9 @@
         "pushbackScale": 1,
         "blockPushbackScale": 1,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit"
+        "pierce": false,
+        "clash": false,
+        "kiBurst": false
       }
     ],
     "cmd:d/f+2": [
@@ -4131,7 +4066,6 @@
         "lifetimeFrames": 96,
         "speed": 13,
         "forwardVelocity": 13,
-        "verticalVelocity": 6.91,
         "homingMode": "limited",
         "homingStrength": 0,
         "homingTurnRate": 0,
@@ -4154,7 +4088,9 @@
         "pushbackScale": 1,
         "blockPushbackScale": 1,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit"
+        "pierce": false,
+        "clash": false,
+        "kiBurst": false
       }
     ],
     "cmd:qcf+4": [
@@ -4174,7 +4110,6 @@
         "lifetimeFrames": 96,
         "speed": 13,
         "forwardVelocity": 13,
-        "verticalVelocity": -6.91,
         "homingMode": "limited",
         "homingStrength": 0,
         "homingTurnRate": 0,
@@ -4197,7 +4132,9 @@
         "pushbackScale": 1,
         "blockPushbackScale": 1,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit"
+        "pierce": false,
+        "clash": false,
+        "kiBurst": false
       }
     ],
     "cmd:WS+4": [
@@ -4217,7 +4154,6 @@
         "lifetimeFrames": 96,
         "speed": 13,
         "forwardVelocity": 13,
-        "verticalVelocity": 0,
         "homingMode": "limited",
         "homingStrength": 0,
         "homingTurnRate": 0,
@@ -4240,7 +4176,9 @@
         "pushbackScale": 1,
         "blockPushbackScale": 1,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit"
+        "pierce": false,
+        "clash": false,
+        "kiBurst": false
       }
     ],
     "cmd:FC+1": [
@@ -4260,7 +4198,6 @@
         "lifetimeFrames": 96,
         "speed": 13,
         "forwardVelocity": 13,
-        "verticalVelocity": 2.76,
         "homingMode": "limited",
         "homingStrength": 0,
         "homingTurnRate": 0,
@@ -4283,7 +4220,9 @@
         "pushbackScale": 1,
         "blockPushbackScale": 1,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit"
+        "pierce": false,
+        "clash": false,
+        "kiBurst": false
       }
     ],
     "cmd:FC+2": [
@@ -4303,7 +4242,6 @@
         "lifetimeFrames": 96,
         "speed": 13,
         "forwardVelocity": 13,
-        "verticalVelocity": 11.71,
         "homingMode": "limited",
         "homingStrength": 0,
         "homingTurnRate": 0,
@@ -4326,7 +4264,9 @@
         "pushbackScale": 1,
         "blockPushbackScale": 1,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit"
+        "pierce": false,
+        "clash": false,
+        "kiBurst": false
       }
     ],
     "cmd:2+4": [
@@ -4346,7 +4286,6 @@
         "lifetimeFrames": 96,
         "speed": 13,
         "forwardVelocity": 13,
-        "verticalVelocity": -2.76,
         "homingMode": "limited",
         "homingStrength": 0,
         "homingTurnRate": 0,
@@ -4369,7 +4308,9 @@
         "pushbackScale": 1,
         "blockPushbackScale": 1,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit"
+        "pierce": false,
+        "clash": false,
+        "kiBurst": false
       }
     ],
     "cmd:3+4": [
@@ -4389,7 +4330,6 @@
         "lifetimeFrames": 96,
         "speed": 13,
         "forwardVelocity": 13,
-        "verticalVelocity": -5.79,
         "homingMode": "limited",
         "homingStrength": 0,
         "homingTurnRate": 0,
@@ -4412,7 +4352,9 @@
         "pushbackScale": 0.33,
         "blockPushbackScale": 0.33,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit"
+        "pierce": false,
+        "clash": false,
+        "kiBurst": false
       },
       {
         "id": "cmd-3-4-arrow-fan-center",
@@ -4430,7 +4372,6 @@
         "lifetimeFrames": 96,
         "speed": 13,
         "forwardVelocity": 13,
-        "verticalVelocity": 0,
         "homingMode": "limited",
         "homingStrength": 0,
         "homingTurnRate": 0,
@@ -4453,7 +4394,9 @@
         "pushbackScale": 0.34,
         "blockPushbackScale": 0.34,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit"
+        "pierce": false,
+        "clash": false,
+        "kiBurst": false
       },
       {
         "id": "cmd-3-4-arrow-fan-high",
@@ -4471,7 +4414,6 @@
         "lifetimeFrames": 96,
         "speed": 13,
         "forwardVelocity": 13,
-        "verticalVelocity": 5.79,
         "homingMode": "limited",
         "homingStrength": 0,
         "homingTurnRate": 0,
@@ -4494,7 +4436,9 @@
         "pushbackScale": 0.33,
         "blockPushbackScale": 0.33,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit"
+        "pierce": false,
+        "clash": false,
+        "kiBurst": false
       }
     ]
   },

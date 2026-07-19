@@ -492,19 +492,15 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.36,
+      "forwardForce": 0.5,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 9,
       "pushback": 0.94,
       "blockPushback": 0.44,
       "label": "Crane Jab",
       "description": "Fast high jab that checks close pressure with a short, compact strike.",
       "hitLevel": "high",
-      "tracking": "medium",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
-      "forwardForce": 0.5,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 9
+      "tracking": "medium"
     },
     "jabright": {
       "startupFrames": 14,
@@ -517,19 +513,15 @@
       "onCounterHitFrames": 12,
       "whiffRecoveryFrames": 6,
       "range": 1.5,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 13,
       "pushback": 0.94,
       "blockPushback": 0.44,
       "label": "Psychic Palm",
       "description": "Quick mid palm thrust with a faint psychic flare for steady close-range control.",
       "hitLevel": "mid",
-      "tracking": "medium",
-      "onComboHitFrames": 7,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
-      "forwardForce": 0.85,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 13
+      "tracking": "medium"
     },
     "kickleft": {
       "startupFrames": 19,
@@ -542,20 +534,16 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 8,
       "range": 1.58,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 20,
       "pushback": 0.94,
       "blockPushback": 0.44,
       "label": "Low Crane Sweep",
       "description": "Steady low sweep that slips under highs but stays punishable on block.",
       "hitLevel": "low",
       "tracking": "medium",
-      "endsInCrouch": true,
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
-      "forwardForce": 0.95,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 20
+      "endsInCrouch": true
     },
     "kickright": {
       "startupFrames": 22,
@@ -576,11 +564,7 @@
       "label": "Telekinetic Roundhouse",
       "description": "Committed mid kick with a wide arc that keeps Chiaotzu close for extensions.",
       "hitLevel": "mid",
-      "tracking": "medium",
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "tracking": "medium"
     },
     "cmd:f+1": {
       "startupFrames": 14,
@@ -603,11 +587,7 @@
       "description": "Advancing mid shoulder rush that rewards timing wins with extra counter-hit stun.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "counterHit": true,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6
+      "counterHit": true
     },
     "cmd:d/f+2": {
       "startupFrames": 17,
@@ -620,6 +600,9 @@
       "onCounterHitFrames": 34,
       "whiffRecoveryFrames": 13,
       "range": 1.64,
+      "forwardForce": 1.95,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17,
       "pushback": 0.94,
       "blockPushback": 0.44,
       "launchHeight": 2.05,
@@ -629,14 +612,7 @@
       "label": "Psychic Lift",
       "description": "Unsafe mid launcher that pops the opponent upward with a telekinetic palm lift.",
       "hitLevel": "mid",
-      "tracking": "medium",
-      "onComboHitFrames": 25,
-      "onJuggleHitFrames": 22,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
-      "forwardForce": 1.95,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 17
+      "tracking": "medium"
     },
     "cmd:qcf+4": {
       "startupFrames": 20,
@@ -649,6 +625,9 @@
       "onCounterHitFrames": 30,
       "whiffRecoveryFrames": 33,
       "range": 3.2,
+      "forwardForce": 3.17,
+      "forwardForceStartFrame": 39,
+      "forwardForceEndFrame": 51,
       "pushback": 0.94,
       "blockPushback": 0.44,
       "kiCost": 22,
@@ -656,14 +635,7 @@
       "description": "Ki-cost yellow Dodon Ray shot that reaches far but leaves Chiaotzu punishable if read.",
       "hitLevel": "special",
       "tracking": "none",
-      "usesKi": true,
-      "onComboHitFrames": 19,
-      "onJuggleHitFrames": 14,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7,
-      "forwardForce": 3.17,
-      "forwardForceStartFrame": 39,
-      "forwardForceEndFrame": 51
+      "usesKi": true
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -676,6 +648,9 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 34,
       "range": 1.64,
+      "forwardForce": 2.2,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 20,
       "pushback": 0.94,
       "blockPushback": 0.44,
       "launchHeight": 1.35,
@@ -685,14 +660,7 @@
       "label": "Rising Crane Kick",
       "description": "While-standing mid kick that lifts lightly out of crouch pressure.",
       "hitLevel": "mid",
-      "tracking": "medium",
-      "onComboHitFrames": 20,
-      "onJuggleHitFrames": 18,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 12,
-      "forwardForce": 2.2,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 20
+      "tracking": "medium"
     },
     "cmd:FC+1": {
       "startupFrames": 13,
@@ -705,20 +673,16 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
+      "forwardForce": 1.64,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 11,
       "pushback": 0.94,
       "blockPushback": 0.44,
       "label": "Crouch Palm Check",
       "description": "Quick crouching mid palm that interrupts pressure without giving big reward.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "endsInCrouch": true,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5,
-      "forwardForce": 1.64,
-      "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 11
+      "endsInCrouch": true
     },
     "cmd:FC+2": {
       "startupFrames": 16,
@@ -731,6 +695,9 @@
       "onCounterHitFrames": 34,
       "whiffRecoveryFrames": 33,
       "range": 1.58,
+      "forwardForce": 2.01,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 17,
       "pushback": 0.94,
       "blockPushback": 0.44,
       "launchHeight": 1.85,
@@ -741,14 +708,7 @@
       "description": "Full-crouch psychic pop-up that starts juggles but is launch-punishable on block.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "endsInCrouch": true,
-      "onComboHitFrames": 24,
-      "onJuggleHitFrames": 21,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
-      "forwardForce": 2.01,
-      "forwardForceStartFrame": 12,
-      "forwardForceEndFrame": 17
+      "endsInCrouch": true
     },
     "cmd:1+2": {
       "startupFrames": 22,
@@ -762,20 +722,16 @@
       "counterHitStunBonusFrames": 6,
       "whiffRecoveryFrames": 11,
       "range": 1.9,
+      "forwardForce": 1.44,
+      "forwardForceStartFrame": 32,
+      "forwardForceEndFrame": 39,
       "pushback": 0.94,
       "blockPushback": 0.44,
       "label": "Telekinesis Hold",
       "description": "Steady mid psychic bind that wins timing wars but stays minus on guard.",
       "hitLevel": "mid",
       "tracking": "medium",
-      "counterHit": true,
-      "onComboHitFrames": 18,
-      "onJuggleHitFrames": 13,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
-      "forwardForce": 1.44,
-      "forwardForceStartFrame": 32,
-      "forwardForceEndFrame": 39
+      "counterHit": true
     },
     "cmd:1+3": {
       "startupFrames": 17,
@@ -800,11 +756,7 @@
       "label": "Psychic Launch Rush",
       "description": "Forward-moving mid launcher that cashes out a hard read with real block risk.",
       "hitLevel": "mid",
-      "tracking": "medium",
-      "onComboHitFrames": 26,
-      "onJuggleHitFrames": 24,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13
+      "tracking": "medium"
     },
     "cmd:2+3": {
       "startupFrames": 30,
@@ -817,20 +769,16 @@
       "onCounterHitFrames": 12,
       "whiffRecoveryFrames": 9,
       "range": 1.52,
+      "forwardForce": 1.49,
+      "forwardForceStartFrame": 26,
+      "forwardForceEndFrame": 31,
       "pushback": 0.94,
       "blockPushback": 0.44,
       "label": "Crane Low Feint",
       "description": "Low feint that ducks under highs and leaves Chiaotzu close but punishable.",
       "hitLevel": "low",
       "tracking": "medium",
-      "endsInCrouch": true,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
-      "forwardForce": 1.49,
-      "forwardForceStartFrame": 26,
-      "forwardForceEndFrame": 31
+      "endsInCrouch": true
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -843,6 +791,9 @@
       "onCounterHitFrames": 23,
       "whiffRecoveryFrames": 13,
       "range": 1.86,
+      "forwardForce": 1.74,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 26,
       "pushback": 0.94,
       "blockPushback": 0.44,
       "label": "Sweeping Crane Kick",
@@ -850,14 +801,7 @@
       "hitLevel": "low",
       "tracking": "strong",
       "knockdown": true,
-      "endsInCrouch": true,
-      "onComboHitFrames": 7,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
-      "forwardForce": 1.74,
-      "forwardForceStartFrame": 18,
-      "forwardForceEndFrame": 26
+      "endsInCrouch": true
     },
     "cmd:3+4": {
       "startupFrames": 19,
@@ -870,6 +814,9 @@
       "onCounterHitFrames": 27,
       "whiffRecoveryFrames": 38,
       "range": 1.82,
+      "forwardForce": 3.43,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 21,
       "pushback": 0.94,
       "blockPushback": 0.44,
       "label": "Spinning Crane Crush",
@@ -877,14 +824,7 @@
       "hitLevel": "mid",
       "tracking": "strong",
       "knockdown": true,
-      "tornado": true,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 23,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 16,
-      "forwardForce": 3.43,
-      "forwardForceStartFrame": 15,
-      "forwardForceEndFrame": 21
+      "tornado": true
     },
     "cmd:O+2": {
       "startupFrames": 30,
@@ -897,6 +837,9 @@
       "onCounterHitFrames": 36,
       "whiffRecoveryFrames": 46,
       "range": 2.05,
+      "forwardForce": 2.96,
+      "forwardForceStartFrame": 19,
+      "forwardForceEndFrame": 28,
       "pushback": 0.94,
       "blockPushback": 0.44,
       "kiCost": 38,
@@ -905,14 +848,7 @@
       "hitLevel": "special",
       "tracking": "medium",
       "knockdown": true,
-      "usesKi": true,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
-      "forwardForce": 2.96,
-      "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 28
+      "usesKi": true
     },
     "neutral:jab-jab": {
       "startupFrames": 14,
@@ -922,15 +858,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Crane Jab Second Beat",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Crane Jab Second Beat",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 14,
@@ -940,15 +872,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Crane Palm Link",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Crane Palm Link",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 14,
@@ -958,15 +886,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Crane Low Changeup",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Crane Low Changeup",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:jab-jab-special": {
       "startupFrames": 14,
@@ -976,15 +900,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Crane Roundhouse Ender",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Crane Roundhouse Ender",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:jab-heavy": {
       "startupFrames": 14,
@@ -994,15 +914,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Psychic Palm Check",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Psychic Palm Check",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 14,
@@ -1012,15 +928,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Palm to Sweep",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Palm to Sweep",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 14,
@@ -1030,15 +942,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Palm Roundhouse Route",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Palm Roundhouse Route",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:jab-kick": {
       "startupFrames": 14,
@@ -1048,15 +956,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Jab Low Feint",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Jab Low Feint",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 14,
@@ -1066,15 +970,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Low to Psychic Palm",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Low to Psychic Palm",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:jab-kick-special": {
       "startupFrames": 14,
@@ -1084,15 +984,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Low Roundhouse Route",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Low Roundhouse Route",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:jab-special": {
       "startupFrames": 14,
@@ -1102,15 +998,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Jab Roundhouse Setup",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Jab Roundhouse Setup",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 14,
@@ -1120,15 +1012,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Roundhouse Palm Reset",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Roundhouse Palm Reset",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:heavy-jab": {
       "startupFrames": 14,
@@ -1138,15 +1026,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Palm Jab Reset",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Palm Jab Reset",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 14,
@@ -1156,15 +1040,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Psychic Palm Loop",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Psychic Palm Loop",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 14,
@@ -1174,15 +1054,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Palm Roundhouse Ender",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Palm Roundhouse Ender",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:heavy-kick": {
       "startupFrames": 14,
@@ -1192,15 +1068,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Palm Low Changeup",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Palm Low Changeup",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 14,
@@ -1210,15 +1082,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Palm Sweep Ender",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Palm Sweep Ender",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:heavy-special": {
       "startupFrames": 14,
@@ -1228,15 +1096,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Psychic Roundhouse",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Psychic Roundhouse",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 14,
@@ -1246,15 +1110,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Roundhouse Low Reset",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Roundhouse Low Reset",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:kick-jab": {
       "startupFrames": 14,
@@ -1264,15 +1124,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Low Jab Reset",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Low Jab Reset",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:kick-jab-special": {
       "startupFrames": 14,
@@ -1282,15 +1138,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Low Roundhouse Link",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Low Roundhouse Link",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:kick-heavy": {
       "startupFrames": 14,
@@ -1300,15 +1152,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Low Palm Link",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Low Palm Link",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 14,
@@ -1318,15 +1166,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Low Palm Ender",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Low Palm Ender",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:kick-special": {
       "startupFrames": 14,
@@ -1336,15 +1180,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Low Roundhouse Ender",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Low Roundhouse Ender",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 14,
@@ -1354,15 +1194,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Low Roundhouse Palm",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Low Roundhouse Palm",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:special-jab": {
       "startupFrames": 14,
@@ -1372,15 +1208,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Roundhouse Jab Reset",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Roundhouse Jab Reset",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 14,
@@ -1390,15 +1222,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Roundhouse Palm Route",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Roundhouse Palm Route",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:special-heavy": {
       "startupFrames": 14,
@@ -1408,15 +1236,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Roundhouse Psychic Palm",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Roundhouse Psychic Palm",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     },
     "neutral:special-kick": {
       "startupFrames": 14,
@@ -1426,15 +1250,11 @@
       "blockDamage": 1,
       "whiffRecoveryFrames": 4,
       "range": 1.55,
-      "label": "Roundhouse Low Reset",
-      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure.",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 1.3,
       "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "label": "Roundhouse Low Reset",
+      "description": "Auto-generated Chiaotzu string route built from compact Crane School strikes and psychic pressure."
     }
   },
   "effects": [],
@@ -1544,67 +1364,57 @@
   "animationFrameScales": {
     "cmd:1+4": {
       "90": {
-        "width": 0.71994,
-        "height": 0.71994,
+        "width": 0.72,
+        "height": 0.72,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.26379,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "91": {
-        "width": 0.69979,
-        "height": 0.69979,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.57072,
-        "voxelScaleY": 1
+        "width": 0.87708,
+        "height": 0.87708,
+        "voxelScaleX": 1.25297,
+        "voxelScaleY": 0.7981,
+        "offsetX": 0
       },
       "92": {
-        "width": 0.67981,
-        "height": 0.67981,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.72841,
-        "voxelScaleY": 1
+        "width": 0.89376,
+        "height": 0.89376,
+        "voxelScaleX": 1.31436,
+        "voxelScaleY": 0.76082,
+        "offsetX": 0
       },
       "93": {
-        "width": 0.67981,
-        "height": 0.67981,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.72841,
-        "voxelScaleY": 1
+        "width": 0.89376,
+        "height": 0.89376,
+        "voxelScaleX": 1.31436,
+        "voxelScaleY": 0.76082,
+        "offsetX": 0
       },
       "94": {
-        "width": 0.67981,
-        "height": 0.67981,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.72841,
-        "voxelScaleY": 1
+        "width": 0.89376,
+        "height": 0.89376,
+        "voxelScaleX": 1.31436,
+        "voxelScaleY": 0.76082,
+        "offsetX": 0
       }
     },
     "crouch": {
       "11": {
-        "width": 0.41985,
+        "width": 0.42,
         "height": 0.55382,
-        "voxelScaleX": 0.99965,
-        "voxelScaleY": 1.00035,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "crouchBlock": {
       "11": {
-        "width": 0.41985,
+        "width": 0.42,
         "height": 0.55382,
-        "voxelScaleX": 0.99965,
-        "voxelScaleY": 1.00035,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "juggle": {
@@ -1613,9 +1423,7 @@
         "height": 0.44,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "flipY": false
       }
     },
     "lose": {
@@ -1624,9 +1432,7 @@
         "height": 0.34,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.99936,
-        "voxelScaleY": 1
+        "flipY": false
       }
     },
     "idle": {
@@ -1761,31 +1567,25 @@
     },
     "chargeKi": {
       "12": {
-        "width": 0.67981,
-        "height": 0.67981,
+        "width": 0.68,
+        "height": 0.68,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.1151,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "13": {
-        "width": 0.6402,
-        "height": 0.6402,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.42177,
-        "voxelScaleY": 1
+        "width": 0.76293,
+        "height": 0.76293,
+        "voxelScaleX": 1.19208,
+        "voxelScaleY": 0.83887,
+        "offsetX": 0
       },
       "14": {
-        "width": 0.61996,
-        "height": 0.61996,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.46762,
-        "voxelScaleY": 1
+        "width": 0.75091,
+        "height": 0.75091,
+        "voxelScaleX": 1.21115,
+        "voxelScaleY": 0.82566,
+        "offsetX": 0
       },
       "113": {
         "width": 1.02,
@@ -2004,11 +1804,11 @@
         "flipY": false
       },
       "75": {
-        "width": 0.66072,
-        "height": 0.66072,
-        "voxelScaleX": 1.03238,
-        "voxelScaleY": 0.96864,
-        "offsetX": 0
+        "width": 0.66,
+        "height": 0.66,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "kickright": {
@@ -2029,9 +1829,9 @@
       "86": {
         "width": 0.96,
         "height": 0.96,
-        "voxelScaleX": 1.26316,
-        "voxelScaleY": 0.79166,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "87": {
         "width": 0.96315,
@@ -2041,18 +1841,18 @@
         "offsetX": 0
       },
       "88": {
-        "width": 0.94888,
-        "height": 0.94888,
-        "voxelScaleX": 1.31789,
-        "voxelScaleY": 0.75879,
-        "offsetX": 0
+        "width": 0.95,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "89": {
-        "width": 0.87708,
-        "height": 0.87708,
-        "voxelScaleX": 1.25297,
-        "voxelScaleY": 0.7981,
-        "offsetX": 0
+        "width": 0.88,
+        "height": 0.88,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "90": {
         "width": 0.91,
@@ -2064,11 +1864,11 @@
     },
     "hitLight": {
       "25": {
-        "width": 0.87924,
-        "height": 0.87924,
-        "voxelScaleX": 1.29299,
-        "voxelScaleY": 0.7734,
-        "offsetX": 0
+        "width": 0.88,
+        "height": 0.88,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "hitHeavy": {
@@ -2080,11 +1880,11 @@
         "flipY": false
       },
       "25": {
-        "width": 0.87924,
-        "height": 0.87924,
-        "voxelScaleX": 1.29299,
-        "voxelScaleY": 0.7734,
-        "offsetX": 0
+        "width": 0.88,
+        "height": 0.88,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "26": {
         "width": 1.18,
@@ -2112,9 +1912,11 @@
       "46": {
         "width": 0.72,
         "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
         "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
+        "voxelScaleY": 1
       },
       "47": {
         "width": 0.72,
@@ -2126,16 +1928,20 @@
       "48": {
         "width": 0.72,
         "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
         "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
+        "voxelScaleY": 1
       },
       "49": {
         "width": 0.72,
         "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
         "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
+        "voxelScaleY": 1
       },
       "50": {
         "width": 1.29,
@@ -2161,58 +1967,46 @@
         "flipY": false
       },
       "50": {
-        "width": 0.3,
-        "height": 0.3,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 4.29747,
-        "voxelScaleY": 1
+        "width": 0.62171,
+        "height": 0.62171,
+        "voxelScaleX": 2.07238,
+        "voxelScaleY": 0.48254,
+        "offsetX": 0
       },
       "51": {
         "width": 0.34,
         "height": 0.34,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.99936,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "52": {
         "width": 0.5,
         "height": 0.5,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.99962,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "53": {
         "width": 0.66,
         "height": 0.66,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.00031,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "54": {
         "width": 0.66,
         "height": 0.66,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.00008,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "55": {
-        "width": 0.42,
-        "height": 0.42,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.9863,
-        "voxelScaleY": 1
+        "width": 0.59173,
+        "height": 0.59173,
+        "voxelScaleX": 1.40888,
+        "voxelScaleY": 0.70979,
+        "offsetX": 0
       }
     },
     "getupRollUp": {
@@ -2407,25 +2201,25 @@
     },
     "cmd:qcf+4": {
       "66": {
-        "width": 0.74177,
-        "height": 0.74177,
-        "voxelScaleX": 1.1239,
-        "voxelScaleY": 0.88976,
-        "offsetX": 0
+        "width": 0.74,
+        "height": 0.74,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "67": {
-        "width": 0.75695,
-        "height": 0.75695,
-        "voxelScaleX": 1.05132,
-        "voxelScaleY": 0.95119,
-        "offsetX": 0
+        "width": 0.76,
+        "height": 0.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "68": {
-        "width": 0.66983,
-        "height": 0.66983,
-        "voxelScaleX": 0.90518,
-        "voxelScaleY": 1.10476,
-        "offsetX": 0
+        "width": 0.67,
+        "height": 0.67,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "69": {
         "width": 1,
@@ -2604,67 +2398,53 @@
     },
     "cmd:1+2": {
       "76": {
-        "width": 0.76046,
-        "height": 0.76046,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.74829,
-        "voxelScaleY": 1
+        "width": 0.65726,
+        "height": 0.65726,
+        "voxelScaleX": 0.86483,
+        "voxelScaleY": 1.1563,
+        "offsetX": 0
       },
       "77": {
-        "width": 0.76046,
-        "height": 0.76046,
+        "width": 0.76,
+        "height": 0.76,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.04762,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "78": {
-        "width": 0.71994,
-        "height": 0.71994,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.36911,
-        "voxelScaleY": 1
+        "width": 0.84225,
+        "height": 0.84225,
+        "voxelScaleX": 1.1698,
+        "voxelScaleY": 0.85485,
+        "offsetX": 0
       },
       "79": {
-        "width": 0.76046,
-        "height": 0.76046,
+        "width": 0.76,
+        "height": 0.76,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.09751,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "80": {
-        "width": 0.66007,
-        "height": 0.66007,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.66591,
-        "voxelScaleY": 1
+        "width": 0.85165,
+        "height": 0.85165,
+        "voxelScaleX": 1.29038,
+        "voxelScaleY": 0.77496,
+        "offsetX": 0
       },
       "81": {
-        "width": 0.66007,
-        "height": 0.66007,
+        "width": 0.66,
+        "height": 0.66,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.20635,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "82": {
-        "width": 0.69979,
-        "height": 0.69979,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.35406,
-        "voxelScaleY": 1
+        "width": 0.81435,
+        "height": 0.81435,
+        "voxelScaleX": 1.16335,
+        "voxelScaleY": 0.85958,
+        "offsetX": 0
       },
       "90": {
         "width": 0.91,
@@ -2746,67 +2526,53 @@
         "flipY": false
       },
       "83": {
-        "width": 0.71994,
-        "height": 0.71994,
+        "width": 0.72,
+        "height": 0.72,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.15846,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "84": {
-        "width": 0.76046,
-        "height": 0.76046,
+        "width": 0.76,
+        "height": 0.76,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.04762,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "85": {
-        "width": 0.77942,
-        "height": 0.77942,
+        "width": 0.78,
+        "height": 0.78,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.82632,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "86": {
-        "width": 0.76046,
-        "height": 0.76046,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.59637,
-        "voxelScaleY": 1
+        "width": 0.96,
+        "height": 0.96,
+        "voxelScaleX": 1.26316,
+        "voxelScaleY": 0.79166,
+        "offsetX": 0
       },
       "87": {
-        "width": 0.71994,
-        "height": 0.71994,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.79037,
-        "voxelScaleY": 1
+        "width": 0.96315,
+        "height": 0.96315,
+        "voxelScaleX": 1.33772,
+        "voxelScaleY": 0.74754,
+        "offsetX": 0
       },
       "88": {
-        "width": 0.71994,
-        "height": 0.71994,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.7377,
-        "voxelScaleY": 1
+        "width": 0.94888,
+        "height": 0.94888,
+        "voxelScaleX": 1.31789,
+        "voxelScaleY": 0.75879,
+        "offsetX": 0
       },
       "89": {
-        "width": 0.69979,
-        "height": 0.69979,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.57072,
-        "voxelScaleY": 1
+        "width": 0.87708,
+        "height": 0.87708,
+        "voxelScaleX": 1.25297,
+        "voxelScaleY": 0.7981,
+        "offsetX": 0
       },
       "96": {
         "width": 0.76,
@@ -2860,103 +2626,81 @@
         "flipY": false
       },
       "95": {
-        "width": 0.91996,
-        "height": 0.91996,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.61815,
-        "voxelScaleY": 1
+        "width": 0.72315,
+        "height": 0.72315,
+        "voxelScaleX": 0.78603,
+        "voxelScaleY": 1.27221,
+        "offsetX": 0
       },
       "96": {
-        "width": 0.76046,
-        "height": 0.76046,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.74602,
-        "voxelScaleY": 1
+        "width": 1.00399,
+        "height": 1.00399,
+        "voxelScaleX": 1.32104,
+        "voxelScaleY": 0.75698,
+        "offsetX": 0
       },
       "97": {
-        "width": 0.71994,
-        "height": 0.71994,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.68506,
-        "voxelScaleY": 1
+        "width": 0.9344,
+        "height": 0.9344,
+        "voxelScaleX": 1.29778,
+        "voxelScaleY": 0.77055,
+        "offsetX": 0
       },
       "98": {
-        "width": 0.76046,
-        "height": 0.76046,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.54647,
-        "voxelScaleY": 1
+        "width": 0.94488,
+        "height": 0.94488,
+        "voxelScaleX": 1.24326,
+        "voxelScaleY": 0.80433,
+        "offsetX": 0
       },
       "99": {
-        "width": 0.84034,
-        "height": 0.84034,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.48945,
-        "voxelScaleY": 1
+        "width": 1.02491,
+        "height": 1.02491,
+        "voxelScaleX": 1.22013,
+        "voxelScaleY": 0.81959,
+        "offsetX": 0
       },
       "100": {
-        "width": 0.66007,
-        "height": 0.66007,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.89568,
-        "voxelScaleY": 1
+        "width": 0.90848,
+        "height": 0.90848,
+        "voxelScaleX": 1.37649,
+        "voxelScaleY": 0.72648,
+        "offsetX": 0
       },
       "101": {
-        "width": 0.66007,
-        "height": 0.66007,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.89568,
-        "voxelScaleY": 1
+        "width": 0.90848,
+        "height": 0.90848,
+        "voxelScaleX": 1.37649,
+        "voxelScaleY": 0.72648,
+        "offsetX": 0
       },
       "102": {
-        "width": 0.66007,
-        "height": 0.66007,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.83825,
-        "voxelScaleY": 1
+        "width": 0.89462,
+        "height": 0.89462,
+        "voxelScaleX": 1.35548,
+        "voxelScaleY": 0.73774,
+        "offsetX": 0
       },
       "103": {
-        "width": 0.67981,
-        "height": 0.67981,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.61692,
-        "voxelScaleY": 1
+        "width": 0.86446,
+        "height": 0.86446,
+        "voxelScaleX": 1.27126,
+        "voxelScaleY": 0.78662,
+        "offsetX": 0
       },
       "104": {
-        "width": 0.67981,
-        "height": 0.67981,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.44965,
-        "voxelScaleY": 1
+        "width": 0.81852,
+        "height": 0.81852,
+        "voxelScaleX": 1.20372,
+        "voxelScaleY": 0.83076,
+        "offsetX": 0
       },
       "105": {
-        "width": 0.71994,
-        "height": 0.71994,
+        "width": 0.72,
+        "height": 0.72,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.15846,
-        "voxelScaleY": 1
+        "flipY": false
       }
     },
     "cmd:2+4": {
@@ -3017,67 +2761,53 @@
         "flipY": false
       },
       "104": {
-        "width": 0.67981,
-        "height": 0.67981,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.44965,
-        "voxelScaleY": 1
+        "width": 0.81852,
+        "height": 0.81852,
+        "voxelScaleX": 1.20372,
+        "voxelScaleY": 0.83076,
+        "offsetX": 0
       },
       "105": {
-        "width": 0.71994,
-        "height": 0.71994,
+        "width": 0.72,
+        "height": 0.72,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.15846,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "106": {
-        "width": 0.66007,
-        "height": 0.66007,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.78079,
-        "voxelScaleY": 1
+        "width": 0.88052,
+        "height": 0.88052,
+        "voxelScaleX": 1.33413,
+        "voxelScaleY": 0.74955,
+        "offsetX": 0
       },
       "107": {
-        "width": 0.66007,
-        "height": 0.66007,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.78079,
-        "voxelScaleY": 1
+        "width": 0.88052,
+        "height": 0.88052,
+        "voxelScaleX": 1.33413,
+        "voxelScaleY": 0.74955,
+        "offsetX": 0
       },
       "108": {
-        "width": 0.66007,
-        "height": 0.66007,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.78079,
-        "voxelScaleY": 1
+        "width": 0.88052,
+        "height": 0.88052,
+        "voxelScaleX": 1.33413,
+        "voxelScaleY": 0.74955,
+        "offsetX": 0
       },
       "109": {
-        "width": 0.67981,
-        "height": 0.67981,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.44965,
-        "voxelScaleY": 1
+        "width": 0.81852,
+        "height": 0.81852,
+        "voxelScaleX": 1.20372,
+        "voxelScaleY": 0.83076,
+        "offsetX": 0
       },
       "110": {
-        "width": 0.69979,
-        "height": 0.69979,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.35406,
-        "voxelScaleY": 1
+        "width": 0.81435,
+        "height": 0.81435,
+        "voxelScaleX": 1.16335,
+        "voxelScaleY": 0.85958,
+        "offsetX": 0
       }
     },
     "cmd:3+4": {

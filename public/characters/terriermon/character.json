@@ -68,34 +68,13 @@
       "/characters/terriermon/frames/frame-014.png"
     ],
     "sidestepLeft": [
-      "/characters/terriermon/frames/frame-091.png",
-      "/characters/terriermon/frames/frame-092.png",
-      "/characters/terriermon/frames/frame-094.png",
-      "/characters/terriermon/frames/frame-096.png",
-      "/characters/terriermon/frames/frame-098.png",
-      "/characters/terriermon/frames/frame-099.png",
-      "/characters/terriermon/frames/frame-101.png",
-      "/characters/terriermon/frames/frame-103.png"
+      "/characters/terriermon/frames/frame-015.png"
     ],
     "sidestepRight": [
-      "/characters/terriermon/frames/frame-105.png",
-      "/characters/terriermon/frames/frame-106.png",
-      "/characters/terriermon/frames/frame-108.png",
-      "/characters/terriermon/frames/frame-110.png",
-      "/characters/terriermon/frames/frame-112.png",
-      "/characters/terriermon/frames/frame-114.png",
-      "/characters/terriermon/frames/frame-116.png",
-      "/characters/terriermon/frames/frame-118.png"
+      "/characters/terriermon/frames/frame-015.png"
     ],
     "jump": [
-      "/characters/terriermon/frames/frame-120.png",
-      "/characters/terriermon/frames/frame-121.png",
-      "/characters/terriermon/frames/frame-123.png",
-      "/characters/terriermon/frames/frame-124.png",
-      "/characters/terriermon/frames/frame-126.png",
-      "/characters/terriermon/frames/frame-127.png",
-      "/characters/terriermon/frames/frame-129.png",
-      "/characters/terriermon/frames/frame-130.png"
+      "/characters/terriermon/frames/frame-047.png"
     ],
     "crouch": [
       "/characters/terriermon/frames/frame-041.png"
@@ -479,15 +458,11 @@
       "onCounterHitFrames": 11,
       "whiffRecoveryFrames": 4,
       "range": 1.42,
-      "label": "Terriermon Left Check",
-      "hitLevel": "high",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.5,
       "forwardForceStartFrame": 4,
-      "forwardForceEndFrame": 11
+      "forwardForceEndFrame": 11,
+      "label": "Terriermon Left Check",
+      "hitLevel": "high"
     },
     "jabright": {
       "startupFrames": 14,
@@ -499,15 +474,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
-      "label": "Terriermon Right Check",
-      "hitLevel": "mid",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 0.85,
       "forwardForceStartFrame": 5,
-      "forwardForceEndFrame": 9
+      "forwardForceEndFrame": 9,
+      "label": "Terriermon Right Check",
+      "hitLevel": "mid"
     },
     "kickleft": {
       "startupFrames": 20,
@@ -519,15 +490,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
-      "label": "Terriermon Left Kick",
-      "hitLevel": "low",
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
       "forwardForce": 0.95,
       "forwardForceStartFrame": 18,
-      "forwardForceEndFrame": 22
+      "forwardForceEndFrame": 22,
+      "label": "Terriermon Left Kick",
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 14,
@@ -539,18 +506,14 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 10,
       "range": 1.7,
-      "label": "Terriermon Right Kick",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "pushback": 1,
-      "blockPushback": 0.48,
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 1.2,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 23
+      "forwardForceEndFrame": 23,
+      "pushback": 1,
+      "blockPushback": 0.48,
+      "label": "Terriermon Right Kick",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:f+1": {
       "startupFrames": 14,
@@ -563,14 +526,10 @@
       "whiffRecoveryFrames": 8,
       "range": 1.72,
       "forwardForce": 0.6,
-      "label": "Terriermon Rush",
-      "hitLevel": "mid",
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 15
+      "forwardForceEndFrame": 15,
+      "label": "Terriermon Rush",
+      "hitLevel": "mid"
     },
     "cmd:d/f+2": {
       "startupFrames": 18,
@@ -582,19 +541,15 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 12,
       "range": 1.68,
+      "forwardForce": 1.98,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 12,
       "launchHeight": 2.1,
       "launchVelocity": 5.9,
       "juggleRefloatVelocity": 4.25,
       "juggleGravityScale": 0.54,
       "label": "Terriermon Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 19,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
-      "forwardForce": 1.98,
-      "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 12
+      "hitLevel": "mid"
     },
     "cmd:qcf+4": {
       "startupFrames": 26,
@@ -606,16 +561,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 43,
       "range": 2.05,
-      "label": "Terriermon Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 4,
       "forwardForceStartFrame": 25,
-      "forwardForceEndFrame": 40
+      "forwardForceEndFrame": 40,
+      "label": "Terriermon Burst",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 14,
@@ -627,15 +578,11 @@
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 23,
       "range": 1.62,
-      "label": "Terriermon Rising Strike",
-      "hitLevel": "mid",
-      "onComboHitFrames": 20,
-      "onJuggleHitFrames": 14,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 2.17,
       "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 22
+      "forwardForceEndFrame": 22,
+      "label": "Terriermon Rising Strike",
+      "hitLevel": "mid"
     },
     "cmd:FC+1": {
       "startupFrames": 14,
@@ -647,15 +594,11 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.34,
-      "label": "Terriermon Crouch Jab",
-      "hitLevel": "mid",
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5,
       "forwardForce": 1.72,
       "forwardForceStartFrame": 6,
-      "forwardForceEndFrame": 15
+      "forwardForceEndFrame": 15,
+      "label": "Terriermon Crouch Jab",
+      "hitLevel": "mid"
     },
     "cmd:FC+2": {
       "startupFrames": 18,
@@ -667,16 +610,12 @@
       "onCounterHitFrames": 30,
       "whiffRecoveryFrames": 12,
       "range": 1.48,
-      "launchHeight": 2,
-      "label": "Terriermon Crouch Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 21,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
       "forwardForce": 1.89,
       "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 12
+      "forwardForceEndFrame": 12,
+      "launchHeight": 2,
+      "label": "Terriermon Crouch Launcher",
+      "hitLevel": "mid"
     },
     "cmd:1+2": {
       "startupFrames": 22,
@@ -688,15 +627,11 @@
       "onCounterHitFrames": 16,
       "whiffRecoveryFrames": 9,
       "range": 1.72,
-      "label": "Terriermon Twin Assault",
-      "hitLevel": "mid",
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7,
       "forwardForce": 1.68,
       "forwardForceStartFrame": 7,
-      "forwardForceEndFrame": 13
+      "forwardForceEndFrame": 13,
+      "label": "Terriermon Twin Assault",
+      "hitLevel": "mid"
     },
     "cmd:1+3": {
       "startupFrames": 18,
@@ -708,16 +643,12 @@
       "onCounterHitFrames": 31,
       "whiffRecoveryFrames": 35,
       "range": 1.65,
-      "launchHeight": 2.2,
-      "label": "Terriermon Cross Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 19,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 13,
       "forwardForce": 2.66,
       "forwardForceStartFrame": 19,
-      "forwardForceEndFrame": 24
+      "forwardForceEndFrame": 24,
+      "launchHeight": 2.2,
+      "label": "Terriermon Cross Launcher",
+      "hitLevel": "mid"
     },
     "cmd:2+3": {
       "startupFrames": 20,
@@ -729,15 +660,11 @@
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 27,
       "range": 1.58,
-      "label": "Terriermon Low Feint",
-      "hitLevel": "low",
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 6,
       "forwardForce": 2.27,
       "forwardForceStartFrame": 17,
-      "forwardForceEndFrame": 22
+      "forwardForceEndFrame": 22,
+      "label": "Terriermon Low Feint",
+      "hitLevel": "low"
     },
     "cmd:2+4": {
       "startupFrames": 27,
@@ -749,16 +676,12 @@
       "onCounterHitFrames": 14,
       "whiffRecoveryFrames": 39,
       "range": 1.74,
-      "label": "Terriermon Driving Kick",
-      "hitLevel": "low",
-      "knockdown": true,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10,
       "forwardForce": 2.44,
       "forwardForceStartFrame": 24,
-      "forwardForceEndFrame": 38
+      "forwardForceEndFrame": 38,
+      "label": "Terriermon Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -770,16 +693,12 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 39,
       "range": 1.9,
-      "label": "Terriermon Power Crush",
-      "hitLevel": "mid",
-      "knockdown": true,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11,
       "forwardForce": 3.64,
       "forwardForceStartFrame": 21,
-      "forwardForceEndFrame": 34
+      "forwardForceEndFrame": 34,
+      "label": "Terriermon Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 26,
@@ -791,18 +710,14 @@
       "onCounterHitFrames": 32,
       "whiffRecoveryFrames": 41,
       "range": 2.1,
+      "forwardForce": 3.12,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 16,
       "kiCost": 35,
       "label": "Terriermon Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "usesKi": true,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 12,
-      "forwardForce": 3.12,
-      "forwardForceStartFrame": 9,
-      "forwardForceEndFrame": 16
+      "usesKi": true
     },
     "neutral:jab-jab": {
       "startupFrames": 14,
@@ -1340,11 +1255,11 @@
         "flipY": false
       },
       "69": {
-        "width": 0.73807,
-        "height": 0.73807,
-        "voxelScaleX": 1.1256,
-        "voxelScaleY": 0.88842,
-        "offsetX": 0
+        "width": 0.74,
+        "height": 0.74,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "71": {
         "width": 0.48,
@@ -1370,11 +1285,11 @@
     },
     "backHop": {
       "14": {
-        "width": 0.48778,
-        "height": 0.48778,
-        "voxelScaleX": 1.14965,
-        "voxelScaleY": 0.86983,
-        "offsetX": 0
+        "width": 0.49,
+        "height": 0.49,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "75": {
         "width": 0.48,
@@ -1434,6 +1349,13 @@
       }
     },
     "sidestepLeft": {
+      "15": {
+        "width": 0.54956,
+        "height": 0.54956,
+        "voxelScaleX": 1.09599,
+        "voxelScaleY": 0.91242,
+        "offsetX": 0
+      },
       "91": {
         "width": 0.56,
         "height": 0.63,
@@ -1449,32 +1371,32 @@
         "flipY": false
       },
       "94": {
-        "width": 0.63542,
-        "height": 0.63542,
-        "voxelScaleX": 0.91521,
-        "voxelScaleY": 1.09264,
-        "offsetX": 0
+        "width": 0.64,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "96": {
-        "width": 0.63257,
-        "height": 0.63257,
-        "voxelScaleX": 0.88649,
-        "voxelScaleY": 1.12804,
-        "offsetX": 0
+        "width": 0.63,
+        "height": 0.63,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "98": {
-        "width": 0.6123,
-        "height": 0.6123,
-        "voxelScaleX": 0.88192,
-        "voxelScaleY": 1.13389,
-        "offsetX": 0
+        "width": 0.61,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "99": {
-        "width": 0.60373,
-        "height": 0.60373,
-        "voxelScaleX": 0.89443,
-        "voxelScaleY": 1.11803,
-        "offsetX": 0
+        "width": 0.6,
+        "height": 0.6,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "101": {
         "width": 0.56,
@@ -1484,14 +1406,21 @@
         "flipY": false
       },
       "103": {
-        "width": 0.61686,
-        "height": 0.61686,
-        "voxelScaleX": 0.84172,
-        "voxelScaleY": 1.18804,
-        "offsetX": 0
+        "width": 0.62,
+        "height": 0.62,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "sidestepRight": {
+      "15": {
+        "width": 0.54956,
+        "height": 0.54956,
+        "voxelScaleX": 1.09599,
+        "voxelScaleY": 0.91242,
+        "offsetX": 0
+      },
       "105": {
         "width": 0.58,
         "height": 0.67,
@@ -1500,18 +1429,18 @@
         "flipY": false
       },
       "106": {
-        "width": 0.67306,
-        "height": 0.67306,
-        "voxelScaleX": 1.20345,
-        "voxelScaleY": 0.83094,
-        "offsetX": 0
+        "width": 0.67,
+        "height": 0.67,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "108": {
-        "width": 0.62074,
-        "height": 0.62074,
-        "voxelScaleX": 0.86992,
-        "voxelScaleY": 1.14953,
-        "offsetX": 0
+        "width": 0.62,
+        "height": 0.62,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "110": {
         "width": 0.58,
@@ -1550,6 +1479,13 @@
       }
     },
     "jump": {
+      "47": {
+        "width": 0.4939,
+        "height": 0.4939,
+        "voxelScaleX": 0.88308,
+        "voxelScaleY": 1.1324,
+        "offsetX": 0
+      },
       "120": {
         "width": 0.7,
         "height": 0.85,
@@ -1855,25 +1791,25 @@
         "flipY": false
       },
       "133": {
-        "width": 0.63541,
-        "height": 0.63541,
-        "voxelScaleX": 1.1767,
-        "voxelScaleY": 0.84983,
-        "offsetX": 0
+        "width": 0.64,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "134": {
-        "width": 0.7307,
-        "height": 0.7307,
-        "voxelScaleX": 1.22222,
-        "voxelScaleY": 0.81818,
-        "offsetX": 0
+        "width": 0.73,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "135": {
-        "width": 0.72713,
-        "height": 0.72713,
-        "voxelScaleX": 1.25678,
-        "voxelScaleY": 0.79569,
-        "offsetX": 0
+        "width": 0.73,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "136": {
         "width": 0.67396,
@@ -1883,11 +1819,11 @@
         "offsetX": 0
       },
       "137": {
-        "width": 0.76786,
-        "height": 0.76786,
-        "voxelScaleX": 1.24422,
-        "voxelScaleY": 0.80371,
-        "offsetX": 0
+        "width": 0.77,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "138": {
         "width": 0.73,
@@ -2004,11 +1940,11 @@
         "flipY": false
       },
       "217": {
-        "width": 0.46765,
-        "height": 0.46765,
-        "voxelScaleX": 1.1547,
-        "voxelScaleY": 0.86603,
-        "offsetX": 0
+        "width": 0.47,
+        "height": 0.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "kickleft": {
@@ -2062,11 +1998,11 @@
         "flipY": false
       },
       "226": {
-        "width": 0.5,
-        "height": 0.5,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
+        "width": 0.58209,
+        "height": 0.58209,
+        "voxelScaleX": 1.17263,
+        "voxelScaleY": 0.85278,
+        "offsetX": 0
       }
     },
     "kickright": {
@@ -2377,11 +2313,11 @@
     },
     "getupRollUp": {
       "37": {
-        "width": 0.65619,
-        "height": 0.65619,
-        "voxelScaleX": 0.79128,
-        "voxelScaleY": 1.26378,
-        "offsetX": 0
+        "width": 0.66,
+        "height": 0.66,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "38": {
         "width": 0.47,
@@ -3257,7 +3193,6 @@
     {
       "id": "bunny-blast-projectile",
       "name": "Bunny Blast",
-      "kind": "projectile",
       "sourcePath": "/characters/terriermon/animation-sheet.png",
       "frames": [
         "/characters/terriermon/projectiles/bunny-blast-projectile/frames/frame-000.png",
@@ -3290,7 +3225,11 @@
         "depth": 0.14,
         "alphaThreshold": 24,
         "paletteSnap": 8,
-        "mergeRuns": true
+        "mergeRuns": true,
+        "lod": {
+          "mobileStep": 2,
+          "farStep": 2
+        }
       },
       "defaultScale": [
         0.44,
@@ -3302,8 +3241,9 @@
         0,
         0
       ],
-      "alignToVelocity": true,
-      "color": "#32ff5a"
+      "color": "#32ff5a",
+      "soundCues": [],
+      "proceduralLayers": []
     }
   ],
   "moveProjectiles": {
@@ -3311,7 +3251,6 @@
       {
         "id": "kickleft-bunny-blast",
         "projectileId": "bunny-blast-projectile",
-        "kind": "projectile",
         "label": "Bunny Blast",
         "spawnFrame": 20,
         "spawnOffset": [
@@ -3347,8 +3286,9 @@
         "pushbackScale": 1,
         "blockPushbackScale": 1,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit",
-        "clash": true
+        "pierce": false,
+        "clash": true,
+        "kiBurst": false
       }
     ]
   },
