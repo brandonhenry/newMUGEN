@@ -58,14 +58,12 @@ const LAYERS: Record<StoryWorldThemeId, LayerInput[]> = {
     ['magical-road/middle.png', -6.5, 19, 0.4, 5.1], ['warped-city/near-buildings.png', -5, 12, 0.52, 28.3, 0.78]
   ],
   village: [
-    ['gothic-town/background.png', -16, 18, 0.05, 24], ['seasonal/grass-hills.png', -13, 18, 0.12, 24.9, 0.84],
-    ['gothic-town/middleground.png', -9, 18, 0.27, 24], ['seasonal/grass-foreground.png', -5, 18, 0.5, 24.9, 0.72]
+    ['gothic-town/background.png', -16, 18, 0.05, 24], ['gothic-town/background.png', -13, 18, 0.12, 24, 0.72],
+    ['gothic-town/middleground.png', -9, 18, 0.27, 24], ['gothic-town/middleground.png', -5, 18, 0.5, 24, 0.58]
   ],
   forest: [
-    ['tall-forest/back.png', -17, 19, 0.04, 11.4], ['forest-illusion/back.png', -15, 19, 0.08, 11.2, 0.66],
-    ['seasonal/autumn-distant.png', -13, 19, 0.13, 26.3, 0.38], ['tall-forest/far.png', -11, 19, 0.2, 13.9],
-    ['forest-illusion/middle.png', -8, 19, 0.32, 26.8, 0.82], ['tall-forest/middle.png', -6, 19, 0.43, 15.2],
-    ['seasonal/autumn-leaves.png', -4.5, 19, 0.56, 26.3, 0.68]
+    ['thornwood/sky.png', -17, 19, 0.04, 7], ['thornwood/clouds.png', -14, 19, 0.1, 41.5, 0.72],
+    ['thornwood/far-grounds.png', -10, 12, 0.24, 50.4], ['thornwood/sea.png', -6, 7, 0.46, 11.2, 0.56]
   ],
   mine: [
     ['warped-caves/background.png', -15, 18, 0.05, 24.5], ['warped-caves/middleground.png', -9, 18, 0.24, 27.8],
@@ -73,25 +71,23 @@ const LAYERS: Record<StoryWorldThemeId, LayerInput[]> = {
   ],
   crypt: [
     ['gothic-cemetery/background.png', -16, 18, 0.04, 30.9], ['gothic-cemetery/mountains.png', -13, 18, 0.12, 19.3],
-    ['gothic-cemetery/graveyard.png', -9, 10, 0.28, 31.2], ['gothic-church/backgrounds.png', -5.5, 12, 0.48, 39, 0.82]
+    ['gothic-cemetery/graveyard.png', -9, 10, 0.28, 31.2]
   ],
   underworld: [
     ['emberdeep/background.png', -15, 18, 0.05, 24.5], ['emberdeep/middleground.png', -9, 18, 0.24, 27.8],
-    ['emberdeep/walls.png', -4.5, 14, 0.5, 17.5], ['seasonal/lava.png', -2.8, 1.6, 0.68, 3.2, 0.95, 0.15]
+    ['emberdeep/walls.png', -4.5, 14, 0.5, 17.5], ['moten-lava/lava-surface.png', -2.8, 1.6, 0.68, 3.2, 0.95, 0.15]
   ],
   snow: [
-    ['seasonal/snow-big-mountain.png', -15, 18, 0.06, 24.9], ['seasonal/snow-small-mountains.png', -10, 18, 0.2, 24.9],
-    ['seasonal/snow-foreground.png', -5, 18, 0.48, 24.9]
+    ['sunnyland-winter/sky.png', -17, 18, 0.04, 29.3], ['sunnyland-winter/mountains.png', -14, 18, 0.1, 24.8],
+    ['sunnyland-winter/mid-layer-a.png', -10, 18, 0.24, 45.4], ['sunnyland-winter/mid-layer-b.png', -5, 18, 0.48, 45.4]
   ],
   desert: [
-    ['desert-platformer/back-1.png', -17, 18, 0.03, 28.8], ['sunscar-pixel/back.png', -13, 18, 0.12, 38.4, 0.84],
-    ['sunscar-pixel/middle.png', -9, 18, 0.28, 38.4], ['sunscar-pixel/near.png', -5, 18, 0.5, 38.4]
+    ['yeehaw/parallax-c.png', -16, 18, 0.05, 24], ['yeehaw/parallax-b.png', -11, 18, 0.2, 24],
+    ['yeehaw/parallax-a.png', -6, 18, 0.46, 24]
   ],
   ruins: [
-    ['magic-cliffs/sky.png', -18, 19, 0.03, 7], ['ocean-view/day-clouds.png', -16, 19, 0.06, 25.3, 0.62],
-    ['magic-cliffs/clouds.png', -14, 18, 0.1, 41.5], ['rocky-pass/back.png', -12, 18, 0.16, 38.4, 0.72],
-    ['rocky-pass/middle.png', -9, 18, 0.28, 38.4], ['magic-cliffs/far-grounds.png', -7, 9, 0.38, 50.4],
-    ['rocky-pass/near.png', -4.5, 18, 0.52, 38.4]
+    ['skyglass/back.png', -15, 18, 0.06, 38.4], ['skyglass/middle.png', -10, 18, 0.24, 38.4],
+    ['skyglass/near.png', -5, 18, 0.5, 38.4]
   ]
 };
 
@@ -108,9 +104,9 @@ const PROPS: Record<StoryWorldThemeId, PropInput[]> = {
   mine: [['warped-caves/gate.png', [48, 48], [5.2, 5.2]], ['warped-caves/stalactite.png', [38, 53], [3.2, 4.5], 7], ['warped-caves/stone-head.png', [55, 51], [4, 3.7]]],
   crypt: [['gothic-cemetery/tree.png', [166, 117], [9, 6.4]], ['gothic-cemetery/statue.png', [63, 75], [3.6, 4.3]], ['gothic-cemetery/stone.png', [27, 33], [2.2, 2.7]], ['gothic-church/column.png', [114, 190], [5.2, 8.7]]],
   underworld: [['emberdeep/gate.png', [48, 48], [5.2, 5.2]], ['emberdeep/stone-head.png', [55, 51], [4, 3.7]], ['emberdeep/stalactite.png', [38, 53], [3.2, 4.5], 7], ['rocky-pass/crystal-1.png', [25, 25], [2.2, 2.2]]],
-  snow: [['frostpeak-details/house.png', [240, 96], [10, 4]], ['rocky-pass/crystal-1.png', [25, 25], [2.2, 2.2]], ['rocky-pass/crystal-2.png', [26, 20], [2.5, 1.9]], ['tall-forest/rock.png', [32, 32], [2.8, 2.8]]],
-  desert: [['sunscar-settlement/wagon.png', [93, 75], [4.5, 3.6]], ['sunscar-settlement/well.png', [65, 65], [3.4, 3.4]], ['sunscar-settlement/house-a.png', [168, 183], [7.5, 8.2]], ['sunscar-settlement/house-b.png', [210, 244], [7.4, 8.6]], ['sunscar-settlement/house-c.png', [221, 183], [8.2, 7]], ['sunscar-settlement/street-lamp.png', [35, 108], [1.4, 4.3]], ['sunscar-pixel/crystal-1.png', [25, 25], [2.2, 2.2]], ['sunscar-pixel/crystal-2.png', [26, 20], [2.5, 1.9]]],
-  ruins: [['rocky-pass/crystal-1.png', [25, 25], [2.4, 2.4]], ['rocky-pass/crystal-2.png', [26, 20], [2.8, 2.2]], ['gothic-cemetery/statue.png', [63, 75], [3.6, 4.3]], ['gothic-church/column.png', [114, 190], [4.6, 7.7], undefined, 0.78]]
+  snow: [['sunnyland-winter/house.png', [170, 126], [8.5, 6.3]], ['sunnyland-winter/pine-snow.png', [47, 99], [3.4, 7.2]], ['sunnyland-winter/tall-tree.png', [89, 172], [5.2, 10]], ['sunnyland-winter/fence.png', [96, 37], [5.2, 2]]],
+  desert: [['yeehaw/frontier-facade.png', [192, 176], [9, 8.25]], ['yeehaw/cactus.png', [48, 64], [3, 4]], ['yeehaw/sun.png', [192, 64], [6, 2]], ['yeehaw/wanted-poster.png', [16, 32], [1.2, 2.4]], ['yeehaw/bottle.png', [16, 32], [1.1, 2.2]], ['yeehaw/tin-can.png', [16, 32], [1.1, 2.2]]],
+  ruins: [['skyglass/crystal-1.png', [25, 25], [2.4, 2.4]], ['skyglass/crystal-2.png', [26, 20], [2.8, 2.2]], ['skyglass/crystal-1.png', [25, 25], [3.6, 3.6]], ['skyglass/crystal-2.png', [26, 20], [4.2, 3.3], undefined, 0.78]]
 };
 
 type SurfaceInput = [string, [number, number, number, number], [number, number], walkSurfaceInsetPixels?: number];
@@ -123,14 +119,14 @@ const SURFACES: Record<StoryWorldThemeId, SurfaceInput> = {
   training: ['warped-city/tileset.png', [48, 16, 32, 16], [384, 256]],
   tournament: ['tournament-gold/tileset.png', [0, 16, 32, 16], [208, 128]],
   route: ['magical-road/tileset.png', [32, 16, 32, 16], [128, 96]],
-  village: ['seasonal/grass-terrain.png', [48, 16, 32, 16], [272, 160], 1],
-  forest: ['tall-forest/tileset.png', [16, 80, 32, 16], [112, 144], 1],
+  village: ['gothic-town/tileset.png', [48, 16, 32, 16], [592, 192], 1],
+  forest: ['thornwood/tileset.png', [16, 16, 32, 16], [928, 320], 1],
   mine: ['warped-caves/tileset.png', [32, 16, 32, 16], [384, 192]],
   crypt: ['gothic-cemetery/tileset.png', [336, 16, 32, 16], [448, 160]],
   underworld: ['emberdeep/tileset.png', [32, 16, 32, 16], [384, 192]],
-  snow: ['seasonal/snow-terrain.png', [48, 16, 32, 16], [272, 160], 1],
-  desert: ['sunscar-pixel/tileset.png', [48, 16, 32, 16], [224, 128]],
-  ruins: ['rocky-pass/tileset.png', [48, 16, 32, 16], [224, 128]]
+  snow: ['sunnyland-winter/tileset.png', [48, 16, 32, 16], [320, 240], 1],
+  desert: ['yeehaw/tileset.png', [0, 0, 32, 16], [256, 256]],
+  ruins: ['skyglass/tileset.png', [48, 16, 32, 16], [224, 128]]
 };
 
 /**
@@ -140,12 +136,12 @@ const SURFACES: Record<StoryWorldThemeId, SurfaceInput> = {
  */
 const SURFACE_VARIANT_FRAMES: Partial<Record<StoryWorldThemeId, Array<[number, number, number, number]>>> = {
   village: [[16, 16, 32, 16], [48, 16, 32, 16], [80, 16, 32, 16]],
-  forest: [[16, 80, 32, 16], [48, 80, 32, 16], [80, 80, 32, 16]],
+  forest: [[16, 16, 32, 16], [48, 16, 32, 16], [80, 16, 32, 16]],
   mine: [[0, 16, 32, 16], [32, 16, 32, 16], [64, 16, 32, 16]],
   crypt: [[304, 16, 32, 16], [336, 16, 32, 16], [368, 16, 32, 16]],
   underworld: [[0, 16, 32, 16], [32, 16, 32, 16], [64, 16, 32, 16]],
   snow: [[16, 16, 32, 16], [48, 16, 32, 16], [80, 16, 32, 16]],
-  desert: [[16, 16, 32, 16], [48, 16, 32, 16], [80, 16, 32, 16]],
+  desert: [[0, 0, 32, 16], [32, 0, 32, 16], [64, 0, 32, 16]],
   ruins: [[16, 16, 32, 16], [48, 16, 32, 16], [80, 16, 32, 16]]
 };
 

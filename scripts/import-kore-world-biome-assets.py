@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Import and verify the reviewed CC0 pixel-art packs used by play-mode worlds.
+"""Import and verify the reviewed free pixel-art packs used by play-mode worlds.
 
 Only the PNG files referenced by the game are extracted. Source archives are
 downloaded into a temporary/cache directory, pinned by SHA-256, and never
@@ -55,6 +55,8 @@ class Pack:
     sha256: str
     files: dict[str, str]
     license: str = "CC0-1.0"
+    scale: int = 1
+    container: str = "zip"
 
 
 PACKS = (
@@ -132,6 +134,22 @@ PACKS = (
         "snow-big-mountain.png": "Seasonal Tilesets/4 - Winter World/Background parts/3 - Big_mountain_BG.png", "snow-small-mountains.png": "Seasonal Tilesets/4 - Winter World/Background parts/2 - Smaller_mountains.png", "snow-foreground.png": "Seasonal Tilesets/4 - Winter World/Background parts/1 - Snowy_foreground_area.png", "snow-terrain.png": "Seasonal Tilesets/4 - Winter World/Terrain (16 x 16).png",
         "lava.png": "Seasonal Tilesets/5 - Misc. universal tiles/Lava_frames (16 x 32).png", "house.png": "Seasonal Tilesets/5 - Misc. universal tiles/House (112 x 96).png",
     }),
+    Pack("sunnyland-winter", "Ansimuz", "https://ansimuz.itch.io/sunnyland-winter-forest", "itch://ansimuz.itch.io/sunnyland-winter-forest/16443364", "63adce10f83d31d5ed05ddf0cb94ba8936ea2782c386a8b9f9707783164a0616", {
+        "sky.png": "sunnyland winter forest files/ENVIRONMENT/sky.png", "mountains.png": "sunnyland winter forest files/ENVIRONMENT/mountains.png",
+        "mid-layer-a.png": "sunnyland winter forest files/ENVIRONMENT/mid-layer-a.png", "mid-layer-b.png": "sunnyland winter forest files/ENVIRONMENT/mid-layer-b.png",
+        "tileset.png": "sunnyland winter forest files/ENVIRONMENT/tileset.png", "house.png": "sunnyland winter forest files/ENVIRONMENT/props-sliced/house.png",
+        "pine.png": "sunnyland winter forest files/ENVIRONMENT/props-sliced/pine.gif", "pine-snow.png": "sunnyland winter forest files/ENVIRONMENT/props-sliced/pine-snow.gif",
+        "tall-tree.png": "sunnyland winter forest files/ENVIRONMENT/props-sliced/tall-tree.gif", "fence.png": "sunnyland winter forest files/ENVIRONMENT/props-sliced/fence-snow.gif",
+    }, license="Free commercial use and modification; attribution not required"),
+    Pack("yeehaw", "CURSED OFFERINGS", "https://cursed-offerings.itch.io/yeehaw", "itch://cursed-offerings.itch.io/yeehaw/12917777", "edd18deb839130954db9c5e7e6cc58e838e05df38136faa5afcf4dd485ad77de", {
+        "tileset.png": "Yeehaw/yeehaw_tileset_standard.png", "parallax-a.png": "Yeehaw/yeehaw_parallax_layerA_standard.png",
+        "parallax-b.png": "Yeehaw/yeehaw_parallax_layerB_standard.png", "parallax-c.png": "Yeehaw/yeehaw_parallax_layerC_standard.png",
+        "sun.png": "Yeehaw/yeehaw_env_sun_sprite.png", "bottle.png": "Yeehaw/yeehaw_obj_bottle_sprite.png",
+        "tin-can.png": "Yeehaw/yeehaw_obj_tincan_sprite.png", "wanted-poster.png": "Yeehaw/yeehaw_obj_wantedposter_sprite.png",
+    }, license="Free commercial and non-commercial use and modification", scale=2),
+    Pack("moten-lava", "TheConceptofChris", "https://theconceptofchris.itch.io/moten-lava-32-x-32-tile-set", "itch://theconceptofchris.itch.io/moten-lava-32-x-32-tile-set/3732832", "b4fa67634658af7ece05087dde1e135cf2c69f34e3748509f4fc2308b5effcdc", {
+        "lava-tiles.png": "LavaTile set.png",
+    }, license="No copyright; free to use", container="raw"),
 )
 
 
@@ -171,8 +189,25 @@ def download_seasonal() -> bytes:
     return request(opener, file_json["url"])
 
 
+def download_itch_upload(pack: Pack) -> bytes:
+    host_and_slug, upload_id = pack.archive.removeprefix("itch://").rsplit("/", 1)
+    page_url = f"https://{host_and_slug}"
+    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
+    page = request(opener, page_url).decode("utf-8")
+    csrf = re.search(r'name="csrf_token" value="([^"]+)"', page)
+    if not csrf:
+        raise RuntimeError(f"Could not find itch.io CSRF token for {pack.id}")
+    download_page_json = json.loads(request(opener, f"{page_url}/download_url", {"csrf_token": csrf.group(1)}))
+    download_page = request(opener, download_page_json["url"]).decode("utf-8")
+    csrf = re.search(r'name="csrf_token" value="([^"]+)"', download_page)
+    if not csrf:
+        raise RuntimeError(f"Could not find itch.io download CSRF token for {pack.id}")
+    file_json = json.loads(request(opener, f"{page_url}/file/{upload_id}?source=game_download", {"csrf_token": csrf.group(1)}))
+    return request(opener, file_json["url"])
+
+
 def obtain_archive(pack: Pack, archive_dir: Path | None) -> bytes:
-    candidates = [] if archive_dir is None else [archive_dir / f"{pack.id}.zip"]
+    candidates = [] if archive_dir is None else [archive_dir / f"{pack.id}.{'zip' if pack.container == 'zip' else 'png'}"]
     local_aliases = {
         "sci-fi-lab": "scifi-lab.zip",
         "gothic-cemetery": "cemetery.zip",
@@ -188,20 +223,27 @@ def obtain_archive(pack: Pack, archive_dir: Path | None) -> bytes:
             data = candidate.read_bytes()
             break
     else:
-        data = download_seasonal() if pack.archive.startswith("itch://") else urllib.request.urlopen(pack.archive, timeout=90).read()
+        if pack.id == "seasonal":
+            data = download_seasonal()
+        elif pack.archive.startswith("itch://"):
+            data = download_itch_upload(pack)
+        else:
+            data = urllib.request.urlopen(pack.archive, timeout=90).read()
     actual = sha256_bytes(data)
     if actual != pack.sha256:
         raise ValueError(f"Archive checksum mismatch for {pack.id}: {actual}")
     return data
 
 
-def save_png(data: bytes, destination: Path) -> tuple[int, int]:
+def save_png(data: bytes, destination: Path, scale: int = 1) -> tuple[int, int]:
     destination.parent.mkdir(parents=True, exist_ok=True)
     with Image.open(io.BytesIO(data)) as image:
         image.load()
         if image.width > 1024:
             image.thumbnail((720, 450), Image.Resampling.NEAREST)
         image = image.convert("RGBA")
+        if scale != 1:
+            image = image.resize((image.width * scale, image.height * scale), Image.Resampling.NEAREST)
         image.save(destination, format="PNG", compress_level=9)
         return image.size
 
@@ -218,20 +260,33 @@ def palette_variant(source: Path, destination: Path, low: tuple[int, int, int], 
         return image.size
 
 
+def crop_variant(source: Path, destination: Path, box: tuple[int, int, int, int]) -> tuple[int, int]:
+    with Image.open(source).convert("RGBA") as image:
+        cropped = image.crop(box)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        cropped.save(destination, format="PNG", optimize=True)
+        return cropped.size
+
+
 def import_world_packs(archive_dir: Path | None) -> None:
     packs_manifest = []
     integrity: dict[str, str] = {}
     for pack in PACKS:
         archive = obtain_archive(pack, archive_dir)
         assets = []
-        with zipfile.ZipFile(io.BytesIO(archive)) as source:
+        source = zipfile.ZipFile(io.BytesIO(archive)) if pack.container == "zip" else None
+        try:
             for output, archived in pack.files.items():
                 destination = WORLD_ROOT / pack.id / output
-                size = save_png(source.read(archived), destination)
+                data = source.read(archived) if source else archive
+                size = save_png(data, destination, pack.scale)
                 relative = destination.relative_to(WORLD_ROOT).as_posix()
                 file_hash = sha256_path(destination)
                 integrity[relative] = file_hash
                 assets.append({"file": relative, "sourceFile": archived, "width": size[0], "height": size[1], "sha256": file_hash})
+        finally:
+            if source:
+                source.close()
         packs_manifest.append({"id": pack.id, "author": pack.author, "source": pack.source, "archive": pack.archive, "archiveSha256": pack.sha256, "license": pack.license, "assets": assets})
 
     cave_pack = next(item for item in packs_manifest if item["id"] == "warped-caves")
@@ -246,11 +301,10 @@ def import_world_packs(archive_dir: Path | None) -> None:
     packs_manifest.append({"id": "emberdeep", "author": "Ansimuz / K.O.R.E.", "source": next(pack.source for pack in PACKS if pack.id == "warped-caves"), "archive": "derived", "archiveSha256": next(pack.sha256 for pack in PACKS if pack.id == "warped-caves"), "license": "CC0-1.0", "derivedFrom": cave_pack["id"], "assets": ember_assets})
 
     for derived_id, source_id, source_names, low, high in (
+        ("thornwood", "magic-cliffs", ("sky.png", "clouds.png", "sea.png", "far-grounds.png", "tileset.png"), (18, 19, 28), (171, 222, 121)),
         ("tournament-gold", "fort-illusion", ("mountains.png", "back.png", "front.png", "tileset.png", "flag.png", "banner.png", "door.png"), (30, 19, 18), (255, 224, 113)),
-        ("sunscar-pixel", "rocky-pass", ("back.png", "middle.png", "near.png", "tileset.png", "crystal-1.png", "crystal-2.png"), (63, 30, 25), (255, 216, 132)),
-        ("frostpeak-details", "seasonal", ("house.png",), (78, 122, 160), (238, 251, 255)),
         ("tournament-cathedral", "gothic-church", ("backgrounds.png", "column.png", "tileset.png"), (28, 20, 17), (255, 224, 113)),
-        ("sunscar-settlement", "gothic-town", ("house-a.png", "house-b.png", "house-c.png", "wagon.png", "well.png", "street-lamp.png"), (67, 34, 25), (255, 211, 125)),
+        ("skyglass", "rocky-pass", ("back.png", "middle.png", "near.png", "tileset.png", "crystal-1.png", "crystal-2.png"), (26, 31, 71), (126, 255, 244)),
     ):
         assets = []
         for source_name in source_names:
@@ -263,19 +317,68 @@ def import_world_packs(archive_dir: Path | None) -> None:
         source_pack = next(pack for pack in PACKS if pack.id == source_id)
         packs_manifest.append({"id": derived_id, "author": f"{source_pack.author} / K.O.R.E.", "source": source_pack.source, "archive": "derived", "archiveSha256": source_pack.sha256, "license": "CC0-1.0", "derivedFrom": source_id, "assets": assets})
 
+    for pack_id, source_name, output_name, box in (
+        ("moten-lava", "lava-tiles.png", "lava-surface.png", (0, 0, 32, 32)),
+        ("yeehaw", "tileset.png", "cactus.png", (112, 16, 160, 80)),
+        ("yeehaw", "tileset.png", "frontier-facade.png", (0, 80, 192, 256)),
+    ):
+        pack_manifest = next(item for item in packs_manifest if item["id"] == pack_id)
+        destination = WORLD_ROOT / pack_id / output_name
+        size = crop_variant(WORLD_ROOT / pack_id / source_name, destination, box)
+        relative = destination.relative_to(WORLD_ROOT).as_posix()
+        file_hash = sha256_path(destination)
+        integrity[relative] = file_hash
+        pack_manifest["assets"].append({"file": relative, "sourceFile": f"runtime crop {box} of {pack_id}/{source_name}", "width": size[0], "height": size[1], "sha256": file_hash})
+
     WORLD_ROOT.mkdir(parents=True, exist_ok=True)
     WORLD_MANIFEST.write_text(json.dumps({"version": 1, "direction": "crisp authored pixel-art parallax", "packs": packs_manifest}, indent=2) + "\n")
     WORLD_INTEGRITY.write_text(json.dumps({"algorithm": "sha256", "files": dict(sorted(integrity.items()))}, indent=2) + "\n")
-    credit_rows = ["# Play-mode world art", "", "Only reviewed CC0 assets are shipped. Source archives are checksum-pinned and excluded.", "", "| Pack | Author | License | Source |", "| --- | --- | --- | --- |"]
+    credit_rows = ["# Play-mode world art", "", "Only reviewed free-use assets are shipped. Source archives are checksum-pinned and excluded.", "", "| Pack | Author | License | Source |", "| --- | --- | --- | --- |"]
     credit_rows.extend(f"| {pack.id} | {pack.author} | {pack.license} | {pack.source} |" for pack in PACKS)
     credit_rows.append("| emberdeep | Ansimuz / K.O.R.E. | CC0-1.0 | Palette derivative of Warped Caves |")
     credit_rows.append("| tournament-gold | Ansimuz / K.O.R.E. | CC0-1.0 | Palette derivative of Fort of Illusion |")
-    credit_rows.append("| sunscar-pixel | Ansimuz / K.O.R.E. | CC0-1.0 | Palette derivative of Rocky Pass |")
-    credit_rows.append("| frostpeak-details | GrafxKid / K.O.R.E. | CC0-1.0 | Palette derivative of Seasonal Tilesets |")
     credit_rows.append("| tournament-cathedral | Ansimuz / K.O.R.E. | CC0-1.0 | Palette derivative of GothicVania Church |")
-    credit_rows.append("| sunscar-settlement | Ansimuz / K.O.R.E. | CC0-1.0 | Palette derivative of GothicVania Town |")
+    credit_rows.append("| thornwood | Ansimuz / K.O.R.E. | CC0-1.0 | Palette derivative of Magic Cliffs |")
+    credit_rows.append("| skyglass | Ansimuz / K.O.R.E. | CC0-1.0 | Palette derivative of Rocky Pass |")
     (WORLD_ROOT / "CREDITS.md").write_text("\n".join(credit_rows) + "\n")
-    print(f"Imported {len(integrity)} reviewed world assets from {len(PACKS)} CC0 packs")
+    print(f"Imported {len(integrity)} reviewed world assets from {len(PACKS)} free-use packs")
+
+
+def finalize_biome_stack() -> None:
+    """Prune superseded biome derivatives and register deterministic runtime crops."""
+    manifest = json.loads(WORLD_MANIFEST.read_text())
+    integrity = json.loads(WORLD_INTEGRITY.read_text())
+    retired = {"sunscar-pixel", "frostpeak-details", "sunscar-settlement"}
+    retired_files = {
+        asset["file"]
+        for pack in manifest["packs"]
+        if pack["id"] in retired
+        for asset in pack["assets"]
+    }
+    manifest["packs"] = [pack for pack in manifest["packs"] if pack["id"] not in retired]
+    for relative in retired_files:
+        integrity["files"].pop(relative, None)
+    crop_specs = (
+        ("moten-lava", "lava-tiles.png", "lava-surface.png", (0, 0, 32, 32)),
+        ("yeehaw", "tileset.png", "cactus.png", (112, 16, 160, 80)),
+        ("yeehaw", "tileset.png", "frontier-facade.png", (0, 80, 192, 256)),
+    )
+    for pack_id, source_name, output_name, box in crop_specs:
+        pack = next(item for item in manifest["packs"] if item["id"] == pack_id)
+        destination = WORLD_ROOT / pack_id / output_name
+        size = crop_variant(WORLD_ROOT / pack_id / source_name, destination, box)
+        relative = destination.relative_to(WORLD_ROOT).as_posix()
+        file_hash = sha256_path(destination)
+        integrity["files"][relative] = file_hash
+        pack["assets"] = [asset for asset in pack["assets"] if asset["file"] != relative]
+        pack["assets"].append({"file": relative, "sourceFile": f"runtime crop {box} of {pack_id}/{source_name}", "width": size[0], "height": size[1], "sha256": file_hash})
+    integrity["files"] = dict(sorted(integrity["files"].items()))
+    WORLD_MANIFEST.write_text(json.dumps(manifest, indent=2) + "\n")
+    WORLD_INTEGRITY.write_text(json.dumps(integrity, indent=2) + "\n")
+    credit_rows = ["# Play-mode world art", "", "Only reviewed free-use assets are shipped. Source archives are checksum-pinned and excluded.", "", "| Pack | Author | License | Source |", "| --- | --- | --- | --- |"]
+    credit_rows.extend(f"| {pack['id']} | {pack['author']} | {pack['license']} | {pack['source']} |" for pack in manifest["packs"])
+    (WORLD_ROOT / "CREDITS.md").write_text("\n".join(credit_rows) + "\n")
+    print(f"Finalized {len(manifest['packs'])} world packs and {len(integrity['files'])} assets")
 
 
 def verify_integrity(root: Path, manifest_path: Path, label: str) -> None:
@@ -398,9 +501,12 @@ def main() -> None:
     parser.add_argument("--refresh", action="store_true", help="Download and re-import every reviewed CC0 pack")
     parser.add_argument("--refresh-exploration", action="store_true", help="Download only the checksum-pinned exploration packs")
     parser.add_argument("--clean-exploration-actors", action="store_true", help="Re-run alpha cleanup for mount and wildlife atlases")
+    parser.add_argument("--finalize-biome-stack", action="store_true", help="Prune superseded biome derivatives and register runtime crops")
     parser.add_argument("--archive-dir", type=Path, help="Use checksum-pinned archives from this directory")
     args = parser.parse_args()
-    if args.refresh or not WORLD_MANIFEST.is_file() or not WORLD_INTEGRITY.is_file():
+    if args.finalize_biome_stack:
+        finalize_biome_stack()
+    elif args.refresh or not WORLD_MANIFEST.is_file() or not WORLD_INTEGRITY.is_file():
         import_world_packs(args.archive_dir)
     if args.refresh or args.refresh_exploration:
         import_exploration_assets()

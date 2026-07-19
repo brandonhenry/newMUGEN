@@ -15,6 +15,14 @@ function asset(
   family: string,
   occlusion: StoryLevelAssetDefinition['occlusion'] = 'low'
 ): StoryLevelAssetDefinition {
+  const sourcePack = file.split('/')[0];
+  const license = sourcePack === 'sunnyland-winter'
+    ? 'Free commercial use and modification; attribution not required'
+    : sourcePack === 'yeehaw'
+      ? 'Free commercial and non-commercial use and modification'
+      : sourcePack === 'moten-lava'
+        ? 'No copyright; free to use'
+        : 'CC0-1.0';
   return {
     id,
     asset: worldPackAsset(file),
@@ -31,8 +39,8 @@ function asset(
     occlusion,
     densityCost: roles.includes('hero') ? 5 : roles.includes('structural') ? 3 : 1,
     repetitionLimit: roles.includes('hero') ? 1 : roles.includes('structural') ? 4 : 7,
-    sourcePack: file.split('/')[0],
-    license: 'CC0-1.0'
+    sourcePack,
+    license
   };
 }
 
@@ -45,10 +53,10 @@ export const STORY_LEVEL_ASSET_REGISTRY: StoryLevelAssetDefinition[] = [
   asset('village-wagon', 'greenhollow', 'gothic-town/wagon.png', [93, 75], [4.5, 3.6], ['clutter', 'framing'], ['wagon', 'market', 'path', 'cluster-right'], 'gothic-town'),
   asset('village-lamp', 'greenhollow', 'gothic-town/street-lamp.png', [35, 108], [1.5, 4.6], ['framing', 'clutter'], ['lamp', 'path', 'safe', 'entrance'], 'gothic-town'),
 
-  asset('forest-tree', 'thornwood', 'magical-road/tree.png', [86, 181], [6, 12], ['structural', 'hero', 'foliage'], ['tree', 'root', 'canopy', 'landmark'], 'magic-cliffs', 'medium'),
-  asset('forest-cemetery-tree', 'thornwood', 'gothic-cemetery/tree.png', [166, 117], [8, 5.6], ['structural', 'framing', 'foliage'], ['tree', 'fallen', 'old', 'cluster-right'], 'magic-cliffs', 'medium'),
-  asset('forest-plant', 'thornwood', 'tall-forest/plant.png', [42, 27], [3.8, 2.5], ['foliage', 'clutter'], ['plant', 'ground', 'soft'], 'magic-cliffs'),
-  asset('forest-rock', 'thornwood', 'tall-forest/rock.png', [32, 32], [2.8, 2.8], ['structural', 'clutter'], ['rock', 'ground', 'cover'], 'magic-cliffs'),
+  asset('forest-tree', 'thornwood', 'magical-road/tree.png', [86, 181], [6, 12], ['structural', 'hero', 'foliage'], ['tree', 'root', 'canopy', 'landmark'], 'thornwood', 'medium'),
+  asset('forest-cemetery-tree', 'thornwood', 'gothic-cemetery/tree.png', [166, 117], [8, 5.6], ['structural', 'framing', 'foliage'], ['tree', 'fallen', 'old', 'cluster-right'], 'thornwood', 'medium'),
+  asset('forest-plant', 'thornwood', 'tall-forest/plant.png', [42, 27], [3.8, 2.5], ['foliage', 'clutter'], ['plant', 'ground', 'soft'], 'thornwood'),
+  asset('forest-rock', 'thornwood', 'tall-forest/rock.png', [32, 32], [2.8, 2.8], ['structural', 'clutter'], ['rock', 'ground', 'cover'], 'thornwood'),
 
   asset('mine-gate', 'ironroot', 'warped-caves/gate.png', [48, 48], [5.2, 5.2], ['structural', 'hero', 'framing'], ['gate', 'shaft', 'entrance', 'timber'], 'warped-caves', 'medium'),
   asset('mine-stalactite', 'ironroot', 'warped-caves/stalactite.png', [38, 53], [3.2, 4.5], ['framing', 'hazard'], ['stalactite', 'ceiling', 'danger'], 'warped-caves'),
@@ -66,24 +74,23 @@ export const STORY_LEVEL_ASSET_REGISTRY: StoryLevelAssetDefinition[] = [
   asset('ember-crystal', 'emberdeep', 'rocky-pass/crystal-1.png', [25, 25], [2.2, 2.2], ['clutter', 'hero'], ['crystal', 'glow', 'reward'], 'emberdeep'),
   asset('ember-crystal-cluster', 'emberdeep', 'rocky-pass/crystal-2.png', [26, 20], [2.6, 2], ['foliage', 'clutter'], ['crystal', 'magma', 'cluster-right'], 'emberdeep'),
 
-  asset('snow-house', 'frostpeak', 'frostpeak-details/house.png', [240, 96], [10, 4], ['structural', 'hero'], ['shelter', 'snow', 'safe', 'landmark'], 'seasonal-snow', 'medium'),
-  asset('snow-crystal-a', 'frostpeak', 'rocky-pass/crystal-1.png', [25, 25], [2.2, 2.2], ['clutter', 'framing'], ['ice', 'crystal', 'cluster-left'], 'seasonal-snow'),
-  asset('snow-crystal', 'frostpeak', 'rocky-pass/crystal-2.png', [26, 20], [2.5, 1.9], ['clutter', 'hero'], ['ice', 'crystal', 'reward'], 'seasonal-snow'),
-  asset('snow-rock', 'frostpeak', 'tall-forest/rock.png', [32, 32], [2.8, 2.8], ['structural', 'clutter'], ['snow', 'rock', 'ground'], 'seasonal-snow'),
+  asset('snow-house', 'frostpeak', 'sunnyland-winter/house.png', [170, 126], [8.5, 6.3], ['structural', 'hero', 'framing'], ['shelter', 'snow', 'safe', 'landmark'], 'sunnyland-winter', 'medium'),
+  asset('snow-pine', 'frostpeak', 'sunnyland-winter/pine-snow.png', [47, 99], [3.4, 7.2], ['foliage', 'framing'], ['snow', 'pine', 'cluster-left'], 'sunnyland-winter'),
+  asset('snow-pine-shadow', 'frostpeak', 'sunnyland-winter/pine.png', [47, 99], [3.4, 7.2], ['foliage', 'framing'], ['pine', 'shadow', 'cluster-right'], 'sunnyland-winter'),
+  asset('snow-tall-tree', 'frostpeak', 'sunnyland-winter/tall-tree.png', [89, 172], [5.2, 10], ['structural', 'hero', 'foliage'], ['ice', 'tree', 'landmark'], 'sunnyland-winter', 'medium'),
+  asset('snow-fence', 'frostpeak', 'sunnyland-winter/fence.png', [96, 37], [5.2, 2], ['structural', 'clutter'], ['snow', 'fence', 'ground'], 'sunnyland-winter'),
 
-  asset('desert-house', 'sunscar', 'sunscar-settlement/house-a.png', [168, 183], [7.5, 8.2], ['structural', 'hero'], ['settlement', 'shade', 'ruin', 'landmark'], 'sunscar', 'medium'),
-  asset('desert-house-b', 'sunscar', 'sunscar-settlement/house-b.png', [210, 244], [7.4, 8.6], ['structural', 'framing'], ['settlement', 'shade', 'tall', 'cluster-left'], 'sunscar', 'medium'),
-  asset('desert-house-c', 'sunscar', 'sunscar-settlement/house-c.png', [221, 183], [8.2, 7], ['structural', 'framing'], ['settlement', 'shade', 'wide', 'cluster-right'], 'sunscar', 'medium'),
-  asset('desert-well', 'sunscar', 'sunscar-settlement/well.png', [65, 65], [3.4, 3.4], ['hero', 'clutter'], ['oasis', 'water', 'reward'], 'sunscar'),
-  asset('desert-wagon', 'sunscar', 'sunscar-settlement/wagon.png', [93, 75], [4.5, 3.6], ['clutter', 'framing'], ['caravan', 'path', 'entrance'], 'sunscar'),
-  asset('desert-lamp', 'sunscar', 'sunscar-settlement/street-lamp.png', [35, 108], [1.4, 4.3], ['framing', 'clutter'], ['caravan', 'lamp', 'path', 'cluster-left'], 'sunscar'),
-  asset('desert-crystal-a', 'sunscar', 'sunscar-pixel/crystal-1.png', [25, 25], [2.2, 2.2], ['clutter', 'hero'], ['sunstone', 'crystal', 'reward'], 'sunscar'),
-  asset('desert-crystal-b', 'sunscar', 'sunscar-pixel/crystal-2.png', [26, 20], [2.5, 1.9], ['clutter'], ['sunstone', 'crystal', 'path'], 'sunscar'),
+  asset('desert-facade', 'sunscar', 'yeehaw/frontier-facade.png', [192, 176], [9, 8.25], ['structural', 'hero'], ['settlement', 'shade', 'frontier', 'landmark'], 'yeehaw', 'medium'),
+  asset('desert-cactus', 'sunscar', 'yeehaw/cactus.png', [48, 64], [3, 4], ['structural', 'foliage', 'hero'], ['cactus', 'desert', 'cluster-left'], 'yeehaw'),
+  asset('desert-sun', 'sunscar', 'yeehaw/sun.png', [192, 64], [6, 2], ['hero', 'framing'], ['sun', 'heat', 'landmark'], 'yeehaw'),
+  asset('desert-poster', 'sunscar', 'yeehaw/wanted-poster.png', [16, 32], [1.2, 2.4], ['clutter', 'framing'], ['wanted', 'settlement', 'path'], 'yeehaw'),
+  asset('desert-bottle', 'sunscar', 'yeehaw/bottle.png', [16, 32], [1.1, 2.2], ['clutter'], ['bottle', 'saloon', 'ground'], 'yeehaw'),
+  asset('desert-tin-can', 'sunscar', 'yeehaw/tin-can.png', [16, 32], [1.1, 2.2], ['clutter'], ['tin', 'frontier', 'ground'], 'yeehaw'),
 
-  asset('ruins-column', 'skyglass', 'gothic-church/column.png', [114, 190], [4.6, 7.7], ['structural', 'framing', 'hero'], ['column', 'floating', 'sanctum', 'landmark'], 'rocky-pass-glass', 'medium'),
-  asset('ruins-statue', 'skyglass', 'gothic-cemetery/statue.png', [63, 75], [3.6, 4.3], ['hero', 'structural', 'clutter'], ['statue', 'floating', 'sanctum', 'cluster-left'], 'rocky-pass-glass'),
-  asset('ruins-crystal-a', 'skyglass', 'rocky-pass/crystal-1.png', [25, 25], [2.4, 2.4], ['clutter', 'hero'], ['glass', 'crystal', 'chime'], 'rocky-pass-glass'),
-  asset('ruins-crystal-b', 'skyglass', 'rocky-pass/crystal-2.png', [26, 20], [2.8, 2.2], ['clutter'], ['glass', 'crystal', 'path'], 'rocky-pass-glass')
+  asset('ruins-crystal-spire', 'skyglass', 'skyglass/crystal-1.png', [25, 25], [3.6, 3.6], ['structural', 'framing', 'hero'], ['glass', 'floating', 'sanctum', 'landmark'], 'skyglass', 'medium'),
+  asset('ruins-crystal-cluster', 'skyglass', 'skyglass/crystal-2.png', [26, 20], [4.2, 3.3], ['hero', 'structural', 'clutter'], ['glass', 'floating', 'sanctum', 'cluster-left'], 'skyglass'),
+  asset('ruins-crystal-a', 'skyglass', 'skyglass/crystal-1.png', [25, 25], [2.4, 2.4], ['clutter', 'hero'], ['glass', 'crystal', 'chime'], 'skyglass'),
+  asset('ruins-crystal-b', 'skyglass', 'skyglass/crystal-2.png', [26, 20], [2.8, 2.2], ['clutter'], ['glass', 'crystal', 'path'], 'skyglass')
 ];
 
 function scoreAsset(candidate: StoryLevelAssetDefinition, biomeId: BiomeId, tags: string[], role?: StoryLevelAssetRole) {

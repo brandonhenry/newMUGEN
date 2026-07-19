@@ -1,6 +1,6 @@
 # Play-mode world art
 
-Only reviewed CC0 assets are shipped. Source archives are checksum-pinned and excluded.
+Only reviewed free-use assets are shipped. Source archives are checksum-pinned and excluded.
 
 | Pack | Author | License | Source |
 | --- | --- | --- | --- |
@@ -23,9 +23,11 @@ Only reviewed CC0 assets are shipped. Source archives are checksum-pinned and ex
 | space-background | Ansimuz | CC0-1.0 | https://opengameart.org/content/space-background-3 |
 | city-parallax | Gustavo Saraiva | CC0-1.0 | https://opengameart.org/content/city-parallax-pixel-art |
 | seasonal | GrafxKid | CC0-1.0 | https://grafxkid.itch.io/seasonal-tilesets |
-| emberdeep | Ansimuz / K.O.R.E. | CC0-1.0 | Palette derivative of Warped Caves |
-| tournament-gold | Ansimuz / K.O.R.E. | CC0-1.0 | Palette derivative of Fort of Illusion |
-| sunscar-pixel | Ansimuz / K.O.R.E. | CC0-1.0 | Palette derivative of Rocky Pass |
-| frostpeak-details | GrafxKid / K.O.R.E. | CC0-1.0 | Palette derivative of Seasonal Tilesets |
-| tournament-cathedral | Ansimuz / K.O.R.E. | CC0-1.0 | Palette derivative of GothicVania Church |
-| sunscar-settlement | Ansimuz / K.O.R.E. | CC0-1.0 | Palette derivative of GothicVania Town |
+| sunnyland-winter | Ansimuz | Free commercial use and modification; attribution not required | https://ansimuz.itch.io/sunnyland-winter-forest |
+| yeehaw | CURSED OFFERINGS | Free commercial and non-commercial use and modification | https://cursed-offerings.itch.io/yeehaw |
+| moten-lava | TheConceptofChris | No copyright; free to use | https://theconceptofchris.itch.io/moten-lava-32-x-32-tile-set |
+| emberdeep | Ansimuz / K.O.R.E. | CC0-1.0 | https://opengameart.org/content/warped-caves-pixel-art-pack |
+| thornwood | Ansimuz / K.O.R.E. | CC0-1.0 | https://opengameart.org/content/magic-cliffs-environment |
+| tournament-gold | Ansimuz / K.O.R.E. | CC0-1.0 | https://opengameart.org/content/fort-of-illusion |
+| tournament-cathedral | Ansimuz / K.O.R.E. | CC0-1.0 | https://opengameart.org/content/gothicvania-church-pack |
+| skyglass | Ansimuz / K.O.R.E. | CC0-1.0 | https://opengameart.org/content/gothicvania-rocky-pass-environment |

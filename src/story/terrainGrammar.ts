@@ -26,6 +26,10 @@ export type StoryTerrainKitFrameDefinition = {
   sourceUrl: string;
   sourceFile: string;
   sourceHash: string;
+  sourceCell: [number, number];
+  sourceFrame: [number, number, 16, 16];
+  sourceSemantic: string;
+  mappingTreatment: string;
   generatedStatus: 'deterministic-source-derived' | 'generated' | 'imported';
   generationMethod: string;
   promptProvenance: string | null;
@@ -46,13 +50,12 @@ export type StoryTerrainKitDefinition = {
   atlasSize: [number, number];
   atlasHash: string;
   contactSheet: StoryWorldAssetId;
-  materialMaster: StoryWorldAssetId;
-  materialMasterHash: string;
-  materialMasterLayout: { columns: 8; rows: 8; roles: string[] };
+  sourceAsset: StoryWorldAssetId;
+  sourceAssetHash: string;
   frames: StoryTerrainKitFrameDefinition[];
 };
 
-type TerrainManifest = { version: 2; tilePixels: 32; runtimeScale: 2; roles: StoryTerrainKitRole[]; kits: StoryTerrainKitDefinition[] };
+type TerrainManifest = { version: 3; tilePixels: 32; runtimeScale: 2; roles: StoryTerrainKitRole[]; sourceMapping: StoryWorldAssetId; kits: StoryTerrainKitDefinition[] };
 const terrainManifest = terrainManifestJson as unknown as TerrainManifest;
 
 export const STORY_BIOME_TERRAIN_THEME: Record<BiomeId, StoryWorldThemeId> = {
@@ -113,7 +116,7 @@ export function storyTerrainGrammarCoverageErrors() {
     const kit = STORY_TERRAIN_KITS[theme];
     if (!kit) { errors.push(`terrain-kit:${biome}:${theme}`); continue; }
     if (kit.biome !== biome || kit.tilePixels !== 32 || kit.runtimeScale !== 2) errors.push(`terrain-kit-contract:${kit.id}`);
-    if (!kit.materialMaster || !kit.materialMasterHash || kit.materialMasterLayout.columns !== 8 || kit.materialMasterLayout.rows !== 8) errors.push(`terrain-master-contract:${kit.id}`);
+    if (!kit.sourceAsset || !kit.sourceAssetHash) errors.push(`terrain-source-contract:${kit.id}`);
     for (const role of requiredRoles) for (let variant = 0; variant < 3; variant += 1) {
       const frame = kit.frames.find((candidate) => candidate.role === role && candidate.variant === variant);
       if (!frame) { errors.push(`terrain-role:${theme}:${role}:${variant}`); continue; }
@@ -121,7 +124,10 @@ export function storyTerrainGrammarCoverageErrors() {
       if (width !== 32 || height !== 32 || x < 0 || y < 0 || x + width > kit.atlasSize[0] || y + height > kit.atlasSize[1]) errors.push(`terrain-frame-bounds:${frame.id}`);
       if (!frame.rotations.includes(0) || frame.mirroring) errors.push(`terrain-transform:${frame.id}`);
       if (!frame.sourceFile || !frame.sourceHash || !frame.license || frame.reviewStatus.length === 0) errors.push(`terrain-provenance:${frame.id}`);
-      if (frame.generatedStatus !== 'generated' || !frame.promptProvenance) errors.push(`terrain-generated-provenance:${frame.id}`);
+      const [sourceColumn, sourceRow] = frame.sourceCell;
+      const [sourceX, sourceY, sourceWidth, sourceHeight] = frame.sourceFrame;
+      if (sourceX !== sourceColumn * 16 || sourceY !== sourceRow * 16 || sourceWidth !== 16 || sourceHeight !== 16 || !frame.sourceSemantic || !frame.mappingTreatment) errors.push(`terrain-source-map:${frame.id}`);
+      if (frame.generatedStatus !== 'deterministic-source-derived' || frame.promptProvenance !== null) errors.push(`terrain-source-provenance:${frame.id}`);
       if (frame.alphaBounds.some((value, index) => value !== [0, 0, 32, 32][index])) errors.push(`terrain-frame-transparency:${frame.id}`);
     }
   }

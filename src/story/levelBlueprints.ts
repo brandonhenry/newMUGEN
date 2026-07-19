@@ -18,13 +18,13 @@ const THEMES: Record<BiomeId, StoryWorldThemeId> = {
 };
 
 const TERRAIN_FAMILIES: Record<BiomeId, string> = {
-  greenhollow: 'gothic-town', thornwood: 'magic-cliffs', ironroot: 'warped-caves', bonevault: 'gothic-cemetery',
-  emberdeep: 'emberdeep', frostpeak: 'seasonal-snow', sunscar: 'sunscar', skyglass: 'rocky-pass-glass'
+  greenhollow: 'gothic-town', thornwood: 'thornwood', ironroot: 'warped-caves', bonevault: 'gothic-cemetery',
+  emberdeep: 'emberdeep', frostpeak: 'sunnyland-winter', sunscar: 'yeehaw', skyglass: 'skyglass'
 };
 
 const ENCLOSURE_STYLES: Record<BiomeId, string> = {
   greenhollow: 'rooftops-town-walls', thornwood: 'canopy-roots-overhangs', ironroot: 'reinforced-mine-shafts', bonevault: 'crypt-arches-ossuary',
-  emberdeep: 'basalt-forge-caverns', frostpeak: 'ice-cliffs-shelters', sunscar: 'sandstone-buried-architecture', skyglass: 'glass-arches-sanctums'
+  emberdeep: 'basalt-forge-caverns', frostpeak: 'ice-cliffs-shelters', sunscar: 'sandstone-frontier-architecture', skyglass: 'glass-arches-sanctums'
 };
 
 const HEROES: Record<string, string> = {

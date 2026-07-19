@@ -50,14 +50,14 @@ REFERENCES = (
     ROOT / "public/story/npcs/characters/sahir-dune/contact-sheet.png",
     ROOT / "public/story/npcs/characters/aeri-prism/contact-sheet.png",
     ROOT / "public/story/enemies/kore-enemies-v1/contact-sheet.png",
-    ROOT / "public/story/worlds/tall-forest/back.png",
+    ROOT / "public/story/worlds/thornwood/sky.png",
     ROOT / "public/story/worlds/gothic-town/background.png",
     ROOT / "public/story/worlds/warped-caves/middleground.png",
     ROOT / "public/story/worlds/gothic-cemetery/graveyard.png",
     ROOT / "public/story/worlds/emberdeep/background.png",
-    ROOT / "public/story/worlds/seasonal/snow-big-mountain.png",
-    ROOT / "public/story/worlds/sunscar-pixel/middle.png",
-    ROOT / "public/story/worlds/magic-cliffs/far-grounds.png",
+    ROOT / "public/story/worlds/sunnyland-winter/mountains.png",
+    ROOT / "public/story/worlds/yeehaw/parallax-b.png",
+    ROOT / "public/story/worlds/skyglass/middle.png",
     ROOT / "public/story/worlds/magical-road/middle.png",
 )
 
