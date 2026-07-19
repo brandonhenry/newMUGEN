@@ -580,7 +580,7 @@ export type StoryFloorPressureState = {
 export type StoryFloorIntent = 'combat' | 'harvest' | 'exploration' | 'boss';
 
 export type StoryGeneratedFloor = {
-  version: 3 | 4 | 5 | 6;
+  version: 3 | 4 | 5 | 6 | 7;
   worldId: Exclude<StoryAdventureWorldId, 'world-route'>;
   seed: string;
   floorNumber: number;
@@ -604,6 +604,7 @@ export type StoryGeneratedFloor = {
   terrainTiles?: StoryTerrainTileDefinition[];
   cavityTiles?: StoryCavityTileDefinition[];
   terrainKitId?: string;
+  visualSetId?: string;
   hazards: StoryHazardDefinition[];
   traversal: StoryTraversalPieceDefinition[];
   encounters: StoryEncounterZoneDefinition[];
@@ -626,7 +627,7 @@ export type StoryRunRewardLedger = {
 
 export type StoryEndlessRunState = {
   version: 3 | 4;
-  generationVersion?: 3 | 4 | 5 | 6;
+  generationVersion?: 3 | 4 | 5 | 6 | 7;
   worldId: Exclude<StoryAdventureWorldId, 'world-route'>;
   seed: string;
   floorNumber: number;
@@ -762,6 +763,7 @@ export type StoryAdventureMapDefinition = {
   terrainTiles?: StoryTerrainTileDefinition[];
   cavityTiles?: StoryCavityTileDefinition[];
   terrainKitId?: string;
+  visualSetId?: string;
   portals: StoryPortalDefinition[];
   landmarks: StoryWorldLandmarkDefinition[];
   props: StoryWorldPropDefinition[];
@@ -877,6 +879,7 @@ export type StoryHubDefinition = {
   terrainTiles?: StoryTerrainTileDefinition[];
   cavityTiles?: StoryCavityTileDefinition[];
   terrainKitId?: string;
+  visualSetId?: string;
   portals: StoryPortalDefinition[];
   theme?: StoryWorldThemeId;
   environment?: StoryWorldEnvironmentDefinition;
@@ -903,6 +906,7 @@ export type StoryHubDefinition = {
     chunkIds: string[];
     witnessRoute: Array<[number, number]>;
     assetResolution: Array<{ slotId: string; assetId: string }>;
+    visualSetId?: string;
     topologySignature?: string;
     entranceTier?: 0 | 1 | 2;
     exitTier?: 0 | 1 | 2;

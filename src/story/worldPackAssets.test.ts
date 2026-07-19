@@ -25,12 +25,12 @@ const shippedFiles = new Set(manifest.packs.flatMap((pack) => pack.assets.map((a
 describe('play-mode world pack pipeline', () => {
   it('tracks every imported pack with source, author, license, and pinned archive checksum', () => {
     expect(manifest.version).toBe(1);
-    expect(manifest.packs).toHaveLength(27);
+    expect(manifest.packs).toHaveLength(36);
     expect(new Set(manifest.packs.map((pack) => pack.id)).size).toBe(manifest.packs.length);
     for (const pack of manifest.packs) {
       expect(pack.author.length).toBeGreaterThan(0);
       expect(pack.source).toMatch(/^https:\/\//);
-      expect(['CC0-1.0', 'Free commercial use and modification; attribution not required', 'Free commercial and non-commercial use and modification', 'No copyright; free to use']).toContain(pack.license);
+      expect(['CC0-1.0', 'Free commercial use and modification; attribution not required', 'Free commercial and non-commercial use and modification', 'No copyright; free to use', 'Free commercial use for related environments; modification permitted']).toContain(pack.license);
       expect(pack.archiveSha256).toMatch(/^[a-f0-9]{64}$/);
       expect(pack.assets.length).toBeGreaterThan(0);
     }
@@ -39,7 +39,7 @@ describe('play-mode world pack pipeline', () => {
 
   it('verifies every optimized PNG by dimensions and SHA-256', () => {
     expect(integrity.algorithm).toBe('sha256');
-    expect(Object.keys(integrity.files)).toHaveLength(165);
+    expect(Object.keys(integrity.files)).toHaveLength(218);
     for (const pack of manifest.packs) {
       for (const asset of pack.assets) {
         const path = resolve(root, asset.file);

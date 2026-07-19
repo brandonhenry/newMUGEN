@@ -27,7 +27,7 @@ export type StoryTerrainKitFrameDefinition = {
   sourceFile: string;
   sourceHash: string;
   sourceCell: [number, number];
-  sourceFrame: [number, number, 16, 16];
+  sourceFrame: [number, number, number, number];
   sourceSemantic: string;
   mappingTreatment: string;
   generatedStatus: 'deterministic-source-derived' | 'generated' | 'imported';
@@ -43,6 +43,7 @@ export type StoryTerrainKitDefinition = {
   theme: StoryWorldThemeId;
   biome: BiomeId;
   primaryFamily: string;
+  visualSetId: string;
   enclosureStyle: string;
   tilePixels: 32;
   runtimeScale: 2;
@@ -63,14 +64,17 @@ export const STORY_BIOME_TERRAIN_THEME: Record<BiomeId, StoryWorldThemeId> = {
   emberdeep: 'underworld', frostpeak: 'snow', sunscar: 'desert', skyglass: 'ruins'
 };
 
-export const STORY_TERRAIN_KITS = Object.fromEntries(terrainManifest.kits.map((kit) => [kit.theme, kit])) as Partial<Record<StoryWorldThemeId, StoryTerrainKitDefinition>>;
+export const STORY_TERRAIN_KITS_BY_ID = Object.fromEntries(terrainManifest.kits.map((kit) => [kit.id, kit])) as Record<string, StoryTerrainKitDefinition>;
+export const STORY_TERRAIN_KITS_BY_VISUAL_SET = Object.fromEntries(terrainManifest.kits.map((kit) => [kit.visualSetId, kit])) as Record<string, StoryTerrainKitDefinition>;
+export const STORY_TERRAIN_KITS = Object.fromEntries(terrainManifest.kits.filter((kit) => kit.visualSetId.endsWith('-primary')).map((kit) => [kit.theme, kit])) as Partial<Record<StoryWorldThemeId, StoryTerrainKitDefinition>>;
 
 export function storyTerrainKit(theme: StoryWorldThemeId | undefined) {
   return theme ? STORY_TERRAIN_KITS[theme] : undefined;
 }
 
-export function storyTerrainKitForBiome(biome: BiomeId) {
-  return storyTerrainKit(STORY_BIOME_TERRAIN_THEME[biome]);
+export function storyTerrainKitForBiome(biome: BiomeId, visualSetId?: string) {
+  const selected = visualSetId ? STORY_TERRAIN_KITS_BY_VISUAL_SET[visualSetId] : undefined;
+  return selected?.biome === biome ? selected : storyTerrainKit(STORY_BIOME_TERRAIN_THEME[biome]);
 }
 
 export function storyTerrainFrame(kitId: string | undefined, frameId: string | undefined) {
@@ -84,14 +88,17 @@ export function resolveStoryTerrainVariant(_theme: StoryWorldThemeId | undefined
   return Math.abs(authoredVariant) % 3;
 }
 
-function frameFor(theme: StoryWorldThemeId, role: StoryTerrainKitRole, variant: number) {
-  const kit = STORY_TERRAIN_KITS[theme];
-  if (!kit) throw new Error(`Missing terrain kit for ${theme}`);
+function frameForKit(kit: StoryTerrainKitDefinition | undefined, role: StoryTerrainKitRole, variant: number) {
+  if (!kit) throw new Error('Missing terrain kit');
   const normalized = Math.abs(variant) % 3;
   const frame = kit.frames.find((candidate) => candidate.role === role && candidate.variant === normalized);
   if (!frame) throw new Error(`Missing terrain frame ${kit.id}:${role}:${normalized}`);
   if (!frame.rotations.includes(0) || frame.mirroring) throw new Error(`Terrain frame requires an unapproved transform ${frame.id}`);
   return { kit, frame };
+}
+
+function frameFor(theme: StoryWorldThemeId, role: StoryTerrainKitRole, variant: number) {
+  return frameForKit(STORY_TERRAIN_KITS[theme], role, variant);
 }
 
 export function resolveStoryTerrainTile(theme: StoryWorldThemeId, tile: StoryTerrainTileDefinition): StoryTerrainTileDefinition {
@@ -104,18 +111,27 @@ export function resolveStoryTerrainTile(theme: StoryWorldThemeId, tile: StoryTer
   };
 }
 
+export function resolveStoryTerrainTileForKit(kit: StoryTerrainKitDefinition, tile: StoryTerrainTileDefinition): StoryTerrainTileDefinition {
+  const resolved = frameForKit(kit, tile.role, tile.surfaceVariant);
+  return { ...tile, kitId: resolved.kit.id, frameId: resolved.frame.id, visualLayer: tile.role === 'fill' ? 'solid-fill' : 'exposed-face' };
+}
+
 export function resolveStoryCavityTile(theme: StoryWorldThemeId, tile: StoryCavityTileDefinition): StoryCavityTileDefinition {
   const { kit, frame } = frameFor(theme, tile.material, tile.surfaceVariant);
   return { ...tile, kitId: kit.id, frameId: frame.id };
 }
 
+export function resolveStoryCavityTileForKit(kit: StoryTerrainKitDefinition, tile: StoryCavityTileDefinition): StoryCavityTileDefinition {
+  const resolved = frameForKit(kit, tile.material, tile.surfaceVariant);
+  return { ...tile, kitId: resolved.kit.id, frameId: resolved.frame.id };
+}
+
 export function storyTerrainGrammarCoverageErrors() {
   const errors: string[] = [];
   const requiredRoles = terrainManifest.roles;
-  for (const [biome, theme] of Object.entries(STORY_BIOME_TERRAIN_THEME) as Array<[BiomeId, StoryWorldThemeId]>) {
-    const kit = STORY_TERRAIN_KITS[theme];
-    if (!kit) { errors.push(`terrain-kit:${biome}:${theme}`); continue; }
-    if (kit.biome !== biome || kit.tilePixels !== 32 || kit.runtimeScale !== 2) errors.push(`terrain-kit-contract:${kit.id}`);
+  for (const kit of terrainManifest.kits) {
+    const theme = kit.theme;
+    if (!kit.biome || !kit.visualSetId || kit.tilePixels !== 32 || kit.runtimeScale !== 2) errors.push(`terrain-kit-contract:${kit.id}`);
     if (!kit.sourceAsset || !kit.sourceAssetHash) errors.push(`terrain-source-contract:${kit.id}`);
     for (const role of requiredRoles) for (let variant = 0; variant < 3; variant += 1) {
       const frame = kit.frames.find((candidate) => candidate.role === role && candidate.variant === variant);
@@ -126,7 +142,7 @@ export function storyTerrainGrammarCoverageErrors() {
       if (!frame.sourceFile || !frame.sourceHash || !frame.license || frame.reviewStatus.length === 0) errors.push(`terrain-provenance:${frame.id}`);
       const [sourceColumn, sourceRow] = frame.sourceCell;
       const [sourceX, sourceY, sourceWidth, sourceHeight] = frame.sourceFrame;
-      if (sourceX !== sourceColumn * 16 || sourceY !== sourceRow * 16 || sourceWidth !== 16 || sourceHeight !== 16 || !frame.sourceSemantic || !frame.mappingTreatment) errors.push(`terrain-source-map:${frame.id}`);
+      if (sourceWidth !== sourceHeight || ![16, 32].includes(sourceWidth) || sourceX !== sourceColumn * sourceWidth || sourceY !== sourceRow * sourceHeight || !frame.sourceSemantic || !frame.mappingTreatment) errors.push(`terrain-source-map:${frame.id}`);
       if (frame.generatedStatus !== 'deterministic-source-derived' || frame.promptProvenance !== null) errors.push(`terrain-source-provenance:${frame.id}`);
       if (frame.alphaBounds.some((value, index) => value !== [0, 0, 32, 32][index])) errors.push(`terrain-frame-transparency:${frame.id}`);
     }

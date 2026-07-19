@@ -22,12 +22,14 @@ import { getStoryEnemyAnimation, getStoryEnemyDefinition, storyEnemyPlaneSize, S
 import { STORY_GROUNDED_ACTOR_CENTER_Y, storyAvatarGroundingOffsetForWorld, storyGroundAnchoredPlaneCenterY, storyScaledGroundAnchorOffsetY } from './actorGrounding';
 import { STORY_CENTRAL_DOOR_SCALE, STORY_MODE_DOOR_DISPLAY_SIZE, storyCentralModeDoorCenterY, storyPortalDoorFrame, type StoryBiomeDoorFrame } from './biomeDoors';
 import { createStoryDepthEnvironment } from './depthEnvironment';
+import { storyBiomeVisualSet, storyPrimaryBiomeVisualSet } from './biomeVisualSets';
 import { connectStoryHubMultiplayer, readOrCreateStoryHubGuestIdentity, readStoryHubOnlinePreference, STORY_HUB_CHALLENGE_TIMEOUT_MS, writeStoryHubOnlinePreference, type StoryHubMultiplayerSession } from './hubMultiplayer';
 import { KORE_CENTRAL_HUB } from './hubData';
 import { storyPlatformSurfacePlacement } from './platformGrounding';
 import { STORY_MOVEMENT_PROFILE } from './movementProfile';
 import { resolveStoryTerrainMotion } from './storyTerrainCollision';
-import { resolveStoryTerrainVariant, storyTerrainFrame, storyTerrainKitForBiome } from './terrainGrammar';
+import { resolveStoryTerrainVariant, storyTerrainFrame } from './terrainGrammar';
+import { createStoryBiomeVisualSetEnvironment } from './worldEnvironments';
 import { getStorySpriteProjectile, STORY_ATTACK_POSES } from './streetAvatarCatalog';
 import { StoryAvatarRig, type StoryAvatarPose } from './StoryAvatarRig';
 import { acceptStoryPartyInvite, advanceStoryPartyEndlessFloor, bankStoryPartyEndlessChapter, createStoryParty, endStoryPartyEndlessRun, heartbeatStoryParty, inviteToStoryParty, leaveStoryParty, listStoryPartyInvites, resolveStoryPartyEndlessEvent, selectStoryPartyEndlessBoon, startStoryPartyEndlessRun, transferStoryPartyLeadership, updateStoryPartyRoom, type StoryPartyRegistration } from './storyParty';
@@ -2520,6 +2522,7 @@ function devPreviewHub(hub: StoryHubDefinition): StoryHubDefinition {
 
 function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGeneratedFloor | null, exitLocked: boolean, pressureRank: number, pressureHunterAnchor: number | null): StoryHubDefinition {
   if (!floor) return surface;
+  const visualSet = storyBiomeVisualSet(floor.visualSetId) ?? storyPrimaryBiomeVisualSet(floor.worldId);
   const pressure = storyEndlessPressure(floor.parTimeSeconds + Math.max(0, pressureRank - 1) * 30, floor.parTimeSeconds);
   const hazards = floor.hazards.map((hazard) => ({
     ...hazard,
@@ -2570,7 +2573,7 @@ function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGenerate
       role,
       storyEndlessHash(`${floor.seed}:prop:${index}:${attempt}`),
       false,
-      storyTerrainKitForBiome(floor.worldId)?.primaryFamily ? [storyTerrainKitForBiome(floor.worldId)!.primaryFamily] : undefined
+      [visualSet.propFamily]
     )).find((candidate) => candidate && (propRepetitions.get(candidate.id) ?? 0) < candidate.repetitionLimit && propDensity + candidate.densityCost <= propDensityBudget);
     if (!selected) return [];
     propRepetitions.set(selected.id, (propRepetitions.get(selected.id) ?? 0) + 1);
@@ -2603,12 +2606,13 @@ function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGenerate
     terrainTiles: floor.terrainTiles,
     cavityTiles: floor.cavityTiles,
     terrainKitId: floor.terrainKitId,
+    visualSetId: visualSet.id,
     portals: [
       { id: 'endless-abandon', label: 'Abandon Descent', subtitle: 'Lose this chapter\'s unbanked haul', destination: floor.worldId, position: [floor.bounds.minX + 2.4, floor.spawn[1]], size: [2.8, 3.4], accent: '#ff5d69', kind: 'adventure-gate' },
       { id: `endless-next:${floor.floorNumber + 1}`, label: floor.boss ? 'Claim Chapter Reward' : `Descend to Floor ${floor.floorNumber + 1}`, subtitle: exitLocked ? 'Clear required encounters first' : floor.boss ? 'Bank rewards and choose a boon' : 'Continue deeper', destination: floor.worldId, position: floor.exit, size: [2.8, 3.4], accent: '#b8a8ff', kind: 'adventure-gate', locked: exitLocked },
       ...(eventPortal ? [eventPortal] : [])
     ],
-    environment: createStoryDepthEnvironment(surface.environment, { kind: floor.boss ? 'crypt' : 'cave', underwater: false }),
+    environment: createStoryDepthEnvironment(createStoryBiomeVisualSetEnvironment(visualSet.theme, visualSet.id), { kind: floor.boss ? 'crypt' : 'cave', underwater: false }),
     props: generatedProps,
     landmarks: floor.rooms.filter((room) => room.optional || room.templateKind === 'boss').map((room) => ({
       id: `${room.id}-landmark`, label: room.templateKind === 'boss' ? 'Challenger Arena' : room.hidden ? 'Hidden Branch' : floor.intent === 'harvest' ? 'Resource Grove' : 'Optional Route',

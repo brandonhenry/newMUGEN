@@ -37,14 +37,22 @@ EXPOSED_LEFT_ROLES = {"left-wall", "neutral-top-left", "outer-top-left", "outer-
 EXPOSED_RIGHT_ROLES = {"right-wall", "neutral-top-right", "outer-top-right", "outer-bottom-right"}
 
 KIT_SPECS = {
-    "village": ("greenhollow", "gothic-town", "gothic-town/tileset.png", "rooftops-town-walls"),
-    "forest": ("thornwood", "thornwood", "thornwood/tileset.png", "canopy-roots-overhangs"),
-    "mine": ("ironroot", "warped-caves", "warped-caves/tileset.png", "reinforced-mine-shafts"),
-    "crypt": ("bonevault", "gothic-cemetery", "gothic-cemetery/tileset.png", "crypt-arches-ossuary"),
-    "underworld": ("emberdeep", "emberdeep", "emberdeep/tileset.png", "basalt-forge-caverns"),
-    "snow": ("frostpeak", "sunnyland-winter", "sunnyland-winter/tileset.png", "ice-cliffs-shelters"),
-    "desert": ("sunscar", "yeehaw", "yeehaw/tileset.png", "sandstone-frontier-architecture"),
-    "ruins": ("skyglass", "skyglass", "skyglass/tileset.png", "glass-arches-sanctums"),
+    "village": ("village", "greenhollow", "gothic-town", "gothic-town/tileset.png", "rooftops-town-walls", 16, "greenhollow-primary"),
+    "forest": ("forest", "thornwood", "thornwood", "thornwood/tileset.png", "canopy-roots-overhangs", 16, "thornwood-primary"),
+    "mine": ("mine", "ironroot", "warped-caves", "warped-caves/tileset.png", "reinforced-mine-shafts", 16, "ironroot-primary"),
+    "crypt": ("crypt", "bonevault", "gothic-cemetery", "gothic-cemetery/tileset.png", "crypt-arches-ossuary", 16, "bonevault-primary"),
+    "underworld": ("underworld", "emberdeep", "emberdeep", "emberdeep/tileset.png", "basalt-forge-caverns", 16, "emberdeep-primary"),
+    "snow": ("snow", "frostpeak", "sunnyland-winter", "sunnyland-winter/tileset.png", "ice-cliffs-shelters", 16, "frostpeak-primary"),
+    "desert": ("desert", "sunscar", "yeehaw", "yeehaw/tileset.png", "sandstone-frontier-architecture", 16, "sunscar-primary"),
+    "ruins": ("ruins", "skyglass", "skyglass", "skyglass/tileset.png", "glass-arches-sanctums", 16, "skyglass-primary"),
+    "village-kings": ("village", "greenhollow", "kings-pigs", "kings-pigs/terrain.png", "brick-castle-settlement", 32, "greenhollow-backup-kings"),
+    "forest-pixel": ("forest", "thornwood", "pixel-thornwood", "pixel-thornwood/terrain.png", "moss-dark-platform-cavern", 16, "thornwood-backup-pixel"),
+    "mine-grafx": ("mine", "ironroot", "grafx-cave", "grafx-cave/gray-terrain.png", "ore-scaffold-caverns", 16, "ironroot-backup-grafx"),
+    "crypt-moon": ("crypt", "bonevault", "moon-graveyard", "moon-graveyard/tiles.png", "moonlit-grave-ruins", 32, "bonevault-backup-moon"),
+    "underworld-grafx": ("underworld", "emberdeep", "grafx-ember", "grafx-ember/gray-terrain.png", "lava-scaffold-caverns", 16, "emberdeep-backup-grafx"),
+    "snow-seasonal": ("snow", "frostpeak", "seasonal", "seasonal/snow-terrain.png", "seasonal-snow-cliffs", 16, "frostpeak-backup-seasonal"),
+    "desert-pixel": ("desert", "sunscar", "pixel-sunscar", "pixel-sunscar/terrain.png", "orange-sandstone-platforms", 16, "sunscar-backup-pixel"),
+    "ruins-space": ("ruins", "skyglass", "space-skyglass", "space-skyglass/tileset.png", "crystal-space-caverns", 16, "skyglass-backup-space"),
 }
 
 # Manually reviewed 16px source cells. Every runtime role records the exact
@@ -92,6 +100,46 @@ SOURCE_TILE_MAPPINGS = {
         "left": [(1, 2), (1, 3), (1, 4)], "right": [(6, 2), (6, 3), (6, 4)],
         "top-left": [(1, 1)] * 3, "top-right": [(6, 1)] * 3,
         "bottom": [(3, 4), (4, 4), (3, 4)], "bottom-left": [(1, 5)] * 3, "bottom-right": [(6, 5)] * 3,
+    },
+    "village-kings": {
+        "fill": [(7, 1), (8, 1), (7, 2)], "top": [(1, 1), (2, 1), (3, 1)],
+        "left": [(1, 2)] * 3, "right": [(3, 2)] * 3, "top-left": [(1, 1)] * 3, "top-right": [(3, 1)] * 3,
+        "bottom": [(1, 3), (2, 3), (3, 3)], "bottom-left": [(1, 3)] * 3, "bottom-right": [(3, 3)] * 3,
+    },
+    "forest-pixel": {
+        "fill": [(6, 1), (7, 1), (8, 1)], "top": [(6, 0), (7, 0), (8, 0)],
+        "left": [(6, 1)] * 3, "right": [(10, 1)] * 3, "top-left": [(6, 0)] * 3, "top-right": [(8, 0)] * 3,
+        "bottom": [(6, 2), (7, 2), (8, 2)], "bottom-left": [(6, 2)] * 3, "bottom-right": [(8, 2)] * 3,
+    },
+    "mine-grafx": {
+        "fill": [(10, 7), (11, 7), (12, 7)], "top": [(10, 6), (11, 6), (12, 6)],
+        "left": [(6, 7)] * 3, "right": [(15, 7)] * 3, "top-left": [(6, 6)] * 3, "top-right": [(15, 6)] * 3,
+        "bottom": [(12, 8), (13, 8), (12, 8)], "bottom-left": [(12, 8)] * 3, "bottom-right": [(13, 8)] * 3,
+    },
+    "crypt-moon": {
+        "fill": [(1, 3), (3, 3), (1, 4)], "top": [(1, 0), (2, 0), (3, 0)],
+        "left": [(0, 3), (0, 4), (0, 5)], "right": [(4, 3), (4, 4), (4, 5)], "top-left": [(0, 2)] * 3, "top-right": [(4, 2)] * 3,
+        "bottom": [(1, 6), (2, 6), (3, 6)], "bottom-left": [(1, 6)] * 3, "bottom-right": [(3, 6)] * 3,
+    },
+    "underworld-grafx": {
+        "fill": [(10, 7), (11, 7), (12, 7)], "top": [(10, 6), (11, 6), (12, 6)],
+        "left": [(6, 7)] * 3, "right": [(15, 7)] * 3, "top-left": [(6, 6)] * 3, "top-right": [(15, 6)] * 3,
+        "bottom": [(12, 8), (13, 8), (12, 8)], "bottom-left": [(12, 8)] * 3, "bottom-right": [(13, 8)] * 3,
+    },
+    "snow-seasonal": {
+        "fill": [(3, 3), (4, 3), (5, 3)], "top": [(3, 1), (4, 1), (5, 1)],
+        "left": [(1, 3), (1, 4), (1, 3)], "right": [(7, 3), (7, 4), (7, 3)], "top-left": [(3, 1)] * 3, "top-right": [(5, 1)] * 3,
+        "bottom": [(3, 6), (4, 6), (5, 6)], "bottom-left": [(3, 6)] * 3, "bottom-right": [(5, 6)] * 3,
+    },
+    "desert-pixel": {
+        "fill": [(6, 5), (7, 5), (8, 5)], "top": [(6, 4), (7, 4), (8, 4)],
+        "left": [(6, 5)] * 3, "right": [(10, 5)] * 3, "top-left": [(6, 4)] * 3, "top-right": [(8, 4)] * 3,
+        "bottom": [(6, 6), (7, 6), (8, 6)], "bottom-left": [(6, 6)] * 3, "bottom-right": [(8, 6)] * 3,
+    },
+    "ruins-space": {
+        "fill": [(3, 9), (0, 9), (3, 9)], "top": [(0, 3), (1, 3), (2, 3)],
+        "left": [(0, 4), (0, 5), (0, 4)], "right": [(2, 4), (2, 5), (2, 4)], "top-left": [(0, 3)] * 3, "top-right": [(2, 3)] * 3,
+        "bottom": [(0, 5), (1, 5), (2, 5)], "bottom-left": [(0, 5)] * 3, "bottom-right": [(2, 5)] * 3,
     },
 }
 
@@ -157,13 +205,13 @@ def edge(draw: ImageDraw.ImageDraw, side: str, dark, light, thickness: int = 5) 
         draw.line((TILE - thickness - 1, 0, TILE - thickness - 1, TILE - 1), fill=light, width=2)
 
 
-def source_cell(source: Image.Image, cell: tuple[int, int]) -> Image.Image:
-    """Return one manually mapped 16px source cell at the 32px runtime size."""
+def source_cell(source: Image.Image, cell: tuple[int, int], cell_pixels: int) -> Image.Image:
+    """Return one manually mapped source cell at the 32px runtime size."""
     column, row = cell
-    left, top = column * 16, row * 16
-    if left < 0 or top < 0 or left + 16 > source.width or top + 16 > source.height:
+    left, top = column * cell_pixels, row * cell_pixels
+    if left < 0 or top < 0 or left + cell_pixels > source.width or top + cell_pixels > source.height:
         raise RuntimeError(f"Source cell {cell} is outside {source.size}")
-    return source.crop((left, top, left + 16, top + 16)).resize((TILE, TILE), Image.Resampling.NEAREST)
+    return source.crop((left, top, left + cell_pixels, top + cell_pixels)).resize((TILE, TILE), Image.Resampling.NEAREST)
 
 
 def role_sides(role: str) -> tuple[str, ...]:
@@ -177,17 +225,18 @@ def role_sides(role: str) -> tuple[str, ...]:
 
 def mapped_role_tile(
     source: Image.Image,
-    theme: str,
+    kit_key: str,
     role: str,
     variant: int,
     sky_tint: tuple[int, int, int],
+    cell_pixels: int,
 ) -> tuple[Image.Image, tuple[int, int], str, str]:
     """Build a runtime role from an explicit atlas cell, never a heuristic window."""
-    mapping = SOURCE_TILE_MAPPINGS[theme]
+    mapping = SOURCE_TILE_MAPPINGS[kit_key]
     source_key = ROLE_SOURCE_KEYS[role]
     cell = mapping[source_key][variant]
-    fill = flatten_alpha(source_cell(source, mapping["fill"][variant]))
-    mapped = source_cell(source, cell)
+    fill = flatten_alpha(source_cell(source, mapping["fill"][variant], cell_pixels))
+    mapped = source_cell(source, cell, cell_pixels)
     tile = fill.copy()
     if source_key != "fill":
         tile.alpha_composite(mapped)
@@ -257,13 +306,13 @@ def sky_color(source: Image.Image) -> tuple[int, int, int]:
     return tuple(max(24, min(190, int(channel * 0.72 + bias))) for channel, bias in zip(thumb, (18, 26, 38)))
 
 
-def build_kit(theme: str, biome: str, family: str, relative: str, enclosure: str) -> dict:
+def build_kit(kit_key: str, theme: str, biome: str, family: str, relative: str, enclosure: str, cell_pixels: int, visual_set_id: str) -> dict:
     source_path = WORLD_ROOT / relative
     source = Image.open(source_path).convert("RGBA")
     metadata = source_metadata(relative)
     sky_tint = sky_color(source)
     mapped = {
-        (role, variant): mapped_role_tile(source, theme, role, variant, sky_tint)
+        (role, variant): mapped_role_tile(source, kit_key, role, variant, sky_tint, cell_pixels)
         for role in ROLES for variant in range(VARIANTS)
     }
     raw = {key: value[0] for key, value in mapped.items()}
@@ -281,18 +330,18 @@ def build_kit(theme: str, biome: str, family: str, relative: str, enclosure: str
             source_column, source_row = source_cell_coordinate
             atlas.alpha_composite(tile, (x, y))
             frames.append({
-                "id": f"{theme}-{role}-{variant + 1}", "role": role, "variant": variant,
+                "id": f"{kit_key}-{role}-{variant + 1}", "role": role, "variant": variant,
                 "frame": [x, y, TILE, TILE], "alphaBounds": alpha_bounds(tile), "anchor": [0.5, 0.5],
                 "compatibleSurfaces": ["solid", "cavity", "connector"], "rotations": [0], "mirroring": False,
                 "generatedStatus": "deterministic-source-derived", "generationMethod": "manual-source-cell-map-plus-seam-normalization",
                 "promptProvenance": None, "reviewStatus": "manual-source-cell-map-reviewed", **metadata,
                 "sourceCell": [source_column, source_row],
-                "sourceFrame": [source_column * 16, source_row * 16, 16, 16],
+                "sourceFrame": [source_column * cell_pixels, source_row * cell_pixels, cell_pixels, cell_pixels],
                 "sourceSemantic": source_key,
                 "mappingTreatment": f"{mapping_treatment}+sealed-hidden-edges",
                 "surfaceClass": "walkable-cap" if role in WALKABLE_CAP_ROLES else "cavity" if role in CAVITY_ROLES else "overlay" if role in OVERLAY_ROLES else "neutral-solid",
             })
-    kit_path = OUTPUT_ROOT / f"{theme}.png"
+    kit_path = OUTPUT_ROOT / f"{kit_key}.png"
     atlas.save(kit_path, optimize=True)
     contact_cell_width, contact_cell_height = 128, 76
     contact = Image.new("RGBA", (ATLAS_COLUMNS * contact_cell_width, rows * contact_cell_height), (7, 14, 24, 255))
@@ -307,14 +356,14 @@ def build_kit(theme: str, biome: str, family: str, relative: str, enclosure: str
         draw.text((66 + x, y + 25), f"v{frame['variant'] + 1}", fill=(112, 214, 255, 255), font=font)
         draw.text((66 + x, y + 43), f"src {frame['sourceCell'][0]},{frame['sourceCell'][1]}", fill=(255, 206, 107, 255), font=font)
         draw.text((66 + x, y + 59), frame["sourceSemantic"], fill=(161, 178, 194, 255), font=font)
-    contact_path = OUTPUT_ROOT / "contact-sheets" / f"{theme}.png"
+    contact_path = OUTPUT_ROOT / "contact-sheets" / f"{kit_key}.png"
     contact_path.parent.mkdir(parents=True, exist_ok=True)
     contact.save(contact_path, optimize=True)
     return {
-        "id": f"{theme}-source-terrain-v2", "theme": theme, "biome": biome, "primaryFamily": family,
+        "id": f"{kit_key}-source-terrain-v2", "theme": theme, "biome": biome, "primaryFamily": family, "visualSetId": visual_set_id,
         "enclosureStyle": enclosure, "tilePixels": TILE, "runtimeScale": 2,
-        "asset": f"world:terrain-kits/{theme}.png", "atlasSize": list(atlas.size), "atlasHash": sha256(kit_path),
-        "contactSheet": f"world:terrain-kits/contact-sheets/{theme}.png",
+        "asset": f"world:terrain-kits/{kit_key}.png", "atlasSize": list(atlas.size), "atlasHash": sha256(kit_path),
+        "contactSheet": f"world:terrain-kits/contact-sheets/{kit_key}.png",
         "sourceAsset": f"world:{relative}", "sourceAssetHash": sha256(source_path), "frames": frames,
     }
 
@@ -348,11 +397,12 @@ def verify(manifest: dict) -> list[str]:
             else:
                 source_x, source_y, source_width, source_height = frame["sourceFrame"]
                 source_cell_coordinate = frame["sourceCell"]
-                if source_cell_coordinate != [source_x // 16, source_y // 16] or [source_width, source_height] != [16, 16]:
+                cell_pixels = source_width
+                if source_width != source_height or source_cell_coordinate != [source_x // cell_pixels, source_y // cell_pixels] or cell_pixels not in (16, 32):
                     failures.append(f"source-cell-contract:{kit['id']}:{frame['id']}")
-                if source is None or source_x < 0 or source_y < 0 or source_x + 16 > source.width or source_y + 16 > source.height:
+                if source is None or source_x < 0 or source_y < 0 or source_x + cell_pixels > source.width or source_y + cell_pixels > source.height:
                     failures.append(f"source-cell-bounds:{kit['id']}:{frame['id']}")
-                elif source.crop((source_x, source_y, source_x + 16, source_y + 16)).getchannel("A").getbbox() is None:
+                elif source.crop((source_x, source_y, source_x + cell_pixels, source_y + cell_pixels)).getchannel("A").getbbox() is None:
                     failures.append(f"empty-source-cell:{kit['id']}:{frame['id']}")
             if frame.get("alphaBounds") != [0, 0, TILE, TILE]:
                 failures.append(f"incomplete-runtime-frame:{kit['id']}:{frame['id']}")
@@ -373,20 +423,22 @@ def main() -> None:
         print(json.dumps({"valid": not failures, "failures": failures}, indent=2))
         raise SystemExit(1 if failures else 0)
     OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
-    kits = [build_kit(theme, *spec) for theme, spec in KIT_SPECS.items()]
+    kits = [build_kit(kit_key, *spec) for kit_key, spec in KIT_SPECS.items()]
     expanded_mapping = {
-        theme: {
-            role: [list(SOURCE_TILE_MAPPINGS[theme][ROLE_SOURCE_KEYS[role]][variant]) for variant in range(VARIANTS)]
-            for role in ROLES
+        kit_key: {
+            "sourceCellPixels": spec[5],
+            "roles": {
+                role: [list(SOURCE_TILE_MAPPINGS[kit_key][ROLE_SOURCE_KEYS[role]][variant]) for variant in range(VARIANTS)]
+                for role in ROLES
+            },
         }
-        for theme in KIT_SPECS
+        for kit_key, spec in KIT_SPECS.items()
     }
     SOURCE_MAPPING_MANIFEST.write_text(json.dumps({
-        "version": 1,
-        "sourceCellPixels": 16,
+        "version": 2,
         "runtimeTilePixels": TILE,
         "coordinateFormat": "[column,row], zero-based",
-        "roles": expanded_mapping,
+        "kits": expanded_mapping,
     }, indent=2) + "\n")
     manifest = {
         "version": 3, "tilePixels": TILE, "runtimeScale": 2, "roles": ROLES,

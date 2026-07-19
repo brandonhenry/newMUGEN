@@ -18,6 +18,8 @@ function asset(
   const sourcePack = file.split('/')[0];
   const license = sourcePack === 'sunnyland-winter'
     ? 'Free commercial use and modification; attribution not required'
+    : sourcePack === 'moon-graveyard'
+      ? 'Free commercial use for related environments; modification permitted'
     : sourcePack === 'yeehaw'
       ? 'Free commercial and non-commercial use and modification'
       : sourcePack === 'moten-lava'
@@ -52,33 +54,51 @@ export const STORY_LEVEL_ASSET_REGISTRY: StoryLevelAssetDefinition[] = [
   asset('village-well', 'greenhollow', 'gothic-town/well.png', [65, 65], [3.4, 3.4], ['clutter', 'hero'], ['well', 'water', 'square', 'reward'], 'gothic-town'),
   asset('village-wagon', 'greenhollow', 'gothic-town/wagon.png', [93, 75], [4.5, 3.6], ['clutter', 'framing'], ['wagon', 'market', 'path', 'cluster-right'], 'gothic-town'),
   asset('village-lamp', 'greenhollow', 'gothic-town/street-lamp.png', [35, 108], [1.5, 4.6], ['framing', 'clutter'], ['lamp', 'path', 'safe', 'entrance'], 'gothic-town'),
+  asset('kings-door', 'greenhollow', 'kings-pigs/door.png', [46, 56], [3.6, 4.4], ['structural', 'hero', 'framing'], ['door', 'settlement', 'entrance', 'landmark'], 'kings-pigs', 'medium'),
+  asset('kings-cannon', 'greenhollow', 'kings-pigs/cannon.png', [44, 28], [3.6, 2.3], ['structural', 'framing', 'hero'], ['cannon', 'settlement', 'guard', 'cluster-right'], 'kings-pigs'),
+  asset('kings-box', 'greenhollow', 'kings-pigs/box.png', [22, 16], [2.2, 1.6], ['clutter', 'foliage'], ['box', 'market', 'ground', 'cluster-left'], 'kings-pigs'),
 
   asset('forest-tree', 'thornwood', 'magical-road/tree.png', [86, 181], [6, 12], ['structural', 'hero', 'foliage'], ['tree', 'root', 'canopy', 'landmark'], 'thornwood', 'medium'),
   asset('forest-cemetery-tree', 'thornwood', 'gothic-cemetery/tree.png', [166, 117], [8, 5.6], ['structural', 'framing', 'foliage'], ['tree', 'fallen', 'old', 'cluster-right'], 'thornwood', 'medium'),
   asset('forest-plant', 'thornwood', 'tall-forest/plant.png', [42, 27], [3.8, 2.5], ['foliage', 'clutter'], ['plant', 'ground', 'soft'], 'thornwood'),
   asset('forest-rock', 'thornwood', 'tall-forest/rock.png', [32, 32], [2.8, 2.8], ['structural', 'clutter'], ['rock', 'ground', 'cover'], 'thornwood'),
+  asset('thorn-pixel-box-a', 'thornwood', 'pixel-thornwood/box-1.png', [28, 24], [2.8, 2.4], ['structural', 'hero', 'clutter'], ['moss', 'relic', 'ground', 'landmark'], 'pixel-thornwood'),
+  asset('thorn-pixel-box-b', 'thornwood', 'pixel-thornwood/box-2.png', [28, 24], [2.8, 2.4], ['framing', 'foliage', 'clutter'], ['moss', 'root', 'cluster-left'], 'pixel-thornwood'),
+  asset('thorn-pixel-box-c', 'thornwood', 'pixel-thornwood/box-3.png', [28, 24], [2.8, 2.4], ['framing', 'clutter'], ['moss', 'path', 'cluster-right'], 'pixel-thornwood'),
 
   asset('mine-gate', 'ironroot', 'warped-caves/gate.png', [48, 48], [5.2, 5.2], ['structural', 'hero', 'framing'], ['gate', 'shaft', 'entrance', 'timber'], 'warped-caves', 'medium'),
   asset('mine-stalactite', 'ironroot', 'warped-caves/stalactite.png', [38, 53], [3.2, 4.5], ['framing', 'hazard'], ['stalactite', 'ceiling', 'danger'], 'warped-caves'),
   asset('mine-stone-head', 'ironroot', 'warped-caves/stone-head.png', [55, 51], [4, 3.7], ['clutter', 'hero'], ['stone', 'ore', 'relic'], 'warped-caves'),
   asset('mine-crystal', 'ironroot', 'rocky-pass/crystal-1.png', [25, 25], [2.2, 2.2], ['clutter', 'framing'], ['crystal', 'ore', 'reward', 'cluster-right'], 'warped-caves'),
+  asset('grafx-mine-support', 'ironroot', 'grafx-cave/support.png', [32, 48], [3.2, 4.8], ['structural', 'hero', 'framing'], ['scaffold', 'mine', 'timber', 'landmark'], 'grafx-cave', 'medium'),
+  asset('grafx-mine-door', 'ironroot', 'grafx-cave/door.png', [48, 32], [4.8, 3.2], ['structural', 'framing', 'hero'], ['door', 'shaft', 'entrance'], 'grafx-cave'),
+  asset('grafx-mine-lantern', 'ironroot', 'grafx-cave/lantern.png', [16, 32], [1.6, 3.2], ['framing', 'clutter'], ['lantern', 'ore', 'path', 'cluster-right'], 'grafx-cave'),
 
   asset('crypt-column', 'bonevault', 'gothic-church/column.png', [114, 190], [5.2, 8.7], ['structural', 'framing', 'hero'], ['column', 'arch', 'tomb', 'landmark'], 'gothic-cemetery', 'medium'),
   asset('crypt-tree', 'bonevault', 'gothic-cemetery/tree.png', [166, 117], [9, 6.4], ['structural', 'framing'], ['dead-tree', 'graveyard', 'tomb', 'cluster-left'], 'gothic-cemetery', 'medium'),
   asset('crypt-statue', 'bonevault', 'gothic-cemetery/statue.png', [63, 75], [3.6, 4.3], ['hero', 'clutter'], ['statue', 'tomb', 'lore'], 'gothic-cemetery'),
   asset('crypt-stone', 'bonevault', 'gothic-cemetery/stone.png', [27, 33], [2.2, 2.7], ['clutter'], ['grave', 'stone', 'ground'], 'gothic-cemetery'),
+  asset('moon-statue', 'bonevault', 'moon-graveyard/statue.png', [112, 224], [5, 10], ['structural', 'hero', 'framing'], ['statue', 'grave', 'moon', 'landmark'], 'moon-graveyard', 'medium'),
+  asset('moon-brush-a', 'bonevault', 'moon-graveyard/brush-a.png', [112, 96], [5.6, 4.8], ['foliage', 'framing', 'clutter'], ['dead-brush', 'grave', 'cluster-left'], 'moon-graveyard'),
+  asset('moon-brush-b', 'bonevault', 'moon-graveyard/brush-b.png', [112, 96], [5.6, 4.8], ['foliage', 'framing', 'clutter'], ['dead-brush', 'tomb', 'cluster-right'], 'moon-graveyard'),
 
   asset('ember-gate', 'emberdeep', 'emberdeep/gate.png', [48, 48], [5.2, 5.2], ['structural', 'hero', 'framing'], ['forge', 'gate', 'basalt', 'entrance'], 'emberdeep', 'medium'),
   asset('ember-stone-head', 'emberdeep', 'emberdeep/stone-head.png', [55, 51], [4, 3.7], ['structural', 'clutter'], ['basalt', 'stone', 'forge', 'cluster-left'], 'emberdeep'),
   asset('ember-stalactite', 'emberdeep', 'emberdeep/stalactite.png', [38, 53], [3.2, 4.5], ['hazard', 'framing'], ['lava', 'ceiling', 'danger'], 'emberdeep'),
   asset('ember-crystal', 'emberdeep', 'rocky-pass/crystal-1.png', [25, 25], [2.2, 2.2], ['clutter', 'hero'], ['crystal', 'glow', 'reward'], 'emberdeep'),
   asset('ember-crystal-cluster', 'emberdeep', 'rocky-pass/crystal-2.png', [26, 20], [2.6, 2], ['foliage', 'clutter'], ['crystal', 'magma', 'cluster-right'], 'emberdeep'),
+  asset('grafx-ember-support', 'emberdeep', 'grafx-ember/support.png', [32, 48], [3.2, 4.8], ['structural', 'hero', 'framing'], ['scaffold', 'forge', 'basalt', 'landmark'], 'grafx-ember', 'medium'),
+  asset('grafx-ember-door', 'emberdeep', 'grafx-ember/door.png', [48, 32], [4.8, 3.2], ['structural', 'framing', 'hero'], ['door', 'forge', 'entrance'], 'grafx-ember'),
+  asset('grafx-ember-lantern', 'emberdeep', 'grafx-ember/lantern.png', [16, 32], [1.6, 3.2], ['framing', 'clutter'], ['lantern', 'lava', 'path', 'cluster-right'], 'grafx-ember'),
 
   asset('snow-house', 'frostpeak', 'sunnyland-winter/house.png', [170, 126], [8.5, 6.3], ['structural', 'hero', 'framing'], ['shelter', 'snow', 'safe', 'landmark'], 'sunnyland-winter', 'medium'),
   asset('snow-pine', 'frostpeak', 'sunnyland-winter/pine-snow.png', [47, 99], [3.4, 7.2], ['foliage', 'framing'], ['snow', 'pine', 'cluster-left'], 'sunnyland-winter'),
   asset('snow-pine-shadow', 'frostpeak', 'sunnyland-winter/pine.png', [47, 99], [3.4, 7.2], ['foliage', 'framing'], ['pine', 'shadow', 'cluster-right'], 'sunnyland-winter'),
   asset('snow-tall-tree', 'frostpeak', 'sunnyland-winter/tall-tree.png', [89, 172], [5.2, 10], ['structural', 'hero', 'foliage'], ['ice', 'tree', 'landmark'], 'sunnyland-winter', 'medium'),
   asset('snow-fence', 'frostpeak', 'sunnyland-winter/fence.png', [96, 37], [5.2, 2], ['structural', 'clutter'], ['snow', 'fence', 'ground'], 'sunnyland-winter'),
+  asset('seasonal-snow-house', 'frostpeak', 'seasonal/house-single.png', [56, 96], [4.6, 7.8], ['structural', 'hero', 'framing'], ['shelter', 'snow', 'safe', 'landmark'], 'seasonal', 'medium'),
+  asset('seasonal-snow-bank', 'frostpeak', 'seasonal/snow-bank.png', [48, 32], [3.6, 2.4], ['foliage', 'framing', 'clutter'], ['snow', 'bank', 'cluster-left'], 'seasonal'),
+  asset('seasonal-snow-rock', 'frostpeak', 'seasonal/snow-rock.png', [48, 32], [3.6, 2.4], ['structural', 'clutter'], ['snow', 'rock', 'cluster-right'], 'seasonal'),
 
   asset('desert-facade', 'sunscar', 'yeehaw/frontier-facade.png', [192, 176], [9, 8.25], ['structural', 'hero'], ['settlement', 'shade', 'frontier', 'landmark'], 'yeehaw', 'medium'),
   asset('desert-cactus', 'sunscar', 'yeehaw/cactus.png', [48, 64], [3, 4], ['structural', 'foliage', 'hero'], ['cactus', 'desert', 'cluster-left'], 'yeehaw'),
@@ -86,11 +106,17 @@ export const STORY_LEVEL_ASSET_REGISTRY: StoryLevelAssetDefinition[] = [
   asset('desert-poster', 'sunscar', 'yeehaw/wanted-poster.png', [16, 32], [1.2, 2.4], ['clutter', 'framing'], ['wanted', 'settlement', 'path'], 'yeehaw'),
   asset('desert-bottle', 'sunscar', 'yeehaw/bottle.png', [16, 32], [1.1, 2.2], ['clutter'], ['bottle', 'saloon', 'ground'], 'yeehaw'),
   asset('desert-tin-can', 'sunscar', 'yeehaw/tin-can.png', [16, 32], [1.1, 2.2], ['clutter'], ['tin', 'frontier', 'ground'], 'yeehaw'),
+  asset('sun-pixel-box-a', 'sunscar', 'pixel-sunscar/box-1.png', [28, 24], [2.8, 2.4], ['structural', 'hero', 'clutter'], ['sandstone', 'cache', 'landmark'], 'pixel-sunscar'),
+  asset('sun-pixel-box-b', 'sunscar', 'pixel-sunscar/box-2.png', [28, 24], [2.8, 2.4], ['framing', 'foliage', 'clutter'], ['sandstone', 'caravan', 'cluster-left'], 'pixel-sunscar'),
+  asset('sun-pixel-box-c', 'sunscar', 'pixel-sunscar/box-3.png', [28, 24], [2.8, 2.4], ['framing', 'clutter'], ['sandstone', 'path', 'cluster-right'], 'pixel-sunscar'),
 
   asset('ruins-crystal-spire', 'skyglass', 'skyglass/crystal-1.png', [25, 25], [3.6, 3.6], ['structural', 'framing', 'hero'], ['glass', 'floating', 'sanctum', 'landmark'], 'skyglass', 'medium'),
   asset('ruins-crystal-cluster', 'skyglass', 'skyglass/crystal-2.png', [26, 20], [4.2, 3.3], ['hero', 'structural', 'clutter'], ['glass', 'floating', 'sanctum', 'cluster-left'], 'skyglass'),
   asset('ruins-crystal-a', 'skyglass', 'skyglass/crystal-1.png', [25, 25], [2.4, 2.4], ['clutter', 'hero'], ['glass', 'crystal', 'chime'], 'skyglass'),
-  asset('ruins-crystal-b', 'skyglass', 'skyglass/crystal-2.png', [26, 20], [2.8, 2.2], ['clutter'], ['glass', 'crystal', 'path'], 'skyglass')
+  asset('ruins-crystal-b', 'skyglass', 'skyglass/crystal-2.png', [26, 20], [2.8, 2.2], ['clutter'], ['glass', 'crystal', 'path'], 'skyglass'),
+  asset('space-spire', 'skyglass', 'space-skyglass/spire.png', [16, 48], [2.2, 6.6], ['structural', 'hero', 'framing'], ['space', 'spire', 'glass', 'landmark'], 'space-skyglass', 'medium'),
+  asset('space-crystal-a', 'skyglass', 'space-skyglass/crystal-a.png', [16, 16], [2.4, 2.4], ['clutter', 'foliage', 'hero'], ['space', 'crystal', 'cluster-left'], 'space-skyglass'),
+  asset('space-crystal-b', 'skyglass', 'space-skyglass/crystal-b.png', [16, 16], [2.4, 2.4], ['clutter', 'framing'], ['space', 'crystal', 'cluster-right'], 'space-skyglass')
 ];
 
 function scoreAsset(candidate: StoryLevelAssetDefinition, biomeId: BiomeId, tags: string[], role?: StoryLevelAssetRole) {

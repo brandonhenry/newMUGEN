@@ -4,7 +4,9 @@ import { STORY_SURFACE_LEVEL_BLUEPRINTS, storySurfaceRouteSignature } from './le
 import { STORY_ENDLESS_CHUNK_BLUEPRINTS, storyAuthoredRoomTemplate, storyChunkCoverageErrors } from './levelChunks';
 import { compileStoryLevelBlueprint, renderStoryLevelBlueprintSvg, validateStoryLevelBlueprint } from './levelCompiler';
 import { STORY_MOVEMENT_PROFILE, storyConservativeDoubleJumpRise, storyConservativeJumpRun, storyMaximumJumpRise } from './movementProfile';
-import { STORY_TERRAIN_KITS, storyTerrainGrammarCoverageErrors } from './terrainGrammar';
+import { STORY_TERRAIN_KITS, STORY_TERRAIN_KITS_BY_ID, storyTerrainGrammarCoverageErrors } from './terrainGrammar';
+import { STORY_BIOME_VISUAL_SETS, storyBiomeVisualSetCoverageErrors } from './biomeVisualSets';
+import { createStoryBiomeVisualSetEnvironment } from './worldEnvironments';
 import { storyResourceVisualDefinition } from './adventureCrafting';
 import type { StoryLevelBlueprintV1, StoryLevelGeometry } from './levelTypes';
 
@@ -85,9 +87,10 @@ describe('KORE AI Level Director', () => {
     }
   });
 
-  it('provides three provenance-complete frames for every terrain role in all eight kits', () => {
-    const kits = Object.values(STORY_TERRAIN_KITS);
-    expect(kits).toHaveLength(8);
+  it('provides three provenance-complete frames for every terrain role in all sixteen kits', () => {
+    const kits = Object.values(STORY_TERRAIN_KITS_BY_ID);
+    expect(Object.values(STORY_TERRAIN_KITS)).toHaveLength(8);
+    expect(kits).toHaveLength(16);
     for (const kit of kits) {
       expect(kit!.tilePixels).toBe(32);
       expect(kit!.runtimeScale).toBe(2);
@@ -97,6 +100,21 @@ describe('KORE AI Level Director', () => {
         expect(frames.every((frame) => frame.rotations.length === 1 && frame.rotations[0] === 0 && !frame.mirroring)).toBe(true);
         expect(frames.every((frame) => frame.sourceHash && frame.license && frame.generationMethod)).toBe(true);
       }
+    }
+  });
+
+  it('keeps every backup visual set self-contained across terrain, environment, and props', () => {
+    expect(storyBiomeVisualSetCoverageErrors()).toEqual([]);
+    for (const visualSet of Object.values(STORY_BIOME_VISUAL_SETS)) {
+      const kit = STORY_TERRAIN_KITS_BY_ID[visualSet.terrainKitId];
+      const environment = createStoryBiomeVisualSetEnvironment(visualSet.theme, visualSet.id);
+      const familyAssets = STORY_LEVEL_ASSET_REGISTRY.filter((asset) => asset.biomes.includes(visualSet.biomeId) && asset.family === visualSet.propFamily);
+      expect(kit?.visualSetId, visualSet.id).toBe(visualSet.id);
+      expect(familyAssets.length, visualSet.id).toBeGreaterThanOrEqual(3);
+      expect(environment.layers.length, visualSet.id).toBeGreaterThanOrEqual(2);
+      const environmentPacks = [environment.surface?.asset, ...environment.layers.map((layer) => layer.asset)].filter(Boolean).map((asset) => asset!.slice(6).split('/')[0]);
+      expect(environmentPacks.every((pack) => visualSet.sourcePacks.includes(pack)), visualSet.id).toBe(true);
+      expect(familyAssets.every((asset) => visualSet.sourcePacks.includes(asset.sourcePack)), visualSet.id).toBe(true);
     }
   });
 

@@ -174,6 +174,7 @@ export type StoryCompiledLevelMeta = {
   chunkIds: string[];
   witnessRoute: Array<[number, number]>;
   assetResolution: Array<{ slotId: string; assetId: string }>;
+  visualSetId?: string;
   topologySignature?: string;
   entranceTier?: 0 | 1 | 2;
   exitTier?: 0 | 1 | 2;

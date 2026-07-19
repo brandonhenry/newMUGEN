@@ -150,6 +150,41 @@ function makeLayer(theme: StoryWorldThemeId, input: LayerInput, index: number): 
   return { id: `${theme}-art-${index + 1}`, asset: worldPackAsset(file), depth, y, height, opacity, parallax, color: '#ffffff', repeatEvery };
 }
 
+const BACKUP_ENVIRONMENT_ART: Record<string, { layers: LayerInput[]; surface: SurfaceInput }> = {
+  'greenhollow-backup-kings': {
+    layers: [['kings-pigs/terrain.png', -14, 18, 0.07, 26.3, 0.42], ['kings-pigs/decorations.png', -7, 14, 0.31, 16.3, 0.72]],
+    surface: ['kings-pigs/terrain.png', [32, 32, 32, 32], [608, 416]]
+  },
+  'thornwood-backup-pixel': {
+    layers: [['pixel-thornwood/background-purple.png', -15, 18, 0.05, 18], ['pixel-thornwood/terrain.png', -7, 12, 0.34, 36, 0.5]],
+    surface: ['pixel-thornwood/terrain.png', [96, 0, 16, 16], [352, 176], 1]
+  },
+  'ironroot-backup-grafx': {
+    layers: [['grafx-cave/background.png', -15, 18, 0.05, 24.9], ['grafx-cave/scaffolding.png', -7, 13, 0.32, 27.1, 0.58]],
+    surface: ['grafx-cave/gray-terrain.png', [160, 96, 16, 16], [528, 352]]
+  },
+  'bonevault-backup-moon': {
+    layers: [['moon-graveyard/background-0.png', -16, 18, 0.04, 33.2], ['moon-graveyard/background-1.png', -12, 18, 0.12, 33.2], ['moon-graveyard/grass-1.png', -6, 18, 0.42, 15.2, 0.72]],
+    surface: ['moon-graveyard/tiles.png', [32, 0, 32, 32], [352, 384]]
+  },
+  'emberdeep-backup-grafx': {
+    layers: [['grafx-ember/background.png', -15, 18, 0.05, 24.9], ['grafx-ember/scaffolding.png', -7, 13, 0.32, 27.1, 0.62], ['seasonal/lava.png', -3, 1.7, 0.66, 2.2, 0.96, 0.2]],
+    surface: ['grafx-ember/gray-terrain.png', [160, 96, 16, 16], [528, 352]]
+  },
+  'frostpeak-backup-seasonal': {
+    layers: [['seasonal/snow-big-mountain.png', -16, 18, 0.04, 28], ['seasonal/snow-small-mountains.png', -11, 18, 0.16, 28], ['seasonal/snow-foreground.png', -6, 13, 0.4, 28, 0.78]],
+    surface: ['seasonal/snow-terrain.png', [48, 16, 16, 16], [272, 160], 1]
+  },
+  'sunscar-backup-pixel': {
+    layers: [['pixel-sunscar/background-yellow.png', -15, 18, 0.05, 18], ['pixel-sunscar/terrain.png', -7, 12, 0.34, 36, 0.46]],
+    surface: ['pixel-sunscar/terrain.png', [96, 64, 16, 16], [352, 176], 1]
+  },
+  'skyglass-backup-space': {
+    layers: [['space-skyglass/tileset.png', -15, 18, 0.05, 19.6, 0.46], ['space-skyglass/tileset.png', -7, 13, 0.32, 14.2, 0.62]],
+    surface: ['space-skyglass/tileset.png', [0, 48, 16, 16], [192, 176]]
+  }
+};
+
 export function createStoryWorldEnvironment(theme: StoryWorldThemeId): StoryWorldEnvironmentDefinition {
   const [file, frame, atlasSize, walkSurfaceInsetPixels] = SURFACES[theme];
   return {
@@ -168,6 +203,20 @@ export function createStoryWorldEnvironment(theme: StoryWorldThemeId): StoryWorl
         }))
       } : {})
     }
+  };
+}
+
+export function createStoryBiomeVisualSetEnvironment(theme: StoryWorldThemeId, visualSetId: string | undefined): StoryWorldEnvironmentDefinition {
+  const art = visualSetId ? BACKUP_ENVIRONMENT_ART[visualSetId] : undefined;
+  if (!art) return createStoryWorldEnvironment(theme);
+  const [file, frame, atlasSize, walkSurfaceInsetPixels] = art.surface;
+  return {
+    ...PALETTES[theme],
+    layers: art.layers.map((input, index) => {
+      const [layerFile, depth, height, parallax, repeatEvery, opacity = 1, y = height / 2 - 0.5] = input;
+      return { id: `${visualSetId}-art-${index + 1}`, asset: worldPackAsset(layerFile), depth, y, height, opacity, parallax, color: '#ffffff', repeatEvery };
+    }),
+    surface: { asset: worldPackAsset(file), frame, atlasSize, ...(walkSurfaceInsetPixels ? { walkSurfaceInsetPixels } : {}) }
   };
 }
 

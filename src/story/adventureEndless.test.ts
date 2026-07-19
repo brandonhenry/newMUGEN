@@ -10,6 +10,7 @@ import {
   storyEndlessPressure,
   storyEndlessRewardScale
 } from './adventureEndless';
+import { storyBiomeVisualSet } from './biomeVisualSets';
 
 const REPRESENTATIVE_FLOORS = [1, 2, 3, 4, 5, 6, 7, 8, 100, 10_000, Number.MAX_SAFE_INTEGER];
 
@@ -24,7 +25,7 @@ describe('endless adventure generation', () => {
     }
   });
 
-  it('keeps v4/v5 runs legacy while new v6 floors are enclosed, tiered, and fully dressed', () => {
+  it('keeps v4/v5 runs legacy while v6 floors stay primary and v7 alternates coherent visual sets', () => {
     const legacy = generateAdventureFloor('greenhollow', 'legacy-run', 3, 4);
     expect(legacy.version).toBe(4);
     expect(legacy.terrainTiles).toBeUndefined();
@@ -43,6 +44,18 @@ describe('endless adventure generation', () => {
       expect(floor.levelMeta?.topologySignature).toBeTruthy();
     }
     expect(tiers).toEqual(new Set([0, 1, 2]));
+    for (const biome of STORY_ADVENTURE_REGION_IDS) {
+      const floors = [1, 2].map((floorNumber) => generateAdventureFloor(biome, 'visual-family-run', floorNumber, 7));
+      expect(new Set(floors.map((floor) => floor.visualSetId)).size, biome).toBe(2);
+      for (const floor of floors) {
+        const visualSet = storyBiomeVisualSet(floor.visualSetId)!;
+        expect(visualSet.biomeId).toBe(biome);
+        expect(floor.terrainKitId).toBe(visualSet.terrainKitId);
+        expect(floor.levelMeta?.visualSetId).toBe(visualSet.id);
+        expect(floor.terrainTiles?.every((tile) => tile.kitId === visualSet.terrainKitId)).toBe(true);
+        expect(floor.cavityTiles?.every((tile) => tile.kitId === visualSet.terrainKitId)).toBe(true);
+      }
+    }
   });
 
   it('validates 1,000 seeds per biome across early and direct high floors', () => {

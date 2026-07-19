@@ -153,6 +153,32 @@ PACKS = (
 )
 
 
+# License-reviewed alternate biome stack. These are imported incrementally so
+# adding procedural visual diversity never requires re-downloading the primary
+# production stack.
+BACKUP_PACKS = (
+    Pack("kings-pigs", "Pixel Frog", "https://pixelfrog-assets.itch.io/kings-and-pigs", "itch://pixelfrog-assets.itch.io/kings-and-pigs/1715479", "4d61a9c48d5eb1ec5ef5585359d3800205349af813af67030a719bfd6371d373", {
+        "terrain.png": "Sprites/14-TileSets/Terrain (32x32).png", "decorations.png": "Sprites/14-TileSets/Decorations (32x32).png",
+        "door.png": "Sprites/11-Door/Idle.png", "cannon.png": "Sprites/10-Cannon/Idle.png", "box.png": "Sprites/08-Box/Idle.png",
+    }),
+    Pack("pixel-adventure", "Pixel Frog", "https://pixelfrog-assets.itch.io/pixel-adventure-1", "itch://pixelfrog-assets.itch.io/pixel-adventure-1/2012517", "efafdfc8ed44f2b0ade27c0246e11a2474ce3a793b4f8e16dbe7403824f6e77b", {
+        "terrain.png": "Free/Terrain/Terrain (16x16).png", "background-purple.png": "Free/Background/Purple.png", "background-yellow.png": "Free/Background/Yellow.png",
+        "box-1.png": "Free/Items/Boxes/Box1/Idle.png", "box-2.png": "Free/Items/Boxes/Box2/Idle.png", "box-3.png": "Free/Items/Boxes/Box3/Idle.png",
+    }),
+    Pack("grafx-cave", "GrafxKid", "https://grafxkid.itch.io/cave-tileset", "itch://grafxkid.itch.io/cave-tileset/2936187", "71d5b339b0b01f4a24bddc9d5c82ad78d3a250d744c954fd4cfa77032c7c09b2", {
+        "background.png": "Cave Tileset/_Complete_static_BG_(288 x 208).png", "gray-terrain.png": "Cave Tileset/Gray_Tile_Terrain (16 x 16).png",
+        "brown-terrain.png": "Cave Tileset/Brown_Tile_Terrain (16 x 16).png", "scaffolding.png": "Cave Tileset/Scaffolding_and_BG_Parts (16 x 16).png",
+    }),
+    Pack("moon-graveyard", "Anokolisa", "https://anokolisa.itch.io/moon-graveyard", "itch://anokolisa.itch.io/moon-graveyard/1683927", "4efad04eb0363cbfad2cc249569ae178819ca48250a5c722ff5a3faeb350af46", {
+        "background-0.png": "Final/Background_0.png", "background-1.png": "Final/Background_1.png", "grass-1.png": "Final/Grass_background_1.png",
+        "grass-2.png": "Final/Grass_background_2.png", "brush.png": "Final/brush.png", "statue.png": "Final/Salt.png", "tiles.png": "Final/Tiles.png",
+    }, license="Free commercial use for related environments; modification permitted"),
+    Pack("space-cave", "M039", "https://m039.itch.io/blue-space-cave-tileset", "itch://m039.itch.io/blue-space-cave-tileset/1348049", "8d636b7e875727449dc4ebc0110b064f3aa378ead34e759fb9de9b4b24efcb7d", {
+        "tileset.png": "space-cave.png",
+    }, container="raw"),
+)
+
+
 def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
@@ -344,6 +370,89 @@ def import_world_packs(archive_dir: Path | None) -> None:
     print(f"Imported {len(integrity)} reviewed world assets from {len(PACKS)} free-use packs")
 
 
+def add_backup_biome_stack(archive_dir: Path | None) -> None:
+    """Import the alternate procedural-biome families without touching primaries."""
+    manifest = json.loads(WORLD_MANIFEST.read_text())
+    integrity = json.loads(WORLD_INTEGRITY.read_text())
+    backup_ids = {pack.id for pack in BACKUP_PACKS}
+    derived_ids = {"pixel-thornwood", "pixel-sunscar", "grafx-ember", "space-skyglass"}
+    removed = [pack for pack in manifest["packs"] if pack["id"] in backup_ids | derived_ids]
+    for relative in {asset["file"] for pack in removed for asset in pack["assets"]}:
+        integrity["files"].pop(relative, None)
+    manifest["packs"] = [pack for pack in manifest["packs"] if pack["id"] not in backup_ids | derived_ids]
+
+    for pack in BACKUP_PACKS:
+        archive = obtain_archive(pack, archive_dir)
+        source = zipfile.ZipFile(io.BytesIO(archive)) if pack.container == "zip" else None
+        assets = []
+        try:
+            for output, archived in pack.files.items():
+                destination = WORLD_ROOT / pack.id / output
+                data = source.read(archived) if source else archive
+                size = save_png(data, destination, pack.scale)
+                relative = destination.relative_to(WORLD_ROOT).as_posix()
+                file_hash = sha256_path(destination)
+                integrity["files"][relative] = file_hash
+                assets.append({"file": relative, "sourceFile": archived, "width": size[0], "height": size[1], "sha256": file_hash})
+        finally:
+            if source:
+                source.close()
+        manifest["packs"].append({"id": pack.id, "author": pack.author, "source": pack.source, "archive": pack.archive, "archiveSha256": pack.sha256, "license": pack.license, "assets": assets})
+
+    for derived_id, source_id, source_names, low, high in (
+        ("pixel-thornwood", "pixel-adventure", ("terrain.png", "background-purple.png", "box-1.png", "box-2.png", "box-3.png"), (8, 18, 22), (116, 232, 148)),
+        ("pixel-sunscar", "pixel-adventure", ("terrain.png", "background-yellow.png", "box-1.png", "box-2.png", "box-3.png"), (74, 24, 18), (255, 190, 68)),
+        ("grafx-ember", "grafx-cave", ("background.png", "gray-terrain.png", "brown-terrain.png", "scaffolding.png"), (38, 5, 12), (255, 105, 44)),
+        ("space-skyglass", "space-cave", ("tileset.png",), (24, 13, 69), (113, 244, 255)),
+    ):
+        source_pack = next(pack for pack in BACKUP_PACKS if pack.id == source_id)
+        assets = []
+        for source_name in source_names:
+            destination = WORLD_ROOT / derived_id / source_name
+            size = palette_variant(WORLD_ROOT / source_id / source_name, destination, low, high)
+            relative = destination.relative_to(WORLD_ROOT).as_posix()
+            file_hash = sha256_path(destination)
+            integrity["files"][relative] = file_hash
+            assets.append({"file": relative, "sourceFile": f"palette derivative of {source_id}/{source_name}", "width": size[0], "height": size[1], "sha256": file_hash})
+        manifest["packs"].append({"id": derived_id, "author": f"{source_pack.author} / K.O.R.E.", "source": source_pack.source, "archive": "derived", "archiveSha256": source_pack.sha256, "license": source_pack.license, "derivedFrom": source_id, "assets": assets})
+
+    crop_specs = (
+        ("grafx-cave", "scaffolding.png", "support.png", (16, 48, 48, 96)),
+        ("grafx-cave", "scaffolding.png", "door.png", (192, 112, 240, 144)),
+        ("grafx-cave", "scaffolding.png", "lantern.png", (320, 112, 336, 144)),
+        ("grafx-ember", "scaffolding.png", "support.png", (16, 48, 48, 96)),
+        ("grafx-ember", "scaffolding.png", "door.png", (192, 112, 240, 144)),
+        ("grafx-ember", "scaffolding.png", "lantern.png", (320, 112, 336, 144)),
+        ("space-skyglass", "tileset.png", "spire.png", (128, 48, 144, 96)),
+        ("space-skyglass", "tileset.png", "crystal-a.png", (80, 96, 96, 112)),
+        ("space-skyglass", "tileset.png", "crystal-b.png", (128, 96, 144, 112)),
+        ("moon-graveyard", "brush.png", "brush-a.png", (0, 0, 112, 96)),
+        ("moon-graveyard", "brush.png", "brush-b.png", (112, 96, 224, 192)),
+        ("seasonal", "snow-terrain.png", "snow-bank.png", (48, 16, 96, 48)),
+        ("seasonal", "snow-terrain.png", "snow-rock.png", (48, 48, 96, 80)),
+        ("seasonal", "lava.png", "lava-vent.png", (0, 0, 16, 32)),
+        ("seasonal", "house.png", "house-single.png", (0, 0, 56, 96)),
+    )
+    for pack_id, source_name, output_name, box in crop_specs:
+        pack = next(item for item in manifest["packs"] if item["id"] == pack_id)
+        destination = WORLD_ROOT / pack_id / output_name
+        size = crop_variant(WORLD_ROOT / pack_id / source_name, destination, box)
+        relative = destination.relative_to(WORLD_ROOT).as_posix()
+        file_hash = sha256_path(destination)
+        integrity["files"][relative] = file_hash
+        pack["assets"] = [asset for asset in pack["assets"] if asset["file"] != relative]
+        pack["assets"].append({"file": relative, "sourceFile": f"runtime crop {box} of {pack_id}/{source_name}", "width": size[0], "height": size[1], "sha256": file_hash})
+
+    manifest["packs"] = sorted(manifest["packs"], key=lambda pack: pack["id"])
+    integrity["files"] = dict(sorted(integrity["files"].items()))
+    WORLD_MANIFEST.write_text(json.dumps(manifest, indent=2) + "\n")
+    WORLD_INTEGRITY.write_text(json.dumps(integrity, indent=2) + "\n")
+    credit_rows = ["# Play-mode world art", "", "Only reviewed free-use assets are shipped. Source archives are checksum-pinned and excluded.", "", "| Pack | Author | License | Source |", "| --- | --- | --- | --- |"]
+    credit_rows.extend(f"| {pack['id']} | {pack['author']} | {pack['license']} | {pack['source']} |" for pack in manifest["packs"])
+    (WORLD_ROOT / "CREDITS.md").write_text("\n".join(credit_rows) + "\n")
+    print(f"Added {len(BACKUP_PACKS)} alternate biome packs; world manifest now has {len(manifest['packs'])} packs")
+
+
 def finalize_biome_stack() -> None:
     """Prune superseded biome derivatives and register deterministic runtime crops."""
     manifest = json.loads(WORLD_MANIFEST.read_text())
@@ -502,9 +611,12 @@ def main() -> None:
     parser.add_argument("--refresh-exploration", action="store_true", help="Download only the checksum-pinned exploration packs")
     parser.add_argument("--clean-exploration-actors", action="store_true", help="Re-run alpha cleanup for mount and wildlife atlases")
     parser.add_argument("--finalize-biome-stack", action="store_true", help="Prune superseded biome derivatives and register runtime crops")
+    parser.add_argument("--add-backup-biome-stack", action="store_true", help="Import the coherent alternate procedural-biome families")
     parser.add_argument("--archive-dir", type=Path, help="Use checksum-pinned archives from this directory")
     args = parser.parse_args()
-    if args.finalize_biome_stack:
+    if args.add_backup_biome_stack:
+        add_backup_biome_stack(args.archive_dir)
+    elif args.finalize_biome_stack:
         finalize_biome_stack()
     elif args.refresh or not WORLD_MANIFEST.is_file() or not WORLD_INTEGRITY.is_file():
         import_world_packs(args.archive_dir)
