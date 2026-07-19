@@ -197,7 +197,6 @@ function createMap(biome: BiomeId, role: StoryAdventureMapRole): StoryAdventureM
   const compiled = compileStoryLevelBlueprint(blueprint, id, 1);
   const westEntry = surfaceConnectorPosition(blueprint, 'west');
   const eastEntry = surfaceConnectorPosition(blueprint, 'east');
-  const groundedY = (x: number) => surfaceFloorAtX(blueprint, x) + STORY_GROUNDED_ACTOR_CENTER_Y;
   const terrainFloorAtX = (x: number) => {
     const intendedFloor = surfaceFloorAtX(blueprint, x);
     const supportTops = compiled.platforms
@@ -206,6 +205,11 @@ function createMap(biome: BiomeId, role: StoryAdventureMapRole): StoryAdventureM
       .filter((top) => top <= intendedFloor + 0.1);
     return supportTops.length > 0 ? Math.max(...supportTops) : intendedFloor;
   };
+  // Carved V2 rooms snap to terrain cells, so their compiled collision cap can
+  // sit below the authored room floor between route anchors. Interactive
+  // objects must follow the collision cap the player actually stands on or the
+  // prompt can wind up just outside the vertical interaction radius.
+  const groundedY = (x: number) => terrainFloorAtX(x) + STORY_GROUNDED_ACTOR_CENTER_Y;
   const routeRooms = surfaceRouteRooms(blueprint);
   const slots = (kind: StoryLevelBlueprintV2['slots'][number]['kind']) => blueprint.slots.filter((slot) => slot.kind === kind);
   const anchorX = (x: number) => {
@@ -234,7 +238,7 @@ function createMap(biome: BiomeId, role: StoryAdventureMapRole): StoryAdventureM
   ];
   const hazards = hazardsFor(biome, role).map((hazard) => {
     const centerX = (hazard.bounds[0] + hazard.bounds[1]) / 2;
-    const baseY = surfaceFloorAtX(blueprint, centerX);
+    const baseY = terrainFloorAtX(centerX);
     const height = hazard.bounds[3] - hazard.bounds[2];
     return { ...hazard, bounds: [hazard.bounds[0], hazard.bounds[1], baseY, baseY + height] as [number, number, number, number] };
   });
@@ -242,7 +246,7 @@ function createMap(biome: BiomeId, role: StoryAdventureMapRole): StoryAdventureM
   const traversal = traversalFor(biome, role).map((piece, index) => ({ ...piece, position: traversalSlots[index + 1]?.position ?? [piece.position[0], surfaceFloorAtX(blueprint, piece.position[0]) + 3] as [number, number] }));
   const enemySpawns = enemiesFor(biome, role).map((enemy) => ({
     ...enemy,
-    position: [enemy.position[0], surfaceFloorAtX(blueprint, enemy.position[0]) + (getStoryEnemyDefinition(enemy.enemyId).archetype === 'flying' ? 3.4 : STORY_GROUNDED_ACTOR_CENTER_Y)] as [number, number]
+    position: [enemy.position[0], terrainFloorAtX(enemy.position[0]) + (getStoryEnemyDefinition(enemy.enemyId).archetype === 'flying' ? 3.4 : STORY_GROUNDED_ACTOR_CENTER_Y)] as [number, number]
   }));
   const resourceSlots = slots('resource');
   const resourceNodes = createSurfaceResourceNodes({

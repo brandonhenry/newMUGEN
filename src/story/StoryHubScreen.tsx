@@ -3812,17 +3812,33 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       return;
     }
     if (portal.id.startsWith('endless-event:') && endlessRun && generatedFloor?.event) {
-      if (partyInstance && partyInstance.leaderSessionId !== localSessionId) return;
+      if (partyInstance && partyInstance.leaderSessionId !== localSessionId) {
+        setChallengeNotice({ id: portal.id, text: 'Only the party leader can resolve Endless events.' });
+        return;
+      }
       const event = generatedFloor.event;
-      if (endlessRun.resolvedEventIds.includes(event.id)) return;
+      if (endlessRun.resolvedEventIds.includes(event.id)) {
+        setChallengeNotice({ id: portal.id, text: 'This Endless event has already been resolved.' });
+        return;
+      }
       if (event.kind === 'depth-trader') { setActiveTraderEventId(event.id); return; }
       setPendingEventChoiceId(event.id);
       return;
     }
     if (portal.id.startsWith('endless-cache:') && endlessRun && generatedFloor) {
-      if (partyInstance && partyInstance.leaderSessionId !== localSessionId) return;
+      if (partyInstance && partyInstance.leaderSessionId !== localSessionId) {
+        setChallengeNotice({ id: portal.id, text: 'Only the party leader can open Endless caches.' });
+        return;
+      }
       const container = generatedFloor.containers.find((candidate) => candidate.id === portal.id.slice('endless-cache:'.length));
-      if (!container || endlessRun.ledger.cacheIds.includes(container.id)) return;
+      if (!container) {
+        setChallengeNotice({ id: portal.id, text: 'This cache is no longer available.' });
+        return;
+      }
+      if (endlessRun.ledger.cacheIds.includes(container.id)) {
+        setChallengeNotice({ id: portal.id, text: 'This cache was already opened.' });
+        return;
+      }
       setEndlessRun((current) => {
         if (!current || current.ledger.cacheIds.includes(container.id)) return current;
         const materials = { ...current.ledger.materials };
@@ -3845,7 +3861,10 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       return;
     }
     if (portal.id.startsWith('endless-next:') && endlessRun && generatedFloor) {
-      if (partyInstance && partyInstance.leaderSessionId !== localSessionId) return;
+      if (partyInstance && partyInstance.leaderSessionId !== localSessionId) {
+        setChallengeNotice({ id: portal.id, text: 'Only the party leader can advance the Endless Descent.' });
+        return;
+      }
       if (portal.locked) { setChallengeNotice({ id: portal.id, text: 'Required encounters still block the descent.' }); return; }
       let nextRun = { ...endlessRun, ledger: { ...endlessRun.ledger, routeCoins: endlessRun.ledger.routeCoins + Math.round(15 * storyEndlessRewardScale(generatedFloor.floorNumber)) } };
       if (generatedFloor.event?.kind === 'stranded-explorer' && nextRun.resolvedEventIds.includes(generatedFloor.event.id)) {
@@ -3884,6 +3903,8 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
           analyticsRef.current?.('adventure_recipes_learned', { source: 'specialist', world_id: npc.biomeId, count: result.learned.length });
         }
         if (!refusing && npc.services?.includes('market')) setMarketOpen(true);
+      } else {
+        setChallengeNotice({ id: portal.id, text: 'No one answers. This interaction is unavailable.' });
       }
       return;
     }
@@ -3891,20 +3912,24 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       const id = portal.id.slice('chest:'.length);
       const chest = activeHub.interactables?.find((entry) => entry.id === id && entry.kind === 'chest');
       if (chest) {
-        updateAdventureProgress(claimAdventureCache(adventureProgressRef.current, chest.id, chest.rewardCoins ?? 0).progress);
+        const result = claimAdventureCache(adventureProgressRef.current, chest.id, chest.rewardCoins ?? 0);
+        updateAdventureProgress(result.progress);
+        setChallengeNotice({ id: portal.id, text: result.claimed ? `${chest.label} opened: +${chest.rewardCoins ?? 0} Route Coins.` : `${chest.label} was already opened.` });
         const visit = activeVisitRef.current;
-        if (visit) analyticsRef.current?.('adventure_reward_collected', { visit_id: visit.id, world_id: visit.worldId, reward_type: 'cache', level: adventureProgressRef.current.level });
-      }
+        if (result.claimed && visit) analyticsRef.current?.('adventure_reward_collected', { visit_id: visit.id, world_id: visit.worldId, reward_type: 'cache', level: adventureProgressRef.current.level });
+      } else setChallengeNotice({ id: portal.id, text: 'This cache is unavailable.' });
       return;
     }
     if (portal.id.startsWith('relic:')) {
       const id = portal.id.slice('relic:'.length);
       const relic = activeHub.interactables?.find((entry) => entry.id === id && entry.kind === 'relic');
       if (relic?.relicId) {
+        const alreadyCollected = adventureProgressRef.current.relics.includes(relic.relicId);
         updateAdventureProgress(collectAdventureRelic(adventureProgressRef.current, relic.relicId));
+        setChallengeNotice({ id: portal.id, text: alreadyCollected ? `${relic.label} was already claimed.` : `${relic.label} claimed.` });
         const visit = activeVisitRef.current;
-        if (visit) analyticsRef.current?.('adventure_reward_collected', { visit_id: visit.id, world_id: visit.worldId, reward_type: 'relic', level: adventureProgressRef.current.level });
-      }
+        if (!alreadyCollected && visit) analyticsRef.current?.('adventure_reward_collected', { visit_id: visit.id, world_id: visit.worldId, reward_type: 'relic', level: adventureProgressRef.current.level });
+      } else setChallengeNotice({ id: portal.id, text: 'This relic is unavailable.' });
       return;
     }
     if (portal.id === 'crafting:route-workbench') { openAdventurePack({ kind: 'workbench' }); return; }
@@ -3915,19 +3940,32 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
         setSurfaceEntry('west');
         setActiveSurfaceMapId(firstStoryAdventureSurfaceMap(activeWorldId).id);
       } else {
-        updateAdventureProgress(restoreAdventureShortcut(adventureProgressRef.current, id, 100).progress);
+        const result = restoreAdventureShortcut(adventureProgressRef.current, id, 100);
+        updateAdventureProgress(result.progress);
+        setChallengeNotice({ id: portal.id, text: result.restored ? 'Arrival shortcut restored for 100 Route Coins.' : 'You need 100 Route Coins to restore this shortcut.' });
       }
       return;
     }
     if (portal.id.startsWith('waystone:')) {
       const waystoneId = portal.id.slice('waystone:'.length);
       const current = adventureProgressRef.current;
-      updateAdventureProgress(current.discoveries.waystones.includes(waystoneId) ? upgradeAdventureWaystone(current, waystoneId, 250).progress : discoverAdventureWaystone(current, waystoneId));
+      if (!current.discoveries.waystones.includes(waystoneId)) {
+        updateAdventureProgress(discoverAdventureWaystone(current, waystoneId));
+        setChallengeNotice({ id: portal.id, text: `${portal.label} attuned. Fast travel is now available.` });
+      } else if (current.upgradedWaystones.includes(waystoneId)) {
+        setChallengeNotice({ id: portal.id, text: `${portal.label} is already fully upgraded.` });
+      } else {
+        const result = upgradeAdventureWaystone(current, waystoneId, 250);
+        updateAdventureProgress(result.progress);
+        setChallengeNotice({ id: portal.id, text: result.upgraded ? `${portal.label} upgraded for 250 Route Coins.` : 'You need 250 Route Coins to upgrade this waystone.' });
+      }
       return;
     }
     if (portal.id.startsWith('mount-sanctuary:') && isStoryAdventureRegionId(activeWorldId)) {
       const mountId = STORY_WORLD_MOUNT[activeWorldId];
+      const alreadyUnlocked = Boolean(adventureProgressRef.current.mounts[mountId]?.unlocked);
       updateAdventureProgress(unlockAdventureMount(adventureProgressRef.current, mountId));
+      setChallengeNotice({ id: portal.id, text: alreadyUnlocked ? `${STORY_MOUNTS[mountId].label} is already bonded. Press G to mount.` : `${STORY_MOUNTS[mountId].label} bonded. Press G to mount.` });
       return;
     }
     if (portal.kind === 'shrine') {
@@ -3937,7 +3975,10 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       setStatsOpen(true);
       return;
     }
-    if (portal.locked) return;
+    if (portal.locked) {
+      setChallengeNotice({ id: portal.id, text: `${portal.label} is still locked.` });
+      return;
+    }
     if (portal.destination === 'story') {
       beginWorldTravel('world-route');
       return;
@@ -3955,7 +3996,11 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
       beginWorldTravel(portal.destination);
       return;
     }
-    if (isHubDestination(portal.destination)) onDestination(portal.destination);
+    if (isHubDestination(portal.destination)) {
+      onDestination(portal.destination);
+      return;
+    }
+    setChallengeNotice({ id: portal.id, text: `${portal.label} cannot be used right now.` });
   }, [activeHub.interactables, activeHub.npcs, activeWorldId, beginWorldTravel, endlessRun, generatedFloor, localSessionId, onDestination, openAdventurePack, partyInstance?.seed, quickMatch.portalId, quickMatch.status, updateAdventureProgress]);
 
   const exitCurrentWorld = useCallback(() => {

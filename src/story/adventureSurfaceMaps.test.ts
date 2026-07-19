@@ -5,7 +5,7 @@ import { STORY_ADVENTURE_REGION_IDS, STORY_ADVENTURE_WORLDS } from './adventureW
 import { STORY_ADVENTURE_SURFACE_MAPS } from './adventureSurfaceMaps';
 import { STORY_HAZARD_ENTRY_CLEARANCE, STORY_HAZARD_SPRITES, storyHazardDealsContactDamage, storyHazardHasVisibleDamageSprite, storyHazardIsClearOfEntry } from './adventureHazards';
 import { STORY_NPCS, STORY_NPC_ENTRANCE_SIDE_CLEARANCE, STORY_NPC_SPRITES, STORY_NPC_VISIBLE_WORLD_HEIGHT, storyNpcFootContactSinkY, storyNpcPlaneSize } from './adventureNpcs';
-import { storyAvatarGroundingOffsetForWorld, storyAvatarVisibleFootWorldY, storyGroundAnchoredPlaneCenterY } from './actorGrounding';
+import { STORY_GROUNDED_ACTOR_CENTER_Y, storyAvatarGroundingOffsetForWorld, storyAvatarVisibleFootWorldY, storyGroundAnchoredPlaneCenterY } from './actorGrounding';
 import { adventureRunIsReachable, generateAdventureRunGraph } from './adventureExploration';
 import { storyPlatformSurfacePlacement } from './platformGrounding';
 
@@ -113,6 +113,31 @@ describe('authored Adventure surface campaign', () => {
         for (const entrance of entrances) {
           const minimumSideDistance = entrance.size[0] / 2 + STORY_NPC_ENTRANCE_SIDE_CLEARANCE;
           expect(Math.abs(npc.position[0] - entrance.position[0]), `${world.id}/${npc.id}/${entrance.id}`).toBeGreaterThanOrEqual(minimumSideDistance);
+        }
+      }
+    }
+  });
+
+  it('keeps every surface interaction on reachable compiled collision', () => {
+    for (const maps of Object.values(STORY_ADVENTURE_SURFACE_MAPS)) {
+      for (const map of maps) {
+        expect(new Set(map.portals.map((portal) => portal.id)).size, `${map.id}/unique-portals`).toBe(map.portals.length);
+        for (const interactable of map.interactables) {
+          const portal = map.portals.find((candidate) => candidate.id === `${interactable.kind}:${interactable.id}`);
+          expect(portal, `${map.id}/${interactable.id}/portal`).toBeDefined();
+          expect(portal?.position, `${map.id}/${interactable.id}/position`).toEqual(interactable.position);
+        }
+        for (const npc of map.npcs) {
+          expect(map.portals.some((portal) => portal.id === `npc:${npc.id}`), `${map.id}/${npc.id}/portal`).toBe(true);
+        }
+        for (const portal of map.portals) {
+          const supportTops = map.platforms
+            .filter((platform) => portal.position[0] >= platform.position[0] - platform.size[0] / 2 && portal.position[0] <= platform.position[0] + platform.size[0] / 2)
+            .map((platform) => platform.position[1] + platform.size[1] / 2)
+            .filter((top) => top <= portal.position[1] + 0.1)
+            .sort((left, right) => right - left);
+          expect(supportTops.length, `${map.id}/${portal.id}/support`).toBeGreaterThan(0);
+          expect(portal.position[1], `${map.id}/${portal.id}/grounding`).toBeCloseTo(supportTops[0] + STORY_GROUNDED_ACTOR_CENTER_Y, 8);
         }
       }
     }
