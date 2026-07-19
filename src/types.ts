@@ -156,6 +156,8 @@ export type MoveDefinition = {
   healAmount?: number;
   /** Utility activation: stop the non-owner simulation for this many owner-action frames. */
   timeStopFrames?: number;
+  /** Utility hit effect: route the caster's controls into the struck opponent for this many frames. */
+  mindTransferFrames?: number;
   soundCues?: EffectSoundCue[];
 };
 
@@ -217,6 +219,13 @@ export type RoundFinisherState = {
 
 export type MatchTimeStopRuntime = {
   ownerSlot: 1 | 2;
+  framesRemaining: number;
+  totalFrames: number;
+};
+
+export type MatchMindTransferRuntime = {
+  ownerSlot: 1 | 2;
+  victimSlot: 1 | 2;
   framesRemaining: number;
   totalFrames: number;
 };
@@ -1599,6 +1608,7 @@ export type MatchSnapshot = {
   clashState: ClashState;
   roundFinisher: RoundFinisherState | null;
   timeStop: MatchTimeStopRuntime | null;
+  mindTransfer: MatchMindTransferRuntime | null;
   visualTimeScale: number;
   cameraShake: number;
   idleQuietFrames: number;

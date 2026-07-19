@@ -259,6 +259,7 @@ export function createMatch(
     clashState: createEmptyClashState(),
     roundFinisher: null,
     timeStop: null,
+    mindTransfer: null,
     visualTimeScale: 1,
     cameraShake: 0,
     idleQuietFrames: 0,
@@ -356,8 +357,9 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
       : cpuControlsP2
         ? makeRecoveringAiInput(next, next.fighters[1], next.fighters[0], next.timer, next.cpuDifficulty, cpuDuel, next.aiSeed, next.roundAiSeed)
         : p2Input;
-  const input1 = withControlledWakeupInput(next.fighters[0], next.fighters[1], rawInput1, cpuControlsP1);
-  const input2 = withControlledWakeupInput(next.fighters[1], next.fighters[0], rawInput2, next.mode === 'training' || aiControlsP2);
+  const wakeupInput1 = withControlledWakeupInput(next.fighters[0], next.fighters[1], rawInput1, cpuControlsP1);
+  const wakeupInput2 = withControlledWakeupInput(next.fighters[1], next.fighters[0], rawInput2, next.mode === 'training' || aiControlsP2);
+  const [input1, input2] = routeMindTransferInputs(next, wakeupInput1, wakeupInput2, frameDelta);
   if (isClashActive(next.clashState)) {
     const clashInput1 = cpuControlsP1 ? makeAiClashInput(next, 1) : input1;
     const clashInput2 = aiControlsP2 ? makeAiClashInput(next, 2) : input2;
@@ -421,6 +423,116 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
 
 function withoutTimeStopRestrictedInputs(input: InputFrame): InputFrame {
   return { ...input, charge: false };
+}
+
+function routeMindTransferInputs(
+  match: MatchSnapshot,
+  input1: InputFrame,
+  input2: InputFrame,
+  frameDelta: number
+): [InputFrame, InputFrame] {
+  const transfer = match.mindTransfer;
+  if (!transfer) return [input1, input2];
+  const owner = match.fighters[transfer.ownerSlot - 1];
+  const victim = match.fighters[transfer.victimSlot - 1];
+  if (!owner || !victim || owner.hp <= 0 || victim.hp <= 0 || transfer.framesRemaining <= 0) {
+    clearMindTransfer(match);
+    return [input1, input2];
+  }
+
+  owner.forcedCrouchFrames = Math.max(owner.forcedCrouchFrames, transfer.framesRemaining);
+  const ownerInput = transfer.ownerSlot === 1 ? input1 : input2;
+  transfer.framesRemaining = Math.max(0, transfer.framesRemaining - frameDelta);
+  const routedInput = cloneInputFrame(ownerInput);
+  return transfer.ownerSlot === 1
+    ? [emptyInputFrame(), routedInput]
+    : [routedInput, emptyInputFrame()];
+}
+
+function startMindTransfer(match: MatchSnapshot, owner: FighterRuntime, victim: FighterRuntime, durationFrames: number) {
+  if (match.mindTransfer || owner.hp <= 0 || victim.hp <= 0) return;
+  const duration = Math.max(1, Math.round(durationFrames));
+  match.mindTransfer = {
+    ownerSlot: owner.slot,
+    victimSlot: victim.slot,
+    framesRemaining: duration,
+    totalFrames: duration
+  };
+
+  owner.currentMove = null;
+  owner.state = 'crouch';
+  owner.position.y = 0;
+  owner.velocityY = 0;
+  owner.actionTimer = 0;
+  owner.actionFramesRemaining = 0;
+  owner.moveFrame = 0;
+  owner.horizontalKnockback = null;
+  owner.walkDirection = 0;
+  owner.sidestepDirection = 0;
+  owner.forcedCrouchFrames = duration;
+  resetKiChargeRuntime(owner);
+  clearBufferedMoveInput(owner);
+  if (owner.backHopTotalFrames > 0) clearBackHop(owner);
+
+  victim.currentMove = null;
+  victim.state = 'idle';
+  victim.position.y = 0;
+  victim.velocityY = 0;
+  victim.actionTimer = 0;
+  victim.actionFramesRemaining = 0;
+  victim.moveFrame = 0;
+  victim.stunTimer = 0;
+  victim.stunFramesRemaining = 0;
+  victim.blockstunFramesRemaining = 0;
+  victim.blockPunishWindowFrames = 0;
+  victim.forcedCrouchFrames = 0;
+  victim.horizontalKnockback = null;
+  victim.walkDirection = 0;
+  victim.sidestepDirection = 0;
+  victim.projectileTrap = null;
+  victim.getupInvulnerableFrames = 0;
+  victim.getupForward = 0;
+  victim.getupLane = 0;
+  victim.getupStarted = false;
+  victim.getupAction = 'none';
+  victim.getupTotalFrames = 0;
+  victim.juggleDamage = 0;
+  victim.juggleSequenceDamage = 0;
+  victim.juggleHitCount = 0;
+  victim.juggleTornadoCount = 0;
+  victim.juggleGravityScale = JUGGLE_GRAVITY_SCALE;
+  victim.tornadoReactionFrames = 0;
+  resetKiChargeRuntime(victim);
+  clearBufferedMoveInput(victim);
+  clearThrowRuntime(victim);
+  if (victim.backHopTotalFrames > 0) clearBackHop(victim);
+}
+
+function clearMindTransfer(match: MatchSnapshot) {
+  const transfer = match.mindTransfer;
+  if (!transfer) return;
+  const owner = match.fighters[transfer.ownerSlot - 1];
+  if (owner) {
+    owner.forcedCrouchFrames = 0;
+    if (
+      owner.state === 'crouch' &&
+      owner.actionFramesRemaining === 0 &&
+      owner.stunFramesRemaining === 0 &&
+      owner.blockstunFramesRemaining === 0
+    ) {
+      owner.state = 'idle';
+    }
+  }
+  match.mindTransfer = null;
+}
+
+function mindTransferPreventsCombat(match: MatchSnapshot, first: FighterRuntime, second: FighterRuntime) {
+  const transfer = match.mindTransfer;
+  if (!transfer) return false;
+  return (
+    (first.slot === transfer.ownerSlot && second.slot === transfer.victimSlot) ||
+    (first.slot === transfer.victimSlot && second.slot === transfer.ownerSlot)
+  );
 }
 
 function resolveTimeStopActivations(match: MatchSnapshot) {
@@ -3222,7 +3334,8 @@ function applyMoveOverrides(
     cancelable: Boolean(merged.cancelable),
     healsHp: Boolean(merged.healsHp),
     healAmount: merged.healAmount === undefined ? undefined : clamp(Math.round(merged.healAmount), 0, 100),
-    timeStopFrames: merged.timeStopFrames === undefined ? undefined : Math.max(1, Math.round(merged.timeStopFrames))
+    timeStopFrames: merged.timeStopFrames === undefined ? undefined : Math.max(1, Math.round(merged.timeStopFrames)),
+    mindTransferFrames: merged.mindTransferFrames === undefined ? undefined : Math.max(1, Math.round(merged.mindTransferFrames))
   };
 }
 
@@ -4133,6 +4246,7 @@ function resolveProjectileHits(match: MatchSnapshot, frameDelta: number) {
     if (projectile.expired || projectile.hitConnected || projectile.phase !== 'active') continue;
     const attacker = match.fighters[projectile.ownerSlot - 1];
     const defender = match.fighters[projectile.ownerSlot === 1 ? 1 : 0];
+    if (mindTransferPreventsCombat(match, attacker, defender)) continue;
     if (defender.state === 'knockdown' || defender.state === 'transform' || defender.state === 'throwHold' || defender.state === 'throwHeld' || defender.getupInvulnerableFrames > 0) continue;
     const collision = getProjectileCollision(projectile, defender, projectile.move);
     if (!collision) continue;
@@ -4641,6 +4755,7 @@ function clashParticipantHasPerfect(clash: ClashState, slot: 1 | 2) {
 function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: FighterRuntime, frameDelta: number) {
   const move = attacker.currentMove;
   if (!move || attacker.state !== 'attack') return;
+  if (mindTransferPreventsCombat(match, attacker, defender)) return;
   if (move.timeStopFrames) return;
   if (getUniqueMoveProjectileInstances(attacker, move).some((instance) => instance.delivery === 'replaceMoveHit')) return;
   if (defender.state === 'knockdown' || defender.state === 'transform' || defender.state === 'throwHold' || defender.state === 'throwHeld' || defender.getupInvulnerableFrames > 0) return;
@@ -4858,11 +4973,15 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     pushZ * hitPushback,
     forceKnockdown || move.kiBurst ? 10 : wasJuggled || wasAirborne ? 8 : 6
   );
+  if (move.mindTransferFrames && defender.hp > 0) {
+    startMindTransfer(match, attacker, defender, move.mindTransferFrames);
+  }
   applyVisualHitstop(attacker, defender, move, counterHit ? 'counterHit' : whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : 'hit');
   if (defender.hp <= 0) beginRoundFinisher(match, attacker, defender, impactId, collision.position);
 }
 
 function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defender: FighterRuntime, frameDelta: number) {
+  if (mindTransferPreventsCombat(match, attacker, defender)) return;
   const clone = attacker.shadowClone;
   const sourceMove = clone?.currentMove;
   if (!clone || clone.phase !== 'active' || clone.state !== 'attack' || !sourceMove) return;
@@ -6111,6 +6230,7 @@ function finishRound(match: MatchSnapshot, reason: RoundFinishReason = 'ko') {
   match.clashState = createEmptyClashState();
   match.roundFinisher = null;
   match.timeStop = null;
+  match.mindTransfer = null;
   match.visualTimeScale = reason === 'ko' ? KO_SLOWMO_TIME_SCALE : 1;
   match.idleQuietFrames = 0;
   match.idleQuietLockFrames = 0;
@@ -6150,6 +6270,7 @@ function beginRoundFinisher(
   if (match.phase === 'roundFinisher' || match.phase === 'roundOver' || match.phase === 'matchOver') return false;
   match.phase = 'roundFinisher';
   match.timeStop = null;
+  match.mindTransfer = null;
   match.countdown = ROUND_FINISHER_SECONDS;
   match.message = '';
   match.clashState = createEmptyClashState();
@@ -6205,6 +6326,7 @@ function refillTrainingHealth(match: MatchSnapshot) {
   match.clashState = createEmptyClashState();
   match.roundFinisher = null;
   match.timeStop = null;
+  match.mindTransfer = null;
   match.visualTimeScale = 1;
   match.winnerSlot = null;
   match.idleQuietFrames = 0;
@@ -6231,6 +6353,7 @@ function beginRoundIntro(match: MatchSnapshot) {
   match.clashState = createEmptyClashState();
   match.roundFinisher = null;
   match.timeStop = null;
+  match.mindTransfer = null;
   match.visualTimeScale = 1;
   match.winnerSlot = null;
   match.idleQuietFrames = 0;
@@ -6354,6 +6477,7 @@ function resetRound(match: MatchSnapshot) {
   match.clashState = createEmptyClashState();
   match.roundFinisher = null;
   match.timeStop = null;
+  match.mindTransfer = null;
   match.visualTimeScale = 1;
   match.idleQuietFrames = 0;
   match.idleQuietLockFrames = 0;
@@ -8668,6 +8792,7 @@ export function cloneMatchSnapshot(match: MatchSnapshot): MatchSnapshot {
         }
       : null,
     timeStop: match.timeStop ? { ...match.timeStop } : null,
+    mindTransfer: match.mindTransfer ? { ...match.mindTransfer } : null,
     fighters: match.fighters.map((fighter) => ({
       ...fighter,
       character: fighter.character,

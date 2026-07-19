@@ -241,11 +241,151 @@ function makeProjectileCharacter(id: string, options: Partial<MoveDefinition> = 
   });
 }
 
+function makeMindTransferCharacter(id: string, durationFrames = 24): CharacterDefinition {
+  const base = normalizeCharacter(starterCharacters[0]);
+  const jab = normalizeMove({
+    ...base.moves.find((move) => move.input === 'jab')!,
+    id: `${id}-mind-transfer`,
+    label: 'Mind Transfer Test',
+    input: 'jab',
+    animationKey: 'jableft',
+    startupFrames: 1,
+    activeFrames: 3,
+    recoveryFrames: 4,
+    damage: 1,
+    blockDamage: 0,
+    hitLevel: 'special',
+    range: 2.5,
+    knockdown: true,
+    mindTransferFrames: durationFrames,
+    hitbox: { offset: [0, 1, 0.7], size: [1.2, 2, 1.6] }
+  });
+  return normalizeCharacter({
+    ...base,
+    id,
+    displayName: id,
+    animationFrames: { ...(base.animationFrames ?? {}), jableft: ['/test-mind-transfer.png'] },
+    moves: [jab, ...base.moves.filter((move) => move.input !== 'jab')]
+  });
+}
+
+function makeKiSpendVictim(id: string): CharacterDefinition {
+  const base = normalizeCharacter(starterCharacters[1]);
+  const jab = normalizeMove({
+    ...base.moves.find((move) => move.input === 'jab')!,
+    id: `${id}-ki-jab`,
+    label: 'Victim Ki Jab',
+    input: 'jab',
+    animationKey: 'jableft',
+    startupFrames: 2,
+    activeFrames: 2,
+    recoveryFrames: 4,
+    usesKi: true,
+    kiCost: 20
+  });
+  return normalizeCharacter({
+    ...base,
+    id,
+    displayName: id,
+    animationFrames: { ...(base.animationFrames ?? {}), jableft: ['/test-victim-ki-jab.png'] },
+    moves: [jab, ...base.moves.filter((move) => move.input !== 'jab')]
+  });
+}
+
 function stepFrames(match: MatchSnapshot, frames: number, p1 = emptyInputFrame(), p2 = emptyInputFrame()) {
   let next = match;
   for (let frame = 0; frame < frames; frame += 1) next = stepMatch(next, p1, p2, 1 / 60);
   return next;
 }
+
+describe('mind transfer control routing', () => {
+  it('crouches the caster, ignores victim input, and lets the caster spend the victim ki until expiry', () => {
+    const caster = makeMindTransferCharacter('mind-transfer-p1', 24);
+    const victim = makeKiSpendVictim('mind-transfer-victim');
+    let match = createMatch(caster, victim, stages[0], 'local2p');
+    match.fighters[0].position.x = -0.35;
+    match.fighters[1].position.x = 0.35;
+    match.fighters[1].ki = 25;
+
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    for (let frame = 0; frame < 12 && !match.mindTransfer; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.mindTransfer).toMatchObject({ ownerSlot: 1, victimSlot: 2, totalFrames: 24 });
+    expect(match.fighters[0].state).toBe('crouch');
+    expect(match.fighters[0].currentMove).toBeNull();
+    expect(match.fighters[1].state).toBe('idle');
+
+    match.fighters[1].position.x = 3;
+    match = stepMatch(match, emptyInputFrame(), makeInput('kick'), 1 / 60);
+    expect(match.fighters[1].currentMove).toBeNull();
+
+    const casterX = match.fighters[0].position.x;
+    const victimX = match.fighters[1].position.x;
+    match = stepMatch(match, makeInput('right'), makeInput('left'), 1 / 60);
+    expect(match.fighters[0].position.x).toBeCloseTo(casterX, 5);
+    expect(match.fighters[0].state).toBe('crouch');
+    expect(match.fighters[1].position.x).toBeGreaterThan(victimX);
+
+    match.fighters[1].position.x = match.fighters[0].position.x + 0.7;
+    const casterHp = match.fighters[0].hp;
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    expect(match.fighters[1].currentMove?.input).toBe('jab');
+    expect(match.fighters[1].currentMove?.usesKi).toBe(true);
+    expect(match.fighters[1].ki).toBe(5);
+    expect(match.fighters[0].currentMove).toBeNull();
+    match = stepFrames(match, 4);
+    expect(match.fighters[0].hp).toBe(casterHp);
+
+    for (let frame = 0; frame < 30 && match.mindTransfer; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    expect(match.mindTransfer).toBeNull();
+    expect(match.fighters[0].forcedCrouchFrames).toBe(0);
+
+    match = stepMatch(match, emptyInputFrame(), makeInput('kick'), 1 / 60);
+    expect(match.fighters[1].currentMove?.input).toBe('kick');
+  });
+
+  it('does not transfer control when the technique is blocked', () => {
+    const caster = makeMindTransferCharacter('mind-transfer-blocked');
+    const victim = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(caster, victim, stages[0], 'local2p');
+    match.fighters[0].position.x = -0.35;
+    match.fighters[1].position.x = 0.35;
+
+    match = stepMatch(match, makeInput('jab'), makeInput('block'), 1 / 60);
+    for (let frame = 0; frame < 12 && !match.fighters[0].hitConnected; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), makeInput('block'), 1 / 60);
+    }
+
+    expect(match.fighters[0].hitConnected).toBe(true);
+    expect(match.fighters[0].hitConfirmed).toBe(false);
+    expect(match.mindTransfer).toBeNull();
+  });
+
+  it('routes slot-two caster input into slot one as well', () => {
+    const victim = normalizeCharacter(starterCharacters[0]);
+    const caster = makeMindTransferCharacter('mind-transfer-p2', 12);
+    let match = createMatch(victim, caster, stages[0], 'local2p');
+    match.fighters[0].position.x = -0.35;
+    match.fighters[1].position.x = 0.35;
+
+    match = stepMatch(match, emptyInputFrame(), makeInput('jab'), 1 / 60);
+    for (let frame = 0; frame < 12 && !match.mindTransfer; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    expect(match.mindTransfer).toMatchObject({ ownerSlot: 2, victimSlot: 1 });
+
+    match.fighters[0].position.x = -3;
+    const victimX = match.fighters[0].position.x;
+    match = stepMatch(match, makeInput('right'), makeInput('left'), 1 / 60);
+    expect(match.fighters[0].position.x).toBeLessThan(victimX);
+    expect(match.fighters[1].state).toBe('crouch');
+  });
+});
 
 function readyForBeginnerAutoComboLink(match: MatchSnapshot) {
   match.fighters[0].state = 'idle';

@@ -495,6 +495,14 @@ export function checksumMatch(match: MatchSnapshot) {
           totalFrames: roundNumber(match.timeStop.totalFrames)
         }
       : null,
+    mindTransfer: match.mindTransfer
+      ? {
+          ownerSlot: match.mindTransfer.ownerSlot,
+          victimSlot: match.mindTransfer.victimSlot,
+          framesRemaining: roundNumber(match.mindTransfer.framesRemaining),
+          totalFrames: roundNumber(match.mindTransfer.totalFrames)
+        }
+      : null,
     projectiles: (match.projectiles ?? []).map((projectile) => ({
       id: projectile.id,
       ownerSlot: projectile.ownerSlot,

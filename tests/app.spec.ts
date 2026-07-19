@@ -260,6 +260,51 @@ test('Story biome interactions stay reachable and acknowledge success and blocke
   await expect(page.getByTestId('story-adventure-pack')).toBeVisible();
 });
 
+test('attacking an NPC starts a rewardless fight and removes them until the next Story run', async ({ page }) => {
+  test.setTimeout(45_000);
+  await installStoryTestProfile(page, 'PROVOKER');
+  await startFromSplash(page, { path: '/?storyWorld=world-route&storyPortal=npc%3Amina-quill' });
+  await page.getByRole('button', { name: 'Story', exact: true }).click();
+
+  const hub = page.getByTestId('story-hub-screen');
+  await expect(hub).toHaveAttribute('data-world', 'world-route', { timeout: 15_000 });
+  await expect(hub).toHaveAttribute('data-hub-ready', 'true', { timeout: 15_000 });
+  await expect(hub).toHaveAttribute('data-nearby-portal', 'npc:mina-quill', { timeout: 5_000 });
+  const startingRewards = {
+    coins: await hub.getAttribute('data-route-coins'),
+    xp: await hub.getAttribute('data-player-xp'),
+    challengers: await hub.getAttribute('data-defeated-challengers')
+  };
+
+  await page.keyboard.press('u');
+  const health = page.getByTestId('story-npc-health-mina-quill');
+  await expect(health).toBeVisible({ timeout: 3_000 });
+  await expect(health).toContainText('Mina Quill · Provoked');
+  await expect(hub).toHaveAttribute('data-hostile-npcs', 'mina-quill');
+  await expect(hub).toHaveAttribute('data-nearby-portal', '');
+  await expect(page.getByRole('button', { name: 'Talk', exact: true })).toHaveCount(0);
+
+  for (let hit = 0; hit < 3; hit += 1) {
+    await page.waitForTimeout(650);
+    await page.keyboard.press('u');
+  }
+  await expect(hub).toHaveAttribute('data-defeated-npcs', 'mina-quill', { timeout: 4_000 });
+  await expect(hub).toHaveAttribute('data-hostile-npcs', '');
+  await expect(health).toHaveCount(0);
+  await expect(page.getByTestId('story-challenge-notice')).toContainText('No Route Coins or XP were awarded.');
+  await expect(hub).toHaveAttribute('data-route-coins', startingRewards.coins ?? '');
+  await expect(hub).toHaveAttribute('data-player-xp', startingRewards.xp ?? '');
+  await expect(hub).toHaveAttribute('data-defeated-challengers', startingRewards.challengers ?? '');
+
+  await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: 'Return to Main Menu' }).click();
+  await expectMainMenu(page);
+  await page.getByRole('button', { name: 'Story', exact: true }).click();
+  await expect(hub).toHaveAttribute('data-defeated-npcs', '', { timeout: 15_000 });
+  await expect(hub).toHaveAttribute('data-nearby-portal', 'npc:mina-quill', { timeout: 5_000 });
+  await expect(page.getByRole('button', { name: 'Talk', exact: true })).toBeVisible();
+});
+
 test('Story biome exit warns while map Fast Travel Home returns safely', async ({ page }) => {
   await installStoryTestProfile(page, 'TRAVELER');
   await page.addInitScript(() => {

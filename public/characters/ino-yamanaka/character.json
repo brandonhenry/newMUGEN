@@ -190,12 +190,10 @@
     ],
     "cmd:qcf+4": [
       "/characters/ino-yamanaka/frames/frame-089.png",
-      "/characters/ino-yamanaka/frames/frame-090.png",
       "/characters/ino-yamanaka/frames/frame-091.png",
       "/characters/ino-yamanaka/frames/frame-092.png",
       "/characters/ino-yamanaka/frames/frame-093.png",
-      "/characters/ino-yamanaka/frames/frame-094.png",
-      "/characters/ino-yamanaka/frames/frame-095.png"
+      "/characters/ino-yamanaka/frames/frame-094.png"
     ],
     "cmd:WS+4": [
       "/characters/ino-yamanaka/frames/frame-096.png",
@@ -828,9 +826,11 @@
       "range": 2.1,
       "kiCost": 35,
       "label": "Ino Yamanaka Aura Drive",
+      "description": "Mind Body Switch Technique: on an unblocked hit, Ino crouches while her controls possess the opponent for four seconds.",
       "hitLevel": "special",
-      "knockdown": true,
+      "knockdown": false,
       "usesKi": true,
+      "mindTransferFrames": 240,
       "onComboHitFrames": 11,
       "onJuggleHitFrames": 4,
       "comboRepeatPenaltyFrames": 7,

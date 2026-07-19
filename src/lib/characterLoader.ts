@@ -256,6 +256,7 @@ export function normalizeMove(move: MoveDefinition): MoveDefinition {
     healsHp: Boolean(move.healsHp),
     healAmount: move.healAmount === undefined ? undefined : clamp(Math.round(finiteOr(move.healAmount, 8)), 0, 100),
     timeStopFrames: move.timeStopFrames === undefined ? undefined : Math.max(1, Math.round(finiteOr(move.timeStopFrames, 1))),
+    mindTransferFrames: move.mindTransferFrames === undefined ? undefined : Math.max(1, Math.round(finiteOr(move.mindTransferFrames, 1))),
     cancelWindows: Array.isArray(move.cancelWindows)
       ? move.cancelWindows
           .map((window) => ({
@@ -280,7 +281,8 @@ function sanitizeMoveOverrides(overrides: CharacterDefinition['moveOverrides']) 
       .map(([key, value]) => {
         const soundCues = sanitizeSoundCues(value.soundCues);
         const timeStopFrames = value.timeStopFrames === undefined ? undefined : Math.max(1, Math.round(finiteOr(value.timeStopFrames, 1)));
-        return [key, { ...value, timeStopFrames, ...(soundCues.length > 0 ? { soundCues } : {}) }];
+        const mindTransferFrames = value.mindTransferFrames === undefined ? undefined : Math.max(1, Math.round(finiteOr(value.mindTransferFrames, 1)));
+        return [key, { ...value, timeStopFrames, mindTransferFrames, ...(soundCues.length > 0 ? { soundCues } : {}) }];
       })
   ));
 }

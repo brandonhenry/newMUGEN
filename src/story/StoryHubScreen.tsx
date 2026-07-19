@@ -61,7 +61,6 @@ const DOOR_ASSET_ROOT = '/story/hub/door-transitions';
 const ARCADE_ASSET_ROOT = '/story/hub/arcade-machines';
 // Preserve the authored threshold while scaling the door upward from the floor.
 const MODE_DOOR_BASELINE_OFFSET_Y = 0.28;
-const NPC_INTERACTION_REFUSAL_UNTIL = new globalThis.Map<string, number>();
 const DOOR_TRAVEL_FRAME_SEQUENCE = [0, 1, 2, 3, 4, 5, 5, 4, 3, 2, 1, 0, 0, 1, 2, 3, 4, 5, 5, 4, 3, 2, 1, 0] as const;
 const STORY_BOON_LABELS: Record<StoryRunBoonId, { label: string; description: string }> = {
   fury: { label: 'Fury', description: '+12% party attack per stack' },
@@ -758,90 +757,172 @@ function PortalVisual({ portal, theme, nearby, assigned, reducedMotion, compactD
   </group>;
 }
 
-function AdventureNpcVisual({ npc, attackEvent, playerPosition, maxHealth, reducedMotion, onPlayerDamage, surfaceInsetY = 0, surfacePixelWorldHeight = 0 }: {
+function AdventureNpcVisual({ npc, hostile, paused, movementBounds, attackEvent, playerPosition, playerProjectile, maxHealth, reducedMotion, onAggro, onPlayerDamage, onDefeated, surfaceInsetY = 0, surfacePixelWorldHeight = 0 }: {
   npc: StoryNpcDefinition;
+  hostile: boolean;
+  paused: boolean;
+  movementBounds: [number, number];
   attackEvent: StoryAdventureAttackEvent | null;
   playerPosition: MutableRefObject<THREE.Vector3>;
+  playerProjectile: MutableRefObject<StoryPlayerProjectileRuntime | null>;
   maxHealth: number;
   reducedMotion: boolean;
+  onAggro: (npc: StoryNpcDefinition) => void;
   onPlayerDamage: (damage: number, sourceX: number) => void;
+  onDefeated: (npc: StoryNpcDefinition) => void;
   surfaceInsetY?: number;
   surfacePixelWorldHeight?: number;
 }) {
   const sprite = STORY_NPC_SPRITES[npc.spriteId];
   const idleFrames = sprite?.actions.idle.frames ?? [];
+  const walkFrames = sprite?.actions.walk.frames ?? idleFrames;
   const protectFrames = sprite?.actions.protect.frames ?? idleFrames;
   const counterFrames = sprite?.actions.counter.frames ?? idleFrames;
-  const paths = [...idleFrames, ...protectFrames, ...counterFrames];
+  const paths = [...idleFrames, ...walkFrames, ...protectFrames, ...counterFrames];
   const textures = useTexture(paths.length > 0 ? paths : ['/story/npcs/characters/mina-quill/idle/01.png']);
+  const groupRef = useRef<THREE.Group>(null);
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.MeshBasicMaterial>(null);
   const facing = useRef<-1 | 1>(1);
-  const lastAttackId = useRef(0);
-  const cooldownUntil = useRef(0);
-  const provokedUntil = useRef(0);
-  const counterTimer = useRef<number | null>(null);
-  const calmTimer = useRef<number | null>(null);
-  const phaseStartedAt = useRef(0);
-  const [phase, setPhase] = useState<'idle' | 'protect' | 'counter'>('idle');
+  const x = useRef(npc.position[0]);
+  const hostileRef = useRef(hostile);
+  const alive = useRef(true);
+  const defeatReported = useRef(false);
+  const lastRegisteredAttackId = useRef(0);
+  const health = useRef(Math.max(48, Math.round(maxHealth * 0.75)));
+  const npcMaxHealth = useRef(health.current);
+  const staggerUntil = useRef(0);
+  const nextCounterAt = useRef(0);
+  const counterHitAt = useRef(0);
+  const counterEndsAt = useRef(0);
+  const defeatStartedAt = useRef(0);
+  const defeatTimer = useRef<number | null>(null);
+  const phaseStartedAt = useRef(performance.now());
+  const phaseRef = useRef<'idle' | 'walk' | 'protect' | 'counter' | 'defeated'>('idle');
+  const [visual, setVisual] = useState({ phase: 'idle' as 'idle' | 'walk' | 'protect' | 'counter' | 'defeated', health: health.current });
   const planeSize = storyNpcPlaneSize(sprite);
   const frameHeight = sprite?.frameSize.height ?? 192;
   const baseline = sprite?.frameSize.baseline ?? 188;
   const footAnchorFromBottom = (frameHeight - baseline) / frameHeight;
   const footContactSinkY = storyNpcFootContactSinkY(planeSize, frameHeight, surfacePixelWorldHeight);
+  const targetHalfSize = useMemo(() => ({ width: Math.max(0.52, planeSize * 0.2), height: Math.max(0.9, planeSize * 0.43) }), [planeSize]);
   useMemo(() => textures.forEach((texture) => configurePixelTexture(texture)), [textures]);
-  useEffect(() => () => {
-    if (counterTimer.current !== null) window.clearTimeout(counterTimer.current);
-    if (calmTimer.current !== null) window.clearTimeout(calmTimer.current);
+  const setPhase = useCallback((phase: 'idle' | 'walk' | 'protect' | 'counter' | 'defeated') => {
+    if (phaseRef.current === phase) return;
+    phaseRef.current = phase;
+    phaseStartedAt.current = performance.now();
+    setVisual((current) => ({ ...current, phase }));
   }, []);
-  useEffect(() => {
-    const now = performance.now();
-    if (!attackEvent || attackEvent.id === lastAttackId.current || now < cooldownUntil.current) return;
-    lastAttackId.current = attackEvent.id;
-    if (Math.abs(attackEvent.x - npc.position[0]) > 2.5 || Math.abs(attackEvent.y - npc.position[1]) > 2.4) return;
-    const repeatedThreat = now < provokedUntil.current;
-    provokedUntil.current = now + npc.defense.warningMs;
-    phaseStartedAt.current = now;
+  useEffect(() => { if (hostile) hostileRef.current = true; }, [hostile]);
+  useEffect(() => () => { if (defeatTimer.current !== null) window.clearTimeout(defeatTimer.current); }, []);
+
+  const registerAttackHit = useCallback((currentAttack: StoryAdventureAttackEvent) => {
+    if (!alive.current || lastRegisteredAttackId.current === currentAttack.id) return;
+    lastRegisteredAttackId.current = currentAttack.id;
+    if (!hostileRef.current) {
+      hostileRef.current = true;
+      onAggro(npc);
+    }
+    health.current = Math.max(0, health.current - currentAttack.damage);
+    emitAdventureAudioEvent({ kind: 'enemy-hit', attackInput: currentAttack.attackInput, critical: currentAttack.critical, finishing: health.current <= 0 });
+    setVisual((current) => ({ ...current, health: health.current }));
+    counterHitAt.current = 0;
+    counterEndsAt.current = 0;
+    if (health.current <= 0) {
+      alive.current = false;
+      defeatStartedAt.current = performance.now();
+      setPhase('defeated');
+      defeatTimer.current = window.setTimeout(() => {
+        if (defeatReported.current) return;
+        defeatReported.current = true;
+        onDefeated(npc);
+      }, reducedMotion ? 140 : 480);
+      return;
+    }
+    staggerUntil.current = performance.now() + (reducedMotion ? 100 : 260);
     setPhase('protect');
-    if (counterTimer.current !== null) window.clearTimeout(counterTimer.current);
-    if (calmTimer.current !== null) window.clearTimeout(calmTimer.current);
-    counterTimer.current = window.setTimeout(() => {
-      counterTimer.current = null;
-      const distance = Math.abs(playerPosition.current.x - npc.position[0]);
-      if (!repeatedThreat && distance > npc.defense.threatRadius) {
-        provokedUntil.current = 0;
-        setPhase('idle');
-        return;
-      }
-      phaseStartedAt.current = performance.now();
-      setPhase('counter');
-      if (distance <= npc.defense.counterRange) onPlayerDamage(maxHealth * npc.defense.counterDamagePercent, npc.position[0]);
-      calmTimer.current = window.setTimeout(() => {
-        calmTimer.current = null;
-        const refusalUntil = performance.now() + npc.defense.cooldownMs;
-        cooldownUntil.current = refusalUntil;
-        NPC_INTERACTION_REFUSAL_UNTIL.set(npc.id, refusalUntil);
-        provokedUntil.current = 0;
-        phaseStartedAt.current = performance.now();
-        setPhase('idle');
-      }, reducedMotion ? 280 : 720);
-    }, repeatedThreat ? (reducedMotion ? Math.min(160, npc.defense.guardMs) : npc.defense.guardMs) : npc.defense.warningMs);
-  }, [attackEvent, maxHealth, npc, onPlayerDamage, playerPosition, reducedMotion]);
-  useFrame(() => {
-    const nextFacing = storyNpcWatchFacing(npc.position, playerPosition.current, facing.current);
+  }, [npc, onAggro, onDefeated, reducedMotion, setPhase]);
+
+  useFrame((_, frameDelta) => {
+    const now = performance.now();
+    const currentPosition: [number, number] = [x.current, npc.position[1]];
+    const facingDelta = playerPosition.current.x - x.current;
+    const nextFacing = hostileRef.current && Math.abs(facingDelta) >= 0.08
+      ? facingDelta > 0 ? 1 : -1
+      : storyNpcWatchFacing(currentPosition, playerPosition.current, facing.current);
     if (nextFacing !== facing.current) facing.current = nextFacing;
     if (meshRef.current) meshRef.current.scale.x = facing.current;
-    const frames = phase === 'protect' ? protectFrames : phase === 'counter' ? counterFrames : idleFrames;
+    if (groupRef.current) groupRef.current.position.x = x.current;
+
+    if (!paused && alive.current && attackEvent && !attackEvent.projectile && now <= attackEvent.activeUntil && lastRegisteredAttackId.current !== attackEvent.id) {
+      const attackBox = getAdventureAttackFrameHitbox(attackEvent.avatarSet, attackEvent.attackInput, now - attackEvent.startedAt);
+      if (attackBox && adventureAttackHits({ playerX: playerPosition.current.x, playerY: playerPosition.current.y, facing: attackEvent.facing, enemyX: x.current, enemyY: npc.position[1], targetHalfSize, attackBox })) registerAttackHit(attackEvent);
+    }
+
+    const launchedProjectile = playerProjectile.current;
+    if (!paused && alive.current && launchedProjectile?.active && lastRegisteredAttackId.current !== launchedProjectile.attack.id && storyPlayerProjectileHits({
+      projectileX: launchedProjectile.x,
+      projectileY: launchedProjectile.y,
+      hitboxSize: launchedProjectile.definition.hitboxSize,
+      targetX: x.current,
+      targetY: npc.position[1],
+      targetHalfSize
+    })) {
+      launchedProjectile.active = false;
+      registerAttackHit(launchedProjectile.attack);
+    }
+
+    if (!paused && alive.current && hostileRef.current) {
+      const dx = playerPosition.current.x - x.current;
+      const dy = Math.abs(playerPosition.current.y - npc.position[1]);
+      const distance = Math.abs(dx);
+      const inCounterRange = distance <= npc.defense.counterRange && dy <= 2.3;
+      if (counterHitAt.current > 0 && now >= counterHitAt.current) {
+        counterHitAt.current = 0;
+        if (inCounterRange) onPlayerDamage(maxHealth * npc.defense.counterDamagePercent, x.current);
+      }
+      if (counterEndsAt.current > 0 && now >= counterEndsAt.current) {
+        counterEndsAt.current = 0;
+        nextCounterAt.current = now + Math.min(npc.defense.cooldownMs, reducedMotion ? 1_300 : 2_400);
+        setPhase('idle');
+      }
+      if (now >= staggerUntil.current && counterEndsAt.current === 0) {
+        if (inCounterRange && now >= nextCounterAt.current) {
+          setPhase('counter');
+          counterHitAt.current = now + (reducedMotion ? Math.min(100, npc.defense.guardMs) : npc.defense.guardMs);
+          counterEndsAt.current = counterHitAt.current + (reducedMotion ? 180 : 520);
+        } else if (dy <= 2.8 && distance > Math.max(0.75, npc.defense.counterRange * 0.72)) {
+          x.current = THREE.MathUtils.clamp(x.current + Math.sign(dx) * 2.25 * Math.min(frameDelta, 1 / 30), movementBounds[0], movementBounds[1]);
+          setPhase('walk');
+        } else {
+          setPhase('idle');
+        }
+      }
+    }
+
+    if (materialRef.current) materialRef.current.opacity = visual.phase === 'defeated'
+      ? Math.max(0, 1 - (now - defeatStartedAt.current) / (reducedMotion ? 140 : 480))
+      : 1;
+    const frames = visual.phase === 'walk' ? walkFrames : visual.phase === 'protect' ? protectFrames : visual.phase === 'counter' ? counterFrames : idleFrames;
     if (!materialRef.current || frames.length === 0) return;
-    const duration = phase === 'idle' ? 180 : phase === 'protect' ? 115 : 90;
+    const duration = visual.phase === 'idle' || visual.phase === 'defeated' ? 180 : visual.phase === 'walk' ? 120 : visual.phase === 'protect' ? 115 : 90;
     const frameIndex = Math.floor((performance.now() - phaseStartedAt.current) / duration) % frames.length;
     const path = frames[frameIndex];
     const textureIndex = paths.indexOf(path);
-    if (textureIndex >= 0) materialRef.current.map = textures[textureIndex];
+    if (textureIndex >= 0 && materialRef.current.map !== textures[textureIndex]) {
+      materialRef.current.map = textures[textureIndex];
+      materialRef.current.needsUpdate = true;
+    }
   });
-  return <group position={[npc.position[0], npc.position[1], -0.05]}>
+  return <group ref={groupRef} position={[npc.position[0], npc.position[1], -0.05]} name={`story-npc-${npc.id}`}>
     <mesh ref={meshRef} position={[0, storyGroundAnchoredPlaneCenterY(planeSize, footAnchorFromBottom) - surfaceInsetY - footContactSinkY, 0]}><planeGeometry args={[planeSize, planeSize]} /><meshBasicMaterial ref={materialRef} map={textures[0]} transparent alphaTest={0.02} depthWrite={false} toneMapped={false} /></mesh>
-    {phase !== 'idle' && <Html center position={[0, STORY_NPC_POPUP_ANCHOR_Y, 0.6]} className="story-destination-sign-shell"><div className="story-destination-sign is-nearby"><strong>{phase === 'protect' ? npc.warningBark : `${npc.displayName} counters!`}</strong></div></Html>}
+    {hostile && visual.phase !== 'defeated' && <Html center position={[0, STORY_NPC_POPUP_ANCHOR_Y + 0.2, 0.3]} zIndexRange={[7, 0]} className="story-enemy-bar-shell">
+      <div className="story-enemy-bar is-elite" data-testid={`story-npc-health-${npc.id}`}>
+        <span><i style={{ width: `${Math.max(0, visual.health / npcMaxHealth.current) * 100}%` }} /></span>
+        <small>{npc.displayName} · Provoked</small>
+      </div>
+    </Html>}
+    {visual.phase === 'protect' && <Html center position={[0, STORY_NPC_POPUP_ANCHOR_Y - 0.35, 0.6]} className="story-destination-sign-shell"><div className="story-destination-sign is-nearby"><strong>{npc.warningBark}</strong></div></Html>}
   </group>;
 }
 
@@ -2077,7 +2158,7 @@ function StoryFloorPickupActor({ pickup, playerPosition, reducedMotion, onCollec
   </group>;
 }
 
-function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVisible, quickMatchAvailable, assignedPortalId, nearbyPortal, remotePlayers, selectedPlayerSessionId, progress, activePartyMembers, partyAiActors, mounted, mount, attackEvent, impactEvent, encounterSeed, initialEncounterProgress, onEncounterProgressChange, onChallengerStarted, onAttack, onPlayerDamage, onEnemyDefeated, onResourceHarvest, onPickup, onWildlifeSighting, onQuickMatch, onSelectPlayer, onNearbyPortal, onActivatePortal, onWaterState, onExit, onPause, onStateSample, onReady }: {
+function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVisible, quickMatchAvailable, assignedPortalId, nearbyPortal, remotePlayers, selectedPlayerSessionId, progress, activePartyMembers, partyAiActors, mounted, mount, attackEvent, impactEvent, encounterSeed, initialEncounterProgress, hostileNpcIds, onEncounterProgressChange, onChallengerStarted, onNpcAggro, onNpcDefeated, onAttack, onPlayerDamage, onEnemyDefeated, onResourceHarvest, onPickup, onWildlifeSighting, onQuickMatch, onSelectPlayer, onNearbyPortal, onActivatePortal, onWaterState, onExit, onPause, onStateSample, onReady }: {
   hub: StoryHubDefinition;
   profile: StoryProfileV4;
   reducedMotion: boolean;
@@ -2099,8 +2180,11 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
   impactEvent: StoryPlayerImpactEvent | null;
   encounterSeed: string;
   initialEncounterProgress: StoryEncounterProgress;
+  hostileNpcIds: string[];
   onEncounterProgressChange: (progress: StoryEncounterProgress) => void;
   onChallengerStarted: () => void;
+  onNpcAggro: (npc: StoryNpcDefinition) => void;
+  onNpcDefeated: (npc: StoryNpcDefinition) => void;
   onAttack: (x: number, y: number, facing: -1 | 1, attackInput: StoryAttackInput, durationSeconds: number) => void;
   onPlayerDamage: (damage: number, sourceX: number) => void;
   onEnemyDefeated: (event: StoryEnemyDefeatEvent) => void;
@@ -2240,7 +2324,7 @@ function HubCanvas({ hub, profile, reducedMotion, readInput, disabled, avatarVis
         </RigidBody>)}
         <AdventureHazards hub={hub} progress={progress} playerPosition={playerPosition} onPlayerDamage={(damage, sourceX) => { if (!disabled) onPlayerDamage(damage, sourceX); }} />
         {hub.portals.map((portal) => <PortalVisual key={portal.id} portal={portal} theme={hub.theme} nearby={nearbyPortal?.id === portal.id} assigned={assignedPortalId === portal.id} reducedMotion={reducedMotion} compactDoorways={hub.id === 'kore-central'} />)}
-        {(hub.npcs ?? []).map((npc) => <AdventureNpcVisual key={npc.id} npc={npc} attackEvent={attackEvent} playerPosition={playerPosition} maxHealth={derivedStats.maxHealth} reducedMotion={reducedMotion} onPlayerDamage={(damage, sourceX) => { if (!disabled) onPlayerDamage(damage, sourceX); }} surfaceInsetY={groundSurfaceInsetY} surfacePixelWorldHeight={groundSurfacePixelWorldHeight} />)}
+        {(hub.npcs ?? []).map((npc) => <AdventureNpcVisual key={npc.id} npc={npc} hostile={hostileNpcIds.includes(npc.id)} paused={disabled} movementBounds={[hub.bounds.minX + 1, hub.bounds.maxX - 1]} attackEvent={attackEvent} playerPosition={playerPosition} playerProjectile={playerProjectile} maxHealth={derivedStats.maxHealth} reducedMotion={reducedMotion} onAggro={onNpcAggro} onPlayerDamage={(damage, sourceX) => { if (!disabled) onPlayerDamage(damage, sourceX); }} onDefeated={onNpcDefeated} surfaceInsetY={groundSurfaceInsetY} surfacePixelWorldHeight={groundSurfacePixelWorldHeight} />)}
         {hub.biomeId && (hub.resourceNodes ?? []).map((node) => <AdventureResourceNode key={node.id} node={node} biomeId={hub.biomeId!} progress={progress} attackEvent={attackEvent} playerPosition={playerPosition} playerProjectile={playerProjectile} reducedMotion={reducedMotion} onHarvest={onResourceHarvest} />)}
         {(hub.wildlife ?? []).map((wildlife) => <StoryWildlifeActor key={wildlife.id} wildlife={wildlife} playerPosition={playerPosition} reducedMotion={reducedMotion} onSighting={onWildlifeSighting} />)}
         {(hub.pickups ?? []).map((pickup) => <StoryFloorPickupActor key={pickup.id} pickup={pickup} playerPosition={playerPosition} reducedMotion={reducedMotion} onCollect={onPickup} />)}
@@ -2823,6 +2907,8 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   const [partyAuthorityLost, setPartyAuthorityLost] = useState(false);
   const [encounterProgressByHub, setEncounterProgressByHub] = useState<Record<string, StoryEncounterProgress>>({});
   const [visitChallengers, setVisitChallengers] = useState<StoryEnemyId[]>([]);
+  const [hostileNpcIds, setHostileNpcIds] = useState<string[]>([]);
+  const [defeatedNpcIds, setDefeatedNpcIds] = useState<string[]>([]);
   const biomeHub = useMemo(() => devPreviewHub(STORY_WORLDS[activeWorldId]), [activeWorldId]);
   const baseHub = useMemo(() => {
     if (!isStoryAdventureRegionId(activeWorldId)) return biomeHub;
@@ -3898,16 +3984,15 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     if (portal.id.startsWith('npc:')) {
       const npc = activeHub.npcs?.find((entry) => entry.id === portal.id.slice('npc:'.length));
       if (npc) {
-        const refusing = performance.now() < (NPC_INTERACTION_REFUSAL_UNTIL.get(npc.id) ?? 0);
-        setNpcNotice({ id: npc.id, name: npc.displayName, text: refusing ? 'I need a moment. Keep your distance.' : npc.bark });
+        setNpcNotice({ id: npc.id, name: npc.displayName, text: npc.bark });
         window.setTimeout(() => setNpcNotice((current) => current?.id === npc.id ? null : current), 4_500);
-        if (!refusing && npc.role === 'specialist' && isStoryAdventureRegionId(npc.biomeId)) {
+        if (npc.role === 'specialist' && isStoryAdventureRegionId(npc.biomeId)) {
           const result = unlockAdventureSpecialistRecipes(adventureProgressRef.current, npc.biomeId);
           updateAdventureProgress(result.progress);
           openAdventurePack({ kind: 'specialist', biomeId: npc.biomeId });
           analyticsRef.current?.('adventure_recipes_learned', { source: 'specialist', world_id: npc.biomeId, count: result.learned.length });
         }
-        if (!refusing && npc.services?.includes('market')) setMarketOpen(true);
+        if (npc.services?.includes('market')) setMarketOpen(true);
       } else {
         setChallengeNotice({ id: portal.id, text: 'No one answers. This interaction is unavailable.' });
       }
@@ -4567,6 +4652,19 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     }
   }, [activeHub, activeSurfaceMapId, activeWorldId, derivedAdventureStats.maxHealth, encounterProgressByHub, endlessRun, updateAdventureProgress]);
   const handleChallengerStarted = useCallback(() => setMounted(false), []);
+  const handleNpcAggro = useCallback((npc: StoryNpcDefinition) => {
+    setHostileNpcIds((current) => current.includes(npc.id) ? current : [...current, npc.id]);
+    setNearbyPortal((current) => current?.id === `npc:${npc.id}` ? null : current);
+    setNpcNotice(null);
+    setMounted(false);
+    setChallengeNotice({ id: `npc-aggro:${npc.id}`, text: `${npc.displayName} is now hostile. Defeat them to end the fight.` });
+  }, []);
+  const handleNpcDefeated = useCallback((npc: StoryNpcDefinition) => {
+    setHostileNpcIds((current) => current.filter((id) => id !== npc.id));
+    setDefeatedNpcIds((current) => current.includes(npc.id) ? current : [...current, npc.id]);
+    setNearbyPortal((current) => current?.id === `npc:${npc.id}` ? null : current);
+    setChallengeNotice({ id: `npc-defeated:${npc.id}`, text: `${npc.displayName} was defeated. No Route Coins or XP were awarded.` });
+  }, []);
   const fastTravelToWaystone = useCallback((waystoneId: string, surfaceMapId: string) => {
     const legacyEntryId = waystoneId.replace(/-waystone-arrival$/, '-waystone-entry');
     const waystoneKnown = adventureProgressRef.current.discoveries.waystones.includes(waystoneId)
@@ -4595,15 +4693,25 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
     updateAdventureProgress(pinAdventureDaily(adventureProgressRef.current, adventureUtcDate(), worldId, activityId));
   }, [updateAdventureProgress]);
   const effectiveAttackEvent = partyAttackEvent && (!attackEvent || partyAttackEvent.id > attackEvent.id) ? partyAttackEvent : attackEvent;
+  const combatHub = useMemo((): StoryHubDefinition => {
+    if (hostileNpcIds.length === 0 && defeatedNpcIds.length === 0) return activeHub;
+    const unavailableNpcIds = new Set([...hostileNpcIds, ...defeatedNpcIds]);
+    const defeated = new Set(defeatedNpcIds);
+    return {
+      ...activeHub,
+      portals: activeHub.portals.filter((portal) => !portal.id.startsWith('npc:') || !unavailableNpcIds.has(portal.id.slice('npc:'.length))),
+      npcs: activeHub.npcs?.filter((npc) => !defeated.has(npc.id))
+    };
+  }, [activeHub, defeatedNpcIds, hostileNpcIds]);
   const traderScale = generatedFloor ? storyEndlessRewardScale(generatedFloor.floorNumber) : 1;
   const traderCosts = generatedFloor?.event?.traderCosts ?? { heal: Math.ceil(25 * traderScale), consumable: Math.ceil(40 * traderScale), reroll: Math.ceil(60 * traderScale), tradeGood: Math.ceil(55 * traderScale) };
   const traderConsumables = STORY_RECIPES.filter((candidate) => candidate.kind === 'consumable');
   const traderConsumable = endlessRun && generatedFloor ? traderConsumables[storyEndlessHash(`${endlessRun.seed}:trader-consumable:${generatedFloor.floorNumber}`) % Math.max(1, traderConsumables.length)] : null;
   const traderGood = endlessRun && generatedFloor ? STORY_REQUIRED_MARKET_GOODS[storyEndlessHash(`${endlessRun.seed}:trader-good:${generatedFloor.floorNumber}`) % STORY_REQUIRED_MARKET_GOODS.length] : null;
 
-  return <div className="story-hub-screen" data-testid="story-hub-screen" data-world={activeWorldId} data-surface-map={activeSurfaceMapId ?? ''} data-hub-ready={hubReady ? 'true' : 'false'} data-controls-open={controlsOpen ? 'true' : 'false'} data-map-open={mapOpen ? 'true' : 'false'} data-stats-open={statsOpen ? 'true' : 'false'} data-tutorial-open={tutorialOpen ? 'true' : 'false'} data-return-home-confirm={returnHomeConfirmOpen ? 'true' : 'false'} data-quick-match={quickMatchAvailable ? 'true' : 'false'} data-player-x={playerX.toFixed(2)} data-player-y={playerY.toFixed(2)} data-player-pose={playerPose} data-player-projectile-asset={effectiveAttackEvent?.projectile?.frames[0]?.path ?? ''} data-player-projectile-launch={effectiveAttackEvent?.projectile?.launchPoint.join(',') ?? ''} data-player-health={playerHealth} data-player-level={adventureProgress.level} data-party-id={partyInstance?.id ?? ''} data-nearby-portal={nearbyPortal?.id ?? ''} data-online={onlineEnabled ? 'true' : 'false'} data-connection-status={connectionStatus} data-player-count={playerCount}>
+  return <div className="story-hub-screen" data-testid="story-hub-screen" data-world={activeWorldId} data-surface-map={activeSurfaceMapId ?? ''} data-hub-ready={hubReady ? 'true' : 'false'} data-controls-open={controlsOpen ? 'true' : 'false'} data-map-open={mapOpen ? 'true' : 'false'} data-stats-open={statsOpen ? 'true' : 'false'} data-tutorial-open={tutorialOpen ? 'true' : 'false'} data-return-home-confirm={returnHomeConfirmOpen ? 'true' : 'false'} data-quick-match={quickMatchAvailable ? 'true' : 'false'} data-player-x={playerX.toFixed(2)} data-player-y={playerY.toFixed(2)} data-player-pose={playerPose} data-player-projectile-asset={effectiveAttackEvent?.projectile?.frames[0]?.path ?? ''} data-player-projectile-launch={effectiveAttackEvent?.projectile?.launchPoint.join(',') ?? ''} data-player-health={playerHealth} data-player-level={adventureProgress.level} data-player-xp={adventureProgress.xp} data-route-coins={adventureProgress.routeCoins} data-defeated-challengers={adventureProgress.defeatedChallengerIds.join(',')} data-party-id={partyInstance?.id ?? ''} data-nearby-portal={nearbyPortal?.id ?? ''} data-hostile-npcs={hostileNpcIds.join(',')} data-defeated-npcs={defeatedNpcIds.join(',')} data-online={onlineEnabled ? 'true' : 'false'} data-connection-status={connectionStatus} data-player-count={playerCount}>
     <div className="story-hub-canvas-shell">
-      <HubCanvas key={activeHub.id} hub={activeHub} profile={profile} reducedMotion={reducedMotion} readInput={readInput} disabled={pauseOpen || tutorialOpen || returnHomeConfirmOpen || controlsOpen || mapOpen || statsOpen || packOpen || marketOpen || partyUnlockOpen || Boolean(selectedPlayer) || Boolean(incomingChallenge) || Boolean(doorTravel) || Boolean(boonChoices) || abandonConfirmOpen || Boolean(activeTraderEventId) || Boolean(pendingEventChoiceId)} avatarVisible={!doorTravel || doorTravel.step < 4 || doorTravel.step >= 18} quickMatchAvailable={quickMatchAvailable} assignedPortalId={quickMatch.portalId} nearbyPortal={nearbyPortal} remotePlayers={visibleRemotePlayers} selectedPlayerSessionId={selectedPlayer?.sessionId} progress={adventureProgress} activePartyMembers={partyInstance ? partyInstance.members.length + partyInstance.aiActors.length : 1} partyAiActors={partyInstance?.aiActors ?? []} mounted={mounted} mount={activeMount} attackEvent={effectiveAttackEvent} impactEvent={impactEvent} encounterSeed={encounterSeed} initialEncounterProgress={activeEncounterProgress} onEncounterProgressChange={handleEncounterProgressChange} onChallengerStarted={handleChallengerStarted} onAttack={handleAdventureAttack} onPlayerDamage={handlePlayerDamage} onEnemyDefeated={handleEnemyDefeated} onResourceHarvest={handleResourceHarvest} onPickup={handleFloorPickup} onWildlifeSighting={handleWildlifeSighting} onQuickMatch={startQuickMatch} onSelectPlayer={selectRemotePlayer} onNearbyPortal={setNearbyPortal} onActivatePortal={activatePortal} onWaterState={handleWaterState} onExit={exitCurrentWorld} onPause={openPause} onStateSample={handlePlayerState} onReady={handleHubReady} />
+      <HubCanvas key={activeHub.id} hub={combatHub} profile={profile} reducedMotion={reducedMotion} readInput={readInput} disabled={pauseOpen || tutorialOpen || returnHomeConfirmOpen || controlsOpen || mapOpen || statsOpen || packOpen || marketOpen || partyUnlockOpen || Boolean(selectedPlayer) || Boolean(incomingChallenge) || Boolean(doorTravel) || Boolean(boonChoices) || abandonConfirmOpen || Boolean(activeTraderEventId) || Boolean(pendingEventChoiceId)} avatarVisible={!doorTravel || doorTravel.step < 4 || doorTravel.step >= 18} quickMatchAvailable={quickMatchAvailable} assignedPortalId={quickMatch.portalId} nearbyPortal={nearbyPortal} remotePlayers={visibleRemotePlayers} selectedPlayerSessionId={selectedPlayer?.sessionId} progress={adventureProgress} activePartyMembers={partyInstance ? partyInstance.members.length + partyInstance.aiActors.length : 1} partyAiActors={partyInstance?.aiActors ?? []} mounted={mounted} mount={activeMount} attackEvent={effectiveAttackEvent} impactEvent={impactEvent} encounterSeed={encounterSeed} initialEncounterProgress={activeEncounterProgress} hostileNpcIds={hostileNpcIds} onEncounterProgressChange={handleEncounterProgressChange} onChallengerStarted={handleChallengerStarted} onNpcAggro={handleNpcAggro} onNpcDefeated={handleNpcDefeated} onAttack={handleAdventureAttack} onPlayerDamage={handlePlayerDamage} onEnemyDefeated={handleEnemyDefeated} onResourceHarvest={handleResourceHarvest} onPickup={handleFloorPickup} onWildlifeSighting={handleWildlifeSighting} onQuickMatch={startQuickMatch} onSelectPlayer={selectRemotePlayer} onNearbyPortal={setNearbyPortal} onActivatePortal={activatePortal} onWaterState={handleWaterState} onExit={exitCurrentWorld} onPause={openPause} onStateSample={handlePlayerState} onReady={handleHubReady} />
     </div>
     {storyLevelLabEnabled() && <LevelLabOverlay hub={activeHub} floor={generatedFloor} />}
 

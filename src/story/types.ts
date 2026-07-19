@@ -777,7 +777,7 @@ export type StoryInteractableDefinition = {
 };
 
 export type StoryNpcDefenseProfile = {
-  invulnerable: true;
+  invulnerable: boolean;
   attackerOnly: true;
   warningMs: number;
   threatRadius: number;

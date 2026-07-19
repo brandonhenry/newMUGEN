@@ -6,15 +6,15 @@ import type { StoryAdventureMapRole, StoryAdventureWorldId, StoryNpcDefinition, 
 type BiomeId = Exclude<StoryAdventureWorldId, 'world-route'>;
 
 const STARTER_DEFENSE: Record<'mina' | 'hana' | 'tamsin', StoryNpcDefenseProfile> = {
-  mina: { invulnerable: true, attackerOnly: true, warningMs: 3_000, threatRadius: 5.5, guardMs: 350, counterDamagePercent: 0.1, knockback: 4.8, cooldownMs: 6_000, counterRange: 5.5 },
-  hana: { invulnerable: true, attackerOnly: true, warningMs: 3_000, threatRadius: 3.2, guardMs: 260, counterDamagePercent: 0.14, knockback: 6.2, cooldownMs: 6_000, counterRange: 2.4 },
-  tamsin: { invulnerable: true, attackerOnly: true, warningMs: 3_000, threatRadius: 3.4, guardMs: 420, counterDamagePercent: 0.16, knockback: 7.1, cooldownMs: 6_000, counterRange: 2.6 }
+  mina: { invulnerable: false, attackerOnly: true, warningMs: 3_000, threatRadius: 5.5, guardMs: 350, counterDamagePercent: 0.1, knockback: 4.8, cooldownMs: 6_000, counterRange: 5.5 },
+  hana: { invulnerable: false, attackerOnly: true, warningMs: 3_000, threatRadius: 3.2, guardMs: 260, counterDamagePercent: 0.14, knockback: 6.2, cooldownMs: 6_000, counterRange: 2.4 },
+  tamsin: { invulnerable: false, attackerOnly: true, warningMs: 3_000, threatRadius: 3.4, guardMs: 420, counterDamagePercent: 0.16, knockback: 7.1, cooldownMs: 6_000, counterRange: 2.6 }
 };
 
 function biomeDefense(role: 'guide' | 'specialist' | 'resident', index: number): StoryNpcDefenseProfile {
   const percent = Math.min(0.18, 0.1 + index * 0.008 + (role === 'specialist' ? 0.025 : role === 'resident' ? 0.01 : 0));
   return {
-    invulnerable: true,
+    invulnerable: false,
     attackerOnly: true,
     warningMs: 3_000,
     threatRadius: role === 'guide' ? 4.2 : 3.5,

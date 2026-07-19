@@ -45,7 +45,7 @@ describe('authored Adventure surface campaign', () => {
     for (const biome of STORY_ADVENTURE_REGION_IDS) {
       const residents = STORY_NPCS.filter((npc) => npc.biomeId === biome);
       expect(residents).toHaveLength(12);
-      expect(residents.every((npc) => npc.defense.invulnerable && npc.defense.attackerOnly && npc.defense.counterDamagePercent >= 0.10 && npc.defense.counterDamagePercent <= 0.18)).toBe(true);
+      expect(residents.every((npc) => !npc.defense.invulnerable && npc.defense.attackerOnly && npc.defense.counterDamagePercent >= 0.10 && npc.defense.counterDamagePercent <= 0.18)).toBe(true);
     }
     for (const npc of STORY_NPCS) {
       const sprite = STORY_NPC_SPRITES[npc.spriteId];

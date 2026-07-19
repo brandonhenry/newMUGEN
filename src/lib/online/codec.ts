@@ -159,6 +159,7 @@ export type CompactMatchSnapshot = {
   clashState: MatchSnapshot['clashState'];
   roundFinisher: MatchSnapshot['roundFinisher'];
   timeStop: MatchSnapshot['timeStop'];
+  mindTransfer?: MatchSnapshot['mindTransfer'];
   visualTimeScale: number;
   cameraShake: number;
   idleQuietFrames: number;
@@ -220,6 +221,7 @@ export function compactMatchSnapshot(match: MatchSnapshot, sequence: number): Co
         }
       : null,
     timeStop: match.timeStop ? { ...match.timeStop } : null,
+    mindTransfer: match.mindTransfer ? { ...match.mindTransfer } : null,
     visualTimeScale: match.visualTimeScale,
     cameraShake: match.cameraShake,
     idleQuietFrames: match.idleQuietFrames,
@@ -264,6 +266,7 @@ export function hydrateMatchSnapshot(base: MatchSnapshot, snapshot: CompactMatch
         }
       : null,
     timeStop: snapshot.timeStop ? { ...snapshot.timeStop } : null,
+    mindTransfer: snapshot.mindTransfer ? { ...snapshot.mindTransfer } : null,
     visualTimeScale: snapshot.visualTimeScale,
     cameraShake: snapshot.cameraShake,
     idleQuietFrames: snapshot.idleQuietFrames ?? base.idleQuietFrames,

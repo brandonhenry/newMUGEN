@@ -99,6 +99,7 @@ describe('online codec', () => {
       cameraZoomScale: 0.78
     };
     match.timeStop = { ownerSlot: 1, framesRemaining: 73, totalFrames: 120 };
+    match.mindTransfer = { ownerSlot: 1, victimSlot: 2, framesRemaining: 161, totalFrames: 240 };
     match.clashState = {
       id: 4,
       status: 'input',
@@ -137,6 +138,7 @@ describe('online codec', () => {
     expect(hydrated.roundFinisher?.elapsed).toBe(0.24);
     expect(hydrated.roundFinisher?.cameraZoomScale).toBe(0.78);
     expect(hydrated.timeStop).toEqual({ ownerSlot: 1, framesRemaining: 73, totalFrames: 120 });
+    expect(hydrated.mindTransfer).toEqual({ ownerSlot: 1, victimSlot: 2, framesRemaining: 161, totalFrames: 240 });
     expect(hydrated.fighters[0].hp).toBe(42);
     expect(hydrated.fighters[0].recoverableHp).toBe(11);
     expect(hydrated.fighters[0].displayRecoverableHp).toBe(7);
@@ -198,7 +200,9 @@ describe('online codec', () => {
     delete (legacySnapshot as Partial<typeof snapshot>).roundsToWin;
     delete (legacySnapshot as Partial<typeof snapshot>).lastTrainingFrameEventId;
     delete (legacySnapshot as Partial<typeof snapshot>).trainingFrameEvents;
+    delete (legacySnapshot as Partial<typeof snapshot>).mindTransfer;
     expect(hydrateMatchSnapshot(base, legacySnapshot).roundsToWin).toBe(3);
     expect(hydrateMatchSnapshot(base, legacySnapshot).trainingFrameEvents).toEqual([]);
+    expect(hydrateMatchSnapshot(base, legacySnapshot).mindTransfer).toBeNull();
   });
 });

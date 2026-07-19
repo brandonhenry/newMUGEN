@@ -289,6 +289,7 @@ export function sanitizeMoveOverride(override: MoveOverride): MoveOverride {
     'juggleGravityScale',
     'kiCost',
     'healAmount',
+    'mindTransferFrames',
     'armorStartFrame',
     'armorEndFrame'
   ];
