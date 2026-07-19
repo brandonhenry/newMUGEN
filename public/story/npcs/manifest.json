@@ -2738,7 +2738,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "8479fac8c1fffd9b2f33584910fb6e75f122d535906bc52d4749a91e97ab8bb5",
+        "sha256": "ce8af59e4e7e8aed18e4dbc740d61b8e68e5902adefa4c1f8e385cfef0cc939a",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Liora Mill for greenhollow: windmill machinist with a brass vane tool and rolled sleeves; palette leaf green, wheat gold, warm cream, weathered brown; one 1536x1024 five-row sheet on flat #ff00ff; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -2757,8 +2757,9 @@
         ],
         "chromaKey": "#ff00ff",
         "chromaSourcePath": "/story/npcs/generated/liora-mill-sheet-chroma.png",
-        "chromaSourceSha256": "b26cd81d083145e302b7186412163ac865301df0bf83d05bb3e89d34b1ffb58e",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "6f456f8e733fbaacab0bfd224b0f082688b797ffc02efb154059ce03d3d55263",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -2842,7 +2843,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "999c3ad760f14930c51b507a6b670498b7dea0901a63a380304f210490f1e5af",
+        "sha256": "0020851d4deb2dc6dba699dd3e8c3db2eed8171e9a5541374f7dbec04b74db54",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Cedric Thatch for greenhollow: rooftop pathfinder in a patched green coat carrying a chimney brush; palette leaf green, wheat gold, warm cream, weathered brown; one 1536x1024 five-row sheet on flat #ff00ff; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -2861,8 +2862,9 @@
         ],
         "chromaKey": "#ff00ff",
         "chromaSourcePath": "/story/npcs/generated/cedric-thatch-sheet-chroma.png",
-        "chromaSourceSha256": "7c71a402798aa514a1b31f340961716f66afeabd5ff933a425f16e57c8f3223b",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "929338c878c1dc416b13b95592db0d42e715235ad4f63a2742217fb77a5ac190",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -2946,7 +2948,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "70b3896d681da1e6ac05ba3b5adbbb951b5709f358814d2acf305c235df83300",
+        "sha256": "9f47b5cf3e1c741c3c9de99181d299609eea695d9fa5ef6499e2f9ed849f65dc",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Nessa Loom for greenhollow: market weaver with a compact hand loom and ribbon spools; palette leaf green, wheat gold, warm cream, weathered brown; one 1536x1024 five-row sheet on flat #ff00ff; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -2965,8 +2967,9 @@
         ],
         "chromaKey": "#ff00ff",
         "chromaSourcePath": "/story/npcs/generated/nessa-loom-sheet-chroma.png",
-        "chromaSourceSha256": "4624b988cbb2b5a488de8f50432fcb45c34ada036265cfa888ff328ded14a7a7",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "38d7525bc19731ad0c94c8112ca806e17c5296c96e77b4a245c06f1a3dce33f4",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -3050,7 +3053,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "95481d246952bfde94dd2979bb80cc77707e746efdbd46b383abfbb8145c4bc6",
+        "sha256": "01562ef1538863e6ce456802a0c2d8947bf2dae44606088191bf8b8efa011088",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original folk NPC Pip Bramble for greenhollow: small moss-hare folk courier with a clover satchel; palette leaf green, wheat gold, warm cream, weathered brown; one 1536x1024 five-row sheet on flat #ff00ff; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -3069,8 +3072,9 @@
         ],
         "chromaKey": "#ff00ff",
         "chromaSourcePath": "/story/npcs/generated/pip-bramble-sheet-chroma.png",
-        "chromaSourceSha256": "b5b0a99e2357cecddb713c4e81dee39ebec036413cc118277db0a63633a284d9",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "76853ce9fc2e3ab00f2d86b4068164ea45ae69981777400903b5987a4c7d17e9",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -3154,7 +3158,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "dbab03c038e3e4ad4ab181b67a1eb8d60f01623ab6b73aca7ed13bf33f832169",
+        "sha256": "6678f1f9da45f0fcb37c1caa74a6665e2bb0911f806fc5ec18b1846830b36a98",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Mara Valve for greenhollow: waterworks ranger with blue waders and a valve-key staff; palette leaf green, wheat gold, warm cream, weathered brown; one 1536x1024 five-row sheet on flat #ff00ff; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -3173,8 +3177,9 @@
         ],
         "chromaKey": "#ff00ff",
         "chromaSourcePath": "/story/npcs/generated/mara-valve-sheet-chroma.png",
-        "chromaSourceSha256": "b4f11a069a86760c260bda7b9b853bb2dad28d028306ab787bf41b2c4f8de075",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "09bed3ae92c0089ad471e0615e8ac37631e1010f68027f1a715e1f2af84071f4",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -3258,7 +3263,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "8920a071cf7fb5005e1e32b708c1b6d92d1726686693c36a5f169357bce55751",
+        "sha256": "c8feef0aaa9e885440719bb831e6d3109566dde1b8362c23813a85471887b3f0",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original folk NPC Tobin Reed for greenhollow: broad otter-folk lock keeper wearing a reed vest; palette leaf green, wheat gold, warm cream, weathered brown; one 1536x1024 five-row sheet on flat #ff00ff; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -3277,8 +3282,9 @@
         ],
         "chromaKey": "#ff00ff",
         "chromaSourcePath": "/story/npcs/generated/tobin-reed-sheet-chroma.png",
-        "chromaSourceSha256": "9bdecd539d8ee496fd3431871cbc853bf9785412ec81462ce3ef65b755368413",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "4d238a7c7993414af13a690a60e4f20bded4b625c26d46ea1c277c0036c8ba72",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -3362,7 +3368,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "3f12580ede4c203c8d429a5399adafe31cf3f51e3f501ec8f14b3360212c4aa9",
+        "sha256": "d429ec441f3cfe6a6bd7aaeb4d2d2e4888f067c7f6f279e139f7dcd38bf94d32",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Elowen Gate for greenhollow: forest-gate scout in layered bark leather with a lantern; palette leaf green, wheat gold, warm cream, weathered brown; one 1536x1024 five-row sheet on flat #ff00ff; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -3381,8 +3387,9 @@
         ],
         "chromaKey": "#ff00ff",
         "chromaSourcePath": "/story/npcs/generated/elowen-gate-sheet-chroma.png",
-        "chromaSourceSha256": "4cf2c311288bacffdea960932bea02fe2a8b375f7f389005933e6385caeef1e0",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "dec607169e7014789a8ea797a0293d3fd3a70b2055f5003085cc403a53eddb7d",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -3466,7 +3473,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "bf0bad542d090508c1eb75e546341c4a66611e1a1311f3ac89e1da6a73783d87",
+        "sha256": "5e10efe17b9300c0976e604bd3f4ffcdb93009d537e60e5e42992d1f87fea55b",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Finn Wicker for greenhollow: basketwright engineer carrying a reinforced wicker shield; palette leaf green, wheat gold, warm cream, weathered brown; one 1536x1024 five-row sheet on flat #ff00ff; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -3485,8 +3492,9 @@
         ],
         "chromaKey": "#ff00ff",
         "chromaSourcePath": "/story/npcs/generated/finn-wicker-sheet-chroma.png",
-        "chromaSourceSha256": "ef9b86ca6b81956a5b70eed14295bb54e2082bc851b61a4307231cb73a30664c",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "e0b40e5d1b78c3cccae8c4f7697db7169a29166f5473b4b2bf96d1d50f21cc50",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -3570,7 +3578,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "5d573f9d9b42bab36bce7b863951493b5f26d6eb69806cb0bca4b5cdc9b10115",
+        "sha256": "8806b7e048a4be52c872ade475ca86ab44951134929eb51f9069e76f1c3dde95",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original folk NPC Boro Acorn for greenhollow: stout badger-folk orchard keeper with an acorn mallet; palette leaf green, wheat gold, warm cream, weathered brown; one 1536x1024 five-row sheet on flat #ff00ff; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -3589,8 +3597,9 @@
         ],
         "chromaKey": "#ff00ff",
         "chromaSourcePath": "/story/npcs/generated/boro-acorn-sheet-chroma.png",
-        "chromaSourceSha256": "b8b377b921bd73df8992f1c984c483273064d7d62539e7fded2e4fe8eacd7e0a",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "115db33549463ef4d042a196f71338e34feb98b7a9110a28da60b51f53abc71c",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -3674,7 +3683,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "73754a2fc6fe132b21aeb29bdefb76ce0ea094b8b8a0b4429006cddeb15d5153",
+        "sha256": "a188cda1d0579dca884c03369be11981bb6f0bd3e267966a19b9540e7c4a0c0d",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Asha Lantern for thornwood: forest camp lamplighter with a spore-glass lantern and pruning hook; palette deep pine, moss green, mushroom amber, pale root ivory; one 1536x1024 five-row sheet on flat #ff00ff; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -3693,8 +3702,9 @@
         ],
         "chromaKey": "#ff00ff",
         "chromaSourcePath": "/story/npcs/generated/asha-lantern-sheet-chroma.png",
-        "chromaSourceSha256": "8171a3b662e463013bf2f6a126e489818ea0f4269ea6380514ea797a7c64134d",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "cb7928a12c1f9b5525f10455a9d5e04ae32e0ebe59f097de09205b4e24927346",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -3778,7 +3788,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "ea7416bd508f9f0d2e64b42611cda485e27128c8502cd3e41c2d2289ec7b26fa",
+        "sha256": "1704e6238b2818f0ab46ef6798b325ce50e6ee7b9dd4fc25c21991dcedab3b3a",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Rowan Root for thornwood: giantroot climber wearing rope coils and bark guards; palette deep pine, moss green, mushroom amber, pale root ivory; one 1536x1024 five-row sheet on flat #ff00ff; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -3797,8 +3807,9 @@
         ],
         "chromaKey": "#ff00ff",
         "chromaSourcePath": "/story/npcs/generated/rowan-root-sheet-chroma.png",
-        "chromaSourceSha256": "f98c0e6052ad703bff0a41c563d21b1f4b90286f59dea61b5f6a688dac20ae44",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "5de829f0b0a7a67ffb73c400820f458d8285ab9435284a9d856ca53285408939",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -3882,7 +3893,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "6034d7d809ec1a0d171e968cd3fa2e84063f5d8b119f93d5f78b41935a2ce694",
+        "sha256": "1033f4fda9338e6f34a20daea6d2475c79449985a44beddeabf1de8dc2d4a565",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Veya Spore for thornwood: mycologist with mask, sample satchel, and glowing mushroom wand; palette deep pine, moss green, mushroom amber, pale root ivory; one 1536x1024 five-row sheet on flat #ff00ff; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -3901,8 +3912,9 @@
         ],
         "chromaKey": "#ff00ff",
         "chromaSourcePath": "/story/npcs/generated/veya-spore-sheet-chroma.png",
-        "chromaSourceSha256": "19c822cefd1a95e30ace7ff44de7d9b6aae327d5d7e1601ba02cc7ddcea325e3",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "5efaa0288dfbe396d73cd845cb1a57065c4222ccaf67195341f4710a834b65ea",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -3986,7 +3998,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "7f255f3af13f3cd12f01b05b8a280503d2abdd9a877c2c35a213e2597f460ecc",
+        "sha256": "722191dea753da483c30304107d4d3ad60635f6d7629e699078755d2dd0700ab",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original folk NPC Kip Mossfoot for thornwood: small frog-folk gatherer with moss boots and a berry basket; palette deep pine, moss green, mushroom amber, pale root ivory; one 1536x1024 five-row sheet on flat #ff00ff; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -4005,8 +4017,9 @@
         ],
         "chromaKey": "#ff00ff",
         "chromaSourcePath": "/story/npcs/generated/kip-mossfoot-sheet-chroma.png",
-        "chromaSourceSha256": "84e1a916850bbab02a9eeb03484fda5094ff19127f63355177ba60ecfbfaef8d",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "2d09185c9243083cfd077f70e779610e29192103b82a99453d5169ba3b8302d9",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -4090,7 +4103,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "d0ba4e4db609dc3bede486d446d02ed91db269bc09de2e3725f5453f72803e76",
+        "sha256": "3243e0005fa4616df0f9d0c2050cff55f98f07d991fb1ff3b8f66604a1de321b",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Sable Fern for thornwood: canopy ranger with a fern cloak and recurved branch bow; palette deep pine, moss green, mushroom amber, pale root ivory; one 1536x1024 five-row sheet on flat #ff00ff; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -4109,8 +4122,9 @@
         ],
         "chromaKey": "#ff00ff",
         "chromaSourcePath": "/story/npcs/generated/sable-fern-sheet-chroma.png",
-        "chromaSourceSha256": "040855248d0bbb92e8265553338c70c02a549b5063afb71a6f94bd31284efd5e",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "32c86e43686ed7c63be509a3968a32d830791ae2a31f6e49e54a4428567750bf",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -4194,7 +4208,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "fd03eb7c5ed3a530ab7dd91cb513e9cc2a46a5a6dd51f301d1bc59310e154efe",
+        "sha256": "31a3042f1f43dd7fd071818ea3973257e642915b9b5aabb50c89b5ca7c0186e3",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original folk NPC Odo Glowcap for thornwood: round mushroom-folk lantern tender with a glowing cap; palette deep pine, moss green, mushroom amber, pale root ivory; one 1536x1024 five-row sheet on flat #ff00ff; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -4213,8 +4227,9 @@
         ],
         "chromaKey": "#ff00ff",
         "chromaSourcePath": "/story/npcs/generated/odo-glowcap-sheet-chroma.png",
-        "chromaSourceSha256": "e58fb3016bf031bcaa8f4cc2105a5dc1504887fd14430cbe08945527391e0add",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "f1b4479d9ac72bb5f8616d3ebe03740fa91733bc0882183ea41ab80666a065a2",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -4298,7 +4313,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "af7a549f2899167e97f8038ada037dc20fa2d2a1f868f70f78b42db45e46deef",
+        "sha256": "05a5dfa4e77aab573507e0c0f6916a4b10445141761b0639be72e90e91ded077",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Lark Hollow for thornwood: heartwood pilgrim with a root compass and long green scarf; palette deep pine, moss green, mushroom amber, pale root ivory; one 1536x1024 five-row sheet on flat #ff00ff; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -4317,8 +4332,9 @@
         ],
         "chromaKey": "#ff00ff",
         "chromaSourcePath": "/story/npcs/generated/lark-hollow-sheet-chroma.png",
-        "chromaSourceSha256": "7254fad1a7493d7f5aa8ae2231930c09c917134d278e89a8fb9faf1358d24bbf",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "a6ef9e6296a743d072b5b6ac22e0fb29a0a06135dd1c5582e69c65f32dbbca06",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -4402,7 +4418,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "e8af077b455762d5bcec63a26a74e34f6f9f10a06e83024d01e4155cba1a525f",
+        "sha256": "cbc6949401448df939fe901f8b25dfbe3c0feccdc92dc81a9421b976bd502c1d",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Thalia Thorn for thornwood: thorn surgeon with resin vials and precise hooked blades; palette deep pine, moss green, mushroom amber, pale root ivory; one 1536x1024 five-row sheet on flat #ff00ff; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -4421,8 +4437,9 @@
         ],
         "chromaKey": "#ff00ff",
         "chromaSourcePath": "/story/npcs/generated/thalia-thorn-sheet-chroma.png",
-        "chromaSourceSha256": "5e13cdce0794e52ab0c5079ac472d94c223afec76905234b8a690afa3b999165",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "cb134a37733abf0c1ceb752044ee03720c18f6dea4050bd4fc3dd540d5ab7e80",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -4506,7 +4523,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "6919279395d6bb714db9f99c0d4462301513f4b6a7cf2237a9b5ae82fbd0e993",
+        "sha256": "161d0df7889802fd1d4a13554b1875d0c905369668d53309670b86f23fa8d53e",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original folk NPC Brin Barkkin for thornwood: young bark-skinned tree-folk custodian with branch antlers; palette deep pine, moss green, mushroom amber, pale root ivory; one 1536x1024 five-row sheet on flat #ff00ff; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -4525,8 +4542,9 @@
         ],
         "chromaKey": "#ff00ff",
         "chromaSourcePath": "/story/npcs/generated/brin-barkkin-sheet-chroma.png",
-        "chromaSourceSha256": "6546d6d8ec074a5bd9aca1c4bf8b480877a3d0b3a154b572403163d376460730",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "cdbe8ef1e2517ab9df0d25883a935c21068411c0862b17ed8029966cc164b160",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -4610,7 +4628,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "0b4ce43547fa732a217bf5d5448fbe444817446f527f2d14aef10fcbe4bed3b6",
+        "sha256": "256ab7fa737535f85521dfcc46615b568286b91b213732a8388611ab5a6cbd08",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Tessa Lamp for ironroot: mine safety engineer with a tall lamp helm and inspection hammer; palette iron gray, lamp amber, copper, sunstone gold; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -4629,8 +4647,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/tessa-lamp-sheet-chroma.png",
-        "chromaSourceSha256": "b92da47a670e0bd24d804221dba5d84226747c73bdfb8760bc0b3e445aa0a99a",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "dc3ebf3b88b0dcd24eb548cdd7cf7a47996a7c9766ecec91c1ca4db998b2a138",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -4714,7 +4733,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "ba16de1375d1e213e52e38d1b0395a3933447dfe5679c25cbde350545b1f5e06",
+        "sha256": "3a4210de446d505504fe4bc62f87d258d156c64b17ae5cca3948fc67ac63e7de",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Garrick Rail for ironroot: rail switchman in a heavy coat carrying a signal paddle; palette iron gray, lamp amber, copper, sunstone gold; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -4733,8 +4752,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/garrick-rail-sheet-chroma.png",
-        "chromaSourceSha256": "816e77f99cfa0576d2737f13b8949f8f6f6a6aee6b5d874792a28b49db93dfb2",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "55dc7988b1b3bef529d6cfd9d00e12407eec418c95246209e3b693788dadecd9",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -4818,7 +4838,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "df3378e1d2d5771698fb14f49274991edf7ab28a2cced779c73ce8f3f64ad3ef",
+        "sha256": "ee3ed15bc84bb9175176cb6bd31dddcc3f02de20fdac9d555ab23e5e87e4078f",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Nia Rivet for ironroot: compact mechanic with rivet gun, goggles, and copper apron; palette iron gray, lamp amber, copper, sunstone gold; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -4837,8 +4857,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/nia-rivet-sheet-chroma.png",
-        "chromaSourceSha256": "310d510f5be9232a2dcd809d9d245350b61e356fbf1efaa49cd98537c248ad7d",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "a021b4342094bb16f61781d80d08b4188e5fa479bc8b4f63f1978ef6d7e8d0a5",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -4922,7 +4943,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "b2c4d6238ef113b2d72859e5286499716f725e9b406e382e4c1b49ab2c22314e",
+        "sha256": "ede1268e565937fcc8e3972f3e082304054d587df3f20950091dc50590a4809f",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original folk NPC Peb Oreling for ironroot: small crystal oreling pushing a tiny mine cart; palette iron gray, lamp amber, copper, sunstone gold; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -4941,8 +4962,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/peb-oreling-sheet-chroma.png",
-        "chromaSourceSha256": "85cfdacee911dd1f716ad969d13181ff512d66011ee5f9dbab64a1b7aa6a548d",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "4d27c56d52ee5c2868962e2cdaad8bb87718904c897669d81484d5849f2f619f",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -5026,7 +5048,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "d75fea4f8bef4a05bdbee67706dba5fa93f8c4901557f0dd9b1983c9c5a19933",
+        "sha256": "015cb3b2605ef56fb3eb28d0961135cd52b24cf1f8e23b78f7556f2dc34dbfd7",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Kellan Shaft for ironroot: flooded-shaft diver with rope harness and hooded lamp; palette iron gray, lamp amber, copper, sunstone gold; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -5045,8 +5067,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/kellan-shaft-sheet-chroma.png",
-        "chromaSourceSha256": "41487a53e45a6245481f60db4b204936e5cd2de234e4f8214ff033db24208828",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "3153c139b42b0074597949e5ca9a2b7ba1f90a4228c86b4c4f8774f0f9ada954",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -5130,7 +5153,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "d0abfa72d4bd7c383c63c49935ba3ef03986b64aa5b4544e2d379c00ec0151eb",
+        "sha256": "ec96ffc44d28c9c9f2cabc882d34715b7352e0b3936b0c1b4a2a7181cf92e670",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original folk NPC Ruk Copperhide for ironroot: stocky mole-folk pump operator with copper claws; palette iron gray, lamp amber, copper, sunstone gold; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -5149,8 +5172,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/ruk-copperhide-sheet-chroma.png",
-        "chromaSourceSha256": "548569c2a1705715c6630b6fa618fe35d6eb8460f0e5d43312d3004392384cd2",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "d9d7c3c54152b7ca7fcf62009d5fbf1cd68afb66bad00146d3f996e0cb357a1d",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -5234,7 +5258,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "00bc6a51233a83925a1c579fd0d2d6f3657dbfa910577254a758e6f5817bcf99",
+        "sha256": "e788bc745d48f7d1bf14885bca5a78f91c5f12181e626f6e7e60604cf9b3442b",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Ada Sunstone for ironroot: vault surveyor with a golden crystal compass and long coat; palette iron gray, lamp amber, copper, sunstone gold; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -5253,8 +5277,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/ada-sunstone-sheet-chroma.png",
-        "chromaSourceSha256": "78ad2d8e45895371f631c4599484a54598dbed668b121e354aff00fdc533ccca",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "7e596505f741fecf6e8331385a9016eddb3d338ef4fe694597afc2c1a2b8809d",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -5338,7 +5363,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "f6fc987e8515a94fb435204599686fac7261fda8f0a45dd2d578fe2462209f75",
+        "sha256": "7e66720425a2c31756daefe7e421238c1bbfb9ae66c77a09d5ed9625763ac5ce",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Varo Hoist for ironroot: lift master wearing chain gauntlets and a counterweight pack; palette iron gray, lamp amber, copper, sunstone gold; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -5357,8 +5382,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/varo-hoist-sheet-chroma.png",
-        "chromaSourceSha256": "dd7a8874d0d587414feb042c10d882f22ddb37f5803fba4d29fa4d170afbbc81",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "79f63393286c11c2abbd77f1c2ad4573f8a27319bb4eba6f84a6d17352dee274",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -5442,7 +5468,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "71e773797d97df07f6f56e6d48611f9ab724d1bad14dde551994f90b0155c578",
+        "sha256": "85a99cd6292825ef71b816e5f11e3f7ac706550c4692467fde3cf64e8bbd4bcc",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original folk NPC Gim Gearling for ironroot: round brass construct folk with a lantern heart; palette iron gray, lamp amber, copper, sunstone gold; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -5461,8 +5487,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/gim-gearling-sheet-chroma.png",
-        "chromaSourceSha256": "fd76457b655fff2cc2898bb66baa2be6e7b5090b7fa3319d4448c61d7e90df2a",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "71ad9ea831f61fb3711ce12a3d749dd4e60b8b7ece8ae324d049c622f7a14db3",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -5546,7 +5573,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "ab353c433fc0d9660a46eca7bb2430803486e1d71237088984e81aeefa17887b",
+        "sha256": "4774a512952bc6083a98fe7ae5ff46a38fde977c58b029d5f8beec4016a50fe6",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Selene Wick for bonevault: crypt lamplighter with violet candles and a silver snuffer; palette bone ivory, violet flame, charcoal, tarnished silver; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -5565,8 +5592,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/selene-wick-sheet-chroma.png",
-        "chromaSourceSha256": "aa44976c2f07f87b0bac66a2b5cbcd4127400a14c22da98deb64129860141724",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "8d308e29abe09137ccd503bcf45c7e7850e3e7bf7c5d0c5e7eb059bc3b4f1f11",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -5754,7 +5782,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "393fb7364689aaf38482b8d2cc3f61fd96ad9c520d63d13cfafaa9b619f7b58e",
+        "sha256": "a0ec0de53dc2ae951ff9095fd38c724ba94a23da25f68e7eea823f311f10491f",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Lyra Reliquary for bonevault: relic conservator carrying padded cases and silver tongs; palette bone ivory, violet flame, charcoal, tarnished silver; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -5773,8 +5801,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/lyra-reliquary-sheet-chroma.png",
-        "chromaSourceSha256": "3519cddd964b441a7c28893b0ecda9058854d1a2e147c77c598b1810f958be19",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "5136cc060d08f07d39a0ff48e6bb2d4bee609d064b28f4c1be206e31989e71ff",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -5858,7 +5887,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "650aa4c71c6293eb542d9712347d1d746702828acc1c264a56b2ed6c61b1418f",
+        "sha256": "180ed32d80f3315fd6b276938068bf1cacd06acd1d14da8aa787fe18da6743c7",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original folk NPC Nib Bonekin for bonevault: tiny friendly bonekin porter with an oversized key ring; palette bone ivory, violet flame, charcoal, tarnished silver; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -5877,8 +5906,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/nib-bonekin-sheet-chroma.png",
-        "chromaSourceSha256": "c04ce58a95ade07c1207552aa23034503ab2c6b5a1940cfba3acdbb02612bc82",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "36720aff61a2f31d8ece467d5882d47b76bd9c40f3423a6a04c17ad0482d1082",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -5962,7 +5992,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "77a8c8b34d7cae8c98bc54ff39db56f6410228b6e5fc8690fc26e84686c95c58",
+        "sha256": "ad7e05cc1523cd1cd1881f75d3361b0e135710ae66af925945bc9958dc13e088",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Ezra Bell for bonevault: bell-nave listener in layered black robes with tuning forks; palette bone ivory, violet flame, charcoal, tarnished silver; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -5981,8 +6011,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/ezra-bell-sheet-chroma.png",
-        "chromaSourceSha256": "3a003ac25bb524e2d86684a90312908ec9aa8b6dcb46c50ef612e64872ccb758",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "e94a3ce39bbce885f7b71fb8e3ffaf41ebecf8a04fd4faee0176645f79f4bb0f",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -6170,7 +6201,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "084a5aea3a4f8264a508e5410f540df00001f17e3b4ed79159e0504f254ee9a5",
+        "sha256": "f5024f776624787b6628d6e7497ddddb5481bbb83990d9dac54db399abfc7515",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Ione Tomb for bonevault: tomb cartographer with inked maps and a crescent lantern; palette bone ivory, violet flame, charcoal, tarnished silver; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -6189,8 +6220,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/ione-tomb-sheet-chroma.png",
-        "chromaSourceSha256": "76586e80a27edb2cfe13172a60674ca87e62ff7b526e263630be8c082529e75b",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "713046f705624a14468cca269d80545719d966844680d901988801528ac27cbe",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -6274,7 +6306,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "eed62436a7c864decc4210f839554bef1b38a1772002471e0877e708421be0cb",
+        "sha256": "a83001a62a8620e9ae3284b802d3dead75c2f2b5c58b4b10ae140ec7b502bdbc",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Dorian Sigil for bonevault: ward scribe with floating violet seals and a brush spear; palette bone ivory, violet flame, charcoal, tarnished silver; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -6293,8 +6325,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/dorian-sigil-sheet-chroma.png",
-        "chromaSourceSha256": "24d3e1a79ede4452f15c34af6f81cbf06a395da2a19e840c42c1fd2dd20b8233",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "3ffa5f43aa371d89b5358deea8d65b103cc628cd93f641ab825f8fafd986cf62",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -6482,7 +6515,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "d7c1b4daec87b8f0bd2623be8911dd7644d29f00c6b385787574d334220befeb",
+        "sha256": "ed0649cfe2b9d81f272bc1d15bd9ac94e67db315bbe212157ccf1aa4a06d17e8",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Tala Vent for emberdeep: caldera vent reader with brass gauges and heatproof wraps; palette basalt black, ember orange, furnace red, brass; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -6501,8 +6534,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/tala-vent-sheet-chroma.png",
-        "chromaSourceSha256": "227b0804ea08cc78b4c3cccbb9f4f65aa1fd77ad48855503128d0de1f9d06ace",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "9187899b96de9994fd615fce20de459360acc424f3ec7a3f640289a5df7712fa",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -6586,7 +6620,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "2b1693674f7031f5b05a2ce68a2236757070c30ec20e7629d764294388612406",
+        "sha256": "6b560ff8516f16ff409568c46bb0a24c1205eb511a9c3ea87cb197b5d22ce53c",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Rian Basalt for emberdeep: lavafall scout wearing obsidian plates and carrying a hook staff; palette basalt black, ember orange, furnace red, brass; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -6605,8 +6639,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/rian-basalt-sheet-chroma.png",
-        "chromaSourceSha256": "13031d3c1975847d332d6693844aab8447b1e830fa436f53e4d028d9746d8765",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "69ca4fc06cdb30f15c8ac1df31c1c0a3285ff5be131ec5483c3876e843c3220b",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -6690,7 +6725,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "4bd159289dc1017eb199d046bfcc2608089b92e23a474114eab435f7060d3353",
+        "sha256": "d891522969c107c887d3b70ddf92e4c0a13e8246e7038e21106c5a75d366d2ee",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Naya Bellows for emberdeep: forge tender with portable bellows and ember goggles; palette basalt black, ember orange, furnace red, brass; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -6709,8 +6744,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/naya-bellows-sheet-chroma.png",
-        "chromaSourceSha256": "1b48c953eac2df5823ed571d27e8b73aa2084a76fc6f30c3d1d300b2b9102232",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "b76272f3fce86378f16f90c22af055c448ef55b03082645c1361af1087ff01d4",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -6794,7 +6830,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "af38f7654ed84e9bef56bf13f6f0eac619e24d6e7f928b4fbc77c7e6ae18a222",
+        "sha256": "0411cb8dcfd0df65abe97bd73c594139be5516afb8a54f7f4628e9290565b748",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original folk NPC Ruk Emberling for emberdeep: small coal-black salamander folk with a glowing tail lantern; palette basalt black, ember orange, furnace red, brass; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -6813,8 +6849,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/ruk-emberling-sheet-chroma.png",
-        "chromaSourceSha256": "443d3c310ad4f6b66e6608679d25795d5ffad06f47a3ad43bf1323cb095efb38",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "0e805a70cdb1dd5d8dbb6fab1ce8bdd615746e2f509f1e53777a7e452ee8127e",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -6898,7 +6935,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "8b3c5990b8bba6a7a0958b38ef6fcf5cae0b64d9c224bbb461c8818f80145c99",
+        "sha256": "d9e16f4cb6fdf85e30e98bb956ea3f17fd3aef5def423181364362069b1c3d6e",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Varek Lava for emberdeep: relic-forge pathfinder with chain sandals and a heat shield; palette basalt black, ember orange, furnace red, brass; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -6917,8 +6954,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/varek-lava-sheet-chroma.png",
-        "chromaSourceSha256": "6ccb56f87e7924e885e096796c5aa64959bbd8009e942f96fd1cdb5e5ced345c",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "4797655d92196bc45e7bb1bb30004a7b78ec191c9564d0cb53bf109a298c37e6",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -7002,7 +7040,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "bca8d42496f6c1b5307e1af6b03a56f86ff033f6310da5b9a7480997b498e8c2",
+        "sha256": "422f19015105652912c7f9af54836a4446e69c61af89394809cc4e497fbaa5c0",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original folk NPC Pyra Scorchkin for emberdeep: bright fire-gecko folk machinist with brass tool belt; palette basalt black, ember orange, furnace red, brass; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -7021,8 +7059,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/pyra-scorchkin-sheet-chroma.png",
-        "chromaSourceSha256": "a0009d6697dc934d764760c7d17cae7b42ab8871161e1cad6b21071a24f9b014",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "f19b8da1ce843fdccb8d5d5b00ef3f087b1f22771bc2c395bd487d11a8859084",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -7106,7 +7145,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "086e8886b0819b02d5c12109e76fd38463abddc1fac747dc1ef3fcb67b593f9c",
+        "sha256": "b749cd9b4a39addeb60470a7e82ad74eb1efda9e9ff35d64ef5136a521972eb0",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Kora Caldera for emberdeep: rim watcher with a long ash cloak and seismograph staff; palette basalt black, ember orange, furnace red, brass; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -7125,8 +7164,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/kora-caldera-sheet-chroma.png",
-        "chromaSourceSha256": "d4077c22f1e5caed77ec09dd293a2a562dc87c33244e1c5f25c771e445c5a0f3",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "5f472b63d2f68c457350b3f547c02fdb057faa06365dedcff9db8263e4401242",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -7210,7 +7250,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "b91fa4bc6b09326ef7e2b03cb4b9fe486e0d7539d7892e698f211b384b8ae634",
+        "sha256": "2c024fa8a93f5183ba6f5bdb2a33885d1fcb31320026080cc026e8177727b508",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Dain Anvil for emberdeep: master smith in heavy gloves carrying a compact rune anvil; palette basalt black, ember orange, furnace red, brass; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -7229,8 +7269,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/dain-anvil-sheet-chroma.png",
-        "chromaSourceSha256": "2f7086c6263c4372b0466e4863b0b31aa4dc1a1b5960a6d04f880a58b63d7a57",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "4d9ad3fcfc669bd6e48ca7d81e95d9dfb1efb84408157de21c91c20811d51588",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -7418,7 +7459,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "ba533540d89db60ad4ec45bca853e5ae279887b2cfd1917e4dccf9a649e766b6",
+        "sha256": "2af0eb61ab7ec4be3f943bf52bbefdfebe4f8a1194a160d7b2d17b811af53e88",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Inga Stove for frostpeak: shelter stove keeper with a copper kettle pack and thick mitts; palette ice blue, snow white, navy wool, hearth amber; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -7437,8 +7478,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/inga-stove-sheet-chroma.png",
-        "chromaSourceSha256": "45460345a95001f0bee423e28f923b497d154a3c16c68df1802cdff7478b05a2",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "f4487be4e72ecc17aec446e27fbba8f194e770f6378305aa1db6510d0c72403f",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -7522,7 +7564,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "85e8bfd6671053a4f86a9a1faa06879aec8e002ce7b9aee19b5694302ba2c0fa",
+        "sha256": "d5e5cc2781a33e6fc6bab42e2ba2c7116a6bd5fd9e0fb470b8aec9f1c9e36ea5",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Leif Flag for frostpeak: ice-cave route marker wearing blue flags and climbing spikes; palette ice blue, snow white, navy wool, hearth amber; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -7541,8 +7583,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/leif-flag-sheet-chroma.png",
-        "chromaSourceSha256": "6af94cbbdb7d92e23e6bfceec673e34355a5fbdc06242343ad4dc127754b011d",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "4f6b8962916710c47a5faa236d64ba9c4087638fd768a3890e6cfc43104b63ec",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -7626,7 +7669,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "b597688cec642d3bdcffbb431475fb7174b4cc05ab1b2c25c307299efc11d9cb",
+        "sha256": "683318239b847c19e74994cc9c494d8e9648dc0c5427bf4dea03961cc4f75ff5",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Anya Ice for frostpeak: glacier reader with crystal lens, pick, and fur-lined coat; palette ice blue, snow white, navy wool, hearth amber; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -7645,8 +7688,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/anya-ice-sheet-chroma.png",
-        "chromaSourceSha256": "fec00ab05e7d47058b5724831a5fab3c546294ad4b7b59aeaa4400f2bf3630f5",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "79f248700eb94d26380cb7b3e1a7a7012647cc9bcf0d918792be3c150833dabd",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -7730,7 +7774,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "8319d15ba48c7003205d39319292f40c9d4ef3abfe1be0e80e827eca5d530d9f",
+        "sha256": "420fa7fe23301fcbc3477d90888ca5ee8dd2365a5ac55bd2a75bb7ab89207ce9",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original folk NPC Puck Snowkin for frostpeak: small snow-hare folk carrying a steaming lunch tin; palette ice blue, snow white, navy wool, hearth amber; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -7749,8 +7793,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/puck-snowkin-sheet-chroma.png",
-        "chromaSourceSha256": "68052239bf3a84f215a642198c596f580c52a5c40267d5f68f28348e4062daf3",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "b8fd7f888e4cfbc59800d9d3f17a5b09303701a8804e3ad92083c1fe6288506d",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -7834,7 +7879,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "8bd3a206120df442503ce25fdd8894ebcad0e6b6121e3ed3ddeaab15d1d302e0",
+        "sha256": "3fcfb64e465d27963bc6a004b27877c5b8f0224d721cfd2ea9d3e3cbfbfe98bb",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Freya Ridge for frostpeak: windspine scout with sail scarf and weighted boots; palette ice blue, snow white, navy wool, hearth amber; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -7853,8 +7898,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/freya-ridge-sheet-chroma.png",
-        "chromaSourceSha256": "ab8789dceb853e4a87bde081727a2ac3d7d57068ea0946118dfb0f6b435a2f3d",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "7e5ff17c57953697c08bb926952408a90f18ed117a9ce09c43708a39117ae7de",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -7938,7 +7984,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "59dfae2ee3df0d82b57b21ddd06b41701bad84c6e9104a806ef39fd920a1b28f",
+        "sha256": "6016fee77a629288bcf0eec99b0b322844147fe98cc2595a57b9b171f0f885a9",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original folk NPC Moki Frostling for frostpeak: round frost-ram folk flag tender with tiny curled horns; palette ice blue, snow white, navy wool, hearth amber; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -7957,8 +8003,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/moki-frostling-sheet-chroma.png",
-        "chromaSourceSha256": "16f4e3f86dc0977307b3b267d6e368771961333c1bff0052dcf7a5f4af5ff85f",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "e2559a28771facf6acb381395c137056d005c596d7c705a0ae33d280b165eece",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -8042,7 +8089,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "3c03a1bdd95f10a29e361213dcb79234527750bf4cddc5fb28685c26cbc9e703",
+        "sha256": "e7a2f2cf34b5a33722862149f90558b4dc1dac17e6922696af83ec85ae58d382",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Eira Watch for frostpeak: tower sentinel in white-blue armor carrying a signal lantern; palette ice blue, snow white, navy wool, hearth amber; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -8061,8 +8108,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/eira-watch-sheet-chroma.png",
-        "chromaSourceSha256": "d391ba6736497ce8c588163eea18ec0eaceca0fd9deee2d19c10cceca9667346",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "60c9024bbb1fa2488c2fc20198bb5d52ee8d0e4aab28a4a825b2239757f71b88",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -8146,7 +8194,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "7aaddd84bd69b310a08886ba1986e39d4a5d16c992301866107a3e39d3a95119",
+        "sha256": "e7a35e06b6e29c181881d172587e8431ae6c26d60d08040d41a74f8c10b107de",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Toren Rope for frostpeak: rescue rigger with rope spool, pulley gauntlet, and snow visor; palette ice blue, snow white, navy wool, hearth amber; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -8165,8 +8213,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/toren-rope-sheet-chroma.png",
-        "chromaSourceSha256": "c83d202e75d07acc91deefc419809b00fdc694014b5fcbe6407386247da1b308",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "b2336ead613a97b7c09819219fe66cb64ee9f9e13d96989430e7d8ae77993b21",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -8250,7 +8299,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "4258bfe8b766cb286e635d83feed00799838ac1c433d0572e3c85f3cd202bbe2",
+        "sha256": "f8d43818bdbbe02e2493113257328dd0d26b04b3b31b27e6ded0fad651368d32",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original folk NPC Nym Cloudling for frostpeak: small cloud folk wrapped in a knitted scarf with floating boots; palette ice blue, snow white, navy wool, hearth amber; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -8269,8 +8318,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/nym-cloudling-sheet-chroma.png",
-        "chromaSourceSha256": "4dbe3226ccc5f4c8c5c247ceb555a8272c7d0ee12a10ef7621bf7622035e3c09",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "1a522d22fe864e9c28d1e41b8cb9da13943cca35a1a7f1b5938db725e31891f3",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -8354,7 +8404,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "3155cb7a06ac229cb6c9e1c9193da43882e25556f5e4501d83017579ae8a56f4",
+        "sha256": "e6e06ff5c6fb2163149aa8c4129a401ca774d86fe91fc37914644fa2d01a0890",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Zara Canvas for sunscar: caravan tentwright with folded shade cloth and brass pegs; palette sand gold, terracotta, oasis teal, sun-bleached linen; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -8373,8 +8423,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/zara-canvas-sheet-chroma.png",
-        "chromaSourceSha256": "0c0771d7b95771eee9282016150e3114bd566333a4a51f12c7e1245a4c9e436b",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "ebd7ff603e3af1c4a3616193d9b94fd507cf925ccdb2c352256f6cee07686c23",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -8458,7 +8509,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "8179b1797602eefe0eb720aaa5c3b26ff38272296bec21339d07abe7c4fef120",
+        "sha256": "03528aa2b21e4366f7bc04a597bef162e9d161a6b67856fbf9aff5e61afe7ad9",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Malik Shade for sunscar: dune pathfinder in layered linen carrying a shadow compass; palette sand gold, terracotta, oasis teal, sun-bleached linen; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -8477,8 +8528,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/malik-shade-sheet-chroma.png",
-        "chromaSourceSha256": "603a3006b180c9750896685c6ec79eab5e33e5cc21a961cef332a4cccc34c0e0",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "fa2f4204f0f81313eb6c8f3f5ee7d3d391094e271cf7587c751ae07258bda838",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -8562,7 +8614,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "9e52ba96ea3d885508063bf54d6e79699bc39363b6501001c712e40a5329ac99",
+        "sha256": "a06fbb884a2d952add2539bf3ae157255e3d973ca1b4c9444ed34aac54f49630",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Dalia Compass for sunscar: sand navigator with mirrored goggles and gyroscopic compass; palette sand gold, terracotta, oasis teal, sun-bleached linen; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -8581,8 +8633,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/dalia-compass-sheet-chroma.png",
-        "chromaSourceSha256": "464baf75b64593f99260d59c2340de3e48d24a3c3fc1b74748eb76a06d8e0262",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "895daa2833e18271b0593421a083b64328df6b49564fddf47dd45a81ea740d46",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -8666,7 +8719,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "a77f8f50654791afd591a06f2e671ea6983d31265922ee742e7056a1dafad63c",
+        "sha256": "7a1091d77c8b27a85691412301c449b3a466ed515d5abc93907692fdc42df1fb",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original folk NPC Tiko Fennec for sunscar: small fennec folk courier with giant ears and water gourds; palette sand gold, terracotta, oasis teal, sun-bleached linen; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -8685,8 +8738,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/tiko-fennec-sheet-chroma.png",
-        "chromaSourceSha256": "4f0b67cb60b889371dc18ab590cd727bdb7ced1f33a7dfcedc433667364b6766",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "fbcf2900fcc3b2513108761c85727ff5bffd11c48827aec2722cb27662b7c447",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -8770,7 +8824,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "3d4e0187eb3310337ce106541440abc88836a2dd549a16203e87c280665d02fb",
+        "sha256": "2f5f34343812b1fa091222be8c8316c705d1c2017f6e52ac2d73c2eebc69bc9d",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Rafi Ripple for sunscar: oasis diver with glasswater mask and hooked pole; palette sand gold, terracotta, oasis teal, sun-bleached linen; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -8789,8 +8843,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/rafi-ripple-sheet-chroma.png",
-        "chromaSourceSha256": "77917c8190801c88222c9d026753579698f96611a5056150ac0bbc8fbb86ce2a",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "99a2bae32d652de552dc100ab273e7840dfb555aba9a73bc5605ed6bcd2330ea",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -8874,7 +8929,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "48199d13b9e7684f32b383f94e2f44cde88a67968064236b8ca1a203817ec780",
+        "sha256": "c04b8399f160550873609cc51caf2f38147b5f50e1d2eea5378321bea6504ecc",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original folk NPC Kesh Scarabkin for sunscar: polished scarab folk groundskeeper carrying a tiny rake; palette sand gold, terracotta, oasis teal, sun-bleached linen; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -8893,8 +8948,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/kesh-scarabkin-sheet-chroma.png",
-        "chromaSourceSha256": "0c85d8e74e5989e32b82145c320be578f1c26f68ae5788184667922da8a24067",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "6a5ac3567e10bfba12d8668a539f624f5924f0e6e4e1a1c4fedc3a16b84aa6cb",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -8978,7 +9034,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "f31bbf98138de0afdfa532dae7662030c77c6ba0a303890731ba79af930e9e93",
+        "sha256": "1cb4b9140c5cdb772a0331e8a075786856e2c1a00dedfe58b56f432203091bd4",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Samira Arch for sunscar: sunken-temple scout with map veil and crescent spear; palette sand gold, terracotta, oasis teal, sun-bleached linen; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -8997,8 +9053,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/samira-arch-sheet-chroma.png",
-        "chromaSourceSha256": "8aae5acd68c2d20c4a7034128d6b0043204a0c97c1a45c557402b26b44ab757b",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "44a1eb82167e2a30cb698690dca725b9a0600166d9c99f9ebaaa1091b53b260e",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -9082,7 +9139,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "7a7b39ca1bd9eb15b3cd7dfede5a1bd5d1d2e3ce9451c8d651687f8a0a9c0ccd",
+        "sha256": "4386746f65a78c111fff42636b6b7166299de3b26e2ce80d1ba82db2dacd1ade",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Idris Lens for sunscar: solar lens keeper with articulated mirror staff; palette sand gold, terracotta, oasis teal, sun-bleached linen; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -9101,8 +9158,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/idris-lens-sheet-chroma.png",
-        "chromaSourceSha256": "915f9700cd665e7576a485bfdea0ca0765a8fbc2237bcde8ce7b550bbf47d5ca",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "8913d5d70d34e6af25a77a7348e874ac0f09f6a332f9a5c234d107eb346c887c",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -9186,7 +9244,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "dcccbad45e5ca76e9d66b3acb1c9c5e6e130cad1a2fdb6d305b10841304013c5",
+        "sha256": "2c4953d1fbec77c334b72c9698ccef27180fdfb79cadf4f9f6e3673ae79a6c67",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original folk NPC Nuri Sandling for sunscar: gentle sand spirit folk with pottery armor and a glowing core; palette sand gold, terracotta, oasis teal, sun-bleached linen; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -9205,8 +9263,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/nuri-sandling-sheet-chroma.png",
-        "chromaSourceSha256": "51f71b90b5e33cff563b09383c7e73fff13c264c63a39f0cbb3969919f288011",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "d794a09552c1d160747ba5cfd2c721226a5a2acfd7bb8e1ac9422aa74bd45977",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -9290,7 +9349,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "46d1e7a0dadbb559896951c39d3b1608033c3ee5207a3e103f3b540c300b0874",
+        "sha256": "234610c257a775c9c1c6eb18915201f0004c7787a0d4a647826cdb72baed274d",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Mira Mooring for skyglass: cloud-dock rigger with silver anchor tool and billowing jacket; palette prismatic blue, violet, silver, cloud white; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -9309,8 +9368,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/mira-mooring-sheet-chroma.png",
-        "chromaSourceSha256": "df0676866cfbfabad3b8725b9e0713b706e3745f2983fa50f3022bbd71b66982",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "ac2dba3d61fcf1ef1f607ed4a015b94b642142b91b8b186f314cf7086367c7b0",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -9394,7 +9454,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "48c0b4ab6eeb3fc287b7e4dae963d2babc47ee572dd5e3cdc42ff7a186fa3b1e",
+        "sha256": "4628f6bc428a6db8e369a8250325f03693b6307d90565974a77b473c41eadf41",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Cael Prism for skyglass: crystal-bridge scout with refraction visor and balance pole; palette prismatic blue, violet, silver, cloud white; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -9413,8 +9473,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/cael-prism-sheet-chroma.png",
-        "chromaSourceSha256": "b192b4552f710f67b26819ad2f387b8bf8b30d45e348dea5967f12a7888d571b",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "f8d57dc2ecf30eddcf8688a487b36c69988bd4b4462c14c8c0cc0995db224290",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -9498,7 +9559,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "11cec4b45035c5198de1a658d49fb06b9cd4d4231b164019c0cc0beca5296b5c",
+        "sha256": "d6cc117c97fc7bf86c8c7f652f67013b1a92f1f21deee724ab3038a8ce923e44",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Tali Chime for skyglass: resonance engineer with paired tuning rings and silver coat; palette prismatic blue, violet, silver, cloud white; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -9517,8 +9578,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/tali-chime-sheet-chroma.png",
-        "chromaSourceSha256": "6b73d2d83847e9504589fa32fc3368e3b542f173dbf5a68c105df7d2ef69a4df",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "0f0b2ffba95e5d651c5fde2f467cc2493b7a71699a8853751b5bc5018298c010",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -9602,7 +9664,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "64d3ca1a182d8299bb00b297a4beae5423bcdce95d7aa59a36e248f9333e5c2c",
+        "sha256": "d8e5b2717050f1c5a3ce98c187f960ef92a87a74c9e0c6e05efde305648dec3a",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original folk NPC Zeph Cloudkin for skyglass: small wing-eared cloud folk messenger with prism satchel; palette prismatic blue, violet, silver, cloud white; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -9621,8 +9683,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/zeph-cloudkin-sheet-chroma.png",
-        "chromaSourceSha256": "678b012608abf78897f2ee018eb7f07a2cf4e24f28af1bebea2066d4e64fa085",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "6d3a8358435f07c3baa90664c7fcd0b20cd628689bdcf96863df8c04947c8297",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -9706,7 +9769,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "7454de088c2df6edd3127620b4899e4eca4170f8a0569cf682b201a8a7352aa2",
+        "sha256": "872f3142371cabecf0b551a83c6ae81976e11c7302bac856a0308fc0ae87b43a",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Rhea Orbit for skyglass: tower pathfinder with gyroscopic belt and star map cape; palette prismatic blue, violet, silver, cloud white; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -9725,8 +9788,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/rhea-orbit-sheet-chroma.png",
-        "chromaSourceSha256": "abfe98b2bf8b44d3ceecc8e6215a2fc75caec66a8347c736f3f98a296cb82c41",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "8e9366116a248fd5293349b1b37bda596cee9a00e6dfc33e6097db9d2ee40d5b",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -9810,7 +9874,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "32fb709e7199ee12e8653034712360c8442be3f06cd670eaebfe6eac317e4b81",
+        "sha256": "13019aaf662ce556f146c859d3d64dc3f7c1b5dd8ae82378a384e84b180a2b3d",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original folk NPC Glint Shardling for skyglass: friendly crystal shard folk with floating hands and tool pouch; palette prismatic blue, violet, silver, cloud white; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -9829,8 +9893,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/glint-shardling-sheet-chroma.png",
-        "chromaSourceSha256": "6d79db31aeb869794bd9bd8b6e4b4c268300dcd12f91eeed0a339ac15b781e0f",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "92491f7111fcb8b2bb60f9a17b1eb0f6ea56d5ed87c2300c7ad3a38ea92c1d81",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -9914,7 +9979,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "4c21354fdedd2c85299e9c2858032804c81422f1611b693e3b8c2446385f1f5d",
+        "sha256": "160f36273e495a7c0d5362f1cf45ae51733c79d1177a4090ecf04b881585a767",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Orla Sanctum for skyglass: high-sanctum warden in white-violet robes with a key spear; palette prismatic blue, violet, silver, cloud white; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -9933,8 +9998,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/orla-sanctum-sheet-chroma.png",
-        "chromaSourceSha256": "859efbc084a47ee61557349c67443c6ce3fa80e61f31eaeb7fc68b7405ef448d",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "f3bb907059d45f8cc70d12bdfd6b75916994528d5056ae41a0bfd3812b4d40cd",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {
@@ -10018,7 +10084,7 @@
       },
       "source": {
         "kind": "imagegen",
-        "sha256": "854fccdc41cd81add5610fadf193ad3f9d2b9781d7d4e65223531149ff0f698b",
+        "sha256": "145dd042f1e517ce742acac3039937474248169af754b978a74a2ac7d8534b72",
         "model": "OpenAI image_gen (session-default model)",
         "prompt": "Original human NPC Dex Gyro for skyglass: ancient mechanism technician with orbiting tool discs; palette prismatic blue, violet, silver, cloud white; one 1536x1024 five-row sheet on flat #00ff00; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift.",
         "sourceReferences": [
@@ -10037,8 +10103,9 @@
         ],
         "chromaKey": "#00ff00",
         "chromaSourcePath": "/story/npcs/generated/dex-gyro-sheet-chroma.png",
-        "chromaSourceSha256": "c4fe09b383eff0a2a998450634954a587e63506f1bbf5ba910619dba4f3db49d",
-        "registryPath": "/src/story/storyRosterExpansion.json"
+        "chromaSourceSha256": "9bb96d2e515f1a6fde0e1f285854eb9add458181338e2b1fc6645780debec053",
+        "registryPath": "/src/story/storyRosterExpansion.json",
+        "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
       }
     },
     {

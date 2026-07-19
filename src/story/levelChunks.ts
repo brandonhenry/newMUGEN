@@ -84,7 +84,12 @@ function makeChunkBlueprint(kind: StoryRoomTemplateKind, variant: number): Story
       { id: `${id}-prop-c`, kind: 'prop', position: [7.5, 1.05], semanticTags: ['foliage', kind, 'cluster-right'], route: 'ambient' },
       { id: `${id}-prop-d`, kind: 'prop', position: [10, 1.05], semanticTags: ['framing', kind, 'cluster-right'], route: 'ambient' }
     ],
-    visual: { paletteId: 'route', structuralMaterial: 'biome', heroRole: boss ? 'hero' : 'structural', densityBudget: boss ? 26 : 18, permittedAssetTags: [kind] },
+    visual: {
+      paletteId: 'route', structuralMaterial: 'biome', heroRole: boss ? 'hero' : 'structural',
+      densityBudget: boss ? 26 : 18, permittedAssetTags: [kind], enclosureStyle: 'biome-enclosed-cavity',
+      defaultCavityMaterial: 'background-rock', skyWindowRegions: [], landmarkFramingRegions: [[-5, 2, 10, 7]],
+      dressingClusterAnchors: [[-8, 2], [8, 2]], permittedTerrainFamilies: ['biome-primary'], permittedPropFamilies: ['biome-primary']
+    },
     constraints: {
       entryClearance: 4,
       cameraHeight: boss ? 14 : 11,

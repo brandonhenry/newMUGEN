@@ -239,7 +239,7 @@ def generated_source_path(enemy_id: str, sheet: int, chroma: bool = False) -> Pa
     return path
 
 
-def generated_centers(sheet: Image.Image, row: int, count: int) -> list[float]:
+def generated_centers(sheet: Image.Image, row: int, count: int, require_distinct: bool = False) -> list[float]:
     top = round(row * sheet.height / 5)
     bottom = round((row + 1) * sheet.height / 5)
     band_top = top + round((bottom - top) * 0.3)
@@ -259,6 +259,8 @@ def generated_centers(sheet: Image.Image, row: int, count: int) -> list[float]:
     centers = [(left + right) / 2 for left, right in runs]
     if len(centers) > count:
         centers = centers[:count]
+    if require_distinct and len(centers) != count:
+        raise ValueError(f"Generated walk row must contain {count} coherent cells; found {len(centers)}")
     if len(centers) >= 2 and len(centers) < count:
         gaps = sorted(centers[index] - centers[index - 1] for index in range(1, len(centers)))
         spacing = gaps[len(gaps) // 2]
@@ -403,7 +405,7 @@ def main() -> None:
                 if key not in generated_loaded:
                     generated_loaded[key] = Image.open(generated_source_path(enemy_id, sheet)).convert("RGBA")
                 generated_sheet = generated_loaded[key]
-                centers = generated_centers(generated_sheet, row, count)
+                centers = generated_centers(generated_sheet, row, count, require_distinct=animation == "walk")
             else:
                 y0, y1 = ROW_BANDS[row]
             for index in range(count):
@@ -415,6 +417,8 @@ def main() -> None:
                         cell = loaded[sheet].crop((x0, y0, min(1536, x0 + CELL_WIDTH), y1))
                         cleaned = clean_cell(cell)
                 except ValueError as error:
+                    if definition.get("generated") and animation == "walk":
+                        raise ValueError(f"{enemy_id}/{animation} frame {index + 1} sheet {sheet} row {row}: {error}") from error
                     # Reviewed rows are left-packed. A missing trailing cell means
                     # the visible sequence ended one pose earlier than estimated.
                     if index > 0 and images:
@@ -427,6 +431,10 @@ def main() -> None:
                 normalized.save(frame_path, optimize=True)
                 images.append(normalized)
                 frames.append({"id": f"{animation}-{index + 1:02d}", "path": f"/story/enemies/kore-enemies-v1/sets/{enemy_id}/frames/{animation}/{index + 1:02d}.png", "durationMs": duration_for(animation), "contentBounds": bounds, "sha256": hashlib.sha256(frame_path.read_bytes()).hexdigest()})
+            if definition.get("generated") and animation == "walk":
+                pose_hashes = {hashlib.sha256(image.tobytes()).hexdigest() for image in images}
+                if len(images) != 8 or len(pose_hashes) != 8:
+                    raise ValueError(f"Generated walk row for {enemy_id} must contain eight distinct approved poses")
             built_frames[enemy_id][animation] = images
             count = len(frames)
             entry: dict[str, Any] = {"id": animation, "loop": animation in {"idle", "walk", "run", "block", "disguise"}, "frames": frames}
@@ -463,6 +471,7 @@ def main() -> None:
                 f"Original {definition['biomeId']} {definition['tier']} enemy {definition['label']}: {definition['design']}; "
                 f"two 1536x1024 five-row right-facing anime pixel-art sheets on flat {definition['chromaKey']}; "
                 "idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; "
+                "for grounded actors, walk is four gait phases followed by the same four phases with the opposite leg or limb group leading; "
                 "hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells."
             )
             references = []

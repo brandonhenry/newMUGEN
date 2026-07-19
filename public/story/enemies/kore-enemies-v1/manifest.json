@@ -11572,10 +11572,10 @@
           "model": "OpenAI image_gen (session-default model)",
           "prompt": "Original greenhollow regular enemy Haywire Mite: animated straw-and-copper vermin with sickle mandibles; two 1536x1024 five-row right-facing anime pixel-art sheets on flat #ff00ff; idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells.",
           "path": "/story/enemies/kore-enemies-v1/generated/haywire-mite-sheet-1.png",
-          "sha256": "312acab73884002ffbe37a570846e0732b6e8461b02291d784e08eac441ecfa3",
+          "sha256": "e69fb099a5bb690cff32a61e2226265158de444d7cce9a57adc89e4a6c49f070",
           "chromaKey": "#ff00ff",
           "chromaSourcePath": "/story/enemies/kore-enemies-v1/generated/haywire-mite-sheet-1-chroma.png",
-          "chromaSourceSha256": "88dc204fafdf1634969d7589d49e88832d2cf2d80b7a4bedb1a680150a0bc075",
+          "chromaSourceSha256": "380cf01273fa15683912b891a8e1c6f6ac4537ea5053693c1abcce0661ee5e09",
           "sourceReferences": [
             {
               "path": "/public/story/enemies/kore-enemies-v1/sources/image-01.png",
@@ -11586,7 +11586,8 @@
               "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
             }
           ],
-          "registryPath": "/src/story/storyRosterExpansion.json"
+          "registryPath": "/src/story/storyRosterExpansion.json",
+          "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
         },
         {
           "kind": "imagegen",
@@ -11698,48 +11699,48 @@
               "path": "/story/enemies/kore-enemies-v1/sets/haywire-mite/frames/walk/01.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                121,
-                188,
-                188
+                15,
+                85,
+                176,
+                187
               ],
-              "sha256": "8f68be3caff887a8621dd468c78654ac003b5c10b1412d5bf122e1b3974782a1"
+              "sha256": "e4bd4b29ff2bc06a8b2edcf115d2037ce41021f6dc3837d083341345677e24a9"
             },
             {
               "id": "walk-02",
               "path": "/story/enemies/kore-enemies-v1/sets/haywire-mite/frames/walk/02.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                103,
-                188,
-                188
+                17,
+                86,
+                174,
+                187
               ],
-              "sha256": "589191725f23e1e1fcc4ba798b0f2a444da91dced08d57f0c874034d635e7486"
+              "sha256": "f994558b8070ff0f3fb63921546aad76e4ee35d0f7a69910319df928040eb99a"
             },
             {
               "id": "walk-03",
               "path": "/story/enemies/kore-enemies-v1/sets/haywire-mite/frames/walk/03.png",
               "durationMs": 105,
               "contentBounds": [
-                22,
-                87,
-                169,
+                17,
+                85,
+                173,
                 188
               ],
-              "sha256": "4a61c3ffa4ed59e929612138b165c76d61c306a86cc7ee30dcc265018d509ae3"
+              "sha256": "de403924640623abc942aa25f5458eeaa05a27b55d893bd5ffd834aab15d0d13"
             },
             {
               "id": "walk-04",
               "path": "/story/enemies/kore-enemies-v1/sets/haywire-mite/frames/walk/04.png",
               "durationMs": 105,
               "contentBounds": [
-                25,
-                84,
-                166,
+                22,
+                88,
+                168,
                 188
               ],
-              "sha256": "5fc8f0b4ac213011fbc79148ed4231408ef8ae1c1c3adc9bc3ae60112c378870"
+              "sha256": "4d4149f966cdf55b138bfd3a226d8e2293af0249d2f543e2d1c9fa6863696eee"
             },
             {
               "id": "walk-05",
@@ -11747,35 +11748,35 @@
               "durationMs": 105,
               "contentBounds": [
                 28,
-                88,
+                89,
                 164,
                 188
               ],
-              "sha256": "6caf9e2370a1c66063d5ab81bcc816a724b48a3897798c8bad1b83b0b4032eb8"
+              "sha256": "4e2c7a11df9e21cf653ba1a563b42e630a42f77bc8cd465bbac95fc781730c75"
             },
             {
               "id": "walk-06",
               "path": "/story/enemies/kore-enemies-v1/sets/haywire-mite/frames/walk/06.png",
               "durationMs": 105,
               "contentBounds": [
-                25,
-                89,
-                166,
+                26,
+                90,
+                167,
                 188
               ],
-              "sha256": "ae520b91c11151bad7d20558cfeddd9aaead6a5b98b1131ea479b61c1e9f75e7"
+              "sha256": "94a23447e61b1e63ff1057b0693ff792eff757dabd50d75e4aee8a7d7ea06341"
             },
             {
               "id": "walk-07",
               "path": "/story/enemies/kore-enemies-v1/sets/haywire-mite/frames/walk/07.png",
               "durationMs": 105,
               "contentBounds": [
-                30,
-                87,
-                161,
+                28,
+                88,
+                162,
                 188
               ],
-              "sha256": "009da02297c74d0394f967491ad8525ff9d1074975a56896f150147a28406be4"
+              "sha256": "7b09e0a9c994a85bdde1634f382bda3460a9136c8b8aef252bad33058b0017c7"
             },
             {
               "id": "walk-08",
@@ -11783,11 +11784,11 @@
               "durationMs": 105,
               "contentBounds": [
                 30,
-                87,
-                161,
+                89,
+                163,
                 188
               ],
-              "sha256": "b9705cad81243f264dcca83ed7cfb7d28c5c73a9f4e6756efc0de7db3e87ffd1"
+              "sha256": "ff1a7f579b0b885d4651db895ef26666b43b8e3a61838f0e2f50914312ed04fd"
             }
           ]
         },
@@ -14104,10 +14105,10 @@
           "model": "OpenAI image_gen (session-default model)",
           "prompt": "Original greenhollow challenger enemy Harvest Warden: towering village guardian in grain armor wielding a millstone hammer; two 1536x1024 five-row right-facing anime pixel-art sheets on flat #ff00ff; idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells.",
           "path": "/story/enemies/kore-enemies-v1/generated/harvest-warden-sheet-1.png",
-          "sha256": "6d23ae76f0a4638a530b3e564d51990c9224732caac8fc2fd286ded548db6bfe",
+          "sha256": "58cea28f779ef2f49e9bcdbf1a15f65aa66c10a981c69c4bfcf07f9313c901a0",
           "chromaKey": "#ff00ff",
           "chromaSourcePath": "/story/enemies/kore-enemies-v1/generated/harvest-warden-sheet-1-chroma.png",
-          "chromaSourceSha256": "ad0ffaa0b9db3158f17b2e688b38a598b479c5b11aa68f8bba70460a09718e62",
+          "chromaSourceSha256": "413048f676e9de04b89cadde553dd2830c474d28955956848f5842eb4caa741f",
           "sourceReferences": [
             {
               "path": "/public/story/enemies/kore-enemies-v1/sources/image-01.png",
@@ -14118,7 +14119,8 @@
               "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
             }
           ],
-          "registryPath": "/src/story/storyRosterExpansion.json"
+          "registryPath": "/src/story/storyRosterExpansion.json",
+          "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
         },
         {
           "kind": "imagegen",
@@ -14231,47 +14233,47 @@
               "durationMs": 105,
               "contentBounds": [
                 27,
-                4,
+                30,
                 164,
                 188
               ],
-              "sha256": "bcc4a4288142a897c441957d1899a6fd2368c56761d5d8516b955fb842126a92"
+              "sha256": "473fae063b5771720ed39cbe7d81f0b7dac3f5fee345c727e6aaf442c1579723"
             },
             {
               "id": "walk-02",
               "path": "/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/walk/02.png",
               "durationMs": 105,
               "contentBounds": [
-                31,
-                4,
-                161,
+                30,
+                32,
+                163,
                 188
               ],
-              "sha256": "14a4669f138d6879a59a82b766a126220e72f6c099fe44c5ad78e904c4d62ac6"
+              "sha256": "6c02e744cf8588dd8ace20647469c6f937a5c1a4b357ed134beb5fb90f149dbe"
             },
             {
               "id": "walk-03",
               "path": "/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/walk/03.png",
               "durationMs": 105,
               "contentBounds": [
-                30,
-                4,
-                161,
-                188
+                28,
+                33,
+                163,
+                187
               ],
-              "sha256": "9d185f721739b4a970a2e0df8223b77bda3df2d2a5ab32c3a0ce74a3519bc5f0"
+              "sha256": "05e36f9dba07e5481dc8c00e98d33a7a594d72e198ecba0e540bd0b95ec201a2"
             },
             {
               "id": "walk-04",
               "path": "/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/walk/04.png",
               "durationMs": 105,
               "contentBounds": [
-                31,
-                4,
-                160,
-                188
+                30,
+                34,
+                161,
+                187
               ],
-              "sha256": "f04fbc3720fb9a772d295d1f90aa3724760ba2fae147dbc19cf16a234eec773e"
+              "sha256": "b8ca0351e8a0e8dc4e0566246dda0a355571ff0df468fb352c0c5b68fa9c05d8"
             },
             {
               "id": "walk-05",
@@ -14279,47 +14281,47 @@
               "durationMs": 105,
               "contentBounds": [
                 32,
-                4,
-                160,
-                188
+                32,
+                159,
+                187
               ],
-              "sha256": "0a110e9647b39891e6be71af2b7ea540e8a01ddac991e3a1abb68276fa286036"
+              "sha256": "05352d6a01caad4998b73946f9611fd9ebb3e6ef254abe788c3ae4dc423aac11"
             },
             {
               "id": "walk-06",
               "path": "/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/walk/06.png",
               "durationMs": 105,
               "contentBounds": [
+                29,
                 33,
-                36,
-                159,
-                188
+                163,
+                187
               ],
-              "sha256": "36694b2c985a63318e1c9b1d55a003a850ac17886e086776ceaa455a59e59a51"
+              "sha256": "03ab967c88aa05a22ad810302634ba20099327e8999624ddf3e1d800201276bd"
             },
             {
               "id": "walk-07",
               "path": "/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/walk/07.png",
               "durationMs": 105,
               "contentBounds": [
-                30,
-                36,
-                161,
-                188
+                29,
+                32,
+                160,
+                187
               ],
-              "sha256": "ab1cad74d77ae9032071d512955378b3097d925bac6cd04382464cc051c5df96"
+              "sha256": "f4580a1e62b8099cd794a17605681ebc5b433fe248ec439bc1b71257a557177c"
             },
             {
               "id": "walk-08",
               "path": "/story/enemies/kore-enemies-v1/sets/harvest-warden/frames/walk/08.png",
               "durationMs": 105,
               "contentBounds": [
-                33,
-                41,
-                159,
-                188
+                30,
+                35,
+                163,
+                187
               ],
-              "sha256": "e82f8908ea9cde44adbf2e7b2e6e430aadde4bb398f66c984834a253c8cb3d58"
+              "sha256": "8d3179ed38e7d7962cda54645f9c9b1525ac91ef289593e72218dfc07a131066"
             }
           ]
         },
@@ -14948,10 +14950,10 @@
           "model": "OpenAI image_gen (session-default model)",
           "prompt": "Original greenhollow challenger enemy Millstorm Sage: wind mage in layered sailcloth directing razor gusts with a vane staff; two 1536x1024 five-row right-facing anime pixel-art sheets on flat #ff00ff; idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells.",
           "path": "/story/enemies/kore-enemies-v1/generated/millstorm-sage-sheet-1.png",
-          "sha256": "1316e3a3dfd60b6e29fd33f648e4c87e20e81c0df2d26a1ba3d43e3d6668e501",
+          "sha256": "6b741d0a1edfd5aba483521a7d0f53a572d2aa52ff5049feaf02ab767b4dc79f",
           "chromaKey": "#ff00ff",
           "chromaSourcePath": "/story/enemies/kore-enemies-v1/generated/millstorm-sage-sheet-1-chroma.png",
-          "chromaSourceSha256": "2bc502d31a94794d4c6b115ca4fff67676a4bd2694c94ea6e255ee108fbf6732",
+          "chromaSourceSha256": "f69b24c7f38c2b9b8cc562c5dc8d11cb0eed5befa0412b4ce9a43a6dbe800317",
           "sourceReferences": [
             {
               "path": "/public/story/enemies/kore-enemies-v1/sources/image-01.png",
@@ -14962,7 +14964,8 @@
               "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
             }
           ],
-          "registryPath": "/src/story/storyRosterExpansion.json"
+          "registryPath": "/src/story/storyRosterExpansion.json",
+          "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
         },
         {
           "kind": "imagegen",
@@ -15076,10 +15079,10 @@
               "contentBounds": [
                 22,
                 31,
-                169,
-                188
+                168,
+                187
               ],
-              "sha256": "e83863594a8cc9aaaf81edd11a067434902eb80859b37a021107abb8ff1f312a"
+              "sha256": "23567a7d25553ae53e764c1f445ac42d85b91ed3f7df7e1e0f0faa47e42d72ce"
             },
             {
               "id": "walk-02",
@@ -15087,11 +15090,11 @@
               "durationMs": 105,
               "contentBounds": [
                 27,
-                31,
+                32,
                 165,
-                188
+                187
               ],
-              "sha256": "489826d5c463d89700b08c831e2e773ab572c33d638e83155df93c0756df7958"
+              "sha256": "e5caa8b1c5845b15b1bcc89da5faf9d1fd2c905684680b2e581bde64e49bf5c5"
             },
             {
               "id": "walk-03",
@@ -15099,11 +15102,11 @@
               "durationMs": 105,
               "contentBounds": [
                 26,
-                34,
-                165,
+                33,
+                164,
                 188
               ],
-              "sha256": "79d91fb8f5956dbd3dc8f046388c410e4c3a4a201e0e9a928ac1891be159e1fb"
+              "sha256": "840c560e9466fd2a243834b883096fa46fc97f5e9fd7ac05b72277107fe10edb"
             },
             {
               "id": "walk-04",
@@ -15112,10 +15115,10 @@
               "contentBounds": [
                 29,
                 31,
-                162,
+                161,
                 188
               ],
-              "sha256": "ef2427aa9080904964eaf0e8609cf9acd561416e36c8507dcbaf75353aa7fec2"
+              "sha256": "b20b4dc7a95aa55db68c5d6ce676c1c083946ed10344e5e8225baf29a1a4bf60"
             },
             {
               "id": "walk-05",
@@ -15124,46 +15127,46 @@
               "contentBounds": [
                 26,
                 31,
-                165,
-                188
+                166,
+                187
               ],
-              "sha256": "8ae061497eb18c9e6820241afbf1736f38d5b716930abd183b11fc5de311b9de"
+              "sha256": "562810c3536c51264c7ba6b31c340f2ce4227fcea3c93f0b5897dc348fe47283"
             },
             {
               "id": "walk-06",
               "path": "/story/enemies/kore-enemies-v1/sets/millstorm-sage/frames/walk/06.png",
               "durationMs": 105,
               "contentBounds": [
-                26,
-                33,
-                166,
+                25,
+                30,
+                167,
                 188
               ],
-              "sha256": "790f403d3c3f38184b765243149d8b4182ec835d94b860e37526b898da0709fd"
+              "sha256": "87d6ab661d7a9d89f3322a4cab76a5962db001de3acd0687cb3665f04de871e9"
             },
             {
               "id": "walk-07",
               "path": "/story/enemies/kore-enemies-v1/sets/millstorm-sage/frames/walk/07.png",
               "durationMs": 105,
               "contentBounds": [
-                22,
-                34,
-                169,
+                23,
+                33,
+                168,
                 188
               ],
-              "sha256": "d685024601511a2b9f6f3f33111c0ce12ee92c39130590cc0cdb98aeeaa8bf09"
+              "sha256": "7e349eeed6acc759e59793d18b734ca29f0646ecf1f71443bba3ad83691308f7"
             },
             {
               "id": "walk-08",
               "path": "/story/enemies/kore-enemies-v1/sets/millstorm-sage/frames/walk/08.png",
               "durationMs": 105,
               "contentBounds": [
-                25,
-                38,
-                167,
-                188
+                26,
+                36,
+                166,
+                187
               ],
-              "sha256": "93cd126fe625a9a6d02ff812d3b93179659f5fbc4590794d02431fc63179dc77"
+              "sha256": "72bd0930128c238e105299644aec7d4d4fe19290548bd668102eb6f7b70cf0c2"
             }
           ]
         },
@@ -15792,10 +15795,10 @@
           "model": "OpenAI image_gen (session-default model)",
           "prompt": "Original thornwood regular enemy Briar Maw: low thorn beast with a snapping flower jaw; two 1536x1024 five-row right-facing anime pixel-art sheets on flat #ff00ff; idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells.",
           "path": "/story/enemies/kore-enemies-v1/generated/briar-maw-sheet-1.png",
-          "sha256": "b43baab893672b67611b4b69143ab9273905240511f882035aefaf924132cda7",
+          "sha256": "29ea1fe8082e9e4596b77c2258abd100e681a8d58f7e840cfd7b7fefb255acf8",
           "chromaKey": "#ff00ff",
           "chromaSourcePath": "/story/enemies/kore-enemies-v1/generated/briar-maw-sheet-1-chroma.png",
-          "chromaSourceSha256": "a67ddf8463fceb7ee298ca5963856c49be05485c6fd8cb5749ee1101967a1cee",
+          "chromaSourceSha256": "be28178f8781300d958dcb426b870165476f892d204e2c3ed56fa79631790657",
           "sourceReferences": [
             {
               "path": "/public/story/enemies/kore-enemies-v1/sources/image-01.png",
@@ -15806,7 +15809,8 @@
               "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
             }
           ],
-          "registryPath": "/src/story/storyRosterExpansion.json"
+          "registryPath": "/src/story/storyRosterExpansion.json",
+          "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
         },
         {
           "kind": "imagegen",
@@ -15918,96 +15922,96 @@
               "path": "/story/enemies/kore-enemies-v1/sets/briar-maw/frames/walk/01.png",
               "durationMs": 105,
               "contentBounds": [
-                16,
-                4,
-                175,
-                188
+                7,
+                92,
+                184,
+                187
               ],
-              "sha256": "4e0704c368f7ce630ee5a69bcde431b8f80f5f8ace9aa86726958b92728f7403"
+              "sha256": "70a2ab9374101f0d803d6d820f5dccbab14d3ad6655ca964667d81147071da09"
             },
             {
               "id": "walk-02",
               "path": "/story/enemies/kore-enemies-v1/sets/briar-maw/frames/walk/02.png",
               "durationMs": 105,
               "contentBounds": [
-                7,
-                4,
-                185,
-                188
+                10,
+                95,
+                182,
+                187
               ],
-              "sha256": "cdbcabe7aa1e87b79ab8da248119eaf52134df2d351855450a1f8d3215efc957"
+              "sha256": "215147349ec55494ea7adc80d4ff15bcd5bfd4532e6136f9dc6bd5d7167a9f24"
             },
             {
               "id": "walk-03",
               "path": "/story/enemies/kore-enemies-v1/sets/briar-maw/frames/walk/03.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                20,
-                188,
-                188
+                10,
+                95,
+                183,
+                187
               ],
-              "sha256": "a196e513e3eb85fa7a382fd3f0d4082fa33d92b2b257785b39b1ea86687488d5"
+              "sha256": "8c8ce79761e2dccbe93460283d9269d711c8ba99ab33df8173b0d93ca0c3f22d"
             },
             {
               "id": "walk-04",
               "path": "/story/enemies/kore-enemies-v1/sets/briar-maw/frames/walk/04.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                13,
-                188,
-                188
+                14,
+                84,
+                178,
+                187
               ],
-              "sha256": "7b2ca80c82502cae29df15adcab9840d2392cdcb9cd582bfe1ca602cba96e8f9"
+              "sha256": "6dfef62f94d59feb1f73854f7204d4a6039159584c7a967664623feb93604f60"
             },
             {
               "id": "walk-05",
               "path": "/story/enemies/kore-enemies-v1/sets/briar-maw/frames/walk/05.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                9,
-                188,
-                188
+                11,
+                94,
+                180,
+                187
               ],
-              "sha256": "1a9dd53191fe8cf5172d1a32b00610f36d08f21e831946872f64a125a4d49ff0"
+              "sha256": "10888ee6173cd749694f4d69c5bdabf4d783c2be8bdcdf5ceff144557f502272"
             },
             {
               "id": "walk-06",
               "path": "/story/enemies/kore-enemies-v1/sets/briar-maw/frames/walk/06.png",
               "durationMs": 105,
               "contentBounds": [
-                8,
-                4,
-                183,
+                10,
+                95,
+                182,
                 188
               ],
-              "sha256": "d2bf6935d7409868ea1d023d7611b741cdb1ad8534c390eebe19eca0bb6cd201"
+              "sha256": "b7f06deb2d2f4c9bb9a525c4adb418aaebadc1f4d4ee2b2870cb8a49f8168045"
             },
             {
               "id": "walk-07",
               "path": "/story/enemies/kore-enemies-v1/sets/briar-maw/frames/walk/07.png",
               "durationMs": 105,
               "contentBounds": [
-                11,
-                124,
-                181,
-                188
+                10,
+                97,
+                182,
+                187
               ],
-              "sha256": "5ae7e034fba5b14d84f9baf8f6c88ea6fc860f381c41fe593151789b92626f00"
+              "sha256": "4166f8d024e24a03195a13648ce67f5272a470c460998bbd26e243c2f6ab80d9"
             },
             {
               "id": "walk-08",
               "path": "/story/enemies/kore-enemies-v1/sets/briar-maw/frames/walk/08.png",
               "durationMs": 105,
               "contentBounds": [
-                11,
-                124,
-                181,
-                188
+                9,
+                95,
+                182,
+                187
               ],
-              "sha256": "ad3b79e223fce3b52faa6b211300bfb050c1e4a2da5985d628937970d89ceba1"
+              "sha256": "c53cdca98da51c2dd841fb5e2e732bfca8bed9684a94574bd0f8c1083a6b3da8"
             }
           ]
         },
@@ -16636,10 +16640,10 @@
           "model": "OpenAI image_gen (session-default model)",
           "prompt": "Original thornwood regular enemy Sporecap Stalker: walking dark mushroom that fires luminous spores; two 1536x1024 five-row right-facing anime pixel-art sheets on flat #ff00ff; idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells.",
           "path": "/story/enemies/kore-enemies-v1/generated/sporecap-stalker-sheet-1.png",
-          "sha256": "d174c2716f2ec8485c77a92009b97e2d03e62790c4ead47c81d60bb230658ab5",
+          "sha256": "fe16dabe18bf08a68f9fd50033812c8562e700d044f220fb2de03e2ff3f93cd4",
           "chromaKey": "#ff00ff",
           "chromaSourcePath": "/story/enemies/kore-enemies-v1/generated/sporecap-stalker-sheet-1-chroma.png",
-          "chromaSourceSha256": "806d241c1c663608fc69b6a4ed8676589e03cdc2dd519e5de93a863e759f759f",
+          "chromaSourceSha256": "84eb3495550b7357a5c1ac822fd250e62700c5aba88da794beef1ae759a9f8ed",
           "sourceReferences": [
             {
               "path": "/public/story/enemies/kore-enemies-v1/sources/image-01.png",
@@ -16650,7 +16654,8 @@
               "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
             }
           ],
-          "registryPath": "/src/story/storyRosterExpansion.json"
+          "registryPath": "/src/story/storyRosterExpansion.json",
+          "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
         },
         {
           "kind": "imagegen",
@@ -16764,10 +16769,10 @@
               "contentBounds": [
                 36,
                 42,
-                156,
-                188
+                155,
+                187
               ],
-              "sha256": "8907f11dfcd239058a38cec6cf56a550da268f77e5fa3c5b34d7438e9bbb38c9"
+              "sha256": "014390dad961ce67be7ea03486f7cfd720e57eac0f61c34694ce64fbff70df51"
             },
             {
               "id": "walk-02",
@@ -16777,9 +16782,9 @@
                 35,
                 40,
                 156,
-                188
+                187
               ],
-              "sha256": "9a8d2585b78c15b56b83c0ff216924c6e322eef8bdb7acd8d7a78a78e7e7bb0c"
+              "sha256": "221c7f656d56ccd98c36a21d888e90fd9b7b7c788c1122ccd9c13abd5bd8e4bb"
             },
             {
               "id": "walk-03",
@@ -16788,10 +16793,10 @@
               "contentBounds": [
                 45,
                 41,
-                146,
-                188
+                145,
+                187
               ],
-              "sha256": "d5eb14776c41ba10e42ad20cd89f6593524ceccaeb3bd04bea4464c8ea7dcd97"
+              "sha256": "5c4d00206b435080fa48370d15bc57f2b777e707bc731921d16dcb0f4be172a0"
             },
             {
               "id": "walk-04",
@@ -16799,11 +16804,11 @@
               "durationMs": 105,
               "contentBounds": [
                 37,
-                41,
+                42,
                 155,
-                188
+                187
               ],
-              "sha256": "f64ef2a0129e5c2e6bace0b9faa154dd51d1f69638d39f4bfbd3b10e5e711849"
+              "sha256": "b77eb3463e0f2482c375d126debfbe3580b753cf0d31ab5f3ebd2209f8c614ca"
             },
             {
               "id": "walk-05",
@@ -16811,23 +16816,23 @@
               "durationMs": 105,
               "contentBounds": [
                 38,
-                42,
+                40,
                 154,
-                188
+                187
               ],
-              "sha256": "44aa15f0bb8dd7995dd4ea0b66f91a5710218140f1a27f0e41c40d6fa4343455"
+              "sha256": "11ea26334e80aa2bb538c5651d1af2e15dd95713464b2b29d50267541a2324bd"
             },
             {
               "id": "walk-06",
               "path": "/story/enemies/kore-enemies-v1/sets/sporecap-stalker/frames/walk/06.png",
               "durationMs": 105,
               "contentBounds": [
-                43,
-                41,
-                148,
-                188
+                38,
+                39,
+                152,
+                187
               ],
-              "sha256": "9b1a3c9d7a9b564f784cd65a07b16e588b2264775c0449d4bd11147aa8ea58e9"
+              "sha256": "e98793b304c307c326b8708780eedc498449712d4d25594ace80c980460b9d52"
             },
             {
               "id": "walk-07",
@@ -16835,23 +16840,23 @@
               "durationMs": 105,
               "contentBounds": [
                 43,
-                42,
+                40,
                 149,
-                188
+                187
               ],
-              "sha256": "f248f8ba69d31da5593ecf18f260266bbf67b4b8e37453d9cb169a7e29a1b73e"
+              "sha256": "0ecab8a6d4791909b895295315091af61196fbfa4f88964fedd03e4139c6b537"
             },
             {
               "id": "walk-08",
               "path": "/story/enemies/kore-enemies-v1/sets/sporecap-stalker/frames/walk/08.png",
               "durationMs": 105,
               "contentBounds": [
-                43,
-                42,
-                149,
-                188
+                36,
+                40,
+                155,
+                187
               ],
-              "sha256": "7184f83ec02f4b6a91faa9efd7bda66873d210c58a92638086ee718c3a589264"
+              "sha256": "f19038bf60f1b0b54df021ee464f65523c5874cdeca68f2dceebe4cf98c4e198"
             }
           ]
         },
@@ -18324,10 +18329,10 @@
           "model": "OpenAI image_gen (session-default model)",
           "prompt": "Original thornwood challenger enemy Rootbound Huntress: masked forest huntress wielding paired living-thorn blades; two 1536x1024 five-row right-facing anime pixel-art sheets on flat #ff00ff; idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells.",
           "path": "/story/enemies/kore-enemies-v1/generated/rootbound-huntress-sheet-1.png",
-          "sha256": "08f1961dc2b2cb29673fffa0aa0b2045a300ac68810bd2e9c8eddff51b09aed0",
+          "sha256": "36afe5a32e8e30ceb321265d3ca0ea0c99fe0da9e270752e50bfaded54d1b408",
           "chromaKey": "#ff00ff",
           "chromaSourcePath": "/story/enemies/kore-enemies-v1/generated/rootbound-huntress-sheet-1-chroma.png",
-          "chromaSourceSha256": "f8844bac7eb062d74d5e1eb208a19cc86b86c7ebbdc791423cc9b02242d6b282",
+          "chromaSourceSha256": "95c0acded793b9d1b195f901c3d9c35eab9dda0b20dc1cab48c2238114ade9cd",
           "sourceReferences": [
             {
               "path": "/public/story/enemies/kore-enemies-v1/sources/image-01.png",
@@ -18338,7 +18343,8 @@
               "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
             }
           ],
-          "registryPath": "/src/story/storyRosterExpansion.json"
+          "registryPath": "/src/story/storyRosterExpansion.json",
+          "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
         },
         {
           "kind": "imagegen",
@@ -18453,21 +18459,21 @@
                 38,
                 36,
                 154,
-                188
+                187
               ],
-              "sha256": "e2443d9027788069bb4db45d64bc382fb773997342fca5c3c578a24eca3c6d33"
+              "sha256": "3fea26e2723419a2f9f3a776382f89cc227bd52a6870314931db438014ab6c7e"
             },
             {
               "id": "walk-02",
               "path": "/story/enemies/kore-enemies-v1/sets/rootbound-huntress/frames/walk/02.png",
               "durationMs": 105,
               "contentBounds": [
-                36,
+                37,
                 36,
                 155,
                 188
               ],
-              "sha256": "7a193514d9f38b12a71ae8047155e893cfb9e7ef5fcc4fc9a733158d821ccfcd"
+              "sha256": "f51defd063dc078b13b3bd1c826dcec0b63f363c9447d557843470cf72fc0240"
             },
             {
               "id": "walk-03",
@@ -18476,10 +18482,10 @@
               "contentBounds": [
                 39,
                 37,
-                153,
+                152,
                 188
               ],
-              "sha256": "21e342674a1e10f7e291dfabd273630b1bc950719f9c3e3087efca201def2af8"
+              "sha256": "964f711f87eab31cf37f66569720cd5de755e7b4a6b0ba4e317a432817252d19"
             },
             {
               "id": "walk-04",
@@ -18487,35 +18493,35 @@
               "durationMs": 105,
               "contentBounds": [
                 34,
-                39,
-                157,
+                40,
+                156,
                 188
               ],
-              "sha256": "1db78d64b182b2f14e20f6748e29b92ba4f87183099436b3bc51d4f69bed1377"
+              "sha256": "d2ad0b9cfff9d5eabfe908b138e5eecc01cd35a8d0968b0cc9a3294b68bb19a8"
             },
             {
               "id": "walk-05",
               "path": "/story/enemies/kore-enemies-v1/sets/rootbound-huntress/frames/walk/05.png",
               "durationMs": 105,
               "contentBounds": [
-                41,
-                38,
+                42,
+                34,
                 150,
-                188
+                187
               ],
-              "sha256": "4adc8a969a6ab95a73c5f28626cea4fe6f460c76424dc315e2dfabfd2b50d1e5"
+              "sha256": "fdff1d61efd3bad9ebed6442e2e2cc65431ef41328eb6ec2aa7b045f549f9e24"
             },
             {
               "id": "walk-06",
               "path": "/story/enemies/kore-enemies-v1/sets/rootbound-huntress/frames/walk/06.png",
               "durationMs": 105,
               "contentBounds": [
-                39,
-                39,
+                40,
+                37,
                 152,
                 188
               ],
-              "sha256": "62b9d410d97160980424be544f465ef5bce4d4e768f451a1527ffd0c20eb6b4a"
+              "sha256": "544ed9277a2be85daf4154b9e0d5bb700821dc3e75f3c67ddda4d983f58150d6"
             },
             {
               "id": "walk-07",
@@ -18523,11 +18529,11 @@
               "durationMs": 105,
               "contentBounds": [
                 38,
-                42,
-                153,
+                38,
+                152,
                 188
               ],
-              "sha256": "4ec5c6404ca7dac09dfd79e819e8783d10eacab9066efc0725f06bf73a75ad88"
+              "sha256": "6381000aa28d003bf0dc9f92f799eb957db6570a3ec193da6bb66bc6401467aa"
             },
             {
               "id": "walk-08",
@@ -18535,11 +18541,11 @@
               "durationMs": 105,
               "contentBounds": [
                 42,
-                43,
+                39,
                 150,
                 188
               ],
-              "sha256": "a0ab94c414109852a65d06807b8f14c2d520a49ece2ea1e4fbbdb93dc8f4df5e"
+              "sha256": "ca717712266b5eb9044813a64cb77093f06df385007ebec1b5f581e3b9bf708a"
             }
           ]
         },
@@ -19168,10 +19174,10 @@
           "model": "OpenAI image_gen (session-default model)",
           "prompt": "Original thornwood challenger enemy Heartwood Oracle: ancient root seer with a floating seed halo and branch staff; two 1536x1024 five-row right-facing anime pixel-art sheets on flat #ff00ff; idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells.",
           "path": "/story/enemies/kore-enemies-v1/generated/heartwood-oracle-sheet-1.png",
-          "sha256": "d1a3575bbdc3f811529fb20d4860a5d731c5bce128970c03a5f184b053b75dbd",
+          "sha256": "fc0d2efe2ba2a6c9afc0ef5142d4d24dd49f15da9c4f0d1267a123a38d736d82",
           "chromaKey": "#ff00ff",
           "chromaSourcePath": "/story/enemies/kore-enemies-v1/generated/heartwood-oracle-sheet-1-chroma.png",
-          "chromaSourceSha256": "264dfde365e5962d5b55c8650e9c33f2764b6b224820b84c9126133fe84145b1",
+          "chromaSourceSha256": "e7c0017e615cb482cac61e05fbdd5f305f3f1a930c4a619ecb68fea7141e6d25",
           "sourceReferences": [
             {
               "path": "/public/story/enemies/kore-enemies-v1/sources/image-01.png",
@@ -19182,7 +19188,8 @@
               "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
             }
           ],
-          "registryPath": "/src/story/storyRosterExpansion.json"
+          "registryPath": "/src/story/storyRosterExpansion.json",
+          "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
         },
         {
           "kind": "imagegen",
@@ -19294,48 +19301,48 @@
               "path": "/story/enemies/kore-enemies-v1/sets/heartwood-oracle/frames/walk/01.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                64,
-                188,
-                188
+                16,
+                20,
+                176,
+                187
               ],
-              "sha256": "eadb2aa90318dae25d6e325680f403a8459a9a03c32efde918d38792bdbe8219"
+              "sha256": "6406abf2ef0c080eb2a310423158e3130ba5f8056f9701c80f667487b7e18ffc"
             },
             {
               "id": "walk-02",
               "path": "/story/enemies/kore-enemies-v1/sets/heartwood-oracle/frames/walk/02.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                103,
-                188,
-                188
+                14,
+                18,
+                177,
+                187
               ],
-              "sha256": "55bf3f9b97a686c49205d8714ecd4ee492973dc2e1f5c2a0955e0f1a168bb1d0"
+              "sha256": "9e32b1a6f769d81683f6d226b5dea629ab42ad8b323fc398289e9aeb68f3be0c"
             },
             {
               "id": "walk-03",
               "path": "/story/enemies/kore-enemies-v1/sets/heartwood-oracle/frames/walk/03.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                59,
-                188,
+                23,
+                21,
+                168,
                 188
               ],
-              "sha256": "544bd5088f70728a5b1c647736aa5b4fc77e62810b43fa0b0ab11d1c729aa5d5"
+              "sha256": "2a06e95693577cc38aef9b86b35476484063d3961035b70cf83cf936161d7dcc"
             },
             {
               "id": "walk-04",
               "path": "/story/enemies/kore-enemies-v1/sets/heartwood-oracle/frames/walk/04.png",
               "durationMs": 105,
               "contentBounds": [
-                18,
-                33,
-                173,
-                188
+                14,
+                19,
+                176,
+                187
               ],
-              "sha256": "338ab6dcc03f2ed71ee6c1cd4c2bcd6a78cda558b11f95e45352793d91783a4d"
+              "sha256": "52329ecdc6890394ccafc45d58f3f551b7880910d77f9420ddb0de57434d4d63"
             },
             {
               "id": "walk-05",
@@ -19343,47 +19350,47 @@
               "durationMs": 105,
               "contentBounds": [
                 19,
-                33,
-                173,
+                23,
+                172,
                 188
               ],
-              "sha256": "5d554c8e48730a39da7b84e84624ef21da39175320e3cf52fc7399a06f6964b8"
+              "sha256": "3cc143d3a5c3d7023188b7d25ff6f6e98a2909e4c5e300e8b484bb6aa5cea03d"
             },
             {
               "id": "walk-06",
               "path": "/story/enemies/kore-enemies-v1/sets/heartwood-oracle/frames/walk/06.png",
               "durationMs": 105,
               "contentBounds": [
-                19,
-                33,
-                173,
-                188
+                23,
+                20,
+                167,
+                187
               ],
-              "sha256": "3b229056159f9923e3f8b7677959db8026fcc93289bc152527e41ab6bedc11df"
+              "sha256": "e59b1fbaba15b240fd916d06b9e0d245d7aee5626b60acc0eda1b01fa013fce3"
             },
             {
               "id": "walk-07",
               "path": "/story/enemies/kore-enemies-v1/sets/heartwood-oracle/frames/walk/07.png",
               "durationMs": 105,
               "contentBounds": [
-                19,
-                33,
-                173,
+                23,
+                22,
+                171,
                 188
               ],
-              "sha256": "da8938ac8b8f5efd8718d5c2a57ddde42c13edf79601a040aced3b78842faca9"
+              "sha256": "dea987e13892e0e9ce15f8d5c22832ba01db152b6608f2eac40a76d90cef4e45"
             },
             {
               "id": "walk-08",
               "path": "/story/enemies/kore-enemies-v1/sets/heartwood-oracle/frames/walk/08.png",
               "durationMs": 105,
               "contentBounds": [
-                19,
-                33,
-                173,
-                188
+                20,
+                20,
+                172,
+                187
               ],
-              "sha256": "1edd6c99d2748cab32e68d8b48ae7e554251c84ccf0ddf2a64e028eafb5c72bb"
+              "sha256": "52a34a06ccf98160e0dbf695a92e0f4bbcd1b7afa646fbdaa59b31487113c0f3"
             }
           ]
         },
@@ -20012,10 +20019,10 @@
           "model": "OpenAI image_gen (session-default model)",
           "prompt": "Original ironroot regular enemy Rail Jaw: iron hound assembled from broken rail plates and wheel teeth; two 1536x1024 five-row right-facing anime pixel-art sheets on flat #00ff00; idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells.",
           "path": "/story/enemies/kore-enemies-v1/generated/rail-jaw-sheet-1.png",
-          "sha256": "c81144f560cbe39f084428630ab28c9437809e9321fce53635b4f2a0689d2f50",
+          "sha256": "66755ce9945cad6cc19a742d67d08ab1202d98a4716b089e21bef749a7eae297",
           "chromaKey": "#00ff00",
           "chromaSourcePath": "/story/enemies/kore-enemies-v1/generated/rail-jaw-sheet-1-chroma.png",
-          "chromaSourceSha256": "7613804c9fd0db4c9f9d5584f3430806b80f9e6e38f72ccdd9bde4e379f58989",
+          "chromaSourceSha256": "0688b42558471f6c03dbd417b7103902019077fcfcdf20c0764de0a901f1d051",
           "sourceReferences": [
             {
               "path": "/public/story/enemies/kore-enemies-v1/sources/image-01.png",
@@ -20026,7 +20033,8 @@
               "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
             }
           ],
-          "registryPath": "/src/story/storyRosterExpansion.json"
+          "registryPath": "/src/story/storyRosterExpansion.json",
+          "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
         },
         {
           "kind": "imagegen",
@@ -20143,7 +20151,7 @@
                 188,
                 188
               ],
-              "sha256": "983a6989868635289d69f63001f5945cd588823a88efdabf1202341ea52b0663"
+              "sha256": "50ebfa1d08b624a3672c35f3f3f2e7a12c062b424fa88a01ead53a11660c27a2"
             },
             {
               "id": "walk-02",
@@ -20151,11 +20159,11 @@
               "durationMs": 105,
               "contentBounds": [
                 4,
-                57,
+                58,
                 188,
                 188
               ],
-              "sha256": "6697bcc172cfce8ea0ee35067888317bde560a6ccb5f714a64ff8378fdc29824"
+              "sha256": "92a37318b189d1dc878131a1b25596966c1f858d839dca23375808609d06c8b2"
             },
             {
               "id": "walk-03",
@@ -20167,7 +20175,7 @@
                 185,
                 188
               ],
-              "sha256": "39a6e3fd0d585a7319d91b5278e65246b5b1941f997de0e91b18e313c55b2daf"
+              "sha256": "04c6ad18df4d2d619d47e5b788f5ff43a8b3874d7a18091527e954188ab5f597"
             },
             {
               "id": "walk-04",
@@ -20179,7 +20187,7 @@
                 184,
                 188
               ],
-              "sha256": "7e1370854509563910620a0d97431eb2f2993cfab6706ad8bdeb7c544d9071d2"
+              "sha256": "af716c6ba754d58962b5e7a7c8243370b9bfed90eeb32c0e58bc7535b25ddbf2"
             },
             {
               "id": "walk-05",
@@ -20187,35 +20195,35 @@
               "durationMs": 105,
               "contentBounds": [
                 7,
-                57,
-                184,
+                58,
+                183,
                 188
               ],
-              "sha256": "02beee4b4d9603ca67321803dfe27652c79e224f777b7c19882b1f2db35181b4"
+              "sha256": "5020cc72966a13b0572a65b13cda7ea5eac06fa1d975b333f80b539fae677474"
             },
             {
               "id": "walk-06",
               "path": "/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/walk/06.png",
               "durationMs": 105,
               "contentBounds": [
-                7,
-                57,
-                184,
+                4,
+                58,
+                188,
                 188
               ],
-              "sha256": "02beee4b4d9603ca67321803dfe27652c79e224f777b7c19882b1f2db35181b4"
+              "sha256": "890846723d6c0c3b9741fd6cbf2486f0c43e4079a53d6d34a28d86916ec41ba3"
             },
             {
               "id": "walk-07",
               "path": "/story/enemies/kore-enemies-v1/sets/rail-jaw/frames/walk/07.png",
               "durationMs": 105,
               "contentBounds": [
-                7,
-                57,
-                184,
+                6,
+                62,
+                186,
                 188
               ],
-              "sha256": "02beee4b4d9603ca67321803dfe27652c79e224f777b7c19882b1f2db35181b4"
+              "sha256": "66e53496d6f49a12dc2d815cb293b9c9b1fb2697cc85e9eabada0afe5538fc8d"
             },
             {
               "id": "walk-08",
@@ -20223,11 +20231,11 @@
               "durationMs": 105,
               "contentBounds": [
                 7,
-                57,
-                184,
+                58,
+                185,
                 188
               ],
-              "sha256": "02beee4b4d9603ca67321803dfe27652c79e224f777b7c19882b1f2db35181b4"
+              "sha256": "18ad0032c299beb8bdab0856a238e2e8e508a26560f18077238f32a86ab4004e"
             }
           ]
         },
@@ -20856,10 +20864,10 @@
           "model": "OpenAI image_gen (session-default model)",
           "prompt": "Original ironroot regular enemy Ore Spitter: crystalline cave crawler that launches glowing ore shards; two 1536x1024 five-row right-facing anime pixel-art sheets on flat #00ff00; idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells.",
           "path": "/story/enemies/kore-enemies-v1/generated/ore-spitter-sheet-1.png",
-          "sha256": "b2ddcfe300874f05f34be92a95d22d30b149de323c1f5ba10ba70ee42e92bb93",
+          "sha256": "088b049d0d37198a949f7698fb4606d79e765f0ff305caf5a9c1f480a89da3dc",
           "chromaKey": "#00ff00",
           "chromaSourcePath": "/story/enemies/kore-enemies-v1/generated/ore-spitter-sheet-1-chroma.png",
-          "chromaSourceSha256": "092c3a0a7889aa24256c3e5e6fc3d2b4742ed2488fdeb598bef89a025ca7c304",
+          "chromaSourceSha256": "e1154c62e2d5c8a7b7a6c3f2d163d3207e360ddfc9091a891759cfa7d8f93290",
           "sourceReferences": [
             {
               "path": "/public/story/enemies/kore-enemies-v1/sources/image-01.png",
@@ -20870,7 +20878,8 @@
               "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
             }
           ],
-          "registryPath": "/src/story/storyRosterExpansion.json"
+          "registryPath": "/src/story/storyRosterExpansion.json",
+          "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
         },
         {
           "kind": "imagegen",
@@ -20983,11 +20992,11 @@
               "durationMs": 105,
               "contentBounds": [
                 19,
-                71,
-                172,
+                72,
+                171,
                 188
               ],
-              "sha256": "15e11c314081295ab9febfc4b03fa9794c0dc2b3ea3f01a2448a4d9e04e0f9e6"
+              "sha256": "a79b7d8720a18d1824954dc90de2fccd7d89174cae5e0500f8e4055e12ec2593"
             },
             {
               "id": "walk-02",
@@ -20999,7 +21008,7 @@
                 174,
                 188
               ],
-              "sha256": "45b5b8a2d7335bf2c8903a734983550301c1b2abc14f9a2d1e4bfc43d9d78864"
+              "sha256": "b9c7d1e4f3d58e8aa08ea867454921ca014c16f1270fa110d59522214c728bdd"
             },
             {
               "id": "walk-03",
@@ -21009,9 +21018,9 @@
                 25,
                 73,
                 167,
-                188
+                187
               ],
-              "sha256": "0ad3415bf09aac44103e87b7295229144121f1abce41e1f66aa91dc5a803c88a"
+              "sha256": "b8b79b8cb1ad433ac092c560fdb85b6e9e37dfa680a7bfded0a18442df4a07e9"
             },
             {
               "id": "walk-04",
@@ -21020,58 +21029,58 @@
               "contentBounds": [
                 13,
                 73,
-                178,
+                177,
                 188
               ],
-              "sha256": "cf2e6051dadc45b3331388b7db531a21d5f6377ebbd61d28c2e420fb07be1c29"
+              "sha256": "cd1a54f0d144b00e0082022ac9fd3ba71e7c0bb2d8cc0d1207ea6ed91651ce45"
             },
             {
               "id": "walk-05",
               "path": "/story/enemies/kore-enemies-v1/sets/ore-spitter/frames/walk/05.png",
               "durationMs": 105,
               "contentBounds": [
-                20,
+                21,
                 80,
-                172,
+                171,
                 188
               ],
-              "sha256": "f5f435283655976fafe399aafc4827b64c0d657fc194b951921c017bf9669b75"
+              "sha256": "a81fe6e2ee85c7c0dc0605bf38de87e2a933ccf4aa375b63e65e391c113b6e37"
             },
             {
               "id": "walk-06",
               "path": "/story/enemies/kore-enemies-v1/sets/ore-spitter/frames/walk/06.png",
               "durationMs": 105,
               "contentBounds": [
-                27,
-                80,
-                165,
+                23,
+                77,
+                168,
                 188
               ],
-              "sha256": "2ab23d7b0f350b98716012c3b57018a3cf666e9c65509383edf5a5f2b02b8c51"
+              "sha256": "72175c5c755578958ec8376a32ff0dd99e616424663475fea8a54acc3acf0498"
             },
             {
               "id": "walk-07",
               "path": "/story/enemies/kore-enemies-v1/sets/ore-spitter/frames/walk/07.png",
               "durationMs": 105,
               "contentBounds": [
-                22,
+                18,
                 73,
-                170,
+                174,
                 188
               ],
-              "sha256": "4b0c61fe78ead2dda9549403639d51ecaca18697dbdd1404e1f9299601904291"
+              "sha256": "c04a658eba129f8bec3278eb2942758af7a02fbf682f97ea4841cc01dcd14d83"
             },
             {
               "id": "walk-08",
               "path": "/story/enemies/kore-enemies-v1/sets/ore-spitter/frames/walk/08.png",
               "durationMs": 105,
               "contentBounds": [
-                22,
+                12,
                 73,
-                170,
+                178,
                 188
               ],
-              "sha256": "4b0c61fe78ead2dda9549403639d51ecaca18697dbdd1404e1f9299601904291"
+              "sha256": "56cac76c6683608cd314ae57d81174ea079d65e701de6e77f9db105e022eb777"
             }
           ]
         },
@@ -22544,10 +22553,10 @@
           "model": "OpenAI image_gen (session-default model)",
           "prompt": "Original ironroot challenger enemy Iron Foreman: massive armored foreman wielding a chain-driven pile hammer; two 1536x1024 five-row right-facing anime pixel-art sheets on flat #00ff00; idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells.",
           "path": "/story/enemies/kore-enemies-v1/generated/iron-foreman-sheet-1.png",
-          "sha256": "bb5ae85993053a9fb478c21c5414073fe99b5731d9f362eb9c8eabffee6d6089",
+          "sha256": "1ce96e08150db70389fcfc3844de16930c88f4d8a8afa8c46fda94793bf80f5a",
           "chromaKey": "#00ff00",
           "chromaSourcePath": "/story/enemies/kore-enemies-v1/generated/iron-foreman-sheet-1-chroma.png",
-          "chromaSourceSha256": "dc01d79f04e6561fc2dec98c3b1e7046c5658ad052b66a1092a0bbd8399a25c9",
+          "chromaSourceSha256": "d8a3e924dfe94ecf2b9f99f676b333888929a6aa22cda7ea5ecb03f82431bf27",
           "sourceReferences": [
             {
               "path": "/public/story/enemies/kore-enemies-v1/sources/image-01.png",
@@ -22558,7 +22567,8 @@
               "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
             }
           ],
-          "registryPath": "/src/story/storyRosterExpansion.json"
+          "registryPath": "/src/story/storyRosterExpansion.json",
+          "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
         },
         {
           "kind": "imagegen",
@@ -22671,11 +22681,11 @@
               "durationMs": 105,
               "contentBounds": [
                 24,
-                52,
+                53,
                 167,
                 188
               ],
-              "sha256": "62e68d4252dc1355d65620f8d94053c2a206e1ca05e82dae093b1d76e823a017"
+              "sha256": "1fd147ff854d637a155a5a8829e7310e69de7f8ba54451e5a7776238299f05d4"
             },
             {
               "id": "walk-02",
@@ -22687,19 +22697,19 @@
                 159,
                 188
               ],
-              "sha256": "c182e9f4ca8896f01c9f147126c9d521ae57d8a7c3c8d144dd9affc84b7364c8"
+              "sha256": "3ee5716ba63f1a1b327b1f46a96b51c619d08081fbb0d91a240cc429be6f291c"
             },
             {
               "id": "walk-03",
               "path": "/story/enemies/kore-enemies-v1/sets/iron-foreman/frames/walk/03.png",
               "durationMs": 105,
               "contentBounds": [
-                31,
-                52,
+                32,
+                53,
                 161,
                 188
               ],
-              "sha256": "f5316ef0fc8181bc7371b80047b356e0e124ca4d8bb1f493b3e63a27d1de2fa0"
+              "sha256": "234cccb720f957eecbbb39661da7c24784c4d009a7981b640c50fd394bef822f"
             },
             {
               "id": "walk-04",
@@ -22707,11 +22717,11 @@
               "durationMs": 105,
               "contentBounds": [
                 23,
-                52,
+                53,
                 169,
                 188
               ],
-              "sha256": "d6709fe785e7abb48cfd06e09c7cd55799041d78f833a0942005abcb35ffa84b"
+              "sha256": "c0a0d90032181dd6c7c448b4b1639f58f78a771b2d33a06d8251962199b91b5b"
             },
             {
               "id": "walk-05",
@@ -22719,35 +22729,35 @@
               "durationMs": 105,
               "contentBounds": [
                 34,
-                53,
+                54,
                 158,
                 188
               ],
-              "sha256": "d878bf1d674a8f800301366660e62fe8ebcc5f504c3e56ae18691bc996021845"
+              "sha256": "730bbf7b98cf0381ee9468f6fbaad9be5469f54c05606b88407f0e51db6d9c6a"
             },
             {
               "id": "walk-06",
               "path": "/story/enemies/kore-enemies-v1/sets/iron-foreman/frames/walk/06.png",
               "durationMs": 105,
               "contentBounds": [
-                25,
-                53,
-                167,
+                26,
+                54,
+                166,
                 188
               ],
-              "sha256": "e6da2d1450670ee77bd32a5339913c1e024c88940a079b4e8aa0870f90489427"
+              "sha256": "07858a9a04cda3dc1e4dc4e2d719e1eabc1b31f659e07f0cdf8eb131113c16db"
             },
             {
               "id": "walk-07",
               "path": "/story/enemies/kore-enemies-v1/sets/iron-foreman/frames/walk/07.png",
               "durationMs": 105,
               "contentBounds": [
-                31,
-                53,
+                32,
+                54,
                 160,
                 188
               ],
-              "sha256": "d3848e271b0e8185adef69110564da59844a594cf14772dd27688eda91f11c3a"
+              "sha256": "7ef1a0278e9c898d7e065f921a212c4e21d34fdb6eb9cdffd5b9f39ce8d8560f"
             },
             {
               "id": "walk-08",
@@ -22755,11 +22765,11 @@
               "durationMs": 105,
               "contentBounds": [
                 32,
-                52,
+                54,
                 159,
                 188
               ],
-              "sha256": "c62f1bc9a1d419e2add68f5178074dbe0c0227fdbc052ab5afaaca7b035235d3"
+              "sha256": "47e59eafacf45baba0910447546cd1a118431ccb59b4b2800fbf07c9fb1171ee"
             }
           ]
         },
@@ -23388,10 +23398,10 @@
           "model": "OpenAI image_gen (session-default model)",
           "prompt": "Original ironroot challenger enemy Sunstone Artificer: crystal engineer commanding orbiting golden drill prisms; two 1536x1024 five-row right-facing anime pixel-art sheets on flat #00ff00; idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells.",
           "path": "/story/enemies/kore-enemies-v1/generated/sunstone-artificer-sheet-1.png",
-          "sha256": "1c66ad284ef5204e94235ad088e67aa75ecb7b1ab30e59d652e1b612371cd75c",
+          "sha256": "9647218735b6142363f7c2129e448e95b791a3c0ea97a70ea54b3ba83e399caa",
           "chromaKey": "#00ff00",
           "chromaSourcePath": "/story/enemies/kore-enemies-v1/generated/sunstone-artificer-sheet-1-chroma.png",
-          "chromaSourceSha256": "b0cf2235b97b1d2d25c9aa04acf777fc3dad16378c8e801e65e04391c42d7f13",
+          "chromaSourceSha256": "b06298770b1e43d35cd8bfb7d3a20e4280c42bde954b9329defbfae294084b0e",
           "sourceReferences": [
             {
               "path": "/public/story/enemies/kore-enemies-v1/sources/image-01.png",
@@ -23402,7 +23412,8 @@
               "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
             }
           ],
-          "registryPath": "/src/story/storyRosterExpansion.json"
+          "registryPath": "/src/story/storyRosterExpansion.json",
+          "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
         },
         {
           "kind": "imagegen",
@@ -23514,48 +23525,48 @@
               "path": "/story/enemies/kore-enemies-v1/sets/sunstone-artificer/frames/walk/01.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                126,
-                188,
+                14,
+                36,
+                178,
                 188
               ],
-              "sha256": "4d74472c1675e2b7a2fb071fd42e6288050372605e06d3c69b54c8b60ce8135d"
+              "sha256": "d2e2697078670d409959483487930635a03850f7142edec70d0e41a9124afbbd"
             },
             {
               "id": "walk-02",
               "path": "/story/enemies/kore-enemies-v1/sets/sunstone-artificer/frames/walk/02.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                96,
-                188,
-                188
+                32,
+                36,
+                160,
+                187
               ],
-              "sha256": "b3ff423901c07c2fa4d24bc4cea06d6e2ffdd131f1110273ffd76e945df47ecd"
+              "sha256": "470b91702cac9285cb366e0e86de7bd40391f94ca537c124a7688449584db5d6"
             },
             {
               "id": "walk-03",
               "path": "/story/enemies/kore-enemies-v1/sets/sunstone-artificer/frames/walk/03.png",
               "durationMs": 105,
               "contentBounds": [
-                34,
-                39,
-                157,
-                188
+                31,
+                35,
+                160,
+                187
               ],
-              "sha256": "3a9e49da6bd23eb54f841e8bf0d0d805ce12fd5d2beffe402b2f5d88531474c6"
+              "sha256": "6921dd0c99ce1c0fb64cec40097cbd5f4515eafdc88581de26299a2fe1cb9aa2"
             },
             {
               "id": "walk-04",
               "path": "/story/enemies/kore-enemies-v1/sets/sunstone-artificer/frames/walk/04.png",
               "durationMs": 105,
               "contentBounds": [
-                30,
-                39,
-                162,
-                188
+                23,
+                38,
+                168,
+                187
               ],
-              "sha256": "79066846801004be861686381efdee1d4cfe9be192a0798672a5e438976569e3"
+              "sha256": "c7c2ff560d186031d3d09a0bb693ded77bace349401e42bbeef88670261bed22"
             },
             {
               "id": "walk-05",
@@ -23563,47 +23574,47 @@
               "durationMs": 105,
               "contentBounds": [
                 29,
-                43,
-                163,
-                188
+                38,
+                170,
+                187
               ],
-              "sha256": "87ec61fcb94d38c4b7ae93dd9436a11361702d4b30e187198a0bdee802dfa02c"
+              "sha256": "615c61c721fa2f1475953a38315fa82efbe4df0f33c2d1f11145d8da1e836d3f"
             },
             {
               "id": "walk-06",
               "path": "/story/enemies/kore-enemies-v1/sets/sunstone-artificer/frames/walk/06.png",
               "durationMs": 105,
               "contentBounds": [
-                29,
                 43,
-                163,
-                188
+                37,
+                168,
+                187
               ],
-              "sha256": "87ec61fcb94d38c4b7ae93dd9436a11361702d4b30e187198a0bdee802dfa02c"
+              "sha256": "d5742bd4bc65bbd16bd111dd739346edc3e88376c376bb00864e5d9f05f9ade3"
             },
             {
               "id": "walk-07",
               "path": "/story/enemies/kore-enemies-v1/sets/sunstone-artificer/frames/walk/07.png",
               "durationMs": 105,
               "contentBounds": [
-                29,
-                43,
-                163,
+                41,
+                37,
+                169,
                 188
               ],
-              "sha256": "87ec61fcb94d38c4b7ae93dd9436a11361702d4b30e187198a0bdee802dfa02c"
+              "sha256": "432bf6037eda431c8cc76ea34bd74e77063dbdc2cff20351680f062c1059bd92"
             },
             {
               "id": "walk-08",
               "path": "/story/enemies/kore-enemies-v1/sets/sunstone-artificer/frames/walk/08.png",
               "durationMs": 105,
               "contentBounds": [
-                29,
-                43,
-                163,
-                188
+                32,
+                42,
+                162,
+                187
               ],
-              "sha256": "87ec61fcb94d38c4b7ae93dd9436a11361702d4b30e187198a0bdee802dfa02c"
+              "sha256": "43b3b05472926a93f10bc0a190a1d641d97cb4c5855b52aed1396a51e409853b"
             }
           ]
         },
@@ -24232,10 +24243,10 @@
           "model": "OpenAI image_gen (session-default model)",
           "prompt": "Original bonevault regular enemy Crypt Hound: skeletal hound wrapped in torn funerary cloth; two 1536x1024 five-row right-facing anime pixel-art sheets on flat #00ff00; idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells.",
           "path": "/story/enemies/kore-enemies-v1/generated/crypt-hound-sheet-1.png",
-          "sha256": "5305395399bd394e430ecd4babd39265f4e2316f2153b78434f2cf3031173bdf",
+          "sha256": "7242a9c10b8c6edd278ba59f444373f030913b220035a8749deb5294a8a36111",
           "chromaKey": "#00ff00",
           "chromaSourcePath": "/story/enemies/kore-enemies-v1/generated/crypt-hound-sheet-1-chroma.png",
-          "chromaSourceSha256": "c054adc371d7c767d893dd3d18b6034d1ae7755560105bf2fcebca85dbee683a",
+          "chromaSourceSha256": "60cc245d35f1829506ab3c6e7db0bbedb8563828e0eb82784305229bdef1f93a",
           "sourceReferences": [
             {
               "path": "/public/story/enemies/kore-enemies-v1/sources/image-01.png",
@@ -24246,7 +24257,8 @@
               "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
             }
           ],
-          "registryPath": "/src/story/storyRosterExpansion.json"
+          "registryPath": "/src/story/storyRosterExpansion.json",
+          "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
         },
         {
           "kind": "imagegen",
@@ -24358,96 +24370,96 @@
               "path": "/story/enemies/kore-enemies-v1/sets/crypt-hound/frames/walk/01.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                159,
-                188,
-                188
+                8,
+                72,
+                183,
+                187
               ],
-              "sha256": "7bcc2c9cf0b3d85db43169855cf56cc8208eb99a7e1fc3fe7910f611367c2316"
+              "sha256": "d153f190daf681c522f3152118ae5f8068c19111865cbed2338a6c5c2f4758da"
             },
             {
               "id": "walk-02",
               "path": "/story/enemies/kore-enemies-v1/sets/crypt-hound/frames/walk/02.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                158,
-                188,
-                188
+                6,
+                80,
+                186,
+                187
               ],
-              "sha256": "a9da127aab66fb319916defd4ff6ae357c1bb6b5764a66e660fb93401410e6dc"
+              "sha256": "46b9c9f633bc0544e1d3b6a3e8300b96695641ca4ffd1e74f3d15bc3d49d1731"
             },
             {
               "id": "walk-03",
               "path": "/story/enemies/kore-enemies-v1/sets/crypt-hound/frames/walk/03.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                158,
-                188,
+                7,
+                81,
+                184,
                 188
               ],
-              "sha256": "25a8076f897235b4e8e3d4a32a5fd89cd1c9709f83e2603706b74bfa8e41471a"
+              "sha256": "c114b878f82bb6545c38b84f2caf257fd4ec37951a32615b8cdbcd5891a847aa"
             },
             {
               "id": "walk-04",
               "path": "/story/enemies/kore-enemies-v1/sets/crypt-hound/frames/walk/04.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                158,
-                188,
+                9,
+                81,
+                182,
                 188
               ],
-              "sha256": "43a2fb9e8b228fa59f14d653865281bbe019d5d73887aa75faf4b98688187b8d"
+              "sha256": "4075a838caf766d784e8b1b8c34427d214fc851f5d66347aebf0f1849b7a66c2"
             },
             {
               "id": "walk-05",
               "path": "/story/enemies/kore-enemies-v1/sets/crypt-hound/frames/walk/05.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                158,
-                188,
-                188
+                9,
+                81,
+                184,
+                187
               ],
-              "sha256": "ac0db403b5bc548093b9b955eeaa824e7e82bbc9a1474daf86046407152c5129"
+              "sha256": "7efcdf4a419f5cd0c8b1ba3e6c3c924e473f228035f3bcd03aae1cdbb1c88e82"
             },
             {
               "id": "walk-06",
               "path": "/story/enemies/kore-enemies-v1/sets/crypt-hound/frames/walk/06.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                158,
-                188,
+                8,
+                82,
+                184,
                 188
               ],
-              "sha256": "ac0db403b5bc548093b9b955eeaa824e7e82bbc9a1474daf86046407152c5129"
+              "sha256": "9647207d799cc232a44b047205b42a6408bdee0c4d25127799e91837506f07f1"
             },
             {
               "id": "walk-07",
               "path": "/story/enemies/kore-enemies-v1/sets/crypt-hound/frames/walk/07.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                158,
-                188,
-                188
+                10,
+                81,
+                180,
+                187
               ],
-              "sha256": "ac0db403b5bc548093b9b955eeaa824e7e82bbc9a1474daf86046407152c5129"
+              "sha256": "95f2b635554313a61d8e54b8b8d0b170856165d3a58176248a88bacd89e07160"
             },
             {
               "id": "walk-08",
               "path": "/story/enemies/kore-enemies-v1/sets/crypt-hound/frames/walk/08.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                158,
-                188,
+                13,
+                82,
+                179,
                 188
               ],
-              "sha256": "ac0db403b5bc548093b9b955eeaa824e7e82bbc9a1474daf86046407152c5129"
+              "sha256": "da114757a8e1f6997c200f3c6cfc6bbb3b28736e2b15f1ab712651e301797e7c"
             }
           ]
         },
@@ -28452,10 +28464,10 @@
           "model": "OpenAI image_gen (session-default model)",
           "prompt": "Original emberdeep regular enemy Slag Beetle: low armored lava beetle with molten seams; two 1536x1024 five-row right-facing anime pixel-art sheets on flat #00ff00; idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells.",
           "path": "/story/enemies/kore-enemies-v1/generated/slag-beetle-sheet-1.png",
-          "sha256": "8c5c913e525e4b57dabd8dbe4e6b2eba4b41ba2ba594594bfaaedafc34555cf4",
+          "sha256": "2bd71b20fd6ae3d7b6d6861c315ab758250f0c85482422949f924564eb00e9c6",
           "chromaKey": "#00ff00",
           "chromaSourcePath": "/story/enemies/kore-enemies-v1/generated/slag-beetle-sheet-1-chroma.png",
-          "chromaSourceSha256": "c145cf222f2295144af856e015ed1c7c9b6801ef034167570833ff617d0d480c",
+          "chromaSourceSha256": "0fc121eaa457f942af63582d6977ac64ccfcf350a1dd04ee707554e71ba21095",
           "sourceReferences": [
             {
               "path": "/public/story/enemies/kore-enemies-v1/sources/image-01.png",
@@ -28466,7 +28478,8 @@
               "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
             }
           ],
-          "registryPath": "/src/story/storyRosterExpansion.json"
+          "registryPath": "/src/story/storyRosterExpansion.json",
+          "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
         },
         {
           "kind": "imagegen",
@@ -28578,96 +28591,96 @@
               "path": "/story/enemies/kore-enemies-v1/sets/slag-beetle/frames/walk/01.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                157,
-                188,
+                12,
+                96,
+                180,
                 188
               ],
-              "sha256": "068f7a2665d0179d7271ac7cb8bfb56e552f9e4568e9218fcda67a984b0df6f1"
+              "sha256": "4b1f93e73ca9bd71248ced9aa474442fa27480784ccbce9fc011fb1bc3aa4b1d"
             },
             {
               "id": "walk-02",
               "path": "/story/enemies/kore-enemies-v1/sets/slag-beetle/frames/walk/02.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                165,
-                188,
+                8,
+                98,
+                182,
                 188
               ],
-              "sha256": "21ae8802b0b05e351f128e7d20e309eedbd3d5b64dc69b785ab0606dae66ac5f"
+              "sha256": "7d3510948156075b1b48fc894ce8573c083dbfbe0751cb5054703e158ceb5904"
             },
             {
               "id": "walk-03",
               "path": "/story/enemies/kore-enemies-v1/sets/slag-beetle/frames/walk/03.png",
               "durationMs": 105,
               "contentBounds": [
-                16,
-                101,
-                175,
+                15,
+                97,
+                176,
                 188
               ],
-              "sha256": "0a3e9f7664ff793638bfd3691c3e2ea8d82dbf48b4de9d36e149fd893b343b0c"
+              "sha256": "0439acf030385ce7578d07acc6cf1e99a3630c89cf70173c391ccc8562842a60"
             },
             {
               "id": "walk-04",
               "path": "/story/enemies/kore-enemies-v1/sets/slag-beetle/frames/walk/04.png",
               "durationMs": 105,
               "contentBounds": [
-                16,
-                101,
-                175,
+                12,
+                97,
+                179,
                 188
               ],
-              "sha256": "d287ab2ebd7a8b33707fe8a8a2113f927d7f1285f219bae147f439d9a0169b3f"
+              "sha256": "22780cd15af5a88d18694c28669434aa0428fed93050afc28fe2eeb5cb2637f1"
             },
             {
               "id": "walk-05",
               "path": "/story/enemies/kore-enemies-v1/sets/slag-beetle/frames/walk/05.png",
               "durationMs": 105,
               "contentBounds": [
-                16,
+                13,
                 101,
-                175,
+                179,
                 188
               ],
-              "sha256": "f00adb27a93a9f7cb1a8d12a7f3f76402eb0e656cb6e68f41afe2a6b50e85edd"
+              "sha256": "7de5d57abde92809675092e651068efa14386e325e663f52367cb8c893474521"
             },
             {
               "id": "walk-06",
               "path": "/story/enemies/kore-enemies-v1/sets/slag-beetle/frames/walk/06.png",
               "durationMs": 105,
               "contentBounds": [
-                16,
-                101,
-                175,
+                10,
+                100,
+                182,
                 188
               ],
-              "sha256": "f00adb27a93a9f7cb1a8d12a7f3f76402eb0e656cb6e68f41afe2a6b50e85edd"
+              "sha256": "8b0aab2505cff0e38f5975b2d5be3cf9676fe84386575a6dd3d048798f0582de"
             },
             {
               "id": "walk-07",
               "path": "/story/enemies/kore-enemies-v1/sets/slag-beetle/frames/walk/07.png",
               "durationMs": 105,
               "contentBounds": [
-                16,
-                101,
-                175,
+                13,
+                99,
+                179,
                 188
               ],
-              "sha256": "f00adb27a93a9f7cb1a8d12a7f3f76402eb0e656cb6e68f41afe2a6b50e85edd"
+              "sha256": "673b86841a498f87f101c684349e6986f3281a641c535d9247e756237de2bdfa"
             },
             {
               "id": "walk-08",
               "path": "/story/enemies/kore-enemies-v1/sets/slag-beetle/frames/walk/08.png",
               "durationMs": 105,
               "contentBounds": [
-                16,
-                101,
-                175,
-                188
+                21,
+                102,
+                171,
+                187
               ],
-              "sha256": "f00adb27a93a9f7cb1a8d12a7f3f76402eb0e656cb6e68f41afe2a6b50e85edd"
+              "sha256": "9c45768e3fd18d057f3ef4c99368d8a9653167eee311ad4a5ab44b59e3a21fd9"
             }
           ]
         },
@@ -29296,10 +29309,10 @@
           "model": "OpenAI image_gen (session-default model)",
           "prompt": "Original emberdeep regular enemy Vent Imp: small basalt imp launching compressed steam bursts; two 1536x1024 five-row right-facing anime pixel-art sheets on flat #00ff00; idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells.",
           "path": "/story/enemies/kore-enemies-v1/generated/vent-imp-sheet-1.png",
-          "sha256": "fe7b31d8b0b4063225e531d27bde1a3caf69aa7d22536871629761d6e8004589",
+          "sha256": "426768df417db7c3b2a59b0edc0c774d5c73b93ab104c7f634cd6d0117bef5c4",
           "chromaKey": "#00ff00",
           "chromaSourcePath": "/story/enemies/kore-enemies-v1/generated/vent-imp-sheet-1-chroma.png",
-          "chromaSourceSha256": "e79ace34d97af29f511b057347449a20843ea7c1d8c9393243ee970c92a39e73",
+          "chromaSourceSha256": "8d04967ebc9eddac7649a25a4f269bb4654b596bb108025cb417e5a99b9ec68c",
           "sourceReferences": [
             {
               "path": "/public/story/enemies/kore-enemies-v1/sources/image-01.png",
@@ -29310,7 +29323,8 @@
               "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
             }
           ],
-          "registryPath": "/src/story/storyRosterExpansion.json"
+          "registryPath": "/src/story/storyRosterExpansion.json",
+          "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
         },
         {
           "kind": "imagegen",
@@ -29424,10 +29438,10 @@
               "contentBounds": [
                 32,
                 47,
-                160,
+                159,
                 188
               ],
-              "sha256": "7f4e812c0f8d9cda2043d8f25935a79127cb24ee4e07ecf4d211c30b423600d6"
+              "sha256": "fdf6264a4a5ad5da71b1ac44395897b2acf8c51bc395456517d02acd01dce291"
             },
             {
               "id": "walk-02",
@@ -29437,21 +29451,21 @@
                 40,
                 49,
                 152,
-                188
+                187
               ],
-              "sha256": "2fbe55da185feecd09109c1f245350991d769b5b9bf06a17bede87deffe2b458"
+              "sha256": "9d7a6961a892267820cf910bae073d4caa561f8b3f09f2222fe07d99c5e1f8db"
             },
             {
               "id": "walk-03",
               "path": "/story/enemies/kore-enemies-v1/sets/vent-imp/frames/walk/03.png",
               "durationMs": 105,
               "contentBounds": [
-                32,
+                33,
                 47,
-                159,
+                158,
                 188
               ],
-              "sha256": "15387484494618e50f5d6c4088894574677b04571f0c2a698ac8ecd1cf0289e9"
+              "sha256": "a3e6e55a54d5521c920a69a893ff9c97a8f2da7bc2edff6b2cfcdfcd4eb55075"
             },
             {
               "id": "walk-04",
@@ -29463,7 +29477,7 @@
                 161,
                 188
               ],
-              "sha256": "3a3e567696f0af6ac64e801659b3ccc395edc6a6483195e893101aff42349986"
+              "sha256": "2c8084ee354a1936da88c872135d69c5530caf055099b06dd2046e513ac17e8f"
             },
             {
               "id": "walk-05",
@@ -29471,11 +29485,11 @@
               "durationMs": 105,
               "contentBounds": [
                 33,
-                47,
+                50,
                 159,
                 188
               ],
-              "sha256": "54c9fe786ce00f3f8d5392cf9f4a35bada43f9f3c558aa91443c5ee8fa33746d"
+              "sha256": "f04c58126d20e46b817301354b57c7eb7943fa30c1ececa76779c73fbdc037ec"
             },
             {
               "id": "walk-06",
@@ -29483,11 +29497,11 @@
               "durationMs": 105,
               "contentBounds": [
                 35,
-                46,
+                48,
                 157,
                 188
               ],
-              "sha256": "822464821950cb4cea36ccd6a7a06de425bfe60f1fc05536137c4e04588b6566"
+              "sha256": "dc564daea0ec954f486a5f6d8355295a7687d54381b3b713aab95c8d372cbe94"
             },
             {
               "id": "walk-07",
@@ -29495,23 +29509,23 @@
               "durationMs": 105,
               "contentBounds": [
                 37,
-                47,
+                48,
                 155,
                 188
               ],
-              "sha256": "f63e645fe075c4ccfd76a8bb6388e907f5f55eedc68962d3971d02972c64c8d1"
+              "sha256": "eae66a4df98e881be1f8b582df9389820272afc0576f7457a6e6410b81286301"
             },
             {
               "id": "walk-08",
               "path": "/story/enemies/kore-enemies-v1/sets/vent-imp/frames/walk/08.png",
               "durationMs": 105,
               "contentBounds": [
-                40,
-                50,
-                151,
+                34,
+                51,
+                156,
                 188
               ],
-              "sha256": "aeb4abd13fc899ec59b4e2bc9611f6cdc96464cc09c4538b456269441f3c519e"
+              "sha256": "ca0691d3b61e4007672d57d22bb0e1e259f41579f390a588820cd120cb1009c9"
             }
           ]
         },
@@ -30984,10 +30998,10 @@
           "model": "OpenAI image_gen (session-default model)",
           "prompt": "Original emberdeep challenger enemy Caldera Titan: colossal basalt warrior with a magma core and pillar fists; two 1536x1024 five-row right-facing anime pixel-art sheets on flat #00ff00; idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells.",
           "path": "/story/enemies/kore-enemies-v1/generated/caldera-titan-sheet-1.png",
-          "sha256": "5b7da3aaff5c5927758af06e84fba88fbe88c04b34124b5d590af8756add271c",
+          "sha256": "29785092bb8410848a49147df55170e86a0961d8e28761c9fa23ed75ea775295",
           "chromaKey": "#00ff00",
           "chromaSourcePath": "/story/enemies/kore-enemies-v1/generated/caldera-titan-sheet-1-chroma.png",
-          "chromaSourceSha256": "bf0fd291aa85f66f83fb977d0841e85d97c60dac75d435a7c92824489fccca44",
+          "chromaSourceSha256": "da45c487b458d6fb7eff110f9641f223fb48258a1dbd2fe37095ccba4981a3e0",
           "sourceReferences": [
             {
               "path": "/public/story/enemies/kore-enemies-v1/sources/image-01.png",
@@ -30998,7 +31012,8 @@
               "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
             }
           ],
-          "registryPath": "/src/story/storyRosterExpansion.json"
+          "registryPath": "/src/story/storyRosterExpansion.json",
+          "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
         },
         {
           "kind": "imagegen",
@@ -31110,96 +31125,96 @@
               "path": "/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/walk/01.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                162,
-                188,
+                17,
+                43,
+                174,
                 188
               ],
-              "sha256": "56d4217eb7230c3ffaa0377e57f10a2283ee4d5655529789aec4874cad07be7d"
+              "sha256": "cae8e207c18143289fecc0a225d4f9a3c30e179859019d050288baff39144514"
             },
             {
               "id": "walk-02",
               "path": "/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/walk/02.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                162,
-                188,
-                188
+                14,
+                41,
+                178,
+                187
               ],
-              "sha256": "56d4217eb7230c3ffaa0377e57f10a2283ee4d5655529789aec4874cad07be7d"
+              "sha256": "b1a138487e005dcc167355f6e9acf30df74d8d1aa592a7d844b0d1d36d23690b"
             },
             {
               "id": "walk-03",
               "path": "/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/walk/03.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                162,
-                188,
+                16,
+                42,
+                175,
                 188
               ],
-              "sha256": "56d4217eb7230c3ffaa0377e57f10a2283ee4d5655529789aec4874cad07be7d"
+              "sha256": "decf5b7a0a89a39b788844497e5832a610937aed75e19de77b2d59b0d1843586"
             },
             {
               "id": "walk-04",
               "path": "/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/walk/04.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                162,
-                188,
+                20,
+                39,
+                172,
                 188
               ],
-              "sha256": "56d4217eb7230c3ffaa0377e57f10a2283ee4d5655529789aec4874cad07be7d"
+              "sha256": "a4ac4aca512ea5880d5bda08ac3c3734abcbd2c16ae081c30749e8697395c175"
             },
             {
               "id": "walk-05",
               "path": "/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/walk/05.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                162,
-                188,
-                188
+                18,
+                38,
+                173,
+                187
               ],
-              "sha256": "56d4217eb7230c3ffaa0377e57f10a2283ee4d5655529789aec4874cad07be7d"
+              "sha256": "86611a05fde7c70f1f1f9e717e4cfbca5b87c66b694de1c9ba36b974616752a9"
             },
             {
               "id": "walk-06",
               "path": "/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/walk/06.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                162,
-                188,
+                19,
+                39,
+                171,
                 188
               ],
-              "sha256": "56d4217eb7230c3ffaa0377e57f10a2283ee4d5655529789aec4874cad07be7d"
+              "sha256": "e51051f3a00586ba42c9046bf5ca393f7ebe41e3962712e42b3a43cc0aaec0e2"
             },
             {
               "id": "walk-07",
               "path": "/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/walk/07.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                162,
-                188,
+                20,
+                39,
+                173,
                 188
               ],
-              "sha256": "56d4217eb7230c3ffaa0377e57f10a2283ee4d5655529789aec4874cad07be7d"
+              "sha256": "f7d15f442c4340bfb7746661ec1bbd8a9fb6dda83270a99cd4b536ea87597e52"
             },
             {
               "id": "walk-08",
               "path": "/story/enemies/kore-enemies-v1/sets/caldera-titan/frames/walk/08.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                162,
-                188,
+                19,
+                41,
+                172,
                 188
               ],
-              "sha256": "56d4217eb7230c3ffaa0377e57f10a2283ee4d5655529789aec4874cad07be7d"
+              "sha256": "415c737161562dc7eb878ef68068e675c318269e2a4ab361498af6fa220e2cd4"
             }
           ]
         },
@@ -32672,10 +32687,10 @@
           "model": "OpenAI image_gen (session-default model)",
           "prompt": "Original frostpeak regular enemy Ice Tusk: compact frost boar with crystalline tusks and snow armor; two 1536x1024 five-row right-facing anime pixel-art sheets on flat #00ff00; idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells.",
           "path": "/story/enemies/kore-enemies-v1/generated/ice-tusk-sheet-1.png",
-          "sha256": "004c4d2e06a3413142d951a7d260d32013faa49da607006c53bc388858d9db62",
+          "sha256": "54c795911f8914f75a0ecaa02850586131f8b5ed5485c62d820b6c6831b3c8ac",
           "chromaKey": "#00ff00",
           "chromaSourcePath": "/story/enemies/kore-enemies-v1/generated/ice-tusk-sheet-1-chroma.png",
-          "chromaSourceSha256": "a1adb301848aac1a45a318000e95edad4c846985ad1b9c4fc00ccc541d4a328a",
+          "chromaSourceSha256": "9fdbc33531c5652e96d1a6dac2c472f52d5cdc92d2489317d644a38f36a557df",
           "sourceReferences": [
             {
               "path": "/public/story/enemies/kore-enemies-v1/sources/image-01.png",
@@ -32686,7 +32701,8 @@
               "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
             }
           ],
-          "registryPath": "/src/story/storyRosterExpansion.json"
+          "registryPath": "/src/story/storyRosterExpansion.json",
+          "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
         },
         {
           "kind": "imagegen",
@@ -32798,96 +32814,96 @@
               "path": "/story/enemies/kore-enemies-v1/sets/ice-tusk/frames/walk/01.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                163,
-                188,
+                7,
+                75,
+                185,
                 188
               ],
-              "sha256": "958eea3492545e230d0675f42609a998055f194e52b4bf2f4ed33d0ad90d9748"
+              "sha256": "98955b5a5dbdb7a37533bdb442b74f9eca722b63b5813e2dcc85eaf54375f386"
             },
             {
               "id": "walk-02",
               "path": "/story/enemies/kore-enemies-v1/sets/ice-tusk/frames/walk/02.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                163,
-                188,
+                6,
+                76,
+                185,
                 188
               ],
-              "sha256": "958eea3492545e230d0675f42609a998055f194e52b4bf2f4ed33d0ad90d9748"
+              "sha256": "ae55a77753cb292b11197d0f75093a312e14dd5020b4174825e8314d15c52b07"
             },
             {
               "id": "walk-03",
               "path": "/story/enemies/kore-enemies-v1/sets/ice-tusk/frames/walk/03.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                163,
-                188,
+                9,
+                78,
+                184,
                 188
               ],
-              "sha256": "958eea3492545e230d0675f42609a998055f194e52b4bf2f4ed33d0ad90d9748"
+              "sha256": "8a641b57b9fbcca46074b7ccebf3c2a954beed14c07345b90129c4c5bac2b7a4"
             },
             {
               "id": "walk-04",
               "path": "/story/enemies/kore-enemies-v1/sets/ice-tusk/frames/walk/04.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                163,
-                188,
+                6,
+                79,
+                185,
                 188
               ],
-              "sha256": "958eea3492545e230d0675f42609a998055f194e52b4bf2f4ed33d0ad90d9748"
+              "sha256": "0ba0e6f97eef2ae3cad99f2a7deb834bb798097af1f47f1f15a39869313b2596"
             },
             {
               "id": "walk-05",
               "path": "/story/enemies/kore-enemies-v1/sets/ice-tusk/frames/walk/05.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                163,
-                188,
+                9,
+                79,
+                183,
                 188
               ],
-              "sha256": "958eea3492545e230d0675f42609a998055f194e52b4bf2f4ed33d0ad90d9748"
+              "sha256": "ac3f3926fb1a7cd8a07f14f9df7a56e20f14c7ac1b89eb28fac0e05bb348146e"
             },
             {
               "id": "walk-06",
               "path": "/story/enemies/kore-enemies-v1/sets/ice-tusk/frames/walk/06.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                163,
-                188,
+                13,
+                79,
+                179,
                 188
               ],
-              "sha256": "958eea3492545e230d0675f42609a998055f194e52b4bf2f4ed33d0ad90d9748"
+              "sha256": "26a0e9cad706e6bde54544b10f255283f48e19e885fe540d2d9f05caf83a3de0"
             },
             {
               "id": "walk-07",
               "path": "/story/enemies/kore-enemies-v1/sets/ice-tusk/frames/walk/07.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                163,
-                188,
+                12,
+                80,
+                179,
                 188
               ],
-              "sha256": "958eea3492545e230d0675f42609a998055f194e52b4bf2f4ed33d0ad90d9748"
+              "sha256": "6ab739636a6acfb0c227984d91074e8eacb4aa636cecfb93746873ec97d972cf"
             },
             {
               "id": "walk-08",
               "path": "/story/enemies/kore-enemies-v1/sets/ice-tusk/frames/walk/08.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                163,
-                188,
+                18,
+                79,
+                174,
                 188
               ],
-              "sha256": "958eea3492545e230d0675f42609a998055f194e52b4bf2f4ed33d0ad90d9748"
+              "sha256": "14c17f3feb3d1d51f16078ed8f12c80a848bdcb821e8fd359e5c86593b163a59"
             }
           ]
         },
@@ -35204,10 +35220,10 @@
           "model": "OpenAI image_gen (session-default model)",
           "prompt": "Original frostpeak challenger enemy Windspine Reaver: fur-armored ridge warrior wielding paired ice climbing blades; two 1536x1024 five-row right-facing anime pixel-art sheets on flat #00ff00; idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells.",
           "path": "/story/enemies/kore-enemies-v1/generated/windspine-reaver-sheet-1.png",
-          "sha256": "f161bc6397901d6e3054ce68c33ca056a296646f02c36a3e8d632bc939b5fe4d",
+          "sha256": "85dcdcb7d8bda52b74b147b4a8acc53181b91af6354985b6265fdc3f03df54b5",
           "chromaKey": "#00ff00",
           "chromaSourcePath": "/story/enemies/kore-enemies-v1/generated/windspine-reaver-sheet-1-chroma.png",
-          "chromaSourceSha256": "ce3d4bec121cb031944367f04123d1728af3940ca14035c1e120aed720b171cf",
+          "chromaSourceSha256": "da3ebcd90e36e9b85af76d2d2c9776b1d633ee00bb5b67c24aded768166b1b6f",
           "sourceReferences": [
             {
               "path": "/public/story/enemies/kore-enemies-v1/sources/image-01.png",
@@ -35218,7 +35234,8 @@
               "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
             }
           ],
-          "registryPath": "/src/story/storyRosterExpansion.json"
+          "registryPath": "/src/story/storyRosterExpansion.json",
+          "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
         },
         {
           "kind": "imagegen",
@@ -35331,11 +35348,11 @@
               "durationMs": 105,
               "contentBounds": [
                 4,
-                37,
+                36,
                 188,
-                188
+                187
               ],
-              "sha256": "a5fe03f58c2d2674fc268a53203031a5cf4a5058b072d5dc9945cde8a1aed812"
+              "sha256": "50ffc0c52b178a08c787f4adbdbd3b333c5d793d529f4fae092982a37b716b13"
             },
             {
               "id": "walk-02",
@@ -35343,23 +35360,23 @@
               "durationMs": 105,
               "contentBounds": [
                 4,
-                31,
+                33,
                 188,
-                188
+                187
               ],
-              "sha256": "7d5ecc67521b8ee1a41d174e5f0e9f95607ac98642ac70085505bdc99af74f57"
+              "sha256": "b6810259bcc009ebb0456948578ef51e2496360dd617bdac03d9326d599255e4"
             },
             {
               "id": "walk-03",
               "path": "/story/enemies/kore-enemies-v1/sets/windspine-reaver/frames/walk/03.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                12,
-                188,
-                188
+                5,
+                29,
+                186,
+                187
               ],
-              "sha256": "fd294661582a6ee73702e8dbbbffc85581eb8608c14fb366e7d540d8e6de2744"
+              "sha256": "f99b6f93e7fa270cd09f4476dd0391ba1e265b5f78469981d2940e6e450207a9"
             },
             {
               "id": "walk-04",
@@ -35367,59 +35384,59 @@
               "durationMs": 105,
               "contentBounds": [
                 4,
-                8,
+                31,
                 188,
                 188
               ],
-              "sha256": "d1aec074c63bf6dfa46727f899b0623dd4d3cff439a9debee7843f003a55c68e"
+              "sha256": "0f8e909f0854c38e5771f7f8ae0cb44d2ed83a5da2494fbfc6b17d73bf69bb97"
             },
             {
               "id": "walk-05",
               "path": "/story/enemies/kore-enemies-v1/sets/windspine-reaver/frames/walk/05.png",
               "durationMs": 105,
               "contentBounds": [
-                7,
                 4,
-                184,
-                188
+                32,
+                187,
+                187
               ],
-              "sha256": "bb0af328148552f0f40fdeebef8fc2143e86332888c1fdd03b4177430452a96f"
+              "sha256": "e969f3be3101911c0ff11b2bb3868eadd30fadf8f43e8a0f303ba17128151acf"
             },
             {
               "id": "walk-06",
               "path": "/story/enemies/kore-enemies-v1/sets/windspine-reaver/frames/walk/06.png",
               "durationMs": 105,
               "contentBounds": [
-                35,
-                4,
-                157,
+                2,
+                31,
+                190,
                 188
               ],
-              "sha256": "294c9fe2183b89a464573119df0fec76e9e7a57e1d672d70b330e83fc4d972fd"
+              "sha256": "ed43cc2868e7e7cfd4a217d4cef25f0123fb6d1b3658911ec2e58e3e9c13115f"
             },
             {
               "id": "walk-07",
               "path": "/story/enemies/kore-enemies-v1/sets/windspine-reaver/frames/walk/07.png",
               "durationMs": 105,
               "contentBounds": [
-                29,
-                4,
-                163,
-                188
+                5,
+                30,
+                186,
+                187
               ],
-              "sha256": "effbfa1bc4118013d488abe808f7fea1655b7dc769514245e3a10a9ff424b6df"
+              "sha256": "cec69a4c93d72e425f883bc459649d8953cf5d115aa1abc0d5f54cec07ace4aa"
             },
             {
               "id": "walk-08",
               "path": "/story/enemies/kore-enemies-v1/sets/windspine-reaver/frames/walk/08.png",
               "durationMs": 105,
               "contentBounds": [
-                29,
                 4,
-                163,
+                33,
+                188,
                 188
               ],
-              "sha256": "fe5b055a28695b7fee69936f6b58c33f1aafcbfe81c4ceccd596a6b8710a749d"
+              "sha256": "331cb5e3d3645690fec6d2c0144edb68fa30bf1bfd9554aff4e1081daf196bcc"
             }
           ]
         },
@@ -36892,10 +36909,10 @@
           "model": "OpenAI image_gen (session-default model)",
           "prompt": "Original sunscar regular enemy Dune Claw: sand-burrowing scorpion beast with glass pincers; two 1536x1024 five-row right-facing anime pixel-art sheets on flat #00ff00; idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells.",
           "path": "/story/enemies/kore-enemies-v1/generated/dune-claw-sheet-1.png",
-          "sha256": "e90c3ddd3252a85164ebe0cdf73bfceeb184eaef586e1d4933d81aa1164a2a67",
+          "sha256": "04e907e5778b5e64f55076e75d0dcc1bf755323acb8b2e23e11255aa34b54fe1",
           "chromaKey": "#00ff00",
           "chromaSourcePath": "/story/enemies/kore-enemies-v1/generated/dune-claw-sheet-1-chroma.png",
-          "chromaSourceSha256": "240b3782332c2f0e19f95ced7178762e363eabdb49b5b9efdd14ec032813518c",
+          "chromaSourceSha256": "aefe7130f28c2dfae5673426a6ba4bcfac1b02e298cbf1c179a6a9866dd982d3",
           "sourceReferences": [
             {
               "path": "/public/story/enemies/kore-enemies-v1/sources/image-01.png",
@@ -36906,7 +36923,8 @@
               "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
             }
           ],
-          "registryPath": "/src/story/storyRosterExpansion.json"
+          "registryPath": "/src/story/storyRosterExpansion.json",
+          "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
         },
         {
           "kind": "imagegen",
@@ -37019,11 +37037,11 @@
               "durationMs": 105,
               "contentBounds": [
                 4,
-                134,
+                67,
                 188,
                 188
               ],
-              "sha256": "12c23863835d02d31d296a9db90fcc8dd39ac52b9e2067d9eea69ff3d6d7d5d0"
+              "sha256": "7e94c3d1e846323baa99230ef47877cec521bb6054b7c65d63b0baf2e5133f10"
             },
             {
               "id": "walk-02",
@@ -37031,83 +37049,83 @@
               "durationMs": 105,
               "contentBounds": [
                 4,
-                139,
+                73,
                 188,
                 188
               ],
-              "sha256": "e4bb5a8421ac23d644315d836a65898c48ca47e8eb2309a4b8a5e582e7c3274d"
+              "sha256": "29990af4541e9a986341df1350833761d1f428d09d23cf651b91b6fd19bedd60"
             },
             {
               "id": "walk-03",
               "path": "/story/enemies/kore-enemies-v1/sets/dune-claw/frames/walk/03.png",
               "durationMs": 105,
               "contentBounds": [
-                75,
-                145,
-                117,
+                7,
+                67,
+                185,
                 188
               ],
-              "sha256": "a9d2665ce0c36c87077de55565eed8bf7d62c98642003af8dc970227ab9379fd"
+              "sha256": "ed4b6aa20df7d57cb99257731952b055de4a319d4f7b1a6961eeaa929c55ec3d"
             },
             {
               "id": "walk-04",
               "path": "/story/enemies/kore-enemies-v1/sets/dune-claw/frames/walk/04.png",
               "durationMs": 105,
               "contentBounds": [
-                75,
-                145,
-                117,
+                4,
+                73,
+                188,
                 188
               ],
-              "sha256": "a9d2665ce0c36c87077de55565eed8bf7d62c98642003af8dc970227ab9379fd"
+              "sha256": "4d1cd11b899e2c134624d36b1757f23d21b00ddb6b3b4d35cf33ea8bb61b9056"
             },
             {
               "id": "walk-05",
               "path": "/story/enemies/kore-enemies-v1/sets/dune-claw/frames/walk/05.png",
               "durationMs": 105,
               "contentBounds": [
-                75,
-                145,
-                117,
+                5,
+                76,
+                187,
                 188
               ],
-              "sha256": "a9d2665ce0c36c87077de55565eed8bf7d62c98642003af8dc970227ab9379fd"
+              "sha256": "31433854bfa53bd1b729a239b9cc875e16cbe92ad6514f01b818065b369fd6d7"
             },
             {
               "id": "walk-06",
               "path": "/story/enemies/kore-enemies-v1/sets/dune-claw/frames/walk/06.png",
               "durationMs": 105,
               "contentBounds": [
-                75,
-                145,
-                117,
-                188
+                5,
+                82,
+                188,
+                187
               ],
-              "sha256": "a9d2665ce0c36c87077de55565eed8bf7d62c98642003af8dc970227ab9379fd"
+              "sha256": "b57884eeaf933f3d5f900febc064d4955ee55dcedb3f6e2dd770edc4927b4890"
             },
             {
               "id": "walk-07",
               "path": "/story/enemies/kore-enemies-v1/sets/dune-claw/frames/walk/07.png",
               "durationMs": 105,
               "contentBounds": [
-                75,
-                145,
-                117,
+                6,
+                83,
+                187,
                 188
               ],
-              "sha256": "a9d2665ce0c36c87077de55565eed8bf7d62c98642003af8dc970227ab9379fd"
+              "sha256": "4c1bebbcd09f4848c9a1ed060f8e24a323940033a82961d7c385ada4885c5fcc"
             },
             {
               "id": "walk-08",
               "path": "/story/enemies/kore-enemies-v1/sets/dune-claw/frames/walk/08.png",
               "durationMs": 105,
               "contentBounds": [
+                5,
                 75,
-                145,
-                117,
+                188,
                 188
               ],
-              "sha256": "a9d2665ce0c36c87077de55565eed8bf7d62c98642003af8dc970227ab9379fd"
+              "sha256": "cf59b7173ff5e80cfb2e393e4589915420b69ee9b4bb26774abde23ef2432e63"
             }
           ]
         },
@@ -39424,10 +39442,10 @@
           "model": "OpenAI image_gen (session-default model)",
           "prompt": "Original sunscar challenger enemy Buried Colossus: ancient sandstone giant with a glowing road core and slab fists; two 1536x1024 five-row right-facing anime pixel-art sheets on flat #00ff00; idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells.",
           "path": "/story/enemies/kore-enemies-v1/generated/buried-colossus-sheet-1.png",
-          "sha256": "4186334746defba823471e12309fde1ef5a4218f4376d2083cf1145bda9b03f5",
+          "sha256": "c38d66c883f8c7b1250ffe8fb5517022a8c0d70881e043059f11cea5c627e472",
           "chromaKey": "#00ff00",
           "chromaSourcePath": "/story/enemies/kore-enemies-v1/generated/buried-colossus-sheet-1-chroma.png",
-          "chromaSourceSha256": "8f17dca3a443d2e689536144f5e8e53afdd0ca3f774227f3bc750d58d3f0827b",
+          "chromaSourceSha256": "062bc6540c3f605219d6bbbf97d4ad4f938aa75861dd5a2f848a465d983e7525",
           "sourceReferences": [
             {
               "path": "/public/story/enemies/kore-enemies-v1/sources/image-01.png",
@@ -39438,7 +39456,8 @@
               "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
             }
           ],
-          "registryPath": "/src/story/storyRosterExpansion.json"
+          "registryPath": "/src/story/storyRosterExpansion.json",
+          "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
         },
         {
           "kind": "imagegen",
@@ -39550,96 +39569,96 @@
               "path": "/story/enemies/kore-enemies-v1/sets/buried-colossus/frames/walk/01.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                162,
-                188,
+                14,
+                36,
+                179,
                 188
               ],
-              "sha256": "c71aae71568ad089233e7c5488dbd003d7448ee0df31f1571ed33410b99d2d72"
+              "sha256": "a199d4742398ab9d17689ca16ae54a93d2b4255b1f7a591757ab7e258d1c1758"
             },
             {
               "id": "walk-02",
               "path": "/story/enemies/kore-enemies-v1/sets/buried-colossus/frames/walk/02.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                162,
-                188,
+                14,
+                35,
+                177,
                 188
               ],
-              "sha256": "c71aae71568ad089233e7c5488dbd003d7448ee0df31f1571ed33410b99d2d72"
+              "sha256": "4bce2e15d1822001f24d221999db25e6d774016afa895402fdd1256268b0eb58"
             },
             {
               "id": "walk-03",
               "path": "/story/enemies/kore-enemies-v1/sets/buried-colossus/frames/walk/03.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                162,
-                188,
+                12,
+                34,
+                180,
                 188
               ],
-              "sha256": "c71aae71568ad089233e7c5488dbd003d7448ee0df31f1571ed33410b99d2d72"
+              "sha256": "7f493496cb1e8697be2afc66e8cc62fe2dc5ad25466466499f14c9940ad1bdd2"
             },
             {
               "id": "walk-04",
               "path": "/story/enemies/kore-enemies-v1/sets/buried-colossus/frames/walk/04.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                162,
-                188,
+                19,
+                33,
+                172,
                 188
               ],
-              "sha256": "c71aae71568ad089233e7c5488dbd003d7448ee0df31f1571ed33410b99d2d72"
+              "sha256": "fa92809c6fcf409d8a3aab6901f554977cd7dddaa6f15b85ab7e3eebe83fdfdc"
             },
             {
               "id": "walk-05",
               "path": "/story/enemies/kore-enemies-v1/sets/buried-colossus/frames/walk/05.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                162,
-                188,
+                17,
+                38,
+                176,
                 188
               ],
-              "sha256": "c71aae71568ad089233e7c5488dbd003d7448ee0df31f1571ed33410b99d2d72"
+              "sha256": "369244f8b11ceb4d9b4fd1d8bd8cec7531d1e744d7c2357d21858effd44574b9"
             },
             {
               "id": "walk-06",
               "path": "/story/enemies/kore-enemies-v1/sets/buried-colossus/frames/walk/06.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                162,
-                188,
-                188
+                15,
+                36,
+                175,
+                187
               ],
-              "sha256": "c71aae71568ad089233e7c5488dbd003d7448ee0df31f1571ed33410b99d2d72"
+              "sha256": "d30cccd35ff095a6845d2555ac0aa8545f1da82f22235412b3eb9e89f6372545"
             },
             {
               "id": "walk-07",
               "path": "/story/enemies/kore-enemies-v1/sets/buried-colossus/frames/walk/07.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                162,
-                188,
+                19,
+                44,
+                173,
                 188
               ],
-              "sha256": "c71aae71568ad089233e7c5488dbd003d7448ee0df31f1571ed33410b99d2d72"
+              "sha256": "518ea32fb28f830430da935207eb78735f0ab3b484ee5090f044b4ae6523b4e2"
             },
             {
               "id": "walk-08",
               "path": "/story/enemies/kore-enemies-v1/sets/buried-colossus/frames/walk/08.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                162,
-                188,
+                23,
+                49,
+                173,
                 188
               ],
-              "sha256": "c71aae71568ad089233e7c5488dbd003d7448ee0df31f1571ed33410b99d2d72"
+              "sha256": "3854a327be7472f95ba459459425529088327694a96eb18335c0a88605a8dccd"
             }
           ]
         },
@@ -40268,10 +40287,10 @@
           "model": "OpenAI image_gen (session-default model)",
           "prompt": "Original sunscar challenger enemy Glasswater Seer: oasis oracle wielding floating water mirrors and a glass spear; two 1536x1024 five-row right-facing anime pixel-art sheets on flat #00ff00; idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells.",
           "path": "/story/enemies/kore-enemies-v1/generated/glasswater-seer-sheet-1.png",
-          "sha256": "1cb9c22b97374fc281ca4fac251091fec2e5c2dbc7380ddf14a7729d6ca5136c",
+          "sha256": "a618ee49c31bf61715fae6ccd45b8fb60580e629bff8156b4b2169a3fcec3059",
           "chromaKey": "#00ff00",
           "chromaSourcePath": "/story/enemies/kore-enemies-v1/generated/glasswater-seer-sheet-1-chroma.png",
-          "chromaSourceSha256": "dbd34e3f86815591e8ad1d1648e296831dbdcaac3973f0c792e8788a753ea70f",
+          "chromaSourceSha256": "d0a2734a695e7047f5ca2e1c2685492919087087fabadf6350ab4d9ceeb60b07",
           "sourceReferences": [
             {
               "path": "/public/story/enemies/kore-enemies-v1/sources/image-01.png",
@@ -40282,7 +40301,8 @@
               "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
             }
           ],
-          "registryPath": "/src/story/storyRosterExpansion.json"
+          "registryPath": "/src/story/storyRosterExpansion.json",
+          "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
         },
         {
           "kind": "imagegen",
@@ -40394,96 +40414,96 @@
               "path": "/story/enemies/kore-enemies-v1/sets/glasswater-seer/frames/walk/01.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                158,
-                188,
+                24,
+                22,
+                167,
                 188
               ],
-              "sha256": "efaf7b50b4a471308cd4f48287ed467ad3109eef30f20efcecacef66e3bfc1d0"
+              "sha256": "3a24e7d8264aafc7999fb485262c2216d173ed0730cf424dde6e81979db1b455"
             },
             {
               "id": "walk-02",
               "path": "/story/enemies/kore-enemies-v1/sets/glasswater-seer/frames/walk/02.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                158,
-                188,
-                188
+                26,
+                24,
+                165,
+                187
               ],
-              "sha256": "efaf7b50b4a471308cd4f48287ed467ad3109eef30f20efcecacef66e3bfc1d0"
+              "sha256": "f8ac1a1ae935fb270e48ff0856c7ac10a55ac5c094a92808753f2dc633db77d6"
             },
             {
               "id": "walk-03",
               "path": "/story/enemies/kore-enemies-v1/sets/glasswater-seer/frames/walk/03.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                158,
-                188,
+                27,
+                24,
+                165,
                 188
               ],
-              "sha256": "efaf7b50b4a471308cd4f48287ed467ad3109eef30f20efcecacef66e3bfc1d0"
+              "sha256": "d4038a2c5811aee76c22032a25a7275dd0c106ab641c9aab95cfdc953ea018d0"
             },
             {
               "id": "walk-04",
               "path": "/story/enemies/kore-enemies-v1/sets/glasswater-seer/frames/walk/04.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                158,
-                188,
+                27,
+                24,
+                164,
                 188
               ],
-              "sha256": "efaf7b50b4a471308cd4f48287ed467ad3109eef30f20efcecacef66e3bfc1d0"
+              "sha256": "f28a095a54f21fe7eca4133052b87e7746e1cb2586ccccfdbdb51c77ea20f914"
             },
             {
               "id": "walk-05",
               "path": "/story/enemies/kore-enemies-v1/sets/glasswater-seer/frames/walk/05.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                158,
-                188,
+                14,
+                25,
+                150,
                 188
               ],
-              "sha256": "efaf7b50b4a471308cd4f48287ed467ad3109eef30f20efcecacef66e3bfc1d0"
+              "sha256": "b2f0559c979a2678b96dcdd1bb15b3760fe2dc4e1bf7bea9f550c6ade79ddcec"
             },
             {
               "id": "walk-06",
               "path": "/story/enemies/kore-enemies-v1/sets/glasswater-seer/frames/walk/06.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                158,
-                188,
+                17,
+                25,
+                146,
                 188
               ],
-              "sha256": "efaf7b50b4a471308cd4f48287ed467ad3109eef30f20efcecacef66e3bfc1d0"
+              "sha256": "f6191bbb1e33c3fafc22f329bd1df8f3d9d7cba54685e7e05cbe2047318006d8"
             },
             {
               "id": "walk-07",
               "path": "/story/enemies/kore-enemies-v1/sets/glasswater-seer/frames/walk/07.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                158,
-                188,
+                20,
+                25,
+                147,
                 188
               ],
-              "sha256": "efaf7b50b4a471308cd4f48287ed467ad3109eef30f20efcecacef66e3bfc1d0"
+              "sha256": "cc63421d81e321ad2bcad5a1d180f0ced066ac9d3310ce5266636314da6f681a"
             },
             {
               "id": "walk-08",
               "path": "/story/enemies/kore-enemies-v1/sets/glasswater-seer/frames/walk/08.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                158,
-                188,
+                16,
+                25,
+                148,
                 188
               ],
-              "sha256": "efaf7b50b4a471308cd4f48287ed467ad3109eef30f20efcecacef66e3bfc1d0"
+              "sha256": "21f89a35379904e90cba34b02e6ca7b831e997442c23d8aecb8541770b72d056"
             }
           ]
         },
@@ -41112,10 +41132,10 @@
           "model": "OpenAI image_gen (session-default model)",
           "prompt": "Original skyglass regular enemy Prism Sentinel: four-legged crystal guardian with rotating mirror face; two 1536x1024 five-row right-facing anime pixel-art sheets on flat #00ff00; idle, walk/hover, run/dash, traversal/evade, three attacks including special, block, hurt and dead; hard pixels, dark outlines, stable identity, one body per frame, no text, grid, opponent, or merged cells.",
           "path": "/story/enemies/kore-enemies-v1/generated/prism-sentinel-sheet-1.png",
-          "sha256": "c5f4e853228bc4bebc75baba0df28db80563f9421ebf8b3c36e32d1a76939cb7",
+          "sha256": "ffb6bf3901d4dba075a707499de84014f4a25d561cc84fa62555c3a731131389",
           "chromaKey": "#00ff00",
           "chromaSourcePath": "/story/enemies/kore-enemies-v1/generated/prism-sentinel-sheet-1-chroma.png",
-          "chromaSourceSha256": "19cc8190afb9c89f9ea791e389f24458ed4c9fe9fcc8d8d76259344152eb8500",
+          "chromaSourceSha256": "40c57cf29a23391a60e5f6add631dece06cee63562a1efafd15f1ea7539c0919",
           "sourceReferences": [
             {
               "path": "/public/story/enemies/kore-enemies-v1/sources/image-01.png",
@@ -41126,7 +41146,8 @@
               "sha256": "7eecfe72d0eecb48180f80d8e34c9f87f4a7edc9997da6318de4a15aa73399ad"
             }
           ],
-          "registryPath": "/src/story/storyRosterExpansion.json"
+          "registryPath": "/src/story/storyRosterExpansion.json",
+          "walkRepairPrompt": "Keep the complete character visible in every panel. Leave frames 1-4 visually identical. In frames 5-8, change only the character's lower limbs below the pelvis so the opposite leg or opposite grounded limb group takes the forward/leading position. Preserve every pixel above the pelvis, identity, equipment, palette, scale, baseline, and right-facing direction."
         },
         {
           "kind": "imagegen",
@@ -41238,96 +41259,96 @@
               "path": "/story/enemies/kore-enemies-v1/sets/prism-sentinel/frames/walk/01.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                128,
-                188,
+                17,
+                55,
+                175,
                 188
               ],
-              "sha256": "486c4914dca04cfb56cc0942614a019172602e9992a7aa03b3c7b4c450659d28"
+              "sha256": "189b8d342c858c14b76d9fdcccccf871dd35bcc0fee43b7a77617029d6d48c57"
             },
             {
               "id": "walk-02",
               "path": "/story/enemies/kore-enemies-v1/sets/prism-sentinel/frames/walk/02.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                129,
-                188,
+                22,
+                56,
+                168,
                 188
               ],
-              "sha256": "fcab49af62ee501b0ad9f98898a37a58990cbfc97c29ee23430ebfbc8dce217a"
+              "sha256": "84235e96519d586a6a2b74f865880ccc0900751756bb8e03cebc9c31e04a2303"
             },
             {
               "id": "walk-03",
               "path": "/story/enemies/kore-enemies-v1/sets/prism-sentinel/frames/walk/03.png",
               "durationMs": 105,
               "contentBounds": [
-                4,
-                93,
-                188,
+                22,
+                55,
+                168,
                 188
               ],
-              "sha256": "d8d22d4d991daf1e5f0d9d5e8ef9af7aa10da29c7e3512763389c0302daecceb"
+              "sha256": "9d86d4b67e2fdec681d0a6d6009647b33aacf7d72354ff366001f8ee595819c6"
             },
             {
               "id": "walk-04",
               "path": "/story/enemies/kore-enemies-v1/sets/prism-sentinel/frames/walk/04.png",
               "durationMs": 105,
               "contentBounds": [
-                59,
-                72,
-                133,
+                19,
+                61,
+                173,
                 188
               ],
-              "sha256": "6ee96dddbac36bb841ef28c711bff5fc23f27c8e03ec6d7b9d4d287941a8222b"
+              "sha256": "4f62f698a868a2a1685c4acb1b645135843d367280c75318924f3e556dbf8acc"
             },
             {
               "id": "walk-05",
               "path": "/story/enemies/kore-enemies-v1/sets/prism-sentinel/frames/walk/05.png",
               "durationMs": 105,
               "contentBounds": [
-                59,
-                72,
-                133,
+                28,
+                64,
+                164,
                 188
               ],
-              "sha256": "6ee96dddbac36bb841ef28c711bff5fc23f27c8e03ec6d7b9d4d287941a8222b"
+              "sha256": "82d4c6dfa918bf9b09e40feae818be9b1a39585bc500c5623f832a092a9a81c0"
             },
             {
               "id": "walk-06",
               "path": "/story/enemies/kore-enemies-v1/sets/prism-sentinel/frames/walk/06.png",
               "durationMs": 105,
               "contentBounds": [
-                59,
-                72,
-                133,
+                30,
+                66,
+                163,
                 188
               ],
-              "sha256": "6ee96dddbac36bb841ef28c711bff5fc23f27c8e03ec6d7b9d4d287941a8222b"
+              "sha256": "a667728c115cc942203941e40c9a82755445da631fe599e9c2a1a17fe19cedc0"
             },
             {
               "id": "walk-07",
               "path": "/story/enemies/kore-enemies-v1/sets/prism-sentinel/frames/walk/07.png",
               "durationMs": 105,
               "contentBounds": [
-                59,
-                72,
-                133,
+                31,
+                65,
+                161,
                 188
               ],
-              "sha256": "6ee96dddbac36bb841ef28c711bff5fc23f27c8e03ec6d7b9d4d287941a8222b"
+              "sha256": "36a6d16ed9ea935c32935709f2518e0d37534877b8e2fe471a5ea9ee70098159"
             },
             {
               "id": "walk-08",
               "path": "/story/enemies/kore-enemies-v1/sets/prism-sentinel/frames/walk/08.png",
               "durationMs": 105,
               "contentBounds": [
-                59,
-                72,
-                133,
+                31,
+                64,
+                161,
                 188
               ],
-              "sha256": "6ee96dddbac36bb841ef28c711bff5fc23f27c8e03ec6d7b9d4d287941a8222b"
+              "sha256": "2a01553860daecd858e16d45056e929d6b2f42a5c293e6edb7b1ac7a8a3465d0"
             }
           ]
         },
@@ -45324,6 +45345,6 @@
   ],
   "contactSheet": {
     "path": "/story/enemies/kore-enemies-v1/contact-sheet.png",
-    "sha256": "b472729e0dee9fac69d8e8b079490de6d4687c241a8052eef65055db1ba973d1"
+    "sha256": "c1d8c8758107a8ef408f129303692848b736f52582b2c3029f2e014d70600d4b"
   }
 }

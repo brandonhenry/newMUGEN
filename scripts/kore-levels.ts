@@ -7,7 +7,7 @@ import { STORY_ENDLESS_CHUNK_BLUEPRINTS, storyChunkCoverageErrors } from '../src
 import { compileStoryLevelBlueprint, renderStoryLevelBlueprintSvg, validateStoryLevelBlueprint } from '../src/story/levelCompiler';
 import { STORY_SURFACE_LEVEL_BLUEPRINTS } from '../src/story/levelBlueprints';
 import type { StoryLevelBlueprint, StoryLevelBlueprintV2 } from '../src/story/levelTypes';
-import { storyTerrainGrammarCoverageErrors } from '../src/story/terrainGrammar';
+import { STORY_TERRAIN_KITS, storyTerrainGrammarCoverageErrors } from '../src/story/terrainGrammar';
 
 const repoRoot = resolve(import.meta.dirname, '..');
 const outputRoot = join(repoRoot, 'tmp', 'level-director');
@@ -40,11 +40,13 @@ async function writeJson(name: string, value: unknown) {
 }
 
 async function inventory() {
-  const payload = { generatedAt: new Date().toISOString(), coverage: storyLevelAssetCoverage(), assets: STORY_LEVEL_ASSET_REGISTRY };
+  const terrainKits = Object.values(STORY_TERRAIN_KITS);
+  const payload = { generatedAt: new Date().toISOString(), coverage: storyLevelAssetCoverage(), assets: STORY_LEVEL_ASSET_REGISTRY, terrainKits };
   const jsonPath = await writeJson('asset-inventory.json', payload);
   const rows = STORY_LEVEL_ASSET_REGISTRY.map((asset) => `<li><img src="../../public/story/worlds/${asset.asset.replace(/^world:/, '')}" alt=""><span><strong>${asset.id}</strong><small>${asset.biomes.join(', ')} · ${asset.roles.join(', ')} · ${asset.tags.join(', ')}</small></span></li>`).join('');
   const htmlPath = join(outputRoot, 'asset-inventory.html');
-  await writeFile(htmlPath, `<!doctype html><meta charset="utf-8"><title>KORE level asset inventory</title><style>body{margin:24px;background:#07111e;color:#eaf8ff;font:14px system-ui}ul{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px;padding:0}li{display:flex;gap:12px;align-items:center;padding:12px;border:1px solid #23445a;border-radius:12px;background:#0d1b2a}img{width:80px;height:80px;object-fit:contain;image-rendering:pixelated;background:#03080e}span{display:grid;gap:5px}small{color:#8da9bc}</style><h1>KORE semantic asset inventory</h1><ul>${rows}</ul>`, 'utf8');
+  const kits = terrainKits.map((kit) => `<article><h2>${kit!.biome} · ${kit!.primaryFamily}</h2><img src="../../public/story/worlds/${kit!.contactSheet.replace(/^world:/, '')}" alt="${kit!.theme} terrain kit contact sheet"><p>${kit!.frames.length} resolved frames · ${kit!.enclosureStyle}</p></article>`).join('');
+  await writeFile(htmlPath, `<!doctype html><meta charset="utf-8"><title>KORE level asset inventory</title><style>body{margin:24px;background:#07111e;color:#eaf8ff;font:14px system-ui}section,ul{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px;padding:0}article,li{padding:12px;border:1px solid #23445a;border-radius:12px;background:#0d1b2a}li{display:flex;gap:12px;align-items:center}li img{width:80px;height:80px;object-fit:contain}article img{width:100%;image-rendering:pixelated;background:#03080e}span{display:grid;gap:5px}small,p{color:#8da9bc}</style><h1>KORE terrain kits</h1><section>${kits}</section><h1>Semantic props</h1><ul>${rows}</ul>`, 'utf8');
   return { jsonPath, htmlPath, assets: payload.assets.length };
 }
 
@@ -88,6 +90,15 @@ function validateAll() {
     return { biomeId, used: used.size, approved: approved.length, gaps: approved.filter((id) => !used.has(id)) };
   });
   for (const coverage of assetCoverage) if (coverage.gaps.length > 0) failures.push(`asset-coverage:${coverage.biomeId}:${coverage.gaps.join(',')}`);
+  for (const blueprint of Object.values(STORY_SURFACE_LEVEL_BLUEPRINTS)) {
+    const compiled = compileStoryLevelBlueprint(blueprint, blueprint.id, 1);
+    const allowed = new Set(blueprint.visual.permittedPropFamilies);
+    for (const resolution of compiled.meta.assetResolution) {
+      const asset = STORY_LEVEL_ASSET_REGISTRY.find((candidate) => candidate.id === resolution.assetId);
+      if (!asset || !allowed.has(asset.family)) failures.push(`prop-family:${blueprint.id}:${resolution.assetId}`);
+    }
+    if (!compiled.terrainKitId || compiled.terrainTiles.some((tile) => !tile.frameId) || compiled.cavityTiles.some((tile) => !tile.frameId)) failures.push(`terrain-art:${blueprint.id}`);
+  }
   return { valid: failures.length === 0, failures, blueprints: allBlueprints().length, surfaces: Object.keys(STORY_SURFACE_LEVEL_BLUEPRINTS).length, chunks: STORY_ENDLESS_CHUNK_BLUEPRINTS.length, assetCoverage };
 }
 
@@ -100,13 +111,14 @@ async function sample() {
   const entranceTiers = [0, 0, 0];
   for (const biome of STORY_ADVENTURE_REGION_IDS) for (let index = 0; index < count; index += 1) {
     const floorNumber = [1, 2, 3, 4, 8, 100, Number.MAX_SAFE_INTEGER][index % 7];
-    const floor = generateAdventureFloor(biome, `level-director-${index}`, floorNumber, 5);
+    const floor = generateAdventureFloor(biome, `level-director-${index}`, floorNumber);
     intents[floor.intent] += 1;
     if (floor.usedFallback) fallbacks += 1;
     if (floor.entranceTier !== undefined) entranceTiers[floor.entranceTier] += 1;
     failures.push(...floor.validationFailures.map((failure) => `${biome}:${index}:${failure}`));
     if ((floor.intent === 'harvest' || floor.intent === 'exploration') && floor.enemySpawns.length > 0) failures.push(`${biome}:${index}:peaceful-floor-enemies`);
     if (!floor.platforms.some((platform) => platform.terrainRole === 'wall')) failures.push(`${biome}:${index}:missing-structural-terrain`);
+    if (floor.version >= 6 && (!floor.terrainKitId || !floor.cavityTiles?.length || floor.terrainTiles?.some((tile) => !tile.frameId))) failures.push(`${biome}:${index}:missing-world-art`);
     signatures.add(floor.rooms.filter((room) => room.critical).sort((a, b) => a.column - b.column || a.row - b.row).map((room) => `${room.column}:${room.row}:${room.templateId}`).join('|'));
   }
   const result = { valid: failures.length === 0 && fallbacks === 0 && entranceTiers.every((value) => value > 0), seeds: count * STORY_ADVENTURE_REGION_IDS.length, fallbacks, failures, uniqueSignatures: signatures.size, intents, entranceTiers };
@@ -127,8 +139,9 @@ async function report() {
   const sampling = await sample();
   const rendered = await render();
   const cards = Object.values(STORY_SURFACE_LEVEL_BLUEPRINTS).map((blueprint) => `<article><h2>${blueprint.id}</h2><p>${blueprint.brief.primaryMechanic}</p><img src="renders/${blueprint.id}.svg" alt="${blueprint.id} plan"></article>`).join('');
+  const terrainCards = Object.values(STORY_TERRAIN_KITS).map((kit) => `<article><h2>${kit!.biome} terrain kit</h2><p>${kit!.primaryFamily} · ${kit!.enclosureStyle}</p><img src="../../public/story/worlds/${kit!.contactSheet.replace(/^world:/, '')}" alt="${kit!.biome} terrain kit"></article>`).join('');
   const reportPath = join(outputRoot, 'report.html');
-  await writeFile(reportPath, `<!doctype html><meta charset="utf-8"><title>KORE Level Director report</title><style>body{margin:24px;background:#07111e;color:#ecf8ff;font:14px system-ui}header{position:sticky;top:0;padding:14px;background:#07111eee;backdrop-filter:blur(12px)}main{display:grid;grid-template-columns:repeat(auto-fit,minmax(480px,1fr));gap:16px}article{padding:14px;border:1px solid #23445a;border-radius:14px;background:#0d1b2a}img{width:100%}p{color:#91adbf}</style><header><h1>KORE AI Level Director</h1><p>Blueprints ${validation.blueprints} · surfaces ${validation.surfaces} · chunks ${validation.chunks} · seeds ${sampling.seeds} · fallbacks ${sampling.fallbacks} · ${validation.valid && sampling.valid ? 'PASS' : 'FAIL'}</p></header><main>${cards}</main>`, 'utf8');
+  await writeFile(reportPath, `<!doctype html><meta charset="utf-8"><title>KORE Level Director report</title><style>body{margin:24px;background:#07111e;color:#ecf8ff;font:14px system-ui}header{position:sticky;top:0;padding:14px;background:#07111eee;backdrop-filter:blur(12px)}main{display:grid;grid-template-columns:repeat(auto-fit,minmax(480px,1fr));gap:16px}article{padding:14px;border:1px solid #23445a;border-radius:14px;background:#0d1b2a}img{width:100%;image-rendering:pixelated}p{color:#91adbf}</style><header><h1>KORE Enclosed World Art Report</h1><p>Blueprints ${validation.blueprints} · surfaces ${validation.surfaces} · chunks ${validation.chunks} · seeds ${sampling.seeds} · fallbacks ${sampling.fallbacks} · ${validation.valid && sampling.valid ? 'PASS' : 'FAIL'}</p></header><main>${terrainCards}${cards}</main>`, 'utf8');
   await writeJson('report.json', { validation, sampling, rendered, reportPath });
   return { reportPath, validation, sampling };
 }

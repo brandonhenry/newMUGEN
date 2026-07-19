@@ -12,6 +12,24 @@ describe('enclosed story terrain', () => {
     expect(terrain.terrainTiles.some((tile) => tile.role === 'right-wall')).toBe(true);
     expect(terrain.terrainTiles.some((tile) => tile.role === 'underside')).toBe(true);
     expect(terrain.platforms.length).toBeLessThan(terrain.terrainTiles.length);
+    expect(terrain.terrainTiles.length + terrain.cavityTiles.length).toBe(terrain.columns * terrain.rows);
+  });
+
+  it('marks only authored air cells as controlled sky windows', () => {
+    const terrain = compileStoryTerrainGrid({
+      id: 'hybrid-shell', bounds: [0, 24, 0, 24], carveRects: [[2, 2, 20, 20]],
+      skyWindowRects: [[8, 14, 8, 6]], cellSize: 2, perimeterCells: 1
+    });
+    expect(terrain.cavityTiles.some((tile) => tile.material === 'sky-window-edge')).toBe(true);
+    expect(terrain.cavityTiles.some((tile) => tile.material === 'background-rock')).toBe(true);
+  });
+
+  it('reserves biome caps for surfaces with real avatar clearance', () => {
+    const shallow = compileStoryTerrainGrid({ id: 'shallow-seam', bounds: [0, 12, 0, 12], carveRects: [[2, 2, 8, 2]], cellSize: 2, perimeterCells: 1 });
+    const tall = compileStoryTerrainGrid({ id: 'walkable-cavity', bounds: [0, 12, 0, 12], carveRects: [[2, 2, 8, 6]], cellSize: 2, perimeterCells: 1 });
+    expect(shallow.terrainTiles.some((tile) => tile.role === 'neutral-top')).toBe(true);
+    expect(shallow.terrainTiles.some((tile) => tile.role === 'top')).toBe(false);
+    expect(tall.terrainTiles.some((tile) => tile.role === 'top')).toBe(true);
   });
 
   it('is byte deterministic and changes its topology signature with authored cavities', () => {

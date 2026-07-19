@@ -1,10 +1,11 @@
-import type { StoryPlatformDefinition, StoryTerrainTileDefinition, StoryTerrainTileRole } from './types';
+import type { StoryCavityTileDefinition, StoryPlatformDefinition, StoryTerrainTileDefinition, StoryTerrainTileRole } from './types';
 
 export type StoryTerrainRect = [number, number, number, number];
 
 export type CompiledStoryTerrain = {
   platforms: StoryPlatformDefinition[];
   terrainTiles: StoryTerrainTileDefinition[];
+  cavityTiles: StoryCavityTileDefinition[];
   columns: number;
   rows: number;
   solid: boolean[];
@@ -17,16 +18,16 @@ function hash(value: string) {
   return result >>> 0;
 }
 
-function roleFor(mask: number, diagonals: number): { role: StoryTerrainTileRole; rotation: 0 | 90 | 180 | 270; mirrored: boolean } {
+function roleFor(mask: number, diagonals: number, walkableTop: boolean): { role: StoryTerrainTileRole; rotation: 0 | 90 | 180 | 270; mirrored: boolean } {
   const north = Boolean(mask & 1);
   const east = Boolean(mask & 2);
   const south = Boolean(mask & 4);
   const west = Boolean(mask & 8);
-  if (!north && !west) return { role: 'outer-top-left', rotation: 0, mirrored: false };
-  if (!north && !east) return { role: 'outer-top-right', rotation: 0, mirrored: true };
+  if (!north && !west) return { role: walkableTop ? 'outer-top-left' : 'neutral-top-left', rotation: 0, mirrored: false };
+  if (!north && !east) return { role: walkableTop ? 'outer-top-right' : 'neutral-top-right', rotation: 0, mirrored: true };
   if (!south && !west) return { role: 'outer-bottom-left', rotation: 180, mirrored: true };
   if (!south && !east) return { role: 'outer-bottom-right', rotation: 180, mirrored: false };
-  if (!north) return { role: 'top', rotation: 0, mirrored: false };
+  if (!north) return { role: walkableTop ? 'top' : 'neutral-top', rotation: 0, mirrored: false };
   if (!south) return { role: 'underside', rotation: 180, mirrored: false };
   if (!west) return { role: 'left-wall', rotation: 90, mirrored: false };
   if (!east) return { role: 'right-wall', rotation: 270, mirrored: false };
@@ -44,6 +45,7 @@ export function compileStoryTerrainGrid(input: {
   perimeterCells?: number;
   carveRects: StoryTerrainRect[];
   solidRects?: StoryTerrainRect[];
+  skyWindowRects?: StoryTerrainRect[];
   seed?: string;
 }): CompiledStoryTerrain {
   const [minX, maxX, minY, maxY] = input.bounds;
@@ -68,11 +70,26 @@ export function compileStoryTerrainGrid(input: {
   }
   const at = (column: number, row: number) => column < 0 || row < 0 || column >= columns || row >= rows || solid[index(column, row)];
   const terrainTiles: StoryTerrainTileDefinition[] = [];
+  const cavityTiles: StoryCavityTileDefinition[] = [];
   for (let row = 0; row < rows; row += 1) for (let column = 0; column < columns; column += 1) {
-    if (!solid[index(column, row)]) continue;
+    if (!solid[index(column, row)]) {
+      const material = (input.skyWindowRects ?? []).some((rect) => overlaps(column, row, rect)) ? 'sky-window-edge' : 'background-rock';
+      cavityTiles.push({
+        id: `${input.id}-cavity-${column}-${row}`,
+        position: [minX + (column + 0.5) * cellSize, minY + (row + 0.5) * cellSize],
+        size: [cellSize, cellSize], column, row, material,
+        surfaceVariant: hash(`${input.seed ?? input.id}:cavity:${column}:${row}:${material}`) % 3,
+        visualLayer: material === 'sky-window-edge' ? 'sky-window' : 'cavity-background'
+      });
+      continue;
+    }
     const neighborMask = (at(column, row + 1) ? 1 : 0) | (at(column + 1, row) ? 2 : 0) | (at(column, row - 1) ? 4 : 0) | (at(column - 1, row) ? 8 : 0);
     const diagonals = (at(column + 1, row + 1) ? 1 : 0) | (at(column - 1, row + 1) ? 2 : 0) | (at(column + 1, row - 1) ? 4 : 0) | (at(column - 1, row - 1) ? 8 : 0);
-    const visual = roleFor(neighborMask, diagonals);
+    // A decorative cap means "the avatar can stand here", not merely "air is
+    // above this cell". Require a full four-world-unit avatar/camera clearance;
+    // thin decorative cavities and ceiling seams keep a neutral material edge.
+    const walkableTop = !at(column, row + 1) && !at(column, row + 2);
+    const visual = roleFor(neighborMask, diagonals, walkableTop);
     terrainTiles.push({
       id: `${input.id}-tile-${column}-${row}`,
       position: [minX + (column + 0.5) * cellSize, minY + (row + 0.5) * cellSize],
@@ -119,7 +136,7 @@ export function compileStoryTerrainGrid(input: {
     };
   });
   const topologySignature = `${columns}x${rows}:${hash(solid.map((value) => value ? '1' : '0').join('')).toString(16).padStart(8, '0')}`;
-  return { platforms, terrainTiles, columns, rows, solid, topologySignature };
+  return { platforms, terrainTiles, cavityTiles, columns, rows, solid, topologySignature };
 }
 
 export function storyTerrainPerimeterIntact(terrain: Pick<CompiledStoryTerrain, 'columns' | 'rows' | 'solid'>) {

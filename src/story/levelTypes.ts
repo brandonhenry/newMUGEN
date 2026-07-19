@@ -83,6 +83,13 @@ export type StoryLevelVisualIntent = {
   heroRole: StoryLevelAssetRole;
   densityBudget: number;
   permittedAssetTags: string[];
+  enclosureStyle: string;
+  defaultCavityMaterial: 'background-rock' | 'interior';
+  skyWindowRegions: Array<[number, number, number, number]>;
+  landmarkFramingRegions: Array<[number, number, number, number]>;
+  dressingClusterAnchors: Array<[number, number]>;
+  permittedTerrainFamilies: string[];
+  permittedPropFamilies: string[];
 };
 
 export type StoryLevelConstraints = {
@@ -139,6 +146,10 @@ export type StoryLevelAssetDefinition = {
   repetitionLimit: number;
   sourcePack: string;
   license: string;
+  frame?: [number, number, number, number];
+  atlasSize?: [number, number];
+  generated?: boolean;
+  provenance?: string;
 };
 
 export type StoryLevelValidationResult = {
@@ -166,5 +177,5 @@ export type StoryCompiledLevelMeta = {
   topologySignature?: string;
   entranceTier?: 0 | 1 | 2;
   exitTier?: 0 | 1 | 2;
-  witnessInputs?: Array<{ frames: number; horizontal: -1 | 0 | 1; jump?: boolean; down?: boolean }>;
+  witnessInputs?: Array<{ frames: number; durationSeconds?: number; horizontal: -1 | 0 | 1; jump?: boolean; down?: boolean }>;
 };

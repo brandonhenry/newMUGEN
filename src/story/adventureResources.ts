@@ -134,7 +134,7 @@ export function createEndlessFloorResourceNodes(biomeId: StoryBiomeId, floor: St
     const alcove = room.rewardAlcoves[index % Math.max(1, room.rewardAlcoves.length)] ?? [0, 1.05];
     const baseX = roomCenter + alcove[0];
     const x = Math.max(floor.bounds.minX + 8, Math.min(floor.bounds.maxX - 8, baseX + (unit(`${floor.seed}:${floor.floorNumber}:${index}`) - 0.5) * 2));
-    return makeNode(`${room.id}-resource-${index + 1}`, resourceId, x, major, local[2], room.bounds[2] + (floor.version === 5 ? 2 : 0));
+    return makeNode(`${room.id}-resource-${index + 1}`, resourceId, x, major, local[2], room.bounds[2] + (floor.version >= 5 ? 2 : 0));
   });
 }
 

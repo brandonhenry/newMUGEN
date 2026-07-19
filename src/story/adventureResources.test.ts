@@ -93,7 +93,7 @@ describe('Adventure gathering nodes', () => {
         const room = floor!.rooms.find((candidate) => node.id.startsWith(`${candidate.id}-resource-`))!;
         const resource = STORY_RESOURCE_BY_ID[node.resourceId];
         const visibleFootY = node.position[1] + node.size[1] * (0.5 - resource.footAnchorY);
-        expect(visibleFootY, node.id).toBeCloseTo(room.bounds[2] + (floor!.version === 5 ? 2 : 0) - 0.035, 8);
+        expect(visibleFootY, node.id).toBeCloseTo(room.bounds[2] + (floor!.version >= 5 ? 2 : 0) - 0.035, 8);
       }
     }
   });

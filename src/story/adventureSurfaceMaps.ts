@@ -258,7 +258,7 @@ function createMap(biome: BiomeId, role: StoryAdventureMapRole): StoryAdventureM
   return {
     id, biomeId: biome, role, order, name: details.name, subtitle: details.subtitle,
     bounds: { minX: -60, maxX: 60, minY: 0, maxY: 36, floorY: 2 }, spawn: westEntry, checkpoint: westEntry,
-    platforms: compiled.platforms, terrainTiles: compiled.terrainTiles, portals,
+    platforms: compiled.platforms, terrainTiles: compiled.terrainTiles, cavityTiles: compiled.cavityTiles, terrainKitId: compiled.terrainKitId, portals,
     landmarks: [landmark(`${id}-hero`, details.hero, details.subtitle, heroRoom ? heroRoom.rect[0] + heroRoom.rect[2] / 2 : 0, heroRoom ? heroRoom.rect[1] + 5 : 9, spec.accent, role === 'mastery' ? 'vista' : 'district'), landmark(`${id}-secret`, 'Optional Route', 'A quieter line rewards careful movement', role === 'field-a' ? 34 : -32, surfaceFloorAtX(blueprint, role === 'field-a' ? 34 : -32) + 6, '#ffe071', 'secret')],
     props: compiled.props, enemySpawns, encounters,
     hazards, traversal, interactables: mapInteractables, npcs, resourceNodes,
@@ -291,6 +291,8 @@ export function createAdventureSurfaceHub(base: StoryHubDefinition, map: StoryAd
     bounds: map.bounds,
     platforms: map.platforms,
     terrainTiles: map.terrainTiles,
+    cavityTiles: map.cavityTiles,
+    terrainKitId: map.terrainKitId,
     portals: map.portals,
     landmarks: map.landmarks,
     props: map.props,

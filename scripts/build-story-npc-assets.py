@@ -29,6 +29,7 @@ IMAGEGEN_PROMPT_CONTRACT = (
     "One production sprite sheet for {identity}; side-view anime pixel art matching all three canonical starter references, "
     "compact proportions, clean dark outlines, hard nearest-neighbor pixels, restrained biome palette, stable identity, "
     "flat #ff00ff background; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6-8; "
+    "the walk row is four gait phases followed by the same four phases with the opposite leg leading; "
     "no opponent, extra limbs, identity drift, scale drift, labels, grid, or broken held prop."
 )
 
@@ -142,12 +143,7 @@ def upper_character_runs(sheet: Image.Image, row: int) -> list[tuple[int, int]]:
 def walk_centers(sheet: Image.Image) -> list[float]:
     runs = alpha_runs(sheet, 2, character_band=True)
     if len(runs) < 8:
-        if not runs:
-            raise RuntimeError(f"Walk row has only {len(runs)} character groups")
-        # Large carried props can bridge two adjacent poses into one alpha run.
-        # Generated sheets use eight evenly spaced walk cells, with a small
-        # rightward inset that keeps the first pose's forward prop intact.
-        return [sheet.width * (index + 0.65) / 8 for index in range(8)]
+        raise RuntimeError(f"Walk row must contain eight coherent character cells; found {len(runs)}")
     if len(runs) > 8:
         runs = sorted(sorted(runs, key=lambda run: run[1] - run[0], reverse=True)[:8])
     return [(left + right) / 2 for left, right in runs]
@@ -262,14 +258,20 @@ def build_asset(asset: NpcAsset) -> dict:
         for stale_frame in action_dir.glob("*.png"):
             stale_frame.unlink()
         previous_frame: Image.Image | None = None
+        pose_hashes: list[str] = []
+        strict_generated_walk = asset.source_kind == "imagegen" and action == "walk"
         for index in range(count):
             try:
                 frame = normalized_frame(sheet, centers, source_row, min(index, len(centers) - 1))
                 if identity_area and not coherent_character_frame(frame, identity_area):
+                    if strict_generated_walk:
+                        raise RuntimeError("Generated walk frame is not a coherent full-body pose")
                     if previous_frame is None and identity_frame is None:
                         raise RuntimeError("No coherent identity fallback")
                     frame = (previous_frame or identity_frame).copy()
             except RuntimeError:
+                if strict_generated_walk:
+                    raise
                 if previous_frame is None and identity_frame is None:
                     raise
                 frame = (previous_frame or identity_frame).copy()
@@ -277,11 +279,14 @@ def build_asset(asset: NpcAsset) -> dict:
                 identity_frame = frame.copy()
                 identity_area = opaque_area(frame)
             previous_frame = frame
+            pose_hashes.append(hashlib.sha256(frame.tobytes()).hexdigest())
             frame_path = action_dir / f"{index + 1:02d}.png"
             frame.save(frame_path, optimize=True)
             public_path = f"/story/npcs/characters/{asset.id}/{action}/{index + 1:02d}.png"
             frames.append(public_path)
             contact_frames.append((f"{action} {index + 1}", frame))
+        if strict_generated_walk and (len(pose_hashes) != 8 or len(set(pose_hashes)) != 8):
+            raise RuntimeError(f"Generated walk row for {asset.id} must contain eight distinct approved poses")
         action_entries[action] = {"frames": frames, "durationMs": duration, "loop": loop}
     columns = 8
     rows = (len(contact_frames) + columns - 1) // columns
@@ -310,6 +315,7 @@ def build_asset(asset: NpcAsset) -> dict:
                 f"Original {metadata['species']} NPC {metadata['displayName']} for {metadata['biomeId']}: "
                 f"{metadata['design']}; palette {metadata['palette']}; one 1536x1024 five-row sheet on flat "
                 f"{metadata['chromaKey']}; rows idle 6, dialogue 6, walk-right 8, protect 4, defensive counter 6; "
+                "the walk row is four gait phases followed by the same four phases with the opposite leg leading; "
                 "right-facing anime pixel art, hard pixels, dark outlines, one stable full-body identity per frame, "
                 "no text, grid, opponent, extra bodies, merged cells, transparency, or identity drift."
             )

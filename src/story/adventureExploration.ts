@@ -26,6 +26,12 @@ export const STORY_MAX_BREATH = 100;
 export const STORY_BREATH_DRAIN_PER_SECOND = 10;
 export const STORY_BREATH_REFILL_PER_SECOND = 32;
 
+/** Emits water-state updates only when the effective swimming state changes. */
+export function shouldSyncAdventureWaterState(previous: boolean | null, swimming: boolean, inAirPocket: boolean) {
+  const next = swimming && !inAirPocket;
+  return previous === null || previous !== next;
+}
+
 export const STORY_MOUNTS: Record<StoryMountId, StoryMountDefinition> = {
   'verdant-stag': { id: 'verdant-stag', worldId: 'greenhollow', label: 'Verdant Stag', ability: 'Clearing Leap', traversal: ['walk'], speedMultiplier: 1.55, jumpMultiplier: 1.35, footAnchor: [0.5, 0], riderOffset: [0, 1.02], accent: '#7ee787' },
   'bramble-lynx': { id: 'bramble-lynx', worldId: 'thornwood', label: 'Bramble Lynx', ability: 'Root Climb', traversal: ['walk', 'climb'], speedMultiplier: 1.42, jumpMultiplier: 1.25, footAnchor: [0.5, 0], riderOffset: [0, 0.92], accent: '#52e1a1' },

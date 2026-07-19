@@ -97,6 +97,16 @@ export const STORY_RESOURCE_BY_ID = Object.fromEntries(STORY_RESOURCES.map((reso
 
 export const STORY_BIOME_RESOURCE_IDS = Object.fromEntries(STORY_BIOME_IDS.map((biomeId) => [biomeId, BIOME_MATERIALS[biomeId].map(([id]) => id)])) as Record<StoryBiomeId, [string, string, string, string]>;
 
+/** Preserve inventory IDs while giving universal materials a coherent local silhouette. */
+export function storyResourceVisualDefinition(resourceId: string, biomeId: StoryBiomeId) {
+  const source = STORY_RESOURCE_BY_ID[resourceId];
+  if (!source || source.biomeId) return source;
+  const local = STORY_BIOME_RESOURCE_IDS[biomeId]
+    .map((id) => STORY_RESOURCE_BY_ID[id])
+    .find((candidate) => candidate.kind === source.kind);
+  return local ?? source;
+}
+
 const BIOME_META: Record<StoryBiomeId, { set: string; stats: [StoryAdventureStatName, StoryAdventureStatName, StoryAdventureStatName]; potion: [string, string, StoryEffectKind, number]; utility: [string, string] }> = {
   greenhollow: { set: 'Wayfarer', stats: ['insight', 'vitality', 'agility'], potion: ['gale-tonic', 'Gale Tonic', 'speed', 1.15], utility: ['field-pouch', 'Field Pouch'] },
   thornwood: { set: 'Heartwood', stats: ['critical', 'guard', 'power'], potion: ['briar-brew', 'Briar Brew', 'attack', 1.15], utility: ['felling-wrap', 'Felling Wrap'] },

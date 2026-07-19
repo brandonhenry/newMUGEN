@@ -24,15 +24,21 @@ describe('endless adventure generation', () => {
     }
   });
 
-  it('keeps v4 runs legacy while new v5 floors are enclosed and tiered', () => {
+  it('keeps v4/v5 runs legacy while new v6 floors are enclosed, tiered, and fully dressed', () => {
     const legacy = generateAdventureFloor('greenhollow', 'legacy-run', 3, 4);
     expect(legacy.version).toBe(4);
     expect(legacy.terrainTiles).toBeUndefined();
     const tiers = new Set<number>();
     for (let floorNumber = 1; floorNumber <= 9; floorNumber += 1) {
-      const floor = generateAdventureFloor('greenhollow', 'tiered-run', floorNumber, 5);
+      const legacyEnclosed = generateAdventureFloor('greenhollow', 'tiered-run', floorNumber, 5);
+      expect(legacyEnclosed.terrainKitId).toBeUndefined();
+      expect(legacyEnclosed.cavityTiles).toBeUndefined();
+      const floor = generateAdventureFloor('greenhollow', 'tiered-run', floorNumber, 6);
       tiers.add(floor.entranceTier!);
       expect(floor.terrainTiles?.length).toBeGreaterThan(0);
+      expect(floor.cavityTiles?.length).toBeGreaterThan(0);
+      expect(floor.terrainKitId).toBeTruthy();
+      expect(floor.terrainTiles?.every((tile) => tile.frameId && tile.kitId)).toBe(true);
       expect(floor.bounds).toMatchObject({ minY: 0, maxY: 36 });
       expect(floor.levelMeta?.topologySignature).toBeTruthy();
     }
@@ -89,6 +95,15 @@ describe('endless adventure generation', () => {
       expect(adventureFloorValidationErrors(generateAdventureFallbackFloor(biome, 'fallback-run', 3))).toEqual([]);
       expect(adventureFloorValidationErrors(generateAdventureFallbackFloor(biome, 'fallback-run', 4))).toEqual([]);
     }
+  });
+
+  it('emits replayable runtime controller witnesses for v6 while retaining v5 records', () => {
+    const v6 = generateAdventureFloor('greenhollow', 'controller-witness', 1, 6);
+    const v5 = generateAdventureFloor('greenhollow', 'controller-witness', 1, 5);
+    expect(v6.levelMeta?.witnessInputs).toHaveLength(Math.max(0, (v6.levelMeta?.witnessRoute.length ?? 0) - 1));
+    expect(v6.levelMeta?.witnessInputs?.every((input) => input.frames > 0)).toBe(true);
+    expect(v6.levelMeta?.witnessInputs?.every((input) => (input.durationSeconds ?? 0) > 0)).toBe(true);
+    expect(v5.levelMeta?.witnessInputs).toBeUndefined();
   });
 
   it('scales monotonically with bounded speed, pressure, rewards, and boon caps', () => {

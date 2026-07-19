@@ -14,6 +14,8 @@
     "build:story-resource-assets": "python3 scripts/build-story-resource-assets.py",
     "verify:story-npc-assets": "python3 scripts/build-story-npc-assets.py --verify",
     "verify:world-assets": "python3 scripts/import-kore-world-biome-assets.py",
+    "build:story-terrain-kits": "python3 scripts/build-story-terrain-kits.py",
+    "verify:story-terrain-kits": "python3 scripts/build-story-terrain-kits.py --verify",
     "import:exploration-assets": "python3 scripts/import-kore-world-biome-assets.py --refresh-exploration",
     "import:adventure-music": "python3 scripts/import-stimmerman-adventure-music.py",
     "verify:adventure-music": "python3 scripts/import-stimmerman-adventure-music.py --verify",

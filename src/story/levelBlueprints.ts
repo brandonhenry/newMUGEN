@@ -17,6 +17,16 @@ const THEMES: Record<BiomeId, StoryWorldThemeId> = {
   emberdeep: 'underworld', frostpeak: 'snow', sunscar: 'desert', skyglass: 'ruins'
 };
 
+const TERRAIN_FAMILIES: Record<BiomeId, string> = {
+  greenhollow: 'gothic-town', thornwood: 'magic-cliffs', ironroot: 'warped-caves', bonevault: 'gothic-cemetery',
+  emberdeep: 'emberdeep', frostpeak: 'seasonal-snow', sunscar: 'sunscar', skyglass: 'rocky-pass-glass'
+};
+
+const ENCLOSURE_STYLES: Record<BiomeId, string> = {
+  greenhollow: 'rooftops-town-walls', thornwood: 'canopy-roots-overhangs', ironroot: 'reinforced-mine-shafts', bonevault: 'crypt-arches-ossuary',
+  emberdeep: 'basalt-forge-caverns', frostpeak: 'ice-cliffs-shelters', sunscar: 'sandstone-buried-architecture', skyglass: 'glass-arches-sanctums'
+};
+
 const HEROES: Record<string, string> = {
   'greenhollow-arrival': 'Great Windmill', 'greenhollow-field-a': 'Copper Market Roofs', 'greenhollow-field-b': 'Old Water Wheel', 'greenhollow-mastery': 'Greenhollow Gate',
   'thornwood-arrival': 'Rootkeeper Camp', 'thornwood-field-a': 'Sleeping Giantroot', 'thornwood-field-b': 'Whisper Crown', 'thornwood-mastery': 'Heartwood Arch',
@@ -204,7 +214,15 @@ function makeSurfaceBlueprint(biomeId: BiomeId, mapRole: StoryAdventureMapRole):
       ...semanticGameplaySlots,
       ...propSlots
     ],
-    visual: { paletteId: THEMES[biomeId], structuralMaterial: THEMES[biomeId], heroRole: 'hero', densityBudget: mapRole === 'arrival' ? 24 : mapRole === 'mastery' ? 28 : 24, permittedAssetTags: propTags },
+    visual: {
+      paletteId: THEMES[biomeId], structuralMaterial: THEMES[biomeId], heroRole: 'hero',
+      densityBudget: mapRole === 'arrival' ? 24 : mapRole === 'mastery' ? 28 : 24,
+      permittedAssetTags: propTags, enclosureStyle: ENCLOSURE_STYLES[biomeId], defaultCavityMaterial: 'background-rock',
+      skyWindowRegions: platformXs.flatMap((x, index) => tiers[index] === 2 && (index + roleIndex) % 2 === 0 ? [[x - 6, floorY(tiers[index]) + 4, 12, 4] as [number, number, number, number]] : []),
+      landmarkFramingRegions: [[platformXs[Math.floor(platformCount / 2)] - 8, floorY(tiers[Math.floor(platformCount / 2)]), 16, 8]],
+      dressingClusterAnchors: platformXs.filter((_, index) => index % 2 === 0).map((x, index) => [x, floorY(tiers[index * 2])] as [number, number]),
+      permittedTerrainFamilies: [TERRAIN_FAMILIES[biomeId]], permittedPropFamilies: [TERRAIN_FAMILIES[biomeId]]
+    },
     constraints: {
       entryClearance: 7,
       cameraHeight: 16,

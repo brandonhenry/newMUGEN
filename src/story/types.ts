@@ -580,7 +580,7 @@ export type StoryFloorPressureState = {
 export type StoryFloorIntent = 'combat' | 'harvest' | 'exploration' | 'boss';
 
 export type StoryGeneratedFloor = {
-  version: 3 | 4 | 5;
+  version: 3 | 4 | 5 | 6;
   worldId: Exclude<StoryAdventureWorldId, 'world-route'>;
   seed: string;
   floorNumber: number;
@@ -602,6 +602,8 @@ export type StoryGeneratedFloor = {
   rooms: StoryGeneratedRoom[];
   platforms: StoryPlatformDefinition[];
   terrainTiles?: StoryTerrainTileDefinition[];
+  cavityTiles?: StoryCavityTileDefinition[];
+  terrainKitId?: string;
   hazards: StoryHazardDefinition[];
   traversal: StoryTraversalPieceDefinition[];
   encounters: StoryEncounterZoneDefinition[];
@@ -624,7 +626,7 @@ export type StoryRunRewardLedger = {
 
 export type StoryEndlessRunState = {
   version: 3 | 4;
-  generationVersion?: 3 | 4 | 5;
+  generationVersion?: 3 | 4 | 5 | 6;
   worldId: Exclude<StoryAdventureWorldId, 'world-route'>;
   seed: string;
   floorNumber: number;
@@ -758,6 +760,8 @@ export type StoryAdventureMapDefinition = {
   checkpoint: [number, number];
   platforms: StoryPlatformDefinition[];
   terrainTiles?: StoryTerrainTileDefinition[];
+  cavityTiles?: StoryCavityTileDefinition[];
+  terrainKitId?: string;
   portals: StoryPortalDefinition[];
   landmarks: StoryWorldLandmarkDefinition[];
   props: StoryWorldPropDefinition[];
@@ -818,6 +822,9 @@ export type StoryPlatformDefinition = {
 export type StoryTerrainTileRole =
   | 'fill'
   | 'top'
+  | 'neutral-top'
+  | 'neutral-top-left'
+  | 'neutral-top-right'
   | 'underside'
   | 'left-wall'
   | 'right-wall'
@@ -842,6 +849,22 @@ export type StoryTerrainTileDefinition = {
   surfaceVariant: number;
   rotation: 0 | 90 | 180 | 270;
   mirrored: boolean;
+  kitId?: string;
+  frameId?: string;
+  visualLayer?: 'solid-fill' | 'exposed-face' | 'overlay';
+};
+
+export type StoryCavityTileDefinition = {
+  id: string;
+  position: [number, number];
+  size: [number, number];
+  column: number;
+  row: number;
+  material: 'background-rock' | 'sky-window-edge';
+  surfaceVariant: number;
+  kitId?: string;
+  frameId?: string;
+  visualLayer: 'cavity-background' | 'sky-window';
 };
 
 export type StoryHubDefinition = {
@@ -852,6 +875,8 @@ export type StoryHubDefinition = {
   bounds: { minX: number; maxX: number; floorY: number; minY?: number; maxY?: number };
   platforms: StoryPlatformDefinition[];
   terrainTiles?: StoryTerrainTileDefinition[];
+  cavityTiles?: StoryCavityTileDefinition[];
+  terrainKitId?: string;
   portals: StoryPortalDefinition[];
   theme?: StoryWorldThemeId;
   environment?: StoryWorldEnvironmentDefinition;
@@ -881,6 +906,6 @@ export type StoryHubDefinition = {
     topologySignature?: string;
     entranceTier?: 0 | 1 | 2;
     exitTier?: 0 | 1 | 2;
-    witnessInputs?: Array<{ frames: number; horizontal: -1 | 0 | 1; jump?: boolean; down?: boolean }>;
+    witnessInputs?: Array<{ frames: number; durationSeconds?: number; horizontal: -1 | 0 | 1; jump?: boolean; down?: boolean }>;
   };
 };

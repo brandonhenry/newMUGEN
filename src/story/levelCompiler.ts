@@ -2,7 +2,9 @@ import { STORY_GROUNDED_ACTOR_CENTER_Y } from './actorGrounding';
 import { resolveStoryLevelAsset } from './levelAssets';
 import { STORY_MOVEMENT_PROFILE, storyConservativeDoubleJumpRise, storyConservativeJumpRun } from './movementProfile';
 import { compileStoryTerrainGrid, storyTerrainPerimeterIntact } from './terrainGrid';
-import type { StoryPlatformDefinition, StoryTerrainTileDefinition, StoryWorldPropDefinition } from './types';
+import { resolveStoryCavityTile, resolveStoryTerrainTile, storyTerrainKit } from './terrainGrammar';
+import { compressStoryWitnessInputs } from './movementWitness';
+import type { StoryCavityTileDefinition, StoryPlatformDefinition, StoryTerrainTileDefinition, StoryWorldPropDefinition } from './types';
 import type { StoryCompiledLevelMeta, StoryLevelAssetRole, StoryLevelBlueprint, StoryLevelValidationResult } from './levelTypes';
 
 function hashString(value: string) {
@@ -17,15 +19,6 @@ function snapped(value: number, grid: number) {
 
 function rectsOverlap(left: [number, number, number, number], right: [number, number, number, number]) {
   return left[0] < right[0] + right[2] && left[0] + left[2] > right[0] && left[1] < right[1] + right[3] && left[1] + left[3] > right[1];
-}
-
-function compressedWitnessInputs(points: Array<[number, number]>) {
-  return points.slice(1).map((point, index) => {
-    const prior = points[index];
-    const horizontal: -1 | 0 | 1 = point[0] > prior[0] ? 1 : point[0] < prior[0] ? -1 : 0;
-    const seconds = Math.abs(point[0] - prior[0]) / STORY_MOVEMENT_PROFILE.walkSpeed + Math.max(0, point[1] - prior[1]) / STORY_MOVEMENT_PROFILE.climbSpeed;
-    return { frames: Math.max(1, Math.ceil(seconds * 60)), horizontal, ...(point[1] > prior[1] + 0.5 ? { jump: true } : {}), ...(point[1] < prior[1] - 0.5 ? { down: true } : {}) };
-  });
 }
 
 export function validateStoryLevelBlueprint(blueprint: StoryLevelBlueprint): StoryLevelValidationResult {
@@ -72,6 +65,9 @@ export function validateStoryLevelBlueprint(blueprint: StoryLevelBlueprint): Sto
       });
       if (!storyTerrainPerimeterIntact(terrain)) errors.push('terrain-perimeter');
     } catch { errors.push('terrain-grid'); }
+    if (!blueprint.visual.enclosureStyle || !blueprint.visual.defaultCavityMaterial) errors.push('terrain-visual-intent');
+    if (blueprint.kind === 'surface' && !storyTerrainKit(blueprint.visual.paletteId)) errors.push(`terrain-kit:${blueprint.visual.paletteId}`);
+    if (blueprint.visual.permittedTerrainFamilies.length !== 1 || blueprint.visual.permittedPropFamilies.length !== 1) errors.push('terrain-family-purity');
   }
   const solids = blueprint.geometry.filter((geometry) => geometry.kind === 'solid' && geometry.surfaceIntent !== 'ground');
   for (let left = 0; left < solids.length; left += 1) for (let right = left + 1; right < solids.length; right += 1) {
@@ -109,6 +105,8 @@ export function validateStoryLevelBlueprint(blueprint: StoryLevelBlueprint): Sto
 export type CompiledStoryLevelBlueprint = {
   platforms: StoryPlatformDefinition[];
   terrainTiles: StoryTerrainTileDefinition[];
+  cavityTiles: StoryCavityTileDefinition[];
+  terrainKitId?: string;
   props: StoryWorldPropDefinition[];
   meta: StoryCompiledLevelMeta;
   validation: StoryLevelValidationResult;
@@ -120,7 +118,8 @@ export function compileStoryLevelBlueprint(blueprint: StoryLevelBlueprint, seed 
   const enclosed = blueprint.version === 2 ? compileStoryTerrainGrid({
     id: blueprint.id, bounds: blueprint.bounds, ...blueprint.terrain, seed,
     carveRects: blueprint.geometry.filter((geometry) => geometry.kind === 'carve').map((geometry) => geometry.rect),
-    solidRects: blueprint.geometry.filter((geometry) => geometry.kind === 'solid').map((geometry) => geometry.rect)
+    solidRects: blueprint.geometry.filter((geometry) => geometry.kind === 'solid').map((geometry) => geometry.rect),
+    skyWindowRects: blueprint.visual.skyWindowRegions
   }) : null;
   const authoredPlatforms = blueprint.geometry.flatMap((geometry): StoryPlatformDefinition[] => {
     if (geometry.kind === 'carve' || (blueprint.version === 2 && geometry.kind !== 'one-way')) return [];
@@ -135,7 +134,9 @@ export function compileStoryLevelBlueprint(blueprint: StoryLevelBlueprint, seed 
     }];
   });
   const platforms = [...(enclosed?.platforms ?? []), ...authoredPlatforms];
-  const terrainTiles = enclosed?.terrainTiles ?? [];
+  const kit = blueprint.version === 2 ? storyTerrainKit(blueprint.visual.paletteId) : undefined;
+  const terrainTiles = kit ? (enclosed?.terrainTiles ?? []).map((tile) => resolveStoryTerrainTile(blueprint.visual.paletteId, tile)) : enclosed?.terrainTiles ?? [];
+  const cavityTiles = kit ? (enclosed?.cavityTiles ?? []).map((tile) => resolveStoryCavityTile(blueprint.visual.paletteId, tile)) : enclosed?.cavityTiles ?? [];
   const entryPoint = blueprint.connectors.find((connector) => connector.edge === 'west')?.point;
   const exitPoint = blueprint.connectors.find((connector) => connector.edge === 'east')?.point;
   const connectorTier = (point?: [number, number]) => Math.max(0, Math.min(2, Math.round(((point?.[1] ?? 3) - 3) / 10))) as 0 | 1 | 2;
@@ -147,9 +148,9 @@ export function compileStoryLevelBlueprint(blueprint: StoryLevelBlueprint, seed 
       ? 'hero'
       : (['structural', 'framing', 'foliage', 'clutter'] as StoryLevelAssetRole[]).find((role) => slot.semanticTags.includes(role)) ?? (index === 0 ? 'framing' : 'clutter');
     const salt = hashString(`${seed}:${slot.id}`);
-    let selected = resolveStoryLevelAsset(blueprint.biomeId!, slot, requestedRole, salt, blueprint.kind === 'surface');
+    let selected = resolveStoryLevelAsset(blueprint.biomeId!, slot, requestedRole, salt, blueprint.kind === 'surface', blueprint.visual.permittedPropFamilies);
     for (let attempt = 1; selected && attempt < 64 && ((repetitions.get(selected.id) ?? 0) >= selected.repetitionLimit || densityUsed + selected.densityCost > blueprint.visual.densityBudget); attempt += 1) {
-      selected = resolveStoryLevelAsset(blueprint.biomeId!, slot, requestedRole, salt + attempt, blueprint.kind === 'surface');
+      selected = resolveStoryLevelAsset(blueprint.biomeId!, slot, requestedRole, salt + attempt, blueprint.kind === 'surface', blueprint.visual.permittedPropFamilies);
     }
     if (!selected) return [];
     const used = repetitions.get(selected.id) ?? 0;
@@ -160,8 +161,8 @@ export function compileStoryLevelBlueprint(blueprint: StoryLevelBlueprint, seed 
     return [{
       id: `${blueprint.id}-${slot.id}-${selected.id}`,
       asset: selected.asset,
-      frame: [0, 0, selected.pixelSize[0], selected.pixelSize[1]],
-      atlasSize: selected.pixelSize,
+      frame: selected.frame ?? [0, 0, selected.pixelSize[0], selected.pixelSize[1]],
+      atlasSize: selected.atlasSize ?? selected.pixelSize,
       position: [slot.position[0], (blueprint.version === 2 ? slot.position[1] - STORY_GROUNDED_ACTOR_CENTER_Y : 0) + selected.footprint[1] / 2 - 0.08, -2.18 - index % 3 * 0.12],
       size: selected.footprint,
       mirrored: hashString(`${slot.id}:mirror`) % 3 === 0,
@@ -171,6 +172,8 @@ export function compileStoryLevelBlueprint(blueprint: StoryLevelBlueprint, seed 
   return {
     platforms,
     terrainTiles,
+    cavityTiles,
+    ...(kit ? { terrainKitId: kit.id } : {}),
     props,
     validation,
     meta: {
@@ -178,7 +181,7 @@ export function compileStoryLevelBlueprint(blueprint: StoryLevelBlueprint, seed 
       chunkIds: blueprint.kind === 'chunk' ? [blueprint.id] : [], witnessRoute: validation.witnessRoute, assetResolution,
       ...(enclosed ? { topologySignature: enclosed.topologySignature } : {}),
       ...(enclosed && blueprint.kind === 'surface' ? {
-        entranceTier: connectorTier(entryPoint), exitTier: connectorTier(exitPoint), witnessInputs: compressedWitnessInputs(validation.witnessRoute)
+        entranceTier: connectorTier(entryPoint), exitTier: connectorTier(exitPoint), witnessInputs: compressStoryWitnessInputs(validation.witnessRoute)
       } : {})
     }
   };
