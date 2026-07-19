@@ -1543,57 +1543,57 @@
         "flipY": false
       },
       "136": {
-        "width": 2.02,
-        "height": 2.02,
+        "width": 1,
+        "height": 1,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "139": {
-        "width": 2.02,
-        "height": 2.02,
+        "width": 1,
+        "height": 1,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "140": {
-        "width": 2.02,
-        "height": 2.02,
+        "width": 1,
+        "height": 1,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "141": {
-        "width": 1.93,
-        "height": 1.93,
+        "width": 1,
+        "height": 1,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "142": {
-        "width": 1.93,
-        "height": 1.93,
+        "width": 1,
+        "height": 1,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "146": {
-        "width": 2,
-        "height": 2,
+        "width": 1,
+        "height": 1,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "149": {
-        "width": 2,
-        "height": 2,
+        "width": 1,
+        "height": 1,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "150": {
-        "width": 2,
-        "height": 2,
+        "width": 1,
+        "height": 1,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -2641,8 +2641,113 @@
   "unplayable": false,
   "hasTransform": false,
   "animationScales": {},
-  "projectiles": [],
-  "moveProjectiles": {},
+  "projectiles": [
+    {
+      "id": "wind-scythe-projectile",
+      "name": "Wind Scythe",
+      "kind": "projectile",
+      "sourcePath": "/characters/temari/animation-sheet.png",
+      "frames": [
+        "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-000.png",
+        "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-001.png",
+        "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-002.png",
+        "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-003.png",
+        "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-004.png",
+        "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-005.png",
+        "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-006.png",
+        "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-007.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-000.png",
+          "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-001.png",
+          "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-002.png",
+          "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-003.png",
+          "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-004.png",
+          "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-005.png",
+          "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-006.png",
+          "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-007.png"
+        ],
+        "recovery": [
+          "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-007.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "hd-image-source",
+      "voxelFidelity": {
+        "resolutionScale": 1,
+        "maxRows": 64,
+        "depth": 0.14,
+        "alphaThreshold": 24,
+        "paletteSnap": 8,
+        "mergeRuns": true
+      },
+      "defaultScale": [
+        0.54,
+        0.54,
+        0.54
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "alignToVelocity": false,
+      "color": "#eef6ff"
+    }
+  ],
+  "moveProjectiles": {
+    "kickright": [
+      {
+        "id": "kickright-wind-scythe",
+        "projectileId": "wind-scythe-projectile",
+        "kind": "projectile",
+        "label": "Wind Scythe",
+        "spawnFrame": 14,
+        "spawnOffset": [
+          0,
+          1.05,
+          1.05
+        ],
+        "startupFrames": 0,
+        "activeFrames": 88,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 96,
+        "speed": 9,
+        "forwardVelocity": 9,
+        "homingMode": "limited",
+        "homingStrength": 2.2,
+        "homingTurnRate": 3,
+        "homingEndFrame": 42,
+        "nearMissRadius": 0.65,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.68,
+            0.92,
+            0.82
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true
+      }
+    ]
+  },
   "beginnerComboRoutes": [
     {
       "id": "temari:beginner:light-core",
