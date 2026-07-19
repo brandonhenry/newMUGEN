@@ -32,6 +32,17 @@
       "style": "fireball"
     },
     {
+      "characterId": "impmon",
+      "assetType": "projectile",
+      "assetId": "aura-drive-green-orb",
+      "name": "Aura Drive Green Orb",
+      "sourceFrames": [100, 102],
+      "moveKeys": ["cmd:O+2"],
+      "spawnFrames": { "cmd:O+2": 30 },
+      "stripMoveFrames": { "cmd:O+2": [100, 102] },
+      "style": "energy-orb"
+    },
+    {
       "characterId": "killua-zoldyck",
       "assetType": "projectile",
       "assetId": "electric-yo-yo-orb",

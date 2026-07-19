@@ -1,0 +1,36 @@
+{
+  "characterId": "impmon",
+  "assetId": "aura-drive-green-orb",
+  "classification": "projectile",
+  "source": "Impmon original sprite sheet",
+  "sourceSheetPath": "/characters/impmon/animation-sheet.png",
+  "extraction": "Standalone green orb cells removed from the Aura Drive body animation",
+  "sourceFrames": [
+    {
+      "index": 100,
+      "path": "/characters/impmon/frames/frame-100.png",
+      "cropBox": [
+        911,
+        1018,
+        933,
+        1040
+      ],
+      "output": "/characters/impmon/projectiles/aura-drive-green-orb/frames/frame-000.png"
+    },
+    {
+      "index": 102,
+      "path": "/characters/impmon/frames/frame-102.png",
+      "cropBox": [
+        1321,
+        1018,
+        1343,
+        1040
+      ],
+      "duplicateOf": 100,
+      "output": "/characters/impmon/projectiles/aura-drive-green-orb/frames/frame-001.png"
+    }
+  ],
+  "matchedMoves": [
+    "cmd:O+2"
+  ]
+}

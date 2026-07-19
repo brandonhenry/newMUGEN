@@ -229,9 +229,7 @@
       "/characters/impmon/frames/frame-097.png",
       "/characters/impmon/frames/frame-098.png",
       "/characters/impmon/frames/frame-099.png",
-      "/characters/impmon/frames/frame-100.png",
       "/characters/impmon/frames/frame-101.png",
-      "/characters/impmon/frames/frame-102.png",
       "/characters/impmon/frames/frame-103.png",
       "/characters/impmon/frames/frame-104.png",
       "/characters/impmon/frames/frame-105.png"
@@ -5240,6 +5238,53 @@
         "paletteSnap": 8,
         "mergeRuns": true
       }
+    },
+    {
+      "id": "aura-drive-green-orb",
+      "name": "Aura Drive Green Orb",
+      "kind": "projectile",
+      "sourcePath": "/characters/impmon/animation-sheet.png",
+      "frames": [
+        "/characters/impmon/projectiles/aura-drive-green-orb/frames/frame-000.png",
+        "/characters/impmon/projectiles/aura-drive-green-orb/frames/frame-001.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/impmon/projectiles/aura-drive-green-orb/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/impmon/projectiles/aura-drive-green-orb/frames/frame-000.png",
+          "/characters/impmon/projectiles/aura-drive-green-orb/frames/frame-001.png"
+        ],
+        "recovery": [
+          "/characters/impmon/projectiles/aura-drive-green-orb/frames/frame-000.png"
+        ]
+      },
+      "fps": 12,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "hd-image-source",
+      "defaultScale": [
+        0.55,
+        0.55,
+        0.55
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "alignToVelocity": true,
+      "color": "#4acb8c",
+      "voxelFidelity": {
+        "resolutionScale": 1,
+        "maxRows": 64,
+        "depth": 0.14,
+        "alphaThreshold": 24,
+        "paletteSnap": 8,
+        "mergeRuns": true
+      }
     }
   ],
   "moveProjectiles": {
@@ -5276,6 +5321,50 @@
             0.5,
             0.46,
             0.66
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true
+      }
+    ],
+    "cmd:O+2": [
+      {
+        "id": "aura-drive-green-orb-shot",
+        "projectileId": "aura-drive-green-orb",
+        "kind": "projectile",
+        "label": "Aura Drive Green Orb",
+        "spawnFrame": 30,
+        "spawnOffset": [
+          0,
+          0.9,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 86,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 96,
+        "speed": 8.5,
+        "forwardVelocity": 8.5,
+        "homingMode": "limited",
+        "homingStrength": 2.8,
+        "homingTurnRate": 3.2,
+        "homingEndFrame": 48,
+        "nearMissRadius": 0.52,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.52,
+            0.52,
+            0.68
           ]
         },
         "damageScale": 1,
