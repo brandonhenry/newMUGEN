@@ -1338,19 +1338,8 @@ test('keeps credits and licenses in the Options Konsole sidebar', async ({ page 
   await expect(page.getByRole('link', { name: /Adventure art/ })).toHaveAttribute('href', '/story/adventure/CREDITS.md');
 });
 
-test('Adventure pause credits shortcut opens Konsole credits and returns to Adventure', async ({ page }) => {
-  await page.addInitScript(() => {
-    window.localStorage.setItem('kore.story.profile.v4', JSON.stringify({
-      version: 4,
-      avatarStyle: 'kore-street-v1',
-      avatar: {
-        name: 'CREDITS', avatarSet: 'crimson-ranger', lineage: 'human', bodyPreset: 'standard', bodyTone: 'tan', hairStyle: 'short', hairColor: '#15131a', outfit: 'kore-cyan', accessory: 'none'
-      },
-      createdAt: 1,
-      updatedAt: 1,
-      reviewedAt: 1
-    }));
-  });
+test('Story pause menu omits the credits shortcut', async ({ page }) => {
+  await installStoryTestProfile(page, 'NO CREDITS');
   await forceMenuLagHealthy(page);
   await startFromSplash(page);
   await page.getByRole('button', { name: 'Story', exact: true }).click();
@@ -1358,15 +1347,8 @@ test('Adventure pause credits shortcut opens Konsole credits and returns to Adve
   const hub = page.getByTestId('story-hub-screen');
   await expect(hub).toHaveAttribute('data-hub-ready', 'true', { timeout: 15_000 });
   await page.keyboard.press('Escape');
-  await page.getByRole('button', { name: 'Credits & Licenses' }).click();
-
-  await expect(page.getByRole('button', { name: 'Konsole' })).toHaveClass(/active/);
-  await expect(page.locator('.options-sidebar').getByRole('button', { name: 'Credits & Licenses' })).toHaveClass(/active/);
-  await expect(page.getByRole('heading', { name: 'Stimmerman' })).toBeVisible();
-
-  await page.getByRole('button', { name: 'Back', exact: true }).click();
-  await expect(hub).toBeVisible({ timeout: 10_000 });
-  await expect(page.getByTestId('adventure-music-player')).toHaveAttribute('data-active', 'true');
+  await expect(page.getByRole('heading', { name: 'Hub Paused' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Credits & Licenses' })).toHaveCount(0);
 });
 
 test('menu lag prompt can be skipped once per detector version', async ({ page }) => {

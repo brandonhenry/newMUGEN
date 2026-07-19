@@ -2616,7 +2616,7 @@ function createEndlessFloorHub(surface: StoryHubDefinition, floor: StoryGenerate
   };
 }
 
-export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, readInputs, setVirtualAction, onAnalytics, onProfileChange, onDestination, onOnlineSpar, onMusicContext, activeMusicTrack, onCredits, onExit }: {
+export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, readInputs, setVirtualAction, onAnalytics, onProfileChange, onDestination, onOnlineSpar, onMusicContext, activeMusicTrack, onExit }: {
   profile: StoryProfileV4;
   onlineProfile?: OnlinePlayerProfile | null;
   reducedMotion: boolean;
@@ -2628,7 +2628,6 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
   onOnlineSpar: (opponent: StoryHubPresence) => void;
   onMusicContext?: (context: AdventureMusicContext | null) => void;
   activeMusicTrack?: AdventureMusicTrackDefinition | null;
-  onCredits?: () => void;
   onExit: () => void;
 }) {
   const [activeWorldId, setActiveWorldId] = useState<StoryWorldId>(readDevPreviewWorldId);
@@ -4569,7 +4568,6 @@ export default function StoryHubScreen({ profile, onlineProfile, reducedMotion, 
         {activeHub.adventure && <button type="button" className="story-pause-edit" onClick={() => { closePause(); setStatsOpen(true); }}><BarChart3 size={19} /> Adventure Stats</button>}
         {activeHub.adventure && <button type="button" className="story-pause-edit" onClick={() => openAdventurePack({ kind: 'field' })}><Backpack size={19} /> Adventure Pack</button>}
         {activeMusicTrack && <p className="story-adventure-now-playing"><strong>{activeMusicTrack.title}</strong> — Stimmerman</p>}
-        {onCredits && <button type="button" className="story-pause-edit" onClick={onCredits}><BookOpen size={19} /> Credits &amp; Licenses</button>}
         <button type="button" className="story-pause-edit" onClick={editAvatarFromPause}><Pencil size={19} /> Edit Avatar</button>
         <button type="button" className={`story-online-toggle ${onlineEnabled ? 'is-online' : 'is-offline'}`} role="switch" aria-checked={onlineEnabled} onClick={toggleOnline}>
           <span aria-hidden="true"><Wifi size={19} /><WifiOff size={19} /></span>

@@ -5891,11 +5891,6 @@ export default function App() {
               onAnalytics={captureAppAnalytics}
               onMusicContext={setAdventureMusicContext}
               activeMusicTrack={adventureMusicTrack}
-              onCredits={() => {
-                setNavigationHome('storyHub');
-                setSettingsDestination({ tab: 'console', section: 5 });
-                setScreen('settings');
-              }}
               onDestination={launchStoryHubDestination}
               onOnlineSpar={launchStoryHubSpar}
               onExit={() => {
