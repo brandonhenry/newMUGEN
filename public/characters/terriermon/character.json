@@ -2020,8 +2020,8 @@
         "flipY": false
       },
       "220": {
-        "width": 0.54,
-        "height": 0.54,
+        "width": 0.48,
+        "height": 0.48,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -2034,8 +2034,8 @@
         "flipY": false
       },
       "222": {
-        "width": 0.61,
-        "height": 0.61,
+        "width": 0.45,
+        "height": 0.45,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -2048,8 +2048,8 @@
         "flipY": false
       },
       "224": {
-        "width": 0.6,
-        "height": 0.6,
+        "width": 0.41,
+        "height": 0.41,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -2062,8 +2062,8 @@
         "flipY": false
       },
       "226": {
-        "width": 0.6,
-        "height": 0.6,
+        "width": 0.5,
+        "height": 0.5,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -3253,8 +3253,105 @@
     "height": 1.6
   },
   "animationScales": {},
-  "projectiles": [],
-  "moveProjectiles": {},
+  "projectiles": [
+    {
+      "id": "bunny-blast-projectile",
+      "name": "Bunny Blast",
+      "kind": "projectile",
+      "sourcePath": "/characters/terriermon/animation-sheet.png",
+      "frames": [
+        "/characters/terriermon/projectiles/bunny-blast-projectile/frames/frame-000.png",
+        "/characters/terriermon/projectiles/bunny-blast-projectile/frames/frame-001.png",
+        "/characters/terriermon/projectiles/bunny-blast-projectile/frames/frame-002.png",
+        "/characters/terriermon/projectiles/bunny-blast-projectile/frames/frame-003.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/terriermon/projectiles/bunny-blast-projectile/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/terriermon/projectiles/bunny-blast-projectile/frames/frame-000.png",
+          "/characters/terriermon/projectiles/bunny-blast-projectile/frames/frame-001.png",
+          "/characters/terriermon/projectiles/bunny-blast-projectile/frames/frame-002.png",
+          "/characters/terriermon/projectiles/bunny-blast-projectile/frames/frame-003.png"
+        ],
+        "recovery": [
+          "/characters/terriermon/projectiles/bunny-blast-projectile/frames/frame-003.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "hd-image-source",
+      "voxelFidelity": {
+        "resolutionScale": 1,
+        "maxRows": 64,
+        "depth": 0.14,
+        "alphaThreshold": 24,
+        "paletteSnap": 8,
+        "mergeRuns": true
+      },
+      "defaultScale": [
+        0.44,
+        0.44,
+        0.44
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "alignToVelocity": true,
+      "color": "#32ff5a"
+    }
+  ],
+  "moveProjectiles": {
+    "kickleft": [
+      {
+        "id": "kickleft-bunny-blast",
+        "projectileId": "bunny-blast-projectile",
+        "kind": "projectile",
+        "label": "Bunny Blast",
+        "spawnFrame": 20,
+        "spawnOffset": [
+          0,
+          0.95,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 90,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 100,
+        "speed": 10.5,
+        "forwardVelocity": 10.5,
+        "homingMode": "limited",
+        "homingStrength": 2.8,
+        "homingTurnRate": 3.4,
+        "homingEndFrame": 48,
+        "nearMissRadius": 0.52,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.42,
+            0.36,
+            0.82
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true
+      }
+    ]
+  },
   "beginnerComboRoutes": [
     {
       "id": "terriermon:beginner:light-core",

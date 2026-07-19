@@ -1,0 +1,125 @@
+{
+  "characterId": "temari",
+  "assetId": "wind-scythe-projectile",
+  "classification": "projectile",
+  "source": "Temari original sprite sheet",
+  "sourceSheetPath": "/characters/temari/animation-sheet.png",
+  "extraction": "largest alpha component retained as fighter and fan; detached alpha components extracted as Wind Scythe",
+  "sourceFrames": [
+    {
+      "index": 136,
+      "path": "/characters/temari/frames/frame-136.png",
+      "sourceBox": [
+        761,
+        1181,
+        895,
+        1280
+      ],
+      "bodyPixels": 1340,
+      "projectileComponents": 7,
+      "projectilePixels": 1242,
+      "projectileOutput": "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-000.png"
+    },
+    {
+      "index": 139,
+      "path": "/characters/temari/frames/frame-139.png",
+      "sourceBox": [
+        1313,
+        1181,
+        1447,
+        1280
+      ],
+      "bodyPixels": 1340,
+      "projectileComponents": 7,
+      "projectilePixels": 1242,
+      "projectileOutput": "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-001.png"
+    },
+    {
+      "index": 140,
+      "path": "/characters/temari/frames/frame-140.png",
+      "sourceBox": [
+        1497,
+        1181,
+        1631,
+        1280
+      ],
+      "bodyPixels": 1340,
+      "projectileComponents": 7,
+      "projectilePixels": 1242,
+      "projectileOutput": "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-002.png"
+    },
+    {
+      "index": 141,
+      "path": "/characters/temari/frames/frame-141.png",
+      "sourceBox": [
+        1679,
+        1185,
+        1816,
+        1280
+      ],
+      "bodyPixels": 1340,
+      "projectileComponents": 5,
+      "projectilePixels": 1534,
+      "projectileOutput": "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-003.png"
+    },
+    {
+      "index": 142,
+      "path": "/characters/temari/frames/frame-142.png",
+      "sourceBox": [
+        1852,
+        1185,
+        2012,
+        1280
+      ],
+      "bodyPixels": 1871,
+      "projectileComponents": 7,
+      "projectilePixels": 1453,
+      "projectileOutput": "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-004.png"
+    },
+    {
+      "index": 146,
+      "path": "/characters/temari/frames/frame-146.png",
+      "sourceBox": [
+        376,
+        1289,
+        544,
+        1387
+      ],
+      "bodyPixels": 1871,
+      "projectileComponents": 6,
+      "projectilePixels": 1407,
+      "projectileOutput": "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-005.png"
+    },
+    {
+      "index": 149,
+      "path": "/characters/temari/frames/frame-149.png",
+      "sourceBox": [
+        924,
+        1289,
+        1100,
+        1387
+      ],
+      "bodyPixels": 1872,
+      "projectileComponents": 5,
+      "projectilePixels": 1446,
+      "projectileOutput": "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-006.png"
+    },
+    {
+      "index": 150,
+      "path": "/characters/temari/frames/frame-150.png",
+      "sourceBox": [
+        1112,
+        1289,
+        1280,
+        1387
+      ],
+      "bodyPixels": 1871,
+      "projectileComponents": 6,
+      "projectilePixels": 1407,
+      "projectileOutput": "/characters/temari/projectiles/wind-scythe-projectile/frames/frame-007.png"
+    }
+  ],
+  "matchedMoves": [
+    "kickright"
+  ]
+}

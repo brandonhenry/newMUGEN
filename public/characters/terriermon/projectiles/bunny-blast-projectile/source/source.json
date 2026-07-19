@@ -1,0 +1,69 @@
+{
+  "characterId": "terriermon",
+  "assetId": "bunny-blast-projectile",
+  "classification": "projectile",
+  "source": "Terriermon original sprite sheet",
+  "sourceSheetPath": "/characters/terriermon/animation-sheet.png",
+  "extraction": "largest alpha component retained as fighter; detached alpha components extracted as Bunny Blast",
+  "sourceFrames": [
+    {
+      "index": 220,
+      "path": "/characters/terriermon/frames/frame-220.png",
+      "sourceBox": [
+        1637,
+        2039,
+        1729,
+        2067
+      ],
+      "bodyPixels": 439,
+      "projectileComponents": 6,
+      "projectilePixels": 168,
+      "projectileOutput": "/characters/terriermon/projectiles/bunny-blast-projectile/frames/frame-000.png"
+    },
+    {
+      "index": 222,
+      "path": "/characters/terriermon/frames/frame-222.png",
+      "sourceBox": [
+        2384,
+        2041,
+        2478,
+        2067
+      ],
+      "bodyPixels": 461,
+      "projectileComponents": 6,
+      "projectilePixels": 147,
+      "projectileOutput": "/characters/terriermon/projectiles/bunny-blast-projectile/frames/frame-001.png"
+    },
+    {
+      "index": 224,
+      "path": "/characters/terriermon/frames/frame-224.png",
+      "sourceBox": [
+        3131,
+        2043,
+        3227,
+        2067
+      ],
+      "bodyPixels": 432,
+      "projectileComponents": 6,
+      "projectilePixels": 142,
+      "projectileOutput": "/characters/terriermon/projectiles/bunny-blast-projectile/frames/frame-002.png"
+    },
+    {
+      "index": 226,
+      "path": "/characters/terriermon/frames/frame-226.png",
+      "sourceBox": [
+        3894,
+        2038,
+        3959,
+        2067
+      ],
+      "bodyPixels": 519,
+      "projectileComponents": 3,
+      "projectilePixels": 71,
+      "projectileOutput": "/characters/terriermon/projectiles/bunny-blast-projectile/frames/frame-003.png"
+    }
+  ],
+  "matchedMoves": [
+    "kickleft"
+  ]
+}

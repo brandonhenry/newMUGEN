@@ -278,7 +278,6 @@
     { "characterId": "don-patch-poppa-rocks", "frames": [194, 195, 196, 197, 198], "reason": "The orange ball is Don Patch's body-rush animation." },
     { "characterId": "kidomaru", "frames": [122, 125, 128, 131, 173, 176, 179, 200, 203], "reason": "The sand/web clouds do not show a discrete traveling hit object." },
     { "characterId": "knuckles-the-echidna", "frames": [237, 238, 239, 240, 241], "reason": "The red ball is Knuckles's spinning body state." },
-    { "characterId": "terriermon", "frames": [220, 222, 224], "reason": "Green bead art is embedded with the fighter and has no clean source cell without partial body pixels." },
     { "characterId": "train-heartnet", "frames": [], "reason": "Configured gun frames contain muzzle poses but no standalone or safely detachable bullet pixels; retain the current bullet." }
   ]
 }
