@@ -36,6 +36,35 @@ export function shouldRestartStoryAvatarAnimation(
   return lastPose !== pose || lastRestartToken !== restartToken;
 }
 
+export type StoryAvatarCrouchTransition = 'enter' | 'exit';
+
+export function storyAvatarCrouchTransitionForPoseChange(
+  previousPose: StoryAvatarPose,
+  pose: StoryAvatarPose
+): StoryAvatarCrouchTransition | null {
+  if (pose === 'crouch' && previousPose !== 'crouch' && previousPose !== 'roll') return 'enter';
+  if ((previousPose === 'crouch' || previousPose === 'roll') && (pose === 'idle' || pose === 'walk' || pose === 'sprint')) return 'exit';
+  return null;
+}
+
+export function storyAvatarCrouchTransitionFrameIndex(
+  transition: StoryAvatarCrouchTransition,
+  animation: StorySpriteAnimation,
+  elapsedMs: number
+): number | null {
+  const crouchedFrameIndex = animation.frames.length - 1;
+  const plantedFrameIndex = Math.max(0, crouchedFrameIndex - 1);
+  const sequence = transition === 'enter'
+    ? [plantedFrameIndex, crouchedFrameIndex]
+    : [crouchedFrameIndex, plantedFrameIndex];
+  let cursor = 0;
+  for (const frameIndex of sequence) {
+    cursor += animation.frames[frameIndex]?.durationMs ?? 0;
+    if (elapsedMs < cursor) return frameIndex;
+  }
+  return null;
+}
+
 export function StoryAvatarRig({ avatar, pose = 'idle', facing = 1, reducedMotion = false, restartToken = 0 }: {
   avatar: StoryAvatarDefinition;
   pose?: StoryAvatarPose;
@@ -44,6 +73,7 @@ export function StoryAvatarRig({ avatar, pose = 'idle', facing = 1, reducedMotio
   restartToken?: number;
 }) {
   const animation = getStorySpriteAnimation(avatar.avatarSet, animationForPose(pose));
+  const crouchAnimation = getStorySpriteAnimation(avatar.avatarSet, 'roll');
   const paths = useMemo(() => animation.frames.map((frame) => frame.path), [animation]);
   const textures = useTexture(paths) as unknown as THREE.Texture[];
   const materialRef = useRef<THREE.MeshBasicMaterial>(null);
@@ -51,6 +81,8 @@ export function StoryAvatarRig({ avatar, pose = 'idle', facing = 1, reducedMotio
   const poseStartedAtRef = useRef<number | null>(null);
   const lastPoseRef = useRef(pose);
   const lastRestartTokenRef = useRef(restartToken);
+  const crouchTexturesRef = useRef<THREE.Texture[]>([]);
+  const crouchTransitionRef = useRef<{ kind: StoryAvatarCrouchTransition; startedAt: number } | null>(null);
   const planeHeight = storyAvatarPlaneHeight();
   const planeWidth = planeHeight * STORY_SPRITE_MANIFEST.frameSize.width / STORY_SPRITE_MANIFEST.frameSize.height;
 
@@ -62,23 +94,48 @@ export function StoryAvatarRig({ avatar, pose = 'idle', facing = 1, reducedMotio
       texture.generateMipmaps = false;
       texture.needsUpdate = true;
     });
-  }, [textures]);
+    if (animation.id === 'roll') crouchTexturesRef.current = textures;
+  }, [animation.id, textures]);
 
   useFrame((state) => {
-    if (poseStartedAtRef.current === null || shouldRestartStoryAvatarAnimation(
+    const restarting = poseStartedAtRef.current === null || shouldRestartStoryAvatarAnimation(
       lastPoseRef.current,
       pose,
       lastRestartTokenRef.current,
       restartToken
-    )) {
+    );
+    if (restarting) {
+      const previousPose = lastPoseRef.current;
+      const crouchTransition = storyAvatarCrouchTransitionForPoseChange(previousPose, pose);
       lastPoseRef.current = pose;
       lastRestartTokenRef.current = restartToken;
       poseStartedAtRef.current = state.clock.elapsedTime;
+      crouchTransitionRef.current = crouchTransition
+        ? { kind: crouchTransition, startedAt: state.clock.elapsedTime }
+        : null;
     }
-    const elapsedMs = (state.clock.elapsedTime - (poseStartedAtRef.current ?? state.clock.elapsedTime)) * 1000;
-    const frameIndex = pose === 'crouch' ? animation.frames.length - 1 : frameIndexAt(animation, elapsedMs, reducedMotion);
-    const texture = textures[frameIndex] ?? textures[0];
-    const visualScale = animation.frames[frameIndex]?.visualScale ?? 1;
+    let elapsedMs = (state.clock.elapsedTime - (poseStartedAtRef.current ?? state.clock.elapsedTime)) * 1000;
+    let frameIndex = pose === 'crouch' ? animation.frames.length - 1 : frameIndexAt(animation, elapsedMs, reducedMotion);
+    let texture = textures[frameIndex] ?? textures[0];
+    let visualScale = animation.frames[frameIndex]?.visualScale ?? 1;
+    const crouchTransition = crouchTransitionRef.current;
+    if (crouchTransition) {
+      const transitionElapsedMs = (state.clock.elapsedTime - crouchTransition.startedAt) * 1000;
+      const transitionFrameIndex = storyAvatarCrouchTransitionFrameIndex(crouchTransition.kind, crouchAnimation, transitionElapsedMs);
+      const crouchTextures = animation.id === 'roll' ? textures : crouchTexturesRef.current;
+      if (transitionFrameIndex !== null && crouchTextures[transitionFrameIndex]) {
+        frameIndex = transitionFrameIndex;
+        texture = crouchTextures[transitionFrameIndex];
+        visualScale = crouchAnimation.frames[transitionFrameIndex]?.visualScale ?? 1;
+      } else {
+        crouchTransitionRef.current = null;
+        poseStartedAtRef.current = state.clock.elapsedTime;
+        elapsedMs = 0;
+        frameIndex = pose === 'crouch' ? animation.frames.length - 1 : frameIndexAt(animation, elapsedMs, reducedMotion);
+        texture = textures[frameIndex] ?? textures[0];
+        visualScale = animation.frames[frameIndex]?.visualScale ?? 1;
+      }
+    }
     const material = materialRef.current;
     if (texture && material && material.map !== texture) {
       material.map = texture;
