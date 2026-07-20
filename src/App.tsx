@@ -3249,6 +3249,7 @@ export default function App() {
   const [inputPromptMode, setInputPromptMode] = useState<InputPromptMode>('keyboardShortcut');
   const [onlineProfile, setOnlineProfile] = useState<OnlinePlayerProfile | null>(() => readOnlineProfile());
   const [storyProfile, setStoryProfile] = useState<StoryProfileV4 | null>(() => readStoryProfile());
+  const [storyTutorialFixtureRevision, setStoryTutorialFixtureRevision] = useState(0);
   const [adventureMusicContext, setAdventureMusicContext] = useState<AdventureMusicContext | null>(null);
   const [adventureMusicTrack, setAdventureMusicTrack] = useState<AdventureMusicTrackDefinition | null>(null);
   const [settingsDestination, setSettingsDestination] = useState<SettingsDestination | null>(null);
@@ -4127,6 +4128,7 @@ export default function App() {
         setStoryProfile(result.profile);
         setNavigationHome('storyHub');
         setAvatarCreatorReturnScreen(result.screen === 'avatarCreator' ? 'menu' : 'storyHub');
+        setStoryTutorialFixtureRevision((revision) => revision + 1);
         setScreen(result.screen);
       };
     }
@@ -5895,6 +5897,7 @@ export default function App() {
         {screen === 'storyHub' && storyProfile && (
           <Suspense fallback={<div className="story-loading-screen"><Swords size={34} /><strong>Entering K.O.R.E. Central</strong></div>}>
             <StoryHubScreen
+              key={`story-tutorial-${storyTutorialFixtureRevision}`}
               profile={storyProfile}
               onProfileChange={(nextProfile) => setStoryProfile(persistStoryProfile(nextProfile))}
               onlineProfile={onlineProfile}
