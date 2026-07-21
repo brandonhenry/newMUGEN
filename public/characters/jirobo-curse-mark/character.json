@@ -1558,7 +1558,7 @@
       "50": {
         "width": 1.37,
         "height": 0.97019,
-        "offsetX": 0.0,
+        "offsetX": 0,
         "flipX": false,
         "flipY": false
       }
@@ -1567,7 +1567,7 @@
       "50": {
         "width": 1.15,
         "height": 0.99128,
-        "offsetX": 0.0,
+        "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
@@ -2003,8 +2003,10 @@
     },
     "juggle": {
       "61": {
-        "width": 1.14,
-        "height": 1.14,
+        "width": 1.27493,
+        "height": 1.27493,
+        "voxelScaleX": 1.12006,
+        "voxelScaleY": 0.89281,
         "offsetX": 0,
         "flipX": false,
         "flipY": false

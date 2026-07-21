@@ -302,6 +302,20 @@ const MOVEMENT_SMOKE_STYLE_OPTIONS: ReadonlyArray<{ value: MovementSmokeStyle; l
 ];
 
 type Screen = 'boot' | 'title' | 'menu' | 'avatarCreator' | 'storyHub' | 'friends' | 'leaderboard' | 'matchHistory' | 'privateRooms' | 'customRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'tournamentAdvancement' | 'stage' | 'assetWarmup' | 'versus' | 'fight' | 'arcadeTransition' | 'miniGame' | 'miniGameResult' | 'arcadeGameOver' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
+export type CpuArcadeTutorialCaptureConfig = {
+  fighterId: string;
+  seed: number;
+};
+export type CpuArcadeTutorialCaptureState = {
+  ready: boolean;
+  targetFighterId: string | null;
+  screen: Screen;
+  mode: MatchMode;
+  p1Id: string;
+  p2Id: string;
+  stageId: string;
+  arcadeRun: Pick<ArcadeRunState, 'score' | 'livesRemaining' | 'wins' | 'level' | 'status'>;
+};
 type E2EAuditScreen = Exclude<Screen, 'boot'>
   | 'selectOnline'
   | 'selectRanked'
@@ -419,6 +433,8 @@ type E2EWindow = Window & {
   __koreE2ESeedPaidRecoveryPrompt?: (profile: OnlinePlayerProfile, message?: string) => void;
   __koreE2EOpenAuditScreen?: (screen: E2EAuditScreen) => void;
   __koreE2EOpenStoryFixture?: (fixture: StoryTutorialFixtureId) => void;
+  __koreE2EPrepareCpuArcadeCapture?: (config: CpuArcadeTutorialCaptureConfig) => void;
+  __koreE2EGetCpuArcadeCaptureState?: () => CpuArcadeTutorialCaptureState;
   __KORE_E2E_SUPPRESS_BOOT_TITLE__?: boolean;
   __KORE_E2E_SKIP_ONLINE_VERSUS__?: boolean;
   __KORE_E2E_SKIP_ONLINE_ASSET_GATE__?: boolean;
@@ -1848,7 +1864,7 @@ function pickRandomCharacter(roster: CharacterDefinition[]) {
 function pickRandomStage(stageRoster: StageDefinition[]) {
   const visibleRoster = stageRoster.filter((stage) => !stage.hidden);
   const pool = visibleRoster.length > 0 ? visibleRoster : stageRoster;
-  return pool[Math.floor(Math.random() * pool.length)] ?? pool[0];
+  return pool[Math.floor(tutorialCaptureRandom() * pool.length)] ?? pool[0];
 }
 
 function pickMenuAttractStage(stageRoster: StageDefinition[], attractMode: MenuAttractPerformanceMode = 'full') {
@@ -1956,11 +1972,11 @@ function pickArcadeOpponent(
   const lockedCandidates = candidates.filter((character) => !isCharacterUnlocked(character, unlockedIds));
   const shouldOfferLockedEncounter =
     lockedCandidates.length > 0 &&
-    (unlockedCandidates.length === 0 || Math.random() < lockedEncounterChanceByDifficulty[difficulty]);
+    (unlockedCandidates.length === 0 || tutorialCaptureRandom() < lockedEncounterChanceByDifficulty[difficulty]);
   const pool = shouldOfferLockedEncounter ? lockedCandidates : unlockedCandidates.length > 0 ? unlockedCandidates : lockedCandidates;
-  const weights = pool.map(() => 1 + Math.random() * 0.25);
+  const weights = pool.map(() => 1 + tutorialCaptureRandom() * 0.25);
   const total = weights.reduce((sum, weight) => sum + weight, 0);
-  let cursor = Math.random() * total;
+  let cursor = tutorialCaptureRandom() * total;
   for (let index = 0; index < pool.length; index += 1) {
     cursor -= weights[index];
     if (cursor <= 0) return pool[index];
@@ -3094,7 +3110,25 @@ function writeCharacterViewerViewMode(viewMode: CharacterViewerViewMode) {
   }
 }
 
+let tutorialCaptureSeedState: number | null = null;
+
+function setTutorialCaptureSeed(seed: number) {
+  tutorialCaptureSeedState = Math.max(1, Math.floor(seed) >>> 0);
+}
+
+function tutorialCaptureRandom() {
+  if (!isTutorialCaptureMode() || tutorialCaptureSeedState === null) return Math.random();
+  tutorialCaptureSeedState = (tutorialCaptureSeedState + 0x6d2b79f5) >>> 0;
+  let value = tutorialCaptureSeedState;
+  value = Math.imul(value ^ value >>> 15, value | 1);
+  value ^= value + Math.imul(value ^ value >>> 7, value | 61);
+  return ((value ^ value >>> 14) >>> 0) / 4294967296;
+}
+
 function freshAiSeed() {
+  if (isTutorialCaptureMode() && tutorialCaptureSeedState !== null) {
+    return Math.floor(tutorialCaptureRandom() * 1_000_000);
+  }
   return Math.floor((Date.now() + performance.now() * 1000 + Math.random() * 1_000_000) % 1_000_000);
 }
 
@@ -3270,6 +3304,33 @@ export default function App() {
   const [arcadeTransition, setArcadeTransition] = useState<ArcadeTransitionIntent | null>(null);
   const [lastMiniGameResult, setLastMiniGameResult] = useState<MiniGameResult | null>(null);
   const [arcadeRun, setArcadeRun] = useState<ArcadeRunState>(() => createArcadeRunState());
+  const cpuArcadeTutorialTargetRef = useRef<string | null>(null);
+  const cpuArcadeTutorialSnapshotRef = useRef<CpuArcadeTutorialCaptureState>({
+    ready: false,
+    targetFighterId: null,
+    screen,
+    mode,
+    p1Id,
+    p2Id,
+    stageId,
+    arcadeRun
+  });
+  cpuArcadeTutorialSnapshotRef.current = {
+    ready: roster.length > 1 && playableStageRoster.length > 0,
+    targetFighterId: cpuArcadeTutorialTargetRef.current,
+    screen,
+    mode,
+    p1Id,
+    p2Id,
+    stageId,
+    arcadeRun: {
+      score: arcadeRun.score,
+      livesRemaining: arcadeRun.livesRemaining,
+      wins: arcadeRun.wins,
+      level: arcadeRun.level,
+      status: arcadeRun.status
+    }
+  };
   const arcadeRunAnalyticsIdRef = useRef(createAnalyticsId('arcade-run'));
   const completedArcadeRunAnalyticsRef = useRef<Set<string>>(new Set());
   const [arcadeRunBestScore, setArcadeRunBestScore] = useState(0);
@@ -3295,7 +3356,7 @@ export default function App() {
   const { readInputsForStep, peekInputs, setVirtualAction, clearMenuInputs, getLastInput } = useControls(mode, settings.controls);
   const isDevHost = isLocalDevHost();
   const effectiveUnlockedCharacterIds = useMemo(
-    () => (isDevHost ? new Set(roster.map((character) => character.id)) : unlockedCharacterIds),
+    () => (isDevHost || isTutorialCaptureMode() ? new Set(roster.map((character) => character.id)) : unlockedCharacterIds),
     [isDevHost, roster, unlockedCharacterIds]
   );
   const selectionAccessContext: CharacterAccessContext = mode === 'training' && selectedTrainingMode !== 'online'
@@ -4122,6 +4183,46 @@ export default function App() {
       setScreen('fight');
     };
     if (isTutorialCaptureMode()) {
+      testWindow.__koreE2EPrepareCpuArcadeCapture = (config) => {
+        const fighter = roster.find((character) => character.id === config?.fighterId && isCharacterPlayable(character));
+        if (!fighter) throw new Error(`Unknown playable CPU Arcade capture fighter: ${config?.fighterId ?? ''}`);
+        if (!Number.isFinite(config.seed)) throw new Error('CPU Arcade capture seed must be a finite number.');
+        const firstOpponent = roster.find((character) => character.id !== fighter.id && isCharacterPlayable(character));
+        if (!firstOpponent) throw new Error('CPU Arcade capture requires at least two playable fighters.');
+        // This fixture opens the title explicitly; suppress the app-load timer so it cannot
+        // reset a fast capture back to title after navigation has already started.
+        testWindow.__KORE_E2E_SUPPRESS_BOOT_TITLE__ = true;
+        cpuArcadeTutorialTargetRef.current = fighter.id;
+        setTutorialCaptureSeed(config.seed);
+        setNavigationHome('menu');
+        setP1Id(roster[0]?.id ?? fighter.id);
+        setP2Id(firstOpponent.id);
+        setMode('ai');
+        setCpuDifficulty(KORE_CPU_DIFFICULTY);
+        setRandomCharacterSlots({ 1: true, 2: true });
+        setRandomStageSelected(true);
+        setArcadeRun(createArcadeRunState());
+        setLastMiniGameResult(null);
+        setActiveArcadeMiniGame(null);
+        setArcadeTransition(null);
+        setPendingUnlockCharacterId('');
+        setMusicStarted(true);
+        setSettings((current) => sanitizeGameSettings({
+          ...current,
+          audio: {
+            ...current.audio,
+            master: 1,
+            music: 0.72,
+            ambience: 0.55,
+            sfx: 0.85,
+            voices: 0.85,
+            muted: false,
+            menuMusic: true
+          }
+        }));
+        setScreen('title');
+      };
+      testWindow.__koreE2EGetCpuArcadeCaptureState = () => cpuArcadeTutorialSnapshotRef.current;
       testWindow.__koreE2EOpenStoryFixture = (fixture) => {
         testWindow.__KORE_E2E_SUPPRESS_BOOT_TITLE__ = true;
         const result = applyStoryTutorialFixture(fixture);
@@ -4546,6 +4647,8 @@ export default function App() {
       if (testWindow.__koreE2EOnlineStartReady) delete testWindow.__koreE2EOnlineStartReady;
       if (testWindow.__koreE2EOpenAuditScreen) delete testWindow.__koreE2EOpenAuditScreen;
       if (testWindow.__koreE2EOpenStoryFixture) delete testWindow.__koreE2EOpenStoryFixture;
+      if (testWindow.__koreE2EPrepareCpuArcadeCapture) delete testWindow.__koreE2EPrepareCpuArcadeCapture;
+      if (testWindow.__koreE2EGetCpuArcadeCaptureState) delete testWindow.__koreE2EGetCpuArcadeCaptureState;
       if (testWindow.__koreE2ESeedOnlineTournament) delete testWindow.__koreE2ESeedOnlineTournament;
       if (testWindow.__koreE2ESeedPaidRecoveryPrompt) delete testWindow.__koreE2ESeedPaidRecoveryPrompt;
     };
@@ -5287,7 +5390,7 @@ export default function App() {
   const selectedStage = playableStageRoster.find((stage) => stage.id === stageId) ?? playableStageRoster[0] ?? stages[0];
   const selectedStageAssetStatus = useMemo(() => getStageAssetStatus(selectedStage.id), [selectedStage.id, stageAssetRevision]);
   const effectiveCpuDifficulty = getEffectiveCpuDifficulty(mode, cpuDifficulty);
-  const cpuAutoAccept = isDevHost && isCpuLedLocalMode(mode, localTournamentCpuSlots);
+  const cpuAutoAccept = (isDevHost || isTutorialCaptureMode()) && isCpuLedLocalMode(mode, localTournamentCpuSlots);
   const activeLocalTournamentIntroEntryId = getLocalTournamentPlayerEntryIds(localTournamentBracket)
     .find((entryId) => entryId === localTournamentSlotEntryIds[1] || entryId === localTournamentSlotEntryIds[2]);
   const unlockRevealCharacter = roster.find((character) => character.id === pendingUnlockCharacterId) ?? null;
@@ -5321,6 +5424,14 @@ export default function App() {
     warmupFighters: { p1?: CharacterDefinition; p2?: CharacterDefinition } = {},
     modeOverride?: MatchMode
   ) => {
+    const captureMode = modeOverride ?? mode;
+    if (isTutorialCaptureMode() && captureMode === 'cpuArcade') {
+      setStageId(stage.id);
+      assetReadyContinuationRef.current = null;
+      setAssetWarmupIntent(null);
+      continuation();
+      return;
+    }
     const warmupId = createAnalyticsId('warmup');
     assetReadyContinuationRef.current = continuation;
     setAssetWarmupIntent({
@@ -7721,6 +7832,7 @@ function ArcadeTransitionScreen({
     <div
       ref={screenRef}
       className={`arcade-transition-screen any-input-screen ${ready ? 'is-ready' : ''}`}
+      data-testid="arcade-transition-screen"
       tabIndex={0}
       onKeyDown={(event) => handleLocalAnyInputKeyDown(event, acceptInput)}
       aria-label="Arcade route loading"
@@ -8242,7 +8354,7 @@ function MenuScreen({
 
   useEffect(() => {
     setMenuLagReport(null);
-    if (!performanceSettings.autoDetectMenuLag || recommendedPerformanceActive || getMenuLagPromptDismissed()) {
+    if (isTutorialCaptureMode() || !performanceSettings.autoDetectMenuLag || recommendedPerformanceActive || getMenuLagPromptDismissed()) {
       setMenuLagCheckPending(false);
       return undefined;
     }
@@ -8516,6 +8628,7 @@ function MenuScreen({
           {menuItems.map((item, index) => (
             <button
               key={item.label}
+              data-testid={`main-menu-${item.label.toLowerCase()}`}
               className={index === activeMenuIndex ? 'is-active' : ''}
               disabled={item.disabled}
               data-sound="off"
@@ -12493,7 +12606,7 @@ const characterSelectModeOptions: Array<{ mode: MatchMode; label: string; icon: 
 ];
 
 function getCharacterSelectModeOptions() {
-  return characterSelectModeOptions.filter((option) => !option.devOnly || isLocalDevHost());
+  return characterSelectModeOptions.filter((option) => !option.devOnly || isLocalDevHost() || isTutorialCaptureMode());
 }
 
 function cycleModeValue<T>(options: readonly T[], value: T, direction: -1 | 1) {
@@ -12763,7 +12876,7 @@ function CharacterSelect({
       (!randomCharacterSlots[2] && !isCharacterUnlocked(p2Character, unlockedCharacterIds)));
 
   return (
-    <div className="select-screen versus-select-screen">
+    <div className="select-screen versus-select-screen" data-testid="character-select-screen">
       <button
         type="button"
         className={`versus-hero versus-hero-left ${selectTarget === 1 ? 'is-picking' : ''} ${randomCharacterSlots[1] ? 'is-random-selection' : ''}`}
@@ -12835,6 +12948,7 @@ function CharacterSelect({
             <button
               type="button"
               className="secondary-button"
+              data-testid="roster-previous-page"
               onClick={() => cycleRosterPage(-1)}
               disabled={totalRosterPages <= 1}
             >
@@ -12847,6 +12961,7 @@ function CharacterSelect({
             <button
               type="button"
               className="secondary-button"
+              data-testid="roster-next-page"
               onClick={() => cycleRosterPage(1)}
               disabled={totalRosterPages <= 1}
             >
@@ -12889,6 +13004,8 @@ function CharacterSelect({
                 <button
                   key={character.id}
                   type="button"
+                  data-testid={`character-tile-${baseId}`}
+                  data-character-id={displayedCharacter.id}
                   className={`versus-roster-tile ${isP1 ? 'is-p1' : ''} ${isP2 ? 'is-p2' : ''} ${isLocked ? 'is-locked' : ''} ${variantCount > 0 ? 'has-variants' : ''}`}
                   style={{ '--fighter-color': displayedCharacter.colors.primary } as CSSProperties}
                   onClick={() => assignCharacter(assignId)}
@@ -13130,6 +13247,8 @@ function CharacterSelectModeCarousel({
       </button>
       <div
         className="mode-carousel-current"
+        data-testid="match-mode-current"
+        data-mode={activeOption.mode}
         style={{ '--label-font-size': responsiveLabelFontSize(activeOption.label, 60) } as CSSProperties}
         aria-live="polite"
       >
@@ -13458,6 +13577,7 @@ function VersusSplashScreen({
     <div
       ref={screenRef}
       className="fight-versus-screen any-input-screen"
+      data-testid="versus-screen"
       tabIndex={-1}
       onKeyDown={(event) => handleLocalAnyInputKeyDown(event, acceptVersusInput, onBack)}
       aria-label={`${p1.displayName} versus ${p2.displayName}. ${skipEnabled ? 'Press any key to skip.' : 'Match starts after the versus screen.'}`}
@@ -13615,7 +13735,7 @@ function StageSelect({
   }, [cycleStage]);
 
   return (
-    <div className="stage-screen">
+    <div className="stage-screen" data-testid="stage-select-screen">
       <header className="stage-select-header">
         <h2>Stage Select</h2>
       </header>
@@ -13654,6 +13774,7 @@ function StageSelect({
         <div className="stage-thumbnail-grid" aria-label="Stage choices">
           <button
             type="button"
+            data-testid="random-stage"
             className={`stage-thumbnail stage-random-thumbnail ${randomSelected ? 'is-selected' : ''}`}
             style={{
               '--stage-color': '#f7d45a',
@@ -27934,6 +28055,7 @@ function FightScreen({
       className="fight-screen"
       ref={screenRef}
       tabIndex={-1}
+      data-testid="fight-screen"
       data-fight-session-id={fightSessionId}
       onPointerDown={() => screenRef.current?.focus()}
     >
@@ -30286,7 +30408,7 @@ function ArcadeGameOverScreen({
   });
 
   return (
-    <div className="mini-game-result-screen arcade-game-over-screen" aria-label="Arcade game over">
+    <div className="mini-game-result-screen arcade-game-over-screen" aria-label="Arcade game over" data-testid="arcade-game-over-screen">
       <div className="mini-game-result-vignette" />
       <section className="mini-game-result-copy arcade-game-over-copy">
         <span>Arcade Run</span>

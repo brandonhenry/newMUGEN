@@ -2420,9 +2420,13 @@
     },
     "juggle": {
       "30": {
-        "width": 0.54,
-        "height": 0.54,
-        "offsetX": 0
+        "width": 0.50041,
+        "height": 0.50041,
+        "voxelScaleX": 0.99983,
+        "voxelScaleY": 1.00017,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "idle": {
